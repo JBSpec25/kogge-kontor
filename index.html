@@ -474,6 +474,58 @@ details.cv[open] > summary{padding-bottom:4px}
 .cityview{position:relative;width:100%;aspect-ratio:1.55/1;border-radius:10px;overflow:hidden;border:1px solid var(--rule)}
 .cityview canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer}
 .plots{margin-top:10px}
+.cityview .cvbig{position:absolute;right:8px;top:8px;border:0;border-radius:8px;background:rgba(255,250,240,.88);color:#1b2830;font:600 .8rem var(--f-body);padding:6px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.ptiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.ptiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ptile{display:flex;flex-direction:column;align-items:center;gap:1px;padding:0 4px 8px;border:1px solid var(--rule);border-radius:10px;background:var(--card);cursor:pointer;text-align:center;overflow:hidden;font:inherit;color:inherit}
+.ptile .pfac{display:block;width:calc(100% + 8px);background:linear-gradient(#e9dcc0,#efe6d2);line-height:0;margin-bottom:4px}
+.ptile .pfac svg{width:100%;height:auto}
+.ptile b{font-size:.84rem;line-height:1.15;hyphens:manual}.ptile .small{font-size:.7rem;line-height:1.2}
+.ptile .ybtn{min-height:32px;font-size:.72rem;padding:0 6px;margin-top:4px}
+.bslots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.bslot{display:flex;flex-direction:column;gap:4px;text-align:left;border:1px solid var(--rule);border-radius:10px;padding:9px 10px;background:var(--card);font:inherit;color:inherit;cursor:pointer}
+.bslot.free{border-style:dashed;color:var(--muted);cursor:default}
+.bslot b{font-size:.9rem}
+.bh{margin:16px 0 8px;font:700 .95rem var(--f-sc);letter-spacing:.04em}
+.bh small{font:500 .8rem var(--f-body);color:var(--muted);letter-spacing:0;margin-left:6px}
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bc{display:flex;flex-direction:column;gap:3px;border:1px solid var(--rule);border-radius:12px;background:var(--card);padding:0 10px 10px;overflow:hidden;text-align:left;font:inherit;color:inherit}
+.bc .bco,.bc.bco{display:flex;flex-direction:column;gap:3px;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.bc.bco{border:1px solid var(--rule);padding:0 10px 10px}
+.bart{position:relative;display:block;line-height:0;margin:0 -10px 6px;background:linear-gradient(#e9dcc0,#efe6d2);text-align:center}
+.bart svg{width:auto;max-width:100%;height:auto;max-height:116px}
+.bart .bico{position:absolute;left:50%;top:40%;transform:translateX(-50%);width:24px;height:24px;border-radius:50%;background:#f3ead6;border:1px solid #6f5238;display:grid;place-items:center;line-height:1}
+.bart .bico .gi{width:15px;height:15px}
+.bc b{font-size:.98rem}
+.bc .small{line-height:1.3}
+.bmeta{font:500 .8rem var(--f-mono);margin-top:4px}
+.bwhy{font-size:.8rem;color:var(--bad)}
+.bc .ybtn{margin-top:6px;width:100%;justify-content:center}
+.blater{list-style:none;margin:0;padding:0;border:1px solid var(--rule);border-radius:10px;background:var(--card)}
+.blater li{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-top:1px solid var(--rule)}
+.blater li:first-child{border-top:0}
+.bsheet .bsh{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:12px;align-items:end;margin-bottom:10px}
+.bsheet .bshart .bart{margin:0;border-radius:10px;overflow:hidden}
+.bsheet h2{margin:0;font:700 1.25rem var(--f-sc)}
+.bsheet .close{align-self:start}
+.bsheet .bar.big{height:8px;margin:4px 0 8px}
+.bfacts{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:8px 0 12px}
+.bfacts div{border-top:1px solid var(--rule);padding-top:5px}
+.bfacts span{display:block;font-size:.75rem;color:var(--muted)}
+.bfacts b{font:600 .95rem var(--f-mono)}
+.bup{margin:4px 0 6px}
+.bchoose{display:flex;flex-direction:column;gap:8px}
+.bchoose .ybtn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-height:52px;padding:8px 12px}
+.bchoose .ybtn small{font:400 .75rem var(--f-body);opacity:.85}
+.bchoose .ybtn .gi{width:15px;height:15px;margin-right:6px;vertical-align:-2px}
+.ybtn.wide{width:100%;justify-content:center;min-height:48px}
+.cityfull{position:fixed;inset:0;z-index:45;background:#1b2830;display:flex;flex-direction:column}
+.cfbar{display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;color:#eef2ef;font:400 1.4rem var(--f-title)}
+.cfz{display:flex;gap:6px}
+.cfz button{min-width:44px;min-height:40px;border-radius:8px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#eef2ef;font:600 1rem var(--f-body);cursor:pointer;padding:0 10px}
+.cfz button:disabled{opacity:.35}
+.cfscroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.cfscroll canvas{display:block}
 .street{display:flex;align-items:flex-start;overflow-x:auto;scroll-snap-type:x proximity;margin:0 -12px;padding:12px 12px 4px;scrollbar-width:none;background:linear-gradient(#e9dcc0 0,#efe6d2 124px,transparent 124px);border-radius:10px 10px 0 0}
 .street::-webkit-scrollbar{display:none}
 .bld{flex:none;display:flex;flex-direction:column;align-items:center;gap:0;padding:0;border:0;background:none;cursor:pointer;scroll-snap-align:center;text-align:center}
@@ -761,6 +813,9 @@ em.rep.warn{background:#b5523a}
 <div class="sheet book" id="book" role="dialog" aria-modal="true" aria-labelledby="book-title" hidden></div>
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden></div>
+<div class="scrim" id="bscrim" hidden></div>
+<div class="sheet bsheet" id="bsheet" role="dialog" aria-modal="true" aria-labelledby="bs-title" hidden></div>
+<div class="cityfull" id="cityfull" role="dialog" aria-label="Stadtansicht groß" hidden></div>
 
 <script>
 (() => {
@@ -2797,7 +2852,7 @@ em.rep.warn{background:#b5523a}
     setTab('lage');
     const r = route(st.loc, to, st.day);
     const weather = st.wx ? st.wx.w : pickWeather(st.day);
-    st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false};
+    st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false, shanty:r.days >= 4 && Math.random() < 0.35};
     escortDepart(st.loc, to);
     addLog(`Abgelegt in ${C[st.loc].n}, Kurs auf ${C[to].n}. ${r.days} ${r.days === 1 ? 'Tag' : 'Tage'} auf See${r.overland ? ', ein Stück über Land' : ''}${r.ice ? ', Treibeis bremst' : r.winter ? ', Winterwetter bremst' : ''}.`);
     st.loc = null; ui.open = null;
@@ -5122,7 +5177,10 @@ em.rep.warn{background:#b5523a}
   // ───────── Musik (im Browser erzeugt) ─────────
   const music = (() => {
     let ctx = null, master = null, noise = null, on = false, cur = null, pumpId = null, want = 'port';
-    const PREF = 'kogge-kontor-musik';
+    let musicBus = null, ambBus = null, bnoise = null, amb = null, ambWant = {scene:'port', wx:'clear'};
+    const PREF = 'kogge-kontor-musik', LAYER_KEY = 'kogge-kontor-klang';
+    let layers = {music:true, amb:true};
+    try { const v = JSON.parse(localStorage.getItem(LAYER_KEY) || 'null'); if (v) layers = Object.assign(layers, v); } catch (e) {}
     const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
     function init() {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -5135,6 +5193,14 @@ em.rep.warn{background:#b5523a}
       noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
       const d = noise.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      // Musik und Geräusche getrennt regelbar; Musik mit etwas Raumhall
+      musicBus = ctx.createGain(); musicBus.gain.value = layers.music ? 1 : 0.0001; musicBus.connect(master);
+      ambBus = ctx.createGain(); ambBus.gain.value = layers.amb ? 1 : 0.0001; ambBus.connect(master);
+      try {
+        const conv = ctx.createConvolver(), wet = ctx.createGain(), len = Math.floor(ctx.sampleRate * 2.3), ir = ctx.createBuffer(2, len, ctx.sampleRate);
+        for (let c = 0; c < 2; c++) { const x = ir.getChannelData(c); for (let i = 0; i < len; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3.4) * (i < 90 ? i / 90 : 1); }
+        conv.buffer = ir; wet.gain.value = 0.2; musicBus.connect(conv); conv.connect(wet); wet.connect(master);
+      } catch (e) {}
       return true;
     }
     function env(g, t, a, peak, d, rel) {
@@ -5271,7 +5337,24 @@ em.rep.warn{background:#b5523a}
     const BAT_MEL = melMap([[74,2],[77,1],[79,1],[81,2],[79,1],[77,1],[75,2],[74,1],[75,1],[77,4],[81,2],[82,1],[81,1],[79,2],[77,2],[75,2],[77,1],[75,1],[74,4]]);
     const BAT_OST = [[50,50,53,50,51,50,48,50],[50,50,53,50,51,50,48,50],[46,46,50,46,48,46,45,46],[48,48,51,48,50,48,46,45]];
 
+    const SH_PART = [
+      melMap([[69,2],[72,1],[74,1],[76,2],[74,2],[72,2],[69,2],[72,4]]),
+      melMap([[74,3],[74,1],[72,2],[69,2],[67,2],[69,4],[null,2]]),
+      melMap([[74,2],[76,1],[77,1],[79,2],[77,1],[76,1],[74,4],[72,2],[74,2]]),
+      melMap([[72,3],[72,1],[74,2],[76,2],[74,2],[72,2],[69,4]])];
+    const SH_CH = [[50,57],[50,57],[48,55],[50,57],[50,57],[53,60],[48,55],[50,57]];
     const TRACKS = {
+      shanty: {step:60 / 96 / 2, len:64, gain:1.1, setup:() => [],
+        play(bus, i, t, sd, loop) {
+          const bar = Math.floor(i / 8), k = i % 8, ch = SH_CH[bar], part = Math.floor(i / 16), call = part % 2 === 0, n = SH_PART[part][i % 16];
+          if (k === 0 || k === 4) { tom(bus, t, k === 0 ? 0.26 : 0.2, 62); hit(bus, t, 0.05, 420, 0.09); }
+          if (k === 2 || k === 6) hit(bus, t, 0.022, 2400, 0.04);
+          if (k === 0) pluck(bus, t, ch[0] - 12, 0.1);
+          if (k === 4) pluck(bus, t, ch[1] - 12, 0.07);
+          if (!n) return;
+          if (call) lead(loop % 2 ? 'fiddle' : 'shawm', bus, t, n[0], n[1] * sd * 0.92, loop % 2 ? 0.045 : 0.04);
+          else { choir(bus, t, n[0] - 12, n[1] * sd * 0.95, 0.15); choir(bus, t, n[0] - 15, n[1] * sd * 0.95, 0.09); }
+        }},
       port: {step:60 / 100 / 2, len:64, setup:bus => drone(bus, [38, 45], 0.03),
         play(bus, i, t, sd, loop) {
           const [r, th] = PORT_CH[Math.floor(i / 8)], k = i % 8;
@@ -5281,7 +5364,7 @@ em.rep.warn{background:#b5523a}
           const n = PORT_MEL[i];
           if (n && !(loop % 3 === 2 && i < 32)) flute(bus, t, n[0] + (loop % 2 ? 0 : 0), n[1] * sd * 0.95, 0.075);
         }},
-      sea: {step:60 / 52 / 3, len:48, setup:bus => waves(bus, 0.07),
+      sea: {step:60 / 52 / 3, len:48, setup:() => [],
         play(bus, i, t, sd, loop) {
           const bar = Math.floor(i / 6), k = i % 6, ch = SEA_CH[bar];
           if (k === 0) { pad(bus, t, ch, 6 * sd, 0.028); pluck(bus, t, ch[0] - 12, 0.1); tom(bus, t, 0.07, 68); }
@@ -5393,22 +5476,105 @@ em.rep.warn{background:#b5523a}
       return (cityCache[id] = tr);
     }
     const trackOf = name => name.startsWith('city:') ? cityTrack(name.slice(5)) : TRACKS[name];
+    // ── Geräusche: Meer, Wind, Regen, Möwen, Takelage, Hafen ──
+    function brown() {
+      if (bnoise && bnoise.sampleRate === ctx.sampleRate) return bnoise;
+      const len = ctx.sampleRate * 6, b = ctx.createBuffer(1, len, ctx.sampleRate), x = b.getChannelData(0); let last = 0;
+      for (let i = 0; i < len; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; x[i] = last * 3.5; }
+      const fade = Math.floor(ctx.sampleRate * 0.25); for (let i = 0; i < fade; i++) { const a = i / fade; x[len - fade + i] = x[len - fade + i] * (1 - a) + x[i] * a; }
+      return (bnoise = b);
+    }
+    function loopSrc(buf) { const sr = ctx.createBufferSource(); sr.buffer = buf; sr.loop = true; sr.start(0, Math.random() * (buf.duration - 0.5)); return sr; }
+    function lfoTo(param, hz, depth) { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = hz; g.gain.value = depth; o.connect(g); g.connect(param); o.start(); return o; }
+    function bed(out, buf, type, fq, q, v, mods) {
+      const sr = loopSrc(buf), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      f.type = type; f.frequency.value = fq; f.Q.value = q; g.gain.value = v;
+      sr.connect(f); f.connect(g); g.connect(out);
+      return [sr].concat((mods || []).map(([what, hz, d]) => lfoTo(what === 'f' ? f.frequency : g.gain, hz, d)));
+    }
+    function gull(out, t, v) {
+      const n = 2 + Math.floor(Math.random() * 3), base = 1150 + Math.random() * 350;
+      for (let k = 0; k < n; k++) {
+        const t0 = t + k * (0.3 + Math.random() * 0.18), o = ctx.createOscillator(), o2 = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain(), g2 = ctx.createGain();
+        o.type = 'triangle'; o2.type = 'sine'; f.type = 'bandpass'; f.frequency.value = 1900; f.Q.value = 1.6; g2.gain.value = 0.3;
+        const up = base * (1.55 + Math.random() * 0.25), end = base * (1.05 + Math.random() * 0.1), dur = 0.22 + Math.random() * 0.12;
+        [o, o2].forEach((x, i) => { const m = i ? 2 : 1; x.frequency.setValueAtTime(base * m, t0); x.frequency.linearRampToValueAtTime(up * m, t0 + 0.05); x.frequency.exponentialRampToValueAtTime(end * m, t0 + dur); });
+        g.gain.setValueAtTime(0.0001, t0); g.gain.linearRampToValueAtTime(v * (k === n - 1 ? 0.7 : 1), t0 + 0.025); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur + 0.05);
+        o.connect(f); o2.connect(g2); g2.connect(f); f.connect(g); g.connect(out);
+        [o, o2].forEach(x => { x.start(t0); x.stop(t0 + dur + 0.1); });
+      }
+    }
+    function creak(out, t, v) {
+      const sr = ctx.createBufferSource(), f = ctx.createBiquadFilter(), f2 = ctx.createBiquadFilter(), g = ctx.createGain(), dur = 0.45 + Math.random() * 0.5, f0 = 230 + Math.random() * 160;
+      sr.buffer = noise; f.type = 'bandpass'; f.Q.value = 26; f2.type = 'bandpass'; f2.Q.value = 18;
+      f.frequency.setValueAtTime(f0, t); f.frequency.linearRampToValueAtTime(f0 * (0.62 + Math.random() * 0.2), t + dur);
+      f2.frequency.setValueAtTime(f0 * 2.1, t); f2.frequency.linearRampToValueAtTime(f0 * 1.5, t + dur);
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + 0.08); g.gain.setValueAtTime(v, t + dur * 0.7); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      sr.connect(f); sr.connect(f2); f.connect(g); f2.connect(g); g.connect(out); sr.start(t, Math.random()); sr.stop(t + dur + 0.05);
+    }
+    const WXA = {clear:0.2, cloudy:0.4, fog:0.12, rain:0.55, storm:1, snow:0.35};
+    function ambStart(scene, wx) {
+      const now = ctx.currentTime, g = ctx.createGain(), W = WXA[wx] ?? 0.3, B = brown();
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(1, now + 2.5); g.connect(ambBus);
+      let holds = [];
+      if (scene === 'port') {
+        holds = holds.concat(bed(g, B, 'bandpass', 420, 0.8, 0.05, [['g', 0.21, 0.035], ['f', 0.09, 90]]));          // Wasser am Kai
+        holds = holds.concat(bed(g, B, 'bandpass', 950, 1.1, 0.012, [['g', 0.33, 0.005]]));                         // Stimmen in der Ferne
+        holds = holds.concat(bed(g, noise, 'bandpass', 700, 3.5, 0.004 + W * 0.018, [['f', 0.05, 260], ['g', 0.12, 0.004 + W * 0.01]]));  // Wind
+      } else {
+        const k = scene === 'battle' ? 0.6 : 1;
+        holds = holds.concat(bed(g, B, 'lowpass', 520, 0.7, (0.1 + W * 0.07) * k, [['g', 0.073, (0.07 + W * 0.05) * k], ['f', 0.031, 170]]));  // Dünung
+        holds = holds.concat(bed(g, noise, 'highpass', 2600, 0.5, 0.004 + W * 0.01, [['g', 0.073, 0.004 + W * 0.008]]));                    // Gischt
+        holds = holds.concat(bed(g, noise, 'bandpass', 620, 4, (0.01 + W * 0.05) * k, [['f', 0.045, 300], ['g', 0.11, (0.006 + W * 0.03) * k]]));  // Wind in der Takelage
+      }
+      if (wx === 'rain' || wx === 'storm') holds = holds.concat(bed(g, noise, 'highpass', 3200, 0.5, wx === 'storm' ? 0.028 : 0.016, []));
+      const r = (a, b) => now + a + Math.random() * (b - a);
+      return {scene, wx, g, holds, gull:r(2, 8), creak:r(3, 9), knock:r(8, 20), bell:r(35, 80)};
+    }
+    function ambStop(a, fade) {
+      const now = ctx.currentTime;
+      a.g.gain.cancelScheduledValues(now); a.g.gain.setValueAtTime(Math.max(0.0001, a.g.gain.value), now); a.g.gain.linearRampToValueAtTime(0.0001, now + fade);
+      a.holds.forEach(x => { try { x.stop(now + fade + 0.1); } catch (e) {} });
+      setTimeout(() => { try { a.g.disconnect(); } catch (e) {} }, (fade + 0.6) * 1000);
+    }
+    function ambTick() {
+      if (!amb || !layers.amb) return;
+      const now = ctx.currentTime, a = amb, sea = a.scene !== 'port', calm = a.wx !== 'storm';
+      if (now >= a.gull) { if (calm && a.scene !== 'battle') gull(a.g, now + 0.05, sea ? 0.012 : 0.02); a.gull = now + (sea ? 16 : 7) + Math.random() * (sea ? 26 : 16); }
+      if (now >= a.creak) { creak(a.g, now + 0.05, sea ? 0.06 + (WXA[a.wx] || 0.3) * 0.05 : 0.03); a.creak = now + (sea ? 4 : 12) + Math.random() * (sea ? 9 : 20); }
+      if (a.scene === 'port' && now >= a.knock) { const n = 3 + Math.floor(Math.random() * 4); for (let i = 0; i < n; i++) hit(a.g, now + 0.05 + i * (0.34 + Math.random() * 0.06), 0.035, 1250 + Math.random() * 300, 0.07); a.knock = now + 14 + Math.random() * 24; }
+      if (a.scene === 'port' && now >= a.bell) { bell(a.g, now + 0.05, 62 + Math.floor(Math.random() * 3) * 2, 0.012, 5); a.bell = now + 70 + Math.random() * 80; }
+    }
+    function setAmb(scene, wx) {
+      ambWant = {scene, wx};
+      if (!on || !ctx) return;
+      if (amb && amb.scene === scene && amb.wx === wx) return;
+      if (amb) ambStop(amb, 2.2);
+      amb = ambStart(scene, wx);
+    }
+    function setLayer(name, v) {
+      layers[name] = !!v;
+      try { localStorage.setItem(LAYER_KEY, JSON.stringify(layers)); } catch (e) {}
+      if (!ctx) return;
+      const bus = name === 'music' ? musicBus : ambBus, now = ctx.currentTime;
+      bus.gain.cancelScheduledValues(now); bus.gain.setValueAtTime(Math.max(0.0001, bus.gain.value), now); bus.gain.linearRampToValueAtTime(v ? 1 : 0.0001, now + 0.8);
+    }
     async function offline(name, secs) {
-      const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext, keep = [ctx, master, noise], SR = 22050;
+      const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext, keep = [ctx, master, noise, musicBus], SR = 22050; musicBus = null;
       ctx = new OAC(1, SR * secs, SR); master = ctx.createGain(); master.gain.value = 0.6; master.connect(ctx.destination);
       noise = ctx.createBuffer(1, SR * 2, SR);
       const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
       const c = start(name);
       while (c.next < secs - 0.5) { c.tr.play(c.bus, c.i, c.next, c.tr.step, c.loop); c.next += c.tr.step; c.i++; if (c.i >= c.tr.len) { c.i = 0; c.loop++; } }
       const buf = await ctx.startRendering();
-      [ctx, master, noise] = keep;
+      [ctx, master, noise, musicBus] = keep;
       const d = buf.getChannelData(0); let q = 0, pk = 0;
       for (let i = SR * 2; i < d.length; i++) { q += d[i] * d[i]; pk = Math.max(pk, Math.abs(d[i])); }
       return {rms:Math.sqrt(q / (d.length - SR * 2)), peak:pk, len:c.tr.len, mel:Object.keys(c.tr).length};
     }
     function start(name) {
       const tr = trackOf(name), now = ctx.currentTime, bus = ctx.createGain();
-      bus.gain.setValueAtTime(0.0001, now); bus.gain.linearRampToValueAtTime(tr.gain || 1, now + 1.6); bus.connect(master);
+      bus.gain.setValueAtTime(0.0001, now); bus.gain.linearRampToValueAtTime(tr.gain || 1, now + 1.6); bus.connect(musicBus || master);
       return {name, tr, bus, holds:tr.setup ? tr.setup(bus) : [], i:0, loop:0, next:now + 0.08};
     }
     function stop(c, fade) {
@@ -5419,11 +5585,12 @@ em.rep.warn{background:#b5523a}
       setTimeout(() => { try { c.bus.disconnect(); } catch (e) {} }, (fade + 0.6) * 1000);
     }
     function pump() {
+      ambTick();
       if (!cur) return;
       const ahead = ctx.currentTime + 0.2;
       if (cur.next < ctx.currentTime - 0.5) cur.next = ctx.currentTime + 0.05;
       while (cur.next < ahead) {
-        cur.tr.play(cur.bus, cur.i, cur.next, cur.tr.step, cur.loop);
+        cur.tr.play(cur.bus, cur.i, cur.next + (cur.i % 2 ? (Math.random() - 0.5) * 0.012 : 0), cur.tr.step, cur.loop);
         cur.next += cur.tr.step; cur.i++;
         if (cur.i >= cur.tr.len) { cur.i = 0; cur.loop++; }
       }
@@ -5445,10 +5612,10 @@ em.rep.warn{background:#b5523a}
         ctx.resume();
         master.gain.linearRampToValueAtTime(0.6, now + 0.6);
         if (!pumpId) pumpId = setInterval(pump, 40);
-        set(want);
+        set(want); setAmb(ambWant.scene, ambWant.wx);
       } else {
         master.gain.linearRampToValueAtTime(0.0001, now + 0.4);
-        setTimeout(() => { if (on) return; clearInterval(pumpId); pumpId = null; if (cur) { stop(cur, 0.05); cur = null; } ctx.suspend(); }, 500);
+        setTimeout(() => { if (on) return; clearInterval(pumpId); pumpId = null; if (cur) { stop(cur, 0.05); cur = null; } if (amb) { ambStop(amb, 0.05); amb = null; } ctx.suspend(); }, 500);
       }
       savePref(on);
       return on;
@@ -5460,15 +5627,16 @@ em.rep.warn{background:#b5523a}
     let wanted = false;
     try { wanted = localStorage.getItem(PREF) === '1'; } catch (e) {}
     return {
-      toggle, set, isOn:() => on, _offline:offline,
+      toggle, set, isOn:() => on, _offline:offline, amb:setAmb, layer:setLayer, layers:() => Object.assign({}, layers), _ambState:() => amb && {scene:amb.scene, wx:amb.wx, n:amb.holds.length},
       drum:() => { if (!on || !ctx) return; const t = ctx.currentTime + 0.02; [0, 0.16, 0.32, 0.5].forEach((d, i) => hit(master, t + d, i === 3 ? 1.1 : 0.7, i === 3 ? 95 : 130, 0.32)); }, _check:id => { const t = cityTrack(id); return t === TRACKS.port ? null : t.len; },
       // Gespeicherte Einstellung: Musik startet mit dem ersten Tippen, weil Browser Ton erst nach einer Berührung erlauben
       armed:() => wanted && !on,
       arm(cb) { if (!wanted) return; const go = ev => { if (ev.target.closest && ev.target.closest('[data-act="music"]')) return; if (!on) { toggle(); cb && cb(); } }; document.addEventListener('pointerdown', go, {once:true}); }
     };
   })();
-  const TRACK_NAME = {port:'Hafen', sea:'Segeln', battle:'Gefecht'};
-  const trackFor = () => st.enc && !['won', 'lost', 'escaped', 'paid', 'captured'].includes(st.enc.phase) ? 'battle' : st.sail ? 'sea' : st.loc && C[st.loc] ? 'city:' + st.loc : 'port';
+  const TRACK_NAME = {port:'Hafen', sea:'Segeln', battle:'Gefecht', shanty:'Shanty an Bord'};
+  const trackFor = () => st.enc && !['won', 'lost', 'escaped', 'paid', 'captured'].includes(st.enc.phase) ? 'battle' : st.sail ? (st.sail.shanty ? 'shanty' : 'sea') : st.loc && C[st.loc] ? 'city:' + st.loc : 'port';
+  const ambFor = () => st.enc ? 'battle' : st.sail ? 'sea' : 'port';
   const trackLabel = () => { const t = trackFor(); return t.startsWith('city:') ? C[t.slice(5)].n : TRACK_NAME[t]; };
 
   // ───────── Avatar ─────────
@@ -5614,6 +5782,9 @@ em.rep.warn{background:#b5523a}
     if (!st._temp) h += `</div><div class="xfer"><h3>Jahreszeiten in diesem Spiel</h3><div class="chipset" role="group">` +
       [['spuerbar', 'Spürbar'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-slot="seasons" data-v="${v}" aria-pressed="${st.seasons === v}">${l}</button>`).join('') +
       `</div><span class="small">${st.seasons === 'mild' ? 'Preise schwanken mit der Jahreszeit nur halb so stark, kein Eis.' : 'Deutliche Saisonpreise, Newa von Dezember bis März zugefroren, Treibeis im Januar und Februar.'}</span>`;
+    { const L = music.layers(); h += `</div><div class="xfer"><h3>Klang</h3><div class="chipset" role="group">` +
+      [['music', 'Musik'], ['amb', 'Meer und Hafen']].map(([v, l]) => `<button type="button" data-slot="snd" data-v="${v}" aria-pressed="${L[v]}">${l}</button>`).join('') +
+      `</div><span class="small">${music.isOn() ? 'Beides lässt sich einzeln ein- und ausschalten; ganz aus geht es oben mit dem Lautsprecher.' : 'Der Ton ist aus. Einschalten oben mit dem Lautsprecher.'}</span>`; }
     h += `</div><div class="xfer"><h3>Auf ein anderes Gerät übertragen</h3>` +
       `<span class="small">Kopiere den Code und füge ihn auf dem anderen Gerät hier ein. Er ersetzt dort den aktiven Spielstand.</span>` +
       `<div class="row2"><button class="ybtn" type="button" data-slot="copy">Code kopieren</button>${ui.copied ? '<span class="small">Kopiert.</span>' : ''}</div>` +
@@ -5629,6 +5800,7 @@ em.rep.warn{background:#b5523a}
     const n = +t.dataset.n, act = t.dataset.slot;
     if (act === 'load') { const sl = getSlot(n); if (sl) { save(); if (saves.db && saves.ok) await flushRemote(); loadState(JSON.parse(JSON.stringify(sl.state)), n); ui.saves = false; renderSaves(); } return; }
     if (act === 'new') { openWizard(n, true); return; }
+    if (act === 'snd') { const v = t.dataset.v; music.layer(v, !music.layers()[v]); renderSaves(); return; }
     if (act === 'seasons') { st.seasons = t.dataset.v === 'mild' ? 'mild' : 'spuerbar'; commit(); return; }
     if (act === 'del') {
       if (ui.delAsk !== n) { ui.delAsk = n; renderSaves(); setTimeout(() => { if (ui.delAsk === n) { ui.delAsk = null; renderSaves(); } }, 4000); return; }
@@ -6417,15 +6589,20 @@ em.rep.warn{background:#b5523a}
   const cityView = {W:1, H:1, tw:30, th:15, ox:0, oy:0};
   function isoP(i, j) { const v = cityView; return [v.ox + (i - j) * v.tw / 2, v.oy + (i + j) * v.th / 2]; }
   let citySig = '';
-  function drawCity(force) {
-    const cv = $('#citycv');
-    if (!cv || $('#citycard').hidden) return;
-    const v = cityView, r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+  function drawCity(force, tgt) {
+    if (!tgt) return drawCityCore(force);
+    const keep = Object.assign({}, cityView), sig0 = citySig;
+    try { drawCityCore(true, tgt); } finally { Object.assign(cityView, keep); citySig = sig0; }
+  }
+  function drawCityCore(force, tgt) {
+    const cv = tgt ? tgt.cv : $('#citycv');
+    if (!cv || (!tgt && $('#citycard').hidden)) return;
+    const v = cityView, r = tgt ? {width:tgt.W, height:tgt.H} : cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
     if (r.width < 2) return;
     const sig = [Math.round(r.width), Math.round(r.height), dpr, st.home, isWinter(st.day), JSON.stringify(st.city), (st.city.jobs || []).map(jobLeft).join(','), st.kontor && st.kontor.lvl, (st.works || []).map(w => w.g).join(','),
       ui.plot, st.loc === st.home ? st.fleet.map(sh => sh.type).join(',') : '', (st.convoys || []).filter(c => c.loc === st.home).length, Math.floor((st.repute || 0) / 150), civicIdx(st.repute || 0)].join('|');
-    if (sig === citySig && force !== true) return;
-    citySig = sig;
+    if (!tgt && sig === citySig && force !== true) return;
+    if (!tgt) citySig = sig;
     v.W = Math.max(1, r.width); v.H = Math.max(1, r.height);
     cv.width = Math.round(v.W * dpr); cv.height = Math.round(v.H * dpr);
     const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -6605,7 +6782,16 @@ em.rep.warn{background:#b5523a}
       }
       const p = it, ps = plotState(p), sel = ui.plot === p.k;
       if (ps.job && !ps.built) { const f = 1 - jobLeft(ps.job) / ps.job.days; block(p.i + 0.1, p.j + 0.1, p.w - 0.2, Math.min(0.8, p.d - 0.2), 4 + f * 14, ['#b98b62', '#9a7150'], ['#b98b62', '#9a7150'], {rh:0.1, noWin:true}); scaffold(p, 8 + f * 16); return; }
-      if (!ps.built) { plotMark(p, ps, sel); return; }
+      if (!ps.built) { // freies Bauland: nur Bäume, keine Markierung
+        const s2 = v.th / 15;
+        for (let k = 0; k < Math.max(1, p.w); k++) {
+          const [x, y] = isoP(p.i + 0.5 + k, p.j + 0.5), r2 = 5.5 * s2;
+          ctx.fillStyle = 'rgba(50,35,20,.1)'; ctx.beginPath(); ctx.ellipse(x + r2 * 0.4, y + 1, r2, r2 * 0.45, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#5a412c'; ctx.fillRect(x - 0.9 * s2, y - 6 * s2, 1.8 * s2, 6 * s2);
+          ctx.fillStyle = winter ? '#dfe5e3' : '#56704a'; ctx.beginPath(); ctx.arc(x, y - 6 * s2 - r2 * 0.8, r2, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = winter ? '#f2f5f4' : '#6f8c5c'; ctx.beginPath(); ctx.arc(x - r2 * 0.3, y - 6 * s2 - r2 * 1.1, r2 * 0.62, 0, Math.PI * 2); ctx.fill();
+        }
+        void sel; return; }
       if (p.k === 'kontor') block(p.i + 0.05, p.j + 0.1, p.w - 0.1, 0.85, st.kontor.lvl > 1 ? 34 : 26, ['#9a4c34', '#7a3a27'], roofCol, {rh:12});
       else if (p.k === 'haus') { const lv = st.city.house; block(p.i + 0.08, p.j + 0.08, 0.84, 0.84, 18 + lv * 9, lv > 2 ? ['#c3b39a', '#a59478'] : ['#b05a3e', '#8d452f'], lv > 2 ? (winter ? roofCol : ['#46564f', '#33403a']) : roofCol, {rh:10 + lv * 2}); if (ps.job) scaffold(p, 30 + lv * 9); }
       else if (p.k[0] === 'w') block(p.i + 0.1, p.j + 0.1, 0.8, 0.8, 18, ['#8c6a4a', '#6f5238'], roofCol, {rh:9, step:false});
@@ -6758,111 +6944,136 @@ em.rep.warn{background:#b5523a}
     const ground = `<rect x="0" y="${G}" width="${W}" height="10" fill="#8a7a60"/><path d="M0 ${G + 4}H${W}" stroke="rgba(40,30,20,.25)" stroke-dasharray="6 3"/>`;
     return `<svg viewBox="0 0 ${W} 122" width="${W}" height="122" aria-hidden="true">${svg}${ground}</svg>`;
   }
-  function streetList() {
-    const home = st.loc === st.home, c = C[st.loc], L = [];
-    const pub = (k, n, kind, sub, w, o) => L.push({k, n, kind, sub, w, o:o || {}});
-    pub('pub-werft', 'Werft', 'werft', `${(st.builds || []).filter(b => b.c === st.loc).length ? 'Bauauftrag läuft' : 'Schiffe, Heuer, Waffen'}`, 92);
-    if (home) { const ps = plotState(PLOTS.find(p => p.k === 'kran')); L.push({k:'kran', plot:true, ps}); }
-    pub('pub-markt', 'Markt', 'markt', `braucht ${c.c.slice(0, 2).map(g => G[g].n).join(', ')}`, 96);
-    if (home) {
-      L.push({k:'markt', plot:true, ps:plotState(PLOTS.find(p => p.k === 'markt'))});
-      pub('pub-rat', 'Rathaus', 'rat', st.orders && st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'Auftrag' : 'Aufträge'}` : `Wahl am ${fdate(nextElection())}`, 104);
-      L.push({k:'kontor', plot:true, ps:plotState(PLOTS[0])});
-      L.push({k:'haus', plot:true, ps:plotState(PLOTS[1])});
-      pub('pub-schiffer', 'Schifferhaus', 'schiffer', `${tavern().length} Kapitäne suchen Arbeit`, 84);
-      L.push({k:'kirche', plot:true, ps:plotState(PLOTS.find(p => p.k === 'kirche'))});
-      let lockShown = false;
-      PLOTS.filter(p => p.k[0] === 'w').forEach(p => { const ps = plotState(p); if (ps.lock && !ps.job) { if (lockShown) return; lockShown = true; } L.push({k:p.k, plot:true, ps}); });
-      L.push({k:'mauer', plot:true, ps:plotState(PLOTS.find(p => p.k === 'mauer'))});
+  // Bauen: Stadtansicht (nur Gebäude) + Baubuch + Baublatt
+  const civName = k => CIVIC_B[k].n.replace(' stiften', '');
+  function bEntry(k) { // alles, was ein Bauplatz im Baubuch und im Baublatt braucht
+    const p = PLOTS.find(q => q.k === k); if (!p) return null;
+    const ps = plotState(p), ci = civicIdx(st.repute || 0), busy = buildOpen() && !canStartJob(), w0 = k[0] === 'w';
+    const e = {k, ps, kind:'', name:'', desc:'', cost:0, days:0, act:'', why:'', state:ps.job ? 'job' : ps.built ? 'built' : ps.lock ? 'later' : 'now', facts:[]};
+    if (k === 'kontor') {
+      e.kind = 'kontor'; e.name = 'Kontor'; e.o = {lvl:st.kontor ? st.kontor.lvl : 1};
+      if (st.kontor) { e.desc = `Lager für ${st.kontor.cap} Last, ${kontorUsed()} belegt. Ein- und Auslagern im Reiter Markt.`; e.act = `<button class="ybtn" type="button" data-go="kontor">Zum Lager</button>`; }
+      else { e.desc = `Ein eigenes Lager für ${KONTOR[1].cap} Last, ${KONTOR[1].upkeep} Mark am Tag. Wird sofort eingerichtet.`; e.cost = KONTOR[1].cost; e.days = 0; e.cb = 'kontor'; e.why = st.money < e.cost ? 'Zu wenig Geld' : ''; }
+    } else if (k === 'haus') {
+      const lv = st.city.house || 1, H = HOUSE[lv], nx = HOUSE[lv + 1];
+      e.kind = 'haus'; e.o = {lvl:lv, job:ps.job}; e.name = ps.job ? `${nx.n} im Bau` : H.n; e.desc = H.d;
+      if (ps.job) e.state = 'job';
+      else if (nx) {
+        const lock = ci < nx.civic ? `ab ${CIVIC[nx.civic][1]}` : !buildOpen() ? buildLock() : '';
+        e.up = {name:nx.n, desc:nx.d, cost:nx.cost, days:BUILD_T.haus[lv + 1], lock};
+        e.cb = 'haus'; e.cost = nx.cost; e.days = BUILD_T.haus[lv + 1]; e.why = lock ? `Möglich ${lock}` : busy ? 'Beide Baustellen belegt' : st.money < nx.cost ? 'Zu wenig Geld' : '';
+      }
+    } else if (w0) {
+      const n = +k.slice(1);
+      if (ps.built) { const W = WORKS[ps.w.g]; e.kind = 'work'; e.icon = ps.w.g; e.o = {idle:ps.w.idle}; e.name = W.n; e.desc = `${W.d}. Bisher ${ps.w.made || 0} Last.${ps.w.idle ? ' Steht still: Lager voll oder Rohstoff fehlt.' : ''}`; }
+      else if (ps.job) { e.kind = 'work'; e.icon = ps.job.g; e.name = ps.t; e.o = {job:ps.job}; }
+      else if (ps.open) { e.kind = 'empty'; e.name = `Bauplatz ${n + 1} erschließen`; e.desc = 'Kaufe das Grundstück für einen weiteren Betrieb.'; e.cost = ps.open.cost; e.days = BUILD_T.plot; e.cb = 'plot'; e.why = busy ? 'Beide Baustellen belegt' : st.money < e.cost ? 'Zu wenig Geld' : ''; e.state = 'now'; }
+      else if (ps.free) { e.kind = 'work'; e.name = 'Betrieb gründen'; e.desc = `Liefert ins Kontor. Bauzeit ${BUILD_T.work} Tage.`; e.days = BUILD_T.work; e.cost = Math.min(...worksAllowed().map(g => WORKS[g].cost)); e.choose = true; e.why = busy ? 'Beide Baustellen belegt' : ''; }
+      else { e.kind = 'work'; e.name = `Bauplatz ${n + 1}`; e.why = ps.lock; }
     } else {
-      const B = (st.branches || {})[st.loc];
-      pub('pub-nl', B ? 'Niederlassung' : 'Bauplatz am Hafen', B ? 'nl' : 'empty', B ? `Lager ${kontorUsed(st.loc)} / ${B.cap} Last` : 'Niederlassung gründen', 84);
+      const B = CIVIC_B[k]; e.kind = k === 'markt' ? 'halle' : k; e.o = {job:ps.job, wall:k === 'kirche' || k === 'mauer' ? 'dark' : undefined};
+      e.name = civName(k); e.desc = B.d; e.cost = B.cost; e.days = BUILD_T[k]; e.cb = k;
+      if (ps.lock) e.why = `Möglich ${ps.lock}`; else if (!ps.built && !ps.job) e.why = busy ? 'Beide Baustellen belegt' : st.money < B.cost ? 'Zu wenig Geld' : '';
     }
-    return L.map(x => {
-      if (!x.plot) return x;
-      const p = PLOTS.find(q => q.k === x.k), ps = x.ps, w0 = p.k[0] === 'w';
-      const n = p.k === 'kontor' ? 'Kontor' : ps.built || ps.job ? (ps.t || p.n) : w0 ? (ps.open ? 'Bauplatz erschließen' : 'Bauplatz') : (CIVIC_B[p.k] ? CIVIC_B[p.k].n.replace(' stiften', '') : p.n);
-      const kind = ps.job && !ps.built ? (w0 ? 'work' : p.k) : ps.built ? (w0 ? 'work' : p.k === 'markt' ? 'rat' : p.k) : ps.lock ? 'lock' : 'empty';
-      const sub = ps.job ? `im Bau · noch ${jobLeft(ps.job)} ${jobLeft(ps.job) === 1 ? 'Tag' : 'Tage'}` : ps.built ? (p.k === 'kontor' ? `${kontorUsed()} / ${st.kontor.cap} Last` : w0 ? `${ps.w.made || 0} Last geliefert` : p.k === 'haus' ? 'dein Wohnhaus' : 'fertig') : ps.lock ? ps.lock : ps.open ? fmt(ps.open.cost) + ' Mark' : p.k[0] === 'w' ? 'Betrieb gründen' : 'frei';
-      const w = {kontor:92, haus:st.city.house > 2 ? 96 : 76, kirche:84, markt:100, kran:84, mauer:88}[p.k] || 76;
-      return {k:p.k, n, kind:p.k === 'markt' && ps.built ? 'markthalle' : kind, sub, w, o:{lvl:p.k === 'haus' ? st.city.house : st.kontor ? st.kontor.lvl : 1, job:ps.job, idle:ps.w && ps.w.idle}, icon:w0 && (ps.w || (ps.job && ps.job.g)) ? (ps.w ? ps.w.g : ps.job.g) : null};
-    });
+    if (ps.job) { const j = ps.job; e.left = jobLeft(j); e.frac = 1 - e.left / j.days; e.due = j.d0 + j.days; }
+    return e;
   }
-  function streetHTML(L) {
-    const deco = k => `<span class="bld deco" aria-hidden="true" style="width:76px"><span class="fac">${facade('haus', {w:76, lvl:1 + (k % 2)})}</span></span>`;
-    const fill = st.loc !== st.home ? deco(st.loc.length) + deco(st.loc.length + 1) : '';
-    return `<div class="street" role="group" aria-label="Häuser der Stadt">` + L.map(b => {
-      const kind = b.kind === 'markthalle' ? 'halle' : b.kind;
-      b.w = Math.max(b.w, 84);
-      return `<button type="button" class="bld${b.kind === 'lock' ? ' lk' : ''}" data-bld="${b.k}" aria-pressed="${ui.plot === b.k}" style="width:${b.w}px">` +
-        `<span class="fac">${facade(kind, Object.assign({w:b.w, wall:b.kind === 'markthalle' ? 'sand' : b.kind === 'kirche' || b.kind === 'mauer' ? 'dark' : 'brick'}, b.o))}${b.icon ? `<i class="bico">${icon(b.icon)}</i>` : ''}${b.o.job ? `<i class="bprog"><b style="width:${Math.round((1 - jobLeft(b.o.job) / b.o.job.days) * 100)}%"></b></i>` : ''}</span>` +
-        `<span class="bn">${b.n}</span><span class="bs">${b.sub}</span></button>`;
-    }).join('') + fill + `</div>`;
+  const bArt = (e, w) => `<span class="bart">${facade(e.kind === 'halle' ? 'halle' : e.kind, Object.assign({w:w || 110, wall:e.kind === 'kirche' || e.kind === 'mauer' ? 'dark' : e.kind === 'halle' ? 'sand' : 'brick'}, e.o || {}))}${e.icon ? `<i class="bico">${icon(e.icon)}</i>` : ''}</span>`;
+  const bMeta = e => [e.cost ? `${fmt(e.cost)} M` : '', e.days ? `${e.days} Tage` : e.cost ? 'sofort' : ''].filter(Boolean).join(' · ');
+  function bookHTML() {
+    const ci = civicIdx(st.repute || 0), L = PLOTS.map(p => bEntry(p.k));
+    let h = '';
+    // Baustellen
+    const jl = cityJobs();
+    h += `<div class="bslots">` + [0, 1].map(i => { const j = jl[i];
+      if (j) { const e = L.find(x => x.k === j.k) || {name:'Bau'}; return `<button type="button" class="bslot" data-bs="${j.k}"><b>⚒ ${e.k === 'haus' ? HOUSE[(st.city.house || 1) + 1].n : e.name}</b><span class="bar"><i style="width:${Math.round((1 - jobLeft(j) / j.days) * 100)}%"></i></span><span class="small">noch ${jobLeft(j)} ${jobLeft(j) === 1 ? 'Tag' : 'Tage'}</span></button>`; }
+      return `<div class="bslot free"><b>${buildOpen() ? 'Baustelle frei' : 'Noch keine Baustelle'}</b><span class="small">${buildOpen() ? 'bis zu zwei gleichzeitig' : `Bauen ${buildLock()}`}</span></div>`; }).join('') + `</div>`;
+    // Jetzt möglich
+    const now = [];
+    L.forEach(e => { if (!e) return;
+      if (e.k === 'haus' && e.up && !e.up.lock && e.state !== 'job') now.push(Object.assign({}, e, {name:`Zum ${e.up.name}`, desc:e.up.desc, kind:'haus', o:{lvl:(st.city.house || 1) + 1}}));
+      else if (e.k !== 'haus' && e.state === 'now') now.push(e); });
+    const seenWork = now.filter(e => e.choose); if (seenWork.length > 1) now.splice(now.indexOf(seenWork[1]), seenWork.length - 1);
+    if (now.length) h += `<h3 class="bh">Jetzt möglich <small>${now.length}</small></h3><div class="bgrid">` + now.map(e => {
+      const btn = e.choose ? `<button class="ybtn" type="button" data-bs="${e.k}">Wählen</button>` : `<button class="ybtn on" type="button" data-cb="${e.cb}"${e.why ? ' disabled' : ''}>${e.days ? 'Bauen' : 'Einrichten'}</button>`;
+      return `<div class="bc"><button type="button" class="bco" data-bs="${e.k}">${bArt(e, 96)}<b>${e.name}</b><span class="small">${e.desc}</span></button><span class="bmeta">${e.choose ? 'ab ' : ''}${bMeta(e)}</span>${e.why ? `<span class="bwhy">${e.why}</span>` : ''}${btn}</div>`; }).join('') + `</div>`;
+    // Gebaut
+    const built = L.filter(e => e && (e.state === 'built' || e.state === 'job'));
+    h += `<h3 class="bh">In deiner Stadt <small>${built.length}</small></h3><div class="bgrid">` + built.map(e =>
+      `<button type="button" class="bc bco done" data-bs="${e.k}">${bArt(e, 96)}<b>${e.name}</b>${e.state === 'job' ? `<span class="bar"><i style="width:${Math.round(e.frac * 100)}%"></i></span><span class="small">noch ${e.left} ${e.left === 1 ? 'Tag' : 'Tage'}</span>` : `<span class="small">${e.k === 'kontor' ? `${kontorUsed()} / ${st.kontor.cap} Last` : e.k[0] === 'w' ? `${(e.ps.w || {}).made || 0} Last geliefert` : e.k === 'haus' ? 'dein Wohnhaus' : 'fertig'}</span>`}</button>`).join('') + `</div>`;
+    // Später
+    const later = [];
+    L.forEach(e => { if (!e) return;
+      if (e.k === 'haus' && e.up && e.up.lock && e.state !== 'job') later.push([e.up.name, e.up.lock]);
+      else if (e.k !== 'haus' && e.state === 'later' && !(e.k[0] === 'w' && later.some(x => x[2]))) later.push([e.name, e.why.replace(/^Möglich /, ''), e.k[0] === 'w']); });
+    if (later.length) h += `<h3 class="bh">Später</h3><ul class="blater">` + later.map(([n, w]) => `<li><span>${n}</span><span class="small">${w}</span></li>`).join('') + `</ul>`;
+    return h;
   }
-  function pubInfo(k) {
-    const home = st.loc === st.home, c = C[st.loc];
-    if (k === 'pub-markt') return `<b>Markt</b><span class="small">${c.n} erzeugt ${c.p.map(g => G[g].n).join(', ')} und braucht ${c.c.map(g => G[g].n).join(', ')}.</span><div class="ybtns"><button class="ybtn on" type="button" data-go="markt">Zum Markt</button></div>`;
-    if (k === 'pub-werft') return `<b>Werft</b><span class="small">Schiffe in Auftrag geben, ausbessern, Matrosen anheuern und Waffen kaufen.</span><div class="ybtns"><button class="ybtn on" type="button" data-go="werft">Zur Werft</button></div>`;
-    if (k === 'pub-rat') return `<b>Rathaus</b><span class="small">Ratsaufträge, Zölle und die Ratswahl am ${fdate(nextElection())}; im Juni der Hansetag.</span><div class="ybtns"><button class="ybtn on" type="button" data-go="council">Rat und Aufträge</button><button class="ybtn" type="button" data-go="hansetag">Hansetag</button></div>`;
-    if (k === 'pub-schiffer') return `<b>Schifferhaus</b><span class="small">Kapitäne anheuern, Verbände bilden und auf Handelsrouten schicken.</span><div class="ybtns"><button class="ybtn on" type="button" data-go="haus">Zum Handelshaus</button></div>`;
-    if (k === 'pub-nl') { const B = (st.branches || {})[st.loc], ci = civicIdx(st.repute || 0), n = Object.keys(st.branches || {}).length;
-      if (B) return `<b>Niederlassung in ${c.n}</b><span class="small">Lager für ${B.cap} Last, ${BRANCH.upkeep} Mark am Tag. Ein- und Auslagern im Reiter Markt; Verbände auf Handelsrouten nutzen es.</span><div class="ybtns"><button class="ybtn on" type="button" data-go="markt">Zum Lager</button></div>`;
-      if (!home && ci >= BRANCH.civic && n < BRANCH.max) return `<b>Niederlassung gründen</b><span class="small">Ein eigenes Lager für ${BRANCH.cap} Last in ${c.n}, ${BRANCH.upkeep} Mark am Tag.${n ? '' : ' Mit der ersten Niederlassung öffnen sich Handelsrouten und, als Gildebruder, das Bauen in deiner Stadt.'}</span><div class="ybtns"><button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost ? '' : ' disabled'}>Gründen · ${fmt(BRANCH.cost)} M</button></div>`;
-      return `<b>Bauplatz am Hafen</b><span class="small">${ci < BRANCH.civic ? `Niederlassungen kannst du als ${CIVIC[BRANCH.civic][1]} gründen.` : `Du hast schon ${BRANCH.max} Niederlassungen.`}</span>`; }
-    return '';
+  function pubTiles(home) {
+    const c = C[st.loc], B = (st.branches || {})[st.loc], ci = civicIdx(st.repute || 0), nb = Object.keys(st.branches || {}).length;
+    const T = [['markt', 'Markt', 'markt', `braucht ${c.c.slice(0, 2).map(g => G[g].n).join(', ')}`], ['werft', 'Werft', 'werft', 'Schiffe und Heuer']];
+    if (home) T.push(['rat', 'Rathaus', 'council', st.orders && st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'Auftrag' : 'Aufträge'}` : `Wahl ${fdate(nextElection())}`], ['schiffer', 'Schiffer&shy;haus', 'haus', 'Kapitäne']);
+    let h = `<div class="ptiles${home ? '' : ' three'}">` + T.map(([kind, n, go, sub]) => `<button type="button" class="ptile" data-go="${go}"><span class="pfac">${facade(kind, {w:84})}</span><b>${n}</b><span class="small">${sub}</span></button>`).join('');
+    if (!home) h += B ? `<button type="button" class="ptile" data-go="markt"><span class="pfac">${facade('nl', {w:84})}</span><b>Nieder&shy;lassung</b><span class="small">Lager ${kontorUsed(st.loc)} / ${B.cap}</span></button>`
+      : `<div class="ptile"><span class="pfac">${facade(ci >= BRANCH.civic && nb < BRANCH.max ? 'empty' : 'lock', {w:84})}</span><b>Nieder&shy;lassung</b>${ci >= BRANCH.civic && nb < BRANCH.max ? `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost ? '' : ' disabled'}>Gründen ${fmt(BRANCH.cost)} M</button>` : `<span class="small">${ci < BRANCH.civic ? `ab ${CIVIC[BRANCH.civic][1]}` : `schon ${BRANCH.max}`}</span>`}</div>`;
+    return h + `</div>`;
+  }
+  function bSheetHTML(k) {
+    const e = bEntry(k); if (!e) return '';
+    let h = `<div class="in"><div class="bsh"><span class="bshart">${bArt(e, 120)}</span><div><h2 id="bs-title">${e.name}</h2><p class="small">${e.desc || ''}</p></div><button class="close" type="button" data-act="bs-close" aria-label="Schließen">✕</button></div>`;
+    const facts = [];
+    if (e.state === 'job') { facts.push(['Fertig am', fdate(e.due)], ['Noch', `${e.left} ${e.left === 1 ? 'Tag' : 'Tage'}`]); h += `<div class="bar big"><i style="width:${Math.round(e.frac * 100)}%"></i></div>`; }
+    if (e.k === 'haus' && e.up && e.state !== 'job') { h += `<p class="bup"><b>Ausbau: ${e.up.name}.</b> ${e.up.desc}</p>`; facts.push(['Kosten', `${fmt(e.up.cost)} M`], ['Bauzeit', `${e.up.days} Tage`]); }
+    else if (e.state === 'now' || e.state === 'later') { if (e.cost) facts.push(['Kosten', `${e.choose ? 'ab ' : ''}${fmt(e.cost)} M`]); facts.push(['Bauzeit', e.days ? `${e.days} Tage` : 'sofort']); }
+    if (buildOpen() && e.state !== 'built' && e.k !== 'kontor') facts.push(['Baustellen', `${MAX_JOBS - cityJobs().length} von ${MAX_JOBS} frei`]);
+    if (facts.length) h += `<div class="bfacts">${facts.map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`;
+    if (e.why) h += `<p class="bwhy">${e.why}</p>`;
+    if (e.choose) h += `<div class="bchoose">` + worksAllowed().map(g => `<button class="ybtn" type="button" data-work="${g}"${st.money >= WORKS[g].cost && canStartJob() ? '' : ' disabled'}><span>${icon(g)}${WORKS[g].n}</span><small>${WORKS[g].d} · ${fmt(WORKS[g].cost)} M</small></button>`).join('') + `</div>`;
+    else if (e.cb && (e.state === 'now' || (e.k === 'haus' && e.up && e.state !== 'job'))) h += `<button class="ybtn on wide" type="button" data-cb="${e.cb}"${e.why ? ' disabled' : ''}>${e.k === 'haus' ? `Zum ${e.up.name} ausbauen` : e.days ? 'In Auftrag geben' : 'Einrichten'} · ${fmt(e.cost)} M</button>`;
+    if (e.act) h += `<div class="ybtns">${e.act}</div>`;
+    return h + `</div>`;
+  }
+  function renderBSheet() {
+    const sh = $('#bsheet'), sc = $('#bscrim');
+    sh.hidden = sc.hidden = !ui.bsheet;
+    if (ui.bsheet) sh.innerHTML = bSheetHTML(ui.bsheet);
   }
   function renderCity() {
     const box = $('#citycard'), show = !!st.loc && !st.focus;
     box.hidden = !show;
-    if (!show) return;
-    const ci = civicIdx(st.repute || 0), home = st.loc === st.home;
+    if (!show) { if (ui.bsheet) { ui.bsheet = null; renderBSheet(); } return; }
+    const home = st.loc === st.home;
     if (box.dataset.ready !== (home ? 'home' : 'port')) {
-      box.innerHTML = `<div class="chead"><h2></h2><span class="small"></span></div>` + (home ? `<div class="cityview"><canvas id="citycv" role="img" aria-label="Gezeichnete Ansicht deines Stammsitzes mit Bauplätzen"></canvas></div>` : '') + `<div class="plots" id="plotchips"></div><div id="plotinfo"></div>`;
+      box.innerHTML = `<div class="chead"><h2></h2><span class="small"></span></div>` + (home ? `<div class="cityview"><canvas id="citycv" role="img" aria-label="Gezeichnete Ansicht deines Stammsitzes"></canvas><button class="cvbig" type="button" data-act="city-big" aria-label="Stadt groß ansehen">⤢ Groß</button></div>` : '') + `<div id="pubtiles"></div><div id="buildbook"></div>`;
       box.dataset.ready = home ? 'home' : 'port';
-      if (home) $('#citycv').addEventListener('click', ev => { const k = cityPick(ev); if (k) { ui.plot = ui.plot === k ? null : k; renderCity(); scrollBld(); } });
+      if (home) $('#citycv').addEventListener('click', ev => { const k = cityPick(ev); if (k) { const ps = plotState(PLOTS.find(q => q.k === k)); if (ps.built || ps.job) { ui.bsheet = k; renderBSheet(); } } });
       citySig = '';
     }
     box.querySelector('.chead h2').textContent = home ? C[st.home].n : `Hafen von ${C[st.loc].n}`;
     const jl = home ? cityJobs() : [];
-    box.querySelector('.chead .small').textContent = home ? (jl.length ? `${jl.length} ${jl.length === 1 ? 'Baustelle' : 'Baustellen'} · wische durch die Straße` : buildOpen() ? 'Wische durch die Straße und tippe ein Haus an' : `Deine Stadt · bauen ${buildLock()}`) : 'Wische durch die Straße und tippe ein Haus an';
-    const L = streetList();
-    if (ui.plot && !L.some(b => b.k === ui.plot)) ui.plot = null;
-    const sc = $('#plotchips .street'), x0 = sc ? sc.scrollLeft : 0;
-    $('#plotchips').innerHTML = streetHTML(L);
-    if (sc) $('#plotchips .street').scrollLeft = x0;
-    let h = '';
-    if (ui.plot && ui.plot.startsWith('pub-')) h = `<div class="plotinfo">${pubInfo(ui.plot)}</div>`;
-    const p = home && PLOTS.find(q => q.k === ui.plot);
-    if (p) {
-      const ps = plotState(p);
-      h = `<div class="plotinfo">`;
-      if (ps.job) { const j = ps.job, f = 1 - jobLeft(j) / j.days;
-        h += `<b>${p.k === 'haus' ? `Dein ${HOUSE[(st.city.house || 1) + 1].n}` : ps.t || p.n}: im Bau</b><div class="bar"><i style="width:${Math.round(f * 100)}%"></i></div><span class="small">Noch ${jobLeft(j)} ${jobLeft(j) === 1 ? 'Tag' : 'Tage'}, fertig am ${fdate(j.d0 + j.days)}. Die Bauleute arbeiten weiter, auch wenn du auf See bist.</span></div>`;
-        $('#plotinfo').innerHTML = h; requestAnimationFrame(drawCity); return; }
-      const busy = buildOpen() && !canStartJob() ? `<span class="small">Beide Baustellen sind belegt. Ein neuer Bau beginnt, wenn eine fertig ist.</span>` : '';
-      if (p.k === 'kontor') h += ps.built ? `<b>Kontor</b><span class="small">Lager für ${st.kontor.cap} Last. Ein- und Auslagern im Reiter Markt oder unten beim Stammsitz.</span><div class="ybtns"><button class="ybtn on" type="button" data-go="kontor">Zum Kontor</button></div>` :
-        ps.free ? `<b>Kontor bauen</b><span class="small">Ein eigenes Lager für ${KONTOR[1].cap} Last, ${KONTOR[1].upkeep} Mark am Tag.</span><button class="ybtn" type="button" data-cb="kontor"${st.money >= KONTOR[1].cost ? '' : ' disabled'}>Bauen · ${fmt(KONTOR[1].cost)} M</button>` :
-        `<b>Kontor</b><span class="small">Bauplatz frei ${ps.lock}.</span>`;
-      else if (p.k === 'haus') {
-        const H = HOUSE[st.city.house], nx = HOUSE[st.city.house + 1];
-        h += `<b>${H.n}</b><span class="small">${H.d}</span>` + (nx ? `<span class="small">Ausbau: ${nx.n}. ${nx.d} Bauzeit ${BUILD_T.haus[st.city.house + 1]} Tage.${ci < nx.civic ? ` Möglich ab ${CIVIC[nx.civic][1]}.` : !buildOpen() ? ` Bauen kannst du ${buildLock()}.` : ''}</span>${busy}<button class="ybtn" type="button" data-cb="haus"${ci >= nx.civic && canStartJob() && st.money >= nx.cost ? '' : ' disabled'}>Zum ${nx.n} ausbauen · ${fmt(nx.cost)} M</button>` : '');
-      } else if (p.k[0] === 'w') {
-        if (ps.built) { const W = WORKS[ps.w.g]; h += `<b>${W.n}</b><span class="small">${W.d}. Bisher ${ps.w.made || 0} Last.${ps.w.idle ? ' Steht still: Lager voll oder Rohstoff fehlt.' : ''}</span>`; }
-        else if (ps.free) h += `<b>Freier Bauplatz</b><span class="small">Gib hier einen Betrieb in Auftrag. Bauzeit ${BUILD_T.work} Tage, dann liefert er ins Kontor.</span>${busy}<div class="ybtns wrapb">` + worksAllowed().map(g => `<button class="ybtn" type="button" data-work="${g}"${st.money >= WORKS[g].cost && canStartJob() ? '' : ' disabled'}>${icon(g)}${WORKS[g].n} · ${fmt(WORKS[g].cost)} M</button>`).join('') + `</div>`;
-        else if (ps.open) h += `<b>Bauplatz erschließen</b><span class="small">Kaufe das Grundstück für einen weiteren Betrieb. Dauer ${BUILD_T.plot} Tage.</span>${busy}<button class="ybtn" type="button" data-cb="plot"${st.money >= ps.open.cost && canStartJob() ? '' : ' disabled'}>Erschließen · ${fmt(ps.open.cost)} M</button>`;
-        else h += `<b>Bauplatz</b><span class="small">Gesperrt: ${ps.lock}.</span>`;
-      } else {
-        const B = CIVIC_B[p.k];
-        h += `<b>${ps.built ? B.n.replace(' stiften', '') : B.n}</b><span class="small">${B.d}${ps.built ? '' : ` Bauzeit ${BUILD_T[p.k]} Tage.`}</span>` + (ps.built ? `<span class="small">Fertig.</span>` : ps.free ? `${busy}<button class="ybtn" type="button" data-cb="${p.k}"${st.money >= B.cost && canStartJob() ? '' : ' disabled'}>In Auftrag geben · ${fmt(B.cost)} M</button>` : `<span class="small">Möglich ${ps.lock}.</span>`);
-      }
-      h += `</div>`;
-    }
-    $('#plotinfo').innerHTML = h;
-    if (home) requestAnimationFrame(drawCity);
+    box.querySelector('.chead .small').textContent = home ? (jl.length ? `${jl.length} ${jl.length === 1 ? 'Baustelle' : 'Baustellen'}` : buildOpen() ? 'Tippe ein Gebäude an' : `Bauen ${buildLock()}`) : 'Was es hier gibt';
+    $('#pubtiles').innerHTML = pubTiles(home);
+    $('#buildbook').innerHTML = home ? bookHTML() : '';
+    if (ui.bsheet) renderBSheet();
+    if (home) requestAnimationFrame(() => drawCity());
+    renderCityFull();
   }
-  function scrollBld() {
-    const b = ui.plot && $(`#plotchips [data-bld="${ui.plot}"]`), sc = $('#plotchips .street');
-    if (b && sc) sc.scrollTo({left:Math.max(0, b.offsetLeft - (sc.clientWidth - b.offsetWidth) / 2), behavior:'smooth'});
+  const CZ = [1, 1.4, 1.9];
+  function renderCityFull() {
+    const box = $('#cityfull');
+    const show = ui.cityZoom != null && st.loc === st.home && !st.focus;
+    box.hidden = !show;
+    if (!show) return;
+    const vw = Math.min(window.innerWidth || 390, 1400), vh = Math.max(300, (window.innerHeight || 800) - 70);
+    const W = Math.round(Math.max(vw * 1.2, vh * 1.55) * CZ[ui.cityZoom]), H = Math.round(W / 1.55);
+    const key = `${W}|${citySig}`;
+    if (box.dataset.key !== key) {
+      const sc = box.querySelector('.cfscroll'), fx = sc ? (sc.scrollLeft + sc.clientWidth / 2) / Math.max(1, sc.scrollWidth) : 0.5, fy = sc ? (sc.scrollTop + sc.clientHeight / 2) / Math.max(1, sc.scrollHeight) : 0.55;
+      box.innerHTML = `<div class="cfbar"><b>${C[st.home].n}</b><span class="cfz"><button type="button" data-cz="-" aria-label="Kleiner"${ui.cityZoom ? '' : ' disabled'}>−</button><button type="button" data-cz="+" aria-label="Größer"${ui.cityZoom < CZ.length - 1 ? '' : ' disabled'}>+</button><button type="button" data-cz="x">Schließen</button></span></div><div class="cfscroll"><canvas id="citybig" style="width:${W}px;height:${H}px"></canvas></div>`;
+      box.dataset.key = key;
+      drawCity(true, {cv:$('#citybig'), W, H});
+      const s2 = box.querySelector('.cfscroll'); s2.scrollLeft = fx * W - s2.clientWidth / 2; s2.scrollTop = fy * H - s2.clientHeight / 2;
+    }
   }
   function renderBook() {
     const box = $('#book');
@@ -6960,7 +7171,7 @@ em.rep.warn{background:#b5523a}
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
-  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
+  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
 
   function openSheet(focus) {
     if (!st.loc || bankrupt()) return;
@@ -7081,20 +7292,28 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.kq) { ui.kq = t.dataset.kq === 'max' ? 'max' : +t.dataset.kq; renderBranch(); return; }
     if (t.dataset.kmove) kontorMove(t.dataset.good, t.dataset.kmove, ui.kq === 'max' ? Infinity : (ui.kq || 10));
   });
-  $('#citycard').addEventListener('click', e => {
-    const t = e.target.closest('button'); if (!t) return;
-    if (t.dataset.bld) { ui.plot = ui.plot === t.dataset.bld ? null : t.dataset.bld; return renderCity(); }
-    if (t.dataset.go) { const g = t.dataset.go;
+  function cityAct(t) {
+    if (t.dataset.act === 'city-big') { ui.cityZoom = 1; return renderCityFull(); }
+    if (t.dataset.act === 'bs-close') { ui.bsheet = null; return renderBSheet(); }
+    if (t.dataset.bs) { ui.bsheet = t.dataset.bs; return renderBSheet(); }
+    if (t.dataset.go) { const g = t.dataset.go; ui.bsheet = null; renderBSheet();
       if (['markt', 'werft', 'haus'].includes(g)) return setTab(g);
       ui.det[g] = true; render(); const el = document.querySelector(`#homecard [data-det="${g}"]`); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); return; }
     if (t.dataset.k === 'branch') return buildBranch();
-    if (t.dataset.work) return buildWork(t.dataset.work);
-    const k = t.dataset.cb;
+    const done = () => { ui.bsheet = null; renderBSheet(); };
+    if (t.dataset.work) { done(); return buildWork(t.dataset.work); }
+    const k = t.dataset.cb; if (!k) return;
+    done();
     if (k === 'kontor') return kontorBuild();
     if (k === 'haus') return upgradeHouse();
     if (k === 'plot') return openPlot();
-    if (k) buildCivic(k);
-  });
+    buildCivic(k);
+  }
+  $('#citycard').addEventListener('click', e => { const t = e.target.closest('button'); if (t) cityAct(t); });
+  $('#bsheet').addEventListener('click', e => { const t = e.target.closest('button'); if (t) cityAct(t); });
+  $('#bscrim').addEventListener('click', () => { ui.bsheet = null; renderBSheet(); });
+  $('#cityfull').addEventListener('click', e => { const t = e.target.closest('[data-cz]'); if (!t) return; const v = t.dataset.cz;
+    ui.cityZoom = v === 'x' ? null : Math.max(0, Math.min(CZ.length - 1, ui.cityZoom + (v === '+' ? 1 : -1))); renderCityFull(); });
   window.addEventListener('resize', () => { if (!$('#citycard').hidden) drawCity(); });
   $('#mapinfo').addEventListener('click', e => {
     const d = e.target.closest('[data-dest-open]'); if (d) return openSheet(d.dataset.destOpen);
@@ -7293,9 +7512,34 @@ em.rep.warn{background:#b5523a}
 </script>
 
 <script>
+window.KK_BUILD = '41de728295';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
+// Hinweis auf neue Version, wenn die App lange im Hintergrund offen war
+(() => {
+  let shown = false, last = 0;
+  async function check() {
+    if (shown || location.protocol !== 'https:' || Date.now() - last < 60000) return;
+    last = Date.now();
+    try {
+      const v = (await (await fetch('version.txt?' + Date.now(), {cache:'no-store'})).text()).trim();
+      if (v && v !== window.KK_BUILD) show();
+    } catch (e) {}
+  }
+  function show() {
+    shown = true;
+    const b = document.createElement('div');
+    b.setAttribute('role', 'status');
+    b.style.cssText = 'position:fixed;left:12px;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));z-index:60;max-width:520px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:space-between;background:#1b2830;color:#eef2ef;border-radius:12px;padding:10px 12px 10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.3);font:15px/1.3 "Alegreya Sans",sans-serif';
+    b.innerHTML = '<span>Eine neue Version von Kogge &amp; Kontor ist da. Dein Spielstand bleibt.</span><button type="button" style="flex:none;min-height:40px;border:0;border-radius:8px;background:#dba64b;color:#1b1306;font:600 14px \'IBM Plex Mono\',monospace;padding:0 12px;cursor:pointer">Neu laden</button>';
+    b.querySelector('button').onclick = () => location.reload();
+    document.body.appendChild(b);
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
+  setInterval(check, 30 * 60000);
+  setTimeout(check, 15000);
+})();
 </script>
 </body>
 </html>

@@ -22,7 +22,7 @@ Dann startet das Spiel wie eine App, im Vollbild und auch ohne Netz.
 
 ## Neue Versionen
 
-Neue Versionen kommen von selbst: Wer das Spiel mit Netz öffnet, bekommt die neueste Version. Ohne Netz startet die zuletzt geladene. Alte Spielstände laufen weiter.
+Neue Versionen kommen von selbst: Wer das Spiel mit Netz öffnet, bekommt die neueste Version. War die App lange im Hintergrund offen, erscheint ein Hinweis „Neu laden“. Ohne Netz startet die zuletzt geladene Version. Alte Spielstände laufen weiter.
 
 ## Dateien
 
@@ -31,5 +31,6 @@ Neue Versionen kommen von selbst: Wer das Spiel mit Netz öffnet, bekommt die ne
 | `index.html` | Das ganze Spiel in einer Datei |
 | `manifest.webmanifest` | Name, Farben und Symbol für den Home-Bildschirm |
 | `sw.js` | Speichert das Spiel für Offline-Starts |
+| `version.txt` | Versionskennung für den Hinweis auf neue Versionen |
 | `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` | App-Symbole |
 | `.nojekyll` | Sagt GitHub Pages, die Dateien unverändert auszuliefern |
