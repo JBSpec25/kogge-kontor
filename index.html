@@ -272,6 +272,23 @@ button{font:inherit;color:inherit}
 .trade{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .tbtn{min-height:52px;border-radius:8px;border:1px solid var(--ink);background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-weight:700;padding:6px}
 .tbtn span{font:400 .78rem var(--f-mono);font-variant-numeric:tabular-nums}
+.frbox{margin-top:12px}
+#frbody{padding:0 14px 14px}
+.frh{margin:4px 0 6px;font:700 .95rem var(--f-sc);letter-spacing:.03em}
+.frh small{font:500 .8rem var(--f-body);color:var(--muted);letter-spacing:0;margin-left:6px}
+.frhint{margin:0 0 6px}
+.frl{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column}
+.frbox .frow{display:grid;grid-template-columns:26px minmax(0,1fr) auto;font-size:1rem;grid-template-areas:"i m p" ". a a";column-gap:10px;row-gap:8px;padding:10px 0;border-top:1px solid var(--rule)}
+.frbox .frow:first-child{border-top:0}
+.frbox .frow.here{background:color-mix(in srgb,var(--brass) 9%,transparent);margin:0 -10px;padding:10px;border-radius:8px;border-top:0}
+.fri{grid-area:i;padding-top:2px}.fri .gi{width:22px;height:22px}
+.frm{grid-area:m;display:flex;flex-direction:column;gap:1px;min-width:0}
+.frm b{font-size:1rem}
+.frs{font-size:.84rem;color:var(--muted)}
+.frlate{color:var(--bad);font-weight:600}
+.frp{grid-area:p;font:600 1rem var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:1px}
+.fra{grid-area:a;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.frwhere{font-size:.84rem;color:var(--muted)}
 .frtag{font:600 .66rem var(--f-sc);letter-spacing:.03em;color:var(--brass-ink);background:var(--brass);border-radius:4px;padding:1px 5px;vertical-align:2px}
 #market details.sec{margin:8px 0 4px}
 .tbtn.store{grid-column:1/-1;min-height:46px;border-style:dashed}
@@ -719,6 +736,7 @@ em.rep.warn{background:#b5523a}
     </section>
     <section class="col">
       <div class="card" id="market" data-tab="markt"></div>
+      <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Frachtaufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
       <div class="card yard" id="yard" data-tab="werft" hidden></div>
       <div class="card home" id="homecard" data-tab="stadt"></div>
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
@@ -1356,15 +1374,20 @@ em.rep.warn{background:#b5523a}
     commit();
   }
   function freightArrive(cid) {
-    const F = freightState(), due = F.active.filter(f => f.to === cid);
-    due.forEach(f => {
-      const late = st.day > f.due, pay = late ? Math.round(f.pay / 2) : f.pay;
-      st.money += pay; F.done = (F.done || 0) + 1; gainRepute(late ? 0.5 : 1.5);
-      F.active.splice(F.active.indexOf(f), 1);
-      addLog(`Fracht abgeliefert in ${C[cid].n}: ${f.q} Last ${G[f.g].n} für ${f.by}. Lohn ${fmt(pay)} Mark${late ? ', halbiert wegen Verspätung' : ''}.`, 'gain');
-    });
-    if (due.length) checkRank();
+    const n = freightState().active.filter(f => f.to === cid).length;
+    if (n) addLog(`In ${C[cid].n} kannst du ${n === 1 ? 'eine Fracht' : `${n} Frachten`} abliefern: Reiter Markt, Frachtaufträge.`, 'arrive');
   }
+  function deliverFreight(id) {
+    const F = freightState(), f = F.active.find(x => x.id === id);
+    if (!f || st.loc !== f.to || st.enc) return;
+    const late = st.day > f.due, pay = late ? Math.round(f.pay / 2) : f.pay;
+    st.money += pay; F.done = (F.done || 0) + 1; gainRepute(late ? 0.5 : 1.5);
+    F.active.splice(F.active.indexOf(f), 1);
+    addLog(`Fracht abgeliefert in ${C[f.to].n}: ${f.q} Last ${G[f.g].n} für ${f.by}. Lohn ${fmt(pay)} Mark${late ? ', halbiert wegen Verspätung' : ''}.`, 'gain');
+    checkRank();
+    commit();
+  }
+  const freightHere = () => !!st.loc && ((st.freight || {}).active || []).some(f => f.to === st.loc);
   function freightDay() {
     const F = st.freight; if (!F || !F.active.length) return;
     if (!st.fleet.length) { F.active.forEach(f => addLog(`Die Fracht für ${f.by} ist mit deinem Schiff verloren.`)); F.active = []; return; }
@@ -1373,19 +1396,30 @@ em.rep.warn{background:#b5523a}
       addLog(`${f.by} hat die Geduld verloren: Die Fracht nach ${C[f.to].n} ist verfallen, dein Ruf leidet.`);
     });
   }
-  function freightHTML() {
-    const F = freightState(), act = F.active, offers = freightOffers(st.loc);
-    if (!act.length && !offers.length) return '';
-    const free = CAP - used();
-    let h = act.length ? act.map(f => `<div class="krow"><span class="gname">${icon(f.g)}an Bord nach ${C[f.to].n}</span><span class="ybtns"><button class="ybtn" type="button" data-fr="drop" data-id="${f.id}">Aufgeben</button></span>` +
-      `<span class="small">${f.q} Last ${G[f.g].n} für ${f.by} · bis ${fdate(f.due)}${st.day > f.due ? ' <b class="down">verspätet, halber Lohn</b>' : ''} · Lohn ${fmt(f.pay)} Mark</span></div>`).join('') : '';
-    if (offers.length) {
-      h += `<span class="small">${act.length ? 'Weitere Angebote' : 'Kaufleute suchen einen Schiffer. Du brauchst kein Geld, nur Laderaum; den Lohn gibt es beim Abliefern.'}</span>`;
-      h += offers.map(o => { const why = act.length >= FREIGHT_MAX ? `höchstens ${FREIGHT_MAX} Frachten` : free < o.q ? `${o.q - free} Last zu wenig Platz` : '';
-        return `<div class="krow"><span class="gname">${icon(o.g)}nach ${C[o.to].n}</span><span class="ybtns"><button class="ybtn" type="button" data-fr="take" data-id="${o.id}"${why ? ' disabled' : ''}>Annehmen · ${fmt(o.pay)} M</button></span>` +
-          `<span class="small">${o.q} Last ${G[o.g].n} für ${o.by} · etwa ${o.days} ${o.days === 1 ? 'Tag' : 'Tage'} · bis ${fdate(o.due)}${why ? ` · <b class="down">${why}</b>` : ''}</span></div>`; }).join('');
-    }
-    return det('freight', 'Frachtaufträge', h, act.length ? `${act.length} an Bord` : `${offers.length} Angebote`, true);
+  function freightRow(f, active) {
+    const left = f.due - st.day, late = left < 0, here = active && st.loc === f.to;
+    const dl = active ? (late ? `<b class="frlate">${-left} ${-left === 1 ? 'Tag' : 'Tage'} verspätet, halber Lohn</b>` : `noch ${left} ${left === 1 ? 'Tag' : 'Tage'}, bis ${fdate(f.due).replace(' ', '&nbsp;')}`) : `etwa ${f.days} ${f.days === 1 ? 'Tag' : 'Tage'} Fahrt · bis ${fdate(f.due).replace(' ', '&nbsp;')}`;
+    const pay = active && late ? Math.round(f.pay / 2) : f.pay;
+    let act;
+    if (active) act = (here ? `<button class="ybtn on" type="button" data-fr="give" data-id="${f.id}"${st.enc ? ' disabled' : ''}>Abliefern · ${fmt(pay)} M</button>` : `<span class="frwhere">Abliefern in ${C[f.to].n}</span>`) +
+      `<button class="linkbtn" type="button" data-fr="drop" data-id="${f.id}">Aufgeben</button>`;
+    else { const F = freightState(), free = CAP - used(), why = F.active.length >= FREIGHT_MAX ? `Schon ${FREIGHT_MAX} Frachten an Bord` : free < f.q ? `${f.q - free} Last zu wenig Laderaum` : '';
+      act = `<button class="ybtn" type="button" data-fr="take" data-id="${f.id}"${why || st.enc ? ' disabled' : ''}>Annehmen</button>${why ? `<span class="frwhere">${why}</span>` : ''}`; }
+    return `<li class="frow${here ? ' here' : ''}"><span class="fri">${icon(f.g)}</span><span class="frm"><b>${G[f.g].n} nach ${C[f.to].n}</b><span class="frs">${f.q} Last · ${dl}</span><span class="frs">für ${f.by}</span></span>` +
+      `<span class="frp">${fmt(pay)} M</span><span class="fra">${act}</span></li>`;
+  }
+  function renderFreight() {
+    const box = $('#frbox'), F = freightState(), act = F.active, offers = st.loc ? freightOffers(st.loc) : [];
+    box.hidden = !act.length && !offers.length;
+    if (box.hidden) return;
+    const nHere = act.filter(f => f.to === st.loc).length;
+    $('#frlast').textContent = nHere ? `${nHere} hier abliefern` : [act.length ? `${act.length} an Bord` : '', offers.length ? `${offers.length} ${offers.length === 1 ? 'Angebot' : 'Angebote'}` : ''].filter(Boolean).join(' · ');
+    if (ui.det.frbox == null) box.open = true;
+    let h = '';
+    if (act.length) h += `<h3 class="frh">An Bord <small>${act.length} von ${FREIGHT_MAX}</small></h3><ul class="frl">${act.slice().sort((x, y) => (y.to === st.loc) - (x.to === st.loc) || x.due - y.due).map(f => freightRow(f, true)).join('')}</ul>`;
+    if (offers.length) h += `<h3 class="frh">Angebote in ${C[st.loc].n}</h3><p class="small frhint">Kaufleute suchen einen Schiffer. Du brauchst kein Geld, nur Laderaum; den Lohn gibt es beim Abliefern im Zielhafen.</p><ul class="frl">${offers.map(o => freightRow(o, false)).join('')}</ul>`;
+    else if (st.loc && freightOpen()) h += `<p class="small frhint">In ${C[st.loc].n} gibt es gerade keine weiteren Frachten.</p>`;
+    $('#frbody').innerHTML = h;
   }
   function trackTrade(kind, gid, amount, prof) {
     const v = st.visit && st.visit.c === st.loc ? st.visit : (st.visit = {c:st.loc, d:st.day, buy:0, sell:0, prof:0});
@@ -5770,7 +5804,6 @@ em.rep.warn{background:#b5523a}
       (isPest(c.id) ? `<p class="warnline">In ${c.n} geht die Pest um. Die Stadt braucht weniger, Matrosen erkranken beim Anlegen.</p>` : '') +
       (warToll() ? `<span class="small">Pfundzoll für den Krieg: 1 % auf jeden Verkauf.</span>` : '') +
       (() => { const ns = [...new Set(seasonRules(st.loc).filter(r => r.n).map(r => r.n))]; return ns.length ? `<span class="seasonline">${MONTHS[monthOf(st.day)]}: ${ns.join(' · ')}</span>` : ''; })() + `</div>` +
-      freightHTML() +
       `<div class="cols" aria-hidden="true"><span>Ware</span><span>Bestand</span><span>Kauf</span><span>Verkauf</span><span>Bord</span></div>`;
     GOODS.forEach(g => {
       const bp = buyPrice(st.loc, g.id), sp = sellPrice(st.loc, g.id), hq = held(g.id);
@@ -6879,7 +6912,7 @@ em.rep.warn{background:#b5523a}
     const canGive = st.loc === st.home && st.orders && st.orders.active.some(o => haveFor(o.g) >= o.q);
     const htOpen = st.home && openItems().some(x => x.kind === 'gift' || (canVote() && !x.v.my));
     const reps = (st.convoys || []).filter(c => c.report && !c.report.seen);
-    const dots = {haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length ? 'b' : '', stadt:canGive || htOpen ? 'b' : '', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
+    const dots = {markt:freightHere() ? 'b' : '', haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length ? 'b' : '', stadt:canGive || htOpen ? 'b' : '', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
     $('#tabs').innerHTML = TABS.map(([k, label, ic]) => `<button class="tab" type="button" role="tab" data-tab-btn="${k}" aria-selected="${ui.tab === k}">` +
       `<svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${label}</span>${dots[k] ? `<i class="dot${dots[k] === 'b' ? ' b' : ''}"></i>` : ''}</button>`).join('');
   }
@@ -6927,7 +6960,7 @@ em.rep.warn{background:#b5523a}
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
-  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderStatus(); renderMap(); renderMarket(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
+  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
 
   function openSheet(focus) {
     if (!st.loc || bankrupt()) return;
@@ -6941,11 +6974,15 @@ em.rep.warn{background:#b5523a}
   }
 
   // ───────── Ereignisse ─────────
+  $('#frbox').addEventListener('click', e => {
+    const t = e.target.closest('button[data-fr]'); if (!t) return;
+    const id = +t.dataset.id, a = t.dataset.fr;
+    if (a === 'take') takeFreight(id); else if (a === 'give') deliverFreight(id); else if (a === 'drop') dropFreight(id);
+  });
   $('#market').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
     if (t.dataset.trade) { const n = +t.dataset.n, a = t.dataset.trade; a === 'buy' ? doBuy(t.dataset.good, n) : a === 'store' ? doSellStore(t.dataset.good, n) : doSell(t.dataset.good, n); return; }
     if (t.dataset.qty) { ui.qty = t.dataset.qty === 'max' ? 'max' : +t.dataset.qty; renderMarket(); return; }
-    if (t.dataset.fr) return t.dataset.fr === 'take' ? takeFreight(+t.dataset.id) : dropFreight(+t.dataset.id);
     if (t.dataset.good) { ui.open = ui.open === t.dataset.good ? null : t.dataset.good; renderMarket(); }
   });
   $('#actions').addEventListener('click', e => {
