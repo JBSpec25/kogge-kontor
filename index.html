@@ -660,6 +660,7 @@ em.rep.warn{background:#b5523a}
 .dice{min-width:52px;border:1px solid var(--rule);border-radius:9px;background:var(--card);cursor:pointer;font-size:.85rem}
 .avbox{display:grid;grid-template-columns:128px minmax(0,1fr);gap:16px;align-items:start}
 .avbox .big{width:100%;max-width:100%;height:auto}
+.wizard .avbox .big{position:sticky;top:6px;z-index:2;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 @media (max-width:440px){.avbox{grid-template-columns:minmax(0,1fr)}.avbox .big{width:132px}}
 .opts{display:flex;flex-direction:column;gap:10px;min-width:0}
 .opt{display:flex;flex-direction:column;gap:5px}
@@ -674,6 +675,14 @@ em.rep.warn{background:#b5523a}
 .homecard b{font:700 1.08rem var(--f-sc)}
 .homecard .pk{color:var(--brass);font-weight:600;font-size:.92rem}
 .homecard span{font-size:.86rem;color:var(--muted)}
+.origins{display:grid;grid-template-columns:1fr;gap:8px;margin:6px 0 4px}
+.hmset{display:flex;flex-wrap:wrap;gap:8px}
+.hmset button{width:52px;height:52px;padding:4px;border-radius:10px;border:2px solid transparent;background:none;cursor:pointer}
+.hmset button[aria-pressed="true"]{border-color:var(--brass)}
+.hm{display:block;width:100%;height:100%}
+.hm.inl{display:inline-block;width:34px;height:34px;vertical-align:middle}
+.hmhead{display:flex;gap:10px;align-items:center}
+.hmhead .hm.inl{width:40px;height:40px;flex:none}
 .summary{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:center}
 .summary .big{width:96px;height:96px}
 .summary dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:.95rem}
@@ -1129,12 +1138,12 @@ em.rep.warn{background:#b5523a}
   const PERKS = {
     luebeck:{t:'Sitz des Hansetags', d:'Ansehen im Stammsitz wächst um die Hälfte schneller.'},
     hamburg:{t:'Brauherren der Elbe', d:'Bier kaufst du überall 10 % günstiger.'},
-    bremen:{t:'Weserwerft', d:'Ausbessern kostet 5 statt 8 Mark je Prozent.'},
+    bremen:{t:'Weserwerft', d:'Ausbessern kostet 5 statt 8 Gulden je Prozent.'},
     danzig:{t:'Danziger Zimmerleute', d:'Dein erstes Schiff fasst 5 Last mehr.'},
     riga:{t:'Livlandhandel', d:'Pelze und Wachs kaufst du überall 10 % günstiger.'},
     reval:{t:'Stadtwache', d:'Du startest mit 4 statt 2 Armbrüsten und 2 Harnischen an Bord.'},
     visby:{t:'Lotsen von Gotland', d:'Seeräuber greifen 40 % seltener an.'},
-    stockholm:{t:'Erz aus den Bergwerken', d:'Du startest mit 3.000 statt 2.000 Mark.'}
+    stockholm:{t:'Erz aus den Bergwerken', d:'Du startest mit 3.000 statt 2.000 Gulden.'}
   };
   const CIVIC = [[0,'Neubürger'],[60,'Bürger'],[200,'Gildebruder'],[500,'Ratsherr'],[1200,'Bürgermeister'],[3000,'Ältermann der Hanse']];
   const UNLOCK = {1:'Kontor im Stammsitz, Ratsaufträge', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wählbar ab 1.200 Ansehen, Wahl am 1. Januar und 1. Juli', 5:'Als Bürgermeister wählbar ab 3.000 Ansehen, Wahl auf dem Hansetag am 24. Juni'};
@@ -1174,7 +1183,7 @@ em.rep.warn{background:#b5523a}
     const cm = crewMax(), out = Math.max(0, st.crew - cm);
     st.crew = Math.min(st.crew, cm);
     const back = trimArms(st, st.fleet, cm);
-    if (back) { st.money += back; addLog(`Überzählige Waffen gehen für ${fmt(back)} Mark an die Werft.`); }
+    if (back) { st.money += back; addLog(`Überzählige Waffen gehen für ${fmt(back)} Gulden an die Werft.`); }
     return out;
   }
   function newShipName() {
@@ -1192,7 +1201,12 @@ em.rep.warn{background:#b5523a}
       st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     }
   }
-  const defAv = () => ({g:'m', skin:0, hair:0, hat:'barett', beard:'voll', cloth:0});
+  const defAv = () => ({g:'m', skin:0, hair:0, hat:'barett', beard:'voll', cloth:0, hs:'kurz', acc:'ohne', age:'jung', col:0, mark:0});
+  function randAv(g) {
+    const r = a => a[Math.floor(Math.random() * a.length)], f = g === 'f';
+    return {g, skin:r(AV.skinOrder), hair:r([0, 1, 2, 4, 5, 0, 1, 2]), cloth:Math.floor(Math.random() * AV.cloth.length), hat:r(f ? AV.hatF : AV.hatM)[0], beard:f ? 'ohne' : r(AV.beard)[0],
+      hs:r(f ? AV.hsF : AV.hsM)[0], acc:r(AV.acc)[0], age:r(['jung', 'jung', 'reif', 'reif', 'alt']), col:Math.floor(Math.random() * AV.col.length), mark:Math.floor(Math.random() * AV.marks.length)};
+  }
   function newGame(player, home, opts) {
     home = HOMES.includes(home) ? home : 'luebeck';
     const stock = {};
@@ -1208,11 +1222,19 @@ em.rep.warn{background:#b5523a}
       mode:(opts && opts.mode) === 'kampagne' ? 'kampagne' : 'offen', alderman:null, mayorTerms:0, wins:0, ended:null};
     st.rivals = makeRivals();
     { const k0 = Object.assign(newCaptainFree(st, st.nextCap++), {nav:1, trade:1, fight:1, wage:3, fee:75}); st.captains.push(k0); st.capOwn = k0.id; }
+    const og = ORIGINS[opts && opts.origin] ? opts.origin : 'kaufmann';
+    st.player.origin = og;
+    if (og === 'kaufmann') st.money += 500;
+    if (og === 'schiffer') { st.captains[0].nav = 2; st.crew += 2; }
+    if (og === 'gilde') st.repute = 40;
+    if (og === 'soeldner') { st.arms.armbrust = (st.arms.armbrust || 0) + 2; st.captains[0].fight = 2; }
     applyHome();
     remember(home);
-    addLog(`Lübeck, 1. April 1356. Im Sommer soll hier der erste allgemeine Hansetag zusammentreten. ${st.player.name} gründet in ${C[home].n} ein Handelshaus: eine alte Schnigge, die „${shipName}“, mit ${CAP} Last, ${fmt(st.money)} Mark in der Truhe.`);
+    if (og === 'schreiber') CITIES.forEach(c => remember(c.id));
+    addLog(`Lübeck, 1. April 1356. Im Sommer soll hier der erste allgemeine Hansetag zusammentreten. ${st.player.name} gründet in ${C[home].n} ein Handelshaus: eine alte Schnigge, die „${shipName}“, mit ${CAP} Last, ${fmt(st.money)} Gulden in der Truhe.`);
     addLog(`Als Bürger von ${C[home].n} kaufst du dort 5 % günstiger und verkaufst 5 % teurer. ${PERKS[home].d}`, 'tip');
-    addLog(`Kapitän ${st.captains[0].name} führt deine Schnigge, ein Schiffer mit wenig Erfahrung, Heuer ${st.captains[0].wage} Mark am Tag. Noch kreuzen keine Seeräuber hinter einem kleinen Krämer her; das ändert sich, wenn du als Händler auffällst.`, 'cap');
+    addLog(`Herkunft: ${ORIGINS[og].n}. ${ORIGINS[og].d}`, 'tip');
+    addLog(`Kapitän ${st.captains[0].name} führt deine Schnigge, ein Schiffer mit wenig Erfahrung, Heuer ${st.captains[0].wage} Gulden am Tag. Noch kreuzen keine Seeräuber hinter einem kleinen Krämer her; das ändert sich, wenn du als Händler auffällst.`, 'cap');
     addLog('Tipp: Kaufe, was eine Stadt erzeugt, und verkaufe es dort, wo es gebraucht wird. Große Mengen drücken den Preis.', 'tip');
     if (st.mode === 'kampagne') addLog('Deine Kampagne läuft bis zum Frieden von Stralsund am 24. Mai 1370. Die Chronik unter dem Logbuch hält fest, was in der Hanse geschieht.', 'tip');
     era();
@@ -1417,7 +1439,7 @@ em.rep.warn{background:#b5523a}
     if (!o || st.enc || F.active.length >= FREIGHT_MAX || CAP - used() < o.q) return;
     list.splice(list.indexOf(o), 1);
     F.active.push(Object.assign({}, o, {d0:st.day}));
-    addLog(`Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${o.by} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Mark.`);
+    addLog(`Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${o.by} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Gulden.`);
     commit();
   }
   function dropFreight(id) {
@@ -1438,7 +1460,7 @@ em.rep.warn{background:#b5523a}
     const late = st.day > f.due, pay = late ? Math.round(f.pay / 2) : f.pay;
     st.money += pay; F.done = (F.done || 0) + 1; gainRepute(late ? 0.5 : 1.5);
     F.active.splice(F.active.indexOf(f), 1);
-    addLog(`Fracht abgeliefert in ${C[f.to].n}: ${f.q} Last ${G[f.g].n} für ${f.by}. Lohn ${fmt(pay)} Mark${late ? ', halbiert wegen Verspätung' : ''}.`, 'gain');
+    addLog(`Fracht abgeliefert in ${C[f.to].n}: ${f.q} Last ${G[f.g].n} für ${f.by}. Lohn ${fmt(pay)} Gulden${late ? ', halbiert wegen Verspätung' : ''}.`, 'gain');
     checkRank();
     commit();
   }
@@ -1456,12 +1478,12 @@ em.rep.warn{background:#b5523a}
     const dl = active ? (late ? `<b class="frlate">${-left} ${-left === 1 ? 'Tag' : 'Tage'} verspätet, halber Lohn</b>` : `noch ${left} ${left === 1 ? 'Tag' : 'Tage'}, bis ${fdate(f.due).replace(' ', '&nbsp;')}`) : `etwa ${f.days} ${f.days === 1 ? 'Tag' : 'Tage'} Fahrt · bis ${fdate(f.due).replace(' ', '&nbsp;')}`;
     const pay = active && late ? Math.round(f.pay / 2) : f.pay;
     let act;
-    if (active) act = (here ? `<button class="ybtn on" type="button" data-fr="give" data-id="${f.id}"${st.enc ? ' disabled' : ''}>Abliefern · ${fmt(pay)} M</button>` : `<span class="frwhere">Abliefern in ${C[f.to].n}</span>`) +
+    if (active) act = (here ? `<button class="ybtn on" type="button" data-fr="give" data-id="${f.id}"${st.enc ? ' disabled' : ''}>Abliefern · ${fmt(pay)} G</button>` : `<span class="frwhere">Abliefern in ${C[f.to].n}</span>`) +
       `<button class="linkbtn" type="button" data-fr="drop" data-id="${f.id}">Aufgeben</button>`;
     else { const F = freightState(), free = CAP - used(), why = F.active.length >= FREIGHT_MAX ? `Schon ${FREIGHT_MAX} Frachten an Bord` : free < f.q ? `${f.q - free} Last zu wenig Laderaum` : '';
       act = `<button class="ybtn" type="button" data-fr="take" data-id="${f.id}"${why || st.enc ? ' disabled' : ''}>Annehmen</button>${why ? `<span class="frwhere">${why}</span>` : ''}`; }
     return `<li class="frow${here ? ' here' : ''}"><span class="fri">${icon(f.g)}</span><span class="frm"><b>${G[f.g].n} nach ${C[f.to].n}</b><span class="frs">${f.q} Last · ${dl}</span><span class="frs">für ${f.by}</span></span>` +
-      `<span class="frp">${fmt(pay)} M</span><span class="fra">${act}</span></li>`;
+      `<span class="frp">${fmt(pay)} G</span><span class="fra">${act}</span></li>`;
   }
   function renderFreight() {
     const box = $('#frbox'), F = freightState(), act = F.active, offers = st.loc ? freightOffers(st.loc) : [];
@@ -1555,7 +1577,7 @@ em.rep.warn{background:#b5523a}
     if (!k || st.loc !== st.home || st.money < k.fee || st.captains.length >= MAX_CAPTAINS) return;
     st.money -= k.fee; t.splice(t.indexOf(k), 1);
     st.captains.push(Object.assign({}, k, {cv:null}));
-    addLog(`Kapitän ${k.name} tritt für ${fmt(k.fee)} Mark Handgeld in deine Dienste, Heuer ${k.wage} Mark am Tag.`, 'cap');
+    addLog(`Kapitän ${k.name} tritt für ${fmt(k.fee)} Gulden Handgeld in deine Dienste, Heuer ${k.wage} Gulden am Tag.`, 'cap');
     commit();
   }
   function fireCaptain(id) {
@@ -1576,7 +1598,7 @@ em.rep.warn{background:#b5523a}
     if (f.ships.length > MAX_FLEET) return `Höchstens ${MAX_FLEET} Schiffe je Verband.`;
     const fd = st.loc === st.home ? dockOf().filter(sh => f.ships.includes(sh.id)) : [];
     const dc = fd.reduce((x, sh) => x + (SHIPS[sh.type].crewMin + 2) * HIRE_SAILOR, 0);
-    if (dc > st.money) return `Für die Mannschaft der Schiffe vom Liegeplatz fehlen ${fmt(dc - st.money)} Mark.`;
+    if (dc > st.money) return `Für die Mannschaft der Schiffe vom Liegeplatz fehlen ${fmt(dc - st.money)} Gulden.`;
     if (!f.cap) return 'Wähle einen Kapitän.';
     if (f.route.filter(c => c !== st.loc).length < 1) return 'Wähle mindestens einen weiteren Hafen.';
     if (used() > restCap) return `Lade erst ${used() - restCap} Last aus: Deinem eigenen Verband bleibt zu wenig Laderaum.`;
@@ -1658,7 +1680,7 @@ em.rep.warn{background:#b5523a}
   }
   const buildWhy = tp => { const T = SHIPS[tp];
     return !(YARDS[st.loc] || []).includes(tp) ? 'hier nicht' : st.rank < T.rank ? `ab ${RANKS[T.rank][1]}` : buildsOf().filter(b => b.arrive == null).length >= MAX_BUILDS ? `${MAX_BUILDS} Aufträge laufen`
-      : shipsHome() >= MAX_DOCK ? 'Liegeplatz voll' : st.money < T.price ? `${fmt(T.price)} M` : ''; };
+      : shipsHome() >= MAX_DOCK ? 'Liegeplatz voll' : st.money < T.price ? `${fmt(T.price)} G` : ''; };
   function dockToFleet(id) {
     const D = dockOf(), sh = D.find(x => x.id === id);
     if (!sh || st.loc !== st.home || st.sail || st.focus || st.enc || st.fleet.length >= ownMax()) return;
@@ -1677,7 +1699,7 @@ em.rep.warn{background:#b5523a}
   function dockSell(id) {
     const D = dockOf(), sh = D.find(x => x.id === id); if (!sh) return;
     const v = shipValue(sh); D.splice(D.indexOf(sh), 1); st.money += v;
-    addLog(`${shipLabel(sh)} vom Liegeplatz in ${C[st.home].n} verkauft für ${fmt(v)} Mark.`);
+    addLog(`${shipLabel(sh)} vom Liegeplatz in ${C[st.home].n} verkauft für ${fmt(v)} Gulden.`);
     commit();
   }
   function fleetToDock(i) {
@@ -1705,10 +1727,10 @@ em.rep.warn{background:#b5523a}
     let h = D.length ? '' : '<p class="small">Kein Schiff am Liegeplatz.</p>';
     D.forEach(sh => {
       const T = SHIPS[sh.type];
-      h += `<div class="yrow"><span class="yl"><b>${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} Last · Rumpf ${sh.hull} % · Liegegeld ${fmt(T.upkeep * 0.5)} M am Tag</span></span><span class="ybtns wrapb">` +
+      h += `<div class="yrow"><span class="yl"><b>${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} Last · Rumpf ${sh.hull} % · Liegegeld ${fmt(T.upkeep * 0.5)} G am Tag</span></span><span class="ybtns wrapb">` +
         (atHome && st.fleet.length < ownMax() ? `<button class="ybtn" type="button" data-h="dockown" data-sh="${sh.id}">In deinen Verband</button>` : '') +
         cvsHome.filter(cv => cv.fleet.length < MAX_FLEET).map(cv => `<button class="ybtn" type="button" data-h="dockcv" data-id="${cv.id}" data-sh="${sh.id}">Zum ${esc(cvLabel(cv))}</button>`).join('') +
-        `<button class="ybtn" type="button" data-h="docksell" data-sh="${sh.id}">Verkaufen · ${fmt(shipValue(sh))} M</button></span></div>`;
+        `<button class="ybtn" type="button" data-h="docksell" data-sh="${sh.id}">Verkaufen · ${fmt(shipValue(sh))} G</button></span></div>`;
     });
     if (D.length && !atHome && !cvsHome.length) h += `<p class="small">Zuteilen geht, sobald dein Verband oder ein Kapitänsverband in ${C[st.home].n} liegt.</p>`;
     if (B.length) h += `<div class="ysub">Im Bau und unterwegs</div>` + B.map(b => {
@@ -1787,7 +1809,7 @@ em.rep.warn{background:#b5523a}
     cvMaintain(cv);
     if (to === cv.route[0]) cvLapDone(cv);
     const bought = Object.entries(res.bq).map(([g, q]) => `${q} ${G[g].n}`).join(', ');
-    const parts = [res.sold ? `verkauft für ${fmt(res.sold)} Mark (${res.prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(res.prof))})` : 'nichts verkauft'];
+    const parts = [res.sold ? `verkauft für ${fmt(res.sold)} Gulden (${res.prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(res.prof))})` : 'nichts verkauft'];
     if (bought) parts.push(`geladen: ${bought}`);
     (res.moved || []).forEach(x => parts.push(x));
     addLog(`Kapitän ${k ? k.name : '–'} in ${C[to].n}: ${parts.join('; ')}.`, 'cap');
@@ -1916,7 +1938,7 @@ em.rep.warn{background:#b5523a}
     cv.prof += prof;
     return {sold, prof:Math.round(prof), spent, bq};
   }
-  // Daueraufträge der Kapitäne: Ausbessern, Mannschaft, Waffen, Vorräte; 300 Mark bleiben in der Truhe
+  // Daueraufträge der Kapitäne: Ausbessern, Mannschaft, Waffen, Vorräte; 300 Gulden bleiben in der Truhe
   const CV_ORD = {rep:70, crew:'min', arms:'keep', sup:false};
   const cvOrd = cv => cv.orders || (cv.orders = Object.assign({}, CV_ORD));
   const newLap = (cv, n) => ({d:st.day, prof:cv ? cv.prof || 0 : 0, fights:0, lost:0, shipsLost:0, c0:null, s0:null, n:n || 0});
@@ -1945,7 +1967,7 @@ em.rep.warn{background:#b5523a}
       cv.brand = (cv.brand || 0) + buy(15 - (cv.brand || 0), BRAND_PRICE, 'Bündel Brandpfeile', 'Bündel Brandpfeile');
       if (a.buechse) cv.pulver = (cv.pulver || 0) + buy(20 - (cv.pulver || 0), PULVER_PRICE, 'Ladung Pulver', 'Ladungen Pulver');
     }
-    if (spent) addLog(`Kapitän ${k ? k.name : '–'} rüstet in ${C[cv.loc].n} nach: ${got.join(', ')} für ${fmt(spent)} Mark.`, 'cap');
+    if (spent) addLog(`Kapitän ${k ? k.name : '–'} rüstet in ${C[cv.loc].n} nach: ${got.join(', ')} für ${fmt(spent)} Gulden.`, 'cap');
   }
   // Kurzinfo nach jeder Runde der Route
   function cvLapDone(cv) {
@@ -1955,7 +1977,7 @@ em.rep.warn{background:#b5523a}
     cv.report = {d:st.day, n, c:cv.loc, prof, fights:L.fights, lost:L.lost, shipsLost:L.shipsLost, low, warn, seen:false,
       want:Math.max(cvCrewWant(cv), Math.min(cvSum(cv, 'crewMax'), cv.crew + L.lost))};
     cv.lap = newLap(cv, n);
-    const parts = [`Runde ${n} beendet`, `${prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(prof))} Mark`];
+    const parts = [`Runde ${n} beendet`, `${prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(prof))} Gulden`];
     if (L.fights) parts.push(`${L.fights} ${L.fights === 1 ? 'Gefecht' : 'Gefechte'}`);
     if (L.lost) parts.push(`${L.lost} Matrosen verloren`);
     if (L.shipsLost) parts.push(`${L.shipsLost} ${L.shipsLost === 1 ? 'Schiff' : 'Schiffe'} verloren`);
@@ -1967,7 +1989,7 @@ em.rep.warn{background:#b5523a}
     const cv = cvById(id); if (!cv || !cv.loc || st.focus === cv.id) return;
     let spent = 0;
     cv.fleet.forEach(sh => { const per = repairPrice() * SHIPS[sh.type].hullK, pct = Math.min(100 - sh.hull, Math.floor(Math.max(0, st.money) / per)); if (pct > 0) { const c = Math.round(pct * per); st.money -= c; spent += c; sh.hull += pct; } });
-    if (spent) addLog(`Der ${cvLabel(cv)} wird in ${C[cv.loc].n} ausgebessert für ${fmt(spent)} Mark.`, 'cap');
+    if (spent) addLog(`Der ${cvLabel(cv)} wird in ${C[cv.loc].n} ausgebessert für ${fmt(spent)} Gulden.`, 'cap');
     commit();
   }
   function cvHireNow(id) {
@@ -1989,7 +2011,7 @@ em.rep.warn{background:#b5523a}
       `<span class="flabel">Mannschaft</span><div class="chipset">${b('crew', 'min', 'Mindestbesatzung + 2 je Schiff')}${b('crew', 'full', 'voll')}</div>` +
       `<span class="flabel">Waffen</span><div class="chipset">${b('arms', 'keep', 'so lassen')}${b('arms', 'fill', 'Armbrüste auffüllen')}${b('arms', 'all', 'dazu Pavesen und Harnische')}</div>` +
       `<span class="flabel">Vorräte</span><div class="chipset">${b('sup', false, 'nicht nachkaufen')}${b('sup', true, 'Brandpfeile und Pulver nachkaufen')}</div>` +
-      `<span class="small">Der Kapitän führt die Aufträge in jedem Hafen aus und lässt immer 300 Mark in deiner Truhe.</span></div>`;
+      `<span class="small">Der Kapitän führt die Aufträge in jedem Hafen aus und lässt immer 300 Gulden in deiner Truhe.</span></div>`;
   }
   // Routen-Assistent: 1 Schiffe und Kapitän, 2 Vorlage, 3 Häfen und Waren
   function rwStart(id) {
@@ -2108,10 +2130,10 @@ em.rep.warn{background:#b5523a}
   }
   function reportHTML(cv) {
     const r = cv.report, here = !!cv.loc && st.focus !== cv.id, fixC = cvFixCost(cv), hireN = Math.max(0, Math.min(r.want, cvSum(cv, 'crewMax')) - cv.crew);
-    return `<div class="cvrep${r.warn ? ' warn' : ''}"><b>Bericht: Runde ${r.n}</b><span class="small">${fdate(r.d)} · ${C[r.c].n} · ${r.prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(r.prof))} M · ${r.fights} ${r.fights === 1 ? 'Gefecht' : 'Gefechte'} · ${r.lost ? `${r.lost} Matrosen verloren` : 'keine Verluste'}${r.shipsLost ? ` · ${r.shipsLost} ${r.shipsLost === 1 ? 'Schiff' : 'Schiffe'} verloren` : ''}</span>` +
+    return `<div class="cvrep${r.warn ? ' warn' : ''}"><b>Bericht: Runde ${r.n}</b><span class="small">${fdate(r.d)} · ${C[r.c].n} · ${r.prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(r.prof))} G · ${r.fights} ${r.fights === 1 ? 'Gefecht' : 'Gefechte'} · ${r.lost ? `${r.lost} Matrosen verloren` : 'keine Verluste'}${r.shipsLost ? ` · ${r.shipsLost} ${r.shipsLost === 1 ? 'Schiff' : 'Schiffe'} verloren` : ''}</span>` +
       (r.low.length ? `<span class="small">Schaden über 25 %: ${r.low.map(x => `„${esc(x.name)}“ ${x.hull} %`).join(', ')}</span>` : '') +
-      `<div class="ybtns wrapb">${fixC ? `<button class="ybtn" type="button" data-h="repfix" data-id="${cv.id}"${here && st.money > 0 ? '' : ' disabled'}>Ausbessern · ${fmt(fixC)} M</button>` : ''}` +
-      `${hireN ? `<button class="ybtn" type="button" data-h="rephire" data-id="${cv.id}"${here ? '' : ' disabled'}>Nachheuern · ${hireN} · ${fmt(hireN * HIRE_SAILOR)} M</button>` : ''}` +
+      `<div class="ybtns wrapb">${fixC ? `<button class="ybtn" type="button" data-h="repfix" data-id="${cv.id}"${here && st.money > 0 ? '' : ' disabled'}>Ausbessern · ${fmt(fixC)} G</button>` : ''}` +
+      `${hireN ? `<button class="ybtn" type="button" data-h="rephire" data-id="${cv.id}"${here ? '' : ' disabled'}>Nachheuern · ${hireN} · ${fmt(hireN * HIRE_SAILOR)} G</button>` : ''}` +
       `<button class="ybtn" type="button" data-h="repok" data-id="${cv.id}">Gelesen</button></div>${here ? '' : '<span class="small">Der Verband ist auf See; im nächsten Hafen gelten die Aufträge.</span>'}</div>`;
   }
 
@@ -2221,8 +2243,8 @@ em.rep.warn{background:#b5523a}
   // ───────── Rat und Stadt: Aufträge, Zölle, Konkurrenten, Wahl ─────────
   const TOLL = {
     niedrig:{n:'Niedrig', inc:0, rep:0.4, d:'Die Kaufleute danken es dir: täglich etwas Ansehen, aber keine Einnahmen.'},
-    mittel:{n:'Mittel', inc:15, rep:0, d:'15 Mark am Tag aus dem Pfundzoll.'},
-    hoch:{n:'Hoch', inc:40, rep:-0.3, d:'40 Mark am Tag, aber die Kaufleute murren und dein Ansehen sinkt.'}
+    mittel:{n:'Mittel', inc:15, rep:0, d:'15 Gulden am Tag aus dem Pfundzoll.'},
+    hoch:{n:'Hoch', inc:40, rep:-0.3, d:'40 Gulden am Tag, aber die Kaufleute murren und dein Ansehen sinkt.'}
   };
   const MAYOR_PAY = 60, ELECT_MIN = 1200;
   function makeRivals() {
@@ -2259,7 +2281,7 @@ em.rep.warn{background:#b5523a}
     if (st.loc !== st.home || o.active.length >= 2 || civicIdx(st.repute || 0) < 1 || i < 0) return;
     const it = o.offer.splice(i, 1)[0];
     o.active.push(it);
-    addLog(`Ratsauftrag angenommen: ${it.q} Last ${G[it.g].n} bis ${fdate(it.due)} nach ${C[st.home].n}, Lohn ${fmt(it.pay)} Mark.`, 'rank');
+    addLog(`Ratsauftrag angenommen: ${it.q} Last ${G[it.g].n} bis ${fdate(it.due)} nach ${C[st.home].n}, Lohn ${fmt(it.pay)} Gulden.`, 'rank');
     commit();
   }
   const haveFor = gid => held(gid) + stored(gid);
@@ -2279,7 +2301,7 @@ em.rep.warn{background:#b5523a}
     st.stock[st.home][o.g] += o.q;
     st.money += o.pay; gainRepute(o.rep);
     st.orders.active.splice(st.orders.active.indexOf(o), 1); st.orders.done = (st.orders.done || 0) + 1;
-    addLog(`Ratsauftrag erfüllt: ${o.q} Last ${G[o.g].n} geliefert. Der Rat zahlt ${fmt(o.pay)} Mark.`, 'gain');
+    addLog(`Ratsauftrag erfüllt: ${o.q} Last ${G[o.g].n} geliefert. Der Rat zahlt ${fmt(o.pay)} Gulden.`, 'gain');
     commit();
   }
   function ordersDay() {
@@ -2314,7 +2336,7 @@ em.rep.warn{background:#b5523a}
     if (!cands.length) t = `Ratswahl in ${home}: Keiner hat genug Ansehen, ${st.mayorName} bleibt Bürgermeister.`;
     else if (cands[0].me) {
       st.mayor = {since:was ? st.mayor.since : st.day}; st.mayorName = st.player.name; st.mayorTerms = (st.mayorTerms || 0) + 1;
-      t = was ? `Ratswahl in ${home}: Du bleibst Bürgermeister.` : `Ratswahl in ${home}: Der Rat wählt dich zum Bürgermeister! Bürgerrecht 10 %, ${MAYOR_PAY} Mark am Tag, Friedeschiffe schützen deine Verbände.`;
+      t = was ? `Ratswahl in ${home}: Du bleibst Bürgermeister.` : `Ratswahl in ${home}: Der Rat wählt dich zum Bürgermeister! Bürgerrecht 10 %, ${MAYOR_PAY} Gulden am Tag, Friedeschiffe schützen deine Verbände.`;
     } else {
       st.mayor = null; st.mayorName = cands[0].name;
       t = `Ratswahl in ${home}: ${cands[0].name} wird Bürgermeister${was ? ', du verlierst das Amt' : ''}.`;
@@ -2478,11 +2500,11 @@ em.rep.warn{background:#b5523a}
   }
   function hansetag() {
     const y = dateOf(st.day).getFullYear();
-    if (st.alderman) { announce(`Hansetag ${y} in Lübeck. Als Ältermann der Hanse führst du den Vorsitz. Die Städte zahlen dir ${ALDER_PAY} Mark am Tag.`); return; }
+    if (st.alderman) { announce(`Hansetag ${y} in Lübeck. Als Ältermann der Hanse führst du den Vorsitz. Die Städte zahlen dir ${ALDER_PAY} Gulden am Tag.`); return; }
     const best = (st.rivals || []).reduce((a, r) => r.repute > a.repute ? r : a, {repute:0, name:''});
     if (st.mayor && (st.repute || 0) >= ALDER_MIN && (st.repute || 0) > best.repute) {
       st.alderman = {since:st.day};
-      announce(`Hansetag ${y} in Lübeck: Die Ratssendeboten wählen dich zum Ältermann der Hanse! Du sprichst nun für alle Städte. ${ALDER_PAY} Mark am Tag, deine Verbände werden noch seltener angegriffen.`, 'rank');
+      announce(`Hansetag ${y} in Lübeck: Die Ratssendeboten wählen dich zum Ältermann der Hanse! Du sprichst nun für alle Städte. ${ALDER_PAY} Gulden am Tag, deine Verbände werden noch seltener angegriffen.`, 'rank');
       chronicle(`${st.player.name} wird Ältermann der Hanse`);
       if (st.mode !== 'kampagne') announce('Du hast das höchste Amt der Hanse erreicht. Das Spiel geht weiter, so lange du willst.', 'rank');
     } else {
@@ -2646,7 +2668,7 @@ em.rep.warn{background:#b5523a}
       const m = what === 'big' ? 3000 : 1000;
       if (st.money < m) return;
       st.money -= m; g.money += m;
-      addLog(`${fmt(m)} Mark für die Kriegsflotte der Hanse gegeben.`, 'rank');
+      addLog(`${fmt(m)} Gulden für die Kriegsflotte der Hanse gegeben.`, 'rank');
     }
     commit();
   }
@@ -2661,7 +2683,7 @@ em.rep.warn{background:#b5523a}
     if (g.money || g.ship) {
       const rep = Math.round(g.money / 1000 * 40 + (g.ship ? 80 : 0) + (win ? 60 : 20));
       gainRepute(rep); parts.push(`Für deinen Beitrag dankt dir die Hanse mit ${fmt(rep)} Ansehen.`);
-      if (win && g.money) { const back = Math.round(g.money * 1.5); st.money += back; parts.push(`Aus der Beute erhältst du ${fmt(back)} Mark.`); }
+      if (win && g.money) { const back = Math.round(g.money * 1.5); st.money += back; parts.push(`Aus der Beute erhältst du ${fmt(back)} Gulden.`); }
       if (g.ship) {
         const sh = g.ship; g.ship = null;
         if (!win && Math.random() < 0.5) parts.push(`${shipLabel(sh)} ist im Kampf gesunken.`);
@@ -2669,7 +2691,7 @@ em.rep.warn{background:#b5523a}
           sh.hull = Math.max(30, sh.hull - 25 - Math.floor(Math.random() * 20));
           if (st.fleet.length < ownMax()) { st.fleet.push(sh); applyHome(); parts.push(`${shipLabel(sh)} kehrt mit Rumpf ${sh.hull} % zurück.`); }
           else if (shipsHome() < MAX_DOCK) { dockOf().push(sh); parts.push(`${shipLabel(sh)} kehrt zurück und geht in ${C[st.home].n} an den Liegeplatz.`); }
-          else { const v = shipValue(sh); st.money += v; parts.push(`${shipLabel(sh)} kehrt zurück, der Liegeplatz ist voll, die Hanse kauft es dir für ${fmt(v)} Mark ab.`); }
+          else { const v = shipValue(sh); st.money += v; parts.push(`${shipLabel(sh)} kehrt zurück, der Liegeplatz ist voll, die Hanse kauft es dir für ${fmt(v)} Gulden ab.`); }
         }
       }
     }
@@ -2681,7 +2703,7 @@ em.rep.warn{background:#b5523a}
     const H = hanse();
     if (H.kaper || !kaperAvail() || st.money < 200) return;
     st.money -= 200; H.kaper = true;
-    addLog('Du erhältst einen Kaperbrief der Hanse gegen Dänemark (200 Mark Siegelgeld). Dänische Kauffahrer im Sund und vor Gotland darfst du nun aufbringen.', 'rank');
+    addLog('Du erhältst einen Kaperbrief der Hanse gegen Dänemark (200 Gulden Siegelgeld). Dänische Kauffahrer im Sund und vor Gotland darfst du nun aufbringen.', 'rank');
     commit();
   }
   const DANES = ['Henning Podebusk', 'Vicko Moltke', 'Stig Andersen', 'Claus Limbek', 'Erik Kaas', 'Jens Uffesøn'];
@@ -2719,7 +2741,7 @@ em.rep.warn{background:#b5523a}
     if (H.escort || i < 0 || civicIdx(st.repute || 0) < 1) return;
     H.escort = Object.assign(H.offers.splice(i, 1)[0], {state:'active'});
     const E0 = H.escort;
-    addLog(`Geleitschutz angenommen: Kauffahrer von ${C[E0.from].n} nach ${C[E0.to].n}, Abfahrt bis ${fdate(E0.due)}. Nötig: ${E0.ships} Schiffe und ${E0.crew} Mann. Lohn ${fmt(E0.pay)} Mark.`, 'rank');
+    addLog(`Geleitschutz angenommen: Kauffahrer von ${C[E0.from].n} nach ${C[E0.to].n}, Abfahrt bis ${fdate(E0.due)}. Nötig: ${E0.ships} Schiffe und ${E0.crew} Mann. Lohn ${fmt(E0.pay)} Gulden.`, 'rank');
     commit();
   }
   function failEscort(t) {
@@ -2740,7 +2762,7 @@ em.rep.warn{background:#b5523a}
     if (!E0 || E0.state !== 'onway') return;
     if (E0.to !== to) { failEscort('Die Kauffahrer haben ihr Ziel nicht erreicht.'); return; }
     st.money += E0.pay; gainRepute(E0.rep); H.escort = null;
-    addLog(`Geleit glücklich nach ${C[to].n} gebracht. Die Kaufleute zahlen ${fmt(E0.pay)} Mark, ${E0.rep} Ansehen.`, 'gain');
+    addLog(`Geleit glücklich nach ${C[to].n} gebracht. Die Kaufleute zahlen ${fmt(E0.pay)} Gulden, ${E0.rep} Ansehen.`, 'gain');
   }
   function hanseHTML(ci) {
     const H = hanse(), items = openItems();
@@ -2751,9 +2773,9 @@ em.rep.warn{background:#b5523a}
           (canVote() ? `<div class="ybtns"><button class="ybtn${v.my === 'ja' ? ' on' : ''}" type="button" data-vote="${id}" data-v="ja">Ja</button><button class="ybtn${v.my === 'nein' ? ' on' : ''}" type="button" data-vote="${id}" data-v="nein">Nein</button></div>` +
             `<span class="small">Dein Gewicht im Hansetag: ${Math.round(influence() * 100)} %.</span>` : `<span class="small">Abstimmen dürfen nur Ratsherren.</span>`) + `</div>`;
       } else {
-        h += `<div class="vote"><b>${V.q}</b><span class="small">Beiträge bis ${fdate(dayOf(...V.due), true)}${v.money ? ` · gegeben: ${fmt(v.money)} Mark` : ''}${v.ship ? ` · ${shipLabel(v.ship)} fährt mit` : ''}</span>` +
-          `<div class="ybtns wrapb"><button class="ybtn" type="button" data-give="${id}" data-v="small"${st.money >= 1000 ? '' : ' disabled'}>1.000 Mark</button>` +
-          `<button class="ybtn" type="button" data-give="${id}" data-v="big"${st.money >= 3000 ? '' : ' disabled'}>3.000 Mark</button>` +
+        h += `<div class="vote"><b>${V.q}</b><span class="small">Beiträge bis ${fdate(dayOf(...V.due), true)}${v.money ? ` · gegeben: ${fmt(v.money)} Gulden` : ''}${v.ship ? ` · ${shipLabel(v.ship)} fährt mit` : ''}</span>` +
+          `<div class="ybtns wrapb"><button class="ybtn" type="button" data-give="${id}" data-v="small"${st.money >= 1000 ? '' : ' disabled'}>1.000 Gulden</button>` +
+          `<button class="ybtn" type="button" data-give="${id}" data-v="big"${st.money >= 3000 ? '' : ' disabled'}>3.000 Gulden</button>` +
           `<button class="ybtn" type="button" data-give="${id}" data-v="ship"${!v.ship && st.loc && st.fleet.length >= 2 && !st.focus ? '' : ' disabled'}>Ein Schiff</button></div>` +
           `<span class="small">Je mehr die Städte geben, desto besser stehen die Aussichten. Wer gibt, bekommt Ansehen und bei einem Sieg einen Teil der Beute. Ein Schiff kommt beschädigt zurück, nach einer Niederlage vielleicht gar nicht.</span></div>`;
       }
@@ -2763,18 +2785,18 @@ em.rep.warn{background:#b5523a}
     if (st.era && st.era.war) {
       h += `<span class="flabel" style="margin-top:10px;display:block">Kaperbrief gegen Dänemark</span>` +
         (H.kaper ? `<p class="small">Du führst einen Kaperbrief. Im Sund und vor Gotland triffst du dänische Kauffahrer, die du aufbringen darfst. Er erlischt mit dem Frieden.</p>` :
-          kaperAvail() ? `<div class="ybtns"><button class="ybtn" type="button" data-kaper="1"${st.money >= 200 ? '' : ' disabled'}>Kaperbrief nehmen · 200 M</button></div><span class="small">Erlaubt, dänische Kauffahrer zu kapern: Ladung und Schiff gehören dir.</span>` :
+          kaperAvail() ? `<div class="ybtns"><button class="ybtn" type="button" data-kaper="1"${st.money >= 200 ? '' : ' disabled'}>Kaperbrief nehmen · 200 G</button></div><span class="small">Erlaubt, dänische Kauffahrer zu kapern: Ladung und Schiff gehören dir.</span>` :
             `<p class="small">Ab Bürger stellt der Rat Kaperbriefe aus.</p>`);
     }
     // Geleitschutz
     h += `<span class="flabel" style="margin-top:10px;display:block">Geleitschutz</span>`;
     if (H.escort) {
       const E0 = H.escort;
-      h += `<p class="small"><b>${C[E0.from].n} → ${C[E0.to].n}</b>: ${E0.state === 'onway' ? 'Die Kauffahrer folgen dir.' : `Abfahrt in ${C[E0.from].n} bis ${fdate(E0.due)}. Nötig: ${E0.ships} Schiffe, ${E0.crew} Mann (du hast ${st.fleet.length} und ${fighters()}).`} Lohn ${fmt(E0.pay)} Mark, ${E0.rep} Ansehen.</p>`;
+      h += `<p class="small"><b>${C[E0.from].n} → ${C[E0.to].n}</b>: ${E0.state === 'onway' ? 'Die Kauffahrer folgen dir.' : `Abfahrt in ${C[E0.from].n} bis ${fdate(E0.due)}. Nötig: ${E0.ships} Schiffe, ${E0.crew} Mann (du hast ${st.fleet.length} und ${fighters()}).`} Lohn ${fmt(E0.pay)} Gulden, ${E0.rep} Ansehen.</p>`;
     } else if (ci < 1) h += `<p class="small">Ab Bürger vertrauen dir Kaufleute ihr Geleit an.</p>`;
     else if (!H.offers.length) h += `<p class="small">Gerade sucht niemand Geleit.</p>`;
     else h += H.offers.map(o => `<div class="krow"><span class="gname">${C[o.from].n} → ${C[o.to].n}</span><span class="ybtns"><button class="ybtn" type="button" data-escort="${o.id}">Annehmen</button></span>` +
-      `<span class="small">Abfahrt bis ${fdate(o.due)} · ${o.ships} Schiffe, ${o.crew} Mann · Lohn ${fmt(o.pay)} M, ${o.rep} Ansehen. Unterwegs greifen Räuber eher an.</span></div>`).join('');
+      `<span class="small">Abfahrt bis ${fdate(o.due)} · ${o.ships} Schiffe, ${o.crew} Mann · Lohn ${fmt(o.pay)} G, ${o.rep} Ansehen. Unterwegs greifen Räuber eher an.</span></div>`).join('');
     // letzte Beschlüsse
     if (H.past.length) h += `<span class="flabel" style="margin-top:10px;display:block">Beschlüsse</span><ol class="chronlist">` + H.past.slice(0, 5).map(x => `<li><time>${fdate(x.d, true)}</time><span>${VOTES[x.id].c}: <b>${x.res === 'ja' ? 'angenommen' : 'abgelehnt'}</b>${x.my ? ` · du: ${x.my === 'ja' ? 'Ja' : 'Nein'}` : ''}</span></li>`).join('') + `</ol>`;
     return h + `</div>`;
@@ -2793,7 +2815,7 @@ em.rep.warn{background:#b5523a}
     remember(st.loc);
     trackTrade('buy', gid, cost, 0);
     breakEmbargo(q);
-    addLog(`${q} Last ${G[gid].n} in ${C[st.loc].n} gekauft für ${fmt(cost)} Mark.`);
+    addLog(`${q} Last ${G[gid].n} in ${C[st.loc].n} gekauft für ${fmt(cost)} Gulden.`);
     commit();
   }
   function doSell(gid, q) {
@@ -2810,7 +2832,7 @@ em.rep.warn{background:#b5523a}
     trackTrade('sell', gid, gain, pr);
     breakEmbargo(q);
     remember(st.loc);
-    addLog(`${q} Last ${G[gid].n} in ${C[st.loc].n} verkauft für ${fmt(gain)} Mark (${pr >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(pr))}).`, pr >= 0 ? 'gain' : '');
+    addLog(`${q} Last ${G[gid].n} in ${C[st.loc].n} verkauft für ${fmt(gain)} Gulden (${pr >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(pr))}).`, pr >= 0 ? 'gain' : '');
     checkRank();
     commit();
   }
@@ -2827,7 +2849,7 @@ em.rep.warn{background:#b5523a}
     const pr = gain - basis;
     trackTrade('sell', gid, gain, pr);
     if (st.loc === cid) { breakEmbargo(q); remember(cid); }
-    addLog(`${remote && st.loc !== cid ? 'Dein Verwalter verkauft' : `${q} Last ${G[gid].n}`}${remote && st.loc !== cid ? ` ${q} Last ${G[gid].n} aus dem Kontor` : ` aus dem ${cid === st.home ? 'Kontor' : 'Lager der Niederlassung'}`} in ${C[cid].n}${remote && st.loc !== cid ? ' für' : ' verkauft für'} ${fmt(gain)} Mark (${pr >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(pr))}).`, pr >= 0 ? 'gain' : '');
+    addLog(`${remote && st.loc !== cid ? 'Dein Verwalter verkauft' : `${q} Last ${G[gid].n}`}${remote && st.loc !== cid ? ` ${q} Last ${G[gid].n} aus dem Kontor` : ` aus dem ${cid === st.home ? 'Kontor' : 'Lager der Niederlassung'}`} in ${C[cid].n}${remote && st.loc !== cid ? ' für' : ' verkauft für'} ${fmt(gain)} Gulden (${pr >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(pr))}).`, pr >= 0 ? 'gain' : '');
     checkRank();
     commit();
   }
@@ -2966,7 +2988,7 @@ em.rep.warn{background:#b5523a}
     const left = armMax(k) - (armsOf(st)[k] || 0), q = Math.min(n, left, Math.floor(Math.max(0, st.money) / A.price));
     if (q <= 0) return;
     st.money -= q * A.price; armsOf(st)[k] = (armsOf(st)[k] || 0) + q;
-    addLog(`${q} ${q === 1 ? A.one : A.n} in ${C[st.loc].n} gekauft für ${fmt(q * A.price)} Mark.`);
+    addLog(`${q} ${q === 1 ? A.one : A.n} in ${C[st.loc].n} gekauft für ${fmt(q * A.price)} Gulden.`);
     commit();
   }
   function buyPulver(n) {
@@ -3006,7 +3028,7 @@ em.rep.warn{background:#b5523a}
       });
       if (!spent) return;
       st.money -= spent;
-      addLog(list.length === 1 ? `${shipLabel(list[0])} in ${C[st.loc].n} ausgebessert, Rumpf jetzt ${list[0].hull} %.` : `Der Verband wird in ${C[st.loc].n} ausgebessert für ${fmt(spent)} Mark.`);
+      addLog(list.length === 1 ? `${shipLabel(list[0])} in ${C[st.loc].n} ausgebessert, Rumpf jetzt ${list[0].hull} %.` : `Der Verband wird in ${C[st.loc].n} ausgebessert für ${fmt(spent)} Gulden.`);
     } else if (act === 'build') {
       const T = SHIPS[n];
       if (!T || buildWhy(n)) return;
@@ -3014,7 +3036,7 @@ em.rep.warn{background:#b5523a}
       st.money -= T.price;
       buildsOf().push({id:st.nextBuild = (st.nextBuild || 0) + 1, type:n, name, city:st.loc, start:st.day, done:st.day + BUILD_DAYS[n], arrive:null, hull:100});
       ui.shipName = '';
-      addLog(`Bauauftrag in ${C[st.loc].n}: ${T.n} „${name}“ für ${fmt(T.price)} Mark, fertig in ${BUILD_DAYS[n]} Tagen; danach segelt sie nach ${C[st.home].n}.`, 'gain');
+      addLog(`Bauauftrag in ${C[st.loc].n}: ${T.n} „${name}“ für ${fmt(T.price)} Gulden, fertig in ${BUILD_DAYS[n]} Tagen; danach segelt sie nach ${C[st.home].n}.`, 'gain');
     } else if (act === 'todock') {
       return fleetToDock(n);
     } else if (act === 'old') {
@@ -3022,14 +3044,14 @@ em.rep.warn{background:#b5523a}
       st.money -= OLD_SHIP;
       st.fleet.push({id:st.nextShip++, type:'schnigge', name:newShipName(), hull:55});
       applyHome();
-      addLog(`Für ${fmt(OLD_SHIP)} Mark überlässt dir die Werft von ${C[st.loc].n} eine alte Schnigge. Ein neuer Anfang.`);
+      addLog(`Für ${fmt(OLD_SHIP)} Gulden überlässt dir die Werft von ${C[st.loc].n} eine alte Schnigge. Ein neuer Anfang.`);
     } else if (act === 'sell') {
       const sh = st.fleet[n];
       if (!sh || !canSellShip(n)) return;
       const v = shipValue(sh);
       st.fleet.splice(n, 1); st.money += v; applyHome();
       const out = trimCrew();
-      addLog(`${shipLabel(sh)} in ${C[st.loc].n} verkauft für ${fmt(v)} Mark.${out ? ` ${out} Leute mustern ab.` : ''}`);
+      addLog(`${shipLabel(sh)} in ${C[st.loc].n} verkauft für ${fmt(v)} Gulden.${out ? ` ${out} Leute mustern ab.` : ''}`);
     } else {
       if (act.startsWith('arm:')) return buyArm(act.slice(4), n);
       if (act === 'pulver') return buyPulver(n);
@@ -3182,14 +3204,14 @@ em.rep.warn{background:#b5523a}
     const e = st.enc; if (busy || !e || e.phase !== 'meet') return;
     if (st.money >= e.ransom) {
       st.money -= e.ransom;
-      e.msg = `Du zahlst ${fmt(e.ransom)} Mark Wegzoll. ${e.name} lässt dich ziehen.`;
-      addLog(`${fmt(e.ransom)} Mark an Seeräuber gezahlt.`, 'pirate');
+      e.msg = `Du zahlst ${fmt(e.ransom)} Gulden Wegzoll. ${e.name} lässt dich ziehen.`;
+      addLog(`${fmt(e.ransom)} Gulden an Seeräuber gezahlt.`, 'pirate');
     } else {
       const taken = takeCargo(1 / 3), m = Math.max(0, st.money);
       st.money -= m;
-      const booty = [taken, m ? `${fmt(m)} Mark` : ''].filter(Boolean).join(' und ');
+      const booty = [taken, m ? `${fmt(m)} Gulden` : ''].filter(Boolean).join(' und ');
       e.msg = booty ? `Die Truhe reicht nicht. Die Seeräuber nehmen ${booty}.` : 'Bei dir ist nichts zu holen. Die Seeräuber ziehen fluchend ab.';
-      addLog(`Seeräuber nehmen ${taken || 'nichts'}${m ? ` und ${fmt(m)} Mark` : ''}.`, 'pirate');
+      addLog(`Seeräuber nehmen ${taken || 'nichts'}${m ? ` und ${fmt(m)} Gulden` : ''}.`, 'pirate');
     }
     e.phase = 'paid'; scene.fx.leave();
     commit();
@@ -3345,7 +3367,7 @@ em.rep.warn{background:#b5523a}
       e.booty = e.prey ? {g:e.cargoG, q:e.cargoQ} : {g:pick(GOODS).id, q:6 + Math.floor(Math.random() * 13)};
     }
     gainRepute((e.prize ? 18 : 10) + (e.dane || e.prey ? 15 : 0));
-    addLog(`${e.prey ? 'Dänischer Kauffahrer' : e.dane ? 'Dänische Auslieger' : 'Seeräuber'} unter ${e.name} ${kind === 'fled' ? 'vertrieben' : kind === 'sunk' ? 'versenkt' : 'besiegt, ihr Schiff erbeutet'}. Beute: ${fmt(loot)} Mark.`, 'pirate');
+    addLog(`${e.prey ? 'Dänischer Kauffahrer' : e.dane ? 'Dänische Auslieger' : 'Seeräuber'} unter ${e.name} ${kind === 'fled' ? 'vertrieben' : kind === 'sunk' ? 'versenkt' : 'besiegt, ihr Schiff erbeutet'}. Beute: ${fmt(loot)} Gulden.`, 'pirate');
     checkRank();
   }
   const prizeValue = () => { const e = st.enc; return Math.round(SHIPS[e.prize.type].price * 0.25 * e.prize.hull / 100); };
@@ -3474,9 +3496,9 @@ em.rep.warn{background:#b5523a}
     e.aimLock = null; e.offLock = null;
     const pre = prefix + (out.text && out.res !== 'go' && out.res !== 'dusk' ? out.text + ' ' : '');
     if (out.res === 'board') return board(true, pre);
-    if (out.res === 'empty') { winCore('empty'); e.msg = `${pre}Auf dem Seeräuberschiff steht keiner mehr aufrecht. Ihr übernehmt es kampflos. Beute: ${fmt(e.loot)} Mark.`; }
-    else if (out.res === 'sunk') { scene.fx.sink(); winCore('sunk'); e.msg = `${pre}Das Seeräuberschiff brennt nieder und sinkt. Aus dem Wasser fischt ihr ${fmt(e.loot)} Mark.`; }
-    else if (out.res === 'surrender') { scene.fx.fire(false); winCore('surrender'); e.msg = `${pre}${e.name} streicht die Segel und ergibt sich! Beute: ${fmt(e.loot)} Mark.`; }
+    if (out.res === 'empty') { winCore('empty'); e.msg = `${pre}Auf dem Seeräuberschiff steht keiner mehr aufrecht. Ihr übernehmt es kampflos. Beute: ${fmt(e.loot)} Gulden.`; }
+    else if (out.res === 'sunk') { scene.fx.sink(); winCore('sunk'); e.msg = `${pre}Das Seeräuberschiff brennt nieder und sinkt. Aus dem Wasser fischt ihr ${fmt(e.loot)} Gulden.`; }
+    else if (out.res === 'surrender') { scene.fx.fire(false); winCore('surrender'); e.msg = `${pre}${e.name} streicht die Segel und ergibt sich! Beute: ${fmt(e.loot)} Gulden.`; }
     else if (out.res === 'flee') { e.phase = 'fleeing'; scene.fx.leaving(); e.msg = `${pre}${e.name} dreht ab und flieht!`; }
     else if (out.res === 'dusk') { e.phase = 'escaped'; scene.fx.leave(); e.msg = `${prefix}${out.text} Die Dämmerung bricht herein und trennt die Schiffe.`; addLog(`Gefecht mit ${e.name} ohne Ausgang.`, 'pirate'); }
     else { e.phase = 'tactic'; e.msg = prefix + out.text; }
@@ -3496,7 +3518,7 @@ em.rep.warn{background:#b5523a}
     const out = boardCore(forced);
     if (out.win) {
       winCore('board');
-      e.msg = `Sieg im Enterkampf!${out.loss ? ` ${out.loss} ${out.loss === 1 ? 'Mann ist' : 'Leute sind'} verwundet.` : ''} Beute: ${fmt(e.loot)} Mark, und ihr Schiff gehört jetzt euch.`;
+      e.msg = `Sieg im Enterkampf!${out.loss ? ` ${out.loss} ${out.loss === 1 ? 'Mann ist' : 'Leute sind'} verwundet.` : ''} Beute: ${fmt(e.loot)} Gulden, und ihr Schiff gehört jetzt euch.`;
       scene.fx.fire(false);
       return commit();
     }
@@ -3504,9 +3526,9 @@ em.rep.warn{background:#b5523a}
     if (out.last) {
       e.phase = 'captured';
       const fk = st.focus ? capOf(cvById(st.focus)) : null;
-      e.msg = fk ? `Die Seeräuber überwältigen den Verband und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Mark Lösegeld kommt Kapitän ${fk.name} frei und kehrt nach ${C[st.home].n} zurück.`
-        : `Die Seeräuber überwältigen euch und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Mark Lösegeld setzt ${e.name} dich in ${C[st.home].n} an Land.`;
-      addLog(`Von Seeräubern unter ${e.name} gefangen. ${shipLabel(out.ship)} verloren, ${fmt(out.ransom)} Mark Lösegeld.`, 'pirate');
+      e.msg = fk ? `Die Seeräuber überwältigen den Verband und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Gulden Lösegeld kommt Kapitän ${fk.name} frei und kehrt nach ${C[st.home].n} zurück.`
+        : `Die Seeräuber überwältigen euch und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Gulden Lösegeld setzt ${e.name} dich in ${C[st.home].n} an Land.`;
+      addLog(`Von Seeräubern unter ${e.name} gefangen. ${shipLabel(out.ship)} verloren, ${fmt(out.ransom)} Gulden Lösegeld.`, 'pirate');
     } else {
       e.phase = 'lost';
       e.msg = `Die Seeräuber erobern die „${out.ship.name}“${out.taken ? ` mit ${out.taken}` : ''}. ${out.loss} ${out.loss === 1 ? 'Mann geht' : 'Leute gehen'} verloren. Der Rest des Verbands entkommt.`;
@@ -3518,7 +3540,7 @@ em.rep.warn{background:#b5523a}
     const e = st.enc; if (busy || !e || e.phase !== 'fleeing') return;
     if (!go) {
       winCore('fled'); scene.fx.leave();
-      e.msg = `Ihr lasst sie ziehen. Im Treibgut findet ihr ${fmt(e.loot)} Mark.`;
+      e.msg = `Ihr lasst sie ziehen. Im Treibgut findet ihr ${fmt(e.loot)} Gulden.`;
       return commit();
     }
     busy = true; e.msg = 'Alle Segel setzen, hinterher!'; render();
@@ -3529,7 +3551,7 @@ em.rep.warn{background:#b5523a}
       e.msg = 'Ihr holt sie ein! Sie müssen sich stellen.';
     } else {
       winCore('fled'); scene.fx.leave();
-      e.msg = `Sie sind zu schnell und entkommen. Im Treibgut findet ihr ${fmt(e.loot)} Mark.`;
+      e.msg = `Sie sind zu schnell und entkommen. Im Treibgut findet ihr ${fmt(e.loot)} Gulden.`;
     }
     commit();
   }
@@ -3549,10 +3571,10 @@ em.rep.warn{background:#b5523a}
       msg = `${{schnigge:'Die erbeutete', kogge:'Die erbeutete', holk:'Der erbeutete', kraweel:'Das erbeutete'}[e.prize.type]} ${T.n} segelt jetzt als „${st.fleet[st.fleet.length - 1].name}“ in deinem Verband, Rumpf ${e.prize.hull} %.`;
     } else if (prizeManned()) {
       const v = prizeValue(); st.money += v; scene.fx.leave();
-      msg = `Eine Prisenmannschaft segelt das Schiff in den nächsten Hafen. Die Prise bringt ${fmt(v)} Mark Prisengeld.`;
+      msg = `Eine Prisenmannschaft segelt das Schiff in den nächsten Hafen. Die Prise bringt ${fmt(v)} Gulden Prisengeld.`;
     } else {
       const v = stripValue(); st.money += v; scene.fx.sink();
-      msg = `Für eine Prisenmannschaft fehlen euch Leute (${prizeNeed()} Matrosen nötig). Ihr schlachtet das Schiff aus, nehmt Tauwerk, Segel und Waffen für ${fmt(v)} Mark und bohrt es an.`;
+      msg = `Für eine Prisenmannschaft fehlen euch Leute (${prizeNeed()} Matrosen nötig). Ihr schlachtet das Schiff aus, nehmt Tauwerk, Segel und Waffen für ${fmt(v)} Gulden und bohrt es an.`;
     }
     if (e.booty) {
       const q = Math.min(e.booty.q, CAP - used());
@@ -3578,7 +3600,7 @@ em.rep.warn{background:#b5523a}
       if (st.hanse && st.hanse.escort && st.hanse.escort.state === 'onway') failEscort('Dein Verband ist verloren, die Kauffahrer sind schutzlos.');
       st.enc = null; st.sail = null; st.loc = st.home; scene.fx.reset();
       remember(st.home);
-      addLog(`Ohne Schiff zurück in ${C[st.home].n}. Die Werft hier überlässt dir für ${fmt(OLD_SHIP)} Mark eine alte Schnigge.`, 'arrive');
+      addLog(`Ohne Schiff zurück in ${C[st.home].n}. Die Werft hier überlässt dir für ${fmt(OLD_SHIP)} Gulden eine alte Schnigge.`, 'arrive');
       return commit();
     }
     st.enc = null; scene.fx.reset();
@@ -5641,45 +5663,73 @@ em.rep.warn{background:#b5523a}
 
   // ───────── Avatar ─────────
   const AV = {
-    skin:['#f1d3b8','#d8a47c','#9f6c48'], skinN:['hell','mittel','dunkel'],
-    hair:['#5b3a22','#c7a05a','#221c18','#9b9993'], hairN:['braun','blond','schwarz','grau'],
-    cloth:['#2f4f7a','#8a2f2a','#3e6a46','#6b4a2f'], clothN:['blau','rot','grün','braun'],
-    hatM:[['barett','Barett'],['gugel','Gugel'],['ohne','ohne']], hatF:[['haube','Haube'],['schleier','Schleier'],['ohne','ohne']],
-    beard:[['voll','Vollbart'],['schnurr','Schnurrbart'],['ohne','ohne']]
+    skin:['#f1d3b8','#d8a47c','#9f6c48','#f7e3d1','#e3b48c','#6f4630'], skinN:['hell','mittel','dunkel','blass','golden','tiefbraun'], skinOrder:[3,0,4,1,2,5],
+    hair:['#5b3a22','#c7a05a','#221c18','#9b9993','#8e3b1f','#7a4a2a','#e8e2d6'], hairN:['braun','blond','schwarz','grau','rot','kastanie','weiß'], hairOrder:[1,4,5,0,2,3,6],
+    cloth:['#2f4f7a','#8a2f2a','#3e6a46','#6b4a2f','#2a2a2e','#5a3a6b','#a07a2a'], clothN:['blau','rot','grün','braun','schwarz','purpur','ocker'],
+    hatM:[['barett','Barett'],['gugel','Gugel'],['filzhut','Filzhut'],['ohne','ohne']], hatF:[['haube','Haube'],['schleier','Schleier'],['gebende','Gebende'],['kranz','Kranz'],['ohne','ohne']],
+    beard:[['voll','Vollbart'],['kinn','Kinnbart'],['schnurr','Schnurrbart'],['stoppel','Stoppeln'],['ohne','ohne']],
+    hsM:[['kurz','kurz'],['lang','lang'],['locken','Locken'],['licht','licht']], hsF:[['offen','offen'],['zopf','Zopf'],['knoten','Knoten']],
+    acc:[['ohne','schlicht'],['kette','Goldkette'],['pelz','Pelzkragen']],
+    age:[['jung','jung'],['reif','reif'],['alt','alt']],
+    col:['#d9cfb6','#b9c8cf','#d8b4a6','#bfcbb0','#d9c48f'], colN:['Sand','Taube','Ziegel','Salbei','Ocker'],
+    marks:['M20 4V36M12 12H28M20 4L27 11', 'M20 4V36M20 36L12 28M20 36L28 28M13 14H27', 'M14 4V36M14 10H26L30 16M14 22H24', 'M20 4V36M11 18L29 10M11 10L29 18', 'M10 34L20 6L30 34M14 22H26', 'M20 4V24M20 24L10 36M20 24L30 36M14 10H26']
+  };
+  const hausmarke = (i, col, cls) => `<svg class="hm ${cls || ''}" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="7" fill="${AV.col[col] || AV.col[0]}" stroke="#6f5238" stroke-width="1.2"/><path d="${AV.marks[i] || AV.marks[0]}" fill="none" stroke="#2b2522" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const ORIGINS = {
+    kaufmann:{n:'Kaufmannsfamilie', d:'Dein Vater hinterlässt dir 500 Gulden mehr in der Truhe.'},
+    schiffer:{n:'Schifferfamilie', d:'Dein Kapitän ist ein alter Freund der Familie: Seemannschaft 2, dazu 2 Matrosen mehr an Bord.'},
+    gilde:{n:'Handwerkerfamilie', d:'Die Zünfte kennen deinen Namen: 40 Ansehen im Stammsitz vom ersten Tag an.'},
+    schreiber:{n:'Kontorschreiber', d:'Du hast Jahre im Kontor Preislisten geschrieben: Du kennst zum Start die Preise aller Hansestädte.'},
+    soeldner:{n:'Söldnerfamilie', d:'2 Armbrüste mehr an Bord, und dein Kapitän kämpft besser: Kampf 2.'}
   };
   const shade = (hex, k) => { const n = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16)); return '#' + n.map(v => Math.max(0, Math.min(255, Math.round(k < 0 ? v * (1 + k) : v + (255 - v) * k))).toString(16).padStart(2, '0')).join(''); };
   let avId = 0;
   function avatarSVG(a, cls) {
     a = a || defAv();
     const id = 'avc' + (++avId), sk = AV.skin[a.skin] || AV.skin[0], hr = AV.hair[a.hair] || AV.hair[0], cl = AV.cloth[a.cloth] || AV.cloth[0];
-    const f = a.g === 'f', hat = a.hat, dark = shade(cl, -0.35), linen = '#f1ece1';
+    const f = a.g === 'f', hat = a.hat, dark = shade(cl, -0.35), linen = '#f1ece1', hs = a.hs || (f ? 'offen' : 'kurz'), bg = AV.col[a.col] || AV.col[0];
     let back = '', front = '', top = '';
+    if (!f && hs === 'lang' && hat !== 'gugel') back += `<path d="M38 52C36 72 38 84 44 88L48 70ZM82 52C84 72 82 84 76 88L72 70Z" fill="${hr}"/>`;
+    if (f && (hat === 'ohne' || hat === 'kranz') && hs === 'zopf') back += `<path d="M38 58C34 32 86 32 82 58L80 70C74 50 46 50 40 70Z" fill="${hr}"/>` + [0, 1, 2, 3, 4].map(k => `<ellipse cx="${80 + k * 1.5}" cy="${70 + k * 9}" rx="5" ry="5.6" fill="${shade(hr, k % 2 ? -0.12 : 0)}"/>`).join('');
+    if (f && (hat === 'ohne' || hat === 'kranz') && hs === 'knoten') back += `<path d="M38 60C34 32 86 32 82 60L80 66C74 48 46 48 40 66Z" fill="${hr}"/><circle cx="60" cy="27" r="9" fill="${hr}"/><path d="M53 27Q60 22 67 27" fill="none" stroke="${shade(hr, -0.2)}" stroke-width="1.2"/>`;
     if (!f && hat === 'gugel') back += `<path d="M28 74C24 30 96 30 92 74C90 88 78 95 60 95C42 95 30 88 28 74Z" fill="${dark}"/>`;
     if (f && hat === 'haube') back += `<path d="M33 68C29 33 91 33 87 68L88 88C80 98 40 98 32 88Z" fill="${linen}"/>`;
     if (f && hat === 'schleier') back += `<path d="M31 64C29 30 91 30 89 64L96 112L24 112Z" fill="#e6dfcf"/>`;
-    if (f && hat === 'ohne') back += `<path d="M37 60C33 28 87 28 83 60L86 96C80 100 74 96 74 88L73 66C68 48 52 48 47 66L46 88C46 96 40 100 34 96Z" fill="${hr}"/>`;
+    if (f && (hat === 'ohne' || hat === 'kranz') && hs === 'offen') back += `<path d="M37 60C33 28 87 28 83 60L86 96C80 100 74 96 74 88L73 66C68 48 52 48 47 66L46 88C46 96 40 100 34 96Z" fill="${hr}"/>`;
+    if (f && hat === 'gebende') back += `<path d="M36 64C34 34 86 34 84 64L84 80C78 92 42 92 36 80Z" fill="${linen}"/>`;
     // Schultern und Gewand
     let body = `<path d="M12 120C16 94 36 86 60 86C84 86 104 94 108 120Z" fill="${cl}"/>`;
     body += f ? `<path d="M44 88C50 98 70 98 76 88" fill="none" stroke="${linen}" stroke-width="3"/>`
       : `<path d="M34 92C44 102 76 102 86 92C84 104 36 104 34 92Z" fill="#7a5a3c"/><path d="M38 94C46 101 74 101 82 94" fill="none" stroke="#a07a54" stroke-width="1.5"/>`;
+    if (a.acc === 'pelz') body += `<path d="M18 108C22 92 40 86 60 88C80 86 98 92 102 108C92 100 78 97 60 98C42 97 28 100 18 108Z" fill="#b89470"/>` + [24, 34, 44, 54, 64, 74, 84, 94].map(x => `<circle cx="${x}" cy="${97 + Math.abs(x - 59) * 0.12}" r="5" fill="#c9a782"/>`).join('');
+    if (a.acc === 'kette') body += `<path d="M40 92Q60 118 80 92" fill="none" stroke="#c9a24a" stroke-width="2.2" stroke-dasharray="3 1.5"/><circle cx="60" cy="106" r="4.2" fill="#d8b45a" stroke="#8a6a20" stroke-width="1"/>`;
     // Hals und Kopf
     let head = `<rect x="52" y="74" width="16" height="16" fill="${shade(sk, -0.12)}"/><ellipse cx="60" cy="58" rx="20" ry="24" fill="${sk}"/>`;
-    if (!f && hat !== 'gugel') head += `<path d="M40 58C39 34 81 34 80 58C77 47 68 42 60 42C52 42 43 47 40 58Z" fill="${hr}"/>`;
+    if (!f && hat !== 'gugel' && hs !== 'licht') head += `<path d="M40 58C39 34 81 34 80 58C77 47 68 42 60 42C52 42 43 47 40 58Z" fill="${hr}"/>` + (hs === 'locken' ? [42, 49, 56, 63, 70, 77].map((x, k) => `<circle cx="${x + 1}" cy="${44 - Math.sin(k / 5 * Math.PI) * 6}" r="5" fill="${hr}"/>`).join('') : '');
+    if (!f && hs === 'licht' && hat !== 'gugel') head += `<path d="M40 60C39 50 42 44 46 42L45 58ZM80 60C81 50 78 44 74 42L75 58Z" fill="${hr}"/>`;
     head += `<ellipse cx="52" cy="58" rx="1.9" ry="2.2" fill="#2a211b"/><ellipse cx="68" cy="58" rx="1.9" ry="2.2" fill="#2a211b"/>` +
       `<path d="M48 52Q52 50 56 52M64 52Q68 50 72 52" fill="none" stroke="${shade(hr, -0.1)}" stroke-width="1.6" stroke-linecap="round"/>` +
       `<path d="M60 60L58 67L61.5 67" fill="none" stroke="${shade(sk, -0.3)}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>` +
       `<ellipse cx="49" cy="66" rx="3.5" ry="2" fill="#d77b6a" opacity=".25"/><ellipse cx="71" cy="66" rx="3.5" ry="2" fill="#d77b6a" opacity=".25"/>`;
+    if (a.age === 'reif' || a.age === 'alt') front += `<path d="M50 70Q48 74 50 77M70 70Q72 74 70 77" fill="none" stroke="${shade(sk, -0.25)}" stroke-width="0.9" stroke-linecap="round"/>`;
+    if (a.age === 'alt') front += `<path d="M50 44Q60 41 70 44M52 48Q60 46 68 48M44 57L41 55M76 57L79 55M44 60L41 60M76 60L79 60" fill="none" stroke="${shade(sk, -0.22)}" stroke-width="0.9" stroke-linecap="round"/>`;
+    if (!f && a.beard === 'stoppel') front += `<path d="M42 64C43 84 52 91 60 91C68 91 77 84 78 64C74 74 68 78 60 78C52 78 46 74 42 64Z" fill="${hr}" opacity=".28"/>`;
+    if (!f && a.beard === 'kinn') front += `<path d="M53 78C54 88 58 92 60 92C62 92 66 88 67 78C64 80 56 80 53 78Z" fill="${hr}"/>`;
     if (!f && a.beard === 'voll') front += `<path d="M41 62C41 86 52 93 60 93C68 93 79 86 79 62C75 73 68 78 60 78C52 78 45 73 41 62Z" fill="${hr}"/><path d="M53 73Q60 76 67 73" fill="none" stroke="#7a3b30" stroke-width="1.5" stroke-linecap="round"/>`;
     else {
       front += `<path d="M54 74Q60 77.5 66 74" fill="none" stroke="#8a4034" stroke-width="1.6" stroke-linecap="round"/>`;
       if (!f && a.beard === 'schnurr') front += `<path d="M50 71C54 67.5 58 68.5 60 70.5C62 68.5 66 67.5 70 71C66 73 62 72 60 72C58 72 54 73 50 71Z" fill="${hr}"/>`;
     }
     if (f && hat === 'haube') front += `<path d="M41 68C44 88 76 88 79 68L80 78C76 94 44 94 40 78Z" fill="${linen}"/>`;
+    if (f && hat === 'gebende') front += `<path d="M42 66C44 90 76 90 78 66L79 74C76 96 44 96 41 74Z" fill="${linen}"/>`;
     if (!f && hat === 'barett') top += `<path d="M33 45C33 30 87 30 87 45C87 49 33 49 33 45Z" fill="#2b2522"/><rect x="38" y="42" width="44" height="5" rx="2" fill="${dark}"/>`;
+    if (!f && hat === 'filzhut') top += `<ellipse cx="60" cy="44" rx="32" ry="6" fill="#4a3a2c"/><path d="M42 44C42 28 78 28 78 44Z" fill="#5b4836"/><rect x="42" y="38" width="36" height="4" fill="${dark}"/>`;
+    if (f && hat === 'gebende') top += `<path d="M40 46C40 34 80 34 80 46L80 50C70 46 50 46 40 50Z" fill="${linen}" stroke="#d6cdb8" stroke-width="1"/>`;
+    if (f && hat === 'kranz') top += [38, 45, 52, 60, 68, 75, 82].map((x, k) => `<circle cx="${x}" cy="${42 - Math.sin(k / 6 * Math.PI) * 7}" r="4.2" fill="${['#c9554a', '#f0d36a', '#e9e2f2', '#7aa0c9'][k % 4]}"/><circle cx="${x}" cy="${42 - Math.sin(k / 6 * Math.PI) * 7}" r="1.3" fill="#f6e7a8"/>`).join('') + `<path d="M36 44Q60 30 84 44" fill="none" stroke="#56704a" stroke-width="2"/>`;
     if (!f && hat === 'gugel') top += `<path d="M37 54C39 31 81 31 83 54C77 41 43 41 37 54Z" fill="${dark}"/><path d="M80 40C97 35 106 52 101 70C99 58 92 49 82 49Z" fill="${dark}"/>`;
     if (f && (hat === 'haube' || hat === 'schleier')) top += `<path d="M37 52C39 31 81 31 83 52C75 42 45 42 37 52Z" fill="${hat === 'haube' ? linen : '#e6dfcf'}"/>` + (hat === 'schleier' ? `<rect x="38" y="40" width="44" height="4" rx="2" fill="${cl}"/>` : '');
     return `<svg class="av ${cls || ''}" viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="${id}"><circle cx="60" cy="60" r="60"/></clipPath></defs>` +
-      `<g clip-path="url(#${id})"><rect width="120" height="120" fill="#d9cfb6"/><circle cx="60" cy="40" r="46" fill="#e6dcc6"/>${back}${body}${head}${front}${top}</g></svg>`;
+      `<g clip-path="url(#${id})"><rect width="120" height="120" fill="${bg}"/><circle cx="60" cy="40" r="46" fill="${shade(bg, 0.35)}"/>${back}${body}${head}${front}${top}</g></svg>`;
   }
 
   // ───────── Neues Spiel: Kaufmann und Stammsitz ─────────
@@ -5688,7 +5738,7 @@ em.rep.warn{background:#b5523a}
     s:['Vöge','Swarte','Warendorp','Kerkring','Hövelen','Plescow','Mornewech','Darsow','Wickede','Brekelvelde','Castorp','Hadewerk']};
   const pick = a => a[Math.floor(Math.random() * a.length)];
   function openWizard(slot, canCancel) {
-    ui.wiz = {step:1, name:'', av:defAv(), home:'luebeck', ship:'', seasons:'spuerbar', mode:'offen', slot:slot || active, canCancel:!!canCancel};
+    ui.wiz = {step:1, name:'', av:defAv(), origin:'kaufmann', home:'luebeck', ship:'', seasons:'spuerbar', mode:'offen', slot:slot || active, canCancel:!!canCancel};
     ui.saves = false;
     renderWizard(); renderSaves();
     setTimeout(() => { const i = document.getElementById('wiz-name'); if (i) i.focus(); }, 50);
@@ -5700,27 +5750,36 @@ em.rep.warn{background:#b5523a}
     const chips = (key, list, cur) => `<div class="chipset" role="group">` + list.map(([v, label, sw]) =>
       `<button type="button" data-av="${key}" data-v="${v}" aria-pressed="${String(cur) === String(v)}">${sw ? `<i class="sw" style="background:${sw}"></i>` : ''}${label}</button>`).join('') + `</div>`;
     const a = w.av, f = a.g === 'f';
-    let h = `<div class="in"><div class="wsteps" aria-hidden="true">${[1, 2, 3].map(i => `<i class="${i <= w.step ? 'on' : ''}"></i>`).join('')}</div>`;
+    let h = `<div class="in"><div class="wsteps" aria-hidden="true">${[1, 2, 3, 4].map(i => `<i class="${i <= w.step ? 'on' : ''}"></i>`).join('')}</div>`;
     if (w.step === 1) {
       h += `<h1 id="wiz-title">Ein neues Handelshaus</h1><p>Lübeck, 1. April 1356. Wer gründet das Handelshaus?</p>` +
         `<div class="opt"><label class="flabel" for="wiz-name">Name</label><div class="namerow"><input id="wiz-name" maxlength="28" autocomplete="off" placeholder="z. B. ${f ? 'Alheyd Warendorp' : 'Hinrik Vöge'}" value="${(w.name || '').replace(/"/g, '&quot;')}"><button class="dice" type="button" data-act="wiz-dice">Zufall</button></div></div>` +
         `<div class="avbox">${avatarSVG(a, 'big')}<div class="opts">` +
-        `<div class="opt"><span class="flabel">Gestalt</span>${chips('g', [['m', 'Kaufmann'], ['f', 'Kauffrau']], a.g)}</div>` +
+        `<div class="opt"><span class="flabel">Gestalt</span>${chips('g', [['m', 'Kaufmann'], ['f', 'Kauffrau']], a.g)}<button class="dice" type="button" data-act="wiz-look" style="margin-top:6px">Aussehen würfeln</button></div>` +
+        `<div class="opt"><span class="flabel">Alter</span>${chips('age', AV.age, a.age || 'jung')}</div>` +
         `<div class="opt"><span class="flabel">Kopfbedeckung</span>${chips('hat', (f ? AV.hatF : AV.hatM).map(x => [x[0], x[1]]), a.hat)}</div>` +
+        `<div class="opt"><span class="flabel">Frisur</span>${chips('hs', f ? AV.hsF : AV.hsM, a.hs || (f ? 'offen' : 'kurz'))}${f && !['ohne', 'kranz'].includes(a.hat) ? '<span class="small">Unter Haube, Schleier und Gebende sieht man das Haar nicht.</span>' : ''}</div>` +
         (f ? '' : `<div class="opt"><span class="flabel">Bart</span>${chips('beard', AV.beard, a.beard)}</div>`) +
-        `<div class="opt"><span class="flabel">Haar</span>${chips('hair', AV.hair.map((c, i) => [i, AV.hairN[i], c]), a.hair)}</div>` +
-        `<div class="opt"><span class="flabel">Haut</span>${chips('skin', AV.skin.map((c, i) => [i, AV.skinN[i], c]), a.skin)}</div>` +
+        `<div class="opt"><span class="flabel">Haar</span>${chips('hair', AV.hairOrder.map(i => [i, AV.hairN[i], AV.hair[i]]), a.hair)}</div>` +
+        `<div class="opt"><span class="flabel">Haut</span>${chips('skin', AV.skinOrder.map(i => [i, AV.skinN[i], AV.skin[i]]), a.skin)}</div>` +
         `<div class="opt"><span class="flabel">Gewand</span>${chips('cloth', AV.cloth.map((c, i) => [i, AV.clothN[i], c]), a.cloth)}</div>` +
+        `<div class="opt"><span class="flabel">Schmuck</span>${chips('acc', AV.acc, a.acc || 'ohne')}</div>` +
         `</div></div>`;
     } else if (w.step === 2) {
+      h += `<h1 id="wiz-title">Herkunft und Hausmarke</h1><p>Woher kommst du, und mit welchem Zeichen markierst du deine Fässer und Ballen?</p>` +
+        `<div class="origins">` + Object.entries(ORIGINS).map(([k, o]) => `<button class="homecard" type="button" data-origin="${k}" aria-pressed="${w.origin === k}"><b>${o.n}</b><span>${o.d}</span></button>`).join('') + `</div>` +
+        `<div class="opt"><span class="flabel">Hausmarke</span><div class="hmset" role="group">` + AV.marks.map((_, i) => `<button type="button" data-av="mark" data-v="${i}" aria-pressed="${(a.mark || 0) === i}" aria-label="Hausmarke ${i + 1}">${hausmarke(i, a.col || 0)}</button>`).join('') + `</div></div>` +
+        `<div class="opt"><span class="flabel">Hausfarbe</span>${chips('col', AV.col.map((c, i) => [i, AV.colN[i], c]), a.col || 0)}</div>`;
+    } else if (w.step === 3) {
       h += `<h1 id="wiz-title">Dein Stammsitz</h1><p>Hier hast du Bürgerrecht: 5 % günstiger einkaufen, 5 % teurer verkaufen. Mit Ansehen im Stammsitz steigst du auf, vom Neubürger bis zum Bürgermeister.</p><div class="homes">` +
         HOMES.map(cid => `<button class="homecard" type="button" data-home="${cid}" aria-pressed="${w.home === cid}"><b>${C[cid].n}</b><span>${C[cid].d}</span>` +
           `<span class="pk">${PERKS[cid].t}</span><span>${PERKS[cid].d}</span><span>Erzeugt ${C[cid].p.map(g => G[g].n).join(', ')} · braucht ${C[cid].c.map(g => G[g].n).join(', ')}</span></button>`).join('') + `</div>`;
     } else {
       const nm = (w.name || '').trim() || 'Kaufmann', hm = C[w.home];
       h += `<h1 id="wiz-title">Handelshaus ${nm}</h1><div class="summary">${avatarSVG(a, 'big')}<dl>` +
+        `<dt>Hausmarke</dt><dd>${hausmarke(a.mark || 0, a.col || 0, 'inl')}</dd><dt>Herkunft</dt><dd>${ORIGINS[w.origin].n}: ${ORIGINS[w.origin].d}</dd>` +
         `<dt>Stammsitz</dt><dd>${hm.n}</dd><dt>Vorteil</dt><dd>${PERKS[w.home].t}: ${PERKS[w.home].d}</dd>` +
-        `<dt>Start</dt><dd>${fmt(START + (w.home === 'stockholm' ? 1000 : 0))} Mark, alte Schnigge mit ${w.home === 'danzig' ? 35 : 30} Last, 9 Matrosen, ${w.home === 'reval' ? '4 Armbrüste und 2 Harnische' : '2 Armbrüste'}, ein unerfahrener Kapitän</dd>` +
+        `<dt>Start</dt><dd>${fmt(START + (w.home === 'stockholm' ? 1000 : 0) + (w.origin === 'kaufmann' ? 500 : 0))} Gulden, alte Schnigge mit ${w.home === 'danzig' ? 35 : 30} Last, 9 Matrosen, ${w.home === 'reval' ? '4 Armbrüste und 2 Harnische' : '2 Armbrüste'}, ein unerfahrener Kapitän</dd>` +
         `<dt>Spielstand</dt><dd>Platz ${w.slot}${getSlot(w.slot) ? ' (wird überschrieben)' : ''}</dd></dl></div>` +
         `<div class="opt"><span class="flabel">Spielart</span><div class="chipset" role="group">` +
         [['offen', 'Offenes Spiel'], ['kampagne', 'Kampagne bis 1370']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
@@ -5732,13 +5791,13 @@ em.rep.warn{background:#b5523a}
     }
     const nameOk = ((w.name || '').trim().length > 0);
     h += `<div class="wnav">` + (w.step > 1 ? `<button class="btn" type="button" data-act="wiz-back">Zurück</button>` : w.canCancel ? `<button class="btn" type="button" data-act="wiz-cancel">Abbrechen</button>` : '') +
-      (w.step < 3 ? `<button class="btn primary" type="button" data-act="wiz-next"${w.step === 1 && !nameOk ? ' disabled' : ''}>Weiter</button>` : `<button class="btn primary" type="button" data-act="wiz-go">Handelshaus gründen</button>`) + `</div></div>`;
+      (w.step < 4 ? `<button class="btn primary" type="button" data-act="wiz-next"${w.step === 1 && !nameOk ? ' disabled' : ''}>Weiter</button>` : `<button class="btn primary" type="button" data-act="wiz-go">Handelshaus gründen</button>`) + `</div></div>`;
     box.innerHTML = h;
   }
   function foundHouse() {
     const w = ui.wiz;
     if (timer) { clearTimeout(timer); timer = null; }
-    newGame({name:(w.name || '').trim() || 'Kaufmann', avatar:Object.assign({}, w.av)}, w.home, {ship:w.ship, seasons:w.seasons, mode:w.mode});
+    newGame({name:(w.name || '').trim() || 'Kaufmann', avatar:Object.assign({}, w.av)}, w.home, {ship:w.ship, seasons:w.seasons, mode:w.mode, origin:w.origin});
     active = w.slot; ui.wiz = null; ui.open = null; closeSheet(); ui.saves = false;
     scene.fx.init(st); scene.fx.reset();
     commit(); renderWizard();
@@ -5773,7 +5832,7 @@ em.rep.warn{background:#b5523a}
       const m = sl.meta, cur = n === active;
       h += `<div class="slot${cur ? ' active' : ''}">${avatarSVG(m.avatar)}<div class="meta"><b>${m.name}</b>` +
         `<span>Platz ${n}${cur ? ' · wird gespielt' : ''} · Stammsitz ${C[m.home] ? C[m.home].n : '–'}</span>` +
-        `<span>${fdate(m.day || 0, true)} · ${fmt(m.money || 0)} Mark · ${RANKS[m.rank || 0][1]}</span>` +
+        `<span>${fdate(m.day || 0, true)} · ${fmt(m.money || 0)} Gulden · ${RANKS[m.rank || 0][1]}</span>` +
         (m.savedAt && !cur ? `<span>gespeichert ${ago(m.savedAt)}</span>` : '') + `</div><div class="acts">` +
         (cur ? '' : `<button class="ybtn" type="button" data-slot="load" data-n="${n}">Laden</button>`) +
         `<button class="ybtn" type="button" data-slot="new" data-n="${n}">Neu beginnen</button>` +
@@ -5923,9 +5982,9 @@ em.rep.warn{background:#b5523a}
     $('#stats').innerHTML =
       `<span class="who">${avatarSVG(st.player && st.player.avatar)}<span>${st.player ? st.player.name : ''}</span></span>` +
       (() => { const d = fdate(st.day, true), i = d.lastIndexOf(' '); return `<div class="stat date" aria-label="Datum ${d}"><span class="d1">${d.slice(0, i)}</span><span class="d2">${d.slice(i + 1)}</span></div>`; })() +
-      `<div class="purse" aria-label="Truhe ${fmt(st.money)} Mark, Vermögen ${fmt(wealth())} Mark">` +
+      `<div class="purse" aria-label="Truhe ${fmt(st.money)} Gulden, Vermögen ${fmt(wealth())} Gulden">` +
       `<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16" rx="8" ry="3.4"/><path d="M4 16v-3.4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4V16"/><ellipse cx="12" cy="9" rx="8" ry="3.4"/><path d="M4 9v3.6M20 9v3.6"/></svg>` +
-      `<span class="pin"><span class="pv${st.money < 0 ? ' neg' : ''}">${fmt(st.money)} <small>Mark</small></span><span class="pw">Vermögen ${fmt(wealth())}</span></span></div>` +
+      `<span class="pin"><span class="pv${st.money < 0 ? ' neg' : ''}">${fmt(st.money)} <small>Gulden</small></span><span class="pw">Vermögen ${fmt(wealth())}</span></span></div>` +
       `<span class="rank">${r}</span>` +
       `<button class="mbtn" type="button" data-act="music" aria-pressed="${music.isOn()}" aria-label="Musik ${music.isOn() ? 'ausschalten' : 'einschalten'}">` +
       (music.isOn() ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>`
@@ -5950,10 +6009,10 @@ em.rep.warn{background:#b5523a}
       `<div class="bar"><i style="width:${CAP ? u / CAP * 100 : 0}%"></i></div>${chips ? `<div class="chips">${chips}</div>` : ''}` +
       `</div>` + (() => {
         const open = ui.det.status == null ? false : ui.det.status;
-        return `<details class="more" data-det="status"${open ? ' open' : ''}><summary><span>Vermögen ${fmt(w)} Mark · ${st.fleet.length} ${st.fleet.length === 1 ? 'Schiff' : 'Schiffe'}</span><i class="chev" aria-hidden="true"></i></summary>` +
+        return `<details class="more" data-det="status"${open ? ' open' : ''}><summary><span>Vermögen ${fmt(w)} Gulden · ${st.fleet.length} ${st.fleet.length === 1 ? 'Schiff' : 'Schiffe'}</span><i class="chev" aria-hidden="true"></i></summary>` +
           (st.fleet.length ? `<div class="fleetline">${st.fleet.map((sh, i) => `<span class="shipchip${sh.hull < 40 ? ' low' : ''}">${i === 0 ? '⚑ ' : ''}${esc(sh.name)} <small>${SHIPS[sh.type].n} · ${sh.hull} %</small></span>`).join('')}</div>` : '') +
           `<div class="wealth"><div class="holdrow"><span>Vermögen mit Ladung und Schiffen</span><span class="small">${next ? `${next[1]} ab ${fmt(next[0])}` : 'Höchster Rang erreicht'}</span></div>` +
-          `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} Matrosen · ${armsLine()} · Tempo ${Math.round(fleetSpeed() * 100)} % · Heuer und Unterhalt ${wage()} Mark am Tag</span></div></details>`;
+          `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} Matrosen · ${armsLine()} · Tempo ${Math.round(fleetSpeed() * 100)} % · Heuer und Unterhalt ${wage()} Gulden am Tag</span></div></details>`;
       })();
     if (halted()) h = endHTML() + h;
     if (bankrupt()) h += `<div class="over"><strong>Bankrott.</strong><span>${st.money < 0 && wealth() < 0 ? 'Deine Schulden übersteigen dein Vermögen. Die Gläubiger übernehmen das Handelshaus.' : 'Die Truhe ist leer und der Laderaum auch. Die Mannschaft geht von Bord.'}</span><button class="btn primary" type="button" data-act="restart">Neues Spiel</button></div>`;
@@ -5962,15 +6021,15 @@ em.rep.warn{background:#b5523a}
   function renderMarket() {
     const box = $('#market');
     if (!st.loc) {
-      const items = GOODS.filter(g => held(g.id)).map(g => `<li>${icon(g.id)}<span>${held(g.id)} Last ${g.n}, Ø Einkauf ${fmt(st.cargo[g.id].cost / held(g.id))} Mark</span></li>`).join('') +
-        ((st.freight || {}).active || []).map(f => `<li>${icon(f.g)}<span>Fracht: ${f.q} Last ${G[f.g].n} für ${f.by} nach ${C[f.to].n}, bis ${fdate(f.due)}, Lohn ${fmt(f.pay)} Mark</span></li>`).join('');
+      const items = GOODS.filter(g => held(g.id)).map(g => `<li>${icon(g.id)}<span>${held(g.id)} Last ${g.n}, Ø Einkauf ${fmt(st.cargo[g.id].cost / held(g.id))} Gulden</span></li>`).join('') +
+        ((st.freight || {}).active || []).map(f => `<li>${icon(f.g)}<span>Fracht: ${f.q} Last ${G[f.g].n} für ${f.by} nach ${C[f.to].n}, bis ${fdate(f.due)}, Lohn ${fmt(f.pay)} Gulden</span></li>`).join('');
       box.innerHTML = `<div class="mhead"><h2>Laderaum</h2><span class="profile">Der Markt öffnet bei Ankunft in ${C[st.sail.to].n}.</span></div>` +
         (items ? `<ul class="cargo">${items}</ul>` : `<p class="hint">Der Laderaum ist leer.</p>`);
       return;
     }
     const c = C[st.loc];
     let h = `<div class="mhead"><h2>Markt in ${c.n}</h2>` +
-      `<div class="mhold"><span>${used()} / ${CAP} Last${freightQ() ? ` <small>(${freightQ()} Fracht)</small>` : ''}</span><div class="bar"><i style="width:${CAP ? used() / CAP * 100 : 0}%"></i></div><span>${fmt(st.money)} M</span></div>` +
+      `<div class="mhold"><span>${used()} / ${CAP} Last${freightQ() ? ` <small>(${freightQ()} Fracht)</small>` : ''}</span><div class="bar"><i style="width:${CAP ? used() / CAP * 100 : 0}%"></i></div><span>${fmt(st.money)} G</span></div>` +
       `<span class="profile">Erzeugt <b>${c.p.map(g => G[g].n).join(', ')}</b> · braucht <b>${c.c.map(g => G[g].n).join(', ')}</b></span>` +
       (embargoAt(c.id) ? `<p class="warnline">Handelssperre der Hanse bis ${fdate(embargoAt(c.id).until)}. Jede gehandelte Last kostet 1,5 Ansehen.</p>` : '') +
       (isPest(c.id) ? `<p class="warnline">In ${c.n} geht die Pest um. Die Stadt braucht weniger, Matrosen erkranken beim Anlegen.</p>` : '') +
@@ -5987,7 +6046,7 @@ em.rep.warn{background:#b5523a}
       if (open) h += panel(g, hq);
       h += `</div>`;
     });
-    h += `<p class="legend">Preise in Mark je Last. <span class="deal">Grün</span> heißt: günstig einzukaufen oder teuer zu verkaufen. Pfeile zeigen die Jahreszeit: ↓ viel Angebot, ↑ gefragt.</p>`;
+    h += `<p class="legend">Preise in Gulden je Last. <span class="deal">Grün</span> heißt: günstig einzukaufen oder teuer zu verkaufen. Pfeile zeigen die Jahreszeit: ↓ viel Angebot, ↑ gefragt.</p>`;
     box.innerHTML = h;
   }
   function panel(g, hq) {
@@ -5999,7 +6058,7 @@ em.rep.warn{background:#b5523a}
     let hint = '';
     if (hq) {
       const avg = st.cargo[g.id].cost / hq, d = Math.round(sellPrice(st.loc, g.id) - avg);
-      hint = `An Bord ${hq} Last, Ø Einkauf ${fmt(avg)} Mark. Hier je Last <span class="${d >= 0 ? 'up' : 'down'}">${d >= 0 ? '+' : '−'}${fmt(Math.abs(d))}</span>.`;
+      hint = `An Bord ${hq} Last, Ø Einkauf ${fmt(avg)} Gulden. Hier je Last <span class="${d >= 0 ? 'up' : 'down'}">${d >= 0 ? '+' : '−'}${fmt(Math.abs(d))}</span>.`;
     }
     if (!mb) {
       const why = used() >= CAP ? 'Der Laderaum ist voll.' : st.stock[st.loc][g.id] < 1 ? 'Der Markt ist leergekauft.' : 'Das Geld reicht nicht für eine Last.';
@@ -6010,13 +6069,13 @@ em.rep.warn{background:#b5523a}
     const sk = seasonK(st.loc, g.id), ks = stored(g.id, st.loc), K = storeAt(st.loc);
     const nk = Math.min(want, ks), gk = nk ? sellGain(st.loc, g.id, nk) : 0;
     if (ks) { const kc = K.goods[g.id], ka = kc.cost / kc.q, kd = Math.round(sellPrice(st.loc, g.id) - ka);
-      hint += (hint ? ' ' : '') + `Im ${st.loc === st.home ? 'Kontor' : 'Lager der Niederlassung'} liegen ${ks} Last, Ø Einkauf ${fmt(ka)} Mark, hier je Last <span class="${kd >= 0 ? 'up' : 'down'}">${kd >= 0 ? '+' : '−'}${fmt(Math.abs(kd))}</span>.`; }
+      hint += (hint ? ' ' : '') + `Im ${st.loc === st.home ? 'Kontor' : 'Lager der Niederlassung'} liegen ${ks} Last, Ø Einkauf ${fmt(ka)} Gulden, hier je Last <span class="${kd >= 0 ? 'up' : 'down'}">${kd >= 0 ? '+' : '−'}${fmt(Math.abs(kd))}</span>.`; }
     return `<div class="panel"><div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span>` +
       (sk > 1.05 ? `<span class="szl dn">Saison: viel Angebot, günstiger</span>` : sk < 0.95 ? `<span class="szl up">Gerade gefragt, teurer</span>` : '') + `</div></div>` +
       priceChart(g.id) + `<div class="qty" role="group" aria-label="Menge in Last">${q}</div>` +
-      `<div class="trade"><button class="tbtn buy" type="button" data-trade="buy" data-good="${g.id}" data-n="${nb}"${nb ? '' : ' disabled'}>Kaufen<span>${nb} Last · ${fmt(cb)} M</span></button>` +
-      `<button class="tbtn" type="button" data-trade="sell" data-good="${g.id}" data-n="${ns}"${ns ? '' : ' disabled'}>Verkaufen<span>${ns} Last · ${fmt(gs)} M</span></button>` +
-      (ks ? `<button class="tbtn store" type="button" data-trade="store" data-good="${g.id}" data-n="${nk}">Aus dem ${st.loc === st.home ? 'Kontor' : 'Lager'} verkaufen<span>${nk} Last · ${fmt(gk)} M</span></button>` : '') + `</div>` +
+      `<div class="trade"><button class="tbtn buy" type="button" data-trade="buy" data-good="${g.id}" data-n="${nb}"${nb ? '' : ' disabled'}>Kaufen<span>${nb} Last · ${fmt(cb)} G</span></button>` +
+      `<button class="tbtn" type="button" data-trade="sell" data-good="${g.id}" data-n="${ns}"${ns ? '' : ' disabled'}>Verkaufen<span>${ns} Last · ${fmt(gs)} G</span></button>` +
+      (ks ? `<button class="tbtn store" type="button" data-trade="store" data-good="${g.id}" data-n="${nk}">Aus dem ${st.loc === st.home ? 'Kontor' : 'Lager'} verkaufen<span>${nk} Last · ${fmt(gk)} G</span></button>` : '') + `</div>` +
       (hint ? `<p class="hint">${hint}</p>` : '') + `</div>`;
   }
   function priceChart(gid) {
@@ -6026,13 +6085,13 @@ em.rep.warn{background:#b5523a}
     if (hh.length >= 2) {
       const W = 240, H = 54, ps = hh.map(x => x[1]), lo = Math.min(...ps, G[gid].b), hi = Math.max(...ps, G[gid].b), d0 = hh[0][0], d1 = Math.max(hh[hh.length - 1][0], d0 + 1);
       const X = d => 4 + (d - d0) / (d1 - d0) * (W - 8), Y = v => H - 6 - (v - lo) / Math.max(1, hi - lo) * (H - 14), last = hh[hh.length - 1];
-      svg = `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Kaufpreis zwischen ${fmt(Math.min(...ps))} und ${fmt(Math.max(...ps))} Mark">` +
+      svg = `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Kaufpreis zwischen ${fmt(Math.min(...ps))} und ${fmt(Math.max(...ps))} Gulden">` +
         `<line class="base" x1="0" x2="${W}" y1="${Y(G[gid].b).toFixed(1)}" y2="${Y(G[gid].b).toFixed(1)}"/><polyline points="${hh.map(x => `${X(x[0]).toFixed(1)},${Y(x[1]).toFixed(1)}`).join(' ')}"/>` +
         `<circle cx="${X(last[0]).toFixed(1)}" cy="${Y(last[1]).toFixed(1)}" r="3"/></svg>`;
     }
     return `<div class="pchart"><div class="holdrow"><span class="small">Kaufpreis hier${hh.length >= 2 ? ` seit ${fdate(hh[0][0])}` : ''}</span><span class="small">gestrichelt: Grundpreis ${G[gid].b}</span></div>` +
       (svg || `<span class="small">Den Verlauf siehst du, wenn du öfter hier warst.</span>`) +
-      (best ? `<span class="small">Bester bekannter Verkaufspreis: ${best.c.n} ${best.p} Mark, Stand ${fdate(best.d)}</span>` : '') + `</div>`;
+      (best ? `<span class="small">Bester bekannter Verkaufspreis: ${best.c.n} ${best.p} Gulden, Stand ${fdate(best.d)}</span>` : '') + `</div>`;
   }
   function renderChron() {
     const e = st.era || {chron:[]}, c0 = e.chron[0];
@@ -6071,7 +6130,8 @@ em.rep.warn{background:#b5523a}
     box.hidden = false;
     const r = st.repute || 0, i = civicIdx(r), next = CIVIC[i + 1];
     const prog = next ? Math.min(100, (r - CIVIC[i][0]) / (next[0] - CIVIC[i][0]) * 100) : 100;
-    box.innerHTML = `<h2>Stammsitz ${C[st.home].n}</h2><span class="sub2">Handelshaus ${st.player ? st.player.name : ''} · ${CIVIC[i][1]}</span>` +
+    const pa = (st.player && st.player.avatar) || {};
+    box.innerHTML = `<div class="hmhead">${hausmarke(pa.mark || 0, pa.col || 0, 'inl')}<div><h2>Stammsitz ${C[st.home].n}</h2><span class="sub2">Handelshaus ${st.player ? st.player.name : ''} · ${CIVIC[i][1]}${st.player && st.player.origin && ORIGINS[st.player.origin] ? ` · ${ORIGINS[st.player.origin].n}` : ''}</span></div></div>` +
       `<div class="perks"><div><b>Bürgerrecht:</b> hier 5 % günstiger einkaufen und 5 % teurer verkaufen.</div><div><b>${PERKS[st.home].t}:</b> ${PERKS[st.home].d}</div></div>` +
       `<div class="wealth"><div class="holdrow"><span>Ansehen ${fmt(r)}</span><span class="small">${next ? `${next[1]} ab ${fmt(next[0])}` : 'Höchster Stand erreicht'}</span></div><div class="bar"><i style="width:${prog}%"></i></div>` +
       `<span class="small">Ansehen bringen Verkäufe hier, besonders von Waren, die die Stadt braucht, dazu Ratsaufträge, Betriebe, Bauten und Siege über Seeräuber.</span></div>` +
@@ -6087,11 +6147,11 @@ em.rep.warn{background:#b5523a}
     if (!K) {
       if (ci < 1) return h + `<p class="small">Ab Bürger kannst du hier ein Kontor mit eigenem Lager bauen.</p></div>`;
       if (!home) return h + `<p class="small">Als Bürger darfst du in ${C[st.home].n} ein Kontor bauen. Segle dorthin.</p></div>`;
-      return h + `<p class="small">Ein eigenes Lager für ${nk.cap} Last: billig einlagern und verkaufen, wenn die Saison die Preise treibt. ${nk.upkeep} Mark Lagerkosten am Tag.</p>` +
-        `<button class="ybtn" type="button" data-k="build"${st.money >= nk.cost ? '' : ' disabled'}>Kontor bauen · ${fmt(nk.cost)} M</button></div>`;
+      return h + `<p class="small">Ein eigenes Lager für ${nk.cap} Last: billig einlagern und verkaufen, wenn die Saison die Preise treibt. ${nk.upkeep} Gulden Lagerkosten am Tag.</p>` +
+        `<button class="ybtn" type="button" data-k="build"${st.money >= nk.cost ? '' : ' disabled'}>Kontor bauen · ${fmt(nk.cost)} G</button></div>`;
     }
     const ku = kontorUsed();
-    h += `<div class="holdrow"><span>Lager ${ku} / ${K.cap} Last</span><span class="small">${KONTOR[K.lvl].upkeep + (K.steward ? STEWARD.wage : 0)} Mark am Tag${K.steward ? ' mit Verwalter' : ''}</span></div><div class="bar"><i style="width:${ku / K.cap * 100}%"></i></div>`;
+    h += `<div class="holdrow"><span>Lager ${ku} / ${K.cap} Last</span><span class="small">${KONTOR[K.lvl].upkeep + (K.steward ? STEWARD.wage : 0)} Gulden am Tag${K.steward ? ' mit Verwalter' : ''}</span></div><div class="bar"><i style="width:${ku / K.cap * 100}%"></i></div>`;
     const ids = GOODS.filter(g => stored(g.id) || (home && held(g.id)));
     if (!home && hasSteward()) {
       const kq = ui.kq || 10;
@@ -6100,8 +6160,8 @@ em.rep.warn{background:#b5523a}
       if (!ids.length) h += `<p class="small">Das Lager ist leer.</p>`;
       ids.forEach(g => {
         const n = Math.min(kq === 'max' ? Infinity : kq, stored(g.id)), c = K.goods[g.id], gain = sellGain(st.home, g.id, n), d = Math.round(sellPrice(st.home, g.id) - c.cost / c.q);
-        h += `<div class="krow"><span class="gname">${icon(g.id)}${g.n}</span><span class="ybtns"><button class="ybtn" type="button" data-ksell="${g.id}" data-n="${n}"${st.enc ? ' disabled' : ''}>Verkaufen ${n} · ${fmt(gain)} M</button></span>` +
-          `<span class="small">Im Lager ${stored(g.id)} · Ø Einkauf ${fmt(c.cost / c.q)} Mark · in ${C[st.home].n} je Last <span class="${d >= 0 ? 'up' : 'down'}">${d >= 0 ? '+' : '−'}${fmt(Math.abs(d))}</span></span></div>`;
+        h += `<div class="krow"><span class="gname">${icon(g.id)}${g.n}</span><span class="ybtns"><button class="ybtn" type="button" data-ksell="${g.id}" data-n="${n}"${st.enc ? ' disabled' : ''}>Verkaufen ${n} · ${fmt(gain)} G</button></span>` +
+          `<span class="small">Im Lager ${stored(g.id)} · Ø Einkauf ${fmt(c.cost / c.q)} Gulden · in ${C[st.home].n} je Last <span class="${d >= 0 ? 'up' : 'down'}">${d >= 0 ? '+' : '−'}${fmt(Math.abs(d))}</span></span></div>`;
       });
     } else if (!home) {
       h += ids.length ? `<div class="chips">${ids.map(g => `<span class="chip">${icon(g.id)}${stored(g.id)}</span>`).join('')}</div>` : `<p class="small">Das Lager ist leer.</p>`;
@@ -6116,13 +6176,13 @@ em.rep.warn{background:#b5523a}
         h += `<div class="krow"><span class="gname">${icon(g.id)}${g.n}</span><span class="ybtns">` +
           `<button class="ybtn" type="button" data-kmove="in" data-good="${g.id}"${inQ > 0 ? '' : ' disabled'}>Einlagern ${inQ > 0 ? inQ : ''}</button>` +
           `<button class="ybtn" type="button" data-kmove="out" data-good="${g.id}"${outQ > 0 ? '' : ' disabled'}>An Bord ${outQ > 0 ? outQ : ''}</button></span>` +
-          `<span class="small">An Bord ${held(g.id)} · im Lager ${stored(g.id)}${c && c.q ? ` · Ø Einkauf ${fmt(c.cost / c.q)} Mark` : ''}</span></div>`;
+          `<span class="small">An Bord ${held(g.id)} · im Lager ${stored(g.id)}${c && c.q ? ` · Ø Einkauf ${fmt(c.cost / c.q)} Gulden` : ''}</span></div>`;
       });
     }
-    if (home) h += `<div class="krow"><span class="gname">Verwalter</span><span class="ybtns">${hasSteward() ? `<button class="ybtn" type="button" data-steward="0">Entlassen</button>` : `<button class="ybtn" type="button" data-steward="1"${st.money >= STEWARD.fee ? '' : ' disabled'}>Einstellen · ${fmt(STEWARD.fee)} M</button>`}</span>` +
-      `<span class="small">${hasSteward() ? `Dein Verwalter verkauft auf deine Anweisung aus dem Kontor, auch wenn du fern bist. Lohn ${STEWARD.wage} Mark am Tag.` : `Ein Verwalter verkauft für dich aus dem Kontor, während du unterwegs bist: unten beim Stammsitz, zu den Preisen in ${C[st.home].n}. Lohn ${STEWARD.wage} Mark am Tag.`}</span></div>`;
+    if (home) h += `<div class="krow"><span class="gname">Verwalter</span><span class="ybtns">${hasSteward() ? `<button class="ybtn" type="button" data-steward="0">Entlassen</button>` : `<button class="ybtn" type="button" data-steward="1"${st.money >= STEWARD.fee ? '' : ' disabled'}>Einstellen · ${fmt(STEWARD.fee)} G</button>`}</span>` +
+      `<span class="small">${hasSteward() ? `Dein Verwalter verkauft auf deine Anweisung aus dem Kontor, auch wenn du fern bist. Lohn ${STEWARD.wage} Gulden am Tag.` : `Ein Verwalter verkauft für dich aus dem Kontor, während du unterwegs bist: unten beim Stammsitz, zu den Preisen in ${C[st.home].n}. Lohn ${STEWARD.wage} Gulden am Tag.`}</span></div>`;
     if (nk) h += ci >= nk.civic
-      ? (home ? `<button class="ybtn" type="button" data-k="build" style="margin-top:10px"${st.money >= nk.cost ? '' : ' disabled'}>Erweitern auf ${nk.cap} Last · ${fmt(nk.cost)} M</button>` : '')
+      ? (home ? `<button class="ybtn" type="button" data-k="build" style="margin-top:10px"${st.money >= nk.cost ? '' : ' disabled'}>Erweitern auf ${nk.cap} Last · ${fmt(nk.cost)} G</button>` : '')
       : `<p class="small" style="margin-top:8px">Als ${CIVIC[nk.civic][1]} kannst du das Kontor auf ${nk.cap} Last erweitern.</p>`;
     return h + `</div>`;
   }
@@ -6172,8 +6232,8 @@ em.rep.warn{background:#b5523a}
           `<button class="btn primary" type="button" data-act="chase-go"><b>Verfolgen</b><small>${pc(chaseChance())}</small></button>`;
       } else if (e.phase === 'won' && e.prize) {
         const why = keepWhy();
-        a.innerHTML = (prizeManned() ? `<button class="btn" type="button" data-act="prize-sell"><b>Prise verkaufen</b><small>${fmt(prizeValue())} M</small></button>`
-          : `<button class="btn" type="button" data-act="prize-sell"><b>Ausschlachten</b><small>${fmt(stripValue())} M · zu wenig Leute</small></button>`) +
+        a.innerHTML = (prizeManned() ? `<button class="btn" type="button" data-act="prize-sell"><b>Prise verkaufen</b><small>${fmt(prizeValue())} G</small></button>`
+          : `<button class="btn" type="button" data-act="prize-sell"><b>Ausschlachten</b><small>${fmt(stripValue())} G · zu wenig Leute</small></button>`) +
           (why === 'Verband voll' && prizeManned() && shipsHome() < MAX_DOCK ? `<button class="btn primary" type="button" data-act="prize-home"><b>Zum Liegeplatz</b><small>nach ${C[st.home].n}, ${SHIPS[e.prize.type].n}</small></button>` :
           `<button class="btn primary" type="button" data-act="prize-keep"${why ? ' disabled' : ''}><b>In den Verband</b><small>${why || `${SHIPS[e.prize.type].n}, ${e.prize.hull} %`}</small></button>`);
       } else a.innerHTML = `<button class="btn primary" type="button" data-act="resume">${st.focus ? 'Zurück zum Handelshaus' : e.phase === 'captured' ? `Nach ${C[st.home].n}` : 'Weitersegeln'}</button>`;
@@ -6267,7 +6327,7 @@ em.rep.warn{background:#b5523a}
       const A = ARMS[k], cur = a[k] || 0, max = armMax(k), left = Math.max(0, max - cur);
       const locked = A.guns && !gunsOpen();
       h += `<div class="yrow"><span class="yl"><b>${cur} ${cur === 1 ? A.one : A.n}</b><span class="small">${A.d}</span>` +
-        `<span class="small">${locked ? 'Noch gibt es keine Büchsen für Schiffe.' : `bis ${max}${A.slot ? ` · ${A.slot} ${A.slot === 1 ? 'Platz' : 'Plätze'} je Stück` : ''}${A.big ? ' · nicht auf Schniggen' : ''} · ${fmt(A.price)} M`}</span></span>` +
+        `<span class="small">${locked ? 'Noch gibt es keine Büchsen für Schiffe.' : `bis ${max}${A.slot ? ` · ${A.slot} ${A.slot === 1 ? 'Platz' : 'Plätze'} je Stück` : ''}${A.big ? ' · nicht auf Schniggen' : ''} · ${fmt(A.price)} G`}</span></span>` +
         `<span class="ybtns">${locked ? '' : hire(`arm:${k}`, 1, A.price, left) + (['armbrust', 'pavese', 'harnisch'].includes(k) ? hire(`arm:${k}`, 5, A.price, left) : '')}</span></div>`;
     });
     if (a.buechse) h += `<div class="yrow"><span class="yl"><b>${st.pulver || 0} von ${MAX_PULVER} Ladungen Pulver</b><span class="small">jede Büchse braucht eine Ladung je Salve</span></span><span class="ybtns">${hire('pulver', 5, PULVER_PRICE, MAX_PULVER - (st.pulver || 0))}</span></div>`;
@@ -6280,12 +6340,12 @@ em.rep.warn{background:#b5523a}
     if (!st.loc) return;
     const hire = (act, n, price, left) => {
       const q = Math.min(n, left, Math.floor(Math.max(0, st.money) / price));
-      return `<button class="ybtn" type="button" data-yard="${act}" data-n="${n}"${q >= 1 && (n === 1 || q === n) ? '' : ' disabled'}>+${n} · ${fmt(n * price)} M</button>`;
+      return `<button class="ybtn" type="button" data-yard="${act}" data-n="${n}"${q >= 1 && (n === 1 || q === n) ? '' : ' disabled'}>+${n} · ${fmt(n * price)} G</button>`;
     };
     let h = `<h2>Werft &amp; Heuer</h2><div class="ysub">Dein Verband · ${st.fleet.length} von ${ownMax()} ${ownMax() === 1 ? 'Schiff' : 'Schiffen'}${ownMax() < MAX_FLEET ? ` · als ${RANKS[Math.min(st.rank + 1, 2)][1]} ${ownMax() + 1}` : ''}</div>`;
     if (!st.fleet.length) {
       h += `<p class="small">Du hast kein Schiff mehr.${st.loc === st.home ? '' : ` In ${C[st.home].n} würde dir die Werft eine alte Schnigge überlassen.`}</p>`;
-      if (st.loc === st.home) h += `<div class="yrow"><span class="yl"><b>Alte Schnigge</b><span class="small">30 Last, Rumpf 55 %, von der Werft deines Stammsitzes</span></span><span class="ybtns"><button class="ybtn" type="button" data-yard="old"${st.money >= OLD_SHIP ? '' : ' disabled'}>Übernehmen · ${fmt(OLD_SHIP)} M</button></span></div>`;
+      if (st.loc === st.home) h += `<div class="yrow"><span class="yl"><b>Alte Schnigge</b><span class="small">30 Last, Rumpf 55 %, von der Werft deines Stammsitzes</span></span><span class="ybtns"><button class="ybtn" type="button" data-yard="old"${st.money >= OLD_SHIP ? '' : ' disabled'}>Übernehmen · ${fmt(OLD_SHIP)} G</button></span></div>`;
     }
     let damaged = 0, allCost = 0;
     st.fleet.forEach((sh, i) => {
@@ -6293,16 +6353,16 @@ em.rep.warn{background:#b5523a}
       if (miss) { damaged++; allCost += Math.round(miss * per); }
       h += `<div class="yrow"><span class="yl"><b>${i === 0 ? '⚑ ' : ''}${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} Last · Rumpf ${sh.hull} %</span>` +
         `<span class="hbar${sh.hull < 40 ? ' low' : ''}"><i style="width:${sh.hull}%"></i></span></span><span class="ybtns">` +
-        (miss ? `<button class="ybtn" type="button" data-yard="repair" data-n="${i}"${pct ? '' : ' disabled'}>${pct >= miss ? 'Ausbessern' : `+${pct} %`} · ${fmt(Math.round(pct * per))} M</button>` : '') +
+        (miss ? `<button class="ybtn" type="button" data-yard="repair" data-n="${i}"${pct ? '' : ' disabled'}>${pct >= miss ? 'Ausbessern' : `+${pct} %`} · ${fmt(Math.round(pct * per))} G</button>` : '') +
         (st.fleet.length > 1 && st.loc === st.home ? `<button class="ybtn" type="button" data-yard="todock" data-n="${i}"${canSellShip(i) && shipsHome() < MAX_DOCK ? '' : ' disabled'}>Liegeplatz</button>` : '') +
-        (st.fleet.length > 1 ? `<button class="ybtn" type="button" data-yard="sell" data-n="${i}"${canSellShip(i) ? '' : ' disabled'}>Verkaufen · ${fmt(shipValue(sh))} M</button>` : '') + `</span></div>`;
+        (st.fleet.length > 1 ? `<button class="ybtn" type="button" data-yard="sell" data-n="${i}"${canSellShip(i) ? '' : ' disabled'}>Verkaufen · ${fmt(shipValue(sh))} G</button>` : '') + `</span></div>`;
     });
-    if (damaged > 1) h += `<div class="yrow"><span class="yl"><b>Ganzer Verband</b><span class="small">${repairPrice()} Mark je Prozent, große Schiffe kosten mehr</span></span><span class="ybtns"><button class="ybtn" type="button" data-yard="repairall"${st.money >= 1 ? '' : ' disabled'}>Alle ausbessern · ${fmt(Math.min(allCost, Math.max(0, st.money)))} M</button></span></div>`;
+    if (damaged > 1) h += `<div class="yrow"><span class="yl"><b>Ganzer Verband</b><span class="small">${repairPrice()} Gulden je Prozent, große Schiffe kosten mehr</span></span><span class="ybtns"><button class="ybtn" type="button" data-yard="repairall"${st.money >= 1 ? '' : ' disabled'}>Alle ausbessern · ${fmt(Math.min(allCost, Math.max(0, st.money)))} G</button></span></div>`;
     if (st.fleet.length) h += `<div class="ysub">Mannschaft</div>` +
       `<div class="yrow"><span class="yl"><b>${st.crew} von ${crewMax()} Matrosen</b><span class="small">mindestens ${crewMin()} zum Ablegen; segeln und kämpfen beim Entern</span></span><span class="ybtns">${hire('sailor', 1, HIRE_SAILOR, crewMax() - st.crew)}${hire('sailor', 5, HIRE_SAILOR, crewMax() - st.crew)}</span></div>` +
 
       `<div class="yrow"><span class="yl"><b>${st.brand || 0} von ${MAX_BRAND} Bündeln Brandpfeile</b><span class="small">für Salven auf mittlere und weite Entfernung</span></span><span class="ybtns">${hire('brand', 5, BRAND_PRICE, MAX_BRAND - (st.brand || 0))}</span></div>` +
-      `<p class="small" style="margin:8px 0 0">Heuer ${Math.round(st.crew * 0.3)}, Waffen ${Math.round(armsUp(st.arms))} und Unterhalt ${upkeep()} Mark am Tag.</p>` +
+      `<p class="small" style="margin:8px 0 0">Heuer ${Math.round(st.crew * 0.3)}, Waffen ${Math.round(armsUp(st.arms))} und Unterhalt ${upkeep()} Gulden am Tag.</p>` +
       det('arms', 'Waffenkammer', armsHTML(hire), `${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} von ${armSlots()} Plätzen frei`, false);
     const types = YARDS[st.loc] || [];
     if (buildsOf().length || dockOf().length) h += `<p class="small" style="margin-top:10px">${buildsOf().length ? `${buildsOf().length} ${buildsOf().length === 1 ? 'Schiff' : 'Schiffe'} im Bau oder unterwegs` : ''}${buildsOf().length && dockOf().length ? ', ' : ''}${dockOf().length ? `${dockOf().length} am Liegeplatz in ${C[st.home].n}` : ''}; zuteilen im Reiter Haus.</p>`;
@@ -6311,8 +6371,8 @@ em.rep.warn{background:#b5523a}
       types.forEach(tp => {
         const T = SHIPS[tp];
         const why = buildWhy(tp);
-        ns += `<div class="yrow"><span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} Tage Bauzeit</b><span class="small">${T.cap} Last · Tempo ${Math.round(T.spd * 100)} % · ${T.crewMin} bis ${T.crewMax} Matrosen · ${T.arm} Waffenplätze · ${T.upkeep} M am Tag</span><span class="small">${T.d}</span></span>` +
-          `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `In Auftrag · ${fmt(T.price)} M`}</button></span></div>`;
+        ns += `<div class="yrow"><span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} Tage Bauzeit</b><span class="small">${T.cap} Last · Tempo ${Math.round(T.spd * 100)} % · ${T.crewMin} bis ${T.crewMax} Matrosen · ${T.arm} Waffenplätze · ${T.upkeep} G am Tag</span><span class="small">${T.d}</span></span>` +
+          `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `In Auftrag · ${fmt(T.price)} G`}</button></span></div>`;
       });
       h += det('newships', `Bauaufträge`, ns, types.map(tp => SHIPS[tp].n).join(', '), false);
     } else h += `<p class="small" style="margin-top:10px">In ${C[st.loc].n} baut keine Werft neue Schiffe.</p>`;
@@ -6347,7 +6407,7 @@ em.rep.warn{background:#b5523a}
     box.hidden = !show;
     if (!show) return;
     const idle = caps.filter(k => !k.cv && k.id !== st.capOwn);
-    let h = `<h2>Handelshaus</h2><span class="sub2">${cvs.length ? `${cvs.length} ${cvs.length === 1 ? 'Verband' : 'Verbände'} unter Kapitänen · ` : ''}Kosten ${fmt(capWages() + cvs.reduce((x, c) => x + cvCost(c), 0))} Mark am Tag</span>`;
+    let h = `<h2>Handelshaus</h2><span class="sub2">${cvs.length ? `${cvs.length} ${cvs.length === 1 ? 'Verband' : 'Verbände'} unter Kapitänen · ` : ''}Kosten ${fmt(capWages() + cvs.reduce((x, c) => x + cvCost(c), 0))} Gulden am Tag</span>`;
     if (dockOf().length || buildsOf().length) h += det('dock', `Liegeplatz in ${C[st.home].n}`, dockHTML(), `${dockOf().length} ${dockOf().length === 1 ? 'Schiff' : 'Schiffe'}${buildsOf().length ? ` · ${buildsOf().length} im Bau` : ''}`, true);
     if (!cvs.length) h += `<p class="small">Kapitäne führen weitere Verbände auf festen Routen und handeln dort selbst. Ihre Preisberichte landen in deinem Wissen über die Märkte.${caps.length ? '' : ` Kapitäne heuerst du im Schifferhaus von ${C[st.home].n} an.`}</p>`;
     cvs.forEach(cv => {
@@ -6360,9 +6420,9 @@ em.rep.warn{background:#b5523a}
         (cv.loc === st.home && !cv.sail && st.focus !== cv.id && (cv.fleet.length > 1 || (dockOf().length && cv.fleet.length < MAX_FLEET)) ? `<div class="ybtns wrapb">` +
           (cv.fleet.length > 1 ? cv.fleet.map(sh => `<button class="ybtn" type="button" data-h="cvdock" data-id="${cv.id}" data-sh="${sh.id}"${shipsHome() < MAX_DOCK && cvUsed(cv) <= cvCap(cv) - shipCap(sh) ? '' : ' disabled'}>„${esc(sh.name)}“ an den Liegeplatz</button>`).join('') : '') +
           (cv.fleet.length < MAX_FLEET ? dockOf().map(sh => `<button class="ybtn" type="button" data-h="dockcv" data-id="${cv.id}" data-sh="${sh.id}">+ „${esc(sh.name)}“</button>`).join('') : '') + `</div>` : '') +
-        `<span class="small">${cvUsed(cv)} / ${cvCap(cv)} Last · ${cv.crew} Matrosen · ${armsLine(cv)} · ${cvCost(cv)} M am Tag</span>` +
+        `<span class="small">${cvUsed(cv)} / ${cvCap(cv)} Last · ${cv.crew} Matrosen · ${armsLine(cv)} · ${cvCost(cv)} G am Tag</span>` +
         (goods ? `<div class="chips">${goods}</div>` : '') +
-        `<span class="small">Route ${cv.route.map(c => C[c].n).join(' → ')} · ${cv.trips} Fahrten · Gewinn <span class="${cv.prof >= 0 ? 'pos' : 'neg'}">${cv.prof >= 0 ? '+' : '−'}${fmt(Math.abs(cv.prof))} M</span></span>`;
+        `<span class="small">Route ${cv.route.map(c => C[c].n).join(' → ')} · ${cv.trips} Fahrten · Gewinn <span class="${cv.prof >= 0 ? 'pos' : 'neg'}">${cv.prof >= 0 ? '+' : '−'}${fmt(Math.abs(cv.prof))} G</span></span>`;
       if (cv.report && !cv.report.seen) h += reportHTML(cv);
       h += `<span class="small">${cv.tpl === 'pendel' ? 'Pendel' : 'Rundkurs'}${cv.mode === 'regeln' ? ' · nach deinen Regeln' : ' · Kapitän handelt frei'}</span>`;
       if (st.focus !== cv.id) h += `<div class="ybtns wrapb"><button class="ybtn${ui.rw && ui.rw.id === cv.id ? ' on' : ''}" type="button" data-h="redit" data-id="${cv.id}">Route und Waren</button>` +
@@ -6373,18 +6433,18 @@ em.rep.warn{background:#b5523a}
       if (ui.oEdit === cv.id) h += ordersHTML(cv);
       h += `</details>`;
     });
-    if (!routesOpen()) h += `<p class="small">Handelsrouten mit eigenen Verbänden öffnen sich mit deiner ersten Niederlassung (ab ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} Mark, im Reiter Stadt eines anderen Hafens).</p>`;
+    if (!routesOpen()) h += `<p class="small">Handelsrouten mit eigenen Verbänden öffnen sich mit deiner ersten Niederlassung (ab ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} Gulden, im Reiter Stadt eines anderen Hafens).</p>`;
     else if (st.loc && !st.focus && (st.fleet.length || (st.loc === st.home && dockOf().length)) && cvs.length < MAX_CONVOYS) {
       if (ui.rw && !ui.rw.id) h += rwHTML();
       else h += `<button class="ybtn" type="button" data-h="rnew" style="margin-top:10px"${idle.length ? '' : ' disabled'}>Neue Handelsroute</button>${idle.length ? '' : '<span class="small"> Dafür brauchst du einen freien Kapitän aus dem Schifferhaus.</span>'}`;
     }
     if (caps.length) h += det('caps', 'Deine Kapitäne', caps.map(k => `<div class="yrow"><span class="yl"><b>${esc(k.name)}</b>` +
       `<span class="small">${SKILL_N.nav} ${stars(k.nav)} · ${SKILL_N.trade} ${stars(k.trade)} · ${SKILL_N.fight} ${stars(k.fight)}</span>` +
-      `<span class="small">${k.cv ? `führt den ${esc(cvLabel(cvById(k.cv) || {fleet:[]}))}` : st.capOwn === k.id ? 'führt deinen Verband' : 'ohne Auftrag'} · ${k.wage} M am Tag · ${k.xp} Fahrten</span></span>` +
+      `<span class="small">${k.cv ? `führt den ${esc(cvLabel(cvById(k.cv) || {fleet:[]}))}` : st.capOwn === k.id ? 'führt deinen Verband' : 'ohne Auftrag'} · ${k.wage} G am Tag · ${k.xp} Fahrten</span></span>` +
       (k.cv ? '' : `<span class="ybtns"><button class="ybtn${st.capOwn === k.id ? ' on' : ''}" type="button" data-h="aboard" data-id="${k.id}"${st.focus || st.sail ? ' disabled' : ''}>${st.capOwn === k.id ? 'Kommando abgeben' : 'Deinen Verband führen'}</button><button class="ybtn" type="button" data-h="fire" data-id="${k.id}"${st.capOwn === k.id && st.sail ? ' disabled' : ''}>Entlassen</button></span>`) + `</div>`).join(''), `${caps.length} von ${MAX_CAPTAINS}`, false);
     if (home) {
-      h += det('tavern', `Schifferhaus`, `<span class="small">Neue Kapitäne jeden Monat. Seemannschaft macht schneller, Handel klüger beim Kaufen und Verkaufen, Kampf vergrößert dein Zielfeld und stärkt das Entern, wenn du ihr Gefecht übernimmst oder sie deinen eigenen Verband führen. Jeder Verband braucht einen Kapitän, auch deiner.</span>` + tavern().map(k => `<div class="yrow"><span class="yl"><b>${esc(k.name)}</b><span class="small">${SKILL_N.nav} ${stars(k.nav)} · ${SKILL_N.trade} ${stars(k.trade)} · ${SKILL_N.fight} ${stars(k.fight)}</span><span class="small">Heuer ${k.wage} M am Tag</span></span>` +
-        `<span class="ybtns"><button class="ybtn" type="button" data-h="hire" data-id="${k.id}"${st.money >= k.fee && caps.length < MAX_CAPTAINS ? '' : ' disabled'}>${caps.length >= MAX_CAPTAINS ? 'Genug Kapitäne' : `Anheuern · ${fmt(k.fee)} M`}</button></span></div>`).join(''), '3 Bewerber', !caps.length);
+      h += det('tavern', `Schifferhaus`, `<span class="small">Neue Kapitäne jeden Monat. Seemannschaft macht schneller, Handel klüger beim Kaufen und Verkaufen, Kampf vergrößert dein Zielfeld und stärkt das Entern, wenn du ihr Gefecht übernimmst oder sie deinen eigenen Verband führen. Jeder Verband braucht einen Kapitän, auch deiner.</span>` + tavern().map(k => `<div class="yrow"><span class="yl"><b>${esc(k.name)}</b><span class="small">${SKILL_N.nav} ${stars(k.nav)} · ${SKILL_N.trade} ${stars(k.trade)} · ${SKILL_N.fight} ${stars(k.fight)}</span><span class="small">Heuer ${k.wage} G am Tag</span></span>` +
+        `<span class="ybtns"><button class="ybtn" type="button" data-h="hire" data-id="${k.id}"${st.money >= k.fee && caps.length < MAX_CAPTAINS ? '' : ' disabled'}>${caps.length >= MAX_CAPTAINS ? 'Genug Kapitäne' : `Anheuern · ${fmt(k.fee)} G`}</button></span></div>`).join(''), '3 Bewerber', !caps.length);
     }
     box.innerHTML = h;
   }
@@ -6408,7 +6468,7 @@ em.rep.warn{background:#b5523a}
       h += `<div class="krow"><span class="gname">${icon(g.id)}${g.n}</span><span class="ybtns">` +
         `<button class="ybtn" type="button" data-kmove="in" data-good="${g.id}"${inQ > 0 ? '' : ' disabled'}>Einlagern ${inQ > 0 ? inQ : ''}</button>` +
         `<button class="ybtn" type="button" data-kmove="out" data-good="${g.id}"${outQ > 0 ? '' : ' disabled'}>An Bord ${outQ > 0 ? outQ : ''}</button></span>` +
-        `<span class="small">An Bord ${held(g.id)} · im Lager ${sq}${c && c.q ? ` · Ø Einkauf ${fmt(c.cost / c.q)} Mark` : ''}</span></div>`;
+        `<span class="small">An Bord ${held(g.id)} · im Lager ${sq}${c && c.q ? ` · Ø Einkauf ${fmt(c.cost / c.q)} Gulden` : ''}</span></div>`;
     });
     return h;
   }
@@ -6421,11 +6481,11 @@ em.rep.warn{background:#b5523a}
         const have = haveFor(it.g), left = it.due - st.day;
         h += `<div class="krow"><span class="gname">${icon(it.g)}${it.q} Last ${G[it.g].n}</span><span class="ybtns">` +
           (home ? `<button class="ybtn" type="button" data-order="give" data-id="${it.id}"${have >= it.q ? '' : ' disabled'}>Liefern</button>` : '') + `</span>` +
-          `<span class="small">Lohn ${fmt(it.pay)} M und ${it.rep} Ansehen · noch ${left} ${left === 1 ? 'Tag' : 'Tage'} · du hast ${have} an Bord und im Kontor</span></div>`;
+          `<span class="small">Lohn ${fmt(it.pay)} G und ${it.rep} Ansehen · noch ${left} ${left === 1 ? 'Tag' : 'Tage'} · du hast ${have} an Bord und im Kontor</span></div>`;
       });
       if (home && o.active.length < 2) h += ordersOffer().map(it => `<div class="krow"><span class="gname">${icon(it.g)}${it.q} Last ${G[it.g].n}</span>` +
         `<span class="ybtns"><button class="ybtn" type="button" data-order="take" data-id="${it.id}">Annehmen</button></span>` +
-        `<span class="small">Angebot: Lohn ${fmt(it.pay)} M und ${it.rep} Ansehen, Lieferung bis ${fdate(it.due)}</span></div>`).join('');
+        `<span class="small">Angebot: Lohn ${fmt(it.pay)} G und ${it.rep} Ansehen, Lieferung bis ${fdate(it.due)}</span></div>`).join('');
       else if (!o.active.length) h += `<p class="small">Neue Aufträge gibt es im Rathaus deines Stammsitzes.</p>`;
     }
     if (ci >= 3) {
@@ -6437,7 +6497,7 @@ em.rep.warn{background:#b5523a}
     const me = {name:st.player.name, repute:st.repute || 0, me:true}, all = [me].concat(st.rivals || []).sort((a, b) => b.repute - a.repute), mx = Math.max(ELECT_MIN, ...all.map(x => x.repute));
     h += `<span class="flabel" style="margin-top:10px;display:block">Ansehen im Rat · Bürgermeister: ${esc(st.mayorName || '–')}</span><div class="gbars">` +
       all.map(x => `<div><span>${x.me ? '<b>Du</b>' : esc(x.name)}</span><i style="width:${Math.min(100, x.repute / mx * 100)}%${x.me ? '' : ';background:var(--muted)'}"></i><span>${fmt(x.repute)}</span></div>`).join('') + `</div>` +
-      `<span class="small">Nächste Ratswahl am ${fdate(nextElection(), true)}. Wählbar ist, wer ${fmt(ELECT_MIN)} Ansehen hat; es gewinnt, wer das meiste hat.${st.mayor ? ` Als Bürgermeister: Bürgerrecht 10 %, ${MAYOR_PAY} Mark am Tag, deine Verbände werden 30 % seltener angegriffen.` : ''}</span>`;
+      `<span class="small">Nächste Ratswahl am ${fdate(nextElection(), true)}. Wählbar ist, wer ${fmt(ELECT_MIN)} Ansehen hat; es gewinnt, wer das meiste hat.${st.mayor ? ` Als Bürgermeister: Bürgerrecht 10 %, ${MAYOR_PAY} Gulden am Tag, deine Verbände werden 30 % seltener angegriffen.` : ''}</span>`;
     return h + `</div>`;
   }
   function worksHTML(ci) {
@@ -6448,13 +6508,13 @@ em.rep.warn{background:#b5523a}
     (st.works || []).forEach(w => {
       const W = WORKS[w.g];
       h += `<div class="krow"><span class="gname">${icon(w.g)}${W.n}</span><span class="num small" style="grid-column:auto;margin:0">${w.made || 0} Last</span>` +
-        `<span class="small">${W.d}. Lohn ${W.wage} Mark am Tag, Material ${Math.round(W.mat * 100)} % des Grundpreises je Last.${w.idle ? ' Steht still: Lager voll oder Rohstoff fehlt.' : ''}</span></div>`;
+        `<span class="small">${W.d}. Lohn ${W.wage} Gulden am Tag, Material ${Math.round(W.mat * 100)} % des Grundpreises je Last.${w.idle ? ' Steht still: Lager voll oder Rohstoff fehlt.' : ''}</span></div>`;
     });
     cityJobs().filter(j => j.kind === 'work').forEach(j => { h += `<div class="krow"><span class="gname">${icon(j.g)}${WORKS[j.g].n}</span><span class="num small" style="grid-column:auto;margin:0">im Bau</span><span class="small">Fertig in ${jobLeft(j)} ${jobLeft(j) === 1 ? 'Tag' : 'Tagen'}.</span></div>`; });
     const left = maxWorks() - worksPlanned();
     if (!buildOpen()) h += `<span class="small">Bauen kannst du ${buildLock()}.</span>`;
     else if (left > 0 && home) h += `<span class="small">Noch ${left} ${left === 1 ? 'Betrieb' : 'Betriebe'} möglich, Bauzeit ${BUILD_T.work} Tage${canStartJob() ? '' : '; gerade sind beide Baustellen belegt'}:</span><div class="ybtns wrapb">` +
-      worksAllowed().map(g => `<button class="ybtn" type="button" data-work="${g}"${st.money >= WORKS[g].cost && canStartJob() ? '' : ' disabled'}>${WORKS[g].n} · ${fmt(WORKS[g].cost)} M</button>`).join('') + `</div>`;
+      worksAllowed().map(g => `<button class="ybtn" type="button" data-work="${g}"${st.money >= WORKS[g].cost && canStartJob() ? '' : ' disabled'}>${WORKS[g].n} · ${fmt(WORKS[g].cost)} G</button>`).join('') + `</div>`;
     else if (left > 0) h += `<span class="small">Neue Betriebe gibst du vor Ort in ${C[st.home].n} in Auftrag.</span>`;
     else h += `<span class="small">Weitere Bauplätze erschließt du in der Stadtansicht.</span>`;
     return h + `</div>`;
@@ -6468,11 +6528,11 @@ em.rep.warn{background:#b5523a}
     let h = `<h2>Niederlassung in ${C[cid].n}</h2>`;
     if (!B) {
       const n = Object.keys(st.branches || {}).length;
-      h += `<p class="small">Als Gildebruder darfst du in bis zu ${BRANCH.max} anderen Städten ein Lager für ${BRANCH.cap} Last einrichten, ${BRANCH.upkeep} Mark am Tag. So wartet die Ware dort auf bessere Preise.</p>` +
-        `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost && n < BRANCH.max ? '' : ' disabled'}>${n >= BRANCH.max ? 'Höchstzahl erreicht' : `Niederlassung einrichten · ${fmt(BRANCH.cost)} M`}</button>`;
+      h += `<p class="small">Als Gildebruder darfst du in bis zu ${BRANCH.max} anderen Städten ein Lager für ${BRANCH.cap} Last einrichten, ${BRANCH.upkeep} Gulden am Tag. So wartet die Ware dort auf bessere Preise.</p>` +
+        `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost && n < BRANCH.max ? '' : ' disabled'}>${n >= BRANCH.max ? 'Höchstzahl erreicht' : `Niederlassung einrichten · ${fmt(BRANCH.cost)} G`}</button>`;
     } else {
       const ku = kontorUsed(cid);
-      h += `<div class="holdrow"><span>Lager ${ku} / ${B.cap} Last</span><span class="small">${BRANCH.upkeep} Mark am Tag</span></div><div class="bar"><i style="width:${ku / B.cap * 100}%"></i></div>` + storeRows(B, cid);
+      h += `<div class="holdrow"><span>Lager ${ku} / ${B.cap} Last</span><span class="small">${BRANCH.upkeep} Gulden am Tag</span></div><div class="bar"><i style="width:${ku / B.cap * 100}%"></i></div>` + storeRows(B, cid);
     }
     box.innerHTML = h;
   }
@@ -6953,7 +7013,7 @@ em.rep.warn{background:#b5523a}
     if (k === 'kontor') {
       e.kind = 'kontor'; e.name = 'Kontor'; e.o = {lvl:st.kontor ? st.kontor.lvl : 1};
       if (st.kontor) { e.desc = `Lager für ${st.kontor.cap} Last, ${kontorUsed()} belegt. Ein- und Auslagern im Reiter Markt.`; e.act = `<button class="ybtn" type="button" data-go="kontor">Zum Lager</button>`; }
-      else { e.desc = `Ein eigenes Lager für ${KONTOR[1].cap} Last, ${KONTOR[1].upkeep} Mark am Tag. Wird sofort eingerichtet.`; e.cost = KONTOR[1].cost; e.days = 0; e.cb = 'kontor'; e.why = st.money < e.cost ? 'Zu wenig Geld' : ''; }
+      else { e.desc = `Ein eigenes Lager für ${KONTOR[1].cap} Last, ${KONTOR[1].upkeep} Gulden am Tag. Wird sofort eingerichtet.`; e.cost = KONTOR[1].cost; e.days = 0; e.cb = 'kontor'; e.why = st.money < e.cost ? 'Zu wenig Geld' : ''; }
     } else if (k === 'haus') {
       const lv = st.city.house || 1, H = HOUSE[lv], nx = HOUSE[lv + 1];
       e.kind = 'haus'; e.o = {lvl:lv, job:ps.job}; e.name = ps.job ? `${nx.n} im Bau` : H.n; e.desc = H.d;
@@ -6979,7 +7039,7 @@ em.rep.warn{background:#b5523a}
     return e;
   }
   const bArt = (e, w) => `<span class="bart">${facade(e.kind === 'halle' ? 'halle' : e.kind, Object.assign({w:w || 110, wall:e.kind === 'kirche' || e.kind === 'mauer' ? 'dark' : e.kind === 'halle' ? 'sand' : 'brick'}, e.o || {}))}${e.icon ? `<i class="bico">${icon(e.icon)}</i>` : ''}</span>`;
-  const bMeta = e => [e.cost ? `${fmt(e.cost)} M` : '', e.days ? `${e.days} Tage` : e.cost ? 'sofort' : ''].filter(Boolean).join(' · ');
+  const bMeta = e => [e.cost ? `${fmt(e.cost)} G` : '', e.days ? `${e.days} Tage` : e.cost ? 'sofort' : ''].filter(Boolean).join(' · ');
   function bookHTML() {
     const ci = civicIdx(st.repute || 0), L = PLOTS.map(p => bEntry(p.k));
     let h = '';
@@ -7015,7 +7075,7 @@ em.rep.warn{background:#b5523a}
     if (home) T.push(['rat', 'Rathaus', 'council', st.orders && st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'Auftrag' : 'Aufträge'}` : `Wahl ${fdate(nextElection())}`], ['schiffer', 'Schiffer&shy;haus', 'haus', 'Kapitäne']);
     let h = `<div class="ptiles${home ? '' : ' three'}">` + T.map(([kind, n, go, sub]) => `<button type="button" class="ptile" data-go="${go}"><span class="pfac">${facade(kind, {w:84})}</span><b>${n}</b><span class="small">${sub}</span></button>`).join('');
     if (!home) h += B ? `<button type="button" class="ptile" data-go="markt"><span class="pfac">${facade('nl', {w:84})}</span><b>Nieder&shy;lassung</b><span class="small">Lager ${kontorUsed(st.loc)} / ${B.cap}</span></button>`
-      : `<div class="ptile"><span class="pfac">${facade(ci >= BRANCH.civic && nb < BRANCH.max ? 'empty' : 'lock', {w:84})}</span><b>Nieder&shy;lassung</b>${ci >= BRANCH.civic && nb < BRANCH.max ? `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost ? '' : ' disabled'}>Gründen ${fmt(BRANCH.cost)} M</button>` : `<span class="small">${ci < BRANCH.civic ? `ab ${CIVIC[BRANCH.civic][1]}` : `schon ${BRANCH.max}`}</span>`}</div>`;
+      : `<div class="ptile"><span class="pfac">${facade(ci >= BRANCH.civic && nb < BRANCH.max ? 'empty' : 'lock', {w:84})}</span><b>Nieder&shy;lassung</b>${ci >= BRANCH.civic && nb < BRANCH.max ? `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost ? '' : ' disabled'}>Gründen ${fmt(BRANCH.cost)} G</button>` : `<span class="small">${ci < BRANCH.civic ? `ab ${CIVIC[BRANCH.civic][1]}` : `schon ${BRANCH.max}`}</span>`}</div>`;
     return h + `</div>`;
   }
   function bSheetHTML(k) {
@@ -7023,13 +7083,13 @@ em.rep.warn{background:#b5523a}
     let h = `<div class="in"><div class="bsh"><span class="bshart">${bArt(e, 120)}</span><div><h2 id="bs-title">${e.name}</h2><p class="small">${e.desc || ''}</p></div><button class="close" type="button" data-act="bs-close" aria-label="Schließen">✕</button></div>`;
     const facts = [];
     if (e.state === 'job') { facts.push(['Fertig am', fdate(e.due)], ['Noch', `${e.left} ${e.left === 1 ? 'Tag' : 'Tage'}`]); h += `<div class="bar big"><i style="width:${Math.round(e.frac * 100)}%"></i></div>`; }
-    if (e.k === 'haus' && e.up && e.state !== 'job') { h += `<p class="bup"><b>Ausbau: ${e.up.name}.</b> ${e.up.desc}</p>`; facts.push(['Kosten', `${fmt(e.up.cost)} M`], ['Bauzeit', `${e.up.days} Tage`]); }
-    else if (e.state === 'now' || e.state === 'later') { if (e.cost) facts.push(['Kosten', `${e.choose ? 'ab ' : ''}${fmt(e.cost)} M`]); facts.push(['Bauzeit', e.days ? `${e.days} Tage` : 'sofort']); }
+    if (e.k === 'haus' && e.up && e.state !== 'job') { h += `<p class="bup"><b>Ausbau: ${e.up.name}.</b> ${e.up.desc}</p>`; facts.push(['Kosten', `${fmt(e.up.cost)} G`], ['Bauzeit', `${e.up.days} Tage`]); }
+    else if (e.state === 'now' || e.state === 'later') { if (e.cost) facts.push(['Kosten', `${e.choose ? 'ab ' : ''}${fmt(e.cost)} G`]); facts.push(['Bauzeit', e.days ? `${e.days} Tage` : 'sofort']); }
     if (buildOpen() && e.state !== 'built' && e.k !== 'kontor') facts.push(['Baustellen', `${MAX_JOBS - cityJobs().length} von ${MAX_JOBS} frei`]);
     if (facts.length) h += `<div class="bfacts">${facts.map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`;
     if (e.why) h += `<p class="bwhy">${e.why}</p>`;
-    if (e.choose) h += `<div class="bchoose">` + worksAllowed().map(g => `<button class="ybtn" type="button" data-work="${g}"${st.money >= WORKS[g].cost && canStartJob() ? '' : ' disabled'}><span>${icon(g)}${WORKS[g].n}</span><small>${WORKS[g].d} · ${fmt(WORKS[g].cost)} M</small></button>`).join('') + `</div>`;
-    else if (e.cb && (e.state === 'now' || (e.k === 'haus' && e.up && e.state !== 'job'))) h += `<button class="ybtn on wide" type="button" data-cb="${e.cb}"${e.why ? ' disabled' : ''}>${e.k === 'haus' ? `Zum ${e.up.name} ausbauen` : e.days ? 'In Auftrag geben' : 'Einrichten'} · ${fmt(e.cost)} M</button>`;
+    if (e.choose) h += `<div class="bchoose">` + worksAllowed().map(g => `<button class="ybtn" type="button" data-work="${g}"${st.money >= WORKS[g].cost && canStartJob() ? '' : ' disabled'}><span>${icon(g)}${WORKS[g].n}</span><small>${WORKS[g].d} · ${fmt(WORKS[g].cost)} G</small></button>`).join('') + `</div>`;
+    else if (e.cb && (e.state === 'now' || (e.k === 'haus' && e.up && e.state !== 'job'))) h += `<button class="ybtn on wide" type="button" data-cb="${e.cb}"${e.why ? ' disabled' : ''}>${e.k === 'haus' ? `Zum ${e.up.name} ausbauen` : e.days ? 'In Auftrag geben' : 'Einrichten'} · ${fmt(e.cost)} G</button>`;
     if (e.act) h += `<div class="ybtns">${e.act}</div>`;
     return h + `</div>`;
   }
@@ -7088,7 +7148,7 @@ em.rep.warn{background:#b5523a}
     const sg = v => `<span class="${v >= 0 ? 'pos' : 'neg'}">${v >= 0 ? '+' : '−'}${fmt(Math.abs(v))}</span>`;
     let h = `<div class="in"><div class="shead"><div><h2 id="book-title">Handelsbuch</h2><span class="small">Gewinn aus Verkäufen gegenüber dem Einkaufspreis</span></div>` +
       `<button class="close" type="button" data-act="book-close">Zurück</button></div>` +
-      `<div class="tot"><div><span class="small">Gewinn bisher</span><b>${sg(total)} M</b></div><div><span class="small">Letzte 30 Tage</span><b>${sg(recent)} M</b></div></div>`;
+      `<div class="tot"><div><span class="small">Gewinn bisher</span><b>${sg(total)} G</b></div><div><span class="small">Letzte 30 Tage</span><b>${sg(recent)} G</b></div></div>`;
     if (goods.length) h += `<h3 class="ysub">Gewinn je Ware</h3><div class="gbars">` + goods.map(([gid, v]) =>
       `<div><span>${icon(gid)} ${G[gid].n}</span><i class="${v < 0 ? 'neg' : ''}" style="width:${Math.abs(v) / mx * 100}%"></i><span>${sg(v)}</span></div>`).join('') + `</div>`;
     h += rows.length ? `<h3 class="ysub">Hafenbesuche</h3><div style="overflow-x:auto"><table><thead><tr><th>Datum</th><th>Hafen</th><th>Einkauf</th><th>Verkauf</th><th>Gewinn</th></tr></thead><tbody>` +
@@ -7150,7 +7210,7 @@ em.rep.warn{background:#b5523a}
         const k = st.known[c.id], frozen = c.id === 'nowgorod' && newaFrozen(st.day);
         const best = k ? GOODS.map(g => ({g, d:k.s[g.id] - buyPrice(st.loc, g.id)})).sort((a, b) => b.d - a.d)[0] : null;
         return `<li><button type="button" data-dest-open="${c.id}"><b>${c.n}</b><span class="dd">${frozen ? 'Eis' : `${r.days} ${r.days === 1 ? 'Tag' : 'Tage'}`}</span>` +
-          `<span class="small">${[isPest(c.id) ? 'Pest' : '', embargoAt(c.id) ? 'Handelssperre' : '', warK(r.segs) > 1.25 ? 'Auslieger im Sund' : ''].filter(Boolean).map(x => `<b class="flag">${x}</b> `).join('')}${best && best.d > 0 ? `${best.g.n} von hier bringt dort ${fmt(best.d)} M je Last mehr, Stand ${fdate(k.d)}` : k ? `Preise vom ${fdate(k.d)}` : `Erzeugt ${c.p.map(g => G[g].n).join(', ')} · braucht ${c.c.map(g => G[g].n).join(', ')}`}</span></button></li>`;
+          `<span class="small">${[isPest(c.id) ? 'Pest' : '', embargoAt(c.id) ? 'Handelssperre' : '', warK(r.segs) > 1.25 ? 'Auslieger im Sund' : ''].filter(Boolean).map(x => `<b class="flag">${x}</b> `).join('')}${best && best.d > 0 ? `${best.g.n} von hier bringt dort ${fmt(best.d)} G je Last mehr, Stand ${fdate(k.d)}` : k ? `Preise vom ${fdate(k.d)}` : `Erzeugt ${c.p.map(g => G[g].n).join(', ')} · braucht ${c.c.map(g => G[g].n).join(', ')}`}</span></button></li>`;
       }).join('') + `</ul>`;
     } else if (st.sail) {
       h = `<h2>Kurs auf ${C[st.sail.to].n}</h2><p class="small" style="margin:6px 0 0">Tag ${Math.min(st.sail.t + 1, st.sail.days)} von ${st.sail.days}${st.sail.from ? `, von ${C[st.sail.from].n}` : ''}.</p>`;
@@ -7355,17 +7415,19 @@ em.rep.warn{background:#b5523a}
     const t = e.target.closest('button'); const w = ui.wiz; if (!t || !w) return;
     if (t.dataset.av) {
       const k = t.dataset.av, v = t.dataset.v;
-      w.av[k] = ['skin', 'hair', 'cloth'].includes(k) ? +v : v;
-      if (k === 'g') { w.av.hat = v === 'f' ? 'haube' : 'barett'; w.av.beard = v === 'f' ? 'ohne' : 'voll'; }
+      w.av[k] = ['skin', 'hair', 'cloth', 'col', 'mark'].includes(k) ? +v : v;
+      if (k === 'g') { w.av.hat = v === 'f' ? 'haube' : 'barett'; w.av.beard = v === 'f' ? 'ohne' : 'voll'; w.av.hs = v === 'f' ? 'offen' : 'kurz'; }
       renderWizard(); return;
     }
     if (t.dataset.home) { w.home = t.dataset.home; renderWizard(); return; }
+    if (t.dataset.origin) { w.origin = t.dataset.origin; renderWizard(); return; }
     if (t.dataset.wseason) { w.seasons = t.dataset.wseason; renderWizard(); return; }
     if (t.dataset.wmode) { w.mode = t.dataset.wmode; renderWizard(); return; }
     const act = t.dataset.act;
     if (act === 'wiz-ship-dice') { w.ship = pick(SHIPNAMES); renderWizard(); return; }
+    if (act === 'wiz-look') { const keep = {col:w.av.col, mark:w.av.mark}; w.av = Object.assign(randAv(w.av.g), keep); renderWizard(); return; }
     if (act === 'wiz-dice') { w.name = `${pick(NAMES[w.av.g === 'f' ? 'f' : 'm'])} ${pick(NAMES.s)}`; renderWizard(); return; }
-    if (act === 'wiz-next') { w.step = Math.min(3, w.step + 1); renderWizard(); window.scrollTo(0, 0); $('#wizard').scrollTop = 0; return; }
+    if (act === 'wiz-next') { w.step = Math.min(4, w.step + 1); renderWizard(); window.scrollTo(0, 0); $('#wizard').scrollTop = 0; return; }
     if (act === 'wiz-back') { w.step = Math.max(1, w.step - 1); renderWizard(); $('#wizard').scrollTop = 0; return; }
     if (act === 'wiz-cancel') { ui.wiz = null; renderWizard(); return; }
     if (act === 'wiz-go') foundHouse();
@@ -7436,7 +7498,7 @@ em.rep.warn{background:#b5523a}
     [s].concat(s.convoys || []).forEach(o => {
       const r = trimFleet(o); if (!r) return;
       s.money = (s.money || 0) + r.v;
-      (s.log = s.log || []).unshift({d:s.day, text:`Neu: Ein Verband hat höchstens ${MAX_FLEET} Schiffe. ${r.names.join(', ')} ${r.names.length === 1 ? 'wurde' : 'wurden'} für ${fmt(r.v)} Mark verkauft.`});
+      (s.log = s.log || []).unshift({d:s.day, text:`Neu: Ein Verband hat höchstens ${MAX_FLEET} Schiffe. ${r.names.join(', ')} ${r.names.length === 1 ? 'wurde' : 'wurden'} für ${fmt(r.v)} Gulden verkauft.`});
     });
     if (!s.wx) s.wx = {w:(s.sail && s.sail.weather) || (isWinter(s.day || 0) ? 'cloudy' : 'clear'), hold:4, next:null};
     if (s.sail) {
@@ -7465,6 +7527,7 @@ em.rep.warn{background:#b5523a}
     if (!s.city) s.city = {house:1, extra:0};
     if (!s.city.jobs) s.city.jobs = [];
     if (!s.freight) s.freight = {offers:{}, gen:{}, active:[], next:1, done:0};
+    if (!s.gulden) { (s.log || []).forEach(l => { if (l && l.text) l.text = l.text.replace(/\bMark\b/g, 'Gulden'); }); s.gulden = true; }
     if (s.city.open == null) s.city.open = !!((s.works || []).length || s.city.kirche || s.city.kran || s.city.markt || s.city.mauer || (s.city.house || 1) > 1 || s.city.extra);
     if (!s.orders) s.orders = {offer:[], active:[], d:0, done:0};
     if (!s.nextOrder) s.nextOrder = 1;
@@ -7512,7 +7575,7 @@ em.rep.warn{background:#b5523a}
 </script>
 
 <script>
-window.KK_BUILD = '41de728295';
+window.KK_BUILD = 'be53291188';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
