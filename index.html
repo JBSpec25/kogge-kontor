@@ -220,6 +220,18 @@ button.rank{background:none;cursor:pointer;font-family:var(--f-sc)}
 button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
 .awayline{margin:2px 0 10px;padding:8px 10px;border-radius:8px;background:var(--paper);line-height:1.4}
 .fleetcap{margin:2px 0 8px}
+
+/* Ab Version 35: Enterkampf in Runden */
+.duel .bdeck{margin:10px 0 0;padding:10px 12px 8px;border-radius:10px;background:var(--paper);border:1px solid color-mix(in srgb,var(--brass) 45%,transparent)}
+.duel .bdeck .ml{display:flex;justify-content:space-between;align-items:baseline;font:700 .8rem var(--f-sc);letter-spacing:.04em}
+.duel .bdeck .ml em{font:500 .74rem var(--f-sc);font-style:normal;color:var(--muted)}
+.duel .tug{margin:8px 0 2px}
+.duel .tug .tb{position:relative;display:flex;height:10px;border-radius:5px;background:color-mix(in srgb,var(--bad) 55%,var(--rule))}
+.duel .tug .tb i{display:block;height:100%;margin-left:auto;border-radius:0 5px 5px 0;background:var(--brass)}
+.duel .tug .tb b{position:absolute;top:-4px;width:4px;height:18px;margin-left:-2px;border-radius:2px;background:var(--ink)}
+.duel .tug .tl{display:flex;justify-content:space-between;font:500 .7rem var(--f-sc);color:var(--muted);margin-top:3px}
+.duel .tug .tl span:first-child{color:var(--bad)} .duel .tug .tl span:last-child{color:var(--brass)}
+.duel .bdeck small{display:block;margin-top:6px;font-size:.8rem;line-height:1.4;color:var(--muted)}
 /* Kopf */
 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px;padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:14px}
 .brand{display:flex;align-items:center;gap:10px}
@@ -3078,7 +3090,7 @@ em.rep.warn{background:#b5523a}
     armbrust:{n:'Armbrüste', one:'Armbrust', price:60, slot:1, men:1, up:0.1, d:'Jede bemannte Armbrust verstärkt die Salve, auf jede Entfernung.'},
     pavese:  {n:'Pavesen', one:'Pavese', price:30, up:0.02, d:'Setzschilde an der Reling. Decken sie die ganze Reling, wird im Gegenfeuer gut ein Drittel weniger verwundet.'},
     harnisch:{n:'Harnische', one:'Harnisch', price:80, up:0.05, d:'Brustpanzer und Eisenhut: stärker beim Entern, weniger Verluste.'},
-    haken:   {n:'Enterhaken', one:'Enterhaken', price:40, up:0, d:'Entern gelingt leichter, ein angeschlagener Gegner kommt schwerer los.'},
+    haken:   {n:'Enterhaken', one:'Enterhaken', price:40, up:0, d:'Beim Entern ist das Feld für den Hakenwurf größer, und sie kappen die Taue seltener; ein angeschlagener Gegner kommt schwerer los.'},
     blide:   {n:'Bliden', one:'Blide', price:500, slot:4, men:3, up:0.6, big:true, d:'Kleine Steinschleuder auf dem Kastell: trifft auf mittlere und weite Entfernung Rumpf und Takelage.'},
     buechse: {n:'Steinbüchsen', one:'Steinbüchse', price:950, slot:5, men:2, up:1, big:true, guns:true, d:'Neue Feuerwaffe: großer Rumpfschaden auf mittlere und weite Entfernung, braucht Pulver, versagt manchmal.'}
   };
@@ -3268,11 +3280,10 @@ em.rep.warn{background:#b5523a}
   const ENC_K = 0.6, DMG_K = 0.7, DUSK_R = 14;   // ab Version 20: seltener, länger
   const DIST = ['nah', 'mittel', 'fern'], DIST_MOD = [1.2, 1, 0.5], DIST_X = [0.6, 0.76, 0.9];
   const SHIP_A = {schnigge:'Eine Schnigge', kogge:'Eine Kogge', holk:'Ein Holk', kraweel:'Ein Kraweel'};
-  const ENC_OPEN = ['meet', 'tactic', 'volley', 'warn', 'guard', 'flee', 'boarding', 'fleeing'];
+  const ENC_OPEN = ['meet', 'tactic', 'volley', 'warn', 'guard', 'flee', 'boarding', 'fleeing', 'hook', 'melee'];
   const ownWend = () => st.fleet.length ? st.fleet.reduce((x, sh) => x + SHIPS[sh.type].wend, 0) / st.fleet.length : 2;
   const ownEff = () => { const k = fightCap(); return st.crew * 1.1 * (1 + 0.35 * armorFrac()) * (1 + (k ? k.fight * 0.03 : 0)); };
   const pirEff = e => e.n * (0.55 + 0.45 * e.mor / 100) * 1.2 * (1 + 0.4 * ((e.arm && e.arm.armor) || 0));
-  const boardOdds = () => { const e = st.enc, o = ownEff(); return clamp(o / (o + pirEff(e)) + (e.luv === 'own' ? 0.05 : 0) + Math.min(0.12, (armsOf(st).haken || 0) * 0.012), 0.03, 0.97); };
   const oddsWord = p => p >= 0.7 ? 'gut' : p >= 0.5 ? 'ausgeglichen' : p >= 0.35 ? 'schlecht' : 'sehr schlecht';
   // Größe des Zielfelds aus sichtbaren Gründen statt Schrumpfen von Runde zu Runde
   function newAim() {
@@ -3500,19 +3511,10 @@ em.rep.warn{background:#b5523a}
     st.money -= ransom; st.crew = 0; trimArms(st, [], 0); st.cargo = {}; applyHome();
     return {ship:sh, taken, ransom, last:true};
   }
-  function boardCore(forced) {
-    const e = st.enc;
-    if (Math.random() < boardOdds() - (forced ? 0.05 : 0)) {
-      const loss = Math.round(e.n * 0.35 * rnd(0.6, 1.2) * (1 - 0.3 * armorFrac()));
-      loseCrew(loss); e.n = 0;
-      return {win:true, loss};
-    }
-    return Object.assign({win:false}, loseShip());
-  }
   function winCore(kind) {
     const e = st.enc;
     st.wins = (st.wins || 0) + 1;
-    let loot = kind === 'sunk' ? e.n0 * rnd(5, 9) : kind === 'fled' ? e.n0 * rnd(3, 6) : e.n0 * rnd(12, 24);
+    let loot = kind === 'sunk' ? e.n0 * rnd(5, 9) : kind === 'fled' ? e.n0 * rnd(3, 6) : kind === 'burn' ? e.n0 * rnd(6, 11) : e.n0 * rnd(12, 24);
     if (e.prey) loot *= 0.3;
     if (e.dane && st.hanse && st.hanse.kaper && kind !== 'fled') loot += 300;
     loot = Math.round(loot / 5) * 5;
@@ -3523,7 +3525,7 @@ em.rep.warn{background:#b5523a}
       e.booty = e.prey ? {g:e.cargoG, q:e.cargoQ} : {g:pick(GOODS).id, q:6 + Math.floor(Math.random() * 13)};
     }
     gainRepute((e.prize ? 18 : 10) + (e.dane || e.prey ? 15 : 0));
-    addLog(`${e.prey ? 'Dänischer Kauffahrer' : e.dane ? 'Dänische Auslieger' : 'Seeräuber'} unter ${e.name} ${kind === 'fled' ? 'vertrieben' : kind === 'sunk' ? 'versenkt' : 'besiegt, ihr Schiff erbeutet'}. Beute: ${fmt(loot)} Gulden.`, 'pirate');
+    addLog(`${e.prey ? 'Dänischer Kauffahrer' : e.dane ? 'Dänische Auslieger' : 'Seeräuber'} unter ${e.name} ${kind === 'fled' ? 'vertrieben' : kind === 'sunk' ? 'versenkt' : kind === 'burn' ? 'im Enterkampf besiegt; ihr Schiff ging in Flammen auf' : 'besiegt, ihr Schiff erbeutet'}. Beute: ${fmt(loot)} Gulden.`, 'pirate');
     checkRank();
   }
   const prizeValue = () => { const e = st.enc; return Math.round(SHIPS[e.prize.type].price * 0.25 * e.prize.hull / 100); };
@@ -3636,7 +3638,7 @@ em.rep.warn{background:#b5523a}
     return new Promise(res => { guard.res = res; guard.timer = setTimeout(finishGuard, 250 + guard.dur + 180); });
   }
   function guardTap() {
-    if (!guard || guard.tap || !st.enc || st.enc.phase !== 'guard') return;
+    if (!guard || guard.tap || !st.enc || (st.enc.phase !== 'guard' && st.enc.phase !== 'hook')) return;
     const p = guardPos(), d = Math.abs(p - guard.c);
     guard.lock = p;
     guard.tap = d <= guard.perf / 2 ? 'perf' : d <= guard.good / 2 ? 'good' : p < guard.c ? 'early' : 'late';
@@ -3673,33 +3675,169 @@ em.rep.warn{background:#b5523a}
     if (e.phase === 'won' && e.prize) e.msg += prizeManned() ? ' Ihr Schiff gehört jetzt euch.' : ` Ihr Schiff gehört euch, doch für eine Prisenmannschaft fehlen Leute: nötig sind ${prizeNeed()} Matrosen.`;
     commit();
   }
+  // ───────── Ab Version 35: Enterkampf in Runden ─────────
+  // Erst Haken werfen (Zeitspiel), dann bis zu drei Runden Nahkampf mit Stürmen, Halten oder Zurückziehen.
+  // Wer verteidigt, kämpft vom eigenen Deck mit Vorteil; beide Seiten verlieren Leute, Kampfgeist und Deck entscheiden.
+  const BD = {rounds:3, def:1.45, att:{storm:1.3, hold:0.75}, exp:{storm:1.15, hold:0.8}, sw:{storm:1.35, hold:0.6}, kill:0.2, swing:140};
+  const BURN = {drauf:0.25, zaeh:0.3, gierig:0.15, vorsicht:0.1};
+  const ownMor0 = () => { const k = fightCap(); return clamp(62 + (k ? k.fight * 4 : 0) + armorFrac() * 10, 40, 90); };
+  // Grobe Aussicht ohne Glück: Stärke gegen Stärke, der Verteidiger mit Vorteil; im Kampf zählt, wer das Deck hält
+  function boardOdds(att) {
+    const e = st.enc; if (!e) return 0;
+    att = att || (e.bd && e.bd.att) || 'own';
+    const o = ownEff() * (att === 'pir' ? BD.def : 1) * (e.bd ? clamp(e.bd.om / 70, 0.6, 1.2) : 1), p = pirEff(e) * (att === 'pir' ? 1 : BD.def);
+    return clamp(o / (o + p) + (e.bd ? (e.bd.ctl - 50) / 120 : 0) + (e.luv === 'own' ? 0.03 : 0), 0.03, 0.97);
+  }
+  const boardWord = p => p >= 0.58 ? 'gut' : p >= 0.5 ? 'ausgeglichen' : p >= 0.44 ? 'schlecht' : 'sehr schlecht';
+  function pirStance(e, bd) {
+    let p = ({drauf:0.75, gierig:0.6, zaeh:0.45, vorsicht:0.25}[e.trait] ?? 0.5) + (bd.att === 'pir' ? 0.15 : -0.1);
+    if (bd.ctl > 70) p += 0.2;
+    if (pirEff(e) < ownEff() * 0.7) p -= 0.15;
+    return Math.random() < clamp(p, 0.1, 0.9) ? 'storm' : 'hold';
+  }
+  // Eine Runde Nahkampf, ohne Bild und Ton
+  function meleeCore(c, weak) {
+    const e = st.enc, bd = e.bd, p = pirStance(e, bd);
+    const O = ownEff() * (bd.att === 'pir' ? BD.def : 1) * (bd.r === 0 && bd.init ? 1.2 : 1) * clamp(bd.om / 70, 0.6, 1.2) * (weak ? 0.5 : 1);
+    const P = pirEff(e) * (bd.att === 'own' ? BD.def : 1);
+    const lo = rnd(0.45, 1.55), lp = rnd(0.45, 1.55);
+    const dO = O * BD.att[c] * BD.exp[p] * lo, dP = P * BD.att[p] * BD.exp[c] * lp;
+    const kP = Math.min(e.n, Math.round(dO / 1.2 * BD.kill)), kO = Math.round(dP / 1.1 * BD.kill * (1 - 0.3 * armorFrac()));
+    const c0 = st.crew; loseCrew(kO); const lost = c0 - st.crew;
+    const share = dO / (dO + dP), sw = (BD.sw[c] + BD.sw[p]) / 2;
+    e.n -= kP;
+    bd.ctl = clamp(bd.ctl + (share - 0.5) * BD.swing * sw, 0, 100);
+    e.mor = Math.max(0, e.mor - (kP / Math.max(1, e.n0) * 80 + Math.max(0, share - 0.5) * 30) * (TRAITS[e.trait].moraleK || 1));
+    bd.om = clamp(bd.om - lost / Math.max(1, bd.f0) * 90 - Math.max(0, 0.5 - share) * 30 + (c === 'hold' ? 3 : 0), 0, 100);
+    bd.r++;
+    const res = e.n <= 0 || bd.ctl >= 100 ? 'win' : e.mor <= 10 ? 'strike' : bd.ctl <= 0 || bd.om <= 15 ? 'broken' : bd.r >= BD.rounds ? 'stall' : 'go';
+    return {c, p, kP, kO:lost, share, res};
+  }
+  function hookStart() {
+    const e = st.enc, wx = (st.sail && st.sail.weather) || 'clear', fk = fightCap(), hk = armsOf(st).haken || 0;
+    const why = [];
+    let g = 0.16;
+    const f = (v, t) => { if (Math.abs(v - 1) >= 0.005) why.push({t, d:Math.round((v - 1) * 100)}); g *= v; };
+    if (hk) f(1 + Math.min(0.5, hk * 0.04), `${hk} Enterhaken`);
+    f({storm:0.65, rain:0.85, snow:0.85, fog:0.95}[wx] || 1, WX_NAME[wx] || 'Wetter');
+    if (e.luv === 'own') f(1.1, 'Luv'); else if (e.luv === 'pir') f(0.9, 'Gegner in Luv');
+    if (fk && fk.nav) f(1 + fk.nav * 0.03, `Kapitän ${fk.name}`);
+    guard = {t0:performance.now() + 300, dur:wx === 'storm' ? 1000 : 1250, c:0.5 + Math.random() * 0.36, good:g, perf:g * 0.33, cov:0, tap:null, lock:null, hook:true, why};
+    e.phase = 'hook';
+    e.msg = 'Klar zum Entern! Wirf die Haken, wenn der Zeiger im Feld über der Reling steht.';
+    render();
+    return new Promise(res => { guard.res = res; guard.timer = setTimeout(finishGuard, 300 + guard.dur + 180); });
+  }
   async function board(forced, prefix) {
     const e = st.enc; if (!e) return;
     if (!forced && (busy || e.phase !== 'tactic' || e.dist !== 0)) return;
+    e.bd = {att:forced ? 'pir' : 'own', r:0, ctl:50, om:ownMor0(), f0:Math.max(1, st.crew), init:0, n0:e.n, c0:st.crew};
+    e.logMan = ''; e.logOwn = ''; e.logPir = '';
     busy = true;
-    e.phase = 'boarding';
-    e.msg = (prefix || '') + (forced ? 'Sie werfen die Enterhaken!' : 'Enterhaken los! Die Mannschaft stürmt hinüber.');
-    render();
-    scene.fx.board();
-    await sleep(2700);
-    busy = false;
-    const out = boardCore(forced);
-    if (out.win) {
-      winCore('board');
-      e.msg = `Sieg im Enterkampf!${out.loss ? ` ${out.loss} ${out.loss === 1 ? 'Mann ist' : 'Leute sind'} verwundet.` : ''} Beute: ${fmt(e.loot)} Gulden, und ihr Schiff gehört jetzt euch.`;
-      scene.fx.fire(false);
+    if (forced) {
+      e.phase = 'boarding';
+      e.msg = (prefix || '') + 'Sie werfen die Enterhaken und springen herüber! Verteidigt das Deck.';
+      render(); scene.fx.board(); await sleep(1600); busy = false;
+      if (!st.enc) return;
+      e.phase = 'melee';
+      e.msg = 'Sie sind an Deck. Halten heißt: aus dem Kastell verteidigen, du kämpfst mit Vorteil. Stürmen wirft sie vielleicht zurück, kostet aber mehr Leute. Taue kappen bringt die Schiffe auseinander, wenn es gelingt.';
       return commit();
     }
+    const q = await hookStart();
+    busy = false;
+    if (!st.enc) return;
+    const cut = q === 'good' && Math.random() < clamp(0.18 - (armsOf(st).haken || 0) * 0.015 + (e.trait === 'vorsicht' ? 0.1 : 0), 0.05, 0.4);
+    if (q === 'none' || cut) {
+      e.bd = null; e.phase = 'tactic';
+      const t = cut ? 'Die Haken sitzen, doch sie kappen die Taue mit Äxten.' : 'Die Haken fliegen daneben und klatschen ins Wasser.';
+      scene.fx.text(cut ? 'Taue gekappt' : 'Daneben', 'pir', '#dfe7ea');
+      e.logMan = t;
+      return pirateResponse(t + ' ');
+    }
+    e.bd.init = q === 'perf' ? 1 : 0;
+    busy = true; e.phase = 'boarding';
+    e.msg = q === 'perf' ? 'Perfekter Wurf! Ihr seid drüben, bevor sie sich formieren.' : 'Die Haken sitzen. Die Mannschaft springt hinüber.';
+    render(); scene.fx.board(); await sleep(1500); busy = false;
+    if (!st.enc) return;
+    e.phase = 'melee';
+    e.msg += ' Jetzt entscheidet der Nahkampf: höchstens drei Runden.';
+    commit();
+  }
+  const STANCE = {storm:'stürmen vor', hold:'halten ihre Reihe'};
+  async function meleeRound(c) {
+    const e = st.enc; if (busy || !e || e.phase !== 'melee' || !e.bd) return;
+    const bd = e.bd;
+    if (c === 'back') return bd.att === 'own' ? retreat(false) : cutLoose();
+    busy = true; e.phase = 'boarding';
+    e.msg = c === 'storm' ? 'Vorwärts! Deine Leute stürmen.' : 'Haltet die Reihe!';
+    render(); scene.fx.clash(); await sleep(1250); busy = false;
+    if (!st.enc) return;
+    meleeEnd(meleeCore(c));
+  }
+  function meleeEnd(o, pre) {
+    const e = st.enc, bd = e.bd;
+    const line = `${pre || ''}${o.c === 'storm' ? 'Ihr stürmt' : 'Ihr haltet'}, ${o.p === o.c ? 'sie auch' : `sie ${STANCE[o.p]}`}. ${o.kP ? `${o.kP} von ihnen ${o.kP === 1 ? 'fällt' : 'fallen'}` : 'Keiner von ihnen fällt'}, ${o.kO ? `${o.kO} ${o.kO === 1 ? 'Mann' : 'Leute'} von dir` : 'von dir keiner'}.` +
+      (o.share >= 0.6 ? ' Ihr drängt sie zurück.' : o.share <= 0.4 ? ' Sie drängen euch zurück.' : ' Das Gedränge wogt hin und her.');
+    if (o.kO) scene.fx.text(`−${o.kO} Mann`, 'own', '#ffb3a3');
+    if (o.kP) setTimeout(() => { if (st.enc) scene.fx.text(`−${o.kP}`, 'pir', '#f6e7b8'); }, 250);
+    if (o.res === 'win' || o.res === 'strike') return boardWin(o.res, line);
+    if (o.res === 'broken') return bd.att === 'own' ? retreat(true, line) : boardLost(line);
+    if (o.res === 'stall') {
+      e.bd = null; e.phase = 'tactic';
+      if (bd.att === 'own') { e.mor = Math.max(0, e.mor - 4); e.msg = `${line} Nach drei Runden erlahmt der Angriff. Ihr zieht euch auf euer Schiff zurück; die Schiffe liegen noch Bord an Bord.`; }
+      else { e.mor = Math.max(0, e.mor - 12); e.msg = `${line} Sie kommen nicht durch und ziehen sich auf ihr Schiff zurück. Ihr Kampfgeist hat gelitten.`; }
+      e.logMan = e.msg;
+      return commit();
+    }
+    e.phase = 'melee'; e.msg = line;
+    commit();
+  }
+  function retreat(forced, pre) {
+    const e = st.enc, c0 = st.crew;
+    loseCrew(Math.round(st.crew * (forced ? rnd(0.06, 0.12) : rnd(0.02, 0.06))));
+    const loss = c0 - st.crew;
+    e.mor = Math.min(100, e.mor + (forced ? 10 : 4)); e.bd = null; e.phase = 'tactic'; scene.fx.dist(0);
+    e.msg = (pre ? pre + ' ' : '') + (forced ? `Sie werfen euch zurück! Beim Rückzug ${loss ? `fallen noch ${loss} ${loss === 1 ? 'Mann' : 'Leute'}` : 'kommt ihr knapp davon'}. Euer Schiff bleibt euch.`
+      : `Ihr zieht euch auf euer Schiff zurück${loss ? `, ${loss} ${loss === 1 ? 'Mann bleibt' : 'Leute bleiben'} zurück` : ''}. Die Schiffe liegen noch Bord an Bord.`);
+    e.logMan = e.msg; e.logOwn = ''; e.logPir = '';
+    addLog(`Enterangriff auf ${e.name} abgebrochen.`, 'pirate');
+    commit();
+  }
+  async function cutLoose() {
+    const e = st.enc, k = fightCap();
+    const p = clamp(0.3 + 0.1 * (ownWend() - SHIPS[e.ptype].wend) + (k ? k.nav * 0.03 : 0), 0.15, 0.6);
+    busy = true; e.phase = 'boarding'; e.msg = 'Äxte an die Taue!'; render(); await sleep(900); busy = false;
+    if (!st.enc) return;
+    if (Math.random() < p) {
+      e.bd = null; e.phase = 'tactic'; e.dist = 1; e.mor = Math.max(0, e.mor - 3); scene.fx.dist(1);
+      e.msg = 'Ihr kappt die Taue, die Schiffe treiben auseinander. Wer an Bord geblieben ist, wird über die Reling getrieben.'; e.logMan = e.msg;
+      return commit();
+    }
+    meleeEnd(meleeCore('hold', true), 'Die Taue halten. ');
+  }
+  function boardWin(kind, pre) {
+    const e = st.enc, burn = !e.prey && Math.random() < (BURN[e.trait] || 0.15) * (kind === 'strike' ? 1.3 : 1);
+    e.bd = null;
+    winCore(burn ? 'burn' : 'board');
+    scene.fx.fire(!!burn);
+    if (burn) { scene.fx.sink(); e.msg = `${pre} ${e.name} gibt sich geschlagen, doch zuvor legen seine Leute Feuer im Laderaum. Ihr rettet euch mit ${fmt(e.loot)} Gulden Beute zurück an Bord, ihr Schiff brennt nieder.`; }
+    else e.msg = `${pre} Sieg im Enterkampf! ${kind === 'strike' ? `${e.name} streicht die Flagge.` : 'Ihr habt ihr Deck.'} Beute: ${fmt(e.loot)} Gulden.` +
+      (prizeManned() ? ' Ihr Schiff gehört jetzt euch.' : ` Ihr Schiff gehört euch, doch für eine Prisenmannschaft fehlen Leute: nötig sind ${prizeNeed()} Matrosen.`);
+    commit();
+  }
+  function boardLost(pre) {
+    const e = st.enc; e.bd = null;
+    const out = loseShip();
     scene.fx.leave(); scene.fx.fire(false);
     if (out.last) {
       e.phase = 'captured';
       const fk = st.focus ? capOf(cvById(st.focus)) : null;
-      e.msg = fk ? `Die Seeräuber überwältigen den Verband und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Gulden Lösegeld kommt Kapitän ${fk.name} frei und kehrt nach ${C[st.home].n} zurück.`
-        : `Die Seeräuber überwältigen euch und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Gulden Lösegeld setzt ${e.name} dich in ${C[st.home].n} an Land.`;
+      e.msg = `${pre} ` + (fk ? `Die Seeräuber überwältigen den Verband und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Gulden Lösegeld kommt Kapitän ${fk.name} frei und kehrt nach ${C[st.home].n} zurück.`
+        : `Die Seeräuber überwältigen euch und nehmen die „${out.ship.name}“ samt Ladung. Gegen ${fmt(out.ransom)} Gulden Lösegeld setzt ${e.name} dich in ${C[st.home].n} an Land.`);
       addLog(`Von Seeräubern unter ${e.name} gefangen. ${shipLabel(out.ship)} verloren, ${fmt(out.ransom)} Gulden Lösegeld.`, 'pirate');
     } else {
       e.phase = 'lost';
-      e.msg = `Die Seeräuber erobern die „${out.ship.name}“${out.taken ? ` mit ${out.taken}` : ''}. ${out.loss} ${out.loss === 1 ? 'Mann geht' : 'Leute gehen'} verloren. Der Rest des Verbands entkommt.`;
+      e.msg = `${pre} Die Seeräuber erobern die „${out.ship.name}“${out.taken ? ` mit ${out.taken}` : ''}. ${out.loss} ${out.loss === 1 ? 'Mann geht' : 'Leute gehen'} verloren. Der Rest des Verbands entkommt.`;
       addLog(`${shipLabel(out.ship)} an Seeräuber unter ${e.name} verloren.`, 'pirate');
     }
     commit();
@@ -4848,6 +4986,7 @@ em.rep.warn{background:#b5523a}
       fire(on) { fx.fire = on; },
       shake() { fx.shake = performance.now() + 380; },
       sink() { fx.sink = performance.now(); },
+      clash() { fx.pirT = 0.58; fx.board = performance.now(); },
       board() { fx.pirT = 0.58; fx.board = performance.now() + 700; fx.texts.push({s:'Entern!', side:'mid', color:'#ffd27a', t0:performance.now() + 700}); },
       volley(from, n, zone, burn) {
         const now = performance.now();
@@ -5428,7 +5567,7 @@ em.rep.warn{background:#b5523a}
     deck:'<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="5" cy="5" r="2.2" fill="currentColor"/><circle cx="11" cy="5" r="2.2" fill="currentColor"/><path d="M1.5 14c0-3 1.6-5 3.5-5s3.5 2 3.5 5M7.5 14c0-3 1.6-5 3.5-5s3.5 2 3.5 5" fill="currentColor"/></svg>'};
   const BAND_COL = {sail:'#a9cbe4', deck:'#f0cc7f'};
   function renderAim(e) {
-    const ab = $('#aimbar'), ph = e && e.phase, show = !!e && (ph === 'volley' || ph === 'warn' || (ph === 'guard' && guard));
+    const ab = $('#aimbar'), ph = e && e.phase, show = !!e && (ph === 'volley' || ph === 'warn' || ((ph === 'guard' || ph === 'hook') && guard));
     ab.hidden = !show;
     const sc = $('#scene');
     if (ph === 'warn') {
@@ -5442,11 +5581,13 @@ em.rep.warn{background:#b5523a}
       cls = 'warn';
       html = `<div class="big"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l10 18H2z" fill="#ffb4a8"/><path d="M12 9v5M12 16.5v.5" stroke="#5c1b17" stroke-width="2.4" stroke-linecap="round"/></svg>Gegenfeuer kommt!</div>` +
         `<div class="wsub">${esc(e.name)}: ${esc(e.shout || '„Feuer!“')} · gleich „Deckung!“ tippen</div><div class="dots"><i></i><i></i><i></i></div>`;
-    } else if (ph === 'guard') {
-      html = `<div class="ah"><b class="g">Deckung!</b><span class="hint">im grünen Feld tippen · hell = perfekt</span></div>` +
-        `<div class="labels"><div class="lz"><span style="left:${pct(guard.c)};color:#9ff2b8">Einschlag</span></div></div>` +
+    } else if (ph === 'guard' || ph === 'hook') {
+      const hk = ph === 'hook';
+      html = `<div class="ah"><b class="g">${hk ? 'Haken werfen!' : 'Deckung!'}</b><span class="hint">im grünen Feld tippen · hell = perfekt</span></div>` +
+        `<div class="labels"><div class="lz"><span style="left:${pct(guard.c)};color:#9ff2b8">${hk ? 'Reling' : 'Einschlag'}</span></div></div>` +
         `<div class="track"><div class="zones"><div class="gw good" style="left:${pct(guard.c - guard.good / 2)};width:${pct(guard.good)}"></div><div class="gw perf" style="left:${pct(guard.c - guard.perf / 2)};width:${pct(guard.perf)}"></div></div><i class="needle"></i></div>` +
-        (guard.cov > 0.05 ? `<div class="chips"><span class="up">Pavesen: Feld +${Math.round(35 * guard.cov)} %</span></div>` : '');
+        (hk ? ((guard.why || []).length ? `<div class="chips">${guard.why.map(w => `<span class="${w.d > 0 ? 'up' : 'dn'}">${esc(w.t)} ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %</span>`).join('')}</div>` : '')
+          : guard.cov > 0.05 ? `<div class="chips"><span class="up">Pavesen: Feld +${Math.round(35 * guard.cov)} %</span></div>` : '');
     } else if (aim.bands) {
       const b = aim.bands[0], T0 = TGT[b.k] || TGT.deck, R0 = rotten(), shots = e.shots || [];
       const z = `<div class="band ${b.k}" style="left:${pct(b.a)};width:${pct(b.w)}"><i style="left:${pct((b.w - b.cw) / 2 / b.w)};width:${pct(b.cw / b.w)}"></i></div>` +
@@ -6827,9 +6968,16 @@ em.rep.warn{background:#b5523a}
     if (st.enc) {
       const e = st.enc, pc = x => `${Math.round(x * 100)} %`;
       if (e.phase === 'warn') { a.innerHTML = `<button class="btn primary fire" type="button" disabled>Achtung, Gegenfeuer …</button>`; return; }
-      if (e.phase === 'guard') { a.innerHTML = `<button class="btn primary fire" type="button" data-act="guard"${guard && guard.tap ? ' disabled' : ''}>${guard && guard.tap ? 'In Deckung …' : 'Deckung!'}</button>`; return; }
+      if (e.phase === 'guard' || e.phase === 'hook') { const hk = e.phase === 'hook'; a.innerHTML = `<button class="btn primary fire" type="button" data-act="guard"${guard && guard.tap ? ' disabled' : ''}>${guard && guard.tap ? (hk ? 'Haken fliegen …' : 'In Deckung …') : hk ? 'Werfen!' : 'Deckung!'}</button>`; return; }
       if (e.phase === 'volley') { const R0 = rotten(), k = (e.shots || []).length; a.innerHTML = `<button class="btn primary fire" type="button" data-act="fire"${busy ? ' disabled' : ''}>${busy ? (k && k < R0 ? 'Nächste Rotte …' : 'Nachladen …') : `Feuer! <small>${AMMO[e.ammo].n}${R0 > 1 ? ` · Rotte ${k + 1} von ${R0}` : ''}</small>`}</button>`; return; }
       if (busy || e.phase === 'flee' || e.phase === 'boarding') { a.innerHTML = `<button class="btn primary" type="button" disabled>${e.phase === 'boarding' ? 'Handgemenge …' : 'Alle Mann an Deck …'}</button>`; return; }
+      if (e.phase === 'melee' && e.bd) {
+        const own = e.bd.att === 'own';
+        a.innerHTML = `<button class="btn" type="button" data-act="bd-back"><b>${own ? 'Zurückziehen' : 'Taue kappen'}</b><small>${own ? 'zurück an Bord' : 'Schiffe trennen'}</small></button>` +
+          `<button class="btn" type="button" data-act="bd-hold"><b>Halten</b><small>weniger Verluste</small></button>` +
+          `<button class="btn primary" type="button" data-act="bd-storm"><b>Stürmen</b><small>mehr Wucht</small></button>`;
+        return;
+      }
       if (e.phase === 'meet' && e.prey) {
         a.innerHTML = `<button class="btn" type="button" data-act="let-go"><b>Ziehen lassen</b><small>kein Kampf</small></button>` +
           `<button class="btn primary" type="button" data-act="fight"><b>Kapern</b><small>Klar zum Gefecht</small></button>`;
@@ -6845,7 +6993,7 @@ em.rep.warn{background:#b5523a}
           b('hold', 'Kurs halten', 'Feld +15 %') +
           b('open', 'Abstand', e.dist === 2 ? 'schon fern' : `${DIST[e.dist + 1]} · ${pc(contest(e))}`, e.dist === 2) +
           b('luv', 'Luv gewinnen', e.luv === 'own' ? 'hast du' : pc(contest(e)), e.luv === 'own') +
-          b('board', 'Entern!', e.dist === 0 ? pc(boardOdds()) : 'erst nah', e.dist !== 0, e.dist === 0) +
+          b('board', 'Entern!', e.dist === 0 ? `Aussicht ${boardWord(boardOdds('own'))}` : 'erst nah', e.dist !== 0, e.dist === 0) +
           b('flee', 'Abdrehen', pc(fleeChance()));
       } else if (e.phase === 'fleeing') {
         a.innerHTML = `<button class="btn" type="button" data-act="chase-no"><b>Ziehen lassen</b><small>Treibgut</small></button>` +
@@ -6928,13 +7076,20 @@ em.rep.warn{background:#b5523a}
       `<small class="arms">${fk ? `Kapitän ${esc(fk.name)} · Kampf ${fk.fight}` : 'ohne Kapitän'}</small></div>` +
       `<div class="side foe"><h4>${e.prey ? 'Kauffahrer' : e.dane ? 'Auslieger' : 'Seeräuber'}</h4><div class="big"><b>${e.n}</b><span>von ${e.n0}</span></div>` +
       bar('Rumpf', e.phull, `${Math.round(e.phull)} %`) + bar('Segel', 100 - e.psail, `${100 - Math.round(e.psail)} %`) + `<small class="arms">${foeArms}</small></div></div>`;
+    if (e.bd && (e.phase === 'melee' || e.phase === 'boarding')) {
+      const bd = e.bd, own = bd.att === 'own';
+      h += `<div class="bdeck"><div class="ml"><span>Enterkampf ${own ? 'auf ihrem Deck' : 'auf deinem Deck'}</span><em>Runde ${Math.min(bd.r + 1, BD.rounds)} von ${BD.rounds}</em></div>` +
+        `<div class="tug" role="img" aria-label="Wer das Deck hält: ${Math.round(bd.ctl)} von 100 für dich"><div class="tb"><i style="width:${bd.ctl}%"></i><b style="left:${100 - bd.ctl}%"></b></div><div class="tl"><span>Gegner</span><span>wer hält das Deck</span><span>Du</span></div></div>` +
+        bar('Mut', bd.om, `${Math.round(bd.om)}`) +
+        `<small>Aussicht <b>${boardWord(boardOdds())}</b>. ${own ? 'Sie verteidigen ihr eigenes Deck und haben Vorteil.' : 'Du verteidigst dein eigenes Deck und hast Vorteil.'} Wer das Deck ganz hält, gewinnt; bricht der Mut deiner Leute, ${own ? 'werfen sie euch zurück' : 'nehmen sie das Schiff'}.</small></div>`;
+    }
     if (open && e.phase !== 'meet') h += `<div class="mor"><div class="ml"><span>Kampfgeist des Gegners</span><em>${Math.round(e.mor)}</em></div><div class="mb"><i style="width:${clamp(e.mor, 0, 100)}%"></i><b style="left:${T.flee}%"></b></div>` +
       `<small>${e.mor <= T.flee ? 'Unter der Fluchtschwelle: Sie wollen fliehen.' : `Unter ${T.flee} (Strich) wollen sie fliehen. Er sinkt durch Verluste, Volltreffer und Feuer.`}</small></div>`;
     const rows = [['Manöver', e.logMan, 'm'], ['Deine Salve', e.logOwn, 'o'], ['Gegenfeuer', e.logPir, 'p']].filter(r => r[1]);
-    h += open && rows.length && !['meet', 'boarding', 'flee'].includes(e.phase) ? `<div class="log">${rows.map(r => `<p class="${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></p>`).join('')}</div>` : `<p class="emsg">${e.msg}</p>`;
-    if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `Sie zielen auf die „${esc(tgt.name)}“. ` : ''}So funktioniert das Gefecht</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">Jede Runde: Manöver wählen, dann schießen deine Leute. Bolzen und Steine gehen aufs Deck, Brandpfeile in die Segel; ihr Schiff schlingert, also tippe, wenn der Zeiger auf dem Feld steht. Viele Armbrüste schießen in Rotten nacheinander, für jede tippst du einmal. Die Mitte ist ihr Kastell: Volltreffer dort treffen ihre Schützen. Bliden und Büchsen schießen von selbst auf den Rumpf. Danach kündigt der Gegner sein Feuer an und du gehst in Deckung. Nah wirken Steine und Entern, fern Brandpfeile. Luv vergrößert dein Feld und schwächt ihr Feuer. Fällt ihr Kampfgeist unter den Strich, wollen sie fliehen oder ergeben sich.</p></details>`;
+    h += open && rows.length && !['meet', 'boarding', 'flee', 'hook', 'melee'].includes(e.phase) ? `<div class="log">${rows.map(r => `<p class="${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></p>`).join('')}</div>` : `<p class="emsg">${e.msg}</p>`;
+    if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `Sie zielen auf die „${esc(tgt.name)}“. ` : ''}So funktioniert das Gefecht</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">Jede Runde: Manöver wählen, dann schießen deine Leute. Bolzen und Steine gehen aufs Deck, Brandpfeile in die Segel; ihr Schiff schlingert, also tippe, wenn der Zeiger auf dem Feld steht. Viele Armbrüste schießen in Rotten nacheinander, für jede tippst du einmal. Die Mitte ist ihr Kastell: Volltreffer dort treffen ihre Schützen. Bliden und Büchsen schießen von selbst auf den Rumpf. Danach kündigt der Gegner sein Feuer an und du gehst in Deckung. Nah wirken Steine und Entern, fern Brandpfeile. Luv vergrößert dein Feld und schwächt ihr Feuer. Fällt ihr Kampfgeist unter den Strich, wollen sie fliehen oder ergeben sich. Entern geht nur nah: Erst wirfst du die Haken im richtigen Moment, dann folgen bis zu drei Runden Nahkampf mit Stürmen, Halten oder Zurückziehen. Wer sein eigenes Deck verteidigt, hat Vorteil; Glück spielt mit. Misslingt dein Angriff, ziehst du dich zurück und behältst dein Schiff.</p></details>`;
     if (e.phase === 'meet') h += `<p class="small">${st.crew} Matrosen, ${armsLine()}, ${st.brand || 0} Bündel Brandpfeile${armsOf(st).buechse ? `, ${st.pulver || 0} Ladungen Pulver` : ''} an Bord. Die Matrosen bemannen die Waffen${fk && !st.focus ? `, Kapitän ${esc(fk.name)} führt das Gefecht` : ''}; beim Entern kämpfen alle. ` +
-      `${st.fleet.length === 1 ? 'Verlierst du einen Enterkampf, ist dein einziges Schiff samt Ladung verloren, und du kommst nur gegen Lösegeld frei.' : 'Verlierst du einen Enterkampf, nehmen sie das Schiff, auf das sie zielen.'}</p>`;
+      `Entern sie dich und verlierst du den Kampf an Deck, ${st.fleet.length === 1 ? 'ist dein einziges Schiff samt Ladung verloren, und du kommst nur gegen Lösegeld frei' : 'nehmen sie das Schiff, auf das sie zielen'}. Misslingt dein eigener Enterangriff, ziehst du dich zurück.</p>`;
     h += `</div>`;
     box.innerHTML = h;
   }
@@ -8434,6 +8589,7 @@ em.rep.warn{background:#b5523a}
     if (act === 'guard') return guardTap();
     if (act === 'fire') return fire();
     if (act === 'board') return board(false);
+    if (act === 'bd-storm' || act === 'bd-hold' || act === 'bd-back') return meleeRound(act.slice(3));
     if (act && act.startsWith('m-')) return doManeuver(act.slice(2));
     if (act === 'chase-go' || act === 'chase-no') return chase(act === 'chase-go');
     if (act === 'prize-home') return prizeAct('home');
@@ -8627,7 +8783,7 @@ em.rep.warn{background:#b5523a}
       const ab = $('#aimbar');
       if (!ab.hidden && st.enc) {
         const ph = st.enc.phase, nd = ab.querySelector('.needle');
-        if (nd) nd.style.left = `${(ph === 'guard' ? (guard && guard.lock != null ? guard.lock : guardPos()) : (st.enc.aimLock ?? aimPos())) * 100}%`;
+        if (nd) nd.style.left = `${(ph === 'guard' || ph === 'hook' ? (guard && guard.lock != null ? guard.lock : guardPos()) : (st.enc.aimLock ?? aimPos())) * 100}%`;
         if (ph === 'volley') { const tf = `translateX(${((st.enc.offLock ?? aimOff()) * 100).toFixed(2)}%)`; ab.querySelectorAll('.zones,.lz').forEach(x => { x.style.transform = tf; }); }
       }
       requestAnimationFrame(gaugeLoop);
@@ -8736,7 +8892,8 @@ em.rep.warn{background:#b5523a}
     if (s.enc) {
       const e = s.enc; e.aimLock = null;
       if (!e.trait) Object.assign(e, {trait:'drauf', ptype:'kogge', mor:70, phull:100, psail:0, osail:0, dist:1, luv:null, ammo:'bolzen', hold:false, fire:0, target:0, prize:null, r:0});
-      if (['flee', 'boarding', 'decide', 'guard', 'warn'].includes(e.phase)) e.phase = e.r > 0 || e.phase !== 'flee' ? 'tactic' : 'meet';
+      if (e.bd && (e.phase === 'melee' || e.phase === 'boarding')) e.phase = 'melee';
+      else { e.bd = null; if (['flee', 'boarding', 'decide', 'guard', 'warn', 'hook', 'melee'].includes(e.phase)) e.phase = e.r > 0 || e.phase !== 'flee' ? 'tactic' : 'meet'; }
       e.shots = [];
       if (e.phase === 'volley') newAim();
     }
@@ -8750,7 +8907,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '19f3e680c8';
+window.KK_BUILD = '782abf83be';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
