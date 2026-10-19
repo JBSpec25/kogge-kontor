@@ -204,6 +204,22 @@ svg.rvf.sm{width:18px;height:18px;vertical-align:-4px;margin-right:4px}
 .rivhere svg.rvf{width:30px;height:30px}
 .rvn{display:flex;align-items:center;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .kexp{margin:0 0 8px}
+
+/* Ab Version 34: kompakter Markt, Marktinfos aufklappbar, Stammsitz im Reiter Haus */
+.pstat{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.pstat b{color:var(--ink);font:500 .9rem var(--f-mono)}
+.pstat .szl{font-size:.82rem}
+details.minfo{margin-top:0}
+details.minfo .ginfo{margin:4px 0 10px}
+details.minfo .pchart{margin-bottom:6px}
+details.rivhere{margin:12px 0 0;padding:0 12px 6px;border:1px solid var(--rule);border-radius:10px;background:var(--paper)}
+details.rivhere > summary{color:var(--ink);font-weight:500}
+details.rivhere > summary small{color:var(--muted);font-weight:400}
+details.rivhere ul{margin:0 0 6px}
+button.rank{background:none;cursor:pointer;font-family:var(--f-sc)}
+button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
+.awayline{margin:2px 0 10px;padding:8px 10px;border-radius:8px;background:var(--paper);line-height:1.4}
+.fleetcap{margin:2px 0 8px}
 /* Kopf */
 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px;padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:14px}
 .brand{display:flex;align-items:center;gap:10px}
@@ -324,14 +340,14 @@ svg.rvf.sm{width:18px;height:18px;vertical-align:-4px;margin-right:4px}
 .mhead h2{margin:0;font:700 1.2rem var(--f-sc);letter-spacing:.03em;text-wrap:balance}
 .profile{font-size:.9rem;color:var(--muted)}
 .profile b{color:var(--ink);font-weight:500}
-.cols,.row{display:grid;grid-template-columns:minmax(0,1fr) 3.3em 3.7em 3.7em 2.8em;gap:6px;align-items:center}
+.cols,.row{display:grid;grid-template-columns:minmax(0,1fr) 4em 4.2em 3.4em;gap:6px;align-items:center}
 .cols{font:500 .7rem var(--f-sc);letter-spacing:.07em;color:var(--muted);padding:0 6px 6px;border-bottom:1px solid var(--rule)}
 .cols span:not(:first-child),.num{text-align:right}
 .good{border-bottom:1px solid var(--rule)}
 .row{width:100%;background:none;border:0;padding:10px 6px;text-align:left;cursor:pointer;border-radius:6px}
 .row:hover{background:var(--paper)}
 .good.open .row{background:var(--paper)}
-.gname{font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gname{font-weight:500;min-width:0;overflow-wrap:anywhere;line-height:1.25}
 .num{font:400 .88rem var(--f-mono);font-variant-numeric:tabular-nums}
 .num.deal{color:var(--good);font-weight:500}
 .num.dim{color:var(--muted)}
@@ -860,7 +876,7 @@ em.rep.warn{background:#b5523a}
       <div class="card" id="market" data-tab="markt"></div>
       <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Frachtaufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
       <div class="card yard" id="yard" data-tab="werft" hidden></div>
-      <div class="card home" id="homecard" data-tab="stadt"></div>
+      <div class="card home" id="homecard" data-tab="haus"></div>
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
       <div class="card home" id="housecard" data-tab="haus" hidden></div>
       <div class="card emptytab" id="emptytab" hidden></div>
@@ -870,7 +886,7 @@ em.rep.warn{background:#b5523a}
 
   <div class="foot">
     <span class="small" id="savestate">Spielstand wird gespeichert.</span>
-    <span class="ybtns"><button class="linkbtn" id="bookbtn" type="button">Handelsbuch</button><button class="linkbtn" id="savesbtn" type="button">Spielstände</button><button class="linkbtn" id="newgame" type="button">Neues Spiel</button></span>
+    <span class="ybtns"><button class="linkbtn" id="bookbtn" type="button">Handelsbuch</button><button class="linkbtn" id="savesbtn" type="button">Spielstände und Einstellungen</button></span>
   </div>
 </div>
 
@@ -3004,7 +3020,7 @@ em.rep.warn{background:#b5523a}
     setTab('lage');
     const r = route(st.loc, to, st.day);
     const weather = st.wx ? st.wx.w : pickWeather(st.day);
-    st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false, shanty:r.days >= 4 && Math.random() < 0.35};
+    st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false, shanty:r.days >= 4 && Math.random() < 0.5 ? 1 + ((st.shN = (st.shN || 0) + 1) % 2) : 0};
     escortDepart(st.loc, to); qEv('sail');
     addLog(`Abgelegt in ${C[st.loc].n}, Kurs auf ${C[to].n}. ${r.days} ${r.days === 1 ? 'Tag' : 'Tage'} auf See${r.overland ? ', ein Stück über Land' : ''}${r.ice ? ', Treibeis bremst' : r.winter ? ', Winterwetter bremst' : ''}.`);
     st.loc = null; ui.open = null;
@@ -5617,6 +5633,14 @@ em.rep.warn{background:#b5523a}
       src.start(); lfo.start();
       return [src, lfo];
     }
+    // Welle im Takt: Rauschen schwillt über einen Takt an und ab
+    function swell(bus, t, d, v) {
+      const src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      src.buffer = noise; src.loop = true; f.type = 'lowpass';
+      f.frequency.setValueAtTime(320, t); f.frequency.linearRampToValueAtTime(950, t + d * 0.42); f.frequency.linearRampToValueAtTime(260, t + d);
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + d * 0.42); g.gain.exponentialRampToValueAtTime(0.0001, t + d * 1.05);
+      src.connect(f); f.connect(g); g.connect(bus); src.start(t, Math.random() * 1.5); src.stop(t + d * 1.1);
+    }
     const melMap = mel => { const m = {}; let i = 0; mel.forEach(([n, l]) => { if (n) m[i] = [n, l]; i += l; }); return m; };
 
     // Hafen: D-Dorisch, Laute, Blockflöte, Bordun, Rahmentrommel
@@ -5637,18 +5661,30 @@ em.rep.warn{background:#b5523a}
       melMap([[74,2],[76,1],[77,1],[79,2],[77,1],[76,1],[74,4],[72,2],[74,2]]),
       melMap([[72,3],[72,1],[74,2],[76,2],[74,2],[72,2],[69,4]])];
     const SH_CH = [[50,57],[50,57],[48,55],[50,57],[50,57],[53,60],[48,55],[50,57]];
-    const TRACKS = {
-      shanty: {step:60 / 96 / 2, len:64, gain:1.1, setup:() => [],
+    // Ab Version 34: zweites Shanty in E, schneller, mit Stampfen auf 1, 4 und 7
+    const SH2_PART = [
+      melMap([[64,2],[67,1],[69,1],[71,2],[69,1],[67,1],[69,2],[64,2],[62,2],[64,2]]),
+      melMap([[71,3],[69,1],[67,2],[64,2],[62,2],[64,4],[null,2]]),
+      melMap([[67,2],[69,1],[71,1],[74,2],[71,2],[69,1],[67,1],[69,2],[71,4]]),
+      melMap([[74,2],[71,2],[69,2],[67,2],[69,2],[66,2],[64,4]])];
+    const SH2_CH = [[52,59],[52,59],[50,57],[52,59],[55,62],[50,57],[52,59],[52,59]];
+    function shantyTrack(P, CHS, bpm, two) {
+      return {step:60 / bpm / 2, len:64, gain:1.1, setup:() => [],
         play(bus, i, t, sd, loop) {
-          const bar = Math.floor(i / 8), k = i % 8, ch = SH_CH[bar], part = Math.floor(i / 16), call = part % 2 === 0, n = SH_PART[part][i % 16];
-          if (k === 0 || k === 4) { tom(bus, t, k === 0 ? 0.26 : 0.2, 62); hit(bus, t, 0.05, 420, 0.09); }
-          if (k === 2 || k === 6) hit(bus, t, 0.022, 2400, 0.04);
+          const bar = Math.floor(i / 8), k = i % 8, ch = CHS[bar], part = Math.floor(i / 16), call = part % 2 === 0, n = P[part][i % 16];
+          if (two) { if (k === 0 || k === 3 || k === 6) { tom(bus, t, k === 0 ? 0.26 : 0.17, 66); hit(bus, t, 0.045, 420, 0.08); } if (k === 2 || k === 5) hit(bus, t, 0.03, 2300, 0.05); }
+          else { if (k === 0 || k === 4) { tom(bus, t, k === 0 ? 0.26 : 0.2, 62); hit(bus, t, 0.05, 420, 0.09); } if (k === 2 || k === 6) hit(bus, t, 0.022, 2400, 0.04); }
           if (k === 0) pluck(bus, t, ch[0] - 12, 0.1);
           if (k === 4) pluck(bus, t, ch[1] - 12, 0.07);
+          if (k === 0 && bar % 2 === 0) swell(bus, t, 16 * sd, 0.03);
           if (!n) return;
-          if (call) lead(loop % 2 ? 'fiddle' : 'shawm', bus, t, n[0], n[1] * sd * 0.92, loop % 2 ? 0.045 : 0.04);
-          else { choir(bus, t, n[0] - 12, n[1] * sd * 0.95, 0.15); choir(bus, t, n[0] - 15, n[1] * sd * 0.95, 0.09); }
-        }},
+          if (call) lead(two ? (loop % 2 ? 'flute' : 'fiddle') : (loop % 2 ? 'fiddle' : 'shawm'), bus, t, n[0], n[1] * sd * 0.92, two ? (loop % 2 ? 0.06 : 0.045) : loop % 2 ? 0.045 : 0.04);
+          else { choir(bus, t, n[0] - 12, n[1] * sd * 0.95, 0.15); choir(bus, t, n[0] - (two ? 16 : 15), n[1] * sd * 0.95, 0.09); }
+        }};
+    }
+    const TRACKS = {
+      shanty: shantyTrack(SH_PART, SH_CH, 96, false),
+      shanty2: shantyTrack(SH2_PART, SH2_CH, 108, true),
       port: {step:60 / 100 / 2, len:64, setup:bus => drone(bus, [38, 45], 0.03),
         play(bus, i, t, sd, loop) {
           const [r, th] = PORT_CH[Math.floor(i / 8)], k = i % 8;
@@ -5661,7 +5697,7 @@ em.rep.warn{background:#b5523a}
       sea: {step:60 / 52 / 3, len:48, setup:() => [],
         play(bus, i, t, sd, loop) {
           const bar = Math.floor(i / 6), k = i % 6, ch = SEA_CH[bar];
-          if (k === 0) { pad(bus, t, ch, 6 * sd, 0.028); pluck(bus, t, ch[0] - 12, 0.1); tom(bus, t, 0.07, 68); }
+          if (k === 0) { pad(bus, t, ch, 6 * sd, 0.028); pluck(bus, t, ch[0] - 12, 0.1); tom(bus, t, 0.07, 68); swell(bus, t, 6 * sd, 0.04); }
           if (k === 3) pluck(bus, t, ch[0] - 5, 0.07);
           const n = SEA_MEL[i];
           if (n && loop % 2 === 0) flute(bus, t, n[0], n[1] * sd * 0.92, 0.065);
@@ -5707,6 +5743,21 @@ em.rep.warn{background:#b5523a}
       nowgorod: {gain:0.72, root:64, mode:'aeo', meter:8, step:0.455, lead:'choir', altOct:0, acc:['bells', 'drone'], perc:'none', ch:[1,7,3,4,3,4,7,1],
         mel:'1:4 2:2 3:2 | 4:2 3:2 2:4 | 3:2 4:2 5:4 | 4:4 3:4 | 5:4 6:2 5:2 | 4:2 3:2 4:4 | 3:2 2:2 0:4 | 1:8'}
     };
+    // Ab Version 34: weitere Segelmelodien im selben Stil (6/8, Flächen, Wellen), dazu Flaute und Sturm
+    const SEA_MUSIC = {
+      sea2:{root:62, mode:'dor', meter:6, step:0.385, lead:'fiddle', alt:'flute', altOct:12, acc:['pad', 'sparse', 'waves'], perc:'soft', ch:[1,7,1,4,1,3,7,1],
+        mel:'5:3 4 3 2 | 1:2 3 5:3 | 6:2 5 4:2 3 | 2:6 | 3:2 4 5:2 8 | 7:2 6 5:3 | 4:2 3 2:2 0 | 1:6'},
+      sea3:{root:67, mode:'mix', meter:6, step:0.375, lead:'flute', alt:'fiddle', altOct:0, acc:['pad', 'sparse', 'waves'], perc:'soft', ch:[1,4,1,7,1,4,5,1],
+        mel:'1 2 3 5:3 | 4 3 2 1:3 | 2 3 4 6:3 | 5:3 r:3 | 8 7 6 5:3 | 4:2 6 5:3 | 3 2 1 0:3 | 1:6'},
+      sea4:{gain:1.2, root:64, oct:12, mode:'aeo', meter:6, step:0.4, lead:'flute', alt:'fiddle', altOct:-12, acc:['drone', 'harp', 'waves'], perc:'none', ch:[1,6,7,1,1,4,5,1],
+        mel:'1:3 5:3 | 4:2 3 2:3 | 3:2 4 5 6 5 | 4:6 | 5:3 8:3 | 7:2 6 5:2 4 | 3:2 2 0:3 | 1:6'},
+      'sea:storm':{gain:1.15, root:62, mode:'aeo', meter:6, step:0.25, lead:'fiddle', alt:'shawm', altOct:12, acc:['drone', 'lute', 'waves'], wv:0.07, perc:'tabor', ch:[1,1,6,7,1,4,7,1],
+        mel:'1 1 3 5 4 3 | 2:2 0 1:3 | 3 3 5 8 7 5 | 6:2 5 4:3 | 8 8 7 6 5 4 | 3:2 4 5:3 | 4 3 2 0 2 0 | 1:6'},
+      'sea:calm':{gain:0.9, root:69, mode:'dor', meter:6, step:0.52, lead:'flute', echo:true, acc:['drone', 'harp', 'waves'], wv:0.022, perc:'none', ch:[1,4,1,5,6,4,5,1],
+        mel:'5:6 | 4:3 3:3 | 2:6 | 1:3 r:3 | 3:3 5:3 | 6:6 | 5:3 2:3 | 1:6'}
+    };
+    const SEA_SET = ['sea', 'sea2', 'sea3', 'sea4'], SEA_TITLE = ['Nordwind', 'Ostseelied', 'Möwenweise', 'Graue See'];
+    let seaN = Math.floor(Math.random() * SEA_SET.length), seaCur = 0;
     const VOL = {flute:0.075, shawm:0.045, fiddle:0.05, brass:0.05, choir:0.22};
     function lead(type, bus, t, m, d, v) {
       if (type === 'shawm') shawm(bus, t, m, d, v);
@@ -5718,7 +5769,7 @@ em.rep.warn{background:#b5523a}
     const cityCache = {};
     function cityTrack(id) {
       if (cityCache[id]) return cityCache[id];
-      const sp = CITY_MUSIC[id];
+      const sp = CITY_MUSIC[id] || SEA_MUSIC[id];
       if (!sp) return TRACKS.port;
       const sc = MODES[sp.mode], M = sp.meter, half = M / 2, bars = sp.ch.length, acc = [].concat(sp.acc), oct = sp.oct || 0;
       const dm = d => { const k = d - 1, o = Math.floor(k / 7); return sp.root + 12 * o + sc[k - 7 * o]; };
@@ -5747,6 +5798,9 @@ em.rep.warn{background:#b5523a}
               if (k === 0) { organ(bus, t, [h.lo, h.th, h.fi, h.lo + 12], M * sd, 0.022); pluck(bus, t, h.b, 0.11); }
               if (k === half) pluck(bus, t, h.fi - 12, 0.06);
             } else if (a === 'drone') { if (k === 0) pluck(bus, t, h.b, 0.1); if (k === half) pluck(bus, t, h.fi, 0.06); }
+            else if (a === 'pad') { if (k === 0) pad(bus, t, [h.lo, h.th, h.fi], M * sd, 0.026); }
+            else if (a === 'sparse') { if (k === 0) pluck(bus, t, h.b + 12, 0.1); if (k === half) pluck(bus, t, h.fi, 0.07); }
+            else if (a === 'waves') { if (k === 0) swell(bus, t, M * sd, sp.wv || 0.04); }
             else if (a === 'bells') {
               if (k === 0 && bar % 2 === 0) bell(bus, t, sp.root - 24, 0.11, 7);
               if (k % 2 === 1 || bar % 4 === 3) bell(bus, t, [h.lo + 24, h.fi + 24, h.th + 24, h.lo + 36][(i * 3 + loop) % 4], 0.022, 1.6);
@@ -5756,6 +5810,7 @@ em.rep.warn{background:#b5523a}
           if (P === 'frame') { if (k === 0) tom(bus, t, 0.17, 92); if (k === half) tom(bus, t, 0.1, 92); if (!tri && k === 6) hit(bus, t, 0.03, 2600, 0.06); }
           else if (P === 'tabor') { if (k === 0) tom(bus, t, 0.18, 115); if (k === half) tom(bus, t, 0.12, 115); if (tri ? k === 2 || k === 5 : k === 2 || k === 6 || k === 7) hit(bus, t, k === 7 ? 0.03 : 0.05, 1900, 0.07); }
           else if (P === 'tamb') { if (k === 0) tom(bus, t, 0.1, 100); if (tri ? k === 2 || k === 4 : k === 2 || k === 6) { hit(bus, t, 0.035, 7200, 0.1); hit(bus, t + 0.03, 0.02, 9500, 0.05); } }
+          else if (P === 'soft') { if (k === 0) tom(bus, t, 0.07, 68); }
           else if (P === 'bell') { if (k === 0 && bar % 4 === 0) bell(bus, t, sp.root - 12, 0.07, 5); if (k === 0) tom(bus, t, 0.12, 88); }
           const n = mel[i];
           if (!n) return;
@@ -5769,7 +5824,7 @@ em.rep.warn{background:#b5523a}
         }};
       return (cityCache[id] = tr);
     }
-    const trackOf = name => name.startsWith('city:') ? cityTrack(name.slice(5)) : TRACKS[name];
+    const trackOf = name => name.startsWith('city:') ? cityTrack(name.slice(5)) : name === 'sea' ? (SEA_SET[seaCur] === 'sea' ? TRACKS.sea : cityTrack(SEA_SET[seaCur])) : name.startsWith('sea') ? cityTrack(name) : TRACKS[name];
     // ── Geräusche: Meer, Wind, Regen, Möwen, Takelage, Hafen ──
     function brown() {
       if (bnoise && bnoise.sampleRate === ctx.sampleRate) return bnoise;
@@ -5867,6 +5922,7 @@ em.rep.warn{background:#b5523a}
       return {rms:Math.sqrt(q / (d.length - SR * 2)), peak:pk, len:c.tr.len, mel:Object.keys(c.tr).length};
     }
     function start(name) {
+      if (name === 'sea') { seaCur = seaN % SEA_SET.length; seaN++; }
       const tr = trackOf(name), now = ctx.currentTime, bus = ctx.createGain();
       bus.gain.setValueAtTime(0.0001, now); bus.gain.linearRampToValueAtTime(tr.gain || 1, now + 1.6); bus.connect(musicBus || master);
       return {name, tr, bus, holds:tr.setup ? tr.setup(bus) : [], i:0, loop:0, next:now + 0.08};
@@ -5921,17 +5977,19 @@ em.rep.warn{background:#b5523a}
     let wanted = false;
     try { wanted = localStorage.getItem(PREF) === '1'; } catch (e) {}
     return {
-      toggle, set, isOn:() => on, _offline:offline, amb:setAmb, layer:setLayer, layers:() => Object.assign({}, layers), _ambState:() => amb && {scene:amb.scene, wx:amb.wx, n:amb.holds.length},
+      toggle, set, isOn:() => on, seaTitle:() => cur && cur.name === 'sea' ? SEA_TITLE[seaCur] : '', _offline:offline, amb:setAmb, layer:setLayer, layers:() => Object.assign({}, layers), _ambState:() => amb && {scene:amb.scene, wx:amb.wx, n:amb.holds.length},
       drum:() => { if (!on || !ctx) return; const t = ctx.currentTime + 0.02; [0, 0.16, 0.32, 0.5].forEach((d, i) => hit(master, t + d, i === 3 ? 1.1 : 0.7, i === 3 ? 95 : 130, 0.32)); }, _check:id => { const t = cityTrack(id); return t === TRACKS.port ? null : t.len; },
       // Gespeicherte Einstellung: Musik startet mit dem ersten Tippen, weil Browser Ton erst nach einer Berührung erlauben
       armed:() => wanted && !on,
       arm(cb) { if (!wanted) return; const go = ev => { if (ev.target.closest && ev.target.closest('[data-act="music"]')) return; if (!on) { toggle(); cb && cb(); } }; document.addEventListener('pointerdown', go, {once:true}); }
     };
   })();
-  const TRACK_NAME = {port:'Hafen', sea:'Segeln', battle:'Gefecht', shanty:'Shanty an Bord'};
-  const trackFor = () => st.enc && !['won', 'lost', 'escaped', 'paid', 'captured'].includes(st.enc.phase) ? 'battle' : st.sail ? (st.sail.shanty ? 'shanty' : 'sea') : st.loc && C[st.loc] ? 'city:' + st.loc : 'port';
+  const TRACK_NAME = {port:'Hafen', sea:'Segeln', battle:'Gefecht', shanty:'Shanty an Bord', shanty2:'Shanty an Bord', 'sea:storm':'Sturm auf See', 'sea:calm':'Flaute im Nebel'};
+  const trackFor = () => st.enc && !['won', 'lost', 'escaped', 'paid', 'captured'].includes(st.enc.phase) ? 'battle'
+    : st.sail ? (st.sail.weather === 'storm' ? 'sea:storm' : st.sail.shanty ? (st.sail.shanty === 2 ? 'shanty2' : 'shanty') : st.sail.weather === 'fog' ? 'sea:calm' : 'sea')
+    : st.loc && C[st.loc] ? 'city:' + st.loc : 'port';
   const ambFor = () => st.enc ? 'battle' : st.sail ? 'sea' : 'port';
-  const trackLabel = () => { const t = trackFor(); return t.startsWith('city:') ? C[t.slice(5)].n : TRACK_NAME[t]; };
+  const trackLabel = () => { const t = trackFor(); return t.startsWith('city:') ? C[t.slice(5)].n : t === 'sea' ? (music.seaTitle() || TRACK_NAME.sea) : TRACK_NAME[t]; };
 
   // ───────── Avatar ─────────
   const AV = {
@@ -6116,6 +6174,9 @@ em.rep.warn{background:#b5523a}
     { const L = music.layers(); h += `</div><div class="xfer"><h3>Klang</h3><div class="chipset" role="group">` +
       [['music', 'Musik'], ['amb', 'Meer und Hafen']].map(([v, l]) => `<button type="button" data-slot="snd" data-v="${v}" aria-pressed="${L[v]}">${l}</button>`).join('') +
       `</div><span class="small">${music.isOn() ? 'Beides lässt sich einzeln ein- und ausschalten; ganz aus geht es oben mit dem Lautsprecher.' : 'Der Ton ist aus. Einschalten oben mit dem Lautsprecher.'}</span>`; }
+    h += `</div><div class="xfer"><h3>Markt</h3><div class="chipset" role="group">` +
+      [['0', 'Infos beim Antippen'], ['1', 'Marktinfos immer zeigen']].map(([v, l]) => `<button type="button" data-slot="minfo" data-v="${v}" aria-pressed="${minfoPref() === (v === '1')}">${l}</button>`).join('') +
+      `</div><span class="small">${minfoPref() ? 'Bild, Herkunft, Preisverlauf und Konkurrenten stehen offen unter jeder Ware.' : 'Unter jeder Ware klappt „Mehr zur Ware“ Bild, Herkunft, Preisverlauf und den besten bekannten Preis auf.'}</span>`;
     h += `</div><div class="xfer"><h3>Auf ein anderes Gerät übertragen</h3>` +
       `<span class="small">Kopiere den Code und füge ihn auf dem anderen Gerät hier ein. Er ersetzt dort den aktiven Spielstand.</span>` +
       `<div class="row2"><button class="ybtn" type="button" data-slot="copy">Code kopieren</button>${ui.copied ? '<span class="small">Kopiert.</span>' : ''}</div>` +
@@ -6131,6 +6192,7 @@ em.rep.warn{background:#b5523a}
     const n = +t.dataset.n, act = t.dataset.slot;
     if (act === 'load') { const sl = getSlot(n); if (sl) { save(); if (saves.db && saves.ok) await flushRemote(); loadState(JSON.parse(JSON.stringify(sl.state)), n); ui.saves = false; renderSaves(); } return; }
     if (act === 'new') { openWizard(n, true); return; }
+    if (act === 'minfo') { setMinfo(t.dataset.v === '1'); ui.det.minfo = null; ui.det.rivm = null; renderSaves(); renderMarket(); return; }
     if (act === 'snd') { const v = t.dataset.v; music.layer(v, !music.layers()[v]); renderSaves(); return; }
     if (act === 'seasons') { st.seasons = t.dataset.v === 'mild' ? 'mild' : 'spuerbar'; commit(); return; }
     if (act === 'del') {
@@ -6257,7 +6319,7 @@ em.rep.warn{background:#b5523a}
       `<div class="purse" aria-label="Truhe ${fmt(st.money)} Gulden, Vermögen ${fmt(wealth())} Gulden">` +
       `<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16" rx="8" ry="3.4"/><path d="M4 16v-3.4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4V16"/><ellipse cx="12" cy="9" rx="8" ry="3.4"/><path d="M4 9v3.6M20 9v3.6"/></svg>` +
       `<span class="pin"><span class="pv${st.money < 0 ? ' neg' : ''}">${fmt(st.money)} <small>Gulden</small></span><span class="pw">Vermögen ${fmt(wealth())}</span></span></div>` +
-      `<span class="rank">${r}</span>` +
+      `<button class="rank" type="button" data-act="rank" aria-label="${r}: dein nächstes Ziel zeigen">${r}</button>` +
       `<button class="mbtn" type="button" data-act="music" aria-pressed="${music.isOn()}" aria-label="Musik ${music.isOn() ? 'ausschalten' : 'einschalten'}">` +
       (music.isOn() ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>`
         : `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></svg>`) +
@@ -6307,19 +6369,19 @@ em.rep.warn{background:#b5523a}
       (isPest(c.id) ? `<p class="warnline">In ${c.n} geht die Pest um. Die Stadt braucht weniger, Matrosen erkranken beim Anlegen.</p>` : '') +
       (warToll() ? `<span class="small">Pfundzoll für den Krieg: 1 % auf jeden Verkauf.</span>` : '') +
       (() => { const ns = [...new Set(seasonRules(st.loc).filter(r => r.n).map(r => r.n))]; return ns.length ? `<span class="seasonline">${MONTHS[monthOf(st.day)]}: ${ns.join(' · ')}</span>` : ''; })() + `</div>` +
-      `<div class="cols" aria-hidden="true"><span>Ware</span><span>Bestand</span><span>Kauf</span><span>Verkauf</span><span>Bord</span></div>`;
+      `<div class="cols" aria-hidden="true"><span>Ware</span><span>Kauf</span><span>Verkauf</span><span>Bord</span></div>`;
     GOODS.forEach(g => {
       const bp = buyPrice(st.loc, g.id), sp = sellPrice(st.loc, g.id), hq = held(g.id);
       const open = ui.open === g.id;
       h += `<div class="good${open ? ' open' : ''}"><button class="row" type="button" data-good="${g.id}" aria-expanded="${open}">` +
-        `<span class="gname">${icon(g.id)}${g.n}${(k => k > 1.05 ? '<span class="sz dn" title="Saison: viel Angebot">↓</span>' : k < 0.95 ? '<span class="sz up" title="Gerade gefragt">↑</span>' : '')(seasonK(st.loc, g.id))}</span><span class="num dim">${Math.floor(st.stock[st.loc][g.id])}</span>` +
+        `<span class="gname">${icon(g.id)}${g.n}${(k => k > 1.05 ? '<span class="sz dn" title="Saison: viel Angebot">↓</span>' : k < 0.95 ? '<span class="sz up" title="Gerade gefragt">↑</span>' : '')(seasonK(st.loc, g.id))}</span>` +
         `<span class="num${bp < g.b * 0.8 ? ' deal' : ''}">${bp}</span><span class="num${sp > g.b * 1.25 ? ' deal' : ''}">${sp}</span>` +
         `<span class="num">${hq || '·'}${stored(g.id, st.loc) ? `<small class="ks" title="im Lager">⌂${stored(g.id, st.loc)}</small>` : ''}</span></button>`;
       if (open) h += panel(g, hq);
       h += `</div>`;
     });
     h += rivHereHTML(st.loc);
-    h += `<p class="legend">Preise in Gulden je Last. <span class="deal">Grün</span> heißt: günstig einzukaufen oder teuer zu verkaufen. Pfeile zeigen die Jahreszeit: ↓ viel Angebot, ↑ gefragt.</p>`;
+    h += `<p class="legend">Preise in Gulden je Last. <span class="deal">Grün</span>: günstig zu kaufen oder gut zu verkaufen. ↓ Saison mit viel Angebot, ↑ gefragt. Tippe eine Ware an für Menge, Kaufen und Verkaufen.${minfoPref() ? '' : ' Bild, Herkunft und Preisverlauf stehen unter „Mehr zur Ware“; immer zeigen lässt es sich unter Spielstände.'}</p>`;
     box.innerHTML = h;
   }
   function panel(g, hq) {
@@ -6343,14 +6405,22 @@ em.rep.warn{background:#b5523a}
     const nk = Math.min(want, ks), gk = nk ? sellGain(st.loc, g.id, nk) : 0;
     if (ks) { const kc = K.goods[g.id], ka = kc.cost / kc.q, kd = Math.round(sellPrice(st.loc, g.id) - ka);
       hint += (hint ? ' ' : '') + `Im ${st.loc === st.home ? 'Kontor' : 'Lager der Niederlassung'} liegen ${ks} Last, Ø Einkauf ${fmt(ka)} Gulden, hier je Last <span class="${kd >= 0 ? 'up' : 'down'}">${kd >= 0 ? '+' : '−'}${fmt(Math.abs(kd))}</span>.`; }
-    return `<div class="panel"><div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span>` +
-      (sk > 1.05 ? `<span class="szl dn">Saison: viel Angebot, günstiger</span>` : sk < 0.95 ? `<span class="szl up">Gerade gefragt, teurer</span>` : '') + `</div></div>` +
-      priceChart(g.id) + `<div class="qty" role="group" aria-label="Menge in Last">${q}</div>` +
+    const mi = minfoPref() || !!ui.det.minfo;
+    return `<div class="panel"><div class="pstat"><span>Bestand hier <b>${Math.floor(st.stock[st.loc][g.id])} Last</b></span>` +
+      (sk > 1.05 ? `<span class="szl dn">Saison: viel Angebot, günstiger</span>` : sk < 0.95 ? `<span class="szl up">Gerade gefragt, teurer</span>` : '') + `</div>` +
+      `<div class="qty" role="group" aria-label="Menge in Last">${q}</div>` +
       `<div class="trade"><button class="tbtn buy" type="button" data-trade="buy" data-good="${g.id}" data-n="${nb}"${nb ? '' : ' disabled'}>Kaufen<span>${nb} Last · ${fmt(cb)} G</span></button>` +
       `<button class="tbtn" type="button" data-trade="sell" data-good="${g.id}" data-n="${ns}"${ns ? '' : ' disabled'}>Verkaufen<span>${ns} Last · ${fmt(gs)} G</span></button>` +
       (ks ? `<button class="tbtn store" type="button" data-trade="store" data-good="${g.id}" data-n="${nk}">Aus dem ${st.loc === st.home ? 'Kontor' : 'Lager'} verkaufen<span>${nk} Last · ${fmt(gk)} G</span></button>` : '') + `</div>` +
-      (hint ? `<p class="hint">${hint}</p>` : '') + `</div>`;
+      (hint ? `<p class="hint">${hint}</p>` : '') +
+      `<details class="more minfo" data-det="minfo"${mi ? ' open' : ''}><summary><span>Mehr zur Ware</span><i class="chev" aria-hidden="true"></i></summary>` +
+      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</details></div>`;
   }
+  // Ab Version 34: Marktinfos aufklappbar, auf Wunsch immer offen (Einstellung unter Spielstände)
+  const MINFO_KEY = 'kogge-kontor-marktinfo';
+  let minfoV = null;
+  function minfoPref() { if (minfoV == null) { try { minfoV = localStorage.getItem(MINFO_KEY) === '1'; } catch (e) { minfoV = false; } } return minfoV; }
+  function setMinfo(v) { minfoV = !!v; try { localStorage.setItem(MINFO_KEY, v ? '1' : '0'); } catch (e) {} }
   function priceChart(gid) {
     const hh = ((st.hist || {})[st.loc] || {})[gid] || [];
     const best = CITIES.filter(c => c.id !== st.loc && st.known[c.id]).map(c => ({c, p:st.known[c.id].s[gid], d:st.known[c.id].d})).sort((a, b) => b.p - a.p)[0];
@@ -6405,9 +6475,9 @@ em.rep.warn{background:#b5523a}
       done:'Gut gerüstet und mit eigenem Lager. Als Nächstes wartet die Gilde: Mit einer Niederlassung in einer anderen Stadt öffnen sich Handelsrouten und das Bauen.',
       goals:[
         {t:() => `Baue das Kontor in ${HN()}`, ok:() => !!st.kontor,
-          hint:() => `Reiter Stadt in ${HN()}: das Kontor. Es ist dein Lager im Stammsitz (150 Last): billig einlagern, teuer verkaufen. Eine Niederlassung ist es nicht, die liegt in einer anderen Stadt.`, tab:'stadt', sel:'#homecard [data-det="kontor"]'},
+          hint:() => `Reiter Haus, Stammsitz ${HN()}: das Kontor. Es ist dein Lager im Stammsitz (150 Last): billig einlagern, teuer verkaufen. Bauen kannst du es, wenn du in ${HN()} liegst. Eine Niederlassung ist es nicht, die liegt in einer anderen Stadt.`, tab:'haus', sel:'#homecard [data-det="kontor"]'},
         {t:() => 'Erfülle einen Ratsauftrag', ok:() => !!(st.orders && st.orders.done > 0),
-          hint:() => `Im Rathaus von ${HN()} (Reiter Stadt) sucht der Rat Waren gegen Lohn und Ansehen. Annehmen, Ware besorgen, im Stammsitz abliefern.`, tab:'stadt', sel:'#homecard [data-det="council"]'},
+          hint:() => `Im Rathaus von ${HN()} (Reiter Haus) sucht der Rat Waren gegen Lohn und Ansehen. Annehmen, Ware besorgen, im Stammsitz abliefern.`, tab:'haus', sel:'#homecard [data-det="council"]'},
         {t:() => 'Gib ein zweites Schiff in Auftrag', p:() => [nShips(), 2], ok:() => nShips() >= 2,
           hint:() => 'Reiter Werft, Bauaufträge. Eine Kogge gibt es ab Händler. Fertige Schiffe segeln an den Liegeplatz im Heimathafen.', tab:'werft', sel:'#yard'},
         {t:() => 'Rüste 4 Armbrüste aus', p:() => [armsOf(st).armbrust || 0, 4], ok:() => (armsOf(st).armbrust || 0) >= 4,
@@ -6438,7 +6508,7 @@ em.rep.warn{background:#b5523a}
       goals:[
         gRep(500, 3),
         {t:() => 'Stimme auf dem Hansetag ab', ok:() => Object.values((st.hanse || {}).votes || {}).some(v => v && v.my),
-          hint:() => 'Unter Hansetag (Reiter Stadt im Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'stadt', sel:'#homecard [data-det="hansetag"]'},
+          hint:() => 'Unter Hansetag (Reiter Haus, Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'haus', sel:'#homecard [data-det="hansetag"]'},
         {t:() => 'Halte zwei Verbände auf Handelsrouten', p:() => [(st.convoys || []).length, 2], ok:() => (st.convoys || []).length >= 2,
           hint:() => 'Reiter Haus: weitere Kapitäne anheuern und neue Handelsrouten anlegen.', tab:'haus', sel:'#housecard'},
         gWealth(40000, 'Fernhändler')]},
@@ -6448,7 +6518,7 @@ em.rep.warn{background:#b5523a}
       goals:[
         gRep(1200, 4),
         {t:() => 'Gewinne die Wahl zum Bürgermeister', ok:() => !!st.mayor || (st.mayorTerms || 0) > 0,
-          hint:() => 'Im Rathaus siehst du, wie du im Ansehen gegen die Konkurrenten stehst und wann gewählt wird.', tab:'stadt', sel:'#homecard [data-det="council"]'},
+          hint:() => 'Im Rathaus (Reiter Haus) siehst du, wie du im Ansehen gegen die Konkurrenten stehst und wann gewählt wird.', tab:'haus', sel:'#homecard [data-det="council"]'},
         gWealth(100000, 'Großkaufmann')]},
     {n:'Ältermann der Hanse', rew:0, last:true,
       intro:() => 'Der Hansetag wählt jedes Jahr am 24. Juni den Ältermann. Wählbar ist ein Bürgermeister mit 3.000 Ansehen.',
@@ -6457,7 +6527,7 @@ em.rep.warn{background:#b5523a}
         {t:() => 'Sammle 3.000 Ansehen', p:() => [Math.round(st.repute || 0), 3000], ok:() => (st.repute || 0) >= 3000,
           hint:() => 'Ansehen bringen Verkäufe im Stammsitz, Ratsaufträge, Bauten und Siege.', tab:'markt', sel:'#market'},
         {t:() => 'Werde Ältermann der Hanse', ok:() => !!st.alderman,
-          hint:() => 'Gewählt wird auf dem Hansetag am 24. Juni.', tab:'stadt', sel:'#homecard [data-det="hansetag"]'}]}
+          hint:() => 'Gewählt wird auf dem Hansetag am 24. Juni.', tab:'haus', sel:'#homecard [data-det="hansetag"]'}]}
   ];
   const qCur = () => { const q = qS(); return QUEST[Math.min(q.ch, QUEST.length - 1)]; };
   const qGoal = () => { const q = qS(), Q = qCur(); return Q.goals.find(g => !g.ok(q)) || null; };
@@ -6554,9 +6624,9 @@ em.rep.warn{background:#b5523a}
   function rivHereHTML(cid) {
     const l = ((st.rivAt || {})[cid] || []).filter(x => st.day - x.d <= 14 && Math.abs(x.p) >= 2).slice(0, 3);
     if (!l.length) return '';
-    return `<div class="rivhere"><span class="flabel">Konkurrenten in ${C[cid].n}</span><ul>` + l.map(x => { const r = rivById(x.r);
+    return `<details class="more rivhere" data-det="rivm"${minfoPref() || ui.det.rivm ? ' open' : ''}><summary><span>Konkurrenten in ${C[cid].n} <small>· ${l.length} ${l.length === 1 ? 'Geschäft' : 'Geschäfte'}</small></span><i class="chev" aria-hidden="true"></i></summary><ul>` + l.map(x => { const r = rivById(x.r);
       return `<li>${r.av ? avatarSVG(r.av, 'rvf') : ''}<span><b>${esc(r.name)}</b> ${x.k === 'buy' ? `kaufte ${agoD(x.d)} ${x.q} Last ${G[x.g].n}${x.o ? ` für ${C[x.o].n}` : ''}` : `verkaufte ${agoD(x.d)} ${x.q} Last ${G[x.g].n}${x.o ? ` aus ${C[x.o].n}` : ''}`}. ` +
-        `${x.k === 'buy' ? 'Der Kaufpreis stieg dadurch um' : 'Der Verkaufspreis sank dadurch um'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></div>`;
+        `${x.k === 'buy' ? 'Der Kaufpreis stieg dadurch um' : 'Der Verkaufspreis sank dadurch um'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></details>`;
   }
   function rpHTML() {
     const R = st.rpt; if (!R) return '';
@@ -6666,6 +6736,7 @@ em.rep.warn{background:#b5523a}
     const prog = next ? Math.min(100, (r - CIVIC[i][0]) / (next[0] - CIVIC[i][0]) * 100) : 100;
     const pa = (st.player && st.player.avatar) || {};
     box.innerHTML = `<div class="hmhead">${hausmarke(pa.mark || 0, pa.col || 0, 'inl')}<div><h2>Stammsitz ${C[st.home].n}</h2><span class="sub2">Handelshaus ${st.player ? st.player.name : ''} · ${CIVIC[i][1]}${st.player && st.player.origin && ORIGINS[st.player.origin] ? ` · ${ORIGINS[st.player.origin].n}` : ''}</span></div></div>` +
+      (st.loc !== st.home ? `<p class="small awayline">${st.loc ? `Du liegst in ${C[st.loc].n}.` : 'Du bist auf See.'} Was du hier nur vor Ort tun kannst, etwa einlagern oder Aufträge annehmen, geht in ${C[st.home].n}.${hasSteward() ? ' Dein Verwalter handelt für dich aus der Ferne.' : ''}</p>` : '') +
       `<div class="perks"><div><b>Bürgerrecht:</b> hier 5 % günstiger einkaufen und 5 % teurer verkaufen.</div><div><b>${PERKS[st.home].t}:</b> ${PERKS[st.home].d}</div></div>` +
       `<div class="wealth"><div class="holdrow"><span>Ansehen ${fmt(r)}</span><span class="small">${next ? `${next[1]} ab ${fmt(next[0])}` : 'Höchster Stand erreicht'}</span></div><div class="bar"><i style="width:${prog}%"></i></div>` +
       `<span class="small">Ansehen bringen Verkäufe hier, besonders von Waren, die die Stadt braucht, dazu Ratsaufträge, Betriebe, Bauten und Siege über Seeräuber.</span></div>` +
@@ -6893,7 +6964,8 @@ em.rep.warn{background:#b5523a}
       const q = Math.min(n, left, Math.floor(Math.max(0, st.money) / price));
       return `<button class="ybtn" type="button" data-yard="${act}" data-n="${n}"${q >= 1 && (n === 1 || q === n) ? '' : ' disabled'}>+${n} · ${fmt(n * price)} G</button>`;
     };
-    let h = `<h2>Werft &amp; Heuer</h2><div class="ysub">Dein Verband · ${st.fleet.length} von ${ownMax()} ${ownMax() === 1 ? 'Schiff' : 'Schiffen'}${ownMax() < MAX_FLEET ? ` · als ${RANKS[Math.min(st.rank + 1, 2)][1]} ${ownMax() + 1}` : ''}</div>`;
+    let h = `<h2>Werft &amp; Heuer</h2><div class="ysub">Dein Verband · ${st.fleet.length} ${st.fleet.length === 1 ? 'Schiff' : 'Schiffe'}</div>` +
+      `<p class="small fleetcap">Als ${RANKS[st.rank][1]} segeln höchstens ${ownMax()} ${ownMax() === 1 ? 'Schiff' : 'Schiffe'} in deinem eigenen Verband${ownMax() < MAX_FLEET ? `, als ${RANKS[st.rank + 1][1]} ${ownMax() + 1}` : ''}. Weitere Schiffe warten am Liegeplatz in ${C[st.home].n} oder fahren unter Kapitänen.</p>`;
     if (!st.fleet.length) {
       h += `<p class="small">Du hast kein Schiff mehr.${st.loc === st.home ? '' : ` In ${C[st.home].n} würde dir die Werft eine alte Schnigge überlassen.`}</p>`;
       if (st.loc === st.home) h += `<div class="yrow"><span class="yl"><b>Alte Schnigge</b><span class="small">30 Last, Rumpf 55 %, von der Werft deines Stammsitzes</span></span><span class="ybtns"><button class="ybtn" type="button" data-yard="old"${st.money >= OLD_SHIP ? '' : ' disabled'}>Übernehmen · ${fmt(OLD_SHIP)} G</button></span></div>`;
@@ -8106,7 +8178,7 @@ em.rep.warn{background:#b5523a}
     const e = {k, ps, kind:'', name:'', desc:'', cost:0, days:0, act:'', why:'', state:ps.job ? 'job' : ps.built ? 'built' : ps.lock ? 'later' : 'now', facts:[]};
     if (k === 'kontor') {
       e.kind = 'kontor'; e.name = 'Kontor'; e.o = {lvl:st.kontor ? st.kontor.lvl : 1};
-      if (st.kontor) { e.desc = `Lager für ${st.kontor.cap} Last, ${kontorUsed()} belegt. Ein- und Auslagern im Reiter Markt.`; e.act = `<button class="ybtn" type="button" data-go="kontor">Zum Lager</button>`; }
+      if (st.kontor) { e.desc = `Lager für ${st.kontor.cap} Last, ${kontorUsed()} belegt. Ein- und Auslagern im Reiter Haus unter Kontor.`; e.act = `<button class="ybtn" type="button" data-go="kontor">Zum Lager</button>`; }
       else { e.desc = `Ein eigenes Lager für ${KONTOR[1].cap} Last, ${KONTOR[1].upkeep} Gulden am Tag. Wird sofort eingerichtet.`; e.cost = KONTOR[1].cost; e.days = 0; e.cb = 'kontor'; e.why = st.money < e.cost ? 'Zu wenig Geld' : ''; }
     } else if (k === 'haus') {
       const lv = st.city.house || 1, H = HOUSE[lv], nx = HOUSE[lv + 1];
@@ -8279,7 +8351,7 @@ em.rep.warn{background:#b5523a}
     const canGive = st.loc === st.home && st.orders && st.orders.active.some(o => haveFor(o.g) >= o.q);
     const htOpen = st.home && openItems().some(x => x.kind === 'gift' || (canVote() && !x.v.my));
     const reps = (st.convoys || []).filter(c => c.report && !c.report.seen);
-    const dots = {markt:freightHere() ? 'b' : '', haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length ? 'b' : '', stadt:canGive || htOpen ? 'b' : '', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
+    const dots = {markt:freightHere() ? 'b' : '', haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length || canGive || htOpen ? 'b' : '', stadt:'', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
     $('#tabs').innerHTML = TABS.map(([k, label, ic]) => `<button class="tab" type="button" role="tab" data-tab-btn="${k}" aria-selected="${ui.tab === k}">` +
       `<svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${label}</span>${dots[k] ? `<i class="dot${dots[k] === 'b' ? ' b' : ''}"></i>` : ''}</button>`).join('');
   }
@@ -8323,7 +8395,7 @@ em.rep.warn{background:#b5523a}
     if (any) return;
     const msg = {werft:st.sail ? 'Die Werft erreichst du im nächsten Hafen. Gerade bist du auf See.' : 'Hier gibt es gerade nichts zu tun.',
       haus:`Kapitäne heuerst du im Schifferhaus von ${C[st.home].n} an. Dann führen sie weitere Verbände für dich, und hier siehst du dein Handelshaus.`,
-      stadt:`Deine Stadt ${C[st.home].n} siehst du, wenn du dort bist.`, markt:'Der Markt öffnet im Hafen.', karte:'', lage:''}[t];
+      stadt:`Die Stadt siehst du, wenn du in einem Hafen liegst. Deinen Stammsitz ${C[st.home].n} mit Kontor, Rat und Hansetag findest du im Reiter Haus.`, markt:'Der Markt öffnet im Hafen.', karte:'', lage:''}[t];
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
@@ -8376,7 +8448,7 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.act === 'cont-open') { continueOpen(); if (st.sail && !st.enc && !timer) schedTick(); return; }
   });
   $('#tempo').addEventListener('click', () => setTempo(TEMPI[(TEMPI.indexOf(tempo) + 1) % TEMPI.length]));
-  $('#stats').addEventListener('click', e => { if (e.target.closest('[data-act="music"]')) { music.toggle(); renderStats(); } });
+  $('#stats').addEventListener('click', e => { if (e.target.closest('[data-act="music"]')) { music.toggle(); renderStats(); } else if (e.target.closest('[data-act="rank"]')) questShow('#goals', 'lage'); });
   $('#news').addEventListener('click', e => { if (e.target.closest('[data-act="news-ok"]')) { st.inbox = []; commit(); } });
   $('#log').addEventListener('toggle', () => { try { localStorage.setItem('kogge-kontor-log', $('#log').open ? '1' : '0'); } catch (e) {} });
   $('#yard').addEventListener('click', e => {
@@ -8460,7 +8532,7 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.bs) { ui.bsheet = t.dataset.bs; return renderBSheet(); }
     if (t.dataset.go) { const g = t.dataset.go; ui.bsheet = null; renderBSheet();
       if (['markt', 'werft', 'haus'].includes(g)) return setTab(g);
-      ui.det[g] = true; render(); const el = document.querySelector(`#homecard [data-det="${g}"]`); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+      ui.det[g] = true; setTab('haus'); render(); requestAnimationFrame(() => { const el = document.querySelector(`#homecard [data-det="${g}"]`); if (el) el.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'}); }); return; }
     if (t.dataset.k === 'branch') return buildBranch();
     const done = () => { ui.bsheet = null; renderBSheet(); };
     if (t.dataset.work) { done(); return buildWork(t.dataset.work); }
@@ -8495,10 +8567,6 @@ em.rep.warn{background:#b5523a}
   });
   $('#scrim').addEventListener('click', () => { if (ui.book) { ui.book = false; renderBook(); return; } if (ui.saves) { ui.saves = false; renderSaves(); return; } closeSheet(); render(); });
   document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (ui.book) { ui.book = false; renderBook(); } else if (ui.sheet) { closeSheet(); render(); } });
-  $('#newgame').addEventListener('click', () => {
-    const free = SLOTS.find(n => n !== active && !getSlot(n));
-    openWizard(free || active, true);
-  });
   $('#savesbtn').addEventListener('click', () => { ui.saves = true; ui.delAsk = null; renderSaves(); });
   $('#saves').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
@@ -8682,7 +8750,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = 'ee846b221b';
+window.KK_BUILD = '19f3e680c8';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
