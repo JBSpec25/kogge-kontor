@@ -141,6 +141,69 @@ button{font:inherit;color:inherit}
 .duel .hint1{margin:6px 0 0}
 @media (prefers-reduced-motion: reduce){.aimbar.warn .dots i{animation:none;background:#ffb4a8}}
 
+
+/* Ab Version 33: Ziele-Karte, Bericht des Schreibers, Konkurrenten */
+.goals{padding:14px 14px 4px}
+.goals .qhead{display:flex;flex-direction:column;gap:1px;margin-bottom:6px}
+.goals .qhead .k{color:var(--brass)}
+.goals .qhead h2{margin:0;font:700 1.2rem var(--f-sc);letter-spacing:.02em;text-wrap:balance}
+.goals .qintro{margin:2px 0 10px;font-size:.93rem;color:var(--muted);text-wrap:pretty}
+.qgoals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.qgoals li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;padding:7px 0;border-top:1px solid var(--rule)}
+.qgoals li:first-child{border-top:0}
+.qgoals li>span{display:flex;flex-direction:column;gap:4px;min-width:0}
+.qgoals b{font-weight:500;font-size:.96rem;line-height:1.3}
+.qgoals li.ok b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule)}
+.qgoals li.cur b{font-weight:700}
+.qmk{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--rule);display:grid;place-items:center;font:700 .78rem var(--f-body);font-style:normal;color:#fff;margin-top:-1px}
+.qgoals li.ok .qmk{background:var(--good);border-color:var(--good)}
+.qgoals li.cur .qmk{border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
+.qgoals small{font-size:.8rem;color:var(--muted)}
+.qgoals .qhint{font-size:.88rem;line-height:1.4;color:var(--ink);background:var(--paper);border-radius:8px;padding:8px 10px;margin-top:2px}
+.qgoals .ybtn{align-self:flex-start;min-height:40px;padding:4px 14px;background:var(--brass);border-color:var(--brass);color:var(--brass-ink);font-weight:600}
+.qbar{display:block;height:6px;border-radius:3px;background:var(--paper);border:1px solid var(--rule);overflow:hidden;max-width:240px}
+.qbar i{display:block;height:100%;background:var(--brass)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0 4px;border-top:1px solid var(--rule);margin-top:6px}
+.qfoot .linkbtn{padding:6px 10px;font-size:.84rem}
+.qrep{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 2px;padding:10px 12px;border:1px solid var(--purse-rule);border-radius:10px;background:var(--purse);text-align:left;cursor:pointer;font:inherit;color:inherit}
+.qrep span{display:flex;flex-direction:column}.qrep b{font:700 .95rem var(--f-sc)}.qrep small{font-size:.8rem;color:var(--muted)}
+.qrep .chev{flex:none;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg)}
+.qnext{margin:8px 0 4px}
+.goals .chron{border:0;border-top:1px solid var(--rule);border-radius:0;background:none;margin:8px -14px 0}
+.goals .chron summary h2{font-size:.95rem}
+.qflash{animation:qflash 2.4s ease-out}
+@keyframes qflash{0%,40%{box-shadow:0 0 0 3px var(--brass),0 0 18px color-mix(in srgb,var(--brass) 60%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion: reduce){.qflash{animation:none;outline:3px solid var(--brass)}}
+#qsheet{z-index:36}
+#qscrim{z-index:35}
+.qsheet .k{font:500 .72rem var(--f-sc);letter-spacing:.08em;color:var(--brass)}
+.qsheet h2{margin:2px 0 8px;font:700 1.25rem var(--f-sc);text-wrap:balance}
+.qwel p{margin:0 0 10px;text-wrap:pretty}
+.qwel .qbtns{margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qwel .btn{min-height:56px}
+.qrew{color:var(--good)}
+.rph{margin:16px 0 6px;font:700 .95rem var(--f-sc);letter-spacing:.04em}
+.rpgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rpgrid div{border:1px solid var(--rule);border-radius:9px;padding:7px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.rpgrid span{font-size:.76rem;color:var(--muted)}
+.rpgrid b{font:500 .92rem var(--f-mono);overflow-wrap:anywhere}
+.rpt .small{display:block;margin-top:6px}
+.rplist,.rpup{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.rplist li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:10px;font-size:.92rem;line-height:1.35}
+.rplist li>span{display:flex;flex-direction:column;gap:2px}
+.rplist small{color:var(--muted);font-size:.78rem}
+.rpup li{padding-left:14px;position:relative;font-size:.92rem}
+.rpup li:before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--brass)}
+.rpauto{display:flex;gap:8px;align-items:center;margin:16px 0 4px;font-size:.88rem;color:var(--muted)}
+.rpauto input{width:20px;height:20px;accent-color:var(--brass)}
+svg.rvf{width:38px;height:38px;border-radius:50%;flex:none}
+svg.rvf.sm{width:18px;height:18px;vertical-align:-4px;margin-right:4px}
+.rivhere{margin:12px 0 0;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper)}
+.rivhere ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.rivhere li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;font-size:.88rem;line-height:1.35;align-items:start}
+.rivhere svg.rvf{width:30px;height:30px}
+.rvn{display:flex;align-items:center;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.kexp{margin:0 0 8px}
 /* Kopf */
 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px;padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:14px}
 .brand{display:flex;align-items:center;gap:10px}
@@ -402,7 +465,7 @@ button{font:inherit;color:inherit}
 .book .tot div{border:1px solid var(--rule);border-radius:9px;padding:8px 10px;display:flex;flex-direction:column}
 .book .tot b{font:500 1.1rem var(--f-mono)}
 .gbars{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.gbars div{display:grid;grid-template-columns:7.5em minmax(0,1fr) 5.5em;gap:8px;align-items:center;font-size:.88rem}
+.gbars div{display:grid;grid-template-columns:9em minmax(0,1fr) 5.5em;gap:8px;align-items:center;font-size:.88rem}
 .gbars i{display:block;height:8px;border-radius:4px;background:var(--good)}
 .gbars i.neg{background:var(--bad)}
 .gbars span:last-child{text-align:right;font-family:var(--f-mono)}
@@ -783,6 +846,9 @@ em.rep.warn{background:#b5523a}
       <div class="aimbar" id="aimbar" data-tab="lage" role="button" aria-label="Zielleiste: tippen zum Feuern oder für Deckung" hidden></div>
       <div class="card enc" id="enc" data-tab="lage" hidden></div>
       <div class="card" id="status" data-tab="lage"></div>
+      <section class="card goals" id="goals" data-tab="lage" aria-label="Dein Weg in der Hanse" hidden><div id="goalsbody"></div>
+        <details class="log chron" id="chron" data-det="chron"><summary><h2>Lauf der Zeit</h2><span class="last" id="chronlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="chronbody"></div></details>
+      </section>
       <div class="card citycard" id="citycard" data-tab="stadt" hidden></div>
       <figure class="chart" data-tab="karte">
         <svg id="map" viewBox="0 0 520 295" role="img" aria-label="Seekarte von Nord- und Ostsee mit den Hansestädten"></svg>
@@ -798,7 +864,6 @@ em.rep.warn{background:#b5523a}
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
       <div class="card home" id="housecard" data-tab="haus" hidden></div>
       <div class="card emptytab" id="emptytab" hidden></div>
-      <details class="log chron" id="chron" data-tab="lage" data-det="chron"><summary><h2>Chronik</h2><span class="last" id="chronlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="chronbody"></div></details>
       <details class="log" id="log" data-tab="lage"><summary><h2>Logbuch</h2><span class="last" id="loglast"></span><i class="chev" aria-hidden="true"></i></summary><ol id="loglist"></ol></details>
     </section>
   </main>
@@ -817,6 +882,8 @@ em.rep.warn{background:#b5523a}
 <div class="sheet book" id="book" role="dialog" aria-modal="true" aria-labelledby="book-title" hidden></div>
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden></div>
+<div class="scrim" id="qscrim" hidden></div>
+<div class="sheet qsheet" id="qsheet" role="dialog" aria-modal="true" aria-labelledby="q-title" hidden></div>
 <div class="scrim" id="bscrim" hidden></div>
 <div class="sheet bsheet" id="bsheet" role="dialog" aria-modal="true" aria-labelledby="bs-title" hidden></div>
 <div class="cityfull" id="cityfull" role="dialog" aria-label="Stadtansicht groß" hidden></div>
@@ -1231,8 +1298,10 @@ em.rep.warn{background:#b5523a}
     addLog(`Herkunft: ${ORIGINS[og].n}. ${ORIGINS[og].d}`, 'tip');
     addLog(`Kapitän ${st.captains[0].name} führt deine Schnigge, ein Schiffer mit wenig Erfahrung, Heuer ${st.captains[0].wage} Gulden am Tag. Noch kreuzen keine Seeräuber hinter einem kleinen Krämer her; das ändert sich, wenn du als Händler auffällst.`, 'cap');
     addLog('Tipp: Kaufe, was eine Stadt erzeugt, und verkaufe es dort, wo es gebraucht wird. Große Mengen drücken den Preis.', 'tip');
-    if (st.mode === 'kampagne') addLog('Deine Kampagne läuft bis zum Frieden von Stralsund am 24. Mai 1370. Die Chronik unter dem Logbuch hält fest, was in der Hanse geschieht.', 'tip');
+    if (st.mode === 'kampagne') addLog('Deine Kampagne läuft bis zum Frieden von Stralsund am 24. Mai 1370. „Lauf der Zeit“ in der Ziele-Karte hält fest, was in der Hanse geschieht.', 'tip');
     era();
+    st.q = {ch:0, ev:{}, gd:{}, pop:{k:'welcome'}, rpAuto:true, skipTut:false};
+    st.rp = rpFresh();
   }
   // Drei Spielstände. Im Claude-Konto gesichert, wenn diese Ansicht es erlaubt, sonst im Browser.
   const SLOTS = [1, 2, 3], SLOT_KEY = n => `kogge-kontor-slot-${n}`, ACTIVE_KEY = 'kogge-kontor-aktiv';
@@ -1348,10 +1417,12 @@ em.rep.warn{background:#b5523a}
       const n = SEASON_NEWS[dd.getMonth()], txt = n.ice && st.seasons !== 'spuerbar' ? n.t2 : n.t;
       if (txt) rumor(txt, null, n.g || null);
     }
+    const m0c = st.money;
     if (st.kontor) st.money -= KONTOR[st.kontor.lvl].upkeep + (st.kontor.steward ? STEWARD.wage : 0);
     if (st.money < 0 && !st.debtWarn) { st.debtWarn = true; const t = 'Die Truhe ist leer. Heuer, Unterhalt und Lager kosten weiter Geld, die Betriebe stehen still. Verkaufe Waren oder Schiffe, bevor die Schulden dein Vermögen übersteigen.'; addLog(t, 'tip'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4); }
     if (st.money >= 0) st.debtWarn = false;
     st.money -= Object.keys(st.branches || {}).length * BRANCH.upkeep + capWages() + (st.convoys || []).reduce((x, cv) => x + cvCost(cv), 0) + dockCost();
+    rpState().cost += m0c - st.money;
     const rb = st.city ? cityBonus('rep') : 0;
     if (rb) gainRepute(rb);
     worksDay();
@@ -1371,7 +1442,7 @@ em.rep.warn{background:#b5523a}
       s += (e - s) * 0.035 + (Math.random() - 0.5) * e * 0.06;
       st.stock[c.id][g.id] = Math.max(0, s);
     }));
-    st.money -= wage();
+    { const wg = wage(); st.money -= wg; rpState().cost += wg; }
     if (st.sail) st.fleet.forEach(sh => { if (sh.hull > 35 && Math.random() < 0.25) sh.hull -= 1; });
     if (Math.random() < 0.09) event();
     const wxc = stepWx();
@@ -1391,6 +1462,7 @@ em.rep.warn{background:#b5523a}
     }
     if (st.loc) remember(st.loc);
     checkRank();
+    rpDay();
   }
   function checkRank() {
     const r = rankIdx(wealth());
@@ -1434,7 +1506,7 @@ em.rep.warn{background:#b5523a}
     const F = freightState(), list = freightOffers(st.loc), o = list.find(x => x.id === id);
     if (!o || st.enc || F.active.length >= FREIGHT_MAX || CAP - used() < o.q) return;
     list.splice(list.indexOf(o), 1);
-    F.active.push(Object.assign({}, o, {d0:st.day}));
+    F.active.push(Object.assign({}, o, {d0:st.day})); qEv('frt');
     addLog(`Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${o.by} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Gulden.`);
     commit();
   }
@@ -1454,7 +1526,7 @@ em.rep.warn{background:#b5523a}
     const F = freightState(), f = F.active.find(x => x.id === id);
     if (!f || st.loc !== f.to || st.enc) return;
     const late = st.day > f.due, pay = late ? Math.round(f.pay / 2) : f.pay;
-    st.money += pay; F.done = (F.done || 0) + 1; gainRepute(late ? 0.5 : 1.5);
+    st.money += pay; F.done = (F.done || 0) + 1; gainRepute(late ? 0.5 : 1.5); rpState().freight += pay;
     F.active.splice(F.active.indexOf(f), 1);
     addLog(`Fracht abgeliefert in ${C[f.to].n}: ${f.q} Last ${G[f.g].n} für ${f.by}. Lohn ${fmt(pay)} Gulden${late ? ', halbiert wegen Verspätung' : ''}.`, 'gain');
     checkRank();
@@ -2250,16 +2322,19 @@ em.rep.warn{background:#b5523a}
     return [1, 2, 3].map(id => {
       let name; do { name = `${pick(NAMES.m)} ${pick(NAMES.s)}`; } while (taken.has(name)); taken.add(name);
       return {id, name, repute:Math.round(100 + Math.random() * 250), wealth:Math.round(8000 + Math.random() * 12000), pace:+(1.1 + Math.random() * 0.9).toFixed(2)};
-    });
+    }).map((r, i, a) => rivalLook(r, a.slice(0, i).map(x => x.home)));
   }
   function rivalsDay() {
     (st.rivals || []).forEach(r => {
       r.repute += r.pace * (0.6 + Math.random() * 0.8);
       if (Math.random() >= 0.45) return;
-      const g = pick(GOODS), as = CITIES.filter(c => c.p.includes(g.id)), bs = CITIES.filter(c => c.c.includes(g.id));
+      if (!r.home) rivalLook(r);
+      const g = r.fav && Math.random() < 0.5 ? G[r.fav] : pick(GOODS), as = CITIES.filter(c => c.p.includes(g.id)), bs = CITIES.filter(c => c.c.includes(g.id));
       if (!as.length || !bs.length) return;
-      const A = pick(as), B = pick(bs), q = 5 + Math.floor(Math.random() * 15);
+      const A = as.find(c => c.id === r.home && Math.random() < 0.5) || pick(as), B = pick(bs), q = 5 + Math.floor(Math.random() * 15);
+      const bA = buyPrice(A.id, g.id), sB = sellPrice(B.id, g.id);
       st.stock[A.id][g.id] = Math.max(0, st.stock[A.id][g.id] - q); st.stock[B.id][g.id] += q;
+      rivNote({d:st.day, r:r.id, g:g.id, q, a:A.id, b:B.id, pa:Math.round((buyPrice(A.id, g.id) / Math.max(1, bA) - 1) * 100), pb:Math.round((sellPrice(B.id, g.id) / Math.max(1, sB) - 1) * 100)});
       r.wealth += Math.round(q * g.b * rnd(0.15, 0.4));
       if (Math.random() < 0.06) rumor(`${r.name} hat in ${A.n} ${q} Last ${g.n} gekauft, man sagt, für ${B.n}.`, A.id, g.id);
     });
@@ -2811,7 +2886,7 @@ em.rep.warn{background:#b5523a}
     const c = st.cargo[gid] || (st.cargo[gid] = {q:0, cost:0});
     c.q += q; c.cost += cost;
     remember(st.loc);
-    trackTrade('buy', gid, cost, 0);
+    trackTrade('buy', gid, cost, 0); qEv('buy');
     breakEmbargo(q);
     addLog(`${q} Last ${G[gid].n} in ${C[st.loc].n} gekauft für ${fmt(cost)} Gulden.`);
     commit();
@@ -2827,7 +2902,7 @@ em.rep.warn{background:#b5523a}
     c.q -= q; c.cost -= basis;
     if (c.q <= 0) delete st.cargo[gid];
     const pr = gain - basis;
-    trackTrade('sell', gid, gain, pr);
+    trackTrade('sell', gid, gain, pr); rpSale(gid, q, pr); if (pr > 0) qEv('profit');
     breakEmbargo(q);
     remember(st.loc);
     addLog(`${q} Last ${G[gid].n} in ${C[st.loc].n} verkauft für ${fmt(gain)} Gulden (${pr >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(pr))}).`, pr >= 0 ? 'gain' : '');
@@ -2845,7 +2920,7 @@ em.rep.warn{background:#b5523a}
     st.money += gain; st.stock[cid][gid] += q;
     c.q -= q; c.cost -= basis; if (c.q <= 0) delete K.goods[gid];
     const pr = gain - basis;
-    trackTrade('sell', gid, gain, pr);
+    trackTrade('sell', gid, gain, pr); rpSale(gid, q, pr); if (pr > 0) qEv('profit');
     if (st.loc === cid) { breakEmbargo(q); remember(cid); }
     addLog(`${remote && st.loc !== cid ? 'Dein Verwalter verkauft' : `${q} Last ${G[gid].n}`}${remote && st.loc !== cid ? ` ${q} Last ${G[gid].n} aus dem Kontor` : ` aus dem ${cid === st.home ? 'Kontor' : 'Lager der Niederlassung'}`} in ${C[cid].n}${remote && st.loc !== cid ? ' für' : ' verkauft für'} ${fmt(gain)} Gulden (${pr >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(pr))}).`, pr >= 0 ? 'gain' : '');
     checkRank();
@@ -2930,7 +3005,7 @@ em.rep.warn{background:#b5523a}
     const r = route(st.loc, to, st.day);
     const weather = st.wx ? st.wx.w : pickWeather(st.day);
     st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false, shanty:r.days >= 4 && Math.random() < 0.35};
-    escortDepart(st.loc, to);
+    escortDepart(st.loc, to); qEv('sail');
     addLog(`Abgelegt in ${C[st.loc].n}, Kurs auf ${C[to].n}. ${r.days} ${r.days === 1 ? 'Tag' : 'Tage'} auf See${r.overland ? ', ein Stück über Land' : ''}${r.ice ? ', Treibeis bremst' : r.winter ? ', Winterwetter bremst' : ''}.`);
     st.loc = null; ui.open = null;
     closeSheet();
@@ -2963,7 +3038,7 @@ em.rep.warn{background:#b5523a}
     commit();
     if (st.sail && !st.pendingFight) schedTick();
   }
-  function commit() { save(); render(); }
+  function commit() { questCheck(); save(); render(); }
   function schedTick() { scene.tickDur = tickMs(); timer = setTimeout(tick, scene.tickDur); }
   function setTempo(v) {
     if (!TEMPI.includes(v) || v === tempo) return;
@@ -5980,7 +6055,7 @@ em.rep.warn{background:#b5523a}
         `<dt>Spielstand</dt><dd>Platz ${w.slot}${getSlot(w.slot) ? ' (wird überschrieben)' : ''}</dd></dl></div>` +
         `<div class="opt"><span class="flabel">Spielart</span><div class="chipset" role="group">` +
         [['offen', 'Offenes Spiel'], ['kampagne', 'Kampagne bis 1370']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
-        `<span class="small">${w.mode === 'kampagne' ? 'Kampagne: Das Spiel endet mit dem Frieden von Stralsund am 24. Mai 1370. Dann zählen Vermögen, Ansehen, Ämter und Taten, und du bekommst deinen Platz im Ehrenbuch.' : 'Offenes Spiel: kein Ende. Die Krönung ist das Amt des Ältermann der Hanse, gewählt auf dem Hansetag.'}</span></div>` +
+        `<span class="small">${w.mode === 'kampagne' ? 'Kampagne: Das Spiel endet mit dem Frieden von Stralsund am 24. Mai 1370. Dann zählen Vermögen, Ansehen, Ämter und Taten, und du bekommst deinen Platz im Ehrenbuch.' : 'Offenes Spiel: kein Ende. Dein Ziel ist der Aufstieg vom Krämer zum Ältermann der Hanse; die Ziele-Karte führt dich Kapitel für Kapitel dorthin.'}</span></div>` +
         `<div class="opt"><span class="flabel">Jahreszeiten</span><div class="chipset" role="group">` +
         [['spuerbar', 'Spürbar'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-wseason="${v}" aria-pressed="${w.seasons === v}">${l}</button>`).join('') + `</div>` +
         `<span class="small">${w.seasons === 'mild' ? 'Mild: Die Jahreszeiten bewegen die Preise nur halb so stark, keine Sperren durch Eis.' : 'Spürbar: Heringszeit, Fastenzeit, Ernte und Winter bewegen die Preise deutlich; die Newa friert von Dezember bis März zu.'} Du kannst das später unter „Spielstände“ ändern.</span></div>` +
@@ -6243,6 +6318,7 @@ em.rep.warn{background:#b5523a}
       if (open) h += panel(g, hq);
       h += `</div>`;
     });
+    h += rivHereHTML(st.loc);
     h += `<p class="legend">Preise in Gulden je Last. <span class="deal">Grün</span> heißt: günstig einzukaufen oder teuer zu verkaufen. Pfeile zeigen die Jahreszeit: ↓ viel Angebot, ↑ gefragt.</p>`;
     box.innerHTML = h;
   }
@@ -6290,10 +6366,271 @@ em.rep.warn{background:#b5523a}
       (svg || `<span class="small">Den Verlauf siehst du, wenn du öfter hier warst.</span>`) +
       (best ? `<span class="small">Bester bekannter Verkaufspreis: ${best.c.n} ${best.p} Gulden, Stand ${fdate(best.d)}</span>` : '') + `</div>`;
   }
+  // ───────── Ab Version 33: Dein Weg in der Hanse (Questlinie mit Einführung), Bericht des Schreibers, Konkurrenten ─────────
+  const qS = () => st.q || (st.q = {ch:0, ev:{}, gd:{}, pop:null, rpAuto:true, skipTut:false});
+  const qEv = k => { if (!st) return; const q = qS(); q.ev[k] = (q.ev[k] || 0) + 1; };
+  const HN = () => C[st.home] ? C[st.home].n : 'deiner Stadt';
+  const nShips = () => st.fleet.length + (st.reserve || []).length + (st.builds || []).length + (st.convoys || []).reduce((x, cv) => x + cv.fleet.length, 0);
+  const ciNow = () => civicIdx(st.repute || 0);
+  const W0 = () => Math.round(wealth());
+  const gRep = (n, lvl) => ({t:() => lvl <= 3 ? `Werde ${CIVIC[lvl][1]}: ${fmt(n)} Ansehen in ${HN()}` : `Sammle ${fmt(n)} Ansehen in ${HN()}, dann bist du wählbar`, p:() => [Math.round(st.repute || 0), n], ok:() => (st.repute || 0) >= n,
+    hint:() => `Ansehen bringen vor allem Verkäufe in ${HN()}, besonders von Waren, die die Stadt braucht (${C[st.home].c.map(g => G[g].n).join(', ')}). Dazu Ratsaufträge, Frachten und Siege.`, tab:'markt', sel:'#market'});
+  const gWealth = (n, rank) => ({t:() => `Erreiche ${fmt(n)} Gulden Vermögen (${rank})`, p:() => [Math.max(0, W0()), n], ok:() => wealth() >= n,
+    hint:() => 'Zum Vermögen zählen Geld, Ware an Bord und im Lager, Schiffe und Verbände. Es wächst mit jedem guten Handel.', tab:'lage', sel:'#status'});
+  const QUEST = [
+    {n:'Die erste Fahrt', tut:true, rew:150,
+      intro:() => `Ein Handelshaus lebt vom Kreislauf: billig kaufen, wo eine Ware entsteht, teuer verkaufen, wo sie fehlt. Diese erste Fahrt zeigt dir Schritt für Schritt, wie es geht.`,
+      done:'Du kennst jetzt den Kreislauf. Frachten bringen Lohn ohne eigenes Geld, eigene Ware bringt mehr, wenn du die Preise kennst.',
+      goals:[
+        {t:() => 'Nimm einen Frachtauftrag an', ok:q => (q.ev.frt || 0) > 0 || (st.freight && st.freight.done > 0),
+          hint:() => 'Im Reiter Markt, unter der Warenliste: Frachtaufträge. Fracht kostet kein Geld, nur Laderaum. Den Lohn gibt es im Zielhafen.', tab:'markt', sel:'#frbox'},
+        {t:() => `Kaufe eine Ware, die ${HN()} erzeugt`, ok:q => (q.ev.buy || 0) > 0,
+          hint:() => `Oben im Markt steht, was ${HN()} erzeugt (${C[st.home].p.map(g => G[g].n).join(', ')}). Das ist hier günstig. Tippe die Ware an, wähle die Menge und tippe Kaufen. Lass Platz für die Fracht.`, tab:'markt', sel:'#market'},
+        {t:() => 'Lege ab und segle zum Ziel der Fracht', ok:q => (q.ev.sail || 0) > 0,
+          hint:() => 'Tippe unten rechts Ablegen. In der Zielliste steht bei jedem Hafen, was er erzeugt und was er braucht; das Ziel deiner Fracht ist markiert.', tab:'lage', sel:'#actions [data-act="sail"]'},
+        {t:() => 'Liefere die Fracht ab', ok:() => !!(st.freight && st.freight.done > 0),
+          hint:() => 'Im Zielhafen: Reiter Markt, Frachtaufträge, Abliefern.', tab:'markt', sel:'#frbox'},
+        {t:() => 'Verkaufe eine Ware mit Gewinn', ok:q => (q.ev.profit || 0) > 0,
+          hint:() => 'Verkaufe dort, wo deine Ware gebraucht wird. Grün in der Spalte Verkauf heißt: Hier zahlen sie gut. Was du für die Ware bezahlt hast, siehst du beim Antippen.', tab:'markt', sel:'#market'}]},
+    {n:'Vom Krämer zum Händler', rew:300,
+      intro:() => `Lerne die Häfen kennen und gewinne Ansehen in ${HN()}. Wer die Preise kennt, findet die guten Fahrten.`,
+      done:'Als Händler darf dein Verband zwei Schiffe haben, und die Werft baut dir eine Kogge. Aber Seeräuber werden jetzt auf dich aufmerksam: Rüste dich in der Werft.',
+      goals:[
+        {t:() => 'Lerne die Preise in 5 Häfen kennen', p:() => [Object.keys(st.known || {}).length, 5], ok:() => Object.keys(st.known || {}).length >= 5,
+          hint:() => 'Jeder Hafen, den du anläufst, merkt sich seine Preise. Danach zeigt die Zielliste im Reiter Karte den besten bekannten Handel je Ziel.', tab:'karte', sel:'#mapinfo'},
+        gRep(60, 1),
+        gWealth(6000, 'Händler')]},
+    {n:'Bürger und Händler', rew:500,
+      intro:() => `Als Bürger von ${HN()} darfst du ein Kontor bauen und Aufträge des Rats übernehmen.`,
+      done:'Gut gerüstet und mit eigenem Lager. Als Nächstes wartet die Gilde: Mit einer Niederlassung in einer anderen Stadt öffnen sich Handelsrouten und das Bauen.',
+      goals:[
+        {t:() => `Baue das Kontor in ${HN()}`, ok:() => !!st.kontor,
+          hint:() => `Reiter Stadt in ${HN()}: das Kontor. Es ist dein Lager im Stammsitz (150 Last): billig einlagern, teuer verkaufen. Eine Niederlassung ist es nicht, die liegt in einer anderen Stadt.`, tab:'stadt', sel:'#homecard [data-det="kontor"]'},
+        {t:() => 'Erfülle einen Ratsauftrag', ok:() => !!(st.orders && st.orders.done > 0),
+          hint:() => `Im Rathaus von ${HN()} (Reiter Stadt) sucht der Rat Waren gegen Lohn und Ansehen. Annehmen, Ware besorgen, im Stammsitz abliefern.`, tab:'stadt', sel:'#homecard [data-det="council"]'},
+        {t:() => 'Gib ein zweites Schiff in Auftrag', p:() => [nShips(), 2], ok:() => nShips() >= 2,
+          hint:() => 'Reiter Werft, Bauaufträge. Eine Kogge gibt es ab Händler. Fertige Schiffe segeln an den Liegeplatz im Heimathafen.', tab:'werft', sel:'#yard'},
+        {t:() => 'Rüste 4 Armbrüste aus', p:() => [armsOf(st).armbrust || 0, 4], ok:() => (armsOf(st).armbrust || 0) >= 4,
+          hint:() => 'Reiter Werft, Waffenkammer. Jede Armbrust braucht einen Platz und einen Matrosen, der sie bedient.', tab:'werft', sel:'#yard'}]},
+    {n:'Gildebruder und die erste Niederlassung', rew:800,
+      intro:() => 'Eine Niederlassung ist ein Lager in einer anderen Stadt. Mit der ersten öffnen sich Handelsrouten für eigene Verbände und, als Gildebruder, das Bauen in deiner Stadt.',
+      done:'Dein Handelshaus wächst über die eigene Stadt hinaus. Jetzt kannst du in deiner Stadt bauen: Betriebe, ein größeres Haus, Bürgerbauten.',
+      goals:[
+        gRep(200, 2),
+        {t:() => 'Gründe eine Niederlassung in einer anderen Stadt', ok:() => Object.keys(st.branches || {}).length > 0,
+          hint:() => `Segle in einen anderen Hafen als ${HN()}, öffne dort den Reiter Stadt und tippe bei der Kachel Niederlassung auf Gründen (${fmt(BRANCH.cost)} Gulden, ab ${CIVIC[BRANCH.civic][1]}). Das Kontor zuhause zählt nicht.`, tab:'stadt', sel:'#citycard'},
+        {t:() => 'Heuere einen zweiten Kapitän an', p:() => [(st.captains || []).length, 2], ok:() => (st.captains || []).length >= 2,
+          hint:() => `Im Schifferhaus in ${HN()} (Reiter Haus) warten Bewerber. Ein Kapitän führt einen eigenen Verband.`, tab:'haus', sel:'#housecard'},
+        {t:() => 'Schicke einen Verband auf eine Handelsroute', ok:() => (st.convoys || []).length > 0,
+          hint:() => 'Reiter Haus, Neue Handelsroute: Schiffe und Kapitän wählen, Rundkurs oder Pendel, Häfen und Waren. Der Kapitän handelt dann selbst.', tab:'haus', sel:'#housecard'}]},
+    {n:'Bauherr und Kaufmann', rew:1000,
+      intro:() => `Bauen braucht Zeit, zahlt sich aber aus. Betriebe liefern Waren ins Kontor, Bürgerbauten bringen Ansehen.`,
+      done:'Mit Betrieben und eigenen Routen arbeitet dein Haus auch, wenn du nicht selbst segelst. Der Rat wird auf dich aufmerksam.',
+      goals:[
+        {t:() => 'Gib einen Betrieb in Auftrag', ok:() => (st.works || []).length > 0 || ((st.city || {}).jobs || []).some(j => j.kind === 'work'),
+          hint:() => `Reiter Stadt in ${HN()}: Baubuch, Jetzt möglich. Ein Betrieb braucht das Kontor und liefert jeden Tag ein wenig Ware.`, tab:'stadt', sel:'#citycard'},
+        {t:() => 'Baue dein Haus aus', ok:() => ((st.city || {}).house || 1) >= 2 || ((st.city || {}).jobs || []).some(j => j.kind === 'haus'),
+          hint:() => `Tippe in der Stadtansicht von ${HN()} auf dein Wohnhaus. Ein größeres Haus bringt Ansehen.`, tab:'stadt', sel:'#citycard'},
+        gWealth(15000, 'Kaufmann')]},
+    {n:'Ratsherr', rew:2000,
+      intro:() => 'Im Rat bestimmst du mit: Zölle, Aufträge und die Stimme deiner Stadt auf dem Hansetag.',
+      done:'Du sitzt im Rat und sprichst auf dem Hansetag mit. Das höchste Amt der Stadt rückt näher.',
+      goals:[
+        gRep(500, 3),
+        {t:() => 'Stimme auf dem Hansetag ab', ok:() => Object.values((st.hanse || {}).votes || {}).some(v => v && v.my),
+          hint:() => 'Unter Hansetag (Reiter Stadt im Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'stadt', sel:'#homecard [data-det="hansetag"]'},
+        {t:() => 'Halte zwei Verbände auf Handelsrouten', p:() => [(st.convoys || []).length, 2], ok:() => (st.convoys || []).length >= 2,
+          hint:() => 'Reiter Haus: weitere Kapitäne anheuern und neue Handelsrouten anlegen.', tab:'haus', sel:'#housecard'},
+        gWealth(40000, 'Fernhändler')]},
+    {n:'Bürgermeister', rew:3000,
+      intro:() => `Am 1. Januar und am 1. Juli wählt ${HN()} den Bürgermeister. Es gewinnt, wer das meiste Ansehen hat.`,
+      done:'Als Bürgermeister bist du einer der Großen der Hanse. Bleibt das höchste Amt: Ältermann der Hanse.',
+      goals:[
+        gRep(1200, 4),
+        {t:() => 'Gewinne die Wahl zum Bürgermeister', ok:() => !!st.mayor || (st.mayorTerms || 0) > 0,
+          hint:() => 'Im Rathaus siehst du, wie du im Ansehen gegen die Konkurrenten stehst und wann gewählt wird.', tab:'stadt', sel:'#homecard [data-det="council"]'},
+        gWealth(100000, 'Großkaufmann')]},
+    {n:'Ältermann der Hanse', rew:0, last:true,
+      intro:() => 'Der Hansetag wählt jedes Jahr am 24. Juni den Ältermann. Wählbar ist ein Bürgermeister mit 3.000 Ansehen.',
+      done:'Du stehst an der Spitze der Hanse. Das Spiel geht weiter, so lange du willst.',
+      goals:[
+        {t:() => 'Sammle 3.000 Ansehen', p:() => [Math.round(st.repute || 0), 3000], ok:() => (st.repute || 0) >= 3000,
+          hint:() => 'Ansehen bringen Verkäufe im Stammsitz, Ratsaufträge, Bauten und Siege.', tab:'markt', sel:'#market'},
+        {t:() => 'Werde Ältermann der Hanse', ok:() => !!st.alderman,
+          hint:() => 'Gewählt wird auf dem Hansetag am 24. Juni.', tab:'stadt', sel:'#homecard [data-det="hansetag"]'}]}
+  ];
+  const qCur = () => { const q = qS(); return QUEST[Math.min(q.ch, QUEST.length - 1)]; };
+  const qGoal = () => { const q = qS(), Q = qCur(); return Q.goals.find(g => !g.ok(q)) || null; };
+  // Prüft Ziele und Kapitel; still = beim Laden alter Spielstände ohne Belohnung und Meldungen
+  function questCheck(still) {
+    if (!st || !st.home || !st.player) return;
+    const q = qS();
+    for (let guard = 0; guard < 12; guard++) {
+      const Q = QUEST[q.ch]; if (!Q) break;
+      if (Q.tut && q.skipTut) { q.ch++; continue; }
+      Q.goals.forEach((g, i) => { const id = q.ch + '.' + i; if (!q.gd[id] && g.ok(q)) { q.gd[id] = 1; if (!still) addLog(`Ziel erreicht: ${g.t()}.`, 'rank'); } });
+      if (!Q.goals.every(g => g.ok(q))) break;
+      if (Q.last) { if (!q.fin) { q.fin = true; if (!still) q.pop = {k:'ch', ch:q.ch}; } break; }
+      if (!still) {
+        if (Q.rew) st.money += Q.rew;
+        addLog(`Kapitel geschafft: ${Q.n}.${Q.rew ? ` Die Gilde schenkt dir ${fmt(Q.rew)} Gulden.` : ''} Als Nächstes: ${QUEST[q.ch + 1].n}.`, 'rank');
+        q.pop = {k:'ch', ch:q.ch};
+      }
+      q.ch++;
+    }
+  }
+  // Ziel zeigen: Reiter wechseln, Stelle aufklappen und kurz hervorheben
+  function questShow(sel, tab) {
+    q0Pop(null);
+    if (tab) setTab(tab);
+    requestAnimationFrame(() => {
+      const el = sel ? document.querySelector(sel) : null;
+      if (!el) return;
+      if (el.tagName === 'DETAILS') { el.open = true; if (el.dataset.det) ui.det[el.dataset.det] = true; }
+      const tgt = el.closest('details') && !el.closest('details').open ? el.closest('details') : el;
+      if (tgt.tagName === 'DETAILS') tgt.open = true;
+      tgt.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'center'});
+      tgt.classList.remove('qflash'); void tgt.offsetWidth; tgt.classList.add('qflash');
+      setTimeout(() => tgt.classList.remove('qflash'), 2600);
+    });
+  }
+  function q0Pop(p) { const q = qS(); q.pop = p; if (st.rpt && p == null) st.rpt.seen = true; renderQPop(); save(); renderNews(); }
+  const goalLine = (g, q, cur) => {
+    const ok = g.ok(q), pr = g.p ? g.p() : null;
+    return `<li class="${ok ? 'ok' : cur ? 'cur' : ''}"><i class="qmk" aria-hidden="true">${ok ? '✓' : ''}</i><span><b>${g.t()}</b>` +
+      (pr && !ok ? `<span class="qbar"><i style="width:${Math.min(100, pr[0] / pr[1] * 100)}%"></i></span><small>${fmt(pr[0])} von ${fmt(pr[1])}</small>` : '') +
+      (cur ? `<small class="qhint">${g.hint()}</small><button class="ybtn" type="button" data-qshow="${g.sel}" data-qtab="${g.tab}">Zeigen</button>` : '') + `</span></li>`;
+  };
+  function renderGoals() {
+    const box = $('#goals'); if (!box) return;
+    if (!st || !st.home) { box.hidden = true; return; }
+    box.hidden = false;
+    const q = qS(), Q = qCur(), cur = qGoal(), k = Math.min(q.ch, QUEST.length - 1);
+    const left = st.mode === 'kampagne' && !st.ended ? CAMPAIGN_END - st.day : null;
+    let h = `<div class="qhead"><span class="k">Dein Weg in der Hanse · Kapitel ${k + 1} von ${QUEST.length}</span><h2>${Q.n}</h2>` +
+      (left != null ? `<span class="small">Kampagne bis 24. Mai 1370 · noch ${left > 400 ? (Math.round(left / 365 * 10) / 10).toLocaleString('de-DE') + ' Jahre' : left + ' Tage'} · ${fmt(scoreParts().total)} Punkte</span>` : '') + `</div>`;
+    if (q.fin) h += `<p class="qintro">${Q.done}</p>`;
+    else {
+      h += `<p class="qintro">${Q.intro()}</p><ol class="qgoals">${Q.goals.map(g => goalLine(g, q, g === cur)).join('')}</ol>`;
+      h += `<div class="qfoot">${Q.rew ? `<span class="small">Belohnung: ${fmt(Q.rew)} Gulden</span>` : '<span></span>'}${Q.tut ? `<button class="linkbtn" type="button" data-qskip="1">Einführung überspringen</button>` : ''}</div>`;
+    }
+    if (st.rpt) h += `<button class="qrep" type="button" data-qrep="1"><span><b>Bericht des Schreibers</b><small>${fdate(st.rpt.d0)} bis ${fdate(st.rpt.d1)}${st.rpt.seen ? '' : ' · neu'}</small></span><i class="chev" aria-hidden="true"></i></button>`;
+    else h += `<p class="small qnext">Der Schreiber legt am ${fdate(rpState().d0 + RP_DAYS)} seinen ersten Bericht vor.</p>`;
+    $('#goalsbody').innerHTML = h;
+  }
+  // ── Bericht des Schreibers alle 14 Tage ──
+  const RP_DAYS = 14;
+  const rpFresh = () => ({d0:st.day, w0:Math.round(wealth()), trade:0, sales:0, best:null, freight:0, cost:0, riv:[]});
+  const rpState = () => st.rp || (st.rp = rpFresh());
+  function rpDay() {
+    const r = rpState();
+    if (st.day - r.d0 < RP_DAYS) return;
+    st.rpt = {d0:r.d0, d1:st.day, w0:r.w0, w1:Math.round(wealth()), trade:Math.round(r.trade), sales:r.sales, best:r.best, freight:r.freight, cost:Math.round(r.cost), riv:r.riv.slice(), seen:false};
+    st.rp = rpFresh();
+    addLog(`Der Schreiber legt seinen Bericht für ${fdate(st.rpt.d0)} bis ${fdate(st.rpt.d1)} vor.`, 'tip');
+    if (qS().rpAuto) qS().pop = qS().pop || {k:'rp'};
+  }
+  function rpSale(gid, q, prof) {
+    const r = rpState(); r.trade += prof; r.sales++;
+    if (prof > 0 && (!r.best || prof > r.best.p)) r.best = {g:gid, q, p:Math.round(prof), c:st.loc || st.home};
+  }
+  // Konkurrenten: Gesicht, Heimatstadt, Lieblingsware; ihre Geschäfte werden je Stadt und für den Bericht gemerkt
+  function rivalLook(r, taken) {
+    if (!r.home) { const hs = HOMES.filter(c => c !== st.home && !(taken || []).includes(c)); r.home = pick(hs.length ? hs : HOMES); }
+    if (!r.fav) r.fav = pick(C[r.home].p);
+    if (!r.av) r.av = Object.assign(randAv('m'), {col:Math.floor(Math.random() * 6), mark:Math.floor(Math.random() * 8)});
+    return r;
+  }
+  const rivById = id => (st.rivals || []).find(r => r.id === id) || {name:'Ein Kaufmann', id:0};
+  function rivNote(ev) {
+    const at = st.rivAt || (st.rivAt = {});
+    [[ev.a, 'buy', ev.pa], [ev.b, 'sell', ev.pb]].forEach(([cid, k, p]) => {
+      const l = (at[cid] || []).filter(x => st.day - x.d <= 20); l.unshift({d:ev.d, r:ev.r, g:ev.g, q:ev.q, k, p, o:k === 'buy' ? ev.b : ev.a}); at[cid] = l.slice(0, 5);
+    });
+    const r = rpState(); r.riv.push(ev); if (r.riv.length > 80) r.riv.shift();
+  }
+  const pctS = p => `${p > 0 ? '+' : p < 0 ? '−' : '±'}${Math.abs(p)}&nbsp;%`;
+  const agoD = d => { const n = st.day - d; return n <= 0 ? 'heute' : n === 1 ? 'gestern' : `vor ${n} Tagen`; };
+  function rivHereHTML(cid) {
+    const l = ((st.rivAt || {})[cid] || []).filter(x => st.day - x.d <= 14 && Math.abs(x.p) >= 2).slice(0, 3);
+    if (!l.length) return '';
+    return `<div class="rivhere"><span class="flabel">Konkurrenten in ${C[cid].n}</span><ul>` + l.map(x => { const r = rivById(x.r);
+      return `<li>${r.av ? avatarSVG(r.av, 'rvf') : ''}<span><b>${esc(r.name)}</b> ${x.k === 'buy' ? `kaufte ${agoD(x.d)} ${x.q} Last ${G[x.g].n}${x.o ? ` für ${C[x.o].n}` : ''}` : `verkaufte ${agoD(x.d)} ${x.q} Last ${G[x.g].n}${x.o ? ` aus ${C[x.o].n}` : ''}`}. ` +
+        `${x.k === 'buy' ? 'Der Kaufpreis stieg dadurch um' : 'Der Verkaufspreis sank dadurch um'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></div>`;
+  }
+  function rpHTML() {
+    const R = st.rpt; if (!R) return '';
+    const dw = R.w1 - R.w0, q = qS(), g = qGoal();
+    const row = (k, v, cls) => `<div><span>${k}</span><b${cls ? ` class="${cls}"` : ''}>${v}</b></div>`;
+    let h = `<div class="in rpt"><div class="shead"><div><span class="k">Bericht des Schreibers</span><h2 id="q-title">${fdate(R.d0)} bis ${fdate(R.d1)}</h2></div><button class="close" type="button" data-qclose="1">Gelesen</button></div>`;
+    h += `<h3 class="rph">Dein Handelshaus</h3><div class="rpgrid">` +
+      row('Vermögen', `${fmt(R.w0)} → ${fmt(R.w1)} G`) + row('Veränderung', `${dw >= 0 ? '+' : '−'}${fmt(Math.abs(dw))} G`, dw >= 0 ? 'pos' : 'neg') +
+      row('Eigener Handel', R.sales ? `${R.trade >= 0 ? '+' : '−'}${fmt(Math.abs(R.trade))} G aus ${R.sales} ${R.sales === 1 ? 'Verkauf' : 'Verkäufen'}` : 'kein Verkauf', R.trade > 0 ? 'pos' : R.trade < 0 ? 'neg' : '') +
+      row('Frachtlohn', R.freight ? `+${fmt(R.freight)} G` : '–', R.freight ? 'pos' : '') +
+      row('Laufende Kosten', `−${fmt(R.cost)} G`, 'neg') + row('In der Truhe', `${fmt(Math.round(st.money))} G`) + `</div>`;
+    if (R.best) h += `<p class="small">Bester Handel: ${R.best.q} Last ${G[R.best.g].n} in ${C[R.best.c] ? C[R.best.c].n : ''}, ${fmt(R.best.p)} Gulden Gewinn.</p>`;
+    h += `<p class="small">Laufende Kosten sind Heuer, Unterhalt der Schiffe und Waffen, Lager, Kapitäne und Verbände.${R.cost > Math.max(0, R.trade + R.freight) && R.sales ? ' Sie waren höher als dein Gewinn aus Handel und Fracht.' : ''}</p>`;
+    h += `<h3 class="rph">Die Konkurrenten</h3><ul class="rplist">` + (st.rivals || []).slice().sort((a, b) => b.repute - a.repute).map(r => {
+      const ev = R.riv.filter(x => x.r === r.id), top = ev.slice().sort((a, b) => (Math.abs(b.pa) + Math.abs(b.pb)) - (Math.abs(a.pa) + Math.abs(a.pb)))[0];
+      const n = ev.reduce((x, e) => x + e.q, 0);
+      return `<li>${avatarSVG(r.av, 'rvf')}<span><b>${esc(r.name)}</b> <small>aus ${C[r.home].n} · handelt gern ${G[r.fav].n} · Ansehen ${fmt(Math.round(r.repute))}</small>` +
+        (top ? `<span>${ev.length} ${ev.length === 1 ? 'Geschäft' : 'Geschäfte'} mit zusammen ${n} Last. Am meisten bewegt: ${top.q} Last ${G[top.g].n} von ${C[top.a].n} nach ${C[top.b].n}. Danach stieg der Kaufpreis in ${C[top.a].n} um ${pctS(top.pa).slice(1)}, der Verkaufspreis in ${C[top.b].n} sank um ${pctS(top.pb).slice(1)}.</span>`
+          : '<span>Hielt sich in diesen zwei Wochen zurück.</span>') + `</span></li>`;
+    }).join('') + `</ul><p class="small">Wer viel einer Ware kauft, macht sie dort teurer; wer sie anderswo verkauft, drückt dort den Preis. Ihr Ansehen zählt bei der Bürgermeisterwahl gegen deins (du: ${fmt(Math.round(st.repute || 0))}).</p>`;
+    const up = [];
+    ((st.freight || {}).active || []).forEach(f => up.push([f.due, `Fracht ${G[f.g].n} nach ${C[f.to].n} bis ${fdate(f.due)}`]));
+    ((st.orders || {}).active || []).forEach(o => up.push([o.due, `Ratsauftrag ${o.q} Last ${G[o.g].n} bis ${fdate(o.due)}`]));
+    const ne = nextElection(); if (ne - st.day <= 60) up.push([ne, `Bürgermeisterwahl in ${HN()} am ${fdate(ne)}`]);
+    const y = dateOf(st.day).getFullYear(); let ht = dayOf(y, 6, 24); if (ht < st.day) ht = dayOf(y + 1, 6, 24); if (ht - st.day <= 60) up.push([ht, `Hansetag in Lübeck am ${fdate(ht)}`]);
+    ((st.city || {}).jobs || []).forEach(j => up.push([j.d0 + j.days, `Baustelle fertig am ${fdate(j.d0 + j.days)}`]));
+    (st.builds || []).forEach(b => { if (b.done > st.day) up.push([b.done, `${SHIPS[b.type] ? SHIPS[b.type].n : 'Schiff'} „${esc(b.name)}“ fertig am ${fdate(b.done)}`]); });
+    if (st.wx && st.wx.next === 'storm') up.push([st.day + 1, 'Morgen droht Sturm']);
+    h += `<h3 class="rph">Was ansteht</h3>` + (up.length ? `<ul class="rpup">${up.sort((a, b) => a[0] - b[0]).slice(0, 6).map(x => `<li>${x[1]}</li>`).join('')}</ul>` : '<p class="small">Nichts mit fester Frist.</p>');
+    if (g) h += `<h3 class="rph">Dein nächstes Ziel</h3><p><b>${g.t()}</b><br><span class="small">${g.hint()}</span></p><button class="ybtn" type="button" data-qshow="${g.sel}" data-qtab="${g.tab}">Zeigen</button>`;
+    h += `<label class="rpauto"><input type="checkbox" data-qauto="1"${q.rpAuto ? ' checked' : ''}> Bericht alle 14 Tage von selbst zeigen</label></div>`;
+    return h;
+  }
+  function welcomeHTML() {
+    const kp = st.mode === 'kampagne';
+    return `<div class="in qwel"><span class="k">${C[st.home].n}, ${fdate(st.day, true)}</span><h2 id="q-title">Willkommen, ${esc(st.player.name)}</h2>` +
+      `<p>Du beginnst als kleiner Krämer mit einer alten Schnigge. <b>Dein Ziel:</b> vom Krämer zum Ältermann der Hanse aufsteigen. Handel bringt dir Vermögen und Rang, Verkäufe in ${HN()} bringen Ansehen und Ämter.</p>` +
+      `<p>${kp ? 'Du spielst die Kampagne bis zum Frieden von Stralsund am 24. Mai 1370. Dann zählen Vermögen, Ansehen, Ämter und Taten für das Ehrenbuch.' : 'Du spielst offen: Das Spiel endet nicht, du steigst auf, so weit du willst.'}</p>` +
+      `<p>Die Karte <b>Dein Weg in der Hanse</b> im Reiter Lage zeigt dir immer das nächste Ziel, mit einem Knopf, der dir die richtige Stelle zeigt. Das erste Kapitel führt dich durch die erste Fahrt. Alle 14 Tage legt dir dein Schreiber einen Bericht vor.</p>` +
+      `<div class="ybtns qbtns"><button class="btn" type="button" data-qwel="skip"><b>Ohne Einführung</b><small>gleich frei spielen</small></button><button class="btn primary" type="button" data-qwel="go"><b>Los geht's</b><small>erste Fahrt</small></button></div></div>`;
+  }
+  function chapterHTML(ch) {
+    const Q = QUEST[ch], N = QUEST[ch + 1];
+    return `<div class="in qwel"><span class="k">Kapitel ${ch + 1} geschafft</span><h2 id="q-title">${Q.n}</h2><p>${Q.done}</p>` + (Q.rew ? `<p class="qrew">Die Gilde schenkt dir <b>${fmt(Q.rew)} Gulden</b>.</p>` : '') +
+      (N ? `<h3 class="rph">Kapitel ${ch + 2}: ${N.n}</h3><p class="small">${N.intro()}</p>` : '') +
+      `<button class="btn primary wide" type="button" data-qclose="1">Weiter</button></div>`;
+  }
+  const qPopOk = () => !!(st && st.loc && !st.enc && !st.waiting && !st.pendingFight && !st.sail && !ui.wiz && !ui.sheet);
+  function renderQPop() {
+    const sh = $('#qsheet'), sc = $('#qscrim'); if (!sh) return;
+    const q = st ? qS() : null, p = q && q.pop;
+    const show = !!(p && qPopOk() && (p.k !== 'rp' || st.rpt));
+    sh.hidden = sc.hidden = !show;
+    if (!show) { sh.dataset.k = ''; return; }
+    const key = p.k + (p.ch || '') + (p.k === 'rp' ? st.rpt.d1 + ':' + st.day : '');
+    if (sh.dataset.k === key) return;
+    sh.dataset.k = key;
+    sh.innerHTML = p.k === 'welcome' ? welcomeHTML() : p.k === 'ch' ? chapterHTML(p.ch) : rpHTML();
+    sh.scrollTop = 0;
+  }
+  const qBlocksNews = () => !!(st && st.q && st.q.pop && qPopOk());
+  function questClick(e) {
+    const t = e.target.closest('button, input'); if (!t) return;
+    if (t.dataset.qshow != null) return questShow(t.dataset.qshow, t.dataset.qtab);
+    if (t.dataset.qskip) { const q = qS(); if (q.ch === 0) { q.skipTut = true; addLog('Du überspringst die Einführung. Die Ziele-Karte zeigt dir weiter den Weg.', 'tip'); questCheck(); } return commit(); }
+    if (t.dataset.qrep) { qS().pop = {k:'rp'}; return renderQPop(); }
+    if (t.dataset.qclose) return q0Pop(null);
+    if (t.dataset.qauto) { qS().rpAuto = t.checked; return save(); }
+    if (t.dataset.qwel) { const q = qS(); if (t.dataset.qwel === 'skip') { q.skipTut = true; questCheck(); } q.pop = null; commit(); renderQPop(); if (t.dataset.qwel === 'go') { const g = qGoal(); if (g) questShow(g.sel, g.tab); } }
+  }
   function renderChron() {
     const e = st.era || {chron:[]}, c0 = e.chron[0];
     const left = st.mode === 'kampagne' && !st.ended ? CAMPAIGN_END - st.day : null;
-    $('#chronlast').textContent = left != null ? `Kampagne: noch ${left > 400 ? Math.round(left / 365 * 10) / 10 + ' Jahre' : left + ' Tage'}` : c0 ? `${fdate(c0.d, true)} · ${c0.t}` : '';
+    $('#chronlast').textContent = c0 ? `${fdate(c0.d, true)} · ${c0.t}` : left != null ? `Kampagne: noch ${left > 400 ? Math.round(left / 365 * 10) / 10 + ' Jahre' : left + ' Tage'}` : '';
     let h = '';
     if (st.mode === 'kampagne') h += `<p class="small" style="margin:6px 0">${st.ended ? `Kampagne beendet: ${fmt(st.ended.total)} Punkte, ${st.ended.title}.` : `Kampagne bis zum Frieden von Stralsund am 24. Mai 1370. Stand heute: ${fmt(scoreParts().total)} Punkte, ${titleFor(scoreParts().total)}.`}</p>`;
     const flags = [];
@@ -6340,7 +6677,7 @@ em.rep.warn{background:#b5523a}
   }
   function kontorHTML(ci) {
     const home = st.loc === st.home, K = st.kontor, nk = KONTOR[K ? K.lvl + 1 : 1];
-    let h = `<div class="kontor"><h3>Kontor in ${C[st.home].n}</h3>`;
+    let h = `<div class="kontor"><h3>Kontor in ${C[st.home].n}</h3>` + (Object.keys(st.branches || {}).length ? '' : `<p class="small kexp">Das Kontor ist dein Lager im Stammsitz. Eine Niederlassung ist ein Lager in einer anderen Stadt (ab ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} Gulden); erst sie öffnet Handelsrouten und das Bauen.</p>`);
     if (!K) {
       if (ci < 1) return h + `<p class="small">Ab Bürger kannst du hier ein Kontor mit eigenem Lager bauen.</p></div>`;
       if (!home) return h + `<p class="small">Als Bürger darfst du in ${C[st.home].n} ein Kontor bauen. Segle dorthin.</p></div>`;
@@ -6400,7 +6737,7 @@ em.rep.warn{background:#b5523a}
   }
   let newsKey = '';
   function renderNews() {
-    const box = $('#news'), items = st.loc && !st.waiting && !st.pendingFight ? (st.inbox || []) : [];
+    const box = $('#news'), items = st.loc && !st.waiting && !st.pendingFight && !qBlocksNews() ? (st.inbox || []) : [];
     const key = items.map(it => it.d + it.text).join('|') + (st.loc || '');
     box.hidden = !items.length;
     if (!items.length) { newsKey = ''; return; }
@@ -6710,7 +7047,7 @@ em.rep.warn{background:#b5523a}
     }
     const me = {name:st.player.name, repute:st.repute || 0, me:true}, all = [me].concat(st.rivals || []).sort((a, b) => b.repute - a.repute), mx = Math.max(ELECT_MIN, ...all.map(x => x.repute));
     h += `<span class="flabel" style="margin-top:10px;display:block">Ansehen im Rat · Bürgermeister: ${esc(st.mayorName || '–')}</span><div class="gbars">` +
-      all.map(x => `<div><span>${x.me ? '<b>Du</b>' : esc(x.name)}</span><i style="width:${Math.min(100, x.repute / mx * 100)}%${x.me ? '' : ';background:var(--muted)'}"></i><span>${fmt(x.repute)}</span></div>`).join('') + `</div>` +
+      all.map(x => `<div><span class="rvn">${x.me ? '<b>Du</b>' : `${x.av ? avatarSVG(x.av, 'rvf sm') : ''}${esc(x.name.replace(/^(\S)\S*\s+/, '$1. '))}`}</span><i style="width:${Math.min(100, x.repute / mx * 100)}%${x.me ? '' : ';background:var(--muted)'}"></i><span>${fmt(x.repute)}</span></div>`).join('') + `</div>` +
       `<span class="small">Nächste Ratswahl am ${fdate(nextElection(), true)}. Wählbar ist, wer ${fmt(ELECT_MIN)} Ansehen hat; es gewinnt, wer das meiste hat.${st.mayor ? ` Als Bürgermeister: Bürgerrecht 10 %, ${MAYOR_PAY} Gulden am Tag, deine Verbände werden 30 % seltener angegriffen.` : ''}</span>`;
     return h + `</div>`;
   }
@@ -6764,7 +7101,7 @@ em.rep.warn{background:#b5523a}
   const PLOT_X = [{cost:3000, civic:2}, {cost:5000, civic:3}];
   const BUILD_T = {work:14, plot:7, haus:[0, 0, 30, 60], kirche:40, kran:25, markt:35, mauer:60}, MAX_JOBS = 2;
   const buildOpen = () => !!(st.city && st.city.open);
-  const buildLock = () => civicIdx(st.repute || 0) < 2 ? 'ab Gildebruder' : 'nach deiner ersten Niederlassung';
+  const buildLock = () => civicIdx(st.repute || 0) < 2 ? 'ab Gildebruder' : 'nach deiner ersten Niederlassung in einer anderen Stadt';
   const cityJobs = () => (st.city.jobs || (st.city.jobs = []));
   const jobAt = k => cityJobs().find(j => j.k === k) || null;
   const jobLeft = j => Math.max(0, j.d0 + j.days - st.day);
@@ -7990,7 +8327,7 @@ em.rep.warn{background:#b5523a}
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
-  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
+  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
 
   function openSheet(focus) {
     if (!st.loc || bankrupt()) return;
@@ -8108,6 +8445,8 @@ em.rep.warn{background:#b5523a}
     if (h === 'aboard') return toggleAboard(id);
     if (h === 'fire') return fireCaptain(id);
   });
+  $('#goals').addEventListener('click', questClick);
+  $('#qsheet').addEventListener('click', questClick);
   $('#alarm').addEventListener('click', e => { if (e.target.closest('[data-act="takeover"]')) takeOver(); });
   $('#branchcard').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
@@ -8322,6 +8661,8 @@ em.rep.warn{background:#b5523a}
     if (s.pendingFight === undefined) s.pendingFight = null;
     (s.convoys || []).forEach(cv => { if (!cv.mode) cv.mode = 'frei'; if (!cv.tpl) cv.tpl = 'rund'; if (!cv.rules) cv.rules = {}; if (!cv.orders) cv.orders = Object.assign({}, CV_ORD); if (!cv.lap) cv.lap = {d:s.day, prof:cv.prof || 0, fights:0, lost:0, shipsLost:0, c0:null, s0:null, n:0}; if (cv.report === undefined) cv.report = null; });
     if (s.focus === undefined) { s.focus = null; s.parked = null; }
+    if (!s.q) s.q = {ch:0, ev:{}, gd:{}, pop:null, rpAuto:true, skipTut:(s.day || 0) > 0 || (s.book || []).length > 0};
+    if (s.player && s.home && st === s) { (s.rivals || []).forEach((r, i, a) => rivalLook(r, a.slice(0, i).map(x => x.home))); questCheck(true); }
     s.waiting = null;
     if (s.focus && !s.parked) s.focus = null;
     if (s.enc) {
@@ -8341,7 +8682,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '0c1dcbf6d5';
+window.KK_BUILD = '3791378f72';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
