@@ -448,7 +448,13 @@ button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
 
 /* Seeräuber */
 .enc{border-color:var(--bad)}
+.cvy{border-top:1px dashed var(--rule);margin-top:8px;padding-top:6px}
+.cvy .yrow.sub{padding-left:10px}
 /* Ab Version 37: Ereignisse auf Fahrt */
+.frk{display:inline-block;font:600 .68rem var(--f-body);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.rvcmp{display:grid;gap:4px;margin:4px 0 6px}.rvcmp .rvh,.rvcmp .rvr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;align-items:center;font-size:.86rem}
+.rvcmp .rvh{color:var(--muted);font-size:.74rem}.rvcmp .rvr span{position:relative}.rvcmp .rvr i{display:block;height:4px;border-radius:2px;background:var(--muted);margin-bottom:2px}.rvcmp .rvr.me i{background:var(--accent,#8a5a14)}
+.rvcmp small{color:var(--muted)}
 .evc{border-color:var(--accent,#8a5a14);background:linear-gradient(#fbf6ea,var(--card))}
 .evc .k{display:block;font:600 .72rem var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft,#6b5a48)}
 .evc h2{margin:4px 0 6px}
@@ -902,7 +908,7 @@ em.rep.warn{background:#b5523a}
     </section>
     <section class="col">
       <div class="card" id="market" data-tab="markt"></div>
-      <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Frachtaufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
+      <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Aufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
       <div class="card yard" id="yard" data-tab="werft" hidden></div>
       <div class="card home" id="homecard" data-tab="haus"></div>
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
@@ -1165,7 +1171,7 @@ em.rep.warn{background:#b5523a}
     for (let i = 0; i < q; i++) { s += 1; t += unitPrice(s, G[gid].b, cid) * 0.94 * f; }
     return Math.round(t);
   }
-  const freightQ = () => ((st.freight && st.freight.active) || []).reduce((x, f) => x + f.q, 0);
+  const freightQ = () => ((st.freight && st.freight.active) || []).reduce((x, f) => x + ordSpace(f), 0);
   const used = () => Object.values(st.cargo).reduce((x, c) => x + c.q, 0) + freightQ();
   const held = gid => (st.cargo[gid] && st.cargo[gid].q) || 0;
   function maxBuy(cid, gid) {
@@ -1252,7 +1258,7 @@ em.rep.warn{background:#b5523a}
     stockholm:{t:'Erz aus den Bergwerken', d:'Du startest mit 3.000 statt 2.000 Gulden.'}
   };
   const CIVIC = [[0,'Neubürger'],[60,'Bürger'],[200,'Gildebruder'],[500,'Ratsherr'],[1200,'Bürgermeister'],[3000,'Ältermann der Hanse']];
-  const UNLOCK = {1:'Kontor im Stammsitz, Ratsaufträge', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wählbar ab 1.200 Ansehen, Wahl am 1. Januar und 1. Juli', 5:'Als Bürgermeister wählbar ab 3.000 Ansehen, Wahl auf dem Hansetag am 24. Juni'};
+  const UNLOCK = {1:'Kontor im Stammsitz, Aufträge des Rats', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wählbar ab 1.200 Ansehen, Wahl am 1. Januar und 1. Juli', 5:'Als Bürgermeister wählbar ab 3.000 Ansehen, Wahl auf dem Hansetag am 24. Juni'};
   const civicIdx = r => { let i = 0; CIVIC.forEach(([m], k) => { if (r >= m) i = k; }); if (i >= 5 && !(st && st.alderman)) i = 4; return i >= 4 && !(st && (st.mayor || st.alderman)) ? 3 : i; };
   const repairPrice = () => (st.home === 'bremen' ? 5 : REPAIR) * (st && st.city ? cityBonus('repair') : 1);
   const applyHome = () => { CAP = st.fleet ? st.fleet.reduce((x, sh) => x + shipCap(sh), 0) : 60; };
@@ -1523,92 +1529,160 @@ em.rep.warn{background:#b5523a}
     (used() === 0 && !allStores().some(K => Object.keys(K.goods).length) && !(st.convoys || []).length && !(st.reserve || []).length && !(st.builds || []).length && (st.money < 0 || (!st.fleet.length && st.money < OLD_SHIP))));
 
   // Handelsbuch: jeder Hafenbesuch mit Einkauf, Verkauf und Gewinn
-  // Frachtaufträge: für Krämer und Händler, Ware fremder Kaufleute gegen Lohn
-  const FREIGHT_MAX = 2, FREIGHT_RANK = 1;
-  const freightOpen = () => st.rank <= FREIGHT_RANK;
-  function freightState() { return st.freight || (st.freight = {offers:{}, gen:{}, active:[], next:1, done:0}); }
+  // ───────── Ab Version 39: Aufträge in jedem Hafen (Fracht, Abholen, Besorgen) statt Ratsaufträgen ─────────
+  // Auftraggeber sind Kaufleute, Handwerker, Klöster, Gilden und der Rat. Fracht und Abholen brauchen nur Laderaum,
+  // Besorgen eigenes Geld; der Rat des Stammsitzes gibt dazu Ansehen. Manche Ereignisse auf Fahrt erzeugen Aufträge.
+  const FREIGHT_RANK = 99;   // Aufträge gibt es auf jedem Rang
+  const ORD_MAX = () => 2 + (st.rank >= 1 ? 1 : 0) + (st.rank >= 3 ? 1 : 0);
+  const freightOpen = () => true;
+  const ORD_K = {fracht:'Fracht', abholen:'Abholen', besorgen:'Besorgen', brief:'Botschaft', pilger:'Überfahrt'};
+  const CLIENT = {getreide:['Bäcker', 'Brauer', 'Kloster'], bier:['Schankwirt', 'Bergenfahrer'], holz:['Werft', 'Böttcher', 'Zimmermann'], salz:['Heringssalzer', 'Schonenfahrer'],
+    hering:['Fischhändler', 'Kloster'], stockfisch:['Fischhändler', 'Kloster'], eisen:['Schmied', 'Werft'], wein:['Ratskeller', 'Domkapitel'], tuch:['Gewandschneider', 'Schneidergilde'],
+    wachs:['Domkapitel', 'Kerzengießer'], pelze:['Kürschner', 'Gewandschneider']};
+  const CLIENT_INST = new Set(['Kloster', 'Bergenfahrer', 'Werft', 'Schonenfahrer', 'Ratskeller', 'Domkapitel', 'Schneidergilde']);
+  const clientFor = g => { const r = pick(CLIENT[g] || ['Kaufmann']); return CLIENT_INST.has(r) ? (r === 'Bergenfahrer' || r === 'Schonenfahrer' ? `die ${r}` : r === 'Werft' ? 'die Werft' : r === 'Schneidergilde' ? 'die Schneidergilde' : `das ${r}`) : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
+  function freightState() {
+    const F = st.freight || (st.freight = {offers:{}, gen:{}, active:[], next:1, done:0});
+    F.active.forEach(f => { if (!f.k) f.k = 'fracht'; });
+    return F;
+  }
+  const ordSpace = f => f.k === 'fracht' || f.k === 'pilger' || (f.k === 'abholen' && f.picked) ? f.q : 0;
+  const ordQ = rk => { const lo = 6 + 3 * rk, hi = 14 + 6 * rk; return Math.max(4, Math.round(Math.min(lo + Math.random() * (hi - lo), Math.max(lo, CAP * 0.5)))); };
   function freightOffers(cid) {
     const F = freightState();
-    if (!cid || !freightOpen()) return [];
+    if (!cid) return [];
     if (!F.offers[cid] || st.day - (F.gen[cid] == null ? -99 : F.gen[cid]) >= 6) { F.gen[cid] = st.day; F.offers[cid] = genFreight(cid); }
     return F.offers[cid];
   }
+  const ratOrder = cid => cid === st.home && civicIdx(st.repute || 0) >= 1;
   function genFreight(cid) {
-    const F = freightState(), c = C[cid], out = [], n = 2 + (Math.random() < 0.5 ? 1 : 0);
+    const F = freightState(), c = C[cid], out = [], n = 3 + (Math.random() < 0.5 ? 1 : 0);
     let dests = CITIES.filter(x => x.id !== cid && !(x.id === 'nowgorod' && newaFrozen(st.day))).map(x => ({x, days:route(cid, x.id, st.day).days}));
-    for (let k = 0; k < n && dests.length; k++) {
-      const tot = dests.reduce((a, d) => a + 1 / d.days, 0); let r = Math.random() * tot, d = dests[0];
-      for (const dd of dests) { r -= 1 / dd.days; if (r <= 0) { d = dd; break; } }
-      dests = dests.filter(q => q !== d);
-      const fit = c.p.filter(g => d.x.c.includes(g)), gid = fit.length ? pick(fit) : pick(c.p);
-      const q = 6 + Math.floor(Math.random() * 9);
-      const pay = Math.round(q * (3 + 4.5 * d.days) * (0.9 + Math.random() * 0.25) / 5) * 5;
-      out.push({id:F.next++, from:cid, to:d.x.id, g:gid, q, pay, days:d.days, due:st.day + Math.ceil(d.days * 1.6) + 3, by:`${pick(NAMES.m)} ${pick(NAMES.s)}`});
-    }
+    const pickDest = () => { const tot = dests.reduce((a, d) => a + 1 / d.days, 0); let r = Math.random() * tot, d = dests[0]; for (const dd of dests) { r -= 1 / dd.days; if (r <= 0) { d = dd; break; } } dests = dests.filter(q => q !== d); return d; };
+    const kinds = [];
+    if (ratOrder(cid)) kinds.push('rat');
+    while (kinds.length < n) { const r = Math.random(); kinds.push(r < 0.45 ? 'fracht' : r < 0.8 ? 'besorgen' : 'abholen'); }
+    kinds.forEach(k => {
+      if ((k === 'fracht' || k === 'abholen') && !dests.length) return;
+      if (k === 'fracht') {
+        const d = pickDest(), fit = c.p.filter(g => d.x.c.includes(g)), g = fit.length ? pick(fit) : pick(c.p), q = ordQ(st.rank);
+        out.push({id:F.next++, k, from:cid, to:d.x.id, g, q, days:d.days, due:st.day + Math.ceil(d.days * 1.6) + 3, by:clientFor(g), pay:Math.round(q * (3 + 4.5 * d.days) * rnd(0.9, 1.15) / 5) * 5});
+      } else if (k === 'abholen') {
+        const d = pickDest(), g = pick(d.x.p), q = ordQ(st.rank);
+        out.push({id:F.next++, k, from:d.x.id, to:cid, g, q, days:d.days, due:st.day + Math.ceil(d.days * 3) + 5, by:clientFor(g), picked:false, pay:Math.round(q * (3 + 4.5 * d.days) * rnd(1.15, 1.35) / 5) * 5});
+      } else {
+        const rat = k === 'rat', pool = c.c.concat(c.c, GOODS.map(g => g.id).filter(g => !c.p.includes(g))), g = pick(pool);
+        const big = rat && civicIdx(st.repute || 0) >= 3, q = rat ? Math.round((big ? 30 : 12) + Math.random() * (big ? 40 : 20)) : Math.round(ordQ(st.rank) * 0.9);
+        out.push({id:F.next++, k:'besorgen', rat, to:cid, g, q, due:st.day + 18 + Math.floor(Math.random() * 20), by:rat ? `der Rat von ${c.n}` : clientFor(g),
+          pay:Math.round(q * G[g].b * (rat ? rnd(1.2, 1.45) * cityBonus('order') : rnd(1.1, 1.3)) / 10) * 10, rep:rat ? Math.round(q * (big ? 0.8 : 0.6)) : 0});
+      }
+    });
     return out;
+  }
+  function ordWhy(o) {
+    const F = freightState(), slots = F.active.filter(f => f.k !== 'brief').length;
+    if (slots >= ORD_MAX()) return `Schon ${ORD_MAX()} Aufträge angenommen`;
+    if (o.k === 'fracht' && CAP - used() < o.q) return `${o.q - (CAP - used())} Last zu wenig Laderaum`;
+    if (o.k === 'besorgen' && o.rat && st.loc !== st.home) return 'nur im Stammsitz';
+    return '';
   }
   function takeFreight(id) {
     const F = freightState(), list = freightOffers(st.loc), o = list.find(x => x.id === id);
-    if (!o || st.enc || F.active.length >= FREIGHT_MAX || CAP - used() < o.q) return;
+    if (!o || st.enc || ordWhy(o)) return;
     list.splice(list.indexOf(o), 1);
     F.active.push(Object.assign({}, o, {d0:st.day})); qEv('frt');
-    addLog(`Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${o.by} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Gulden.`);
+    addLog(o.k === 'fracht' ? `Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${o.by} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Gulden.`
+      : o.k === 'abholen' ? `Abholauftrag angenommen: ${o.q} Last ${G[o.g].n} in ${C[o.from].n} laden und bis ${fdate(o.due)} nach ${C[o.to].n} bringen, für ${o.by}. Lohn ${fmt(o.pay)} Gulden.`
+      : `Auftrag angenommen: ${o.q} Last ${G[o.g].n} für ${o.by} besorgen und bis ${fdate(o.due)} in ${C[o.to].n} abliefern. Lohn ${fmt(o.pay)} Gulden${o.rep ? ` und ${o.rep} Ansehen` : ''}.`);
     commit();
+  }
+  // von Ereignissen erzeugte Aufträge (Botschaft, Überfahrt, Eilauftrag)
+  function orderFromEvent(spec) {
+    const F = freightState(), o = Object.assign({id:F.next++, d0:st.day}, spec);
+    F.active.push(o);
+    return o;
   }
   function dropFreight(id) {
     const F = freightState(), f = F.active.find(x => x.id === id);
     if (!f) return;
     F.active.splice(F.active.indexOf(f), 1);
-    st.repute = Math.max(0, (st.repute || 0) - 2);
-    addLog(`Du gibst die Fracht für ${f.by} auf. ${f.q} Last ${G[f.g].n} gehen an seinen Faktor zurück; dein Ruf leidet ein wenig.`);
+    st.repute = Math.max(0, (st.repute || 0) - (f.rat ? Math.round(f.rep / 2) : 2));
+    addLog(f.k === 'fracht' || (f.k === 'abholen' && f.picked) ? `Du gibst den Auftrag für ${f.by} auf. ${f.q} Last ${G[f.g].n} gehen an seinen Faktor zurück; dein Ruf leidet ein wenig.` : `Du gibst den Auftrag für ${f.by} auf; dein Ruf leidet ein wenig.`);
     commit();
   }
+  const ordDue = f => (f.k === 'abholen' && !f.picked) ? f.from : f.to;
   function freightArrive(cid) {
-    const n = freightState().active.filter(f => f.to === cid).length;
-    if (n) addLog(`In ${C[cid].n} kannst du ${n === 1 ? 'eine Fracht' : `${n} Frachten`} abliefern: Reiter Markt, Frachtaufträge.`, 'arrive');
+    const A = freightState().active, give = A.filter(f => f.to === cid && (f.k !== 'abholen' || f.picked)).length, pick2 = A.filter(f => f.k === 'abholen' && !f.picked && f.from === cid).length;
+    if (give || pick2) addLog(`In ${C[cid].n} ${[give ? `kannst du ${give === 1 ? 'einen Auftrag' : `${give} Aufträge`} abliefern` : '', pick2 ? `wartet Ware zum Abholen` : ''].filter(Boolean).join(' und ')}: Reiter Markt, Aufträge.`, 'arrive');
+  }
+  function pickupFreight(id) {
+    const F = freightState(), f = F.active.find(x => x.id === id);
+    if (!f || f.k !== 'abholen' || f.picked || st.loc !== f.from || st.enc || CAP - used() < f.q) return;
+    f.picked = true;
+    addLog(`${f.q} Last ${G[f.g].n} für ${f.by} in ${C[f.from].n} geladen. Abliefern in ${C[f.to].n} bis ${fdate(f.due)}.`);
+    commit();
   }
   function deliverFreight(id) {
     const F = freightState(), f = F.active.find(x => x.id === id);
-    if (!f || st.loc !== f.to || st.enc) return;
-    const late = st.day > f.due, pay = late ? Math.round(f.pay / 2) : f.pay;
-    st.money += pay; F.done = (F.done || 0) + 1; gainRepute(late ? 0.5 : 1.5); rpState().freight += pay;
+    if (!f || st.loc !== f.to || st.enc || (f.k === 'abholen' && !f.picked)) return;
+    if (f.k === 'besorgen') {
+      if (haveFor(f.g) < f.q || st.focus) return;
+      let need = f.q; need -= takeGoods(st.cargo, f.g, need); if (need > 0) { const K = storeAt(st.loc); if (K) need -= takeGoods(K.goods, f.g, need); }
+      st.stock[f.to][f.g] += f.q;
+    }
+    const late = st.day > f.due && f.k !== 'besorgen', pay = late ? Math.round(f.pay / 2) : f.pay;
+    st.money += pay; F.done = (F.done || 0) + 1; rpState().freight += pay;
+    if (f.rat) { gainRepute(f.rep); st.orders = st.orders || {active:[], offer:[], done:0}; st.orders.done = (st.orders.done || 0) + 1; }
+    else gainRepute((f.rep || 0) + (late ? 0.5 : 1.5));
     F.active.splice(F.active.indexOf(f), 1);
-    addLog(`Fracht abgeliefert in ${C[f.to].n}: ${f.q} Last ${G[f.g].n} für ${f.by}. Lohn ${fmt(pay)} Gulden${late ? ', halbiert wegen Verspätung' : ''}.`, 'gain');
+    const what = f.k === 'brief' ? 'Die Botschaft ist überbracht' : f.k === 'pilger' ? 'Die Pilger gehen an Land' : `${f.q} Last ${G[f.g].n} abgeliefert`;
+    addLog(`${what} in ${C[f.to].n}, für ${f.by}. Lohn ${fmt(pay)} Gulden${late ? ', halbiert wegen Verspätung' : ''}${f.rep ? ` und ${f.rep} Ansehen` : ''}.`, 'gain');
     checkRank();
     commit();
   }
-  const freightHere = () => !!st.loc && ((st.freight || {}).active || []).some(f => f.to === st.loc);
+  const freightHere = () => !!st.loc && ((st.freight || {}).active || []).some(f => (f.to === st.loc && (f.k !== 'abholen' || f.picked) && (f.k !== 'besorgen' || haveFor(f.g) >= f.q)) || (f.k === 'abholen' && !f.picked && f.from === st.loc));
   function freightDay() {
     const F = st.freight; if (!F || !F.active.length) return;
-    if (!st.fleet.length) { F.active.forEach(f => addLog(`Die Fracht für ${f.by} ist mit deinem Schiff verloren.`)); F.active = []; return; }
-    F.active.filter(f => st.day > f.due + 15).forEach(f => {
-      F.active.splice(F.active.indexOf(f), 1); st.repute = Math.max(0, (st.repute || 0) - 3);
-      addLog(`${f.by} hat die Geduld verloren: Die Fracht nach ${C[f.to].n} ist verfallen, dein Ruf leidet.`);
+    if (!st.fleet.length) { F.active.filter(f => ordSpace(f)).forEach(f => addLog(`Der Auftrag für ${f.by} ist mit deinem Schiff verloren.`)); F.active = F.active.filter(f => !ordSpace(f)); }
+    F.active.filter(f => f.k === 'besorgen' ? st.day > f.due : st.day > f.due + 15).forEach(f => {
+      F.active.splice(F.active.indexOf(f), 1); st.repute = Math.max(0, (st.repute || 0) - (f.rat ? Math.round(f.rep / 2) : 3));
+      addLog(f.rat ? `Auftrag des Rats verfehlt: ${f.q} Last ${G[f.g].n} kamen nicht rechtzeitig. Der Rat ist verstimmt.` : `${f.by.replace(/^\w/, m => m.toUpperCase())} hat die Geduld verloren: Der Auftrag nach ${C[f.to].n} ist verfallen, dein Ruf leidet.`);
     });
   }
+  function ordTitle(f) {
+    if (f.k === 'fracht') return `${G[f.g].n} nach ${C[f.to].n}`;
+    if (f.k === 'abholen') return f.picked ? `${G[f.g].n} nach ${C[f.to].n}` : `${G[f.g].n} in ${C[f.from].n} abholen`;
+    if (f.k === 'besorgen') return `${G[f.g].n} besorgen für ${C[f.to].n}`;
+    if (f.k === 'brief') return `Botschaft nach ${C[f.to].n}`;
+    return `Pilger nach ${C[f.to].n}`;
+  }
   function freightRow(f, active) {
-    const left = f.due - st.day, late = left < 0, here = active && st.loc === f.to;
-    const dl = active ? (late ? `<b class="frlate">${-left} ${-left === 1 ? 'Tag' : 'Tage'} verspätet, halber Lohn</b>` : `noch ${left} ${left === 1 ? 'Tag' : 'Tage'}, bis ${fdate(f.due).replace(' ', '&nbsp;')}`) : `etwa ${f.days} ${f.days === 1 ? 'Tag' : 'Tage'} Fahrt · bis ${fdate(f.due).replace(' ', '&nbsp;')}`;
-    const pay = active && late ? Math.round(f.pay / 2) : f.pay;
+    const left = f.due - st.day, late = left < 0, at = ordDue(f), here = active && st.loc === at;
+    const dl = active ? (late ? (f.k === 'besorgen' ? '' : `<b class="frlate">${-left} ${-left === 1 ? 'Tag' : 'Tage'} verspätet, halber Lohn</b>`) : `noch ${left} ${left === 1 ? 'Tag' : 'Tage'}, bis ${fdate(f.due).replace(' ', '&nbsp;')}`)
+      : f.k === 'besorgen' ? `bis ${fdate(f.due).replace(' ', '&nbsp;')}` : f.k === 'abholen' ? `${f.days} Tage hin, zurück bis ${fdate(f.due).replace(' ', '&nbsp;')}` : `etwa ${f.days} ${f.days === 1 ? 'Tag' : 'Tage'}, bis ${fdate(f.due).replace(' ', '&nbsp;')}`;
+    const pay = active && late && f.k !== 'besorgen' ? Math.round(f.pay / 2) : f.pay;
     let act;
-    if (active) act = (here ? `<button class="ybtn on" type="button" data-fr="give" data-id="${f.id}"${st.enc ? ' disabled' : ''}>Abliefern · ${fmt(pay)} G</button>` : `<span class="frwhere">Abliefern in ${C[f.to].n}</span>`) +
-      `<button class="linkbtn" type="button" data-fr="drop" data-id="${f.id}">Aufgeben</button>`;
-    else { const F = freightState(), free = CAP - used(), why = F.active.length >= FREIGHT_MAX ? `Schon ${FREIGHT_MAX} Frachten an Bord` : free < f.q ? `${f.q - free} Last zu wenig Laderaum` : '';
-      act = `<button class="ybtn" type="button" data-fr="take" data-id="${f.id}"${why || st.enc ? ' disabled' : ''}>Annehmen</button>${why ? `<span class="frwhere">${why}</span>` : ''}`; }
-    return `<li class="frow${here ? ' here' : ''}"><span class="fri">${icon(f.g)}</span><span class="frm"><b>${G[f.g].n} nach ${C[f.to].n}</b><span class="frs">${f.q} Last · ${dl}</span><span class="frs">für ${f.by}</span></span>` +
+    if (active) {
+      if (f.k === 'abholen' && !f.picked) act = here ? `<button class="ybtn on" type="button" data-fr="load" data-id="${f.id}"${st.enc || CAP - used() < f.q ? ' disabled' : ''}>${CAP - used() < f.q ? `${f.q - (CAP - used())} Last zu wenig Platz` : 'Laden'}</button>` : `<span class="frwhere">Abholen in ${C[f.from].n}</span>`;
+      else if (f.k === 'besorgen') { const have = haveFor(f.g); act = here ? `<button class="ybtn on" type="button" data-fr="give" data-id="${f.id}"${st.enc || have < f.q ? ' disabled' : ''}>${have < f.q ? `noch ${f.q - have} Last fehlen` : `Abliefern · ${fmt(pay)} G`}</button>` : `<span class="frwhere">Abliefern in ${C[f.to].n} · du hast ${have}</span>`; }
+      else act = here ? `<button class="ybtn on" type="button" data-fr="give" data-id="${f.id}"${st.enc ? ' disabled' : ''}>Abliefern · ${fmt(pay)} G</button>` : `<span class="frwhere">Abliefern in ${C[f.to].n}</span>`;
+      act += `<button class="linkbtn" type="button" data-fr="drop" data-id="${f.id}">Aufgeben</button>`;
+    } else { const why = ordWhy(f); act = `<button class="ybtn" type="button" data-fr="take" data-id="${f.id}"${why || st.enc ? ' disabled' : ''}>Annehmen</button>${why ? `<span class="frwhere">${why}</span>` : ''}`; }
+    const amount = f.k === 'brief' ? 'kein Laderaum' : f.k === 'pilger' ? `${f.q} Last Platz` : `${f.q} Last`;
+    return `<li class="frow${here ? ' here' : ''}"><span class="fri">${f.g ? icon(f.g) : '✉'}</span><span class="frm"><b><span class="frk">${ORD_K[f.k]}</span> ${ordTitle(f)}</b><span class="frs">${amount}${dl ? ` · ${dl}` : ''}</span><span class="frs">für ${esc(f.by)}${f.rep ? ` · ${f.rep} Ansehen` : ''}</span></span>` +
       `<span class="frp">${fmt(pay)} G</span><span class="fra">${act}</span></li>`;
   }
   function renderFreight() {
     const box = $('#frbox'), F = freightState(), act = F.active, offers = st.loc ? freightOffers(st.loc) : [];
     box.hidden = !act.length && !offers.length;
     if (box.hidden) return;
-    const nHere = act.filter(f => f.to === st.loc).length;
-    $('#frlast').textContent = nHere ? `${nHere} hier abliefern` : [act.length ? `${act.length} an Bord` : '', offers.length ? `${offers.length} ${offers.length === 1 ? 'Angebot' : 'Angebote'}` : ''].filter(Boolean).join(' · ');
+    const nHere = act.filter(f => st.loc && ordDue(f) === st.loc).length, slots = act.filter(f => f.k !== 'brief').length;
+    $('#frlast').textContent = nHere ? `${nHere} hier zu erledigen` : [act.length ? `${act.length} angenommen` : '', offers.length ? `${offers.length} ${offers.length === 1 ? 'Angebot' : 'Angebote'}` : ''].filter(Boolean).join(' · ');
     if (ui.det.frbox == null) box.open = true;
     let h = '';
-    if (act.length) h += `<h3 class="frh">An Bord <small>${act.length} von ${FREIGHT_MAX}</small></h3><ul class="frl">${act.slice().sort((x, y) => (y.to === st.loc) - (x.to === st.loc) || x.due - y.due).map(f => freightRow(f, true)).join('')}</ul>`;
-    if (offers.length) h += `<h3 class="frh">Angebote in ${C[st.loc].n}</h3><p class="small frhint">Kaufleute suchen einen Schiffer. Du brauchst kein Geld, nur Laderaum; den Lohn gibt es beim Abliefern im Zielhafen.</p><ul class="frl">${offers.map(o => freightRow(o, false)).join('')}</ul>`;
-    else if (st.loc && freightOpen()) h += `<p class="small frhint">In ${C[st.loc].n} gibt es gerade keine weiteren Frachten.</p>`;
+    if (act.length) h += `<h3 class="frh">Angenommen <small>${slots} von ${ORD_MAX()}</small></h3><ul class="frl">${act.slice().sort((x, y) => (ordDue(y) === st.loc) - (ordDue(x) === st.loc) || x.due - y.due).map(f => freightRow(f, true)).join('')}</ul>`;
+    if (offers.length) h += `<h3 class="frh">Angebote in ${C[st.loc].n}</h3><p class="small frhint">Fracht und Abholen brauchen nur Laderaum, den Lohn gibt es beim Abliefern. Beim Besorgen kaufst du die Ware selbst, wo sie günstig ist${ratOrder(st.loc) ? '; der Rat zahlt dazu Ansehen' : ''}. Neue Angebote etwa jede Woche.</p><ul class="frl">${offers.map(o => freightRow(o, false)).join('')}</ul>`;
+    else if (st.loc) h += `<p class="small frhint">In ${C[st.loc].n} gibt es gerade keine weiteren Aufträge.</p>`;
     $('#frbody').innerHTML = h;
   }
   function trackTrade(kind, gid, amount, prof) {
@@ -1916,7 +1990,7 @@ em.rep.warn{background:#b5523a}
   }
   function cvArrive(cv) {
     const to = cv.sail.to, k = capOf(cv);
-    cv.loc = to; cv.sail = null; cv.wait = 1; cv.trips++;
+    cv.loc = to; cv.sail = null; cv.wait = CV_STAY(); cv.trips++;
     st.arrived = true;
     if (k) {
       k.xp++;
@@ -2372,6 +2446,15 @@ em.rep.warn{background:#b5523a}
     hoch:{n:'Hoch', inc:40, rep:-0.3, d:'40 Gulden am Tag, aber die Kaufleute murren und dein Ansehen sinkt.'}
   };
   const MAYOR_PAY = 60, ELECT_MIN = 1200;
+  // Ab Version 39: Die Konkurrenten handeln im Hintergrund und treten erst im Kapitel „Ratsherr“ als Gegner auf.
+  // Dann werden ihre Werte an deine angeglichen, damit der Vergleich etwas bedeutet.
+  const RIV_CH = 5;
+  const rivShown = () => !!(st && st.rivShown);
+  function rivReveal() {
+    const w = wealth(), rp = st.repute || 0, fw = [0.8, 1.0, 1.25].sort(() => Math.random() - 0.5), fr = [0.7, 0.9, 1.1].sort(() => Math.random() - 0.5);
+    (st.rivals || []).forEach((r, i) => { r.wealth = Math.round(Math.max(r.wealth, w * fw[i % 3])); r.repute = Math.round(Math.max(r.repute * 0.5, rp * fr[i % 3])); });
+    st.rivShown = {d:st.day};
+  }
   function makeRivals() {
     const taken = new Set();
     return [1, 2, 3].map(id => {
@@ -2380,8 +2463,10 @@ em.rep.warn{background:#b5523a}
     }).map((r, i, a) => rivalLook(r, a.slice(0, i).map(x => x.home)));
   }
   function rivalsDay() {
+    if (!st.rivShown && qS().ch >= RIV_CH) rivReveal();
     (st.rivals || []).forEach(r => {
       r.repute += r.pace * (0.6 + Math.random() * 0.8);
+      if (st.rivShown) r.wealth = Math.round(r.wealth * (1 + 0.0022 * r.pace * rnd(0.5, 1.5)));
       if (Math.random() >= 0.45) return;
       if (!r.home) rivalLook(r);
       const g = r.fav && Math.random() < 0.5 ? G[r.fav] : pick(GOODS), as = CITIES.filter(c => c.p.includes(g.id)), bs = CITIES.filter(c => c.c.includes(g.id));
@@ -2391,7 +2476,6 @@ em.rep.warn{background:#b5523a}
       st.stock[A.id][g.id] = Math.max(0, st.stock[A.id][g.id] - q); st.stock[B.id][g.id] += q;
       rivNote({d:st.day, r:r.id, g:g.id, q, a:A.id, b:B.id, pa:Math.round((buyPrice(A.id, g.id) / Math.max(1, bA) - 1) * 100), pb:Math.round((sellPrice(B.id, g.id) / Math.max(1, sB) - 1) * 100)});
       r.wealth += Math.round(q * g.b * rnd(0.15, 0.4));
-      if (Math.random() < 0.06) rumor(`${r.name} hat in ${A.n} ${q} Last ${g.n} gekauft, man sagt, für ${B.n}.`, A.id, g.id);
     });
   }
   function genOrder() {
@@ -3081,6 +3165,7 @@ em.rep.warn{background:#b5523a}
       remember(to);
       addLog(`Angekommen in ${C[to].n}.`, 'arrive');
       escortArrive(to);
+      { const L = (st.convoys || []).filter(cv => !cv.sail && cv.loc === to && st.focus !== cv.id); if (L.length) addLog(`Im Hafen liegt ${L.map(cv => `der ${cvLabel(cv)} (${cvLeaveText(cv)})`).join(', ')}. In der Werft kannst du ${L.length === 1 ? 'ihn' : 'sie'} ausrüsten.`, 'cap'); }
       freightArrive(to);
       if (isPest(to) && st.crew > 2 && Math.random() < 0.6) {
         const n = Math.min(st.crew - 2, 1 + Math.floor(Math.random() * 3));
@@ -3291,7 +3376,7 @@ em.rep.warn{background:#b5523a}
         {l:'Ablehnen', h:'nichts', s:'safe', f:() => 'Du lehnst ab. Er lacht und zieht davon.'},
         {l:'Annehmen und tricksen', h:'60 % Sieg, sonst −30 Ansehen', f:X => { if (X.chance(0.6)) { X.money(200); return 'Mit einem kleinen Trick in der Hafeneinfahrt gewinnst du 200 Gulden.'; } X.money(-200); X.rep(-30); return 'Der Trick fliegt auf. Du zahlst 200 Gulden, und dein Ruf leidet: Ansehen −30.'; }}]},
     {id:'bote', at:'sea', n:'Ein Bote des Rats', d:'Ein Boot hält auf euch zu, darin ein Ratsbote mit versiegelter Botschaft.', w:() => 0.9,
-      o:[{l:'Botschaft mitnehmen', h:'+1 Tag, +30 Ansehen', s:'safe', f:X => { X.days(1); X.rep(30); return 'Ihr bringt die Botschaft auf einem Umweg zu ihrem Empfänger: ein Tag verloren, Ansehen +30.'; }},
+      o:[{l:'Botschaft mitnehmen', h:'Auftrag: Botschaft überbringen', s:'safe', own:true, f:X => { const to = evDest(X), d = route(X.cid, to, st.day).days; orderFromEvent({k:'brief', to, q:0, pay:60, rep:30, by:`der Rat von ${C[st.home].n}`, due:st.day + (st.sail ? st.sail.days - st.sail.t : 0) + Math.ceil(d * 1.6) + 4}); return `Der Bote gibt dir eine versiegelte Botschaft für ${C[to].n} mit. Sie steht jetzt unter deinen Aufträgen im Reiter Markt.`; }},
         {l:'Gegen Lohn', h:'+120 G', s:'bold', f:X => { X.money(120); return 'Der Rat zahlt 120 Gulden Botenlohn.'; }},
         {l:'Ablehnen', h:'−5 Ansehen', f:X => { X.rep(-5); return 'Du lehnst ab. Ansehen −5.'; }}]},
     {id:'brief', at:'sea', n:'Ein versiegelter Brief', d:'Ein Matrose findet im Laderaum einen Brief an einen Konkurrenten.', w:() => 0.8, own:true,
@@ -3316,7 +3401,7 @@ em.rep.warn{background:#b5523a}
         {l:'Als Schreiber nehmen', h:'Preise eines Hafens', f:X => { const c = X.know(evOther(X.cid)[0]); return c ? `Er kann lesen und schreiben und kennt die Preise in ${c}.` : 'Er weiß nichts Neues.'; }},
         {l:'Ablehnen', h:'nichts', f:() => 'Du schickst ihn nach Hause.'}]},
     {id:'pilger', at:'port', n:'Pilger bitten um Überfahrt', d:'Eine Gruppe Pilger will auf deinem Schiff zum nächsten Hafen.', w:() => 0.8,
-      o:[{l:'Mitnehmen', h:'+60 G, +10 Ansehen', f:X => { X.money(60); X.rep(10); return 'Die Pilger zahlen 60 Gulden und beten für dich. Ansehen +10.'; }},
+      o:[{l:'Mitnehmen', h:'Auftrag: Überfahrt', f:X => { if (CAP - used() < 2) return 'An Bord ist kein Platz für sie. Sie suchen sich ein anderes Schiff.'; const to = evDest(X), d = route(X.cid, to, st.day).days; orderFromEvent({k:'pilger', to, q:2, pay:90, rep:10, by:'eine Gruppe Pilger', due:st.day + Math.ceil(d * 1.6) + 5}); return `Die Pilger wollen nach ${C[to].n}. Sie zahlen bei der Ankunft; der Auftrag steht im Reiter Markt.`; }},
         {l:'Gegen Mitarbeit', h:'+1 Matrose', f:X => X.crew(1) ? 'Einer der Pilger bleibt als Matrose.' : 'Kein Platz an Bord.'},
         {l:'Ablehnen', h:'nichts', f:() => 'Die Pilger suchen sich ein anderes Schiff.'}]},
     {id:'hafenmeister', at:'port', n:'Der Hafenmeister will eine Sondergebühr', d:'„Für Schiffe aus der Fremde gilt diesen Monat ein Aufschlag.“', w:c => c.home ? 0 : 1, x:() => ({fee:evRi(5, 15) * 10}),
@@ -3342,8 +3427,14 @@ em.rep.warn{background:#b5523a}
     {id:'abmustern', at:'port', n:'Matrosen wollen abmustern', d:'Ein paar Männer haben in der Stadt bessere Heuer gefunden.', w:c => c.crew > 6 ? 1 : 0, x:() => ({n:evRi(2, 4)}),
       o:[{l:'Handgeld zahlen', h:'3 G je Matrose, alle bleiben', f:X => { const n = -X.money(-3 * X.crewN()); return `Jeder bekommt 3 Gulden Handgeld, zusammen ${n} Gulden. Alle bleiben.`; }},
         {l:'Gehen lassen', h:(X, x) => `−${x.n} Matrosen`, f:(X, x) => { const n = -X.crew(-x.n); return `${evPlural(n, 'Matrose geht', 'Matrosen gehen')} von Bord.`; }},
-        {l:'Neue anheuern', h:(X, x) => `${x.n * HIRE_SAILOR} G, sofort ersetzt`, f:(X, x) => { X.money(-x.n * HIRE_SAILOR); return `${x.n} gehen, ${x.n} neue kommen an Bord. Handgeld ${x.n * HIRE_SAILOR} Gulden.`; }}]}
+        {l:'Neue anheuern', h:(X, x) => `${x.n * HIRE_SAILOR} G, sofort ersetzt`, f:(X, x) => { X.money(-x.n * HIRE_SAILOR); return `${x.n} gehen, ${x.n} neue kommen an Bord. Handgeld ${x.n * HIRE_SAILOR} Gulden.`; }}]},
+    {id:'eilig', at:'port', n:'Ein Kaufmann braucht dringend Ware', d:'Ein Händler am Kai fasst dich am Ärmel: Ihm ist eine Lieferung ausgefallen, und seine Kunden warten.', w:() => 1.2,
+      x:() => { const c = C[st.loc] || C[st.home], pool = GOODS.map(g => g.id).filter(g => !c.p.includes(g)), g = pick(pool); return {g, q:Math.max(6, Math.round(ordQ(st.rank) * 0.8)), by:clientFor(g)}; },
+      o:[{l:'Zusagen', h:'Eilauftrag', f:(X, x) => { const pay = Math.round(x.q * G[x.g].b * 1.45 / 10) * 10; orderFromEvent({k:'besorgen', to:X.cid, g:x.g, q:x.q, pay, rep:0, by:x.by, due:st.day + 14}); return `Du sagst zu: ${x.q} Last ${G[x.g].n} bis ${fdate(st.day + 14)} hierher, ${fmt(pay)} Gulden. Der Auftrag steht im Reiter Markt.`; }},
+        {l:'Mehr verlangen', h:'Eilauftrag teurer', f:(X, x) => { if (X.chance(0.5)) { const pay = Math.round(x.q * G[x.g].b * 1.7 / 10) * 10; orderFromEvent({k:'besorgen', to:X.cid, g:x.g, q:x.q, pay, rep:0, by:x.by, due:st.day + 14}); return `Er schluckt und willigt ein: ${x.q} Last ${G[x.g].n} bis ${fdate(st.day + 14)}, ${fmt(pay)} Gulden.`; } return 'Das ist ihm zu viel. Er sucht sich einen anderen Schiffer.'; }},
+        {l:'Ablehnen', h:'nichts', f:() => 'Du hast genug zu tun.'}]}
   ];
+  const evDest = X => { const L = CITIES.map(c => c.id).filter(c => c !== X.cid && !(c === 'nowgorod' && newaFrozen(st.day))).map(c => [c, route(X.cid, c, st.day).days]).filter(([, d]) => d <= 7); return (L.length ? pick(L) : [pick(CITIES.filter(c => c.id !== X.cid)).id])[0]; };
   const EV = Object.fromEntries(EVENTS.map(e => [e.id, e]));
   const evRace = X => clamp(0.3 + 0.5 * (Math.min(...X.fleet.map(sh => SHIPS[sh.type].spd)) - 0.85) / 0.35 + (X.own && capOwnK() ? capOwnK().nav * 0.03 : 0), 0.25, 0.75);
   function evLage(X) { // Lage für die Auswahl
@@ -3412,16 +3503,16 @@ em.rep.warn{background:#b5523a}
   // Ab Kaufmann kreuzen Verbände aus zwei oder drei Schiffen in bekannten Gebieten. Wer dort fährt, trifft oft auf sie;
   // gegen sie siegt man auch bei gutem Spiel nur etwa jedes zweite Mal, darum lohnen Umweg, Flucht, Tribut oder Geleitbrief.
   const PF = {
-    stoertebeker:{n:'Klaus Störtebeker', ships:3, kf:1.0, kr:0.34, trait:'zaeh', ptype:'holk', blide:1, flee:-0.1, toll:1.25, bounty:5000, rep:90,
+    stoertebeker:{n:'Klaus Störtebeker', ships:3, kf:0.985, kr:0.335, trait:'zaeh', ptype:'holk', blide:1, flee:-0.1, toll:1.25, bounty:5000, rep:90,
       reg:['nnord', 'skagen', 'kattegat', 'helsingoer', 'bornholm', 'gotsued'], where:'zwischen Skagen, dem Sund und Gotland',
       d:'Die Legende. Seine Männer kämpfen bis zuletzt; wer sich ihm ergibt, behält sein Leben.'},
-    michels:{n:'Gödeke Michels', ships:3, kf:0.99, kr:0.33, trait:'drauf', ptype:'holk', flee:-0.08, toll:1.1, bounty:3500, rep:70,
+    michels:{n:'Gödeke Michels', ships:3, kf:0.97, kr:0.32, trait:'drauf', ptype:'holk', flee:-0.08, toll:1.1, bounty:3500, rep:70,
       reg:['nsued', 'elbe', 'nnord'], where:'vor Helgoland und der Elbmündung', d:'Störtebekers Gefährte. Er entert früh und hart.'},
-    wigbold:{n:'Magister Wigbold', ships:2, kf:1.09, kr:0.49, trait:'vorsicht', ptype:'holk', luv:true, blide:1, flee:-0.05, toll:1, bounty:3000, rep:60,
+    wigbold:{n:'Magister Wigbold', ships:2, kf:1.075, kr:0.48, trait:'vorsicht', ptype:'holk', luv:true, blide:1, flee:-0.05, toll:1, bounty:3000, rep:60,
       reg:['visby', 'gotsued', 'oeland'], where:'rund um Gotland', d:'Ein gelehrter Mann. Er kommt aus Luv und schießt lieber aus der Ferne.'},
     wichmann:{n:'Hennig Wichmann', ships:2, kf:0.98, kr:0.38, trait:'gierig', ptype:'kraweel', flee:-0.04, toll:1, bounty:3000, rep:60,
       reg:['bornholm', 'falsterbo', 'oeresund', 'hel'], where:'vor Bornholm und Falsterbo', d:'Schnelle Schiffe: Fliehen gelingt selten.'},
-    scheld:{n:'Klaus Scheld', ships:2, kf:1.12, kr:0.49, trait:'gierig', ptype:'holk', flee:-0.08, toll:1.4, bounty:2800, rep:55,
+    scheld:{n:'Klaus Scheld', ships:2, kf:1.1, kr:0.48, trait:'gierig', ptype:'holk', flee:-0.08, toll:1.4, bounty:2800, rep:55,
       reg:['irben', 'finbusen', 'aland', 'ostrev'], where:'in den Schären vor Livland und Reval', d:'Lauert zwischen den Inseln und verlangt hohen Tribut.'}
   };
   const PF_RANK = 2, PF_MAX = 2, PF_HARD = 0.45, PF_PASS = {cost:0.6, days:60};
@@ -3545,6 +3636,93 @@ em.rep.warn{background:#b5523a}
     return `<h3 class="pfh">Seeräuberverbände</h3><ul class="pflist">` + A.map(a => { const F = PF[a.id], ok = pfPassValid(a.id), cost = pfPassCost(a.id);
       return `<li><div><b>${esc(F.n)}</b><span class="small">${F.ships} Schiffe ${esc(F.where)}, bis ${fdate(a.until)}. ${esc(F.d)}</span></div>` +
         (ok ? `<span class="small pfok">Geleitbrief bis ${fdate(pfState().pass[a.id])}</span>` : st.loc ? `<button class="ybtn" type="button" data-pfpass="${a.id}"${st.money >= cost ? '' : ' disabled'}>Geleitbrief ${fmt(cost)} G</button>` : '') + `</li>`; }).join('') + `</ul>`;
+  }
+
+  // ───────── Ab Version 39: Verbände im selben Hafen in der Werft ausrüsten ─────────
+  // Kapitäne liegen in jedem Hafen 2 bis 3 Tage und bereiten die nächste Fahrt vor. Liegst du im selben Hafen,
+  // tauschst du Schiffe, bessert aus, heuerst nach, füllst Waffen auf oder hältst den Verband länger fest.
+  const CV_STAY = () => 2 + (Math.random() < 0.5 ? 0 : 1);
+  const cvHere = cv => !!cv && !cv.sail && !!cv.loc && cv.loc === st.loc && !st.sail && !st.enc && st.focus !== cv.id;
+  const cvsHere = () => (st.convoys || []).filter(cvHere);
+  const cvCrewMinOf = fleet => fleet.reduce((x, sh) => x + SHIPS[sh.type].crewMin, 0);
+  const cvCrewMaxOf = fleet => fleet.reduce((x, sh) => x + SHIPS[sh.type].crewMax, 0);
+  // überzählige Waffen wandern mit, statt verkauft zu werden
+  function cvMoveArms(from, fleetFrom, maxFrom, to) {
+    const a = armsOf(from), before = Object.assign({}, a);
+    trimArms(from, fleetFrom, maxFrom);
+    const b = armsOf(to);
+    ARM_ORDER.forEach(k => { const d = (before[k] || 0) - (a[k] || 0); if (d > 0) b[k] = (b[k] || 0) + d; });
+  }
+  function cvArmsNow(id) {
+    const cv = cvById(id); if (!cvHere(cv)) return;
+    const a = armsOf(cv), free = armSlots(cv.fleet) - slotsUsed(a), n = Math.max(0, Math.min(free, Math.floor(Math.max(0, st.money) / ARMS.armbrust.price)));
+    if (!n) return;
+    a.armbrust = (a.armbrust || 0) + n; st.money -= n * ARMS.armbrust.price;
+    addLog(`${n} Armbrüste für den ${cvLabel(cv)} in ${C[cv.loc].n} gekauft für ${fmt(n * ARMS.armbrust.price)} Gulden.`, 'cap');
+    commit();
+  }
+  // eigenes Schiff an den Verband abgeben, mit seiner Mannschaft
+  function shipToCv(i, id) {
+    const cv = cvById(id), sh = st.fleet[i];
+    if (!cvHere(cv) || !sh || st.fleet.length < 2 || cv.fleet.length >= MAX_FLEET || used() > CAP - shipCap(sh)) return;
+    st.fleet.splice(i, 1);
+    const keep = cvCrewMinOf(st.fleet), m = Math.max(0, Math.min(SHIPS[sh.type].crewMin + 2, st.crew - keep));
+    st.crew -= m; cv.crew += m; cv.fleet.push(sh);
+    cvMoveArms(st, st.fleet, cvCrewMaxOf(st.fleet), cv);
+    st.crew = Math.min(st.crew, cvCrewMaxOf(st.fleet));
+    applyHome();
+    st.money += trimArms(cv, cv.fleet, cvSum(cv, 'crewMax'));
+    cvMaintain(cv);
+    addLog(`${shipLabel(sh)} verstärkt den ${cvLabel(cv)}; ${m} ${m === 1 ? 'Matrose geht' : 'Matrosen gehen'} mit hinüber.`, 'cap');
+    commit();
+  }
+  // Schiff aus dem Verband in deinen eigenen Verband übernehmen
+  function shipFromCv(id, shId) {
+    const cv = cvById(id), sh = cv && cv.fleet.find(x => x.id === shId);
+    if (!cvHere(cv) || !sh || cv.fleet.length < 2 || st.fleet.length >= ownMax() || cvUsed(cv) > cvCap(cv) - shipCap(sh)) return;
+    cv.fleet.splice(cv.fleet.indexOf(sh), 1);
+    const keep = cvCrewMinOf(cv.fleet) + 2 * cv.fleet.length, m = Math.max(0, Math.min(SHIPS[sh.type].crewMin + 2, cv.crew - keep));
+    cv.crew -= m; st.fleet.push(sh); applyHome();
+    const room = Math.max(0, crewMax() - st.crew), got = Math.min(m, room); st.crew += got; cv.crew += m - got;
+    cvMoveArms(cv, cv.fleet, cvSum(cv, 'crewMax'), st);
+    cv.crew = Math.min(cv.crew, cvSum(cv, 'crewMax'));
+    st.money += trimArms(st, st.fleet, crewMax());
+    addLog(`${shipLabel(sh)} wechselt aus dem ${cvLabel(cv)} in deinen Verband; ${got} ${got === 1 ? 'Matrose kommt' : 'Matrosen kommen'} mit.`, 'cap');
+    commit();
+  }
+  function cvStayLonger(id) {
+    const cv = cvById(id); if (!cvHere(cv)) return;
+    cv.wait = Math.min(9, (cv.wait || 0) + 1);
+    commit();
+  }
+  const cvLeaveText = cv => cv.hold ? 'wartet auf dich' : cv.stuck ? 'liegt fest' : cv.wait > 1 ? `legt in ${cv.wait + 1} Tagen ab` : cv.wait === 1 ? 'legt übermorgen ab' : 'legt morgen ab';
+  function cvYardHTML() {
+    const L = cvsHere();
+    if (!L.length) return '';
+    let h = `<div class="ysub">Deine Verbände in ${C[st.loc].n}</div><p class="small">Kapitäne liegen in jedem Hafen 2 bis 3 Tage und bereiten die nächste Fahrt vor. Solange du hier bist, kannst du sie ausrüsten.</p>`;
+    L.forEach(cv => {
+      const k = capOf(cv), fixC = cv.fleet.reduce((x, sh) => x + Math.round((100 - sh.hull) * repairPrice() * SHIPS[sh.type].hullK), 0);
+      const want = Math.max(0, Math.min(cvCrewWant(cv), cvSum(cv, 'crewMax')) - cv.crew), free = armSlots(cv.fleet) - slotsUsed(armsOf(cv));
+      h += `<div class="cvy"><div class="yrow"><span class="yl"><b>${esc(cvLabel(cv))}</b><span class="small">Kapitän ${k ? esc(k.name) : '–'} · ${cvLeaveText(cv)}${cvNext(cv) ? ` nach ${C[cvNext(cv)].n}` : ''} · ${cv.crew} Matrosen · ${armsLine(cv)} · ${cvUsed(cv)} / ${cvCap(cv)} Last</span></span>` +
+        `<span class="ybtns wrapb"><button class="ybtn" type="button" data-cvy="stay" data-id="${cv.id}"${cv.hold ? ' disabled' : ''}>1 Tag länger</button><button class="ybtn" type="button" data-h="hold" data-id="${cv.id}">${cv.hold ? 'Ablegen lassen' : 'Festhalten'}</button></span></div>`;
+      cv.fleet.forEach(sh => { const T = SHIPS[sh.type], ok = cv.fleet.length > 1 && st.fleet.length < ownMax() && cvUsed(cv) <= cvCap(cv) - shipCap(sh);
+        h += `<div class="yrow sub"><span class="yl"><b>${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} Last · Rumpf ${sh.hull} %</span><span class="hbar${sh.hull < 40 ? ' low' : ''}"><i style="width:${sh.hull}%"></i></span></span>` +
+          `<span class="ybtns"><button class="ybtn" type="button" data-cvy="take" data-id="${cv.id}" data-sh="${sh.id}"${ok ? '' : ' disabled'}>In deinen Verband</button></span></div>`; });
+      h += `<div class="ybtns wrapb">` +
+        (fixC ? `<button class="ybtn" type="button" data-h="repfix" data-id="${cv.id}"${st.money > 0 ? '' : ' disabled'}>Ausbessern · ${fmt(fixC)} G</button>` : '') +
+        (want ? `<button class="ybtn" type="button" data-h="rephire" data-id="${cv.id}"${st.money >= HIRE_SAILOR ? '' : ' disabled'}>Nachheuern · ${want} · ${fmt(want * HIRE_SAILOR)} G</button>` : '') +
+        (free > 0 ? `<button class="ybtn" type="button" data-cvy="arms" data-id="${cv.id}"${st.money >= ARMS.armbrust.price ? '' : ' disabled'}>Armbrüste auffüllen · ${free} · ${fmt(free * ARMS.armbrust.price)} G</button>` : '') +
+        (cv.fleet.length < MAX_FLEET ? st.fleet.map((sh, i) => `<button class="ybtn" type="button" data-cvy="give" data-id="${cv.id}" data-n="${i}"${st.fleet.length > 1 && used() <= CAP - shipCap(sh) ? '' : ' disabled'}>„${esc(sh.name)}“ abgeben</button>`).join('') : '') +
+        `</div>${!cv.fleet.length ? '' : ''}</div>`;
+    });
+    return h;
+  }
+  function cvYardClick(t) {
+    const id = +t.dataset.id, a = t.dataset.cvy;
+    if (a === 'stay') return cvStayLonger(id);
+    if (a === 'arms') return cvArmsNow(id);
+    if (a === 'give') return shipToCv(+t.dataset.n, id);
+    if (a === 'take') return shipFromCv(id, +t.dataset.sh);
   }
 
   // ───────── Mannschaft & Werft ─────────
@@ -3946,7 +4124,7 @@ em.rep.warn{background:#b5523a}
       const pf = clamp(0.35 + (SHIPS[e.ptype].spd - fleetSpeed()) * 1.2 + (e.luv === 'pir' ? 0.15 : e.luv === 'own' ? -0.1 : 0) + e.dist * 0.12 - e.psail / 200 - (e.dist === 0 ? Math.min(0.15, (armsOf(st).haken || 0) * 0.015) : 0), 0.05, 0.9);
       if (Math.random() < pf) return {res:'flee', text:parts.join(' ')};
       e.mor = Math.max(0, e.mor - 8);
-      if (e.mor < 12 && e.dist < 2) return {res:'surrender', text:parts.join(' ')};
+      if (e.mor < 12 && e.dist < 2 && pirEff(e) / Math.max(1, ownEff()) < 0.55) return {res:'surrender', text:parts.join(' ')};
       parts.push('Sie wollen fliehen, kommen aber nicht los.');
     } else if (e.dist === 0 && pirEff(e) / Math.max(1, ownEff()) >= (e.fleet ? Math.max(T.board, PF_BOARD) : T.board)) return {res:'board', text:parts.join(' ')};
     const ea = e.arm || {armbrust:Math.round(e.n0 * 0.35), armor:0.15};
@@ -4152,17 +4330,17 @@ em.rep.warn{background:#b5523a}
   // ───────── Ab Version 35: Enterkampf in Runden ─────────
   // Erst Haken werfen (Zeitspiel), dann bis zu drei Runden Nahkampf mit Stürmen, Halten oder Zurückziehen.
   // Wer verteidigt, kämpft vom eigenen Deck mit Vorteil; beide Seiten verlieren Leute, Kampfgeist und Deck entscheiden.
-  const BD = {rounds:3, def:1.45, att:{storm:1.3, hold:0.75}, exp:{storm:1.15, hold:0.8}, sw:{storm:1.35, hold:0.6}, kill:0.2, swing:140};
+  const BD = {rounds:3, def:1.8, att:{storm:1.3, hold:0.75}, exp:{storm:1.15, hold:0.8}, sw:{storm:1.35, hold:0.6}, kill:0.17, swing:70, mfloor:50, hook:0.13, retry:0.15};   // ab Version 39 deutlich schwerer
   const BURN = {drauf:0.25, zaeh:0.3, gierig:0.15, vorsicht:0.1};
   const ownMor0 = () => { const k = fightCap(); return clamp(62 + (k ? k.fight * 4 : 0) + armorFrac() * 10, 40, 90); };
   // Grobe Aussicht ohne Glück: Stärke gegen Stärke, der Verteidiger mit Vorteil; im Kampf zählt, wer das Deck hält
   function boardOdds(att) {
     const e = st.enc; if (!e) return 0;
     att = att || (e.bd && e.bd.att) || 'own';
-    const o = ownEff() * (att === 'pir' ? BD.def : 1) * (e.bd ? clamp(e.bd.om / 70, 0.6, 1.2) : 1), p = pirEff(e) * (att === 'pir' ? 1 : BD.def);
+    const o = ownEff() * (att === 'pir' ? BD.def : 1) * (e.bd ? clamp(e.bd.om / 70, 0.6, 1.2) : 1), p = pirEff(att === 'pir' ? e : Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)})) * (att === 'pir' ? 1 : BD.def * (1 + BD.retry * (e.tries || 0)));
     return clamp(o / (o + p) + (e.bd ? (e.bd.ctl - 50) / 120 : 0) + (e.luv === 'own' ? 0.03 : 0), 0.03, 0.97);
   }
-  const boardWord = p => p >= 0.58 ? 'gut' : p >= 0.5 ? 'ausgeglichen' : p >= 0.44 ? 'schlecht' : 'sehr schlecht';
+  const boardWord = p => p >= 0.58 ? 'gut' : p >= 0.53 ? 'ausgeglichen' : p >= 0.48 ? 'schlecht' : 'sehr schlecht';
   function pirStance(e, bd) {
     let p = ({drauf:0.75, gierig:0.6, zaeh:0.45, vorsicht:0.25}[e.trait] ?? 0.5) + (bd.att === 'pir' ? 0.15 : -0.1);
     if (bd.ctl > 70) p += 0.2;
@@ -4173,7 +4351,7 @@ em.rep.warn{background:#b5523a}
   function meleeCore(c, weak) {
     const e = st.enc, bd = e.bd, p = pirStance(e, bd);
     const O = ownEff() * (bd.att === 'pir' ? BD.def : 1) * (bd.r === 0 && bd.init ? 1.2 : 1) * clamp(bd.om / 70, 0.6, 1.2) * (weak ? 0.5 : 1);
-    const P = pirEff(e) * (bd.att === 'own' ? BD.def : 1);
+    const P = pirEff(bd.att === 'own' ? Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)}) : e) * (bd.att === 'own' ? BD.def * (1 + BD.retry * Math.max(0, (e.tries || 1) - 1)) : 1);
     const lo = rnd(0.45, 1.55), lp = rnd(0.45, 1.55);
     const dO = O * BD.att[c] * BD.exp[p] * lo, dP = P * BD.att[p] * BD.exp[c] * lp;
     const kP = Math.min(e.n, Math.round(dO / 1.2 * BD.kill)), kO = Math.round(dP / 1.1 * BD.kill * (1 - 0.3 * armorFrac()));
@@ -4184,13 +4362,13 @@ em.rep.warn{background:#b5523a}
     e.mor = Math.max(0, e.mor - (kP / Math.max(1, e.n0) * 80 + Math.max(0, share - 0.5) * 30) * (TRAITS[e.trait].moraleK || 1));
     bd.om = clamp(bd.om - lost / Math.max(1, bd.f0) * 90 - Math.max(0, 0.5 - share) * 30 + (c === 'hold' ? 3 : 0), 0, 100);
     bd.r++;
-    const res = e.n <= 0 || bd.ctl >= 100 ? 'win' : e.mor <= 10 ? 'strike' : bd.ctl <= 0 || bd.om <= 15 ? 'broken' : bd.r >= BD.rounds ? 'stall' : 'go';
+    const res = e.n <= 0 || bd.ctl >= 100 ? 'win' : e.mor <= 10 && share >= 0.55 && bd.ctl >= 60 ? 'strike' : bd.ctl <= 0 || bd.om <= 15 ? 'broken' : bd.r >= BD.rounds ? 'stall' : 'go';
     return {c, p, kP, kO:lost, share, res};
   }
   function hookStart() {
     const e = st.enc, wx = (st.sail && st.sail.weather) || 'clear', fk = fightCap(), hk = armsOf(st).haken || 0;
     const why = [];
-    let g = 0.16;
+    let g = BD.hook;
     const f = (v, t) => { if (Math.abs(v - 1) >= 0.005) why.push({t, d:Math.round((v - 1) * 100)}); g *= v; };
     if (hk) f(1 + Math.min(0.5, hk * 0.04), `${hk} Enterhaken`);
     f({storm:0.65, rain:0.85, snow:0.85, fog:0.95}[wx] || 1, WX_NAME[wx] || 'Wetter');
@@ -4205,6 +4383,7 @@ em.rep.warn{background:#b5523a}
   async function board(forced, prefix) {
     const e = st.enc; if (!e) return;
     if (!forced && (busy || e.phase !== 'tactic' || e.dist !== 0)) return;
+    if (!forced) e.tries = (e.tries || 0) + 1;
     e.bd = {att:forced ? 'pir' : 'own', r:0, ctl:50, om:ownMor0(), f0:Math.max(1, st.crew), init:0, n0:e.n, c0:st.crew};
     e.logMan = ''; e.logOwn = ''; e.logPir = '';
     busy = true;
@@ -6349,26 +6528,28 @@ em.rep.warn{background:#b5523a}
       else if (cfg.crane != null) objs.push({t:'crane', x:cfg.crane, y:4, big:!!cfg.bigCrane});
       if (cfg.bigCrane && home && cfg.crane !== 118) objs.push({t:'crane', x:cfg.crane, y:4, big:true});
       if (cfg.krantor) objs.push({t:'krantor', x:cfg.krantor, y:0.5});
-      const cargo = [[56, 4, 'b'], [70, 7, 'c'], [84, 3, 's'], [104, 6, 'b'], [131, 5, 'c'], [146, 4, 's'], [188, 6, 'b'], [-14, 5, 'c'], [24, 4, 's']];
+      const cargo = [[56, 4, 'b'], [70, 7, 'c'], [84, 3, 's'], [104, 6, 'b'], [131, 5, 'c'], [146, 4, 's'], [186, 6, 'b'], [-6, 5, 'c'], [24, 4, 's']];
       cargo.forEach(([x, y, t]) => { if ((cfg.krantor && x > cfg.krantor - 3 && x < cfg.krantor + 22) || Math.abs(x - 118) < 5) return; objs.push({t:'cargo', x, y, tt:t, noShadow:true}); });
       // Stadtmauer
       const wm = cfg.walls;
       if (wm !== 'none') {
         const wh = wm === 'log' ? 5 : 7, wmat = wm === 'log' ? 'log' : wm;
         for (let x = -34; x < 214; x += 16) objs.push({t:'wall', x0:x, x1:Math.min(214, x + 16), y:160, h:wh, mat:wmat});
-        for (let y = 16; y < 160; y += 16) { objs.push({t:'wallY', x:-35, y0:y, y1:Math.min(160, y + 16), h:wh, mat:wmat}); objs.push({t:'wallY', x:213, y0:y, y1:Math.min(160, y + 16), h:wh, mat:wmat}); }
+        for (let y = 14; y < 160; y += 16) { objs.push({t:'wallY', x:-35, y0:y, y1:Math.min(160, y + 16), h:wh, mat:wmat}); objs.push({t:'wallY', x:213, y0:y, y1:Math.min(160, y + 16), h:wh, mat:wmat}); }
         const tw = cfg.wallTowers || 'mixed', tmat = wm === 'log' ? 'log' : wm;
         const T = (x, y, rr, h, kind) => objs.push({t:'tower', x, y, r:rr, h, kind, mat:tmat, roofC:tw === 'roundRed' ? '#a24a30' : null, steep:tw === 'roundRed' ? 2.2 : null});
         const xs = tw === 'square' || tw === 'roundRed' ? [0, 30, 60, 140, 170, 196] : [20, 60, 140, 180];
         xs.forEach((x, n) => T(x, 162, tw === 'square' ? 3.8 : 4.5, wm === 'log' ? 9 : tw === 'square' ? 17 : 15, tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : n % 2 ? 'square' : 'round'));
         objs.push({t:'gate', x:98.5, y:161, mat:wm === 'log' ? 'log' : wm});
         [[-34, 162], [214, 162]].forEach(([x, y]) => T(x, y, 5.5, wm === 'log' ? 10 : 17, tw === 'square' ? 'square' : 'round'));
+        // Ecktürme am Wasser, an denen die Seitenmauern enden
+        [[-33.9, 13], [214.1, 13]].forEach(([x, y]) => T(x, y, 4.8, wm === 'log' ? 9 : 15, 'round'));
         [36, 60, 110, 136].forEach((y, n) => { if ((tw === 'mixed') && n % 2) return; T(-35, y, 4.2, wm === 'log' ? 9 : 14, tw === 'roundRed' ? 'round' : 'square'); T(215, y, 4.2, wm === 'log' ? 9 : 14, tw === 'roundRed' ? 'round' : 'square'); });
       }
       // Wachtürme am Hafen (im Stammsitz: Stadtmauer und Türme)
       const harbor = home ? P.mauer === 'built' : wm !== 'none';
-      if (harbor) [[-35, 8, null], [215, 8, 'mauer']].forEach(([x, y, pk]) => objs.push({t:'tower', x, y, r:5.5, h:17, kind:'round', mat:wm === 'none' || wm === 'log' ? 'stone' : wm, plot:home ? pk : null, roofC:cfg.wallTowers === 'roundRed' ? '#a24a30' : null}));
-      if (home && P.mauer === 'job') objs.push({t:'scaffold', x:210, y:3, w:10, d:10, h:16, frac:P.mauerF || 0.3, plot:'mauer', mat:wm === 'none' || wm === 'log' ? 'stone' : wm});
+      if (harbor) [[-16, 4, null], [194, 4, 'mauer']].forEach(([x, y, pk]) => objs.push({t:'tower', x, y, r:3.4, h:14, kind:'square', steep:2, mat:wm === 'none' || wm === 'log' ? 'stone' : wm, plot:home ? pk : null, roofC:cfg.wallTowers === 'roundRed' ? '#a24a30' : null}));
+      if (home && P.mauer === 'job') objs.push({t:'scaffold', x:190, y:0, w:8, d:8, h:14, frac:P.mauerF || 0.3, plot:'mauer', mat:wm === 'none' || wm === 'log' ? 'stone' : wm});
       if (cfg.margarethe) objs.push({t:'tower', x:-48, y:20, r:9, h:16, kind:'round', mat:'stone', flat:true});
       // Bauplätze: Kontor, Haus, Betriebe, Markthalle, Kapelle
       const [kx, ky, kw, kd] = SLOT.kontor, kst = home ? P.kontor : (o.branch ? 'built' : null);
@@ -7325,9 +7506,15 @@ em.rep.warn{background:#b5523a}
       const s = st.sail, day = Math.min(s.t + 1, s.days);
       cap.innerHTML = `<span class="eb">Auf See · Tag ${day} von ${s.days}</span><span class="ttl">Kurs auf ${C[s.to].n}</span>` +
         `<span class="ln">Wind aus ${s.wind || 'West'} · ${WX_NAME[s.weather] || 'heiter'}</span>`;
+      const bar = prog.firstElementChild, voy = `${s.from}>${s.to}@${st.nVoy || 0}`, key = `${voy}:${s.t}:${s.days}`;
+      const fresh = prog.hidden || (prog.dataset.k || '').split(':')[0] !== voy;
       prog.hidden = false;
-      prog.firstElementChild.style.transitionDuration = `${tickMs()}ms`;
-      prog.firstElementChild.style.width = `${Math.min(100, (s.t + 1) / s.days * 100)}%`;
+      if (prog.dataset.k !== key) {
+        if (fresh) { bar.style.transitionDuration = '0ms'; bar.style.width = `${Math.min(100, s.t / s.days * 100)}%`; void bar.getBoundingClientRect(); }
+        prog.dataset.k = key;
+        bar.style.transitionDuration = `${tickMs()}ms`;
+        bar.style.width = `${Math.min(100, (s.t + 1) / s.days * 100)}%`;
+      }
     } else {
       const c = C[st.loc];
       cap.innerHTML = `<span class="eb">Im Hafen · ${fdate(st.day)}</span><span class="ttl">${c.n}</span><span class="ln">${c.d}</span>`;
@@ -8028,7 +8215,7 @@ em.rep.warn{background:#b5523a}
       `</div><span class="small">${music.isOn() ? 'Beides lässt sich einzeln ein- und ausschalten; ganz aus geht es oben mit dem Lautsprecher.' : 'Der Ton ist aus. Einschalten oben mit dem Lautsprecher.'}</span>`; }
     h += `</div><div class="xfer"><h3>Markt</h3><div class="chipset" role="group">` +
       [['0', 'Infos beim Antippen'], ['1', 'Marktinfos immer zeigen']].map(([v, l]) => `<button type="button" data-slot="minfo" data-v="${v}" aria-pressed="${minfoPref() === (v === '1')}">${l}</button>`).join('') +
-      `</div><span class="small">${minfoPref() ? 'Bild, Herkunft, Preisverlauf und Konkurrenten stehen offen unter jeder Ware.' : 'Unter jeder Ware klappt „Mehr zur Ware“ Bild, Herkunft, Preisverlauf und den besten bekannten Preis auf.'}</span>`;
+      `</div><span class="small">${minfoPref() ? `Bild, Herkunft${rivShown() ? ', Preisverlauf und Konkurrenten' : ' und Preisverlauf'} stehen offen unter jeder Ware.` : 'Unter jeder Ware klappt „Mehr zur Ware“ Bild, Herkunft, Preisverlauf und den besten bekannten Preis auf.'}</span>`;
     h += `</div><div class="xfer"><h3>Auf ein anderes Gerät übertragen</h3>` +
       `<span class="small">Kopiere den Code und füge ihn auf dem anderen Gerät hier ein. Er ersetzt dort den aktiven Spielstand.</span>` +
       `<div class="row2"><button class="ybtn" type="button" data-slot="copy">Code kopieren</button>${ui.copied ? '<span class="small">Kopiert.</span>' : ''}</div>` +
@@ -8209,7 +8396,7 @@ em.rep.warn{background:#b5523a}
     const box = $('#market');
     if (!st.loc) {
       const items = GOODS.filter(g => held(g.id)).map(g => `<li>${icon(g.id)}<span>${held(g.id)} Last ${g.n}, Ø Einkauf ${fmt(st.cargo[g.id].cost / held(g.id))} Gulden</span></li>`).join('') +
-        ((st.freight || {}).active || []).map(f => `<li>${icon(f.g)}<span>Fracht: ${f.q} Last ${G[f.g].n} für ${f.by} nach ${C[f.to].n}, bis ${fdate(f.due)}, Lohn ${fmt(f.pay)} Gulden</span></li>`).join('');
+        ((st.freight || {}).active || []).map(f => `<li>${f.g ? icon(f.g) : '✉'}<span>${ORD_K[f.k || 'fracht']}: ${ordTitle(f)}${f.q && f.k !== 'brief' ? `, ${f.q} Last` : ''}, für ${esc(f.by)}, bis ${fdate(f.due)}, Lohn ${fmt(f.pay)} Gulden</span></li>`).join('');
       box.innerHTML = `<div class="mhead"><h2>Laderaum</h2><span class="profile">Der Markt öffnet bei Ankunft in ${C[st.sail.to].n}.</span></div>` +
         (items ? `<ul class="cargo">${items}</ul>` : `<p class="hint">Der Laderaum ist leer.</p>`);
       return;
@@ -8306,13 +8493,13 @@ em.rep.warn{background:#b5523a}
       done:'Du kennst jetzt den Kreislauf. Frachten bringen Lohn ohne eigenes Geld, eigene Ware bringt mehr, wenn du die Preise kennst.',
       goals:[
         {t:() => 'Nimm einen Frachtauftrag an', ok:q => (q.ev.frt || 0) > 0 || (st.freight && st.freight.done > 0),
-          hint:() => 'Im Reiter Markt, unter der Warenliste: Frachtaufträge. Fracht kostet kein Geld, nur Laderaum. Den Lohn gibt es im Zielhafen.', tab:'markt', sel:'#frbox'},
+          hint:() => 'Im Reiter Markt, unter der Warenliste: Aufträge. Eine Fracht kostet kein Geld, nur Laderaum. Den Lohn gibt es im Zielhafen.', tab:'markt', sel:'#frbox'},
         {t:() => `Kaufe eine Ware, die ${HN()} erzeugt`, ok:q => (q.ev.buy || 0) > 0,
           hint:() => `Oben im Markt steht, was ${HN()} erzeugt (${C[st.home].p.map(g => G[g].n).join(', ')}). Das ist hier günstig. Tippe die Ware an, wähle die Menge und tippe Kaufen. Lass Platz für die Fracht.`, tab:'markt', sel:'#market'},
         {t:() => 'Lege ab und segle zum Ziel der Fracht', ok:q => (q.ev.sail || 0) > 0,
           hint:() => 'Tippe unten rechts Ablegen. In der Zielliste steht bei jedem Hafen, was er erzeugt und was er braucht; das Ziel deiner Fracht ist markiert.', tab:'lage', sel:'#actions [data-act="sail"]'},
         {t:() => 'Liefere die Fracht ab', ok:() => !!(st.freight && st.freight.done > 0),
-          hint:() => 'Im Zielhafen: Reiter Markt, Frachtaufträge, Abliefern.', tab:'markt', sel:'#frbox'},
+          hint:() => 'Im Zielhafen: Reiter Markt, Aufträge, Abliefern.', tab:'markt', sel:'#frbox'},
         {t:() => 'Verkaufe eine Ware mit Gewinn', ok:q => (q.ev.profit || 0) > 0,
           hint:() => 'Verkaufe dort, wo deine Ware gebraucht wird. Grün in der Spalte Verkauf heißt: Hier zahlen sie gut. Was du für die Ware bezahlt hast, siehst du beim Antippen.', tab:'markt', sel:'#market'}]},
     {n:'Vom Krämer zum Händler', rew:300,
@@ -8329,8 +8516,8 @@ em.rep.warn{background:#b5523a}
       goals:[
         {t:() => `Baue das Kontor in ${HN()}`, ok:() => !!st.kontor,
           hint:() => `Reiter Haus, Stammsitz ${HN()}: das Kontor. Es ist dein Lager im Stammsitz (150 Last): billig einlagern, teuer verkaufen. Bauen kannst du es, wenn du in ${HN()} liegst. Eine Niederlassung ist es nicht, die liegt in einer anderen Stadt.`, tab:'haus', sel:'#homecard [data-det="kontor"]'},
-        {t:() => 'Erfülle einen Ratsauftrag', ok:() => !!(st.orders && st.orders.done > 0),
-          hint:() => `Im Rathaus von ${HN()} (Reiter Haus) sucht der Rat Waren gegen Lohn und Ansehen. Annehmen, Ware besorgen, im Stammsitz abliefern.`, tab:'haus', sel:'#homecard [data-det="council"]'},
+        {t:() => `Erfülle einen Auftrag des Rats von ${HN()}`, ok:() => !!(st.orders && st.orders.done > 0),
+          hint:() => `Liegst du in ${HN()}, steht unter Aufträge im Reiter Markt ein Auftrag des Rats: Ware besorgen, wo sie günstig ist, und in ${HN()} abliefern. Er bringt Lohn und Ansehen.`, tab:'markt', sel:'#frbox'},
         {t:() => 'Gib ein zweites Schiff in Auftrag', p:() => [nShips(), 2], ok:() => nShips() >= 2,
           hint:() => 'Reiter Werft, Bauaufträge. Eine Kogge gibt es ab Händler. Fertige Schiffe segeln an den Liegeplatz im Heimathafen.', tab:'werft', sel:'#yard'},
         {t:() => 'Rüste 4 Armbrüste aus', p:() => [armsOf(st).armbrust || 0, 4], ok:() => (armsOf(st).armbrust || 0) >= 4,
@@ -8356,7 +8543,7 @@ em.rep.warn{background:#b5523a}
           hint:() => `Tippe in der Stadtansicht von ${HN()} auf dein Wohnhaus. Ein größeres Haus bringt Ansehen.`, tab:'stadt', sel:'#citycard'},
         gWealth(15000, 'Kaufmann')]},
     {n:'Ratsherr', rew:2000,
-      intro:() => 'Im Rat bestimmst du mit: Zölle, Aufträge und die Stimme deiner Stadt auf dem Hansetag.',
+      intro:() => `Im Rat bestimmst du mit: Zölle, Aufträge und die Stimme deiner Stadt auf dem Hansetag. Doch drei Familien wollen dasselbe wie du: ${(st.rivals || []).map(r => r.name).join(', ')}. Ab jetzt zeigt der Bericht des Schreibers, wie du gegen sie stehst.`,
       done:'Du sitzt im Rat und sprichst auf dem Hansetag mit. Das höchste Amt der Stadt rückt näher.',
       goals:[
         gRep(500, 3),
@@ -8475,6 +8662,7 @@ em.rep.warn{background:#b5523a}
   const pctS = p => `${p > 0 ? '+' : p < 0 ? '−' : '±'}${Math.abs(p)}&nbsp;%`;
   const agoD = d => { const n = st.day - d; return n <= 0 ? 'heute' : n === 1 ? 'gestern' : `vor ${n} Tagen`; };
   function rivHereHTML(cid) {
+    if (!rivShown()) return '';
     const l = ((st.rivAt || {})[cid] || []).filter(x => st.day - x.d <= 14 && Math.abs(x.p) >= 2).slice(0, 3);
     if (!l.length) return '';
     return `<details class="more rivhere" data-det="rivm"${minfoPref() || ui.det.rivm ? ' open' : ''}><summary><span>Konkurrenten in ${C[cid].n} <small>· ${l.length} ${l.length === 1 ? 'Geschäft' : 'Geschäfte'}</small></span><i class="chev" aria-hidden="true"></i></summary><ul>` + l.map(x => { const r = rivById(x.r);
@@ -8493,15 +8681,14 @@ em.rep.warn{background:#b5523a}
       row('Laufende Kosten', `−${fmt(R.cost)} G`, 'neg') + row('In der Truhe', `${fmt(Math.round(st.money))} G`) + `</div>`;
     if (R.best) h += `<p class="small">Bester Handel: ${R.best.q} Last ${G[R.best.g].n} in ${C[R.best.c] ? C[R.best.c].n : ''}, ${fmt(R.best.p)} Gulden Gewinn.</p>`;
     h += `<p class="small">Laufende Kosten sind Heuer, Unterhalt der Schiffe und Waffen, Lager, Kapitäne und Verbände.${R.cost > Math.max(0, R.trade + R.freight) && R.sales ? ' Sie waren höher als dein Gewinn aus Handel und Fracht.' : ''}</p>`;
-    h += `<h3 class="rph">Die Konkurrenten</h3><ul class="rplist">` + (st.rivals || []).slice().sort((a, b) => b.repute - a.repute).map(r => {
-      const ev = R.riv.filter(x => x.r === r.id), top = ev.slice().sort((a, b) => (Math.abs(b.pa) + Math.abs(b.pb)) - (Math.abs(a.pa) + Math.abs(a.pb)))[0];
-      const n = ev.reduce((x, e) => x + e.q, 0);
-      return `<li>${avatarSVG(r.av, 'rvf')}<span><b>${esc(r.name)}</b> <small>aus ${C[r.home].n} · handelt gern ${G[r.fav].n} · Ansehen ${fmt(Math.round(r.repute))}</small>` +
-        (top ? `<span>${ev.length} ${ev.length === 1 ? 'Geschäft' : 'Geschäfte'} mit zusammen ${n} Last. Am meisten bewegt: ${top.q} Last ${G[top.g].n} von ${C[top.a].n} nach ${C[top.b].n}. Danach stieg der Kaufpreis in ${C[top.a].n} um ${pctS(top.pa).slice(1)}, der Verkaufspreis in ${C[top.b].n} sank um ${pctS(top.pb).slice(1)}.</span>`
-          : '<span>Hielt sich in diesen zwei Wochen zurück.</span>') + `</span></li>`;
-    }).join('') + `</ul><p class="small">Wer viel einer Ware kauft, macht sie dort teurer; wer sie anderswo verkauft, drückt dort den Preis. Ihr Ansehen zählt bei der Bürgermeisterwahl gegen deins (du: ${fmt(Math.round(st.repute || 0))}).</p>`;
+    if (rivShown()) {
+      const me = {me:true, name:'Du', w:wealth(), r:st.repute || 0}, L = [me].concat((st.rivals || []).map(r => ({r0:r, name:r.name, w:r.wealth, r:r.repute}))).sort((a, b) => b.w - a.w), mw = Math.max(...L.map(x => x.w)), mr = Math.max(...L.map(x => x.r));
+      h += `<h3 class="rph">Deine Gegner</h3><div class="rvcmp"><div class="rvh"><span></span><span>Vermögen</span><span>Ansehen</span></div>` + L.map(x => `<div class="rvr${x.me ? ' me' : ''}"><span>${x.me ? '<b>Du</b>' : `${x.r0.av ? avatarSVG(x.r0.av, 'rvf sm') : ''}${esc(x.name)}<small> aus ${C[x.r0.home].n}</small>`}</span>` +
+        `<span><i style="width:${Math.round(x.w / mw * 100)}%"></i>${fmt(Math.round(x.w))} G</span><span><i style="width:${Math.round(x.r / Math.max(1, mr) * 100)}%"></i>${fmt(Math.round(x.r))}</span></div>`).join('') +
+        `</div><p class="small">Wer das meiste Ansehen hat, gewinnt die Bürgermeisterwahl (ab ${fmt(ELECT_MIN)}). Ihr Handel bewegt die Preise; was sie zuletzt gekauft und verkauft haben, steht im Markt.</p>`;
+    }
     const up = [];
-    ((st.freight || {}).active || []).forEach(f => up.push([f.due, `Fracht ${G[f.g].n} nach ${C[f.to].n} bis ${fdate(f.due)}`]));
+    ((st.freight || {}).active || []).forEach(f => up.push([f.due, `${ORD_K[f.k || 'fracht']}: ${ordTitle(f)} bis ${fdate(f.due)}`]));
     ((st.orders || {}).active || []).forEach(o => up.push([o.due, `Ratsauftrag ${o.q} Last ${G[o.g].n} bis ${fdate(o.due)}`]));
     const ne = nextElection(); if (ne - st.day <= 60) up.push([ne, `Bürgermeisterwahl in ${HN()} am ${fdate(ne)}`]);
     const y = dateOf(st.day).getFullYear(); let ht = dayOf(y, 6, 24); if (ht < st.day) ht = dayOf(y + 1, 6, 24); if (ht - st.day <= 60) up.push([ht, `Hansetag in Lübeck am ${fdate(ht)}`]);
@@ -8777,7 +8964,7 @@ em.rep.warn{background:#b5523a}
     if (box.hidden) return;
     if (e) {
       const where = v.at === 'port' ? `Im Hafen von ${C[st.loc] ? C[st.loc].n : ''}` : st.sail ? `Auf See · Kurs auf ${C[st.sail.to].n} · Tag ${st.sail.t + 1} von ${st.sail.days}` : 'Auf See';
-      box.innerHTML = `<span class="k">${esc(where)}</span><h2>${esc(e.n)}</h2><p>${esc(e.d)}</p><ul class="evo">${e.o.map(o => `<li><b>${esc(o.l)}</b><span>${esc(evHint(o, v))}</span></li>`).join('')}</ul><p class="small">Entscheide unten. Was genau passiert, steht danach hier und im Logbuch.</p>`;
+      box.innerHTML = `<span class="k">${esc(where)}</span><h2>${esc(e.n)}</h2><p>${esc(e.d)}</p><p class="small">Wie entscheidest du? Was daraus wird, zeigt sich erst danach.</p>`;
     } else box.innerHTML = `<span class="k">Ereignis</span><h2>${esc(res.n)}</h2><p><b>${esc(res.l)}.</b> ${esc(res.r)}</p>`;
   }
   function renderEnc() {
@@ -8864,6 +9051,7 @@ em.rep.warn{background:#b5523a}
       `<div class="yrow"><span class="yl"><b>${st.brand || 0} von ${MAX_BRAND} Bündeln Brandpfeile</b><span class="small">für Salven auf mittlere und weite Entfernung</span></span><span class="ybtns">${hire('brand', 5, BRAND_PRICE, MAX_BRAND - (st.brand || 0))}</span></div>` +
       `<p class="small" style="margin:8px 0 0">Heuer ${Math.round(st.crew * 0.3)}, Waffen ${Math.round(armsUp(st.arms))} und Unterhalt ${upkeep()} Gulden am Tag.</p>` +
       det('arms', 'Waffenkammer', armsHTML(hire), `${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} von ${armSlots()} Plätzen frei`, false);
+    h += cvYardHTML();
     const types = YARDS[st.loc] || [];
     if (buildsOf().length || dockOf().length) h += `<p class="small" style="margin-top:10px">${buildsOf().length ? `${buildsOf().length} ${buildsOf().length === 1 ? 'Schiff' : 'Schiffe'} im Bau oder unterwegs` : ''}${buildsOf().length && dockOf().length ? ', ' : ''}${dockOf().length ? `${dockOf().length} am Liegeplatz in ${C[st.home].n}` : ''}; zuteilen im Reiter Haus.</p>`;
     if (types.length) {
@@ -8899,7 +9087,7 @@ em.rep.warn{background:#b5523a}
     const nx = cvNext(cv);
     if (cv.hold) return `Angehalten in ${C[cv.loc].n}`;
     if (cv.stuck) return `Liegt fest in ${C[cv.loc].n}`;
-    return `In ${C[cv.loc].n}, legt ${cv.wait ? 'übermorgen' : 'morgen'} ab${nx ? ` nach ${C[nx].n}` : ''}`;
+    return `In ${C[cv.loc].n}, ${cvLeaveText(cv)}${nx ? ` nach ${C[nx].n}` : ''}`;
   }
   function renderHouse() {
     const box = $('#housecard'), cvs = st.convoys || [], caps = st.captains || [], home = st.loc === st.home && !st.focus;
@@ -8975,7 +9163,9 @@ em.rep.warn{background:#b5523a}
   function councilHTML(ci) {
     const home = st.loc === st.home && !st.focus, o = st.orders;
     let h = `<div class="kontor"><h3>Rathaus von ${C[st.home].n}</h3>`;
-    if (ci < 1) h += `<p class="small">Ab Bürger vergibt der Rat Lieferaufträge mit Lohn und Ansehen.</p>`;
+    if (ci < 1) h += `<p class="small">Ab Bürger gibt der Rat Aufträge zum Besorgen mit Lohn und Ansehen; du findest sie im Reiter Markt unter Aufträge, wenn du in ${C[st.home].n} liegst.</p>`;
+    else h += `<p class="small">Aufträge des Rats stehen jetzt mit allen anderen Aufträgen im Reiter Markt unter Aufträge. Sie bringen Lohn und Ansehen.</p>`;
+    if (false) {} 
     else {
       o.active.forEach(it => {
         const have = haveFor(it.g), left = it.due - st.day;
@@ -8986,7 +9176,7 @@ em.rep.warn{background:#b5523a}
       if (home && o.active.length < 2) h += ordersOffer().map(it => `<div class="krow"><span class="gname">${icon(it.g)}${it.q} Last ${G[it.g].n}</span>` +
         `<span class="ybtns"><button class="ybtn" type="button" data-order="take" data-id="${it.id}">Annehmen</button></span>` +
         `<span class="small">Angebot: Lohn ${fmt(it.pay)} G und ${it.rep} Ansehen, Lieferung bis ${fdate(it.due)}</span></div>`).join('');
-      else if (!o.active.length) h += `<p class="small">Neue Aufträge gibt es im Rathaus deines Stammsitzes.</p>`;
+      else if (!o.active.length) h += '';
     }
     if (ci >= 3) {
       const T = TOLL[st.toll || 'mittel'];
@@ -8994,7 +9184,7 @@ em.rep.warn{background:#b5523a}
         Object.entries(TOLL).map(([k, v]) => `<button type="button" data-toll="${k}" aria-pressed="${(st.toll || 'mittel') === k}"${home ? '' : ' disabled'}>${v.n}</button>`).join('') +
         `</div><span class="small">${T.d}</span>`;
     }
-    const me = {name:st.player.name, repute:st.repute || 0, me:true}, all = [me].concat(st.rivals || []).sort((a, b) => b.repute - a.repute), mx = Math.max(ELECT_MIN, ...all.map(x => x.repute));
+    const me = {name:st.player.name, repute:st.repute || 0, me:true}, all = [me].concat(rivShown() ? st.rivals || [] : []).sort((a, b) => b.repute - a.repute), mx = Math.max(ELECT_MIN, ...all.map(x => x.repute));
     h += `<span class="flabel" style="margin-top:10px;display:block">Ansehen im Rat · Bürgermeister: ${esc(st.mayorName || '–')}</span><div class="gbars">` +
       all.map(x => `<div><span class="rvn">${x.me ? '<b>Du</b>' : `${x.av ? avatarSVG(x.av, 'rvf sm') : ''}${esc(x.name.replace(/^(\S)\S*\s+/, '$1. '))}`}</span><i style="width:${Math.min(100, x.repute / mx * 100)}%${x.me ? '' : ';background:var(--muted)'}"></i><span>${fmt(x.repute)}</span></div>`).join('') + `</div>` +
       `<span class="small">Nächste Ratswahl am ${fdate(nextElection(), true)}. Wählbar ist, wer ${fmt(ELECT_MIN)} Ansehen hat; es gewinnt, wer das meiste hat.${st.mayor ? ` Als Bürgermeister: Bürgerrecht 10 %, ${MAYOR_PAY} Gulden am Tag, deine Verbände werden 30 % seltener angegriffen.` : ''}</span>`;
@@ -9044,7 +9234,7 @@ em.rep.warn{background:#b5523a}
   const CIVIC_B = {
     kirche:{n:'Kapelle stiften', cost:7000, civic:1, d:'Eine Kapelle an der Marienkirche: täglich 0,5 Ansehen.'},
     kran:{n:'Hafenkran', cost:5000, civic:3, d:'Tretradkran und eigene Werftleute: Ausbessern überall 20 % günstiger.'},
-    markt:{n:'Markthalle', cost:6000, civic:3, d:'Gedeckter Markt am Rathaus: Pfundzoll 50 % mehr, Ratsaufträge 20 % besser bezahlt.'},
+    markt:{n:'Markthalle', cost:6000, civic:3, d:'Gedeckter Markt am Rathaus: Pfundzoll 50 % mehr, Aufträge des Rats 20 % besser bezahlt.'},
     mauer:{n:'Stadtmauer und Türme', cost:10000, civic:4, d:'Neue Mauern und Wachtürme am Hafen: Angriffe 15 % seltener, täglich 0,3 Ansehen.'}
   };
   const PLOT_X = [{cost:3000, civic:2}, {cost:5000, civic:3}];
@@ -9290,7 +9480,7 @@ em.rep.warn{background:#b5523a}
   function pubTiles(home) {
     const c = C[st.loc], B = (st.branches || {})[st.loc], ci = civicIdx(st.repute || 0), nb = Object.keys(st.branches || {}).length;
     const T = [['markt', 'Markt', 'markt', `braucht ${c.c.slice(0, 2).map(g => G[g].n).join(', ')}`], ['werft', 'Werft', 'werft', 'Schiffe und Heuer']];
-    if (home) T.push(['rat', 'Rathaus', 'council', st.orders && st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'Auftrag' : 'Aufträge'}` : `Wahl ${fdate(nextElection())}`], ['schiffer', 'Schiffer&shy;haus', 'haus', 'Kapitäne']);
+    if (home) T.push(['rat', 'Rathaus', 'council', `Wahl ${fdate(nextElection())}`], ['schiffer', 'Schiffer&shy;haus', 'haus', 'Kapitäne']);
     let h = `<div class="ptiles${home ? '' : ' three'}">` + T.map(([kind, n, go, sub]) => `<button type="button" class="ptile" data-go="${go}"><span class="pfac">${isoArt(kind, {w:84})}</span><b>${n}</b><span class="small">${sub}</span></button>`).join('');
     if (!home) h += B ? `<button type="button" class="ptile" data-go="markt"><span class="pfac">${isoArt('nl', {w:84})}</span><b>Nieder&shy;lassung</b><span class="small">Lager ${kontorUsed(st.loc)} / ${B.cap}</span></button>`
       : `<div class="ptile"><span class="pfac">${isoArt(ci >= BRANCH.civic && nb < BRANCH.max ? 'empty' : 'lock', {w:84})}</span><b>Nieder&shy;lassung</b>${ci >= BRANCH.civic && nb < BRANCH.max ? `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost ? '' : ' disabled'}>Gründen ${fmt(BRANCH.cost)} G</button>` : `<span class="small">${ci < BRANCH.civic ? `ab ${CIVIC[BRANCH.civic][1]}` : `schon ${BRANCH.max}`}</span>`}</div>`;
@@ -9400,7 +9590,7 @@ em.rep.warn{background:#b5523a}
   }
   function renderTabs() {
     document.body.dataset.tab = ui.tab;
-    const canGive = st.loc === st.home && st.orders && st.orders.active.some(o => haveFor(o.g) >= o.q);
+    const canGive = false;
     const htOpen = st.home && openItems().some(x => x.kind === 'gift' || (canVote() && !x.v.my));
     const reps = (st.convoys || []).filter(c => c.report && !c.report.seen);
     const dots = {markt:freightHere() ? 'b' : '', haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length || canGive || htOpen ? 'b' : '', stadt:'', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
@@ -9469,7 +9659,7 @@ em.rep.warn{background:#b5523a}
   $('#frbox').addEventListener('click', e => {
     const t = e.target.closest('button[data-fr]'); if (!t) return;
     const id = +t.dataset.id, a = t.dataset.fr;
-    if (a === 'take') takeFreight(id); else if (a === 'give') deliverFreight(id); else if (a === 'drop') dropFreight(id);
+    if (a === 'take') takeFreight(id); else if (a === 'give') deliverFreight(id); else if (a === 'drop') dropFreight(id); else if (a === 'load') pickupFreight(id);
   });
   $('#market').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
@@ -9508,6 +9698,8 @@ em.rep.warn{background:#b5523a}
   $('#log').addEventListener('toggle', () => { try { localStorage.setItem('kogge-kontor-log', $('#log').open ? '1' : '0'); } catch (e) {} });
   $('#yard').addEventListener('click', e => {
     if (e.target.closest('[data-act="ship-dice"]')) { ui.shipName = newShipName(); renderYard(); return; }
+    { const cy = e.target.closest('[data-cvy]'); if (cy) return cvYardClick(cy); }
+    { const hh = e.target.closest('[data-h]'); if (hh) { const id = +hh.dataset.id, cv = cvById(id); if (hh.dataset.h === 'hold' && cv) { cv.hold = !cv.hold; cv.stuck = false; commit(); } else if (hh.dataset.h === 'repfix') cvFixNow(id); else if (hh.dataset.h === 'rephire') cvHireNow(id); return; } }
     const t = e.target.closest('[data-yard]'); if (!t) return;
     const v = t.dataset.n;
     yard(t.dataset.yard, v == null ? 1 : /^\d+$/.test(v) ? +v : v);
@@ -9690,6 +9882,7 @@ em.rep.warn{background:#b5523a}
     })();
   }
   function normalize(s) {
+    if (s.orders && (s.orders.active || []).length && s.home) { const F = s.freight || (s.freight = {offers:{}, gen:{}, active:[], next:1, done:0}); s.orders.active.forEach(o => F.active.push({id:F.next++, k:'besorgen', rat:true, to:s.home, g:o.g, q:o.q, pay:o.pay, rep:o.rep, due:o.due, by:`der Rat von ${C[s.home].n}`, d0:s.day || 0})); s.orders.active = []; s.orders.offer = []; }
     if (s.pf && !Array.isArray(s.pf.act)) s.pf = null;
     if (s.ev && (!EV[s.ev.id] || (s.ev.at === 'sea') !== !!s.sail)) s.ev = null;
     if (s.crew == null) { s.crew = 20; s.archers = 0; s.enc = null; }
@@ -9809,7 +10002,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = 'f58ffe55d6';
+window.KK_BUILD = 'efc54b28c9';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
