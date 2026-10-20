@@ -946,6 +946,7 @@ em.rep.warn{background:#b5523a}
 (() => {
   const $ = s => document.querySelector(s);
   const fmt = n => Math.round(n).toLocaleString('de-DE');
+  const fmt1 = n => (Math.round(n * 100) / 100).toLocaleString('de-DE');
   const MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
   const SAVE_KEY = 'kogge-kontor-v1';
   const SPEED = 40, START = 2000, R = 120;
@@ -1742,14 +1743,14 @@ em.rep.warn{background:#b5523a}
   const cvUsed = cv => Object.values(cv.cargo).reduce((x, c) => x + c.q, 0);
   const cvSum = (cv, k) => cv.fleet.reduce((x, sh) => x + SHIPS[sh.type][k], 0);
   const cvSpeed = cv => (cv.fleet.length ? Math.min(...cv.fleet.map(sh => SHIPS[sh.type].spd)) : 1) * (1 + 0.04 * ((capOf(cv) || {}).nav || 0));
-  const cvCost = cv => Math.round(cv.crew * 0.3 + armsUp(cv.arms) + cvSum(cv, 'upkeep'));
+  const cvCost = cv => Math.round(cv.crew * 0.2 + armsUp(cv.arms) + cvSum(cv, 'upkeep') * 0.75);   // ab Version 42 günstiger als der eigene Verband
   const capWages = () => (st.captains || []).reduce((x, k) => x + k.wage, 0);
   const cvLabel = cv => `Verband „${cv.fleet[0] ? cv.fleet[0].name : '–'}“`;
   const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
   const anyAtSea = () => (st.convoys || []).some(c => c.sail);
   // Ab Version 32: Last je Tag (out, zur Saison peak), angesammelt bis zur vollen Last; Gewinn etwa ein Hundertstel der Baukosten am Tag
   const WORKS = {
-    bier:{n:'Brauerei', out:1, inp:{getreide:0.5}, mat:0.2, cost:2200, wage:4, d:'braut aus 1 Last Getreide aus dem Kontor 2 Last Bier, etwa 7 Last in der Woche'},
+    bier:{n:'Brauerei', out:1, inp:{getreide:0.5}, mat:0.1, cost:2200, wage:4, d:'braut aus 1 Last Getreide aus dem Kontor 2 Last Bier, etwa 7 Last in der Woche'},
     salz:{n:'Salzsiederei', out:0.75, mat:0.5, cost:2400, wage:5, d:'siedet etwa 5 Last Salz in der Woche'},
     hering:{n:'Heringsfang', out:0.25, peak:1.4, mat:0.45, cost:2200, wage:5, season:[7, 8, 9], d:'fängt zur Heringszeit etwa 10 Last in der Woche, sonst knapp 2'},
     holz:{n:'Holzhof', out:0.9, mat:0.45, cost:1800, wage:4, d:'schlägt etwa 6 Last Holz in der Woche'},
@@ -2105,7 +2106,7 @@ em.rep.warn{background:#b5523a}
   }
   function cvTrade(cv, cid) {
     if (cv.mode === 'regeln') return cvRuleTrade(cv, cid);
-    const k = capOf(cv) || {trade:1, name:'–'}, m = 0.3 - 0.04 * k.trade;
+    const k = capOf(cv) || {trade:1, name:'–'}, m = 0.22 - 0.03 * k.trade;   // ab Version 42: 19 % bis 7 % statt 26 % bis 10 % Mindestspanne
     const noise = () => 1 + (Math.random() - 0.5) * (5 - k.trade) * 0.06;
     const others = cv.route.filter(c => c !== cid);
     const bestElse = gid => Math.max(0, ...others.map(c => estSell(cv, gid, c)));
@@ -2117,12 +2118,12 @@ em.rep.warn{background:#b5523a}
       c.v = (c.v || 0) + 1;
       let q = 0, sk = st.stock[cid][g.id];
       while (q < c.q) {
-        const p = unitPrice(sk + 1, g.b, cid) * 0.94 * pf(cid, g.id, 'sell');
+        const p = unitPrice(sk + 1, g.b, cid) * 0.94 * pf(cid, g.id, 'sell') * (1 + 0.01 * k.trade);
         if (!((p >= avg * (1 + m * 0.5) && p >= alt * 0.92) || (c.v >= 3 && p >= avg * 0.85) || c.v >= 5)) break;
         q++; sk++;
       }
       if (!q) return;
-      const gain = sellGain(cid, g.id, q), basis = c.cost * q / c.q;
+      const gain = Math.round(sellGain(cid, g.id, q) * (1 + 0.01 * k.trade)), basis = c.cost * q / c.q;
       st.money += gain; st.stock[cid][g.id] += q; c.q -= q; c.cost -= basis;
       if (c.q <= 0) delete cv.cargo[g.id];
       sold += gain; prof += gain - basis; st.gprof[g.id] = (st.gprof[g.id] || 0) + gain - basis;
@@ -2134,7 +2135,7 @@ em.rep.warn{background:#b5523a}
       let best = null, bestR = m;
       GOODS.forEach(g => {
         if ((cv.skip || []).includes(g.id) || st.stock[cid][g.id] < 1) return;
-        const p = unitPrice(st.stock[cid][g.id], g.b, cid) * 1.06 * pf(cid, g.id, 'buy'), r = (dest[g.id] ? estAfter(est[g.id], bq[g.id] || 0, dest[g.id]) : est[g.id]) / p - 1;
+        const p = unitPrice(st.stock[cid][g.id], g.b, cid) * 1.06 * pf(cid, g.id, 'buy') * (1 - 0.01 * k.trade), r = (dest[g.id] ? estAfter(est[g.id], bq[g.id] || 0, dest[g.id]) : est[g.id]) / p - 1;
         if (r > bestR && spent + p <= budget) { bestR = r; best = {g, p}; }
       });
       if (!best) break;
@@ -2289,7 +2290,7 @@ em.rep.warn{background:#b5523a}
       h += `<span class="flabel">Schiffe</span><div class="chipset">` + st.fleet.map(sh => `<button type="button" data-rw="ship" data-v="${sh.id}" aria-pressed="${w.ships.includes(sh.id)}">${esc(sh.name)} · ${SHIPS[sh.type].n}</button>`).join('') +
         dock.map(sh => `<button type="button" data-rw="ship" data-v="${sh.id}" aria-pressed="${w.ships.includes(sh.id)}">${esc(sh.name)} · ${SHIPS[sh.type].n} · Liegeplatz</button>`).join('') + `</div>` +
         `<span class="flabel">Kapitän</span><div class="chipset">${idle.map(k => `<button type="button" data-rw="cap" data-v="${k.id}" aria-pressed="${w.cap === k.id}">${esc(k.name)} · Handel ${k.trade}</button>`).join('')}</div>` +
-        `<span class="small">Der Verband bekommt die nötigen Matrosen und einen Anteil deiner Waffen; für Schiffe vom Liegeplatz wird neu angeheuert.</span>`;
+        `<span class="small">Der Verband bekommt die nötigen Matrosen und einen Anteil deiner Waffen; für Schiffe vom Liegeplatz wird neu angeheuert. Mehr Schiffe auf derselben Route bringen wenig mehr, weil die Märkte satt werden: Ein oder zwei Schiffe je Verband und dafür verschiedene Routen zahlen sich am schnellsten aus.</span>`;
     } else if (w.step === 2) {
       const card = (v, t, d) => `<button type="button" class="rwcard" data-rw="tpl" data-v="${v}" aria-pressed="${w.tpl === v}"><b>${t}</b><span>${d}</span></button>`;
       h += `<div class="rwcards">${card('rund', 'Rundkurs', '2 bis 4 Häfen im Kreis. Der Kapitän kauft und verkauft selbst, je besser sein Handel, desto klüger.')}` +
@@ -2361,6 +2362,30 @@ em.rep.warn{background:#b5523a}
     CV_KEYS.forEach(k => { if (cv) cv[k] = st[k]; st[k] = st.parked[k]; });
     st.focus = null; st.parked = null; applyHome();
     return cv;
+  }
+  // ab Version 42: Der Kapitän führt das Gefecht selbst: fliehen, kämpfen oder Tribut zahlen
+  function capFight() {
+    const cv = cvById(st.pendingFight);
+    st.pendingFight = null;
+    if (!cv || !cv.sail || st.focus) return commit();
+    const k = capOf(cv) || {fight:1, nav:1, name:'–'}, A0 = cv.arms || {};
+    const n0 = Math.round(6 + Math.random() * 8 + st.rank * 3.5 + Math.min(12, wealth() / 6000));
+    const own = cv.crew + 1.5 * (A0.armbrust || 0) + 0.5 * (A0.harnisch || 0) + 4 * k.fight, r = own / n0;
+    const val = GOODS.reduce((x, g) => x + ((cv.cargo[g.id] || {}).q || 0) * g.b, 0);
+    const hurt = (d, frac) => { cv.fleet.forEach(sh => { sh.hull = Math.max(25, sh.hull - Math.round(d * rnd(0.6, 1.4))); }); const lost = Math.min(Math.max(0, cv.crew - cvCrewMinOf(cv.fleet)), Math.round(cv.crew * frac)); cv.crew -= lost; return lost; };
+    const tribute = () => { const toll = Math.round(Math.max(150, val * 0.2) / 10) * 10; if (st.money >= toll) { st.money -= toll; return `zahlt ${fmt(toll)} Gulden Tribut`; }
+      const out = []; GOODS.forEach(g => { const c = cv.cargo[g.id]; if (!c) return; const q = Math.ceil(c.q / 3); c.cost -= c.cost * q / c.q; c.q -= q; if (c.q <= 0) delete cv.cargo[g.id]; out.push(`${q} ${G[g.id].n}`); }); return out.length ? `verliert ${out.join(', ')}` : 'hat nichts, was die Seeräuber wollen'; };
+    let t;
+    if (cv.lap) cv.lap.fights++;
+    if (Math.random() < 0.3 + 0.05 * k.nav) t = 'entkommt den Seeräubern unter vollen Segeln';
+    else if (r >= 0.9 && Math.random() < clamp(0.3 + 0.45 * (r - 0.9) + 0.06 * k.fight, 0.2, 0.92)) {
+      const loot = Math.round(n0 * rnd(3, 7) / 5) * 5, lost = hurt(8, rnd(0.03, 0.1)); st.money += loot; st.wins = (st.wins || 0) + 1; gainRepute(6);
+      t = `schlägt die Seeräuber zurück und erbeutet ${fmt(loot)} Gulden${lost ? `; ${lost} ${lost === 1 ? 'Mann' : 'Leute'} verloren` : ''}`;
+    } else if (r >= 0.9) { const lost = hurt(18, rnd(0.1, 0.2)); t = `wehrt sich, muss aber aufgeben: ${lost} ${lost === 1 ? 'Mann' : 'Leute'} verloren, er ${tribute()}`; }
+    else t = tribute();
+    addLog(`Kapitän ${k.name} (${cvLabel(cv)}) ${t}.`, 'pirate');
+    commit();
+    if (st.sail && !st.enc && !timer) schedTick();
   }
   function takeOver() {
     const cv = cvById(st.pendingFight);
@@ -2464,7 +2489,9 @@ em.rep.warn{background:#b5523a}
       st.money -= matCost;
       let cost = w.wc + matCost; w.wc = 0;
       if (W.inp) Object.entries(W.inp).forEach(([gid, per]) => {
-        const c = st.kontor.goods[gid], q = Math.min(c.q, Math.ceil(out * per - 1e-9)), part = c.cost * q / c.q;
+        const c = st.kontor.goods[gid]; if (!c) return;
+        const U = w.used || (w.used = {}), need = out * per + (U[gid] || 0), q = Math.min(c.q, Math.floor(need + 1e-9)), part = q ? c.cost * q / c.q : 0;
+        U[gid] = Math.max(0, need - q);
         c.q -= q; c.cost -= part; cost += part;
         if (c.q <= 0) delete st.kontor.goods[gid];
       });
@@ -2485,7 +2512,7 @@ em.rep.warn{background:#b5523a}
   // Fall der Auftraggeber: für den Rat, mit dem Rat
   const byAcc = s => String(s).replace(/^der (Rat|Ratskeller)\b/, 'den $1');
   const byDat = s => String(s).replace(/^die (Bergenfahrer|Schonenfahrer)$/, 'den $1n').replace(/^die Lombarden/, 'den Lombarden').replace(/^der |^das /, 'dem ').replace(/^die /, 'der ').replace(/^ein /, 'einem ').replace(/^eine /, 'einer ');
-  const CT_RANK = 2, CT_EVERY = 30, CT_EARLY = 15, CT_GRACE = 3;
+  const CT_RANK = 2, CT_EVERY = 30, CT_EARLY = 30, CT_GRACE = 5;   // ab Version 42 jederzeit bis zum Termin, fünf Tage Nachfrist
   const CT_MAX = () => st.rank < CT_RANK ? 0 : 1 + (st.rank >= 3 ? 1 : 0) + (st.rank >= 4 ? 1 : 0);
   const ctState = () => st.contracts || (st.contracts = {list:[], offers:{}, gen:{}, next:1, done:0, broken:0, intro:false});
   const ctPen = k => Math.round(k.q * k.price * 0.3 / 10) * 10;
@@ -2502,7 +2529,7 @@ em.rep.warn{background:#b5523a}
   function genContract(cid) {
     const T = ctState(), c = C[cid], pool = ctGoods(cid), g = pick(pool.concat(c.c)), rk = Math.max(CT_RANK, st.rank), rat = Math.random() < 0.4;
     const lo = 8 + 4 * (rk - 2), q = Math.max(4, Math.round((lo + Math.random() * lo) * (G[g].b >= 200 ? 0.55 : G[g].b >= 120 ? 0.8 : 1)));
-    const eq = unitPrice(baseE(c, g), G[g].b, cid) * 0.94, price = Math.round(eq * rnd(1.04, 1.14) * (rat ? 1.03 : 1));
+    const eq = unitPrice(baseE(c, g), G[g].b, cid) * 0.94, price = Math.round(eq * rnd(1.08, 1.2) * (rat ? 1.03 : 1));
     return {id:T.next++, cid, g, q, n:3 + Math.floor(Math.random() * 4), price, rat, by:rat ? `der Rat von ${c.n}` : clientFor(g)};
   }
   function ctWhy(o) {
@@ -2616,7 +2643,7 @@ em.rep.warn{background:#b5523a}
     if (!T.list.length && !offers.length) return '';
     let h = `<h3 class="frh">Lieferverträge <small>${T.list.length} von ${CT_MAX()}</small></h3>`;
     if (T.list.length) h += `<ul class="frl">${T.list.slice().sort((a, b) => a.due - b.due).map(k => ctRow(k, true)).join('')}</ul>`;
-    if (offers.length) h += `<p class="small frhint">Ein Vertrag bindet dich über Monate: alle ${CT_EVERY} Tage dieselbe Menge zum festen Preis, gleich wie der Markt steht. Liefern kannst du ab ${CT_EARLY} Tagen vor dem Termin, selbst oder mit einem Verband; liegt die Ware in deinem Lager in der Stadt, geht sie zum Termin von selbst hinaus. Wer zu spät kommt, zahlt Strafe.</p><ul class="frl">${offers.map(k => ctRow(k, false)).join('')}</ul>`;
+    if (offers.length) h += `<p class="small frhint">Ein Vertrag bindet dich über Monate: alle ${CT_EVERY} Tage dieselbe Menge zum festen Preis, gleich wie der Markt steht. Liefern kannst du jederzeit bis zum Termin, selbst oder mit einem Verband; liegt die Ware in deinem Lager in der Stadt, geht sie zum Termin von selbst hinaus. Wer zu spät kommt, zahlt Strafe.</p><ul class="frl">${offers.map(k => ctRow(k, false)).join('')}</ul>`;
     return h;
   }
   const storedQ = gid => (st.kontor && st.kontor.goods[gid] && st.kontor.goods[gid].q) || 0;
@@ -3015,7 +3042,7 @@ em.rep.warn{background:#b5523a}
     st.money -= K.fee; S.mem[cid] = {d:st.day};
     hkSync(cid);
     gainRepute(10);
-    addLog(`${K.nom} nimmt dich auf. Hier kaufst du ${fmt(hkPct(cid))} % günstiger und verkaufst ${fmt(hkPct(cid))} % teurer und hast ein Lager für ${hkCap(cid)} Last im Kontor.`, 'rank');
+    addLog(`${K.nom} nimmt dich auf. Hier kaufst du ${fmt1(hkPct(cid))} % günstiger und verkaufst ${fmt1(hkPct(cid))} % teurer und hast ein Lager für ${hkCap(cid)} Last im Kontor.`, 'rank');
     chronicle(`Aufnahme in ${K.acc}`);
     commit();
   }
@@ -3025,7 +3052,7 @@ em.rep.warn{background:#b5523a}
     S.priv[cid]++;
     const p = HK[cid].P[S.priv[cid] - 1];
     hkSync(cid);
-    return `Neues Vorrecht: ${p}.` + (hkMember(cid) ? ` Als Mitglied kaufst du dort jetzt ${fmt(hkPct(cid))} % günstiger, verkaufst ${fmt(hkPct(cid))} % teurer, und dein Kontorlager wächst auf ${hkCap(cid)} Last.` : '');
+    return `Neues Vorrecht: ${p}.` + (hkMember(cid) ? ` Als Mitglied kaufst du dort jetzt ${fmt1(hkPct(cid))} % günstiger, verkaufst ${fmt1(hkPct(cid))} % teurer, und dein Kontorlager wächst auf ${hkCap(cid)} Last.` : '');
   }
   // eine Frage zu den Kontoren am Hansetag, bevorzugt zu deinen
   function hkVoteOpen(d) {
@@ -3062,9 +3089,9 @@ em.rep.warn{background:#b5523a}
     let h = `<div class="kontor"><h3>${K.n}</h3>`;
     const plist = `<ol class="privs">${K.P.map((p, i) => `<li class="${i < lv ? 'done' : ''}">${p}${i < lv ? '' : ' <span class="small">noch nicht erstritten</span>'}</li>`).join('')}</ol>`;
     if (hkMember(cid)) {
-      h += `<p class="small">Du bist Mitglied seit ${fdate(st.hk.mem[cid].d, true)}. Hier kaufst du ${fmt(hkPct(cid))} % günstiger und verkaufst ${fmt(hkPct(cid))} % teurer; dein Lager im Kontor fasst ${hkCap(cid)} Last, ${HK_UP} Gulden Schoß am Tag.</p>`;
+      h += `<p class="small">Du bist Mitglied seit ${fdate(st.hk.mem[cid].d, true)}. Hier kaufst du ${fmt1(hkPct(cid))} % günstiger und verkaufst ${fmt1(hkPct(cid))} % teurer; dein Lager im Kontor fasst ${hkCap(cid)} Last, ${HK_UP} Gulden Schoß am Tag.</p>`;
     } else if (st.rank < HK_RANK) h += `<p class="small">Ab dem Rang ${RANKS[HK_RANK][1]} nimmt dich das Kontor auf. Mitglieder kaufen und verkaufen hier günstiger und haben ein eigenes Lager.</p>`;
-    else h += `<p class="small">Mitglieder kaufen hier ${fmt(2 + 2.5 * lv)} % günstiger, verkaufen ${fmt(2 + 2.5 * lv)} % teurer und lagern ${HK_CAP + 20 * lv} Last im Kontor, für ${HK_UP} Gulden Schoß am Tag. Jedes Vorrecht, das der Hansetag erstreitet, bringt 2,5 % und 20 Last mehr.</p>` +
+    else h += `<p class="small">Mitglieder kaufen hier ${fmt1(2 + 2.5 * lv)} % günstiger, verkaufen ${fmt1(2 + 2.5 * lv)} % teurer und lagern ${HK_CAP + 20 * lv} Last im Kontor, für ${HK_UP} Gulden Schoß am Tag. Jedes Vorrecht, das der Hansetag erstreitet, bringt 2,5 % und 20 Last mehr.</p>` +
       `<div class="ybtns"><button class="ybtn" type="button" data-fin="hkjoin" data-c="${cid}"${st.money >= K.fee && !st.enc ? '' : ' disabled'}>Aufnahme · ${fmt(K.fee)} G</button></div>`;
     return h + `<span class="flabel">Vorrechte</span>${plist}</div>`;
   }
@@ -3077,7 +3104,7 @@ em.rep.warn{background:#b5523a}
   const GIVE_MAX = () => 2 + (st.rank >= 4 ? 1 : 0) + (st.rank >= 5 ? 1 : 0);
   const CROP_MAX = () => 2 + (st.rank >= 4 ? 1 : 0);
   const LOAN_CAP = () => [1500, 3000, 6000, 12000, 25000, 50000, 80000][st.rank] || 1500;
-  const LENDER = cid => cid === 'bruegge' ? {n:'die Lombarden in Brügge', r:0.02, k:1.5} : cid === 'luebeck' ? {n:'die Kämmerei von Lübeck', r:0.015, k:1} : cid === st.home ? {n:`der Rat von ${C[cid].n}`, r:0.0125, k:0.8} : null;
+  const LENDER = cid => cid === 'bruegge' ? {n:'die Lombarden in Brügge', r:0.02, k:1.5} : cid === st.home ? {n:`der Rat von ${C[cid].n}`, r:0.0125, k:cid === 'luebeck' ? 1 : 0.8} : cid === 'luebeck' ? {n:'die Kämmerei von Lübeck', r:0.015, k:1} : null;
   const GRADE = [{n:'sicher', p:0.03, r:[0.012, 0.018]}, {n:'ordentlich', p:0.09, r:[0.02, 0.028]}, {n:'wacklig', p:0.2, r:[0.03, 0.04]}];
   const CROPS = [
     {g:'getreide', c:['danzig', 'riga'], off:[4, 5, 6], del:[9, 10], n:'Ernte', by:['ein Gut des Ordens', 'das Kloster Oliva', 'ein Gut an der Weichsel', 'ein Gut in Livland']},
@@ -3163,7 +3190,7 @@ em.rep.warn{background:#b5523a}
     if (!Lr || st.rank < TAKE_RANK || amt < 100 || st.enc || st.focus || ![6, 12].includes(mo)) return;
     st.money += amt;
     F.loans.push({id:F.next++, kind:'take', amt, r:Lr.r, d0:st.day, due:st.day + mo * 30, who:Lr.n, cid:st.loc, ext:0});
-    addLog(`Du leihst dir ${fmt(amt)} Gulden bei ${byDat(Lr.n)}, zu ${fmt(Lr.r * 100)} % im Monat, zurück bis ${fdate(st.day + mo * 30)}. Zurückzahlen kannst du jederzeit unter Haus.`, 'rank');
+    addLog(`Du leihst dir ${fmt(amt)} Gulden bei ${byDat(Lr.n)}, zu ${fmt1(Lr.r * 100)} % im Monat, zurück bis ${fdate(st.day + mo * 30)}. Zurückzahlen kannst du jederzeit unter Haus.`, 'rank');
     commit();
   }
   function loanRepay(id) {
@@ -3182,7 +3209,7 @@ em.rep.warn{background:#b5523a}
     O.req.splice(O.req.indexOf(o), 1);
     st.money -= o.amt;
     F.loans.push({id:o.id, kind:'give', amt:o.amt, r:o.r, gr:o.gr, d0:st.day, due:st.day + o.mo * 30, who:o.who, cid:o.cid, mo:o.mo});
-    addLog(`Du leihst ${o.who} in ${C[o.cid].n} ${fmt(o.amt)} Gulden auf ${o.mo} Monate, zu ${fmt(o.r * 100)} % im Monat. Er zahlt per Wechsel zurück.`, 'rank');
+    addLog(`Du leihst ${o.who} in ${C[o.cid].n} ${fmt(o.amt)} Gulden auf ${o.mo} Monate, zu ${fmt1(o.r * 100)} % im Monat. Er zahlt per Wechsel zurück.`, 'rank');
     commit();
   }
   function loansDay() {
@@ -3208,7 +3235,7 @@ em.rep.warn{background:#b5523a}
       } else if (!L.ext) {
         L.amt = o; L.d0 = st.day; L.r = Math.round((L.r + 0.01) * 1000) / 1000; L.due = st.day + 90; L.ext = 1;
         st.repute = Math.max(0, (st.repute || 0) - 8);
-        announce(`Du kannst ${byDat(L.who)} die ${fmt(o)} Gulden nicht zahlen. Die Frist wird um drei Monate verlängert, zu ${fmt(L.r * 100)} % im Monat. Danach pfänden die Gläubiger.`);
+        announce(`Du kannst ${byDat(L.who)} die ${fmt(o)} Gulden nicht zahlen. Die Frist wird um drei Monate verlängert, zu ${fmt1(L.r * 100)} % im Monat. Danach pfänden die Gläubiger.`);
       } else {
         let rest = o; const cash = Math.max(0, Math.min(st.money, rest)); st.money -= cash; rest -= cash;
         allStores().forEach(K => Object.entries(K.goods).forEach(([g, c]) => { if (rest <= 0) return; const v = G[g].b * 0.7, q = Math.min(c.q, Math.ceil(rest / v)); takeGoods(K.goods, g, q); rest -= q * v; }));
@@ -3293,6 +3320,13 @@ em.rep.warn{background:#b5523a}
   }
   function finDay() {
     const F = finState();
+    if (!F.loanIntro && st.rank >= TAKE_RANK) {
+      F.loanIntro = true;
+      const t = `Als Händler bekommst du Kredit: Der Rat von ${C[st.home].n}${st.home === 'luebeck' ? '' : ', die Kämmerei in Lübeck'} und die Lombarden in Brügge leihen dir Geld, etwa für ein weiteres Schiff, das sich schnell bezahlt macht. In der Werft dieser Städte baust du auch gleich mit Darlehen; sonst im Reiter Markt unter Geschäfte.`;
+      addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
+    }
+    // Kapitäne kaufen mit deinem Geld: Ist die Truhe leer, liegen die Verbände still
+    if ((st.convoys || []).length && st.money < 600) { F.lowCash = (F.lowCash || 0) + 1; if (F.lowCash === 3 && (!F.cashWarn || st.day - F.cashWarn > 30)) { F.cashWarn = st.day; const t = 'Deine Kapitäne finden kaum Geld in der Truhe und kaufen nichts mehr ein. Ohne Einkauf bringen die Verbände nichts, kosten aber weiter Heuer.'; addLog(t, 'cap'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'cap'}]).slice(-4); } } else F.lowCash = 0;
     if (!F.intro && st.rank >= HK_RANK) {
       F.intro = true;
       const t = 'Als Kaufmann öffnen sich dir neue Geschäfte: Die Hansekontore in Brügge, London, Bergen und Nowgorod nehmen dich auf, Wechsler leihen dir Geld. Ab Fernhändler kommen Schiffsparten, eigene Darlehen und der Vorkauf ganzer Ernten dazu. Du findest sie im Reiter Markt unter Geschäfte, den Überblick unter Haus.';
@@ -3300,6 +3334,11 @@ em.rep.warn{background:#b5523a}
     }
     partsDay(); loansDay(); cropsDay();
   }
+  // Bauen mit Darlehen, wenn nur das Geld fehlt
+  const loanBuildAmt = tp => { const T = SHIPS[tp], Lr = LENDER(st.loc); if (!T || !Lr || st.rank < TAKE_RANK || st.money >= T.price) return 0;
+    const amt = Math.ceil((T.price - Math.max(0, st.money) + 300) / 100) * 100, lim = Math.min(loanRoom(), Math.round(LOAN_CAP() * Lr.k / 100) * 100); return amt <= lim ? amt : 0; };
+  const loanBuildBtn = (tp, why) => { const amt = why === `${fmt(SHIPS[tp].price)} G` ? loanBuildAmt(tp) : 0, Lr = LENDER(st.loc);
+    return amt ? `<button class="ybtn" type="button" data-yard="loanbuild" data-n="${tp}">Mit Darlehen · ${fmt(amt)} G zu ${fmt1(Lr.r * 100)} %</button>` : ''; };
   const bizShown = () => !!st.loc && !st.focus && !st.sail && (st.rank >= TAKE_RANK || !!HK[st.loc]);
   function dealHTML() {
     const cid = st.loc, F = finState(), O = finOffers(cid), Lr = LENDER(cid);
@@ -3333,11 +3372,11 @@ em.rep.warn{background:#b5523a}
       h += `<div class="kontor"><h3>Wechsler und Darlehen</h3>`;
       if (Lr && st.rank >= TAKE_RANK) {
         const room = Math.min(loanRoom(), Math.round(LOAN_CAP() * Lr.k / 100) * 100), steps = [...new Set([0.25, 0.5, 1].map(f => Math.round(room * f / 100) * 100))].filter(a => a >= 100);
-        h += `<p class="small">${Lr.n.replace(/^\w/, m => m.toUpperCase())} leiht dir Geld zu ${fmt(Lr.r * 100)} % im Monat; jeder angefangene Monat zählt. Deine Schulden: ${fmt(debt())} Gulden, Spielraum ${fmt(room)} Gulden.</p>`;
+        h += `<p class="small">${Lr.n.replace(/^\w/, m => m.toUpperCase())} leiht dir Geld zu ${fmt1(Lr.r * 100)} % im Monat; jeder angefangene Monat zählt. Deine Schulden: ${fmt(debt())} Gulden, Spielraum ${fmt(room)} Gulden.</p>`;
         h += steps.length ? `<div class="ybtns wrapb">${steps.map(a => `<button class="ybtn" type="button" data-fin="take" data-a="${a}" data-m="6"${st.enc ? ' disabled' : ''}>${fmt(a)} G auf 6 Monate</button>`).join('')}<button class="ybtn" type="button" data-fin="take" data-a="${steps[steps.length - 1]}" data-m="12"${st.enc ? ' disabled' : ''}>${fmt(steps[steps.length - 1])} G auf 12 Monate</button></div>` : `<p class="small">Mehr leiht man dir auf deinem Rang nicht.</p>`;
       }
       O.req.forEach(o => { const full = F.loans.filter(L => L.kind === 'give').length >= GIVE_MAX(), back = Math.round(o.amt * (1 + o.r * o.mo));
-        h += `<div class="krow"><span class="gname">✍ ${esc(o.who)}</span><span class="num small" style="grid-column:auto;margin:0">${GRADE[o.gr].n}</span><span class="small">bittet um ${fmt(o.amt)} Gulden auf ${o.mo} Monate zu ${fmt(o.r * 100)} % im Monat: zurück ${fmt(back)} Gulden. Seine Sicherheit gilt als ${GRADE[o.gr].n}.</span>` +
+        h += `<div class="krow"><span class="gname">✍ ${esc(o.who)}</span><span class="num small" style="grid-column:auto;margin:0">${GRADE[o.gr].n}</span><span class="small">bittet um ${fmt(o.amt)} Gulden auf ${o.mo} Monate zu ${fmt1(o.r * 100)} % im Monat: zurück ${fmt(back)} Gulden. Seine Sicherheit gilt als ${GRADE[o.gr].n}.</span>` +
           `<span class="ybtns"><button class="ybtn" type="button" data-fin="give" data-id="${o.id}"${!full && st.money >= o.amt && !st.enc ? '' : ' disabled'}>${full ? `Schon ${GIVE_MAX()} Darlehen` : `Leihen · ${fmt(o.amt)} G`}</button></span></div>`; });
       h += `</div>`;
     }
@@ -3355,14 +3394,14 @@ em.rep.warn{background:#b5523a}
     const F = finState(), T = ctState(), S = hkState();
     let h = `<div class="kontor"><h3>Verträge und Geldgeschäfte</h3>`, any = false;
     const mem = Object.keys(S.mem);
-    if (mem.length) { any = true; h += `<span class="flabel">Hansekontore</span>` + mem.map(c => `<div class="krow"><span class="gname">${HK[c].s}</span><span class="num small" style="grid-column:auto;margin:0">${hkPriv(c)} von 3</span><span class="small">±${fmt(hkPct(c))} % auf Preise in ${C[c].n}, Lager ${kontorUsed(c)} / ${(st.branches[c] || {}).cap || hkCap(c)} Last</span></div>`).join(''); }
+    if (mem.length) { any = true; h += `<span class="flabel">Hansekontore</span>` + mem.map(c => `<div class="krow"><span class="gname">${HK[c].s}</span><span class="num small" style="grid-column:auto;margin:0">${hkPriv(c)} von 3</span><span class="small">±${fmt1(hkPct(c))} % auf Preise in ${C[c].n}, Lager ${kontorUsed(c)} / ${(st.branches[c] || {}).cap || hkCap(c)} Last</span></div>`).join(''); }
     if (T.list.length) { any = true; h += `<span class="flabel">Lieferverträge</span>` + T.list.map(k => `<div class="krow"><span class="gname">${icon(k.g)}${G[k.g].n}</span><span class="num small" style="grid-column:auto;margin:0">${k.q} Last</span><span class="small">nach ${C[k.cid].n} für ${esc(k.by)} · Lieferung ${k.next} von ${k.n} bis ${fdate(k.due)} · ${fmt(k.price)} G je Last</span></div>`).join(''); }
     if (F.parts.length) { any = true; h += `<span class="flabel">Schiffsparten</span>` + F.parts.map(p => `<div class="krow"><span class="gname">⚓ „${esc(p.ship)}“</span><span class="num small" style="grid-column:auto;margin:0">${p.share === 2 ? '½' : `1/${p.share}`}</span><span class="small">${SHIPS[p.type].n} aus ${C[p.cid].n}, gekauft für ${fmt(p.price)} G, bisher ${p.paid >= 0 ? '' : 'minus '}${fmt(Math.abs(p.paid))} G ausgeschüttet</span></div>`).join(''); }
     const tk = F.loans.filter(L => L.kind === 'take'), gv = F.loans.filter(L => L.kind === 'give');
-    if (tk.length) { any = true; h += `<span class="flabel">Deine Schulden</span>` + tk.map(L => { const o = loanOwed(L); return `<div class="krow"><span class="gname">${esc(L.who.replace(/^\w/, m => m.toUpperCase()))}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(o)} G</span><span class="small">geliehen ${fmt(L.amt)} G zu ${fmt(L.r * 100)} % im Monat, fällig ${fdate(L.due)}${L.ext ? ', schon verlängert' : ''}</span><span class="ybtns"><button class="ybtn" type="button" data-fin="repay" data-id="${L.id}"${st.money >= o ? '' : ' disabled'}>Tilgen · ${fmt(o)} G</button></span></div>`; }).join(''); }
-    if (gv.length) { any = true; h += `<span class="flabel">Verliehenes Geld</span>` + gv.map(L => `<div class="krow"><span class="gname">${esc(L.who)}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(L.amt)} G</span><span class="small">in ${C[L.cid].n}, ${fmt(L.r * 100)} % im Monat, fällig ${fdate(L.due)}, Sicherheit ${GRADE[L.gr].n}</span></div>`).join(''); }
+    if (tk.length) { any = true; h += `<span class="flabel">Deine Schulden</span>` + tk.map(L => { const o = loanOwed(L); return `<div class="krow"><span class="gname">${esc(L.who.replace(/^\w/, m => m.toUpperCase()))}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(o)} G</span><span class="small">geliehen ${fmt(L.amt)} G zu ${fmt1(L.r * 100)} % im Monat, fällig ${fdate(L.due)}${L.ext ? ', schon verlängert' : ''}</span><span class="ybtns"><button class="ybtn" type="button" data-fin="repay" data-id="${L.id}"${st.money >= o ? '' : ' disabled'}>Tilgen · ${fmt(o)} G</button></span></div>`; }).join(''); }
+    if (gv.length) { any = true; h += `<span class="flabel">Verliehenes Geld</span>` + gv.map(L => `<div class="krow"><span class="gname">${esc(L.who)}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(L.amt)} G</span><span class="small">in ${C[L.cid].n}, ${fmt1(L.r * 100)} % im Monat, fällig ${fdate(L.due)}, Sicherheit ${GRADE[L.gr].n}</span></div>`).join(''); }
     if (F.crops.length) { any = true; h += `<span class="flabel">Vorkäufe</span>` + F.crops.map(c => `<div class="krow"><span class="gname">${icon(c.g)}${G[c.g].n}</span><span class="num small" style="grid-column:auto;margin:0">${c.ready ? `${c.q - c.got} Last` : `≈ ${c.q0} Last`}</span><span class="small">${c.n} von ${esc(byDat(c.by))} in ${C[c.cid].n} · ${c.ready ? `liegt bereit bis ${fdate(c.d1 + 45)}${c.paid ? '' : `, Restzahlung ${fmt(c.price * c.q0 - c.dep)} G offen`}` : `Lieferung am ${fdate(c.del)}, Rest ${fmt(c.price * c.q0 - c.dep)} G`}</span></div>`).join(''); }
-    if (!any) h += `<p class="small">${st.rank < CT_RANK ? `Ab dem Rang ${RANKS[CT_RANK][1]} bieten dir Städte und Kaufleute Lieferverträge an, die Hansekontore nehmen dich auf, und Wechsler leihen dir größere Summen. ` : 'Noch läuft nichts. '}Angebote findest du in den Häfen im Reiter Markt unter Aufträge und Geschäfte.</p>`;
+    if (!any) h += `<p class="small">${st.rank < CT_RANK ? `Ab dem Rang ${RANKS[CT_RANK][1]} bieten dir Städte und Kaufleute Lieferverträge an, die Hansekontore nehmen dich auf, und Wechsler leihen dir größere Summen. ` : 'Noch läuft nichts. '}Angebote findest du in den Häfen im Reiter Markt unter Aufträge und Geschäfte.${st.rank >= TAKE_RANK ? ` Geld leihen dir der Rat von ${C[st.home].n} (1,25 % im Monat)${st.home === 'luebeck' ? '' : ', die Kämmerei in Lübeck (1,5 %)'} und die Lombarden in Brügge (2 %); dein Rahmen liegt bei ${fmt(Math.round(LOAN_CAP() * 1.5))} Gulden.` : ''}</p>`;
     return h + `</div>`;
   }
   const bizMeta = () => { const F = st.fin || {parts:[], loans:[], crops:[]}, n = ((st.contracts || {}).list || []).length, d = debt();
@@ -4438,6 +4477,12 @@ em.rep.warn{background:#b5523a}
       buildsOf().push({id:st.nextBuild = (st.nextBuild || 0) + 1, type:n, name, city:st.loc, start:st.day, done:st.day + BUILD_DAYS[n], arrive:null, hull:100});
       ui.shipName = '';
       addLog(`Bauauftrag in ${C[st.loc].n}: ${T.n} „${name}“ für ${fmt(T.price)} Gulden, fertig in ${BUILD_DAYS[n]} Tagen; danach segelt sie nach ${C[st.home].n}.`, 'gain');
+    } else if (act === 'loanbuild') {
+      const T = SHIPS[n], amt = loanBuildAmt(n);
+      if (!T || !amt) return;
+      loanTake(amt, 12);
+      if (!buildWhy(n)) return yard('build', n);
+      return;
     } else if (act === 'todock') {
       return fleetToDock(n);
     } else if (act === 'old') {
@@ -4593,7 +4638,7 @@ em.rep.warn{background:#b5523a}
     const dane = !!(st.sail && st.era && st.era.war === 1 && warK(st.sail.segs) > 1 && Math.random() < 0.6);
     if (dane) n0 = Math.round(n0 * 1.3);
     const tk = pick(Object.keys(TRAITS).filter(k => !fresh || (k !== 'drauf' && k !== 'zaeh'))), T = TRAITS[tk], name = dane ? `Hauptmann ${pick(DANES)}` : pick(PIRATES), luv = Math.random() < 0.5 ? 'pir' : null;
-    const ransom = Math.round(Math.max(120, cargoValue() * 0.2 + Math.max(0, st.money) * 0.08) / 10) * 10;
+    const ransom = Math.round(Math.max(120, cargoValue() * 0.2 + Math.min(Math.max(0, st.money) * 0.08, 300 + 400 * st.rank)) / 10) * 10;   // ab Version 42 Anteil der Truhe gedeckelt
     const big = st.fleet.reduce((b, sh, i) => shipCap(sh) > shipCap(st.fleet[b]) ? i : b, 0);
     st.enc = {phase:'meet', name, trait:tk, ptype, n0, n:n0, f0:fighters(), mor:Math.round(rnd(T.mor[0], T.mor[1])), phull:Math.round(rnd(60, 95)), psail:0, osail:0,
       dist:2, luv, r:0, ammo:'bolzen', hold:false, fire:0, target:tk === 'gierig' ? big : pickShip(), ransom, aimLock:null, prize:null,
@@ -4758,7 +4803,7 @@ em.rep.warn{background:#b5523a}
       e.target = 0;
       return {ship:sh, taken, loss, last:false};
     }
-    const ransom = Math.min(Math.max(0, Math.round(st.money)), Math.max(200, Math.round(st.money * 0.35)));
+    const ransom = Math.min(Math.max(0, Math.round(st.money)), Math.max(200, Math.round(Math.min(st.money * 0.35, 1500 + 1500 * st.rank))));
     st.money -= ransom; st.crew = 0; trimArms(st, [], 0); st.cargo = {}; applyHome();
     return {ship:sh, taken, ransom, last:true};
   }
@@ -9512,7 +9557,7 @@ em.rep.warn{background:#b5523a}
       return;
     }
     if (st.ev && EV[st.ev.id]) { const e = EV[st.ev.id]; a.innerHTML = e.o.map((o, i) => `<button class="btn${i === 0 ? ' primary' : ''}" type="button" data-ev="${i}"><b>${esc(o.l)}</b></button>`).join(''); return; }
-    if (st.pendingFight) { a.innerHTML = `<button class="btn primary" type="button" data-act="takeover">Gefecht übernehmen</button>`; return; }
+    if (st.pendingFight) { a.innerHTML = `<button class="btn primary" type="button" data-act="takeover">Gefecht übernehmen</button><button class="btn" type="button" data-act="capfight">Kapitän lassen</button>`; return; }
     if (st.waiting) { a.innerHTML = `<button class="btn" type="button" data-act="waitstop"><b>Anhalten</b><small>Tag ${st.waiting.n + 1} des Wartens</small></button>`; return; }
     if (st.sail) { a.innerHTML = `<button class="btn primary" type="button" disabled>Unter Segeln …</button>`; return; }
     if (bankrupt()) { a.innerHTML = `<button class="btn primary" type="button" data-act="restart">Neues Spiel</button>`; return; }
@@ -9665,7 +9710,7 @@ em.rep.warn{background:#b5523a}
         const T = SHIPS[tp];
         const why = buildWhy(tp);
         ns += `<div class="yrow"><span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} Tage Bauzeit</b><span class="small">${T.cap} Last · Tempo ${Math.round(T.spd * 100)} % · ${T.crewMin} bis ${T.crewMax} Matrosen · ${T.arm} Waffenplätze · ${T.upkeep} G am Tag</span><span class="small">${T.d}</span></span>` +
-          `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `In Auftrag · ${fmt(T.price)} G`}</button></span></div>`;
+          `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `In Auftrag · ${fmt(T.price)} G`}</button>${loanBuildBtn(tp, why)}</span></div>`;
       });
       h += det('newships', `Bauaufträge`, ns, types.map(tp => SHIPS[tp].n).join(', '), false);
     } else h += `<p class="small" style="margin-top:10px">In ${C[st.loc].n} baut keine Werft neue Schiffe.</p>`;
@@ -9748,8 +9793,9 @@ em.rep.warn{background:#b5523a}
     const k = capOf(cv);
     box.innerHTML = `<div class="in" role="alertdialog" aria-live="assertive"><span class="k">Bote aus dem Hafen</span><h2>Seeräuber!</h2>` +
       `<p>Der ${esc(cvLabel(cv))} unter Kapitän ${k ? esc(k.name) : '–'} wird auf dem Weg nach ${C[cv.sail.to].n} angegriffen. ${cvUsed(cv)} Last an Bord, ${cv.crew} Matrosen, ${armsLine(cv)}.</p>` +
-      `<p class="small">Du übernimmst das Gefecht. ${k ? `Mit Kapitän ${esc(k.name)} (Kampf ${k.fight} von 5) wird dein Zielfeld ${k.fight * 4} % größer.` : ''}</p>` +
-      `<button class="btn primary" type="button" data-act="takeover">Gefecht übernehmen</button></div>`;
+      `<p class="small">Übernimmst du selbst, führst du das Gefecht wie mit deinem eigenen Verband. ${k ? `Mit Kapitän ${esc(k.name)} (Kampf ${k.fight} von 5) wird dein Zielfeld ${k.fight * 4} % größer.` : ''}</p>` +
+      `<div class="ybtns wrapb"><button class="btn primary" type="button" data-act="takeover">Gefecht übernehmen</button><button class="btn" type="button" data-act="capfight">Kapitän entscheiden lassen</button></div>` +
+      `<p class="small">Lässt du ihn entscheiden, flieht er, kämpft mit seinen Leuten oder zahlt Tribut, je nachdem, wie stark sein Verband ist.</p></div>`;
   }
   function storeRows(K, cid) {
     const kq = ui.kq || 10, ku = kontorUsed(cid);
@@ -10299,6 +10345,7 @@ em.rep.warn{background:#b5523a}
     if (act === 'prize-keep' || act === 'prize-sell') return prizeAct(act === 'prize-keep');
     if (act === 'resume') return resumeVoyage();
     if (act === 'takeover') return takeOver();
+    if (act === 'capfight') return capFight();
     if (act === 'waitrun') return startWait();
     if (act === 'waitstop') return stopWait();
     if (t.dataset.act === 'wait') waitDay();
@@ -10383,7 +10430,7 @@ em.rep.warn{background:#b5523a}
   });
   $('#goals').addEventListener('click', questClick);
   $('#qsheet').addEventListener('click', questClick);
-  $('#alarm').addEventListener('click', e => { if (e.target.closest('[data-act="takeover"]')) takeOver(); });
+  $('#alarm').addEventListener('click', e => { if (e.target.closest('[data-act="takeover"]')) takeOver(); else if (e.target.closest('[data-act="capfight"]')) capFight(); });
   $('#branchcard').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
     if (t.dataset.k === 'branch') return buildBranch();
@@ -10622,7 +10669,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '31ab8f4983';
+window.KK_BUILD = '21400f33fe';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
