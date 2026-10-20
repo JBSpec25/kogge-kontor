@@ -1501,6 +1501,7 @@ em.rep.warn{background:#b5523a}
     freightDay();
     ctDay();
     ctSteward();
+    mqDay();
     finDay();
     gvDay();
     if (dateOf(st.day).getDate() === 1 && dateOf(st.day).getMonth() === 0) blUpdate();
@@ -2970,7 +2971,7 @@ em.rep.warn{background:#b5523a}
       d:'Ein Hospital für Alte, Kranke und Pilger: 400 Ehre, täglich 1 Ansehen und 200 Stimmen mehr bei der Ratswahl.'},
     hafen:{n:'Hafen und Speicher', cost:45000, days:120, ehre:300, cap:400, art:'kran',
       d:'Neue Kaimauern, Kräne und Speicher: 300 Ehre, das Kontor fasst 400 Last mehr, Ausbessern wird überall 25 % günstiger.'},
-    flotte:{n:'Eigene Friedeflotte', cost:60000, days:100, ehre:500, up:60, art:'mauer',
+    flotte:{n:'Eigene Friedeflotte', cost:60000, days:100, ehre:500, up:60, art:'werft',
       d:'Zwei bewaffnete Holke kreuzen für die Hanse: 500 Ehre, Seeräuber greifen dich und deine Verbände 30 % seltener an. 60 Gulden Unterhalt am Tag.'},
     artushof:{n:'Artushof der Kaufleute', cost:90000, days:150, ehre:700, rep:0.8, infl:0.1, art:'markt',
       d:'Ein prächtiger Saal für Gilden und Gäste: 700 Ehre, täglich 0,8 Ansehen, dein Gewicht auf dem Hansetag steigt um 10 Punkte.'},
@@ -3150,7 +3151,7 @@ em.rep.warn{background:#b5523a}
   // Ab dem Kapitel „Ratsherr“ halten die drei Familien mit dir Schritt: Ihr Ansehen folgt deinem, jede mit eigener Stärke.
   // Sie stiften, bieten um Lieferverträge, drücken Preise und machen dir ab und an das Leben schwer. Mit einer Familie kannst du
   // ein Bündnis schließen (sie tritt nicht gegen dich an und stimmt für dich) oder eine Fehde führen.
-  const RV_F = [0.84, 0.98, 1.12], RV_BUND = 365, RV_GEGEN = 2000, RV_GEGEN_CD = 60, RV_REPLY = 1500;
+  const RV_F = [0.8, 0.94, 1.07], RV_BUND = 365, RV_GEGEN = 2000, RV_GEGEN_CD = 60, RV_REPLY = 1500;
   const rvBundCost = () => Math.max(5000, Math.round(wealth() * 0.03 / 500) * 500);
   const rvRel = r => r.rel && r.relUntil > st.day ? r.rel : r.rel === 'fehde' ? 'fehde' : 'neutral';
   function rvInit() {
@@ -3164,10 +3165,10 @@ em.rep.warn{background:#b5523a}
     rvInit();
     const me = st.repute || 0, myE = ehre();
     (st.rivals || []).forEach(r => {
-      r.f = clamp(r.f + (Math.random() - 0.5) * 0.002, 0.7, 1.14);
+      r.f = clamp(r.f + (Math.random() - 0.5) * 0.002, 0.7, 1.1);
       const tgt = me * r.f;
       if (tgt > r.repute) r.repute += (tgt - r.repute) * 0.02;
-      const te = myE * r.f * 0.95;
+      const te = myE * r.f * 0.9;
       if (te > r.ehre) r.ehre += (te - r.ehre) * 0.01;
       // Stiftungen der Gegner
       if (st.day >= r.nextGift && st.rank >= 3) {
@@ -3177,8 +3178,8 @@ em.rep.warn{background:#b5523a}
       }
       // vor dem Hansetag legen knappe Gegner noch einmal nach
       const ht = nextHansetag() - st.day;
-      if (ht === 45 && !st.alderman && rivStand(r) >= standing() * 0.85 && rivStand(r) >= ALDER_STAND * 0.8 && Math.random() < 0.6) {
-        const e = Math.round(rivStand(r) * rnd(0.04, 0.09)); r.ehre += e;
+      if (ht === 45 && !st.alderman && rivStand(r) >= standing() * 0.85 && rivStand(r) >= ALDER_STAND * 0.8 && Math.random() < 0.5) {
+        const e = Math.round(rivStand(r) * rnd(0.03, 0.07)); r.ehre += e;
         addLog(`${r.name} will Ältermann werden und lässt vor dem Hansetag ${pick(['eine Kapelle', 'ein Gildehaus', 'einen Brunnen am Markt', 'ein Spital'])} bauen: ${e} Ehre.`, 'rumor');
       }
       if (rvRel(r) === 'bund') return;
@@ -3241,7 +3242,7 @@ em.rep.warn{background:#b5523a}
     const r = (st.rivals || []).find(x => x.id === id);
     if (!r || rvRel(r) !== 'fehde' || st.money < RV_GEGEN || st.day - (r.gegen || -999) < RV_GEGEN_CD) return;
     st.money -= RV_GEGEN; r.gegen = st.day;
-    const loss = Math.round(Math.min(150, r.repute * 0.04)); r.repute = Math.max(0, r.repute - loss); r.f = clamp(r.f - 0.015, 0.7, 1.14); r.wealth = Math.round(r.wealth * 0.97);
+    const loss = Math.round(Math.min(150, r.repute * 0.04)); r.repute = Math.max(0, r.repute - loss); r.f = clamp(r.f - 0.02, 0.7, 1.1); r.wealth = Math.round(r.wealth * 0.97);
     addLog(`Deine Leute im Rat und an den Kais machen ${r.name} das Leben schwer: Die Familie verliert ${loss} Ansehen und Geschäfte.`, 'rank');
     commit();
   }
@@ -3327,12 +3328,18 @@ em.rep.warn{background:#b5523a}
     Object.entries(L.g).forEach(([g, q]) => { const n = Math.min(q, maxBuy(st.loc, g)); if (n > 0) doBuy(g, n); });
   }
   function mqHTML() {
-    if (!st.loc || st.focus) return '';
+    if (!st.loc || st.focus || !st.mqOpen) return '';
     const P = mqPlan(), L = st.lists && st.lists[st.loc];
     let h = '';
     if (P.n) h += `<button class="ybtn" type="button" data-mq="sell">Alles mit Gewinn verkaufen · ${P.n} Last · ${fmt(P.gain)} G</button>`;
     if (L) h += `<button class="ybtn" type="button" data-mq="buy"${Object.keys(L.g).some(g => maxBuy(st.loc, g) > 0) ? '' : ' disabled'}>Wie zuletzt für ${C[L.to].n}: ${Object.entries(L.g).map(([g, q]) => `${q} ${G[g].n}`).join(', ')}</button>`;
     return h ? `<div class="mquick ybtns wrapb">${h}</div>` : '';
+  }
+  const MQ_AT = 100000;
+  function mqDay() {
+    if (st.mqOpen || wealth() < MQ_AT) return;
+    st.mqOpen = {d:st.day};
+    announce('Du und deine Mannschaft habt so viel gesehen, ihr seht sofort, was sich lohnt. Im Markt verkaufst du jetzt mit einem Knopf alles, was Gewinn bringt, und wiederholst den letzten Einkauf für dasselbe Ziel.', 'rank');
   }
   // Der Verwalter liefert Vertragsware aus dem Kontor im Stammsitz selbst aus, per Frachtschiff
   function ctSteward() {
@@ -7819,11 +7826,11 @@ em.rep.warn{background:#b5523a}
         box = [-8, -7, 9, 9, 15];
       } else if (kind === 'mauer') {
         ground.push({t:'water', rect:[-24, -24, 24, 0], waves:12, grad:false});
-        slab(-16, 0, 16, 16, 'meadow');
+        slab(-17, 0, 16, 25, 'meadow');
         const wm = cfg.walls === 'none' || cfg.walls === 'log' ? 'stone' : cfg.walls;
         if (job) scaf(-5, 3, 10, 10, 16, wm);
-        else { objs.push({t:'wall', x0:-14, x1:-5, y:7, h:7, mat:wm}, {t:'wall', x0:5, x1:14, y:7, h:7, mat:wm}, {t:'tower', x:0, y:8, r:5.5, h:17, kind:'round', mat:wm, roofC:cfg.wallTowers === 'roundRed' ? '#a24a30' : null}); }
-        box = [-8, 2, 8, 14, 26];
+        else { objs.push({t:'wall', x0:-15, x1:-2, y:6.9, h:7, mat:wm}, {t:'wallY', x:-1.1, y0:10, y1:22, h:7, mat:wm}, {t:'tower', x:0, y:8, r:5.5, h:17, kind:'round', mat:wm, roofC:cfg.wallTowers === 'roundRed' ? '#a24a30' : null}); }
+        box = [-12, 2, 6, 20, 26];
       }
       let clip = null; ground.forEach(g => { const r = g.rect || (g.t === 'quay' ? [g.x0, 0, g.x1, 10] : null); if (!r) return; clip = clip ? [Math.min(clip[0], r[0]), Math.min(clip[1], r[1]), Math.max(clip[2], r[2]), Math.max(clip[3], r[3])] : r.slice(); });
       return {scene:{objs, ground, roof:cfg.roof, clip}, box};
@@ -11107,7 +11114,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '6f8f2671bf';
+window.KK_BUILD = 'd8d1f0a422';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
