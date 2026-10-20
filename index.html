@@ -452,6 +452,7 @@ button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
 .cvy .yrow.sub{padding-left:10px}
 /* Ab Version 37: Ereignisse auf Fahrt */
 .frk{display:inline-block;font:600 .68rem var(--f-body);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+ol.privs{margin:4px 0 8px;padding-left:1.3em;font-size:.92rem}ol.privs li{margin:2px 0;color:var(--muted)}ol.privs li.done{color:inherit;font-weight:600}ol.privs li.done::marker{content:'✓ '}
 .rvcmp{display:grid;gap:4px;margin:4px 0 6px}.rvcmp .rvh,.rvcmp .rvr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;align-items:center;font-size:.86rem}
 .rvcmp .rvh{color:var(--muted);font-size:.74rem}.rvcmp .rvr span{position:relative}.rvcmp .rvr i{display:block;height:4px;border-radius:2px;background:var(--muted);margin-bottom:2px}.rvcmp .rvr.me i{background:var(--accent,#8a5a14)}
 .rvcmp small{color:var(--muted)}
@@ -862,6 +863,8 @@ em.rep.warn{background:#b5523a}
   <symbol id="gi-wein" viewBox="0 0 24 24"><path d="M7.5 5h9"/><path d="M8.5 5c-.4 3-2.5 5-2.5 9 0 4 2.6 6.5 6 6.5s6-2.5 6-6.5c0-4-2.1-6-2.5-9"/><path d="M8.2 5.2L5.6 3.4"/><path d="M17.5 9c2.6.2 3 4.8.2 6.2"/><path d="M7.4 12h9.2"/></symbol>
   <symbol id="gi-tuch" viewBox="0 0 24 24"><ellipse cx="6" cy="11.5" rx="2.6" ry="5.5"/><path d="M6 6h11c1.6 0 2.6 2.5 2.6 5.5S18.6 17 17 17H6"/><path d="M15 17l2.5 4.5 2-1"/><path d="M10 6v11M13.5 6v11"/></symbol>
   <symbol id="gi-wachs" viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="11" rx="1"/><path d="M12 9V7.2"/><path d="M12 2.8c1.6 1.6 1.6 3.1 0 4.2-1.6-1.1-1.6-2.6 0-4.2z"/><path d="M6.5 20.5h11"/><path d="M15 12.5c.6.4.6 1.4 0 2"/></symbol>
+  <symbol id="gi-wolle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M5.5 8.5c4 1 9 4.5 11 10.5M8.2 4.9c4 2.5 7.4 7 8.4 13M4.4 13.2c3.5.5 7 2.5 9 6.5"/><path d="M18.4 17.2c1.6 1 2.6 2.4 2.6 4"/></symbol>
+  <symbol id="gi-fass" viewBox="0 0 24 24"><path d="M7 3h10c1.6 3 2.4 6 2.4 9s-.8 6-2.4 9H7c-1.6-3-2.4-6-2.4-9S5.4 6 7 3z"/><path d="M5.2 8h13.6M5.2 16h13.6"/><path d="M12 3v18" opacity=".5"/></symbol>
   <symbol id="gi-pelze" viewBox="0 0 24 24"><path d="M8 3.5c1 1.2 3 1.8 4 1.8s3-.6 4-1.8l1.2 4.2 3 1.2-2 3 1 5-4 1.2-1.6 3.4h-3.2L8.8 18.1l-4-1.2 1-5-2-3 3-1.2z"/><path d="M12 8v8"/></symbol>
 </svg>
 
@@ -909,6 +912,7 @@ em.rep.warn{background:#b5523a}
     <section class="col">
       <div class="card" id="market" data-tab="markt"></div>
       <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Aufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
+      <div class="card home" id="dealcard" data-tab="markt" hidden></div>
       <div class="card yard" id="yard" data-tab="werft" hidden></div>
       <div class="card home" id="homecard" data-tab="haus"></div>
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
@@ -979,6 +983,7 @@ em.rep.warn{background:#b5523a}
     {id:'holz', n:'Holz', b:40},
     {id:'salz', n:'Salz', b:70},
     {id:'hering', n:'Hering', b:90},
+    {id:'wolle', n:'Wolle', b:95},
     {id:'stockfisch', n:'Stockfisch', b:115},
     {id:'eisen', n:'Eisen', b:130},
     {id:'wein', n:'Wein', b:210},
@@ -988,10 +993,10 @@ em.rep.warn{background:#b5523a}
   ];
   const CITIES = [
     {id:'luebeck', n:'Lübeck', lon:10.69, lat:53.87, p:['salz','hering'], c:['stockfisch','eisen','wachs'], lx:7, ly:-7, la:'start', d:'Haupt der Hanse, Sitz des Hansetags'},
-    {id:'hamburg', n:'Hamburg', lon:9.99, lat:53.55, p:['bier'], c:['pelze','getreide','eisen'], lx:-6, ly:-7, la:'end', d:'Bierstadt an der Elbe'},
+    {id:'hamburg', n:'Hamburg', lon:9.99, lat:53.55, p:['bier','wolle'], c:['pelze','getreide','eisen'], lx:-6, ly:-7, la:'end', d:'Bierstadt an der Elbe'},
     {id:'bremen', n:'Bremen', lon:8.8, lat:53.08, p:['bier'], c:['holz','hering'], lx:-8, ly:5, la:'end', d:'Hansestadt an der Weser'},
-    {id:'bruegge', n:'Brügge', lon:3.22, lat:51.21, p:['tuch','wein'], c:['pelze','wachs','stockfisch','holz'], lx:8, ly:5, la:'start', d:'Kontor der Hanse in Flandern'},
-    {id:'london', n:'London', lon:-0.12, lat:51.5, p:['tuch'], c:['pelze','wachs','holz','stockfisch'], lx:4, ly:-9, la:'start', d:'Stalhof, Kontor der Hanse'},
+    {id:'bruegge', n:'Brügge', lon:3.22, lat:51.21, p:['tuch','wein'], c:['wolle','pelze','wachs','stockfisch','holz'], lx:8, ly:5, la:'start', d:'Kontor der Hanse in Flandern'},
+    {id:'london', n:'London', lon:-0.12, lat:51.5, p:['tuch','wolle'], c:['pelze','wachs','holz','stockfisch'], lx:4, ly:-9, la:'start', d:'Stalhof, Kontor der Hanse'},
     {id:'bergen', n:'Bergen', lon:5.32, lat:60.39, p:['stockfisch'], c:['getreide','bier','salz','wein'], lx:8, ly:5, la:'start', d:'Deutsche Brücke, Kontor der Hanse'},
     {id:'visby', n:'Visby', lon:18.3, lat:57.64, p:['hering'], c:['bier','getreide','tuch'], lx:-8, ly:5, la:'end', d:'Stadt der Mauern auf Gotland'},
     {id:'stockholm', n:'Stockholm', lon:18.07, lat:59.33, p:['eisen','holz'], c:['salz','bier','wein','tuch'], lx:-8, ly:-4, la:'end', d:'Eisen aus den Bergwerken Schwedens'},
@@ -1017,6 +1022,7 @@ em.rep.warn{background:#b5523a}
     wachs:'<g stroke="#8a6a1e" stroke-width="2"><ellipse cx="22" cy="48" rx="16" ry="6" fill="#e2b84a"/><path d="M6 48v-6c0-3 7-6 16-6s16 3 16 6v6" fill="#efc95e"/><ellipse cx="22" cy="42" rx="16" ry="6" fill="#f3d478"/></g><rect x="44" y="20" width="9" height="34" rx="2" fill="#f6e3a0" stroke="#8a6a1e" stroke-width="2"/><path d="M48.5 20v-4" stroke="#3a2a1a" stroke-width="1.5"/><path d="M48.5 6c-3 4-3 7 0 9 3-2 3-5 0-9z" fill="#ffb347" stroke="#c96a1a"/><path d="M14 40c4-2 12-2 16 0" stroke="#fff3c4" stroke-width="1.5" fill="none"/>',
     pelze:'<path d="M22 8c3 3 7 4 10 4s7-1 10-4l2 8 8 4-4 7 2 12-8 3-3 8-4 10h-6l-4-10-3-8-8-3 2-12-4-7 8-4z" fill="#7a5233" stroke="#3e2818" stroke-width="2" stroke-linejoin="round"/><path d="M32 16v40" stroke="#5a3a22" stroke-width="2"/><path d="M26 22c2 6 2 18 0 26M38 22c-2 6-2 18 0 26" stroke="#a37552" stroke-width="1.5" fill="none" opacity=".8"/><circle cx="28" cy="14" r="1.6" fill="#1a120c"/><circle cx="36" cy="14" r="1.6" fill="#1a120c"/>'
   };
+  GOOD_ART.wolle = '<path d="M12 24c0-6 6-9 20-9s20 3 20 9v24c0 6-6 9-20 9s-20-3-20-9z" fill="#d9c7a0" stroke="#6b5636" stroke-width="2"/><path d="M12 32c8 3 32 3 40 0M12 43c8 3 32 3 40 0" stroke="#8a7350" stroke-width="1.5" fill="none"/><path d="M22 36l4 4M38 34l3 4M30 47l3 3" stroke="#a8916a" stroke-width="1.4"/><g fill="#f3ecdc" stroke="#b9a983" stroke-width="1.2"><circle cx="20" cy="16" r="4.5"/><circle cx="27" cy="12.5" r="5"/><circle cx="35" cy="12" r="5"/><circle cx="42" cy="15.5" r="4.2"/><circle cx="31" cy="17" r="4"/></g>';
   const art = id => `<svg viewBox="0 0 64 64" aria-hidden="true">${GOOD_ART[id] || ''}</svg>`;
   const GOOD_INFO = {
     getreide:'Roggen und Weizen aus Preußen und Livland. Billig nach der Ernte im Herbst, im Winter im Norden knapp.',
@@ -1029,7 +1035,8 @@ em.rep.warn{background:#b5523a}
     wein:'Rheinwein und Wein aus der Gascogne über Brügge. Der neue Wein kommt im Herbst.',
     tuch:'Flämisches und englisches Wolltuch, das wertvollste Massengut der Hanse.',
     wachs:'Bienenwachs aus Livland und Russland für Kirchenkerzen, gefragt zu Weihnachten und Lichtmess.',
-    pelze:'Zobel, Hermelin und Grauwerk aus Nowgorod und Reval. Die Winterpelze kommen im Frühjahr auf den Markt.'
+    pelze:'Zobel, Hermelin und Grauwerk aus Nowgorod und Reval. Die Winterpelze kommen im Frühjahr auf den Markt.',
+    wolle:'Englische Wolle über London und Heidewolle aus dem Hamburger Umland. Brügge und die flämischen Weber kaufen, so viel kommt; eine eigene Tuchmacherei macht daraus Tuch. Nach der Schur im Frühsommer ist sie billig.'
   };
 
   const P = (lon, lat) => [(lon + 1.5) * 15, (61.5 - lat) * 27];
@@ -1118,7 +1125,9 @@ em.rep.warn{background:#b5523a}
     {g:'wein', who:'p', m:[9, 10, 11], k:1.4, n:'Neuer Wein'},
     {g:'bier', who:'c', m:[5, 6, 7], k:0.85, n:'Sommerdurst'},
     {g:'wachs', who:'c', m:[11, 1], k:0.8, n:'Kerzen für die Feste'},
-    {g:'holz', who:'p', m:[11, 0, 1], k:0.8}
+    {g:'holz', who:'p', m:[11, 0, 1], k:0.8},
+    {g:'wolle', who:'p', m:[5, 6, 7], k:1.4, n:'Schafschur'},
+    {g:'wolle', who:'c', m:[11, 0, 1], k:0.85}
   ];
   const SEASON_NEWS = {
     7:{t:'Die Heringszüge vor Schonen haben begonnen. Bis Oktober gibt es in Lübeck und Visby Hering in Fülle, Salz wird gesucht.', g:'hering'},
@@ -1149,7 +1158,7 @@ em.rep.warn{background:#b5523a}
   const unitPrice = (s, b, cid) => b * Math.pow(2, 1 - Math.max(0, s) / (R * (DEPTH[cid] || 1)));
   // Bürgerrecht im Stammsitz und Vorteile einzelner Städte
   function pf(cid, gid, side) {
-    let f = 1;
+    let f = hkF(cid, side);
     if (st.home === cid) f *= side === 'buy' ? (st.mayor ? 0.9 : 0.95) : (st.mayor ? 1.1 : 1.05);
     if (side === 'sell' && warToll()) f *= 0.99;
     if (side === 'sell' && st.era && st.era.peace > st.day) f *= 0.995;
@@ -1188,7 +1197,7 @@ em.rep.warn{background:#b5523a}
   const stored = (gid, cid) => { const K = cid ? storeAt(cid) : st.kontor; return (K && K.goods[gid] && K.goods[gid].q) || 0; };
   const storesValue = () => allStores().reduce((x, K) => x + Object.entries(K.goods).reduce((y, [gid, c]) => y + c.q * G[gid].b, 0), 0);
   const convoysValue = () => (st.convoys || []).reduce((x, cv) => x + cv.fleet.reduce((y, sh) => y + shipValue(sh), 0) + Object.entries(cv.cargo).reduce((y, [gid, c]) => y + c.q * G[gid].b, 0), 0);
-  const wealth = () => st.money + GOODS.reduce((x, g) => x + held(g.id) * g.b, 0) + storesValue() + (st.fleet ? fleetValue() : 0) + convoysValue() + (st.reserve || st.builds ? dockValue() : 0);
+  const wealth = () => st.money + GOODS.reduce((x, g) => x + held(g.id) * g.b, 0) + storesValue() + (st.fleet ? fleetValue() : 0) + convoysValue() + (st.reserve || st.builds ? dockValue() : 0) + (st.fin ? finValue() : 0);
   const rankIdx = w => { let r = 0; RANKS.forEach(([min], i) => { if (w >= min) r = i; }); return r; };
 
   // Wetter
@@ -1472,13 +1481,15 @@ em.rep.warn{background:#b5523a}
     if (st.kontor) st.money -= KONTOR[st.kontor.lvl].upkeep + (st.kontor.steward ? STEWARD.wage : 0);
     if (st.money < 0 && !st.debtWarn) { st.debtWarn = true; const t = 'Die Truhe ist leer. Heuer, Unterhalt und Lager kosten weiter Geld, die Betriebe stehen still. Verkaufe Waren oder Schiffe, bevor die Schulden dein Vermögen übersteigen.'; addLog(t, 'tip'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4); }
     if (st.money >= 0) st.debtWarn = false;
-    st.money -= Object.keys(st.branches || {}).length * BRANCH.upkeep + capWages() + (st.convoys || []).reduce((x, cv) => x + cvCost(cv), 0) + dockCost();
+    st.money -= ownBranches() * BRANCH.upkeep + hkCount() * HK_UP + capWages() + (st.convoys || []).reduce((x, cv) => x + cvCost(cv), 0) + dockCost();
     rpState().cost += m0c - st.money;
     const rb = st.city ? cityBonus('rep') : 0;
     if (rb) gainRepute(rb);
     worksDay();
     stewardDay();
     freightDay();
+    ctDay();
+    finDay();
     cityJobsDay();
     convoysDay();
     buildsDay();
@@ -1538,9 +1549,9 @@ em.rep.warn{background:#b5523a}
   const ORD_K = {fracht:'Fracht', abholen:'Abholen', besorgen:'Besorgen', brief:'Botschaft', pilger:'Überfahrt'};
   const CLIENT = {getreide:['Bäcker', 'Brauer', 'Kloster'], bier:['Schankwirt', 'Bergenfahrer'], holz:['Werft', 'Böttcher', 'Zimmermann'], salz:['Heringssalzer', 'Schonenfahrer'],
     hering:['Fischhändler', 'Kloster'], stockfisch:['Fischhändler', 'Kloster'], eisen:['Schmied', 'Werft'], wein:['Ratskeller', 'Domkapitel'], tuch:['Gewandschneider', 'Schneidergilde'],
-    wachs:['Domkapitel', 'Kerzengießer'], pelze:['Kürschner', 'Gewandschneider']};
+    wachs:['Domkapitel', 'Kerzengießer'], pelze:['Kürschner', 'Gewandschneider'], wolle:['Tuchmacher', 'Weber']};
   const CLIENT_INST = new Set(['Kloster', 'Bergenfahrer', 'Werft', 'Schonenfahrer', 'Ratskeller', 'Domkapitel', 'Schneidergilde']);
-  const clientFor = g => { const r = pick(CLIENT[g] || ['Kaufmann']); return CLIENT_INST.has(r) ? (r === 'Bergenfahrer' || r === 'Schonenfahrer' ? `die ${r}` : r === 'Werft' ? 'die Werft' : r === 'Schneidergilde' ? 'die Schneidergilde' : `das ${r}`) : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
+  const clientFor = g => { const r = pick(CLIENT[g] || ['Kaufmann']); return CLIENT_INST.has(r) ? (r === 'Bergenfahrer' || r === 'Schonenfahrer' ? `die ${r}` : r === 'Werft' ? 'die Werft' : r === 'Schneidergilde' ? 'die Schneidergilde' : r === 'Ratskeller' ? 'der Ratskeller' : `das ${r}`) : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
   function freightState() {
     const F = st.freight || (st.freight = {offers:{}, gen:{}, active:[], next:1, done:0});
     F.active.forEach(f => { if (!f.k) f.k = 'fracht'; });
@@ -1591,9 +1602,9 @@ em.rep.warn{background:#b5523a}
     if (!o || st.enc || ordWhy(o)) return;
     list.splice(list.indexOf(o), 1);
     F.active.push(Object.assign({}, o, {d0:st.day})); qEv('frt');
-    addLog(o.k === 'fracht' ? `Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${o.by} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Gulden.`
-      : o.k === 'abholen' ? `Abholauftrag angenommen: ${o.q} Last ${G[o.g].n} in ${C[o.from].n} laden und bis ${fdate(o.due)} nach ${C[o.to].n} bringen, für ${o.by}. Lohn ${fmt(o.pay)} Gulden.`
-      : `Auftrag angenommen: ${o.q} Last ${G[o.g].n} für ${o.by} besorgen und bis ${fdate(o.due)} in ${C[o.to].n} abliefern. Lohn ${fmt(o.pay)} Gulden${o.rep ? ` und ${o.rep} Ansehen` : ''}.`);
+    addLog(o.k === 'fracht' ? `Fracht übernommen: ${o.q} Last ${G[o.g].n} für ${byAcc(o.by)} nach ${C[o.to].n}, abzuliefern bis ${fdate(o.due)}. Lohn ${fmt(o.pay)} Gulden.`
+      : o.k === 'abholen' ? `Abholauftrag angenommen: ${o.q} Last ${G[o.g].n} in ${C[o.from].n} laden und bis ${fdate(o.due)} nach ${C[o.to].n} bringen, für ${byAcc(o.by)}. Lohn ${fmt(o.pay)} Gulden.`
+      : `Auftrag angenommen: ${o.q} Last ${G[o.g].n} für ${byAcc(o.by)} besorgen und bis ${fdate(o.due)} in ${C[o.to].n} abliefern. Lohn ${fmt(o.pay)} Gulden${o.rep ? ` und ${o.rep} Ansehen` : ''}.`);
     commit();
   }
   // von Ereignissen erzeugte Aufträge (Botschaft, Überfahrt, Eilauftrag)
@@ -1607,7 +1618,7 @@ em.rep.warn{background:#b5523a}
     if (!f) return;
     F.active.splice(F.active.indexOf(f), 1);
     st.repute = Math.max(0, (st.repute || 0) - (f.rat ? Math.round(f.rep / 2) : 2));
-    addLog(f.k === 'fracht' || (f.k === 'abholen' && f.picked) ? `Du gibst den Auftrag für ${f.by} auf. ${f.q} Last ${G[f.g].n} gehen an seinen Faktor zurück; dein Ruf leidet ein wenig.` : `Du gibst den Auftrag für ${f.by} auf; dein Ruf leidet ein wenig.`);
+    addLog(f.k === 'fracht' || (f.k === 'abholen' && f.picked) ? `Du gibst den Auftrag für ${byAcc(f.by)} auf. ${f.q} Last ${G[f.g].n} gehen an seinen Faktor zurück; dein Ruf leidet ein wenig.` : `Du gibst den Auftrag für ${byAcc(f.by)} auf; dein Ruf leidet ein wenig.`);
     commit();
   }
   const ordDue = f => (f.k === 'abholen' && !f.picked) ? f.from : f.to;
@@ -1619,7 +1630,7 @@ em.rep.warn{background:#b5523a}
     const F = freightState(), f = F.active.find(x => x.id === id);
     if (!f || f.k !== 'abholen' || f.picked || st.loc !== f.from || st.enc || CAP - used() < f.q) return;
     f.picked = true;
-    addLog(`${f.q} Last ${G[f.g].n} für ${f.by} in ${C[f.from].n} geladen. Abliefern in ${C[f.to].n} bis ${fdate(f.due)}.`);
+    addLog(`${f.q} Last ${G[f.g].n} für ${byAcc(f.by)} in ${C[f.from].n} geladen. Abliefern in ${C[f.to].n} bis ${fdate(f.due)}.`);
     commit();
   }
   function deliverFreight(id) {
@@ -1636,14 +1647,14 @@ em.rep.warn{background:#b5523a}
     else gainRepute((f.rep || 0) + (late ? 0.5 : 1.5));
     F.active.splice(F.active.indexOf(f), 1);
     const what = f.k === 'brief' ? 'Die Botschaft ist überbracht' : f.k === 'pilger' ? 'Die Pilger gehen an Land' : `${f.q} Last ${G[f.g].n} abgeliefert`;
-    addLog(`${what} in ${C[f.to].n}, für ${f.by}. Lohn ${fmt(pay)} Gulden${late ? ', halbiert wegen Verspätung' : ''}${f.rep ? ` und ${f.rep} Ansehen` : ''}.`, 'gain');
+    addLog(`${what} in ${C[f.to].n}, für ${byAcc(f.by)}. Lohn ${fmt(pay)} Gulden${late ? ', halbiert wegen Verspätung' : ''}${f.rep ? ` und ${f.rep} Ansehen` : ''}.`, 'gain');
     checkRank();
     commit();
   }
   const freightHere = () => !!st.loc && ((st.freight || {}).active || []).some(f => (f.to === st.loc && (f.k !== 'abholen' || f.picked) && (f.k !== 'besorgen' || haveFor(f.g) >= f.q)) || (f.k === 'abholen' && !f.picked && f.from === st.loc));
   function freightDay() {
     const F = st.freight; if (!F || !F.active.length) return;
-    if (!st.fleet.length) { F.active.filter(f => ordSpace(f)).forEach(f => addLog(`Der Auftrag für ${f.by} ist mit deinem Schiff verloren.`)); F.active = F.active.filter(f => !ordSpace(f)); }
+    if (!st.fleet.length) { F.active.filter(f => ordSpace(f)).forEach(f => addLog(`Der Auftrag für ${byAcc(f.by)} ist mit deinem Schiff verloren.`)); F.active = F.active.filter(f => !ordSpace(f)); }
     F.active.filter(f => f.k === 'besorgen' ? st.day > f.due : st.day > f.due + 15).forEach(f => {
       F.active.splice(F.active.indexOf(f), 1); st.repute = Math.max(0, (st.repute || 0) - (f.rat ? Math.round(f.rep / 2) : 3));
       addLog(f.rat ? `Auftrag des Rats verfehlt: ${f.q} Last ${G[f.g].n} kamen nicht rechtzeitig. Der Rat ist verstimmt.` : `${f.by.replace(/^\w/, m => m.toUpperCase())} hat die Geduld verloren: Der Auftrag nach ${C[f.to].n} ist verfallen, dein Ruf leidet.`);
@@ -1669,12 +1680,13 @@ em.rep.warn{background:#b5523a}
       act += `<button class="linkbtn" type="button" data-fr="drop" data-id="${f.id}">Aufgeben</button>`;
     } else { const why = ordWhy(f); act = `<button class="ybtn" type="button" data-fr="take" data-id="${f.id}"${why || st.enc ? ' disabled' : ''}>Annehmen</button>${why ? `<span class="frwhere">${why}</span>` : ''}`; }
     const amount = f.k === 'brief' ? 'kein Laderaum' : f.k === 'pilger' ? `${f.q} Last Platz` : `${f.q} Last`;
-    return `<li class="frow${here ? ' here' : ''}"><span class="fri">${f.g ? icon(f.g) : '✉'}</span><span class="frm"><b><span class="frk">${ORD_K[f.k]}</span> ${ordTitle(f)}</b><span class="frs">${amount}${dl ? ` · ${dl}` : ''}</span><span class="frs">für ${esc(f.by)}${f.rep ? ` · ${f.rep} Ansehen` : ''}</span></span>` +
+    return `<li class="frow${here ? ' here' : ''}"><span class="fri">${f.g ? icon(f.g) : '✉'}</span><span class="frm"><b><span class="frk">${ORD_K[f.k]}</span> ${ordTitle(f)}</b><span class="frs">${amount}${dl ? ` · ${dl}` : ''}</span><span class="frs">für ${esc(byAcc(f.by))}${f.rep ? ` · ${f.rep} Ansehen` : ''}</span></span>` +
       `<span class="frp">${fmt(pay)} G</span><span class="fra">${act}</span></li>`;
   }
   function renderFreight() {
     const box = $('#frbox'), F = freightState(), act = F.active, offers = st.loc ? freightOffers(st.loc) : [];
-    box.hidden = !act.length && !offers.length;
+    const ctH = ctSection();
+    box.hidden = !act.length && !offers.length && !ctH;
     if (box.hidden) return;
     const nHere = act.filter(f => st.loc && ordDue(f) === st.loc).length, slots = act.filter(f => f.k !== 'brief').length;
     $('#frlast').textContent = nHere ? `${nHere} hier zu erledigen` : [act.length ? `${act.length} angenommen` : '', offers.length ? `${offers.length} ${offers.length === 1 ? 'Angebot' : 'Angebote'}` : ''].filter(Boolean).join(' · ');
@@ -1683,7 +1695,7 @@ em.rep.warn{background:#b5523a}
     if (act.length) h += `<h3 class="frh">Angenommen <small>${slots} von ${ORD_MAX()}</small></h3><ul class="frl">${act.slice().sort((x, y) => (ordDue(y) === st.loc) - (ordDue(x) === st.loc) || x.due - y.due).map(f => freightRow(f, true)).join('')}</ul>`;
     if (offers.length) h += `<h3 class="frh">Angebote in ${C[st.loc].n}</h3><p class="small frhint">Fracht und Abholen brauchen nur Laderaum, den Lohn gibt es beim Abliefern. Beim Besorgen kaufst du die Ware selbst, wo sie günstig ist${ratOrder(st.loc) ? '; der Rat zahlt dazu Ansehen' : ''}. Neue Angebote etwa jede Woche.</p><ul class="frl">${offers.map(o => freightRow(o, false)).join('')}</ul>`;
     else if (st.loc) h += `<p class="small frhint">In ${C[st.loc].n} gibt es gerade keine weiteren Aufträge.</p>`;
-    $('#frbody').innerHTML = h;
+    $('#frbody').innerHTML = h + ctH;
   }
   function trackTrade(kind, gid, amount, prof) {
     const v = st.visit && st.visit.c === st.loc ? st.visit : (st.visit = {c:st.loc, d:st.day, buy:0, sell:0, prof:0});
@@ -1744,9 +1756,11 @@ em.rep.warn{background:#b5523a}
     getreide:{n:'Gutshof', out:0.2, peak:1.6, mat:0.45, cost:2000, wage:4, season:[7, 8, 9, 10], d:'erntet im Herbst etwa 11 Last in der Woche, sonst 1 bis 2'},
     eisen:{n:'Hammerwerk', out:0.55, mat:0.5, cost:3200, wage:6, d:'schmiedet etwa 4 Last Eisen in der Woche'},
     wachs:{n:'Wachszieherei', out:0.25, mat:0.55, cost:3000, wage:6, d:'gewinnt knapp 2 Last Wachs in der Woche'},
-    pelze:{n:'Pelzhandel', out:0.25, mat:0.6, cost:3400, wage:7, d:'kauft Jägern knapp 2 Last Pelze in der Woche ab'}
+    pelze:{n:'Pelzhandel', out:0.25, mat:0.6, cost:3400, wage:7, d:'kauft Jägern knapp 2 Last Pelze in der Woche ab'},
+    tuch:{n:'Tuchmacherei', out:0.5, inp:{wolle:1.5}, mat:0.15, cost:3600, wage:6, d:'webt aus 3 Last Wolle aus dem Kontor 2 Last Tuch, etwa 3 bis 4 Last in der Woche. Wolle gibt es in London und Hamburg'},
+    fass:{n:'Böttcherei', aux:true, out:0, inp:{holz:0.5}, mat:0, cost:1600, wage:3, d:'macht aus Holz aus dem Kontor Fässer, etwa 3 bis 4 Last Holz in der Woche. Jede Böttcherei lässt zwei Brauereien, Heringsfänge oder Salzsiedereien ein Viertel mehr liefern'}
   };
-  const worksAllowed = () => [...new Set(C[st.home].p.concat(['bier']))].filter(g => WORKS[g]);
+  const worksAllowed = () => [...new Set(C[st.home].p.concat(['bier', 'tuch', 'fass']))].filter(g => WORKS[g]);
   const maxWorks = () => 3 + (typeof cityBonus === 'function' ? cityBonus('works') : 0);
   const storeAt = cid => !st || !cid ? null : cid === st.home ? st.kontor : (st.branches || {})[cid] || null;
   const allStores = () => [st.kontor].concat(Object.values(st.branches || {})).filter(Boolean);
@@ -2000,11 +2014,14 @@ em.rep.warn{background:#b5523a}
       }
     }
     cvSee(cv, to);
+    const ctd = ctFromConvoy(cv, to);
     const res = cvTrade(cv, to);
     cvMaintain(cv);
     if (to === cv.route[0]) cvLapDone(cv);
     const bought = Object.entries(res.bq).map(([g, q]) => `${q} ${G[g].n}`).join(', ');
     const parts = [res.sold ? `verkauft für ${fmt(res.sold)} Gulden (${res.prof >= 0 ? 'Gewinn' : 'Verlust'} ${fmt(Math.abs(res.prof))})` : 'nichts verkauft'];
+    if (ctd) parts.unshift(ctd);
+    const crp = cropToConvoy(cv, to); if (crp) parts.push(crp);
     if (bought) parts.push(`geladen: ${bought}`);
     (res.moved || []).forEach(x => parts.push(x));
     addLog(`Kapitän ${k ? k.name : '–'} in ${C[to].n}: ${parts.join('; ')}.`, 'cap');
@@ -2388,25 +2405,66 @@ em.rep.warn{background:#b5523a}
     if (st.waiting) timer = setTimeout(waitTick, tickMs());
   }
 
-  // Betriebe im Stammsitz und Niederlassungen in anderen Städten
+  // ───────── Ab Version 40: Produktionsketten und Lieferverträge ─────────
+  // Betriebe brauchen Rohstoffe aus dem Kontor: die Brauerei Getreide, die Tuchmacherei Wolle, die Böttcherei Holz.
+  // Die Böttcherei liefert Fässer: Jede laufende Böttcherei lässt zwei Fassbetriebe (Brauerei, Heringsfang, Salzsiederei) ein Viertel mehr liefern.
+  const FASS_WORKS = ['bier', 'hering', 'salz'], FASS_K = 1.25, FASS_PER = 2;
+  const isAux = g => !!(WORKS[g] && WORKS[g].aux);
+  const worksNeed = () => { const n = {}; (st.works || []).forEach(w => { const W = WORKS[w.g]; if (W && W.inp) Object.entries(W.inp).forEach(([g, per]) => { n[g] = (n[g] || 0) + per * (W.aux ? 1 : (W.peak && W.season ? Math.max(W.out, W.peak) : W.out)) * (FASS_WORKS.includes(w.g) ? FASS_K : 1); }); }); return n; };
+  // Verwalter kauft fehlende Rohstoffe am Markt des Stammsitzes nach, für etwa zehn Tage
+  function worksRestock() {
+    const K = st.kontor;
+    if (!K || !K.steward || !K.auto || st.money <= 0) return;
+    Object.entries(worksNeed()).forEach(([g, per]) => {
+      if (storedQ(g) >= per * 4) return;
+      let q = Math.ceil(per * 10) - storedQ(g);
+      q = Math.min(q, K.cap - kontorUsed());
+      while (q > 0 && buyCost(st.home, g, q) > st.money * 0.5) q--;
+      if (q <= 0) return;
+      const cost = buyCost(st.home, g, q);
+      st.money -= cost; st.stock[st.home][g] = Math.max(0, st.stock[st.home][g] - q);
+      const c = K.goods[g] || (K.goods[g] = {q:0, cost:0}); c.q += q; c.cost += cost;
+      K.bought = (K.bought || 0) + cost;
+      if (!K.autoLog || st.day - K.autoLog >= 7) { K.autoLog = st.day; addLog(`Dein Verwalter kauft in ${C[st.home].n} ${q} Last ${G[g].n} für die Betriebe, ${fmt(cost)} Gulden.`, 'tip'); }
+    });
+  }
   function worksDay() {
     if (!st.kontor || !(st.works || []).length) return;
-    if (st.money < 0) { st.works.forEach(w => { w.idle = true; }); return; }
+    if (st.money < 0) { st.works.forEach(w => { w.idle = true; w.why = 'geld'; }); return; }
+    worksRestock();
     const m = monthOf(st.day);
-    st.works.forEach(w => {
+    // zuerst die Böttchereien: Holz aus dem Kontor zu Fässern
+    let barrels = 0;
+    st.works.filter(w => isAux(w.g)).forEach(w => {
+      const W = WORKS[w.g];
+      st.money -= W.wage;
+      w.need = (w.need || 0) + W.inp.holz;
+      const take = Math.floor(w.need + 1e-9);
+      if (take > 0) {
+        if (storedQ('holz') < take) { w.idle = true; w.why = 'roh:holz'; w.need = Math.min(w.need, 2); return; }
+        const c = st.kontor.goods.holz, part = c.cost * take / c.q;
+        c.q -= take; c.cost -= part; if (c.q <= 0) delete st.kontor.goods.holz;
+        w.need -= take; w.made = (w.made || 0) + take;
+      }
+      w.idle = false; w.why = null; barrels += FASS_PER;
+    });
+    st.works.filter(w => !isAux(w.g)).forEach(w => {
       const W = WORKS[w.g];
       st.money -= W.wage; w.wc = (w.wc || 0) + W.wage;
-      w.acc = (w.acc || 0) + (W.season && W.season.includes(m) ? W.peak : W.out);
-      let out = Math.floor(w.acc + 1e-9);
-      if (W.inp) Object.entries(W.inp).forEach(([gid, per]) => { out = Math.min(out, Math.floor(storedQ(gid) / per)); });
-      out = Math.min(out, st.kontor.cap - kontorUsed());
-      if (out <= 0) { w.idle = w.acc >= 1; if (w.acc > 2) w.acc = 2; return; }
-      w.acc -= out; w.idle = false;
+      w.fass = FASS_WORKS.includes(w.g) && barrels > 0;
+      if (w.fass) barrels--;
+      w.acc = (w.acc || 0) + (W.season && W.season.includes(m) ? W.peak : W.out) * (w.fass ? FASS_K : 1);
+      let out = Math.floor(w.acc + 1e-9), why = null;
+      if (W.inp) Object.entries(W.inp).forEach(([gid, per]) => { const can = Math.floor(storedQ(gid) / per + 1e-9); if (can < out) { out = can; why = 'roh:' + gid; } });
+      const room = st.kontor.cap - kontorUsed();
+      if (room < out) { out = room; why = 'voll'; }
+      if (out <= 0) { w.idle = w.acc >= 1; w.why = w.idle ? why : null; if (w.acc > 2) w.acc = 2; return; }
+      w.acc -= out; w.idle = false; w.why = null;
       const matCost = Math.round(out * G[w.g].b * W.mat);
       st.money -= matCost;
       let cost = w.wc + matCost; w.wc = 0;
       if (W.inp) Object.entries(W.inp).forEach(([gid, per]) => {
-        const c = st.kontor.goods[gid], q = Math.min(c.q, Math.ceil(out * per)), part = c.cost * q / c.q;
+        const c = st.kontor.goods[gid], q = Math.min(c.q, Math.ceil(out * per - 1e-9)), part = c.cost * q / c.q;
         c.q -= q; c.cost -= part; cost += part;
         if (c.q <= 0) delete st.kontor.goods[gid];
       });
@@ -2414,6 +2472,152 @@ em.rep.warn{background:#b5523a}
       d.q += out; d.cost += cost; w.made = (w.made || 0) + out;
       gainRepute(0.06 * out);
     });
+  }
+  const workWhy = w => !w.idle ? '' : w.why === 'voll' ? ' Steht still: Das Kontor ist voll.' : w.why === 'geld' ? ' Steht still: Die Truhe ist leer.' : w.why && w.why.startsWith('roh:') ? ` Steht still: Es fehlt ${G[w.why.slice(4)].n} im Kontor.` : ' Steht still: Lager voll oder Rohstoff fehlt.';
+  function workInpLine(w) {
+    const W = WORKS[w.g];
+    if (!W.inp) return w.fass ? ' Mit Fässern aus deiner Böttcherei ein Viertel mehr.' : '';
+    return ' ' + Object.entries(W.inp).map(([g, per]) => { const have = storedQ(g), use = per * (W.aux ? 1 : W.out) * (w.fass ? FASS_K : 1), days = use ? Math.floor(have / use) : 0;
+      return `Im Kontor ${have} Last ${G[g].n}${have ? `, reicht etwa ${days} ${days === 1 ? 'Tag' : 'Tage'}` : ''}.`; }).join(' ') + (w.fass ? ' Mit Fässern aus deiner Böttcherei ein Viertel mehr.' : '');
+  }
+
+  // Lieferverträge: feste Menge zum festen Preis alle 30 Tage, über mehrere Monate; wer zu spät liefert, zahlt Strafe
+  // Fall der Auftraggeber: für den Rat, mit dem Rat
+  const byAcc = s => String(s).replace(/^der (Rat|Ratskeller)\b/, 'den $1');
+  const byDat = s => String(s).replace(/^die (Bergenfahrer|Schonenfahrer)$/, 'den $1n').replace(/^die Lombarden/, 'den Lombarden').replace(/^der |^das /, 'dem ').replace(/^die /, 'der ').replace(/^ein /, 'einem ').replace(/^eine /, 'einer ');
+  const CT_RANK = 2, CT_EVERY = 30, CT_EARLY = 15, CT_GRACE = 3;
+  const CT_MAX = () => st.rank < CT_RANK ? 0 : 1 + (st.rank >= 3 ? 1 : 0) + (st.rank >= 4 ? 1 : 0);
+  const ctState = () => st.contracts || (st.contracts = {list:[], offers:{}, gen:{}, next:1, done:0, broken:0, intro:false});
+  const ctPen = k => Math.round(k.q * k.price * 0.3 / 10) * 10;
+  const ctOpen = k => st.day >= k.due - CT_EARLY;
+  const ctHave = k => held(k.g) + (st.loc === k.cid ? stored(k.g, k.cid) : 0);
+  const CT_FINE = ['bier', 'tuch', 'salz', 'hering'];
+  const ctGoods = cid => { const c = C[cid]; return [...new Set(c.c.concat(c.c, CT_FINE.filter(g => !c.c.includes(g))))].filter(g => !c.p.includes(g)); };
+  function ctOffers(cid) {
+    const T = ctState();
+    if (!cid || !CT_MAX()) return [];
+    if (!T.offers[cid] || st.day - (T.gen[cid] == null ? -99 : T.gen[cid]) >= 20) { T.gen[cid] = st.day; T.offers[cid] = Math.random() < 0.7 ? [genContract(cid)] : []; }
+    return T.offers[cid];
+  }
+  function genContract(cid) {
+    const T = ctState(), c = C[cid], pool = ctGoods(cid), g = pick(pool.concat(c.c)), rk = Math.max(CT_RANK, st.rank), rat = Math.random() < 0.4;
+    const lo = 8 + 4 * (rk - 2), q = Math.max(4, Math.round((lo + Math.random() * lo) * (G[g].b >= 200 ? 0.55 : G[g].b >= 120 ? 0.8 : 1)));
+    const eq = unitPrice(baseE(c, g), G[g].b, cid) * 0.94, price = Math.round(eq * rnd(1.04, 1.14) * (rat ? 1.03 : 1));
+    return {id:T.next++, cid, g, q, n:3 + Math.floor(Math.random() * 4), price, rat, by:rat ? `der Rat von ${c.n}` : clientFor(g)};
+  }
+  function ctWhy(o) {
+    const T = ctState();
+    if (T.list.length >= CT_MAX()) return CT_MAX() === 1 ? 'Schon ein Vertrag läuft' : `Schon ${CT_MAX()} Verträge laufen`;
+    if (st.loc !== o.cid) return `nur in ${C[o.cid].n}`;
+    return '';
+  }
+  function ctTake(id) {
+    const T = ctState(), list = ctOffers(st.loc), o = list.find(x => x.id === id);
+    if (!o || st.enc || ctWhy(o)) return;
+    list.splice(list.indexOf(o), 1);
+    T.list.push(Object.assign({}, o, {d0:st.day, next:1, due:st.day + CT_EVERY, miss:0, got:0}));
+    addLog(`Liefervertrag unterschrieben: ${o.n}-mal ${o.q} Last ${G[o.g].n} für ${byAcc(o.by)}, alle ${CT_EVERY} Tage in ${C[o.cid].n}, zu ${fmt(o.price)} Gulden je Last. Die erste Lieferung ist bis ${fdate(st.day + CT_EVERY)} fällig.`, 'rank');
+    commit();
+  }
+  function ctPaid(k, how) {
+    const T = ctState(), pay = k.q * k.price;
+    st.money += pay; rpState().freight += pay; k.got++;
+    st.stock[k.cid][k.g] += k.q * 0.5;
+    gainRepute(k.rat ? 2 : 1.5);
+    addLog(`Lieferung ${k.next} von ${k.n} für ${byAcc(k.by)}: ${k.q} Last ${G[k.g].n} ${how}, ${fmt(pay)} Gulden.`, 'gain');
+    ctStep(k);
+  }
+  function ctStep(k) {
+    const T = ctState();
+    k.next++; k.due += CT_EVERY; k.warned = 0;
+    if (k.next <= k.n) return;
+    T.list.splice(T.list.indexOf(k), 1); T.done++;
+    const rep = Math.max(0, k.got * (k.rat ? 3 : 2) - k.miss * 3);
+    if (rep) gainRepute(rep);
+    addLog(`Der Vertrag mit ${byDat(k.by)} ist erfüllt: ${k.got} von ${k.n} Lieferungen${rep ? `, ${rep} Ansehen` : ''}.`, 'gain');
+    checkRank();
+  }
+  function ctMiss(k) {
+    const T = ctState(), pen = ctPen(k);
+    st.money -= pen; rpState().cost += pen; k.miss++;
+    st.repute = Math.max(0, (st.repute || 0) - (k.rat ? 6 : 4));
+    if (k.miss >= 2) {
+      T.list.splice(T.list.indexOf(k), 1); T.broken++;
+      st.repute = Math.max(0, (st.repute || 0) - 8);
+      announce(`${k.by.replace(/^\w/, m => m.toUpperCase())} kündigt den Liefervertrag über ${G[k.g].n}: Zum zweiten Mal kam nichts. Strafe ${fmt(pen)} Gulden, dein Ruf leidet.`);
+      return;
+    }
+    addLog(`Lieferung verfehlt: ${k.q} Last ${G[k.g].n} kamen nicht rechtzeitig nach ${C[k.cid].n}. Strafe ${fmt(pen)} Gulden. Beim zweiten Mal kündigt ${k.by} den Vertrag.`, 'tip');
+    ctStep(k);
+  }
+  function ctGive(id) {
+    const k = ctState().list.find(x => x.id === id);
+    if (!k || st.loc !== k.cid || st.enc || st.focus || !ctOpen(k) || ctHave(k) < k.q) return;
+    let need = k.q; need -= takeGoods(st.cargo, k.g, need); if (need > 0) { const K = storeAt(k.cid); if (K) need -= takeGoods(K.goods, k.g, need); }
+    ctPaid(k, 'geliefert');
+    commit();
+  }
+  function ctDrop(id) {
+    const T = ctState(), k = T.list.find(x => x.id === id);
+    if (!k) return;
+    const pen = ctPen(k);
+    T.list.splice(T.list.indexOf(k), 1); T.broken++;
+    st.money -= pen; rpState().cost += pen; st.repute = Math.max(0, (st.repute || 0) - 6);
+    addLog(`Du kündigst den Liefervertrag mit ${byDat(k.by)}. Die Vertragsstrafe beträgt ${fmt(pen)} Gulden, dein Ruf leidet.`);
+    commit();
+  }
+  // ein Verband liefert, wenn er Vertragsware an Bord hat und das Lieferfenster offen ist
+  function ctFromConvoy(cv, cid) {
+    const T = st.contracts; if (!T || !T.list.length) return '';
+    const out = [];
+    T.list.filter(k => k.cid === cid && ctOpen(k)).forEach(k => {
+      const K = storeAt(cid), have = ((cv.cargo[k.g] || {}).q || 0) + (K ? stored(k.g, cid) : 0);
+      if (have < k.q) return;
+      let need = k.q; need -= takeGoods(cv.cargo, k.g, need); if (need > 0 && K) need -= takeGoods(K.goods, k.g, need);
+      out.push(`liefert ${k.q} Last ${G[k.g].n} für den Vertrag mit ${byDat(k.by)}`);
+      ctPaid(k, `vom ${cvLabel(cv)} geliefert`);
+    });
+    return out.join('; ');
+  }
+  function ctDay() {
+    const T = ctState();
+    if (!T.intro && CT_MAX()) {
+      T.intro = true;
+      const t = 'Als Kaufmann bekommst du Lieferverträge angeboten: feste Mengen zum festen Preis, alle 30 Tage über mehrere Monate. Du findest sie im Reiter Markt unter Aufträge. Wer zu spät liefert, zahlt Strafe.';
+      addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
+    }
+    T.list.slice().forEach(k => {
+      if (st.day >= k.due - 2 && st.day <= k.due + CT_GRACE) {
+        const K = storeAt(k.cid);
+        if (K && stored(k.g, k.cid) >= k.q) { takeGoods(K.goods, k.g, k.q); ctPaid(k, `aus deinem Lager in ${C[k.cid].n} geliefert`); return; }
+      }
+      if (st.day === k.due - 7 && k.warned !== k.next && !(st.loc === k.cid && ctHave(k) >= k.q)) { k.warned = k.next; addLog(`In einer Woche erwartet ${k.by} in ${C[k.cid].n} ${k.q} Last ${G[k.g].n} (Lieferung ${k.next} von ${k.n}).`, 'tip'); }
+      if (st.day > k.due + CT_GRACE) ctMiss(k);
+    });
+  }
+  function ctRow(k, active) {
+    const here = st.loc === k.cid, val = k.q * k.price;
+    let sub, act;
+    if (active) {
+      const left = k.due - st.day, open = ctOpen(k);
+      sub = `Lieferung ${k.next} von ${k.n} · ${left >= 0 ? `fällig bis ${fdate(k.due).replace(' ', '&nbsp;')}` : `<b class="frlate">überfällig, letzte Frist ${fdate(k.due + CT_GRACE).replace(' ', '&nbsp;')}</b>`}${k.miss ? ` · ${k.miss}× verfehlt` : ''}`;
+      if (here && open) { const have = ctHave(k); act = `<button class="ybtn on" type="button" data-ct="give" data-id="${k.id}"${st.enc || st.focus || have < k.q ? ' disabled' : ''}>${have < k.q ? `noch ${k.q - have} Last fehlen` : `Liefern · ${fmt(val)} G`}</button>`; }
+      else act = `<span class="frwhere">${open ? `Liefern in ${C[k.cid].n}` : `Lieferfenster ab ${fdate(k.due - CT_EARLY)}`}</span>`;
+      act += `<button class="linkbtn" type="button" data-ct="drop" data-id="${k.id}">Kündigen · ${fmt(ctPen(k))} G Strafe</button>`;
+    } else {
+      sub = `${k.n}-mal ${k.q} Last, alle ${CT_EVERY} Tage · ${fmt(k.price)} G je Last`;
+      const why = ctWhy(k); act = `<button class="ybtn" type="button" data-ct="take" data-id="${k.id}"${why || st.enc ? ' disabled' : ''}>Unterschreiben</button>${why ? `<span class="frwhere">${why}</span>` : ''}`;
+    }
+    return `<li class="frow${active && here && ctOpen(k) ? ' here' : ''}"><span class="fri">${icon(k.g)}</span><span class="frm"><b><span class="frk">Vertrag</span> ${G[k.g].n} nach ${C[k.cid].n}</b><span class="frs">${sub}</span><span class="frs">für ${esc(byAcc(k.by))} · Strafe bei Verzug ${fmt(ctPen(k))} G</span></span>` +
+      `<span class="frp">${fmt(val)} G</span><span class="fra">${act}</span></li>`;
+  }
+  function ctSection() {
+    const T = ctState(), offers = st.loc && !st.focus ? ctOffers(st.loc) : [];
+    if (!T.list.length && !offers.length) return '';
+    let h = `<h3 class="frh">Lieferverträge <small>${T.list.length} von ${CT_MAX()}</small></h3>`;
+    if (T.list.length) h += `<ul class="frl">${T.list.slice().sort((a, b) => a.due - b.due).map(k => ctRow(k, true)).join('')}</ul>`;
+    if (offers.length) h += `<p class="small frhint">Ein Vertrag bindet dich über Monate: alle ${CT_EVERY} Tage dieselbe Menge zum festen Preis, gleich wie der Markt steht. Liefern kannst du ab ${CT_EARLY} Tagen vor dem Termin, selbst oder mit einem Verband; liegt die Ware in deinem Lager in der Stadt, geht sie zum Termin von selbst hinaus. Wer zu spät kommt, zahlt Strafe.</p><ul class="frl">${offers.map(k => ctRow(k, false)).join('')}</ul>`;
+    return h;
   }
   const storedQ = gid => (st.kontor && st.kontor.goods[gid] && st.kontor.goods[gid].q) || 0;
   function buildWork(gid) {
@@ -2426,12 +2630,13 @@ em.rep.warn{background:#b5523a}
   }
   function buildBranch() {
     const cid = st.loc;
-    if (!cid || cid === st.home || (st.branches || {})[cid] || civicIdx(st.repute || 0) < BRANCH.civic || Object.keys(st.branches).length >= BRANCH.max || st.money < BRANCH.cost) return;
+    const B0 = (st.branches || {})[cid];
+    if (!cid || cid === st.home || (B0 && (B0.own || !B0.hk)) || civicIdx(st.repute || 0) < BRANCH.civic || ownBranches() >= BRANCH.max || st.money < BRANCH.cost) return;
     st.money -= BRANCH.cost;
-    st.branches[cid] = {lvl:1, cap:BRANCH.cap, goods:{}};
+    if (B0) { B0.own = true; B0.cap += BRANCH.cap; } else st.branches[cid] = {lvl:1, cap:BRANCH.cap, goods:{}, own:true};
     addLog(`Deine Niederlassung in ${C[cid].n} ist eingerichtet: ein Lager für ${BRANCH.cap} Last.`, 'gain');
     buildUnlockCheck();
-    if (Object.keys(st.branches).length === 1 && !(st.convoys || []).length) {
+    if (ownBranches() === 1 && !(st.convoys || []).length) {
       const t = 'Du kannst jetzt Verbände auf Handelsrouten schicken: Im Reiter Haus gibst du einem Kapitän Schiffe und eine Route. Er handelt selbst oder nach deinen Regeln und kann in deine Lager ein- und auslagern.';
       addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'cap'}]).slice(-4);
     }
@@ -2496,7 +2701,7 @@ em.rep.warn{background:#b5523a}
     addLog(`Ratsauftrag angenommen: ${it.q} Last ${G[it.g].n} bis ${fdate(it.due)} nach ${C[st.home].n}, Lohn ${fmt(it.pay)} Gulden.`, 'rank');
     commit();
   }
-  const haveFor = gid => held(gid) + stored(gid);
+  const haveFor = gid => held(gid) + stored(gid, st.loc || st.home);
   function takeGoods(src, gid, q) {
     const c = src[gid]; if (!c || q <= 0) return 0;
     const n = Math.min(q, c.q);
@@ -2781,6 +2986,398 @@ em.rep.warn{background:#b5523a}
     d_kop:{open:[1368, 2, 1], due:[1368, 4, 25], battle:[1368, 5, 2], base:0.85, need:'v_koeln',
       q:'Die Konföderation rüstet die große Flotte gegen Kopenhagen. Was gibst du dazu?'}
   };
+  // ───────── Ab Version 41: Hansekontore, Schiffsparten, Darlehen und Vorkauf ganzer Ernten ─────────
+  // Hansekontore: Aufnahme gegen Gebühr, dann ein Lager im Kontor und bessere Preise. Weitere Vorrechte erstreitet der Hansetag.
+  const HK = {
+    bruegge:{n:'Kontor in Brügge', s:'Brügger Kontor', nom:'Das Kontor in Brügge', acc:'das Kontor in Brügge', dat:'im Kontor in Brügge', fee:2000, P:['Zollnachlass am Zwin', 'Eigene Waage bei den Karmelitern', 'Freiheit vom Brügger Stapel']},
+    london:{n:'Stalhof in London', s:'Stalhof', nom:'Der Stalhof in London', acc:'den Stalhof in London', dat:'im Stalhof', fee:2400, P:['Freiheit vom Londoner Schoß', 'Eigener Kran am Stalhof', 'Gleichstellung mit den Londoner Bürgern']},
+    bergen:{n:'Deutsche Brücke in Bergen', s:'Deutsche Brücke', nom:'Die Deutsche Brücke in Bergen', acc:'die Deutsche Brücke in Bergen', dat:'auf der Deutschen Brücke', fee:1600, P:['Vorrang beim Stockfisch', 'Eigene Speicher auf der Brücke', 'Winterlager in Bryggen']},
+    nowgorod:{n:'Peterhof in Nowgorod', s:'Peterhof', nom:'Der Peterhof in Nowgorod', acc:'den Peterhof in Nowgorod', dat:'im Peterhof', fee:2200, P:['Freies Geleit auf dem Wolchow', 'Eigene Waage im Peterhof', 'Vorrang beim Pelzkauf']}
+  };
+  const HK_RANK = 2, HK_CAP = 60, HK_UP = 2, HK_LOBBY = 600;
+  const hkState = () => st.hk || (st.hk = {mem:{}, priv:{bruegge:0, london:0, bergen:0, nowgorod:0}});
+  const hkMember = cid => !!(st && st.hk && st.hk.mem[cid]);
+  const hkPriv = cid => (st && st.hk && st.hk.priv[cid]) || 0;
+  const hkPct = cid => 2 + 2.5 * hkPriv(cid);
+  const hkF = (cid, side) => !hkMember(cid) ? 1 : side === 'buy' ? 1 - hkPct(cid) / 100 : 1 + hkPct(cid) / 100;
+  const hkCap = cid => HK_CAP + 20 * hkPriv(cid);
+  const hkCount = () => st.hk ? Object.keys(st.hk.mem).length : 0;
+  const ownBranches = () => Object.values(st.branches || {}).filter(b => b.own || !b.hk).length;
+  function hkSync(cid) {
+    if (!hkMember(cid)) return;
+    const B = st.branches[cid];
+    if (!B) st.branches[cid] = {lvl:1, cap:hkCap(cid), goods:{}, hk:true, own:false};
+    else { if (!B.hk) B.own = true; B.hk = true; B.cap = (B.own ? BRANCH.cap : 0) + hkCap(cid); }
+  }
+  function hkJoin(cid) {
+    const S = hkState(), K = HK[cid];
+    if (!K || st.loc !== cid || hkMember(cid) || st.rank < HK_RANK || st.money < K.fee || st.enc || st.focus) return;
+    st.money -= K.fee; S.mem[cid] = {d:st.day};
+    hkSync(cid);
+    gainRepute(10);
+    addLog(`${K.nom} nimmt dich auf. Hier kaufst du ${fmt(hkPct(cid))} % günstiger und verkaufst ${fmt(hkPct(cid))} % teurer und hast ein Lager für ${hkCap(cid)} Last im Kontor.`, 'rank');
+    chronicle(`Aufnahme in ${K.acc}`);
+    commit();
+  }
+  function hkWin(cid) {
+    const S = hkState();
+    if (S.priv[cid] >= 3) return '';
+    S.priv[cid]++;
+    const p = HK[cid].P[S.priv[cid] - 1];
+    hkSync(cid);
+    return `Neues Vorrecht: ${p}.` + (hkMember(cid) ? ` Als Mitglied kaufst du dort jetzt ${fmt(hkPct(cid))} % günstiger, verkaufst ${fmt(hkPct(cid))} % teurer, und dein Kontorlager wächst auf ${hkCap(cid)} Last.` : '');
+  }
+  // eine Frage zu den Kontoren am Hansetag, bevorzugt zu deinen
+  function hkVoteOpen(d) {
+    const H = hanse(), S = hkState();
+    const pool = Object.keys(HK).filter(c => S.priv[c] < 3 && !(c === 'nowgorod' && H.yearly === 'v_nowgorod'));
+    if (!pool.length) return;
+    const mine = pool.filter(hkMember);
+    if (!mine.length && Math.random() < 0.5) return;
+    const cid = mine.length && Math.random() < 0.85 ? pick(mine) : pick(pool), id = 'v_k_' + cid;
+    H.votes[id] = {due:d + 31, my:null, lobby:0};
+    if (canVote() || hkMember(cid)) announce(`Der Hansetag berät auch über ${HK[cid].acc}: ${VOTES[id].q} ${canVote() ? 'Abstimmen und Fürsprache einlegen' : 'Fürsprache einlegen'} kannst du unter Stammsitz.`);
+  }
+  function hkLobby(id) {
+    const v = hanse().votes[id];
+    if (!v || v.res || !VOTES[id] || !VOTES[id].kontor || (v.lobby || 0) >= 0.2 - 1e-9 || st.money < HK_LOBBY) return;
+    st.money -= HK_LOBBY; v.lobby = Math.round(((v.lobby || 0) + 0.1) * 10) / 10;
+    addLog(`Du lässt den Ratssendeboten für ${HK[VOTES[id].kontor].acc} ${fmt(HK_LOBBY)} Gulden Zehrgeld zukommen. Die Aussichten steigen.`, 'rank');
+    commit();
+  }
+  const hkLobbyHTML = (id, v) => `<div class="ybtns"><button class="ybtn" type="button" data-hkl="${id}"${(v.lobby || 0) < 0.2 - 1e-9 && st.money >= HK_LOBBY ? '' : ' disabled'}>${(v.lobby || 0) >= 0.2 - 1e-9 ? 'Fürsprache eingelegt' : `Fürsprache · ${fmt(HK_LOBBY)} G`}</button></div><span class="small">Zehrgeld für die Gesandten hebt die Aussicht um je zehn Punkte, höchstens zweimal${v.lobby ? `; bisher ${Math.round(v.lobby * 10)}-mal` : ''}.</span>`;
+  Object.assign(VOTES, {
+    v_k_bruegge:{c:'Vorrechte des Kontors in Brügge', yearly:true, kontor:'bruegge', base:0.45, q:'Soll die Hanse mit dem Grafen von Flandern über neue Vorrechte für das Kontor in Brügge verhandeln?',
+      ja:'Die Gesandten der Hanse erstreiten in Brügge neue Vorrechte für das Kontor.', nein:'Der Hansetag will Flandern nicht drängen; die Vorrechte des Brügger Kontors bleiben, wie sie sind.'},
+    v_k_london:{c:'Vorrechte des Stalhofs', yearly:true, kontor:'london', base:0.45, q:'Soll die Hanse beim englischen König neue Vorrechte für den Stalhof in London erwirken?',
+      ja:'Der König bestätigt dem Stalhof neue Vorrechte.', nein:'Die Gesandtschaft nach London unterbleibt.'},
+    v_k_bergen:{c:'Vorrechte der Deutschen Brücke', yearly:true, kontor:'bergen', base:0.45, q:'Soll die Hanse dem norwegischen König neue Vorrechte für die Deutsche Brücke in Bergen abringen?',
+      ja:'Der König von Norwegen gesteht der Deutschen Brücke neue Vorrechte zu.', nein:'Der Hansetag will den Streit mit Norwegen nicht suchen.'},
+    v_k_nowgorod:{c:'Vorrechte des Peterhofs', yearly:true, kontor:'nowgorod', base:0.45, q:'Soll eine Gesandtschaft beim Fürsten und den Bojaren neue Vorrechte für den Peterhof in Nowgorod aushandeln?',
+      ja:'Fürst und Bojaren gewähren dem Peterhof neue Vorrechte.', nein:'Die Gesandtschaft nach Nowgorod findet keine Mehrheit.'}
+  });
+  function hkHTML(cid) {
+    const K = HK[cid]; if (!K) return '';
+    const lv = hkPriv(cid);
+    let h = `<div class="kontor"><h3>${K.n}</h3>`;
+    const plist = `<ol class="privs">${K.P.map((p, i) => `<li class="${i < lv ? 'done' : ''}">${p}${i < lv ? '' : ' <span class="small">noch nicht erstritten</span>'}</li>`).join('')}</ol>`;
+    if (hkMember(cid)) {
+      h += `<p class="small">Du bist Mitglied seit ${fdate(st.hk.mem[cid].d, true)}. Hier kaufst du ${fmt(hkPct(cid))} % günstiger und verkaufst ${fmt(hkPct(cid))} % teurer; dein Lager im Kontor fasst ${hkCap(cid)} Last, ${HK_UP} Gulden Schoß am Tag.</p>`;
+    } else if (st.rank < HK_RANK) h += `<p class="small">Ab dem Rang ${RANKS[HK_RANK][1]} nimmt dich das Kontor auf. Mitglieder kaufen und verkaufen hier günstiger und haben ein eigenes Lager.</p>`;
+    else h += `<p class="small">Mitglieder kaufen hier ${fmt(2 + 2.5 * lv)} % günstiger, verkaufen ${fmt(2 + 2.5 * lv)} % teurer und lagern ${HK_CAP + 20 * lv} Last im Kontor, für ${HK_UP} Gulden Schoß am Tag. Jedes Vorrecht, das der Hansetag erstreitet, bringt 2,5 % und 20 Last mehr.</p>` +
+      `<div class="ybtns"><button class="ybtn" type="button" data-fin="hkjoin" data-c="${cid}"${st.money >= K.fee && !st.enc ? '' : ' disabled'}>Aufnahme · ${fmt(K.fee)} G</button></div>`;
+    return h + `<span class="flabel">Vorrechte</span>${plist}</div>`;
+  }
+
+  // Geldgeschäfte: Schiffsparten, Darlehen, Vorkauf ganzer Ernten
+  const finState = () => st.fin || (st.fin = {parts:[], loans:[], crops:[], offers:{}, gen:{}, next:1, intro:false});
+  const PART_RANK = 3, GIVE_RANK = 3, CROP_RANK = 3, TAKE_RANK = 1;
+  const PART_SHIPS = ['Sankt Jürgen', 'Marienknecht', 'Heilig Geist', 'Sankt Peter', 'Christoffer', 'Sankt Gertrud', 'Bunte Kuh', 'Jonas', 'Sankt Nikolaus', 'Dreifaltigkeit', 'Barbara', 'Gotteswind', 'Salvator', 'Ewer von Stade'];
+  const PART_MAX = () => 2 + (st.rank >= 4 ? 2 : 0) + (st.rank >= 5 ? 2 : 0);
+  const GIVE_MAX = () => 2 + (st.rank >= 4 ? 1 : 0) + (st.rank >= 5 ? 1 : 0);
+  const CROP_MAX = () => 2 + (st.rank >= 4 ? 1 : 0);
+  const LOAN_CAP = () => [1500, 3000, 6000, 12000, 25000, 50000, 80000][st.rank] || 1500;
+  const LENDER = cid => cid === 'bruegge' ? {n:'die Lombarden in Brügge', r:0.02, k:1.5} : cid === 'luebeck' ? {n:'die Kämmerei von Lübeck', r:0.015, k:1} : cid === st.home ? {n:`der Rat von ${C[cid].n}`, r:0.0125, k:0.8} : null;
+  const GRADE = [{n:'sicher', p:0.03, r:[0.012, 0.018]}, {n:'ordentlich', p:0.09, r:[0.02, 0.028]}, {n:'wacklig', p:0.2, r:[0.03, 0.04]}];
+  const CROPS = [
+    {g:'getreide', c:['danzig', 'riga'], off:[4, 5, 6], del:[9, 10], n:'Ernte', by:['ein Gut des Ordens', 'das Kloster Oliva', 'ein Gut an der Weichsel', 'ein Gut in Livland']},
+    {g:'wein', c:['bruegge'], off:[5, 6, 7], del:[10, 15], n:'Weinlese', by:['ein Weinhändler aus Köln', 'ein Weinhändler aus Bordeaux']},
+    {g:'wolle', c:['london', 'hamburg'], off:[1, 2, 3], del:[6, 15], n:'Schur', by:['eine Abtei in Yorkshire', 'eine Schäferei in der Heide', 'ein Gut in Lincolnshire']},
+    {g:'hering', c:['luebeck', 'visby'], off:[5, 6], del:[9, 25], n:'Fang', by:['eine Fischerlage auf Schonen', 'die Vitte der Lübecker auf Falsterbo']},
+    {g:'wachs', c:['riga', 'nowgorod'], off:[5, 6, 7], del:[10, 10], n:'Zeidlerei', by:['die Zeidlergilde an der Düna', 'ein Bojar am Wolchow']}
+  ];
+  const loanOwed = L => Math.round(L.amt * (1 + L.r * Math.max(1, Math.ceil((st.day - L.d0) / 30))));
+  const debt = () => st.fin ? st.fin.loans.filter(L => L.kind === 'take').reduce((x, L) => x + loanOwed(L), 0) : 0;
+  const loanRoom = () => Math.max(0, Math.round(LOAN_CAP() * 1.5) - (st.fin ? st.fin.loans.filter(L => L.kind === 'take').reduce((x, L) => x + L.amt, 0) : 0));
+  const finValue = () => {
+    const F = st.fin; if (!F) return 0;
+    return F.parts.reduce((x, p) => x + p.price * 0.85, 0) + F.loans.reduce((x, L) => x + (L.kind === 'give' ? L.amt : -loanOwed(L)), 0) +
+      F.crops.reduce((x, c) => x + (c.ready ? (c.q - (c.got || 0)) * G[c.g].b * 0.8 - (c.paid ? 0 : c.price * c.q0 - c.dep) : c.dep), 0);
+  };
+  const finOffers = cid => {
+    const F = finState();
+    if (!cid || st.rank < TAKE_RANK) return {parts:[], req:[], crops:[]};
+    if (!F.offers[cid] || st.day - (F.gen[cid] == null ? -99 : F.gen[cid]) >= 15) { F.gen[cid] = st.day; F.offers[cid] = genFin(cid); }
+    return F.offers[cid];
+  };
+  function genFin(cid) {
+    const F = finState(), out = {parts:[], req:[], crops:[]}, rk = st.rank, m = monthOf(st.day), y = dateOf(st.day).getFullYear();
+    if (rk >= PART_RANK && Math.random() < 0.75) {
+      const types = ['kogge', 'kogge', 'holk'].concat(y >= 1365 ? ['kraweel'] : []), type = pick(types), share = pick(rk >= 4 ? [8, 4, 4, 2] : [16, 8, 8, 4]);
+      const price = Math.round(SHIPS[type].price * 1.3 / share / 50) * 50;
+      const dest = pick(CITIES.filter(c => c.id !== cid)).id;
+      out.parts.push({id:F.next++, cid, type, share, price, ship:pick(PART_SHIPS), reeder:`${pick(NAMES.m)} ${pick(NAMES.s)}`, dest});
+    }
+    if (rk >= GIVE_RANK && Math.random() < 0.6) {
+      const gr = Math.random() < 0.45 ? 0 : Math.random() < 0.65 ? 1 : 2, amt = Math.round([800, 1500, 3000, 5000, 9000, 14000, 20000][rk] * rnd(0.6, 1.4) / 100) * 100;
+      out.req.push({id:F.next++, cid, amt, gr, r:Math.round(rnd(...GRADE[gr].r) * 1000) / 1000, mo:pick([3, 6, 6, 12]), who:`${pick(['Kaufmann', 'Schiffer', 'Brauer', 'Gewandschneider', 'Reeder', 'Krämer'])} ${pick(NAMES.m)} ${pick(NAMES.s)}`});
+    }
+    if (rk >= CROP_RANK) CROPS.filter(cr => cr.c.includes(cid) && cr.off.includes(m)).forEach(cr => {
+      if (Math.random() < 0.3) return;
+      const q = Math.round((25 + 12 * rk) * rnd(0.8, 1.2) * (G[cr.g].b >= 200 ? 0.5 : 1)), del = dayOf(y, cr.del[0], cr.del[1]);
+      if (del <= st.day + 20) return;
+      out.crops.push({id:F.next++, cid, g:cr.g, n:cr.n, by:pick(cr.by), q, price:Math.round(G[cr.g].b * rnd(0.45, 0.53)), del});
+    });
+    return out;
+  }
+  // Schiffsparten
+  function partBuy(id) {
+    const F = finState(), O = finOffers(st.loc), o = O.parts.find(x => x.id === id);
+    if (!o || F.parts.length >= PART_MAX() || st.money < o.price || st.enc || st.focus) return;
+    O.parts.splice(O.parts.indexOf(o), 1);
+    st.money -= o.price;
+    F.parts.push(Object.assign({}, o, {d0:st.day, next:st.day + 30, paid:0}));
+    addLog(`Du kaufst ein ${o.share === 2 ? 'halbes' : `${o.share}tel`} Part an der ${SHIPS[o.type].n} „${o.ship}“ von Reeder ${o.reeder} für ${fmt(o.price)} Gulden. Jeden Monat teilen die Partner den Gewinn der Fahrten.`, 'rank');
+    commit();
+  }
+  function partSell(id) {
+    const F = finState(), p = F.parts.find(x => x.id === id);
+    if (!p || st.loc !== p.cid || st.enc || st.focus) return;
+    const v = Math.round(p.price * 0.85);
+    F.parts.splice(F.parts.indexOf(p), 1); st.money += v;
+    addLog(`Reeder ${p.reeder} kauft dir dein Part an der „${p.ship}“ für ${fmt(v)} Gulden ab.`, 'gain');
+    commit();
+  }
+  function partsDay() {
+    const F = st.fin; if (!F || !F.parts.length) return;
+    const lines = [];
+    F.parts.slice().filter(p => st.day >= p.next).forEach(p => {
+      p.next += 30;
+      const risk = (p.type === 'kraweel' ? 0.007 : p.type === 'holk' ? 0.01 : 0.012) * ((st.era && st.era.danger) || 1) * (st.era && st.era.peace > st.day ? 0.7 : 1), r = Math.random();
+      if (r < risk) {
+        F.parts.splice(F.parts.indexOf(p), 1);
+        announce(`Schlechte Nachricht von Reeder ${p.reeder}: Die „${p.ship}“ ist auf der Fahrt nach ${C[p.dest].n} verloren. Dein Part über ${fmt(p.price)} Gulden ist dahin.`);
+        return;
+      }
+      if (r < risk + 0.06) { const z = Math.round(p.price * rnd(0.03, 0.08)); st.money -= z; rpState().cost += z; p.paid -= z; lines.push(`„${p.ship}“ Zubuße für Ausbesserung ${fmt(z)}`); return; }
+      if (r < risk + 0.18) { lines.push(`„${p.ship}“ ohne Gewinn`); return; }
+      const g = Math.round(p.price * rnd(0.02, 0.06)); st.money += g; rpState().freight += g; p.paid += g; lines.push(`„${p.ship}“ ${fmt(g)}`);
+      p.dest = pick(CITIES.filter(c => c.id !== p.dest)).id;
+    });
+    if (lines.length) addLog(`Abrechnung deiner Schiffsparten: ${lines.join(', ')} Gulden.`, 'gain');
+  }
+  // Darlehen nehmen und geben
+  function loanTake(amt, mo) {
+    const F = finState(), Lr = LENDER(st.loc);
+    amt = Math.min(Math.round(amt / 100) * 100, loanRoom(), Math.round(LOAN_CAP() * (Lr ? Lr.k : 0) / 100) * 100);
+    if (!Lr || st.rank < TAKE_RANK || amt < 100 || st.enc || st.focus || ![6, 12].includes(mo)) return;
+    st.money += amt;
+    F.loans.push({id:F.next++, kind:'take', amt, r:Lr.r, d0:st.day, due:st.day + mo * 30, who:Lr.n, cid:st.loc, ext:0});
+    addLog(`Du leihst dir ${fmt(amt)} Gulden bei ${byDat(Lr.n)}, zu ${fmt(Lr.r * 100)} % im Monat, zurück bis ${fdate(st.day + mo * 30)}. Zurückzahlen kannst du jederzeit unter Haus.`, 'rank');
+    commit();
+  }
+  function loanRepay(id) {
+    const F = finState(), L = F.loans.find(x => x.id === id && x.kind === 'take');
+    if (!L) return;
+    const o = loanOwed(L);
+    if (st.money < o) return;
+    st.money -= o; rpState().cost += o - L.amt;
+    F.loans.splice(F.loans.indexOf(L), 1);
+    addLog(`Darlehen bei ${byDat(L.who)} getilgt: ${fmt(o)} Gulden mit Zinsen.`, 'gain');
+    commit();
+  }
+  function loanGive(id) {
+    const F = finState(), O = finOffers(st.loc), o = O.req.find(x => x.id === id);
+    if (!o || F.loans.filter(L => L.kind === 'give').length >= GIVE_MAX() || st.money < o.amt || st.enc || st.focus) return;
+    O.req.splice(O.req.indexOf(o), 1);
+    st.money -= o.amt;
+    F.loans.push({id:o.id, kind:'give', amt:o.amt, r:o.r, gr:o.gr, d0:st.day, due:st.day + o.mo * 30, who:o.who, cid:o.cid, mo:o.mo});
+    addLog(`Du leihst ${o.who} in ${C[o.cid].n} ${fmt(o.amt)} Gulden auf ${o.mo} Monate, zu ${fmt(o.r * 100)} % im Monat. Er zahlt per Wechsel zurück.`, 'rank');
+    commit();
+  }
+  function loansDay() {
+    const F = st.fin; if (!F || !F.loans.length) return;
+    F.loans.slice().filter(L => st.day >= L.due).forEach(L => {
+      if (L.kind === 'give') {
+        F.loans.splice(F.loans.indexOf(L), 1);
+        if (Math.random() < GRADE[L.gr].p) {
+          const back = Math.round(L.amt * rnd(0.2, 0.5));
+          st.money += back;
+          announce(`${L.who} aus ${C[L.cid].n} kann nicht zahlen. Vor dem Gericht bekommst du nur ${fmt(back)} von ${fmt(L.amt)} Gulden zurück.`);
+        } else {
+          const back = Math.round(L.amt * (1 + L.r * L.mo));
+          st.money += back; rpState().freight += back - L.amt; gainRepute(1);
+          addLog(`${L.who} aus ${C[L.cid].n} zahlt sein Darlehen per Wechsel zurück: ${fmt(back)} Gulden, darin ${fmt(back - L.amt)} Zinsen.`, 'gain');
+        }
+        return;
+      }
+      const o = loanOwed(L);
+      if (st.money >= o) {
+        st.money -= o; rpState().cost += o - L.amt; F.loans.splice(F.loans.indexOf(L), 1);
+        addLog(`Dein Darlehen bei ${byDat(L.who)} ist fällig und wird aus der Truhe getilgt: ${fmt(o)} Gulden.`, 'tip');
+      } else if (!L.ext) {
+        L.amt = o; L.d0 = st.day; L.r = Math.round((L.r + 0.01) * 1000) / 1000; L.due = st.day + 90; L.ext = 1;
+        st.repute = Math.max(0, (st.repute || 0) - 8);
+        announce(`Du kannst ${byDat(L.who)} die ${fmt(o)} Gulden nicht zahlen. Die Frist wird um drei Monate verlängert, zu ${fmt(L.r * 100)} % im Monat. Danach pfänden die Gläubiger.`);
+      } else {
+        let rest = o; const cash = Math.max(0, Math.min(st.money, rest)); st.money -= cash; rest -= cash;
+        allStores().forEach(K => Object.entries(K.goods).forEach(([g, c]) => { if (rest <= 0) return; const v = G[g].b * 0.7, q = Math.min(c.q, Math.ceil(rest / v)); takeGoods(K.goods, g, q); rest -= q * v; }));
+        if (rest > 0) st.money -= Math.round(rest);
+        F.loans.splice(F.loans.indexOf(L), 1);
+        st.repute = Math.max(0, (st.repute || 0) - 20);
+        announce(`${L.who.replace(/^\w/, m => m.toUpperCase())} lässt pfänden: Geld und Ware aus deinen Lagern gehen an die Gläubiger. Dein Ruf hat schwer gelitten.`);
+      }
+    });
+  }
+  // Vorkauf ganzer Ernten: Anzahlung jetzt, Rest bei Lieferung; die Menge hängt von der Ernte ab
+  function cropBuy(id) {
+    const F = finState(), O = finOffers(st.loc), o = O.crops.find(x => x.id === id);
+    if (!o || F.crops.length >= CROP_MAX() || st.enc || st.focus) return;
+    const dep = Math.round(o.q * o.price * 0.4);
+    if (st.money < dep) return;
+    O.crops.splice(O.crops.indexOf(o), 1);
+    st.money -= dep;
+    F.crops.push(Object.assign({}, o, {q0:o.q, dep, paid:false, ready:false, got:0}));
+    addLog(`Vorkauf: Du kaufst ${byDat(o.by)} die ganze ${o.n} ab, etwa ${o.q} Last ${G[o.g].n} zu ${fmt(o.price)} Gulden je Last. Anzahlung ${fmt(dep)} Gulden, der Rest bei Lieferung am ${fdate(o.del)} in ${C[o.cid].n}.`, 'rank');
+    commit();
+  }
+  function cropPay(c) {
+    const rest = c.price * c.q0 - c.dep;
+    if (c.paid || st.money < rest) return c.paid;
+    st.money -= rest; c.paid = true;
+    return true;
+  }
+  function cropStore(c) {
+    const K = storeAt(c.cid);
+    if (!K || !c.paid) return 0;
+    const q = Math.min(c.q - c.got, Math.max(0, K.cap - kontorUsed(c.cid)));
+    if (q <= 0) return 0;
+    const g = K.goods[c.g] || (K.goods[c.g] = {q:0, cost:0}); g.q += q; g.cost += q * c.price * c.q0 / c.q; c.got += q;
+    return q;
+  }
+  function cropsDay() {
+    const F = st.fin; if (!F || !F.crops.length) return;
+    F.crops.slice().forEach(c => {
+      if (!c.ready && st.day >= c.del) {
+        const r = Math.random(), f = r < 0.15 ? rnd(0.55, 0.8) : r < 0.85 ? rnd(0.9, 1.1) : rnd(1.15, 1.35);
+        c.q = Math.max(1, Math.round(c.q0 * f)); c.ready = true; c.d1 = st.day;
+        const word = f < 0.85 ? `Die ${c.n} fällt mager aus: nur ${c.q} statt ${c.q0} Last.` : f > 1.12 ? `Die ${c.n} ist reich: ${c.q} statt ${c.q0} Last.` : `Die ${c.n} ist eingebracht: ${c.q} Last.`;
+        const paid = cropPay(c), st0 = cropStore(c);
+        announce(`${word} ${G[c.g].n} von ${byDat(c.by)} liegt in ${C[c.cid].n} bereit.${paid ? '' : ` Die Restzahlung über ${fmt(c.price * c.q0 - c.dep)} Gulden steht noch aus.`}${st0 ? ` ${st0} Last gehen in dein Lager dort.` : ''}${c.got < c.q ? ' Den Rest holst du binnen 45 Tagen ab, sonst verkauft der Verwalter des Guts ihn für dich.' : ''}`);
+      }
+      if (c.ready) {
+        if (!c.paid) cropPay(c);
+        if (c.paid && c.got < c.q) cropStore(c);
+        if (c.got >= c.q) { F.crops.splice(F.crops.indexOf(c), 1); return; }
+        if (st.day > c.d1 + 45) {
+          const left = c.q - c.got, v = Math.round(left * sellPrice(c.cid, c.g) * 0.8) - (c.paid ? 0 : c.price * c.q0 - c.dep);
+          st.money += v; F.crops.splice(F.crops.indexOf(c), 1);
+          addLog(`Die übrigen ${left} Last ${G[c.g].n} in ${C[c.cid].n} wurden für dich verkauft${c.paid ? '' : ' und mit der offenen Restzahlung verrechnet'}: ${v >= 0 ? '' : 'minus '}${fmt(Math.abs(v))} Gulden.`, 'tip');
+        }
+      }
+    });
+  }
+  function cropLoad(id) {
+    const F = finState(), c = F.crops.find(x => x.id === id);
+    if (!c || !c.ready || st.loc !== c.cid || st.enc || st.focus) return;
+    if (!cropPay(c)) return;
+    const q = Math.min(c.q - c.got, Math.max(0, CAP - used()));
+    if (q <= 0) return;
+    const g = st.cargo[c.g] || (st.cargo[c.g] = {q:0, cost:0}); g.q += q; g.cost += q * c.price * c.q0 / c.q; c.got += q;
+    addLog(`${q} Last ${G[c.g].n} aus dem Vorkauf geladen${c.got < c.q ? `, ${c.q - c.got} Last liegen noch bereit` : ''}.`);
+    if (c.got >= c.q) F.crops.splice(F.crops.indexOf(c), 1);
+    commit();
+  }
+  // ein Verband nimmt bezahlte Vorkaufsware mit
+  function cropToConvoy(cv, cid) {
+    const F = st.fin; if (!F || !F.crops.length) return '';
+    const out = [];
+    F.crops.slice().filter(c => c.ready && c.paid && c.cid === cid && c.got < c.q).forEach(c => {
+      const q = Math.min(c.q - c.got, Math.max(0, cvCap(cv) - cvUsed(cv)));
+      if (q <= 0) return;
+      const g = cv.cargo[c.g] || (cv.cargo[c.g] = {q:0, cost:0}); g.q += q; g.cost += q * c.price * c.q0 / c.q; c.got += q;
+      out.push(`lädt ${q} Last ${G[c.g].n} aus deinem Vorkauf`);
+      if (c.got >= c.q) F.crops.splice(F.crops.indexOf(c), 1);
+    });
+    return out.join('; ');
+  }
+  function finDay() {
+    const F = finState();
+    if (!F.intro && st.rank >= HK_RANK) {
+      F.intro = true;
+      const t = 'Als Kaufmann öffnen sich dir neue Geschäfte: Die Hansekontore in Brügge, London, Bergen und Nowgorod nehmen dich auf, Wechsler leihen dir Geld. Ab Fernhändler kommen Schiffsparten, eigene Darlehen und der Vorkauf ganzer Ernten dazu. Du findest sie im Reiter Markt unter Geschäfte, den Überblick unter Haus.';
+      addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
+    }
+    partsDay(); loansDay(); cropsDay();
+  }
+  const bizShown = () => !!st.loc && !st.focus && !st.sail && (st.rank >= TAKE_RANK || !!HK[st.loc]);
+  function dealHTML() {
+    const cid = st.loc, F = finState(), O = finOffers(cid), Lr = LENDER(cid);
+    let h = '';
+    if (HK[cid]) h += hkHTML(cid);
+    // Vorkauf
+    const myC = F.crops.filter(c => c.cid === cid && c.ready);
+    if (O.crops.length || myC.length) {
+      h += `<div class="kontor"><h3>Vorkauf der Ernte</h3><p class="small">Du kaufst die ganze Ernte im Voraus: 40 % Anzahlung jetzt, der Rest bei Lieferung. Wie viel es wird, zeigt erst die Ernte.</p>`;
+      myC.forEach(c => { const rest = c.price * c.q0 - c.dep, room = CAP - used();
+        h += `<div class="krow"><span class="gname">${icon(c.g)}${G[c.g].n}</span><span class="num small" style="grid-column:auto;margin:0">${c.q - c.got} Last bereit</span><span class="small">Von ${esc(byDat(c.by))}.${c.paid ? '' : ` Restzahlung ${fmt(rest)} Gulden.`}</span>` +
+          `<span class="ybtns"><button class="ybtn" type="button" data-fin="cload" data-id="${c.id}"${(c.paid || st.money >= rest) && room > 0 && !st.enc ? '' : ' disabled'}>${room <= 0 ? 'Kein Laderaum' : c.paid ? `Laden · ${Math.min(room, c.q - c.got)} Last` : `Zahlen und laden · ${fmt(rest)} G`}</button></span></div>`; });
+      O.crops.forEach(o => { const dep = Math.round(o.q * o.price * 0.4), full = F.crops.length >= CROP_MAX();
+        h += `<div class="krow"><span class="gname">${icon(o.g)}${G[o.g].n}</span><span class="num small" style="grid-column:auto;margin:0">≈ ${o.q} Last</span><span class="small">Die ${o.n} von ${esc(byDat(o.by))}, Lieferung am ${fdate(o.del)}. ${fmt(o.price)} Gulden je Last, zusammen ${fmt(o.q * o.price)} Gulden.</span>` +
+          `<span class="ybtns"><button class="ybtn" type="button" data-fin="cbuy" data-id="${o.id}"${!full && st.money >= dep && !st.enc ? '' : ' disabled'}>${full ? `Schon ${CROP_MAX()} Vorkäufe` : `Anzahlen · ${fmt(dep)} G`}</button></span></div>`; });
+      h += `</div>`;
+    }
+    // Schiffsparten
+    const myP = F.parts.filter(p => p.cid === cid);
+    if (O.parts.length || myP.length) {
+      h += `<div class="kontor"><h3>Schiffsparten</h3><p class="small">Als Partenreeder trägst du einen Teil von Schiff und Ladung. Jeden Monat teilen die Partner den Gewinn, manchmal ist Zubuße für Ausbesserungen fällig, selten geht ein Schiff verloren. Zurückverkaufen kannst du beim Reeder in seinem Heimathafen.</p>`;
+      myP.forEach(p => { h += `<div class="krow"><span class="gname">⚓ „${esc(p.ship)}“</span><span class="num small" style="grid-column:auto;margin:0">${p.share === 2 ? '½' : `1/${p.share}`}</span><span class="small">${SHIPS[p.type].n} von Reeder ${esc(p.reeder)} · bisher ${p.paid >= 0 ? '' : 'minus '}${fmt(Math.abs(p.paid))} Gulden ausgeschüttet</span>` +
+        `<span class="ybtns"><button class="ybtn" type="button" data-fin="psell" data-id="${p.id}"${st.enc ? ' disabled' : ''}>Verkaufen · ${fmt(Math.round(p.price * 0.85))} G</button></span></div>`; });
+      O.parts.forEach(o => { const full = F.parts.length >= PART_MAX();
+        h += `<div class="krow"><span class="gname">⚓ „${esc(o.ship)}“</span><span class="num small" style="grid-column:auto;margin:0">${o.share === 2 ? '½' : `1/${o.share}`}</span><span class="small">${SHIPS[o.type].n} von Reeder ${esc(o.reeder)}, als Nächstes nach ${C[o.dest].n}.</span>` +
+          `<span class="ybtns"><button class="ybtn" type="button" data-fin="pbuy" data-id="${o.id}"${!full && st.money >= o.price && !st.enc ? '' : ' disabled'}>${full ? `Schon ${PART_MAX()} Parten` : `Part kaufen · ${fmt(o.price)} G`}</button></span></div>`; });
+      h += `</div>`;
+    }
+    // Wechsler
+    if ((Lr && st.rank >= TAKE_RANK) || O.req.length) {
+      h += `<div class="kontor"><h3>Wechsler und Darlehen</h3>`;
+      if (Lr && st.rank >= TAKE_RANK) {
+        const room = Math.min(loanRoom(), Math.round(LOAN_CAP() * Lr.k / 100) * 100), steps = [...new Set([0.25, 0.5, 1].map(f => Math.round(room * f / 100) * 100))].filter(a => a >= 100);
+        h += `<p class="small">${Lr.n.replace(/^\w/, m => m.toUpperCase())} leiht dir Geld zu ${fmt(Lr.r * 100)} % im Monat; jeder angefangene Monat zählt. Deine Schulden: ${fmt(debt())} Gulden, Spielraum ${fmt(room)} Gulden.</p>`;
+        h += steps.length ? `<div class="ybtns wrapb">${steps.map(a => `<button class="ybtn" type="button" data-fin="take" data-a="${a}" data-m="6"${st.enc ? ' disabled' : ''}>${fmt(a)} G auf 6 Monate</button>`).join('')}<button class="ybtn" type="button" data-fin="take" data-a="${steps[steps.length - 1]}" data-m="12"${st.enc ? ' disabled' : ''}>${fmt(steps[steps.length - 1])} G auf 12 Monate</button></div>` : `<p class="small">Mehr leiht man dir auf deinem Rang nicht.</p>`;
+      }
+      O.req.forEach(o => { const full = F.loans.filter(L => L.kind === 'give').length >= GIVE_MAX(), back = Math.round(o.amt * (1 + o.r * o.mo));
+        h += `<div class="krow"><span class="gname">✍ ${esc(o.who)}</span><span class="num small" style="grid-column:auto;margin:0">${GRADE[o.gr].n}</span><span class="small">bittet um ${fmt(o.amt)} Gulden auf ${o.mo} Monate zu ${fmt(o.r * 100)} % im Monat: zurück ${fmt(back)} Gulden. Seine Sicherheit gilt als ${GRADE[o.gr].n}.</span>` +
+          `<span class="ybtns"><button class="ybtn" type="button" data-fin="give" data-id="${o.id}"${!full && st.money >= o.amt && !st.enc ? '' : ' disabled'}>${full ? `Schon ${GIVE_MAX()} Darlehen` : `Leihen · ${fmt(o.amt)} G`}</button></span></div>`; });
+      h += `</div>`;
+    }
+    return h;
+  }
+  function renderDeals() {
+    const box = $('#dealcard');
+    if (!box) return;
+    const h = bizShown() ? dealHTML() : '';
+    box.hidden = !h;
+    if (h) box.innerHTML = `<h2>Geschäfte in ${C[st.loc].n}</h2>` + h;
+  }
+  // Überblick unter Haus
+  function bizHTML() {
+    const F = finState(), T = ctState(), S = hkState();
+    let h = `<div class="kontor"><h3>Verträge und Geldgeschäfte</h3>`, any = false;
+    const mem = Object.keys(S.mem);
+    if (mem.length) { any = true; h += `<span class="flabel">Hansekontore</span>` + mem.map(c => `<div class="krow"><span class="gname">${HK[c].s}</span><span class="num small" style="grid-column:auto;margin:0">${hkPriv(c)} von 3</span><span class="small">±${fmt(hkPct(c))} % auf Preise in ${C[c].n}, Lager ${kontorUsed(c)} / ${(st.branches[c] || {}).cap || hkCap(c)} Last</span></div>`).join(''); }
+    if (T.list.length) { any = true; h += `<span class="flabel">Lieferverträge</span>` + T.list.map(k => `<div class="krow"><span class="gname">${icon(k.g)}${G[k.g].n}</span><span class="num small" style="grid-column:auto;margin:0">${k.q} Last</span><span class="small">nach ${C[k.cid].n} für ${esc(k.by)} · Lieferung ${k.next} von ${k.n} bis ${fdate(k.due)} · ${fmt(k.price)} G je Last</span></div>`).join(''); }
+    if (F.parts.length) { any = true; h += `<span class="flabel">Schiffsparten</span>` + F.parts.map(p => `<div class="krow"><span class="gname">⚓ „${esc(p.ship)}“</span><span class="num small" style="grid-column:auto;margin:0">${p.share === 2 ? '½' : `1/${p.share}`}</span><span class="small">${SHIPS[p.type].n} aus ${C[p.cid].n}, gekauft für ${fmt(p.price)} G, bisher ${p.paid >= 0 ? '' : 'minus '}${fmt(Math.abs(p.paid))} G ausgeschüttet</span></div>`).join(''); }
+    const tk = F.loans.filter(L => L.kind === 'take'), gv = F.loans.filter(L => L.kind === 'give');
+    if (tk.length) { any = true; h += `<span class="flabel">Deine Schulden</span>` + tk.map(L => { const o = loanOwed(L); return `<div class="krow"><span class="gname">${esc(L.who.replace(/^\w/, m => m.toUpperCase()))}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(o)} G</span><span class="small">geliehen ${fmt(L.amt)} G zu ${fmt(L.r * 100)} % im Monat, fällig ${fdate(L.due)}${L.ext ? ', schon verlängert' : ''}</span><span class="ybtns"><button class="ybtn" type="button" data-fin="repay" data-id="${L.id}"${st.money >= o ? '' : ' disabled'}>Tilgen · ${fmt(o)} G</button></span></div>`; }).join(''); }
+    if (gv.length) { any = true; h += `<span class="flabel">Verliehenes Geld</span>` + gv.map(L => `<div class="krow"><span class="gname">${esc(L.who)}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(L.amt)} G</span><span class="small">in ${C[L.cid].n}, ${fmt(L.r * 100)} % im Monat, fällig ${fdate(L.due)}, Sicherheit ${GRADE[L.gr].n}</span></div>`).join(''); }
+    if (F.crops.length) { any = true; h += `<span class="flabel">Vorkäufe</span>` + F.crops.map(c => `<div class="krow"><span class="gname">${icon(c.g)}${G[c.g].n}</span><span class="num small" style="grid-column:auto;margin:0">${c.ready ? `${c.q - c.got} Last` : `≈ ${c.q0} Last`}</span><span class="small">${c.n} von ${esc(byDat(c.by))} in ${C[c.cid].n} · ${c.ready ? `liegt bereit bis ${fdate(c.d1 + 45)}${c.paid ? '' : `, Restzahlung ${fmt(c.price * c.q0 - c.dep)} G offen`}` : `Lieferung am ${fdate(c.del)}, Rest ${fmt(c.price * c.q0 - c.dep)} G`}</span></div>`).join(''); }
+    if (!any) h += `<p class="small">${st.rank < CT_RANK ? `Ab dem Rang ${RANKS[CT_RANK][1]} bieten dir Städte und Kaufleute Lieferverträge an, die Hansekontore nehmen dich auf, und Wechsler leihen dir größere Summen. ` : 'Noch läuft nichts. '}Angebote findest du in den Häfen im Reiter Markt unter Aufträge und Geschäfte.</p>`;
+    return h + `</div>`;
+  }
+  const bizMeta = () => { const F = st.fin || {parts:[], loans:[], crops:[]}, n = ((st.contracts || {}).list || []).length, d = debt();
+    return [n ? `${n} ${n === 1 ? 'Vertrag' : 'Verträge'}` : '', F.parts.length ? `${F.parts.length} ${F.parts.length === 1 ? 'Part' : 'Parten'}` : '', d ? `Schulden ${fmt(d)} G` : ''].filter(Boolean).join(' · ') || (st.rank < CT_RANK ? `ab ${RANKS[CT_RANK][1]}` : 'nichts offen'); };
+  function finClick(t) {
+    const a = t.dataset.fin, id = +t.dataset.id;
+    if (a === 'hkjoin') return hkJoin(t.dataset.c);
+    if (a === 'pbuy') return partBuy(id);
+    if (a === 'psell') return partSell(id);
+    if (a === 'take') return loanTake(+t.dataset.a, +t.dataset.m);
+    if (a === 'repay') return loanRepay(id);
+    if (a === 'give') return loanGive(id);
+    if (a === 'cbuy') return cropBuy(id);
+    if (a === 'cload') return cropLoad(id);
+  }
   function hanse() {
     if (!st.hanse) st.hanse = {votes:{}, gifts:{}, past:[], kaper:false, escort:null, offers:[], offerD:-999, yearly:null};
     return st.hanse;
@@ -2820,8 +3417,9 @@ em.rep.warn{background:#b5523a}
       const id = pick(pool); H.yearly = id;
       H.votes[id] = {due:d + 31, my:null};
       if (canVote()) announce(`Für den Hansetag zu Johannis liegt eine Frage vor: ${VOTES[id].q} Abstimmen kannst du unter Stammsitz.`);
+      hkVoteOpen(d);
     }
-    ['v_friede', 'v_nowgorod', 'v_hering'].forEach(id => { const v = H.votes[id]; if (v && !v.res && d >= v.due) decideVote(id); });
+    Object.keys(VOTES).filter(x => VOTES[x].yearly).forEach(id => { const v = H.votes[id]; if (v && !v.res && d >= v.due) decideVote(id); });
     // Kriegsbeiträge
     Object.entries(GIFTS).forEach(([id, G0]) => {
       if (voteRes(G0.need) === 'nein') return;
@@ -2843,9 +3441,11 @@ em.rep.warn{background:#b5523a}
     const H = hanse(), V = VOTES[id], v = H.votes[id], w = influence();
     let p = V.base;
     if (v.my) p = V.base * (1 - w) + (v.my === 'ja' ? w : 0);
+    p = Math.min(0.95, p + (v.lobby || 0));
     v.res = Math.random() < p ? 'ja' : 'nein';
     const y = dateOf(st.day).getFullYear();
     let t = V[v.res];
+    if (V.kontor && v.res === 'ja') t += ' ' + hkWin(V.kontor);
     if (v.my) { const won = v.my === v.res; if (won) gainRepute(15); t += won ? ' Deine Stimme hat sich durchgesetzt (+15 Ansehen).' : ' Du hast anders gestimmt.'; }
     announce(`Hansetag ${y}: ${t}`);
     H.past.unshift({id, d:st.day, my:v.my, res:v.res}); H.past = H.past.slice(0, 12);
@@ -2983,7 +3583,7 @@ em.rep.warn{background:#b5523a}
       if (kind === 'vote') {
         h += `<div class="vote"><b>${V.q}</b><span class="small">Entscheidung am ${fdate(v.due, true)}${v.my ? ` · deine Stimme: ${v.my === 'ja' ? 'Ja' : 'Nein'}` : ''}</span>` +
           (canVote() ? `<div class="ybtns"><button class="ybtn${v.my === 'ja' ? ' on' : ''}" type="button" data-vote="${id}" data-v="ja">Ja</button><button class="ybtn${v.my === 'nein' ? ' on' : ''}" type="button" data-vote="${id}" data-v="nein">Nein</button></div>` +
-            `<span class="small">Dein Gewicht im Hansetag: ${Math.round(influence() * 100)} %.</span>` : `<span class="small">Abstimmen dürfen nur Ratsherren.</span>`) + `</div>`;
+            `<span class="small">Dein Gewicht im Hansetag: ${Math.round(influence() * 100)} %.</span>` : `<span class="small">Abstimmen dürfen nur Ratsherren.</span>`) + (V.kontor ? hkLobbyHTML(id, v) : '') + `</div>`;
       } else {
         h += `<div class="vote"><b>${V.q}</b><span class="small">Beiträge bis ${fdate(dayOf(...V.due), true)}${v.money ? ` · gegeben: ${fmt(v.money)} Gulden` : ''}${v.ship ? ` · ${shipLabel(v.ship)} fährt mit` : ''}</span>` +
           `<div class="ybtns wrapb"><button class="ybtn" type="button" data-give="${id}" data-v="small"${st.money >= 1000 ? '' : ' disabled'}>1.000 Gulden</button>` +
@@ -6178,6 +6778,8 @@ em.rep.warn{background:#b5523a}
         if (g === 'eisen') { shed({x, y, w:8, d:7, h:4.4, mat:'stone', wi:1, chimney:true, tall:true, smoke:sm, smokeCol:'90,86,82'}); [[x + 9.6, y + 2], [x + 10.4, y + 4.6]].forEach(([a, b]) => coneF(a, b, 1.2, 0, 1.1, '#2e2b29', 10)); return; }
         if (g === 'wachs') { shed({x, y, w:7, d:6, h:4, mat:'fach', chimney:true, smoke:sm}); for (let q = 0; q < 4; q++) coneF(x + 8.4 + (q % 2) * 1.6, y + 1 + Math.floor(q / 2) * 2.2, 0.55, 0, 0.9, '#c9a658', 8); return; }
         if (g === 'pelze') { shed({x, y, w:8, d:6, h:4.2, mat:'log', wi:0}); for (let q = 0; q < 2; q++) { const px = x + 9 + q * 1.8; lineP(P(px, y + 1, 0), P(px, y + 1, 2.4), '#5a3e28', Math.max(0.5, 0.15 * k)); lineP(P(px, y + 3.6, 0), P(px, y + 3.6, 2.4), '#5a3e28', Math.max(0.5, 0.15 * k)); face([[px, y + 1.2, 2.2], [px, y + 3.4, 2.2], [px, y + 3.4, 0.9], [px, y + 1.2, 0.9]], '#7a5232', [1, 0, 0]); } return; }
+        if (g === 'tuch') { shed({x, y, w:10, d:6, h:4.4, mat:'fach', wi:1}); for (let q = 0; q < 2; q++) { const py = y + 0.6 + q * 3; lineP(P(x + 11.2, py, 0), P(x + 11.2, py, 2.6), '#5a3e28', Math.max(0.5, 0.15 * k)); lineP(P(x + 11.2, py + 2.2, 0), P(x + 11.2, py + 2.2, 2.6), '#5a3e28', Math.max(0.5, 0.15 * k)); face([[x + 11.2, py + 0.1, 2.4], [x + 11.2, py + 2.1, 2.4], [x + 11.2, py + 2.1, 0.8], [x + 11.2, py + 0.1, 0.8]], q ? '#2f4f7a' : '#8a2f2a', [1, 0, 0]); } return; }
+        if (g === 'fass') { shed({x, y, w:8, d:6, h:4, mat:'wood', wi:1, chimney:true, smoke:sm}); for (let q = 0; q < 5; q++) cylF(x + 9 + (q % 3) * 1.15, y + 0.8 + Math.floor(q / 3) * 2.6 + (q % 3) * 0.5, 0.55, 0, 1.2, '#8a5e38', 8); return; }
         shed({x, y, w:8, d:6, h:4.4, chimney:true, smoke:sm});
       }
       function woodpile(o) { const {x, y, n} = o, c = '#9a7248';
@@ -8396,7 +8998,7 @@ em.rep.warn{background:#b5523a}
     const box = $('#market');
     if (!st.loc) {
       const items = GOODS.filter(g => held(g.id)).map(g => `<li>${icon(g.id)}<span>${held(g.id)} Last ${g.n}, Ø Einkauf ${fmt(st.cargo[g.id].cost / held(g.id))} Gulden</span></li>`).join('') +
-        ((st.freight || {}).active || []).map(f => `<li>${f.g ? icon(f.g) : '✉'}<span>${ORD_K[f.k || 'fracht']}: ${ordTitle(f)}${f.q && f.k !== 'brief' ? `, ${f.q} Last` : ''}, für ${esc(f.by)}, bis ${fdate(f.due)}, Lohn ${fmt(f.pay)} Gulden</span></li>`).join('');
+        ((st.freight || {}).active || []).map(f => `<li>${f.g ? icon(f.g) : '✉'}<span>${ORD_K[f.k || 'fracht']}: ${ordTitle(f)}${f.q && f.k !== 'brief' ? `, ${f.q} Last` : ''}, für ${esc(byAcc(f.by))}, bis ${fdate(f.due)}, Lohn ${fmt(f.pay)} Gulden</span></li>`).join('');
       box.innerHTML = `<div class="mhead"><h2>Laderaum</h2><span class="profile">Der Markt öffnet bei Ankunft in ${C[st.sail.to].n}.</span></div>` +
         (items ? `<ul class="cargo">${items}</ul>` : `<p class="hint">Der Laderaum ist leer.</p>`);
       return;
@@ -8527,7 +9129,7 @@ em.rep.warn{background:#b5523a}
       done:'Dein Handelshaus wächst über die eigene Stadt hinaus. Jetzt kannst du in deiner Stadt bauen: Betriebe, ein größeres Haus, Bürgerbauten.',
       goals:[
         gRep(200, 2),
-        {t:() => 'Gründe eine Niederlassung in einer anderen Stadt', ok:() => Object.keys(st.branches || {}).length > 0,
+        {t:() => 'Gründe eine Niederlassung in einer anderen Stadt', ok:() => ownBranches() > 0,
           hint:() => `Segle in einen anderen Hafen als ${HN()}, öffne dort den Reiter Stadt und tippe bei der Kachel Niederlassung auf Gründen (${fmt(BRANCH.cost)} Gulden, ab ${CIVIC[BRANCH.civic][1]}). Das Kontor zuhause zählt nicht.`, tab:'stadt', sel:'#citycard'},
         {t:() => 'Heuere einen zweiten Kapitän an', p:() => [(st.captains || []).length, 2], ok:() => (st.captains || []).length >= 2,
           hint:() => `Im Schifferhaus in ${HN()} (Reiter Haus) warten Bewerber. Ein Kapitän führt einen eigenen Verband.`, tab:'haus', sel:'#housecard'},
@@ -8677,7 +9279,7 @@ em.rep.warn{background:#b5523a}
     h += `<h3 class="rph">Dein Handelshaus</h3><div class="rpgrid">` +
       row('Vermögen', `${fmt(R.w0)} → ${fmt(R.w1)} G`) + row('Veränderung', `${dw >= 0 ? '+' : '−'}${fmt(Math.abs(dw))} G`, dw >= 0 ? 'pos' : 'neg') +
       row('Eigener Handel', R.sales ? `${R.trade >= 0 ? '+' : '−'}${fmt(Math.abs(R.trade))} G aus ${R.sales} ${R.sales === 1 ? 'Verkauf' : 'Verkäufen'}` : 'kein Verkauf', R.trade > 0 ? 'pos' : R.trade < 0 ? 'neg' : '') +
-      row('Frachtlohn', R.freight ? `+${fmt(R.freight)} G` : '–', R.freight ? 'pos' : '') +
+      row('Lohn, Verträge, Zinsen', R.freight ? `+${fmt(R.freight)} G` : '–', R.freight ? 'pos' : '') +
       row('Laufende Kosten', `−${fmt(R.cost)} G`, 'neg') + row('In der Truhe', `${fmt(Math.round(st.money))} G`) + `</div>`;
     if (R.best) h += `<p class="small">Bester Handel: ${R.best.q} Last ${G[R.best.g].n} in ${C[R.best.c] ? C[R.best.c].n : ''}, ${fmt(R.best.p)} Gulden Gewinn.</p>`;
     h += `<p class="small">Laufende Kosten sind Heuer, Unterhalt der Schiffe und Waffen, Lager, Kapitäne und Verbände.${R.cost > Math.max(0, R.trade + R.freight) && R.sales ? ' Sie waren höher als dein Gewinn aus Handel und Fracht.' : ''}</p>`;
@@ -8690,6 +9292,8 @@ em.rep.warn{background:#b5523a}
     const up = [];
     ((st.freight || {}).active || []).forEach(f => up.push([f.due, `${ORD_K[f.k || 'fracht']}: ${ordTitle(f)} bis ${fdate(f.due)}`]));
     ((st.orders || {}).active || []).forEach(o => up.push([o.due, `Ratsauftrag ${o.q} Last ${G[o.g].n} bis ${fdate(o.due)}`]));
+    ((st.contracts || {}).list || []).forEach(k => up.push([k.due, `Vertrag: ${k.q} Last ${G[k.g].n} nach ${C[k.cid].n} bis ${fdate(k.due)}`]));
+    if (st.fin) { st.fin.loans.forEach(L => up.push([L.due, L.kind === 'take' ? `Darlehen bei ${esc(byDat(L.who))} fällig am ${fdate(L.due)}: ${fmt(loanOwed(L))} Gulden` : `${esc(L.who)} zahlt am ${fdate(L.due)} zurück`])); st.fin.crops.forEach(c => up.push([c.ready ? c.d1 + 45 : c.del, c.ready ? `${G[c.g].n} aus dem Vorkauf in ${C[c.cid].n} abholen bis ${fdate(c.d1 + 45)}` : `Vorkauf ${G[c.g].n} in ${C[c.cid].n} kommt am ${fdate(c.del)}`])); }
     const ne = nextElection(); if (ne - st.day <= 60) up.push([ne, `Bürgermeisterwahl in ${HN()} am ${fdate(ne)}`]);
     const y = dateOf(st.day).getFullYear(); let ht = dayOf(y, 6, 24); if (ht < st.day) ht = dayOf(y + 1, 6, 24); if (ht - st.day <= 60) up.push([ht, `Hansetag in Lübeck am ${fdate(ht)}`]);
     ((st.city || {}).jobs || []).forEach(j => up.push([j.d0 + j.days, `Baustelle fertig am ${fdate(j.d0 + j.days)}`]));
@@ -8784,6 +9388,7 @@ em.rep.warn{background:#b5523a}
       sec('kontor', kontorHTML(i), st.kontor ? `${kontorUsed()} / ${st.kontor.cap} Last${hasSteward() ? ' · Verwalter' : ''}` : i >= 1 ? 'kann gebaut werden' : 'ab Bürger', (st.loc === st.home || hasSteward()) && !!st.kontor) +
       sec('works', worksHTML(i), i < 2 ? 'ab Gildebruder' : `${(st.works || []).length} von ${maxWorks()}`, false) +
       sec('hansetag', hanseHTML(i), (() => { const n = openItems().length; return n ? `${n} ${n === 1 ? 'Frage' : 'Fragen'} offen` : st.hanse && st.hanse.escort ? 'Geleit läuft' : 'nächster Hansetag 24. Juni'; })(), openItems().some(x => x.kind === 'gift' || !x.v.my) && (canVote() || openItems().some(x => x.kind === 'gift'))) +
+      sec('biz', bizHTML(), bizMeta(), false) +
       sec('council', councilHTML(i), `${st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'Auftrag' : 'Aufträge'} · ` : ''}Wahl am ${fdate(nextElection())}`, st.loc === st.home && st.orders.active.some(o => haveFor(o.g) >= o.q));
   }
   function kontorHTML(ci) {
@@ -9197,9 +9802,11 @@ em.rep.warn{background:#b5523a}
     if (ci < 2) return h + `<p class="small">Ab Gildebruder kannst du hier eigene Betriebe gründen, die ins Kontor liefern.</p></div>`;
     (st.works || []).forEach(w => {
       const W = WORKS[w.g];
-      h += `<div class="krow"><span class="gname">${icon(w.g)}${W.n}</span><span class="num small" style="grid-column:auto;margin:0">${w.made || 0} Last</span>` +
-        `<span class="small">${W.d}. Lohn ${W.wage} Gulden am Tag, Material ${Math.round(W.mat * 100)} % des Grundpreises je Last.${w.idle ? ' Steht still: Lager voll oder Rohstoff fehlt.' : ''}</span></div>`;
+      h += `<div class="krow"><span class="gname">${icon(w.g)}${W.n}</span><span class="num small" style="grid-column:auto;margin:0">${w.made || 0} ${W.aux ? 'Last Holz' : 'Last'}</span>` +
+        `<span class="small">${W.d}. Lohn ${W.wage} Gulden am Tag${W.mat ? `, Material ${Math.round(W.mat * 100)} % des Grundpreises je Last` : ''}.${workInpLine(w)}${workWhy(w)}</span></div>`;
     });
+    if ((st.works || []).some(w => WORKS[w.g].inp)) h += hasSteward() ? `<div class="krow"><span class="gname">Rohstoffe</span><span class="ybtns"><button class="ybtn${st.kontor.auto ? ' on' : ''}" type="button" data-wauto="1">${st.kontor.auto ? 'Verwalter kauft nach' : 'Nachkauf aus'}</button></span><span class="small">${st.kontor.auto ? `Dein Verwalter kauft fehlende Rohstoffe am Markt in ${C[st.home].n} nach, wenn der Vorrat unter vier Tage sinkt.` : `Dein Verwalter kann fehlende Rohstoffe am Markt in ${C[st.home].n} nachkaufen. Günstiger bringst du sie selbst oder mit einem Verband.`}</span></div>`
+      : `<p class="small">Rohstoffe bringst du selbst oder mit einem Verband ins Kontor. Ein Verwalter kann sie auch am Markt in ${C[st.home].n} nachkaufen.</p>`;
     cityJobs().filter(j => j.kind === 'work').forEach(j => { h += `<div class="krow"><span class="gname">${icon(j.g)}${WORKS[j.g].n}</span><span class="num small" style="grid-column:auto;margin:0">im Bau</span><span class="small">Fertig in ${jobLeft(j)} ${jobLeft(j) === 1 ? 'Tag' : 'Tagen'}.</span></div>`; });
     const left = maxWorks() - worksPlanned();
     if (!buildOpen()) h += `<span class="small">Bauen kannst du ${buildLock()}.</span>`;
@@ -9215,14 +9822,15 @@ em.rep.warn{background:#b5523a}
     const show = cid && cid !== st.home && !st.focus && (B || ci >= BRANCH.civic);
     box.hidden = !show;
     if (!show) return;
-    let h = `<h2>Niederlassung in ${C[cid].n}</h2>`;
+    let h = `<h2>${B && B.hk && !B.own ? `Lager ${HK[cid].dat}` : B && B.hk ? `Niederlassung und Kontorlager in ${C[cid].n}` : `Niederlassung in ${C[cid].n}`}</h2>`;
+    const n = ownBranches();
+    const addOwn = !(B && B.hk && !B.own && ci >= BRANCH.civic) ? '' : `<p class="small">Mit einer eigenen Niederlassung kommen ${BRANCH.cap} Last dazu.</p><button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost && n < BRANCH.max ? '' : ' disabled'}>${n >= BRANCH.max ? 'Höchstzahl erreicht' : `Niederlassung dazu · ${fmt(BRANCH.cost)} G`}</button>`;
     if (!B) {
-      const n = Object.keys(st.branches || {}).length;
       h += `<p class="small">Als Gildebruder darfst du in bis zu ${BRANCH.max} anderen Städten ein Lager für ${BRANCH.cap} Last einrichten, ${BRANCH.upkeep} Gulden am Tag. So wartet die Ware dort auf bessere Preise.</p>` +
         `<button class="ybtn" type="button" data-k="branch"${st.money >= BRANCH.cost && n < BRANCH.max ? '' : ' disabled'}>${n >= BRANCH.max ? 'Höchstzahl erreicht' : `Niederlassung einrichten · ${fmt(BRANCH.cost)} G`}</button>`;
     } else {
       const ku = kontorUsed(cid);
-      h += `<div class="holdrow"><span>Lager ${ku} / ${B.cap} Last</span><span class="small">${BRANCH.upkeep} Gulden am Tag</span></div><div class="bar"><i style="width:${ku / B.cap * 100}%"></i></div>` + storeRows(B, cid);
+      h += `<div class="holdrow"><span>Lager ${ku} / ${B.cap} Last</span><span class="small">${(B.own || !B.hk ? BRANCH.upkeep : 0) + (B.hk ? HK_UP : 0)} Gulden am Tag</span></div><div class="bar"><i style="width:${ku / B.cap * 100}%"></i></div>` + storeRows(B, cid) + addOwn;
     }
     box.innerHTML = h;
   }
@@ -9252,7 +9860,7 @@ em.rep.warn{background:#b5523a}
   }
   function buildUnlockCheck() {
     if (!st.city || st.city.open || !st.home) return;
-    if (civicIdx(st.repute || 0) < 2 || !Object.keys(st.branches || {}).length) return;
+    if (civicIdx(st.repute || 0) < 2 || !ownBranches()) return;
     st.city.open = true;
     const t = `Du kannst jetzt bauen: In ${C[st.home].n} gibst du Betriebe, ein größeres Haus und Bürgerbauten in Auftrag. Jeder Bau braucht seine Zeit, höchstens zwei Baustellen gleichzeitig. Tippe in der Stadt auf einen Bauplatz.`;
     addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
@@ -9433,7 +10041,7 @@ em.rep.warn{background:#b5523a}
       }
     } else if (w0) {
       const n = +k.slice(1);
-      if (ps.built) { const W = WORKS[ps.w.g]; e.kind = 'work'; e.icon = ps.w.g; e.o = {idle:ps.w.idle}; e.name = W.n; e.desc = `${W.d}. Bisher ${ps.w.made || 0} Last.${ps.w.idle ? ' Steht still: Lager voll oder Rohstoff fehlt.' : ''}`; }
+      if (ps.built) { const W = WORKS[ps.w.g]; e.kind = 'work'; e.icon = ps.w.g; e.o = {idle:ps.w.idle}; e.name = W.n; e.desc = `${W.d}. ${W.aux ? `Bisher ${ps.w.made || 0} Last Holz verarbeitet.` : `Bisher ${ps.w.made || 0} Last.`}${workInpLine(ps.w)}${workWhy(ps.w)}`; }
       else if (ps.job) { e.kind = 'work'; e.icon = ps.job.g; e.name = ps.t; e.o = {job:ps.job}; }
       else if (ps.open) { e.kind = 'empty'; e.name = `Bauplatz ${n + 1} erschließen`; e.desc = 'Kaufe das Grundstück für einen weiteren Betrieb.'; e.cost = ps.open.cost; e.days = BUILD_T.plot; e.cb = 'plot'; e.why = busy ? 'Beide Baustellen belegt' : st.money < e.cost ? 'Zu wenig Geld' : ''; e.state = 'now'; }
       else if (ps.free) { e.kind = 'work'; e.name = 'Betrieb gründen'; e.desc = `Liefert ins Kontor. Bauzeit ${BUILD_T.work} Tage.`; e.days = BUILD_T.work; e.cost = Math.min(...worksAllowed().map(g => WORKS[g].cost)); e.choose = true; e.why = busy ? 'Beide Baustellen belegt' : ''; }
@@ -9478,7 +10086,7 @@ em.rep.warn{background:#b5523a}
     return h;
   }
   function pubTiles(home) {
-    const c = C[st.loc], B = (st.branches || {})[st.loc], ci = civicIdx(st.repute || 0), nb = Object.keys(st.branches || {}).length;
+    const c = C[st.loc], B = (st.branches || {})[st.loc], ci = civicIdx(st.repute || 0), nb = ownBranches();
     const T = [['markt', 'Markt', 'markt', `braucht ${c.c.slice(0, 2).map(g => G[g].n).join(', ')}`], ['werft', 'Werft', 'werft', 'Schiffe und Heuer']];
     if (home) T.push(['rat', 'Rathaus', 'council', `Wahl ${fdate(nextElection())}`], ['schiffer', 'Schiffer&shy;haus', 'haus', 'Kapitäne']);
     let h = `<div class="ptiles${home ? '' : ' three'}">` + T.map(([kind, n, go, sub]) => `<button type="button" class="ptile" data-go="${go}"><span class="pfac">${isoArt(kind, {w:84})}</span><b>${n}</b><span class="small">${sub}</span></button>`).join('');
@@ -9642,7 +10250,7 @@ em.rep.warn{background:#b5523a}
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
-  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderEv(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
+  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderEv(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderDeals(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
 
   function openSheet(focus) {
     if (!st.loc || bankrupt()) return;
@@ -9660,6 +10268,12 @@ em.rep.warn{background:#b5523a}
     const t = e.target.closest('button[data-fr]'); if (!t) return;
     const id = +t.dataset.id, a = t.dataset.fr;
     if (a === 'take') takeFreight(id); else if (a === 'give') deliverFreight(id); else if (a === 'drop') dropFreight(id); else if (a === 'load') pickupFreight(id);
+  });
+  $('#dealcard').addEventListener('click', e => { const t = e.target.closest('button[data-fin]'); if (t) finClick(t); });
+  $('#frbox').addEventListener('click', e => {
+    const t = e.target.closest('button[data-ct]'); if (!t) return;
+    const id = +t.dataset.id, a = t.dataset.ct;
+    if (a === 'take') ctTake(id); else if (a === 'give') ctGive(id); else if (a === 'drop') ctDrop(id);
   });
   $('#market').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
@@ -9724,6 +10338,9 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.toll && st.loc === st.home) { st.toll = t.dataset.toll; addLog(`Der Rat setzt den Pfundzoll auf ${TOLL[st.toll].n.toLowerCase()}.`, 'rank'); return commit(); }
     if (t.dataset.kq) { ui.kq = t.dataset.kq === 'max' ? 'max' : +t.dataset.kq; renderHome(); return; }
     if (t.dataset.steward) return stewardSet(t.dataset.steward === '1');
+    if (t.dataset.fin) return finClick(t);
+    if (t.dataset.hkl) return hkLobby(t.dataset.hkl);
+    if (t.dataset.wauto && st.kontor) { st.kontor.auto = !st.kontor.auto; return commit(); }
     if (t.dataset.vwg || t.dataset.vwb || t.dataset.vwl) { const v = ui.vw; if (t.dataset.vwg) v.g = t.dataset.vwg; if (t.dataset.vwb) v.b = +t.dataset.vwb; if (t.dataset.vwl) v.k = +t.dataset.vwl; renderHome(); return; }
     if (t.dataset.vw === 'now') return stewardBuy(ui.vw.g, ui.vw.b);
     if (t.dataset.vw === 'order') return stewardOrder(ui.vw.g, ui.vw.b, ui.vw.k);
@@ -9984,6 +10601,9 @@ em.rep.warn{background:#b5523a}
     if (s.player && s.home && st === s) { (s.rivals || []).forEach((r, i, a) => rivalLook(r, a.slice(0, i).map(x => x.home))); questCheck(true); }
     s.waiting = null;
     if (s.focus && !s.parked) s.focus = null;
+    if (s.stock) CITIES.forEach(c => { const S0 = s.stock[c.id]; if (S0 && S0.wolle == null) S0.wolle = Math.round(baseE(c, 'wolle') * (0.8 + Math.random() * 0.4)); });
+    const kfix = K => { if (!K) return; Object.values(K).forEach(k => { if (k && k.b && k.b.wolle == null) { k.b.wolle = Math.round(G.wolle.b * 1.06); k.s.wolle = Math.round(G.wolle.b * 0.94); } }); };
+    kfix(s.known); (s.convoys || []).forEach(cv => kfix(cv.known));
     if (s.enc) {
       const e = s.enc; e.aimLock = null;
       if (!e.trait) Object.assign(e, {trait:'drauf', ptype:'kogge', mor:70, phull:100, psail:0, osail:0, dist:1, luv:null, ammo:'bolzen', hold:false, fire:0, target:0, prize:null, r:0});
@@ -10002,7 +10622,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = 'efc54b28c9';
+window.KK_BUILD = '31ab8f4983';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
