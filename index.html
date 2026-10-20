@@ -453,6 +453,16 @@ button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
 /* Ab Version 37: Ereignisse auf Fahrt */
 .frk{display:inline-block;font:600 .68rem var(--f-body);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:4px}
 ol.privs{margin:4px 0 8px;padding-left:1.3em;font-size:.92rem}ol.privs li{margin:2px 0;color:var(--muted)}ol.privs li.done{color:inherit;font-weight:600}ol.privs li.done::marker{content:'✓ '}
+.mquick{margin:6px 0 2px}.mquick .ybtn{font-size:.85rem}
+.gvrow{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-areas:"a t" "a b";column-gap:10px;row-gap:4px;padding:8px 0;border-top:1px solid var(--rule)}
+.gvrow .gvart{grid-area:a}.gvrow .gvtxt{grid-area:t;display:grid;gap:2px}.gvrow .ybtns{grid-area:b}.gvrow.done{opacity:.75}
+.race{display:grid;gap:6px;margin:6px 0}.race .rrow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr);grid-template-areas:"n b" "n v";column-gap:10px;align-items:center;font-size:.9rem}
+.race .rn{grid-area:n}.race .rb{grid-area:b;position:relative;height:10px;border-radius:5px;background:color-mix(in srgb,var(--muted) 18%,transparent);display:flex;overflow:visible}
+.race .rv{grid-area:v}.race i.rr,.sw.rr{background:var(--accent,#8a5a14)}.race i.re,.sw.re{background:var(--brass,#b8902e);opacity:.75}.race .rb i{display:block;height:100%}.race .rb i:first-child{border-radius:5px 0 0 5px}
+.race .rb em{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink,#222)}.race .rrow.me .rn b{color:var(--accent,#8a5a14)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin:0 3px 0 6px}
+.blist{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.blist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:4px 0;border-top:1px solid var(--rule)}
+.blist li.cur{background:color-mix(in srgb,var(--brass) 10%,transparent);border-radius:6px}.blist .bn{display:grid}.blist .num{font-variant-numeric:tabular-nums}
 .rvcmp{display:grid;gap:4px;margin:4px 0 6px}.rvcmp .rvh,.rvcmp .rvr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;align-items:center;font-size:.86rem}
 .rvcmp .rvh{color:var(--muted);font-size:.74rem}.rvcmp .rvr span{position:relative}.rvcmp .rvr i{display:block;height:4px;border-radius:2px;background:var(--muted);margin-bottom:2px}.rvcmp .rvr.me i{background:var(--accent,#8a5a14)}
 .rvcmp small{color:var(--muted)}
@@ -1108,7 +1118,7 @@ em.rep.warn{background:#b5523a}
   // Wirtschaft
   // Ab Version 24.1: Große Handelsplätze schlucken mehr Ware, kleine Häfen weniger
   const DEPTH = {luebeck:1.6, bruegge:1.6, london:1.5, danzig:1.4, hamburg:1.4, nowgorod:1.3, bremen:1.1, riga:1.1, stockholm:1, bergen:1, reval:0.85, visby:0.8};
-  const baseE = (c, g) => (c.p.includes(g) ? 164 : c.c.includes(g) ? 77 : 120) * (DEPTH[c.id] || 1);
+  const baseE = (c, g) => (c.p.includes(g) ? 164 : c.c.includes(g) ? 77 : 120) * (DEPTH[c.id] || 1) * (GDEP[g] || 1);   // ab Version 45 Markttiefe je Ware
   // Jahreszeiten verschieben den Ruhebestand: mehr Bestand heißt günstiger, weniger heißt teurer.
   // who: p = Städte, die die Ware erzeugen; c = die sie brauchen; x = alle außer den Erzeugern; oder eine Liste von Städten
   const SEASON = [
@@ -1156,7 +1166,7 @@ em.rep.warn{background:#b5523a}
   const iceK = (seg, day) => st && st.seasons === 'spuerbar' && [0, 1].includes(monthOf(day)) && (ICE_NODES.has(seg.a) || ICE_NODES.has(seg.b)) ? 1.3 : 1;
   // Kontor im Stammsitz
   const KONTOR = [null, {cap:150, cost:1500, upkeep:2, civic:1}, {cap:400, cost:3000, upkeep:4, civic:2}];
-  const unitPrice = (s, b, cid) => b * Math.pow(2, 1 - Math.max(0, s) / (R * (DEPTH[cid] || 1)));
+  const unitPrice = (s, b, cid) => b * Math.pow(2, 1 - Math.max(0, s) / (R * (DEPTH[cid] || 1) * gdB(b)));
   // Bürgerrecht im Stammsitz und Vorteile einzelner Städte
   function pf(cid, gid, side) {
     let f = hkF(cid, side);
@@ -1198,7 +1208,7 @@ em.rep.warn{background:#b5523a}
   const stored = (gid, cid) => { const K = cid ? storeAt(cid) : st.kontor; return (K && K.goods[gid] && K.goods[gid].q) || 0; };
   const storesValue = () => allStores().reduce((x, K) => x + Object.entries(K.goods).reduce((y, [gid, c]) => y + c.q * G[gid].b, 0), 0);
   const convoysValue = () => (st.convoys || []).reduce((x, cv) => x + cv.fleet.reduce((y, sh) => y + shipValue(sh), 0) + Object.entries(cv.cargo).reduce((y, [gid, c]) => y + c.q * G[gid].b, 0), 0);
-  const wealth = () => st.money + GOODS.reduce((x, g) => x + held(g.id) * g.b, 0) + storesValue() + (st.fleet ? fleetValue() : 0) + convoysValue() + (st.reserve || st.builds ? dockValue() : 0) + (st.fin ? finValue() : 0);
+  const wealth = () => st.money + GOODS.reduce((x, g) => x + held(g.id) * g.b, 0) + storesValue() + (st.fleet ? fleetValue() : 0) + convoysValue() + (st.reserve || st.builds ? dockValue() : 0) + (st.fin ? finValue() : 0) + (st.gv ? gvValue() : 0);
   const rankIdx = w => { let r = 0; RANKS.forEach(([min], i) => { if (w >= min) r = i; }); return r; };
 
   // Wetter
@@ -1341,7 +1351,7 @@ em.rep.warn{background:#b5523a}
       orders:{offer:[], active:[], d:0, done:0}, nextOrder:1, toll:null, mayor:null, mayorName:`${pick(NAMES.m)} ${pick(NAMES.s)}`,
       freight:{offers:{}, gen:{}, active:[], next:1, done:0}, city:{house:1, extra:0, jobs:[], open:false}, captains:[], convoys:[], reserve:[], builds:[], nextCap:1, nextConvoy:1, nextWork:1, tavern:null, branches:{}, works:[], pendingFight:null, focus:null, parked:null, waiting:null,
       player:{name:(player && player.name) || 'Kaufmann', avatar:(player && player.avatar) || defAv()}, home, repute:0,
-      mode:(opts && opts.mode) === 'kampagne' ? 'kampagne' : 'offen', alderman:null, mayorTerms:0, wins:0, ended:null, n32:true};
+      mode:(opts && opts.mode) === 'kampagne' ? 'kampagne' : 'offen', alderman:null, gd45:true, mayorTerms:0, wins:0, ended:null, n32:true};
     st.rivals = makeRivals();
     { const k0 = Object.assign(newCaptainFree(st, st.nextCap++), {nav:1, trade:1, fight:1, wage:3, fee:75}); st.captains.push(k0); st.capOwn = k0.id; }
     const og = ORIGINS[opts && opts.origin] ? opts.origin : 'kaufmann';
@@ -1420,7 +1430,7 @@ em.rep.warn{background:#b5523a}
       if (!uid) return;
       const snap = await db.collection('data/users/' + uid).get();
       saves.db = db; saves.uid = uid; saves.cloud = true;
-      snap.docs.forEach(d => { if (/^slot[123]$/.test(d.id) && d.exists) saves.remote[d.id] = d.data(); });
+      snap.docs.forEach(d => { if (/^slot[123]$/.test(d.id) && d.exists) saves.remote[d.id] = d.data(); if (d.id === 'bestenliste' && d.exists) saves.remote.bestenliste = d.data(); });
       const mine = saves.remote['slot' + active], here = localLoad(active);
       if (mine && mine.state && (st._temp || (!dirty && (!here || mine.meta.savedAt > here.meta.savedAt)))) {
         loadState(JSON.parse(JSON.stringify(mine.state)), active);
@@ -1490,7 +1500,10 @@ em.rep.warn{background:#b5523a}
     stewardDay();
     freightDay();
     ctDay();
+    ctSteward();
     finDay();
+    gvDay();
+    if (dateOf(st.day).getDate() === 1 && dateOf(st.day).getMonth() === 0) blUpdate();
     cityJobsDay();
     convoysDay();
     buildsDay();
@@ -1713,7 +1726,7 @@ em.rep.warn{background:#b5523a}
     const lvl = st.kontor ? st.kontor.lvl + 1 : 1, K = KONTOR[lvl];
     if (!K || st.loc !== st.home || civicIdx(st.repute || 0) < K.civic || st.money < K.cost) return;
     st.money -= K.cost;
-    if (!st.kontor) st.kontor = {lvl:1, cap:K.cap, goods:{}}; else { st.kontor.lvl = lvl; st.kontor.cap = K.cap; }
+    if (!st.kontor) st.kontor = {lvl:1, cap:K.cap + gvSum('cap'), goods:{}}; else { st.kontor.lvl = lvl; st.kontor.cap = K.cap + gvSum('cap'); }
     addLog(lvl === 1 ? `Dein Kontor in ${C[st.home].n} ist fertig: ein Lager für ${K.cap} Last.` : `Das Kontor in ${C[st.home].n} ist erweitert und fasst jetzt ${K.cap} Last.`, 'gain');
     commit();
   }
@@ -1974,6 +1987,7 @@ em.rep.warn{background:#b5523a}
     p *= warK(s.segs);
     if (st.era && st.era.peace > st.day) p *= 0.75;
     if (st.rank >= PF_RANK && pfOn(s.segs).length) p *= 1.15;
+    else if (st.rank >= 4) p *= st.rank >= 5 ? 0.6 : 0.7;   // ab Version 44
     if (Math.random() >= p) return false;
     s.met = true;
     const pf = cvPfMeet(cv);
@@ -2042,7 +2056,7 @@ em.rep.warn{background:#b5523a}
   const routesOpen = () => Object.keys(st.branches || {}).length > 0 || (st.convoys || []).length > 0;
   const RULE_N = {buy:'Kaufen', sell:'Verkaufen', put:'Einlagern', take:'Auslagern'};
   // Geschätzter Verkaufspreis der n-ten Last am Ziel: Menge drückt den Preis
-  const estAfter = (p, n, dest) => p * Math.pow(2, -n / (R * (DEPTH[dest] || 1)));
+  const estAfter = (p, n, dest, gid) => p * Math.pow(2, -n / (R * (DEPTH[dest] || 1) * (GDEP[gid] || 1)));
   function cvRuleTrade(cv, cid) {
     const k = capOf(cv) || {trade:1, name:'–'}, m = 0.3 - 0.04 * k.trade, R0 = (cv.rules || {})[cid] || {}, K = storeAt(cid);
     let sold = 0, prof = 0, spent = 0; const bq = {}, moved = [];
@@ -2088,7 +2102,7 @@ em.rep.warn{background:#b5523a}
         buys.forEach(gid => {
           if (st.stock[cid][gid] < 1) return;
           const p = unitPrice(st.stock[cid][gid], G[gid].b, cid) * 1.06 * pf(cid, gid, 'buy');
-          const e = dest[gid] ? estAfter(est[gid], bq[gid] || 0, dest[gid]) : est[gid], r = e / p - 1;
+          const e = dest[gid] ? estAfter(est[gid], bq[gid] || 0, dest[gid], gid) : est[gid], r = e / p - 1;
           if (r > bestR && spent + p <= budget) { bestR = r; best = {gid, p}; }
         });
         if (!best) break;
@@ -2130,12 +2144,13 @@ em.rep.warn{background:#b5523a}
     });
     const budget = Math.max(0, Math.min(st.money - 400, st.money * 0.5)), est = {}, bq = {}, dest = {};
     GOODS.forEach(g => { const b = others.map(c => ({c, p:estSell(cv, g.id, c)})).sort((x, y) => y.p - x.p)[0] || {c:null, p:0}; est[g.id] = b.p * noise(); dest[g.id] = b.c; });
+    ((st.contracts || {}).list || []).forEach(k => { if (k.cid !== cid && cv.route.includes(k.cid) && k.due - st.day <= 45 && ((cv.cargo[k.g] || {}).q || 0) < k.q && k.price * 1.1 > (est[k.g] || 0)) { est[k.g] = k.price * 1.1; dest[k.g] = k.cid; } });   // ab Version 45 Vertragsware
     let free = cvCap(cv) - cvUsed(cv), guard = 0;
     while (free > 0 && guard++ < 500) {
       let best = null, bestR = m;
       GOODS.forEach(g => {
         if ((cv.skip || []).includes(g.id) || st.stock[cid][g.id] < 1) return;
-        const p = unitPrice(st.stock[cid][g.id], g.b, cid) * 1.06 * pf(cid, g.id, 'buy') * (1 - 0.01 * k.trade), r = (dest[g.id] ? estAfter(est[g.id], bq[g.id] || 0, dest[g.id]) : est[g.id]) / p - 1;
+        const p = unitPrice(st.stock[cid][g.id], g.b, cid) * 1.06 * pf(cid, g.id, 'buy') * (1 - 0.01 * k.trade), r = (dest[g.id] ? estAfter(est[g.id], bq[g.id] || 0, dest[g.id], g.id) : est[g.id]) / p - 1;
         if (r > bestR && spent + p <= budget) { bestR = r; best = {g, p}; }
       });
       if (!best) break;
@@ -2523,7 +2538,8 @@ em.rep.warn{background:#b5523a}
   function ctOffers(cid) {
     const T = ctState();
     if (!cid || !CT_MAX()) return [];
-    if (!T.offers[cid] || st.day - (T.gen[cid] == null ? -99 : T.gen[cid]) >= 20) { T.gen[cid] = st.day; T.offers[cid] = Math.random() < 0.7 ? [genContract(cid)] : []; }
+    if (!T.offers[cid] || st.day - (T.gen[cid] == null ? -99 : T.gen[cid]) >= 20) { T.gen[cid] = st.day; T.offers[cid] = Math.random() < 0.7 ? [genContract(cid)] : []; rvTagOffers(T.offers[cid]); }
+    rvExpireOffers(cid);
     return T.offers[cid];
   }
   function genContract(cid) {
@@ -2632,7 +2648,7 @@ em.rep.warn{background:#b5523a}
       else act = `<span class="frwhere">${open ? `Liefern in ${C[k.cid].n}` : `Lieferfenster ab ${fdate(k.due - CT_EARLY)}`}</span>`;
       act += `<button class="linkbtn" type="button" data-ct="drop" data-id="${k.id}">Kündigen · ${fmt(ctPen(k))} G Strafe</button>`;
     } else {
-      sub = `${k.n}-mal ${k.q} Last, alle ${CT_EVERY} Tage · ${fmt(k.price)} G je Last`;
+      sub = `${k.n}-mal ${k.q} Last, alle ${CT_EVERY} Tage · ${fmt(k.price)} G je Last` + (k.riv ? ` · <b class="frlate">auch ${esc(rivById(k.riv.id).name)} bietet, bis ${fdate(k.riv.until).replace(' ', '&nbsp;')}</b>` : '');
       const why = ctWhy(k); act = `<button class="ybtn" type="button" data-ct="take" data-id="${k.id}"${why || st.enc ? ' disabled' : ''}>Unterschreiben</button>${why ? `<span class="frwhere">${why}</span>` : ''}`;
     }
     return `<li class="frow${active && here && ctOpen(k) ? ' here' : ''}"><span class="fri">${icon(k.g)}</span><span class="frm"><b><span class="frk">Vertrag</span> ${G[k.g].n} nach ${C[k.cid].n}</b><span class="frs">${sub}</span><span class="frs">für ${esc(byAcc(k.by))} · Strafe bei Verzug ${fmt(ctPen(k))} G</span></span>` +
@@ -2686,6 +2702,7 @@ em.rep.warn{background:#b5523a}
     const w = wealth(), rp = st.repute || 0, fw = [0.8, 1.0, 1.25].sort(() => Math.random() - 0.5), fr = [0.7, 0.9, 1.1].sort(() => Math.random() - 0.5);
     (st.rivals || []).forEach((r, i) => { r.wealth = Math.round(Math.max(r.wealth, w * fw[i % 3])); r.repute = Math.round(Math.max(r.repute * 0.5, rp * fr[i % 3])); });
     st.rivShown = {d:st.day};
+    rvInit();
   }
   function makeRivals() {
     const taken = new Set();
@@ -2696,14 +2713,15 @@ em.rep.warn{background:#b5523a}
   }
   function rivalsDay() {
     if (!st.rivShown && qS().ch >= RIV_CH) rivReveal();
+    rvDay();
     (st.rivals || []).forEach(r => {
-      r.repute += r.pace * (0.6 + Math.random() * 0.8);
-      if (st.rivShown) r.wealth = Math.round(r.wealth * (1 + 0.0022 * r.pace * rnd(0.5, 1.5)));
+      r.repute += r.pace * (0.6 + Math.random() * 0.8) * (st.rivShown ? 0.4 : 1);
+      if (st.rivShown) { const tw = wealth() * (r.fw || 1); r.wealth = Math.round(r.wealth + (tw - r.wealth) * 0.006 * rnd(0.5, 1.5)); }
       if (Math.random() >= 0.45) return;
       if (!r.home) rivalLook(r);
       const g = r.fav && Math.random() < 0.5 ? G[r.fav] : pick(GOODS), as = CITIES.filter(c => c.p.includes(g.id)), bs = CITIES.filter(c => c.c.includes(g.id));
       if (!as.length || !bs.length) return;
-      const A = as.find(c => c.id === r.home && Math.random() < 0.5) || pick(as), B = pick(bs), q = 5 + Math.floor(Math.random() * 15);
+      const A = as.find(c => c.id === r.home && Math.random() < 0.5) || pick(as), B = pick(bs), q = Math.round((5 + Math.floor(Math.random() * 15)) * (st.rivShown ? 1 + Math.min(3, r.wealth / 150000) : 1));
       const bA = buyPrice(A.id, g.id), sB = sellPrice(B.id, g.id);
       st.stock[A.id][g.id] = Math.max(0, st.stock[A.id][g.id] - q); st.stock[B.id][g.id] += q;
       rivNote({d:st.day, r:r.id, g:g.id, q, a:A.id, b:B.id, pa:Math.round((buyPrice(A.id, g.id) / Math.max(1, bA) - 1) * 100), pb:Math.round((sellPrice(B.id, g.id) / Math.max(1, sB) - 1) * 100)});
@@ -2773,7 +2791,7 @@ em.rep.warn{background:#b5523a}
     return st.day;
   }
   function election() {
-    const cands = [{name:st.player.name, me:true, repute:(st.repute || 0) + cityBonus('elect')}].concat((st.rivals || []).map(r => ({name:r.name, repute:r.repute})))
+    const cands = [{name:st.player.name, me:true, repute:(st.repute || 0) + cityBonus('elect')}].concat((st.rivals || []).filter(r => rvRel(r) !== 'bund').map(r => ({name:r.name, repute:r.repute * (st.rivShown ? 0.85 : 1)})))
       .filter(c => c.repute >= ELECT_MIN).sort((a, b) => b.repute - a.repute);
     const was = !!st.mayor, home = C[st.home].n;
     let t;
@@ -2931,30 +2949,423 @@ em.rep.warn{background:#b5523a}
     if (d.getMonth() === 5 && d.getDate() === 24 && d.getFullYear() > 1356) hansetag();
     // kleine Ereignisse
     if (st.day >= e.nextMinor) {
-      e.nextMinor = st.day + 45 + Math.floor(Math.random() * 50);
+      e.nextMinor = st.day + 35 + Math.floor(Math.random() * 45);
       const m = d.getMonth(), list = MINOR.filter(x => !x.m || x.m.includes(m)), tot = list.reduce((a, x) => a + x.w, 0);
       let r = Math.random() * tot, ev = list[0];
       for (const x of list) { r -= x.w; if (r <= 0) { ev = x; break; } }
       const res = ev.f();
       if (res) rumor(res.t, res.c || null, null);
     }
+    majorDay();
     // abgelaufene Wirkungen aufräumen
     if (st.day % 30 === 0) { e.mods = e.mods.filter(m => m.until >= st.day); Object.keys(e.pest).forEach(c => { if (e.pest[c] < st.day) delete e.pest[c]; }); }
     if (st.mode === 'kampagne' && !st.ended && st.day >= CAMPAIGN_END) endCampaign();
   }
-  function hansetag() {
-    const y = dateOf(st.day).getFullYear();
-    if (st.alderman) { announce(`Hansetag ${y} in Lübeck. Als Ältermann der Hanse führst du den Vorsitz. Die Städte zahlen dir ${ALDER_PAY} Gulden am Tag.`); return; }
-    const best = (st.rivals || []).reduce((a, r) => r.repute > a.repute ? r : a, {repute:0, name:''});
-    if (st.mayor && (st.repute || 0) >= ALDER_MIN && (st.repute || 0) > best.repute) {
-      st.alderman = {since:st.day};
-      announce(`Hansetag ${y} in Lübeck: Die Ratssendeboten wählen dich zum Ältermann der Hanse! Du sprichst nun für alle Städte. ${ALDER_PAY} Gulden am Tag, deine Verbände werden noch seltener angegriffen.`, 'rank');
-      chronicle(`${st.player.name} wird Ältermann der Hanse`);
-      if (st.mode !== 'kampagne') announce('Du hast das höchste Amt der Hanse erreicht. Das Spiel geht weiter, so lange du willst.', 'rank');
-    } else {
-      const why = !st.mayor ? 'Wählbar ist nur, wer Bürgermeister seiner Stadt ist.' : (st.repute || 0) < ALDER_MIN ? `Wählbar ist erst, wer ${fmt(ALDER_MIN)} Ansehen hat.` : `${best.name} hat mehr Ansehen.`;
-      announce(`Hansetag ${y} in Lübeck. Die Ratssendeboten beraten über Zölle und Privilegien. ${why}`);
+  // ───────── Ab Version 43: Große Vorhaben, Ehre, Wettlauf um das Ältermannamt, Bestenliste, Spielzeit ─────────
+  // Ab Großkaufmann bindet Geld sich in großen Vorhaben im Stammsitz. Sie bringen Ehre; Ansehen und Ehre zusammen
+  // entscheiden am Hansetag, wer Ältermann der Hanse wird: du oder einer der drei Konkurrenten.
+  const GV_RANK = 4, ALDER_STAND = 3000, RIVAL_TERM = 3 * 365;
+  const GV = {
+    hospital:{n:'Hospital zum Heiligen Geist', cost:30000, days:90, ehre:400, rep:1, elect:200, art:'kirche',
+      d:'Ein Hospital für Alte, Kranke und Pilger: 400 Ehre, täglich 1 Ansehen und 200 Stimmen mehr bei der Ratswahl.'},
+    hafen:{n:'Hafen und Speicher', cost:45000, days:120, ehre:300, cap:400, art:'kran',
+      d:'Neue Kaimauern, Kräne und Speicher: 300 Ehre, das Kontor fasst 400 Last mehr, Ausbessern wird überall 25 % günstiger.'},
+    flotte:{n:'Eigene Friedeflotte', cost:60000, days:100, ehre:500, up:60, art:'mauer',
+      d:'Zwei bewaffnete Holke kreuzen für die Hanse: 500 Ehre, Seeräuber greifen dich und deine Verbände 30 % seltener an. 60 Gulden Unterhalt am Tag.'},
+    artushof:{n:'Artushof der Kaufleute', cost:90000, days:150, ehre:700, rep:0.8, infl:0.1, art:'markt',
+      d:'Ein prächtiger Saal für Gilden und Gäste: 700 Ehre, täglich 0,8 Ansehen, dein Gewicht auf dem Hansetag steigt um 10 Punkte.'},
+    turm:{n:'Turm der Marienkirche', cost:180000, days:240, ehre:1500, rep:2, art:'kirche',
+      d:'Der höchste Turm an der Küste, weithin von See zu sehen: 1.500 Ehre und täglich 2 Ansehen.'}
+  };
+  const GV_ORDER = ['hospital', 'hafen', 'flotte', 'artushof', 'turm'];
+  const STIFT = {n:'Stiftung', ehre:150, base:12000, k:1.3};
+  const gvState = () => st.gv || (st.gv = {done:{}, job:null, stift:0, intro:false});
+  const gvHas = k => !!(st && st.gv && st.gv.done[k]);
+  const gvSum = key => !st || !st.gv ? 0 : Object.keys(st.gv.done).reduce((x, k) => x + ((GV[k] || {})[key] || 0), 0);
+  const ehre = () => Math.round((st && st.ehre) || 0);
+  const standing = () => Math.round((st.repute || 0) + ehre());
+  const stiftCost = () => Math.round(STIFT.base * Math.pow(STIFT.k, gvState().stift) / 100) * 100;
+  // Gebäude zählen zur Hälfte ihrer Kosten zum Vermögen, Stiftungen nicht
+  const gvValue = () => !st.gv ? 0 : 0.5 * (Object.keys(st.gv.done).reduce((x, k) => x + (GV[k] ? GV[k].cost : 0), 0) + (st.gv.job ? GV[st.gv.job.k].cost : 0));
+  const gvLeft = () => { const J = gvState().job; return J ? Math.max(0, J.d0 + GV[J.k].days - st.day) : 0; };
+  function gvWhy(k) {
+    const S = gvState(), V = GV[k];
+    if (S.done[k]) return 'fertig';
+    if (S.job) return S.job.k === k ? 'im Bau' : 'erst nach dem laufenden Vorhaben';
+    if (st.rank < GV_RANK) return `ab ${RANKS[GV_RANK][1]}`;
+    if (st.loc !== st.home) return `nur in ${C[st.home].n}`;
+    if (st.money < V.cost) return `${fmt(V.cost)} G`;
+    return '';
+  }
+  function gvStart(k) {
+    const S = gvState(), V = GV[k];
+    if (!V || gvWhy(k) || st.enc || st.focus) return;
+    st.money -= V.cost; S.job = {k, d0:st.day};
+    addLog(`In ${C[st.home].n} beginnt der Bau: ${V.n}. Fertig in ${V.days} Tagen.`, 'rank');
+    chronicle(`${st.player.name} lässt bauen: ${V.n}`);
+    commit();
+  }
+  function gvStift() {
+    const S = gvState(), c = stiftCost();
+    if (st.rank < GV_RANK || st.money < c || st.enc) return;
+    st.money -= c; S.stift++; st.ehre = (st.ehre || 0) + STIFT.ehre; gainRepute(20);
+    addLog(`Du stiftest ${fmt(c)} Gulden für Armenspeisung, Seelmessen und ein Fenster in der Kirche: ${STIFT.ehre} Ehre. Die nächste Stiftung wird teurer, ${fmt(stiftCost())} Gulden.`, 'rank');
+    commit();
+  }
+  function gvDay() {
+    const S = gvState();
+    if (!S.intro && st.rank >= GV_RANK) {
+      S.intro = true;
+      const t = `Als Großkaufmann kannst du in ${C[st.home].n} große Vorhaben bauen: Hospital, Hafen, Friedeflotte, Artushof, Kirchturm, dazu Stiftungen. Sie bringen Ehre, und Ansehen und Ehre zusammen entscheiden, wer Ältermann der Hanse wird. Unter Haus: Große Vorhaben.`;
+      addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     }
+    if (S.job && st.day >= S.job.d0 + GV[S.job.k].days) {
+      const k = S.job.k, V = GV[k]; S.done[k] = {d:st.day}; S.job = null;
+      st.ehre = (st.ehre || 0) + V.ehre;
+      if (V.cap && st.kontor) st.kontor.cap += V.cap;
+      announce(`${V.n} in ${C[st.home].n} ist fertig! ${V.ehre} Ehre für das Handelshaus ${st.player.name}.`, 'rank');
+      chronicle(`${V.n} in ${C[st.home].n} vollendet`);
+    }
+    const rep = gvSum('rep'); if (rep) gainRepute(rep);
+    if (gvHas('flotte')) { st.money -= GV.flotte.up; rpState().cost += GV.flotte.up; }
+  }
+  function gvHTML() {
+    const S = gvState(), home = st.loc === st.home;
+    let h = `<div class="kontor"><h3>Große Vorhaben</h3><p class="small">Vorhaben binden viel Geld und bringen Ehre; Gebäude zählen zur Hälfte ihrer Kosten zu deinem Vermögen. Ansehen und Ehre zusammen (${fmt(standing())}) entscheiden am Hansetag, wer Ältermann der Hanse wird.${st.rank < GV_RANK ? ` Bauen kannst du ab ${RANKS[GV_RANK][1]}.` : ''}</p>`;
+    if (S.job) { const V = GV[S.job.k], f = 1 - gvLeft() / V.days; h += `<div class="krow"><span class="gname">⚒ ${V.n}</span><span class="num small" style="grid-column:auto;margin:0">noch ${gvLeft()} Tage</span><span class="bar"><i style="width:${Math.round(f * 100)}%"></i></span></div>`; }
+    GV_ORDER.forEach(k => {
+      const V = GV[k], why = gvWhy(k), done = S.done[k];
+      h += `<div class="gvrow${done ? ' done' : ''}"><span class="gvart">${isoArt(V.art, {w:72})}</span><span class="gvtxt"><b>${V.n}</b><span class="small">${V.d}${V.days && !done ? ` Bauzeit ${V.days} Tage.` : ''}</span></span>` +
+        `<span class="ybtns">${done ? `<span class="small">fertig seit ${fdate(done.d, true)}</span>` : `<button class="ybtn" type="button" data-gv="${k}"${why ? ' disabled' : ''}>${why || `Bauen · ${fmt(V.cost)} G`}</button>`}</span></div>`;
+    });
+    h += `<div class="gvrow"><span class="gvart">${isoArt('kirche', {w:72})}</span><span class="gvtxt"><b>Stiftung</b><span class="small">Armenspeisung, Seelmessen, ein Kirchenfenster: sofort ${STIFT.ehre} Ehre und etwas Ansehen. Geht überall, jede weitere kostet ein Drittel mehr${S.stift ? `; bisher ${S.stift}` : ''}.</span></span>` +
+      `<span class="ybtns"><button class="ybtn" type="button" data-gv="stift"${st.rank >= GV_RANK && st.money >= stiftCost() && !st.enc ? '' : ' disabled'}>${st.rank < GV_RANK ? `ab ${RANKS[GV_RANK][1]}` : `Stiften · ${fmt(stiftCost())} G`}</button></span></div>`;
+    if (!home && st.rank >= GV_RANK) h += `<p class="small">Bauen lässt du in ${C[st.home].n}; Stiftungen gehen von überall.</p>`;
+    return h + `</div>`;
+  }
+  const gvMeta = () => { const S = gvState(), n = Object.keys(S.done).length; return S.job ? `${GV[S.job.k].n}: noch ${gvLeft()} Tage` : st.rank < GV_RANK ? `ab ${RANKS[GV_RANK][1]}` : `${n} von ${GV_ORDER.length} · Ehre ${fmt(ehre())}`; };
+
+  // Wettlauf um das Ältermannamt: Kandidaten sind Bürgermeister mit 3.000 Ansehen und Ehre zusammen
+  const rivStand = r => Math.round(r.repute + (r.ehre || 0));
+  const rivAld = () => st.aldRival && (st.rivals || []).find(r => r.id === st.aldRival.id);
+  function hansetag() {
+    const y = dateOf(st.day).getFullYear(), R0 = st.race || (st.race = {});
+    if (st.alderman) { announce(`Hansetag ${y} in Lübeck. Als Ältermann der Hanse führst du den Vorsitz. Die Städte zahlen dir ${ALDER_PAY} Gulden am Tag.`); return; }
+    const inc = rivAld();
+    if (inc && st.day < st.aldRival.until) { announce(`Hansetag ${y} in Lübeck. ${inc.name} führt als Ältermann den Vorsitz, gewählt bis ${dateOf(st.aldRival.until).getFullYear()}. Dann wird neu gewählt.`); return; }
+    const meOk = !!st.mayor && standing() >= ALDER_STAND;
+    const cands = (st.rivShown ? st.rivals || [] : []).filter(r => r.repute >= ELECT_MIN && rivStand(r) >= ALDER_STAND && !(r.rel === 'bund' && r.relUntil > st.day))
+      .map(r => ({r, s:rivStand(r) * (inc && inc.id === r.id ? 1.1 : 1)}));
+    const allies = (st.rivals || []).filter(r => r.rel === 'bund' && r.relUntil > st.day).reduce((x, r) => x + r.repute * 0.05, 0);
+    if (meOk) cands.push({me:true, s:standing() + allies});
+    cands.sort((a, b) => b.s - a.s);
+    const best = cands[0];
+    if (best && best.me) {
+      st.alderman = {since:st.day}; st.aldRival = null;
+      if (!R0.rivalFirst) R0.first = true;
+      R0.day = st.day;
+      announce(`Hansetag ${y} in Lübeck: Die Ratssendeboten wählen dich zum Ältermann der Hanse!${R0.rivalFirst ? '' : ' Du bist der Erste deiner Generation, vor allen Konkurrenten.'} ${ALDER_PAY} Gulden am Tag, deine Verbände werden noch seltener angegriffen.`, 'rank');
+      chronicle(`${st.player.name} wird Ältermann der Hanse`);
+      blUpdate('ald');
+      if (st.mode !== 'kampagne') announce('Du hast das höchste Amt der Hanse erreicht. Das Spiel geht weiter, so lange du willst; deine Bestenliste führt dich unter Spielstände.', 'rank');
+    } else if (best) {
+      const r = best.r, again = inc && inc.id === r.id;
+      st.aldRival = {id:r.id, since:st.day, until:st.day + RIVAL_TERM};
+      if (!R0.rivalFirst) R0.rivalFirst = {id:r.id, name:r.name, d:st.day};
+      announce(`Hansetag ${y} in Lübeck: ${again ? `${r.name} bleibt Ältermann der Hanse` : `Die Ratssendeboten wählen ${r.name} zum Ältermann der Hanse`}, für drei Jahre.${meOk ? ' Du hattest weniger Ansehen und Ehre.' : ''} ${R0.first ? '' : 'Der Wettlauf ist nicht verloren: Nach seiner Amtszeit wird neu gewählt.'}`, 'rank');
+      chronicle(`${r.name} wird Ältermann der Hanse`);
+    } else {
+      const why = !st.mayor ? 'Wählbar ist nur, wer Bürgermeister seiner Stadt ist.' : `Wählbar ist erst, wer ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen hat (du: ${fmt(standing())}).`;
+      announce(`Hansetag ${y} in Lübeck. Die Ratssendeboten beraten über Zölle und Privilegien. Zum Ältermann ist niemand gewählt. ${why}`);
+    }
+  }
+  function raceHTML() {
+    let h = `<div class="kontor"><h3>Wettlauf um das Ältermannamt</h3>`;
+    if (!rivShown()) return h + `<p class="small">Am Hansetag am 24. Juni wird der Ältermann der Hanse gewählt. Wählbar ist ein Bürgermeister mit ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen. Wer dir den Platz streitig macht, zeigt sich, wenn du im Rat sitzt.</p></div>`;
+    const inc = rivAld(), R0 = st.race || {};
+    const L = [{me:true, name:'Du', rep:st.repute || 0, e:ehre(), mayor:!!st.mayor}].concat((st.rivals || []).map(r => ({r, name:r.name, rep:r.repute, e:r.ehre || 0, mayor:r.repute >= ELECT_MIN})))
+      .map(x => Object.assign(x, {s:x.rep + x.e})).sort((a, b) => b.s - a.s), mx = Math.max(ALDER_STAND, ...L.map(x => x.s));
+    h += `<p class="small">${st.alderman ? `Du bist Ältermann seit ${fdate(st.alderman.since, true)}${R0.first ? ', als Erster vor allen Konkurrenten' : ''}.` : inc ? `${esc(inc.name)} ist Ältermann bis ${fdate(st.aldRival.until, true)}. Danach wird am Hansetag neu gewählt.` : `Nächste Wahl am Hansetag, ${fdate(nextHansetag(), true)}. Es gewinnt, wer als Bürgermeister die meisten Punkte aus Ansehen und Ehre hat, mindestens ${fmt(ALDER_STAND)}.`}</p>`;
+    h += `<div class="race">` + L.map(x => `<div class="rrow${x.me ? ' me' : ''}"><span class="rn">${x.me ? '<b>Du</b>' : `${x.r.av ? avatarSVG(x.r.av, 'rvf sm') : ''}${esc(x.name)}`}${inc && x.r && x.r.id === inc.id ? ' <span class="pill">Ältermann</span>' : ''}${x.me && st.alderman ? ' <span class="pill">Ältermann</span>' : ''}</span>` +
+      `<span class="rb"><i class="rr" style="width:${Math.round(x.rep / mx * 100)}%"></i><i class="re" style="width:${Math.round(x.e / mx * 100)}%"></i><em style="left:${Math.round(ALDER_STAND / mx * 100)}%"></em></span>` +
+      `<span class="rv small">${fmt(x.s)}${x.mayor ? '' : ' · noch kein Bürgermeister'}</span></div>`).join('') + `</div>` +
+      `<p class="small"><i class="sw rr"></i> Ansehen <i class="sw re"></i> Ehre · Strich: ${fmt(ALDER_STAND)} Punkte</p>`;
+    if (typeof rvActHTML === 'function') h += rvActHTML();
+    return h + `</div>`;
+  }
+  const nextHansetag = () => { const y = dateOf(st.day).getFullYear(); let d = dayOf(y, 6, 24); if (d <= st.day) d = dayOf(y + 1, 6, 24); return d; };
+  const raceMeta = () => st.alderman ? 'Du bist Ältermann' : rivAld() ? `${rivAld().name} ist Ältermann` : rivShown() ? `du ${fmt(standing())} von ${fmt(ALDER_STAND)}` : 'ab Ratsherr';
+
+  // Bestenliste: jedes Spiel ein Eintrag, im Browser und im Claude-Konto
+  const BL_KEY = 'kogge-kontor-bestenliste';
+  function blRead() {
+    let L = [];
+    try { L = JSON.parse(localStorage.getItem(BL_KEY) || '[]'); } catch (e) {}
+    const R = saves.remote && saves.remote.bestenliste;
+    if (R && Array.isArray(R.list)) R.list.forEach(x => { const i = L.findIndex(y => y.id === x.id); if (i < 0) L.push(x); else if ((x.at || 0) > (L[i].at || 0)) L[i] = x; });
+    return L;
+  }
+  function blWrite(L) {
+    L = L.slice().sort(blSortAld).slice(0, 40);
+    try { localStorage.setItem(BL_KEY, JSON.stringify(L)); } catch (e) {}
+    if (saves.remote) saves.remote.bestenliste = {list:L};
+    if (saves.db && saves.ok) saves.db.doc(`data/users/${saves.uid}/bestenliste`).set({list:L}).catch(() => {});
+  }
+  const blSortAld = (a, b) => (b.first ? 1 : 0) - (a.first ? 1 : 0) || (a.ald == null) - (b.ald == null) || (a.ald || 0) - (b.ald || 0) || b.w - a.w;
+  const blSortW = (a, b) => b.w - a.w;
+  function blEntry() {
+    if (!st || st._temp || !st.player) return null;
+    if (!st.gid) st.gid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const R0 = st.race || {}, prev = (blRead().find(x => x.id === st.gid) || {});
+    return {id:st.gid, n:st.player.name, h:st.home, mode:st.mode, ald:st.alderman ? st.alderman.since : prev.ald != null ? prev.ald : null, first:!!R0.first, by:R0.rivalFirst ? R0.rivalFirst.name : null,
+      w:Math.max(Math.round(wealth()), prev.w || 0), wNow:Math.round(wealth()), ehre:ehre(), rank:st.rank, day:st.day, ms:(st.play || {}).ms || 0, at:Date.now(),
+      riv:(st.rivals || []).map(r => ({n:r.name, w:Math.round(r.wealth), s:rivStand(r)}))};
+  }
+  function blUpdate() {
+    const E = blEntry(); if (!E) return;
+    const L = blRead().filter(x => x.id !== E.id); L.push(E); blWrite(L);
+  }
+  function blHTML(sortW) {
+    const cur = blEntry(), L = blRead().filter(x => !cur || x.id !== cur.id).concat(cur ? [cur] : []).sort(sortW ? blSortW : blSortAld).slice(0, 10);
+    if (!L.length) return '<p class="small">Noch keine Einträge.</p>';
+    return `<ol class="blist">` + L.map((x, i) => `<li class="${cur && x.id === cur.id ? 'cur' : ''}"><span class="bp">${i + 1}.</span><span class="bn"><b>${esc(x.n)}</b><span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.ald != null ? `Ältermann ${dateOf(x.ald).getFullYear()}${x.first ? ', als Erster' : x.by ? `, nach ${esc(x.by)}` : ''}` : x.by ? `${esc(x.by)} wurde zuerst Ältermann` : RANKS[x.rank || 0][1]} · ${playTime(x.ms)}${cur && x.id === cur.id ? ' · dieses Spiel' : ''}</span></span><span class="num">${fmt(x.w)} G</span></li>`).join('') + `</ol>`;
+  }
+
+  // Spielzeit: zählt nur, solange das Spiel sichtbar ist und du in den letzten zwei Minuten etwas getan hast
+  let lastInput = Date.now();
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => window.addEventListener(ev, () => { lastInput = Date.now(); }, {passive:true}));
+  setInterval(() => {
+    if (!st || st._temp || window.__fast || document.visibilityState !== 'visible' || Date.now() - lastInput > 120000) return;
+    const P = st.play || (st.play = {ms:0, rk:{}, d0:st.day});
+    P.ms += 5000;
+    if (st.rank != null && P.rk[st.rank] == null) P.rk[st.rank] = P.ms;
+  }, 5000);
+  const playTime = ms => { const m = Math.round((ms || 0) / 60000); return m < 60 ? `${m} Min` : `${Math.floor(m / 60)} Std ${m % 60} Min`; };
+  function playHTML() {
+    const P = st.play || {ms:0, rk:{}, d0:0}, months = Math.max(0.5, (st.day - (P.d0 || 0)) / 30);
+    const rk = Object.entries(P.rk || {}).filter(([r]) => +r > 0).map(([r, ms]) => `${RANKS[r][1]} nach ${playTime(ms)}`).join(' · ');
+    return `<p class="small">Gespielt: ${playTime(P.ms)}, etwa ${playTime(P.ms / months)} je Spielmonat.${rk ? ` ${rk}.` : ''} Gezählt wird nur, solange das Spiel offen ist und du etwas tust.</p>`;
+  }
+  // ───────── Ab Version 44: Konkurrenten als Gegner ─────────
+  // Ab dem Kapitel „Ratsherr“ halten die drei Familien mit dir Schritt: Ihr Ansehen folgt deinem, jede mit eigener Stärke.
+  // Sie stiften, bieten um Lieferverträge, drücken Preise und machen dir ab und an das Leben schwer. Mit einer Familie kannst du
+  // ein Bündnis schließen (sie tritt nicht gegen dich an und stimmt für dich) oder eine Fehde führen.
+  const RV_F = [0.84, 0.98, 1.12], RV_BUND = 365, RV_GEGEN = 2000, RV_GEGEN_CD = 60, RV_REPLY = 1500;
+  const rvBundCost = () => Math.max(5000, Math.round(wealth() * 0.03 / 500) * 500);
+  const rvRel = r => r.rel && r.relUntil > st.day ? r.rel : r.rel === 'fehde' ? 'fehde' : 'neutral';
+  function rvInit() {
+    const F = RV_F.slice().sort(() => Math.random() - 0.5);
+    const FW = [0.75, 1, 1.3].sort(() => Math.random() - 0.5);
+    (st.rivals || []).forEach((r, i) => { if (r.fw == null) r.fw = FW[i % 3]; if (r.f == null) r.f = F[i % 3]; if (r.ehre == null) r.ehre = 0; if (r.nextMove == null) r.nextMove = st.day + 40 + Math.floor(Math.random() * 60); if (r.nextGift == null) r.nextGift = st.day + 90 + Math.floor(Math.random() * 120); });
+  }
+  // täglicher Gang der Gegner nach der Enthüllung
+  function rvDay() {
+    if (!st.rivShown) return;
+    rvInit();
+    const me = st.repute || 0, myE = ehre();
+    (st.rivals || []).forEach(r => {
+      r.f = clamp(r.f + (Math.random() - 0.5) * 0.002, 0.7, 1.14);
+      const tgt = me * r.f;
+      if (tgt > r.repute) r.repute += (tgt - r.repute) * 0.02;
+      const te = myE * r.f * 0.95;
+      if (te > r.ehre) r.ehre += (te - r.ehre) * 0.01;
+      // Stiftungen der Gegner
+      if (st.day >= r.nextGift && st.rank >= 3) {
+        r.nextGift = st.day + 120 + Math.floor(Math.random() * 150);
+        const e = Math.round(rnd(110, 230)); r.ehre += e; r.wealth = Math.round(r.wealth * 0.96);
+        addLog(`${r.name} stiftet ${pick(['ein Fenster in der Marienkirche', 'eine Armenspeisung', 'einen Altar', 'ein Haus für Pilger', 'eine Glocke'])} und gewinnt ${e} Ehre.`, 'rumor');
+      }
+      // vor dem Hansetag legen knappe Gegner noch einmal nach
+      const ht = nextHansetag() - st.day;
+      if (ht === 45 && !st.alderman && rivStand(r) >= standing() * 0.85 && rivStand(r) >= ALDER_STAND * 0.8 && Math.random() < 0.6) {
+        const e = Math.round(rivStand(r) * rnd(0.04, 0.09)); r.ehre += e;
+        addLog(`${r.name} will Ältermann werden und lässt vor dem Hansetag ${pick(['eine Kapelle', 'ein Gildehaus', 'einen Brunnen am Markt', 'ein Spital'])} bauen: ${e} Ehre.`, 'rumor');
+      }
+      if (rvRel(r) === 'bund') return;
+      if (st.day >= r.nextMove) { r.nextMove = st.day + Math.round((60 + Math.random() * 70) * (rvRel(r) === 'fehde' ? 0.5 : 1)); rvMove(r); }
+    });
+    const P = st.rvPend; if (P && st.day > P.until) st.rvPend = null;
+  }
+  function rvMove(r) {
+    const kinds = ['geruecht', 'preis', 'wegkauf', 'stimme', 'vertrag'], k = pick(kinds);
+    const top = Object.entries(st.gprof || {}).sort((a, b) => b[1] - a[1]).map(x => x[0])[0] || pick(GOODS).id;
+    if (k === 'geruecht') {
+      const loss = Math.min(120, Math.max(20, Math.round((st.repute || 0) * 0.03)));
+      st.repute = Math.max(0, (st.repute || 0) - loss);
+      st.rvPend = {k, r:r.id, loss, until:st.day + 20};
+      announce(`${r.name} streut im Rat von ${C[st.home].n} Gerüchte über deine Geschäfte: ${loss} Ansehen verloren. Unter Haus, Wettlauf um das Ältermannamt, kannst du binnen 20 Tagen eine Gegendarstellung geben.`);
+    } else if (k === 'preis') {
+      const c = pick(CITIES.filter(x => x.c.includes(top))) || pick(CITIES);
+      addMod(c.id, top, 1.6, st.day + 45);
+      addLog(`${r.name} wirft große Mengen ${G[top].n} auf den Markt in ${c.n}. Dort sinken die Preise für einige Wochen.`, 'rumor');
+    } else if (k === 'wegkauf') {
+      const g = pick(GOODS.filter(x => x.b >= 90)).id, c = pick(CITIES.filter(x => x.p.includes(g))) || pick(CITIES);
+      st.stock[c.id][g] *= 0.35; addMod(c.id, g, 0.7, st.day + 30);
+      addLog(`${r.name} kauft in ${c.n} fast alles ${G[g].n} auf. Dort wird es für einige Wochen teuer.`, 'rumor');
+    } else if (k === 'stimme') {
+      st.rvVote = {r:r.id, until:st.day + 90};
+      addLog(`${r.name} wirbt bei den Ratssendeboten gegen dich. Bei der nächsten Abstimmung auf dem Hansetag zählt deine Stimme weniger.`, 'rumor');
+    } else {
+      st.rvCt = {r:r.id, until:st.day + 60};
+      addLog(`${r.name} bietet in den Häfen um dieselben Lieferverträge wie du. Wer zögert, geht leer aus.`, 'rumor');
+    }
+  }
+  // Lieferverträge: ein Gegner bietet mit; nach zwei Tagen ist das Angebot weg
+  function rvTagOffers(list) {
+    if (!st.rivShown || !list || !list.length) return;
+    const R = (st.rivals || []).filter(r => rvRel(r) !== 'bund'); if (!R.length) return;
+    const p = st.rvCt && st.rvCt.until > st.day ? 0.6 : 0.3;
+    list.forEach(o => { if (!o.riv && Math.random() < p) { const r = st.rvCt && st.rvCt.until > st.day ? rivById(st.rvCt.r) : pick(R); o.riv = {id:r.id, until:st.day + 2}; } });
+  }
+  function rvExpireOffers(cid) {
+    const T = st.contracts; if (!T || !T.offers[cid]) return;
+    T.offers[cid] = T.offers[cid].filter(o => { if (o.riv && st.day > o.riv.until) { addLog(`${rivById(o.riv.id).name} hat den Liefervertrag über ${G[o.g].n} in ${C[o.cid].n} übernommen.`, 'rumor'); return false; } return true; });
+  }
+  // deine Züge
+  function rvBund(id) {
+    const r = (st.rivals || []).find(x => x.id === id), c = rvBundCost();
+    if (!r || !st.rivShown || rvRel(r) === 'bund' || st.money < c || rivStand(r) > standing()) return;
+    st.money -= c; r.rel = 'bund'; r.relUntil = st.day + RV_BUND;
+    addLog(`Bündnis mit ${r.name} für ein Jahr, besiegelt mit ${fmt(c)} Gulden: Die Familie tritt nicht gegen dich an, stimmt für dich und lässt dich in Ruhe.`, 'rank');
+    commit();
+  }
+  function rvFehde(id) {
+    const r = (st.rivals || []).find(x => x.id === id);
+    if (!r || !st.rivShown || rvRel(r) === 'bund') return;
+    if (rvRel(r) === 'fehde') { if (st.money < 3000) return; st.money -= 3000; r.rel = 'neutral'; r.relUntil = 0; addLog(`Du legst die Fehde mit ${r.name} bei, gegen 3.000 Gulden für einen Ausgleich.`, 'rank'); return commit(); }
+    r.rel = 'fehde'; r.relUntil = st.day + 9999; r.gegen = r.gegen || -999;
+    addLog(`Du erklärst ${r.name} die Fehde. Jetzt kannst du Gegenzüge machen, aber die Familie schlägt öfter zurück.`, 'rank');
+    commit();
+  }
+  function rvGegen(id) {
+    const r = (st.rivals || []).find(x => x.id === id);
+    if (!r || rvRel(r) !== 'fehde' || st.money < RV_GEGEN || st.day - (r.gegen || -999) < RV_GEGEN_CD) return;
+    st.money -= RV_GEGEN; r.gegen = st.day;
+    const loss = Math.round(Math.min(150, r.repute * 0.04)); r.repute = Math.max(0, r.repute - loss); r.f = clamp(r.f - 0.015, 0.7, 1.14); r.wealth = Math.round(r.wealth * 0.97);
+    addLog(`Deine Leute im Rat und an den Kais machen ${r.name} das Leben schwer: Die Familie verliert ${loss} Ansehen und Geschäfte.`, 'rank');
+    commit();
+  }
+  function rvReply() {
+    const P = st.rvPend; if (!P || P.k !== 'geruecht' || st.money < RV_REPLY) return;
+    st.money -= RV_REPLY; gainRepute(P.loss); const r = rivById(P.r); if (r.repute) r.repute = Math.max(0, r.repute - Math.round(P.loss * 0.8));
+    addLog(`Deine Gegendarstellung vor dem Rat wirkt: Du gewinnst ${P.loss} Ansehen zurück, ${r.name} steht schlecht da.`, 'rank');
+    st.rvPend = null; commit();
+  }
+  function rvActHTML() {
+    let h = '';
+    const P = st.rvPend;
+    if (P && P.k === 'geruecht') h += `<div class="krow"><span class="gname">Gerüchte von ${esc(rivById(P.r).name)}</span><span class="ybtns"><button class="ybtn" type="button" data-rv="reply"${st.money >= RV_REPLY ? '' : ' disabled'}>Gegendarstellung · ${fmt(RV_REPLY)} G</button></span><span class="small">Bis ${fdate(P.until)}: Du holst ${P.loss} Ansehen zurück, er verliert fast so viel.</span></div>`;
+    h += `<span class="flabel">Die Familien</span>`;
+    (st.rivals || []).forEach(r => {
+      const rel = rvRel(r), c = rvBundCost(), strong = rivStand(r) > standing(), cd = RV_GEGEN_CD - (st.day - (r.gegen || -999));
+      h += `<div class="krow"><span class="gname">${r.av ? avatarSVG(r.av, 'rvf sm') : ''}${esc(r.name)}</span><span class="num small" style="grid-column:auto;margin:0">${rel === 'bund' ? 'Bündnis' : rel === 'fehde' ? 'Fehde' : 'neutral'}</span>` +
+        `<span class="small">aus ${C[r.home].n} · Vermögen ${fmt(Math.round(r.wealth))} G · Ansehen ${fmt(Math.round(r.repute))} · Ehre ${fmt(Math.round(r.ehre || 0))}${rel === 'bund' ? ` · Bündnis bis ${fdate(r.relUntil)}` : ''}</span><span class="ybtns wrapb">` +
+        (rel === 'neutral' ? `<button class="ybtn" type="button" data-rv="bund" data-id="${r.id}"${st.money >= c && !strong ? '' : ' disabled'}>${strong ? 'will selbst Ältermann werden' : `Bündnis · ${fmt(c)} G`}</button><button class="ybtn" type="button" data-rv="fehde" data-id="${r.id}">Fehde erklären</button>` : '') +
+        (rel === 'fehde' ? `<button class="ybtn" type="button" data-rv="gegen" data-id="${r.id}"${st.money >= RV_GEGEN && cd <= 0 ? '' : ' disabled'}>${cd > 0 ? `Gegenzug in ${cd} Tagen` : `Gegenzug · ${fmt(RV_GEGEN)} G`}</button><button class="ybtn" type="button" data-rv="fehde" data-id="${r.id}"${st.money >= 3000 ? '' : ' disabled'}>Fehde beilegen · 3.000 G</button>` : '') +
+        `</span></div>`;
+    });
+    return h + `<p class="small">Im Bündnis tritt eine Familie ein Jahr lang nicht gegen dich an, stimmt für dich und lässt dich in Ruhe. In einer Fehde kannst du ihr alle ${RV_GEGEN_CD} Tage schaden, aber sie schlägt doppelt so oft zurück.</p>`;
+  }
+  function rvClick(t) {
+    const a = t.dataset.rv, id = +t.dataset.id;
+    if (a === 'reply') return rvReply();
+    if (a === 'bund') return rvBund(id);
+    if (a === 'fehde') return rvFehde(id);
+    if (a === 'gegen') return rvGegen(id);
+  }
+
+  // Gefechte: Ist dein Verband klar überlegen, entscheidet der Kapitän das Gefecht selbst
+  const capAutoOk = () => { const e = st.enc; return !!e && e.phase === 'meet' && !e.prey && !e.fleet && ownEff() / Math.max(1, pirEff(e)) >= 1.5; };
+  function capAuto() {
+    const e = st.enc; if (busy || !capAutoOk()) return;
+    const lost = Math.min(Math.max(0, st.crew - crewMin()), Math.round(st.crew * rnd(0.02, 0.07)));
+    st.crew -= lost; st.fleet.forEach(sh => { sh.hull = Math.max(30, sh.hull - Math.round(rnd(2, 9))); });
+    winCore('fled');
+    e.msg = `Dein Kapitän lässt die Armbrüste sprechen, und ${e.name} dreht nach wenigen Salven ab. Beute ${fmt(e.loot)} Gulden${lost ? `, ${lost} ${lost === 1 ? 'Mann' : 'Leute'} verwundet` : ''}.`;
+    addLog(`Seeräuber unter ${e.name} vertrieben, ohne dass du selbst eingreifen musstest. Beute ${fmt(e.loot)} Gulden.`, 'pirate');
+    commit();
+  }
+  // ───────── Ab Version 45: Märkte, weniger Routine im Hafen ─────────
+  // Massengüter haben tiefe Märkte, in die große Mengen passen; Luxuswaren kleine Märkte, die schnell satt sind.
+  const GDEP = {getreide:1.7, bier:1.5, holz:1.7, salz:1.5, hering:1.4, wolle:1.15, stockfisch:1.1, eisen:1, wein:0.8, tuch:0.75, wachs:0.65, pelze:0.6};
+  const GDEP_B = {};
+  const gdB = b => { if (GDEP_B[b] == null) { const g = GOODS.find(x => x.b === b); GDEP_B[b] = g ? GDEP[g.id] || 1 : 1; } return GDEP_B[b]; };
+  // Alles mit Gewinn verkaufen: was hier mehr bringt, als es gekostet hat; Ware für Aufträge und Verträge anderswo bleibt an Bord
+  function mqKeep(gid) {
+    const a = st.loc;
+    return ((st.freight || {}).active || []).filter(f => f.k === 'besorgen' && f.g === gid && f.to !== a).reduce((x, f) => x + f.q, 0) +
+      ((st.contracts || {}).list || []).filter(k => k.g === gid && k.cid !== a).reduce((x, k) => x + k.q, 0);
+  }
+  function mqPlan() {
+    const out = []; let gain = 0, n = 0;
+    GOODS.forEach(g => {
+      const c = st.cargo[g.id]; if (!c || !c.q) return;
+      const avg = c.cost / c.q, max = c.q - mqKeep(g.id);
+      let q = 0, s = st.stock[st.loc][g.id];
+      while (q < max && unitPrice(s + 1, g.b, st.loc) * 0.94 * pf(st.loc, g.id, 'sell') >= avg * 1.02) { q++; s++; }
+      if (q > 0) { out.push([g.id, q]); n += q; gain += sellGain(st.loc, g.id, q); }
+    });
+    return {out, n, gain:Math.round(gain)};
+  }
+  function mqSellAll() {
+    if (!st.loc || st.enc || st.focus) return;
+    const P = mqPlan(); if (!P.n) return;
+    P.out.forEach(([g, q]) => doSell(g, q));
+  }
+  // Einkauf wie zuletzt: was du hier vor der letzten Fahrt gekauft hast, für dasselbe Ziel
+  function mqTrack(gid, q) {
+    const B = st.buyLog && st.buyLog.loc === st.loc && st.buyLog.day >= st.day - 0 ? st.buyLog : (st.buyLog = {loc:st.loc, day:st.day, g:{}});
+    B.g[gid] = (B.g[gid] || 0) + q;
+  }
+  function mqSail(to) {
+    const B = st.buyLog;
+    if (B && B.loc === st.loc && Object.keys(B.g).length) { const L = st.lists || (st.lists = {}); L[st.loc] = {to, g:Object.assign({}, B.g), d:st.day}; }
+    st.buyLog = null;
+  }
+  function mqRepeat() {
+    const L = st.lists && st.lists[st.loc]; if (!L || st.enc || st.focus) return;
+    Object.entries(L.g).forEach(([g, q]) => { const n = Math.min(q, maxBuy(st.loc, g)); if (n > 0) doBuy(g, n); });
+  }
+  function mqHTML() {
+    if (!st.loc || st.focus) return '';
+    const P = mqPlan(), L = st.lists && st.lists[st.loc];
+    let h = '';
+    if (P.n) h += `<button class="ybtn" type="button" data-mq="sell">Alles mit Gewinn verkaufen · ${P.n} Last · ${fmt(P.gain)} G</button>`;
+    if (L) h += `<button class="ybtn" type="button" data-mq="buy"${Object.keys(L.g).some(g => maxBuy(st.loc, g) > 0) ? '' : ' disabled'}>Wie zuletzt für ${C[L.to].n}: ${Object.entries(L.g).map(([g, q]) => `${q} ${G[g].n}`).join(', ')}</button>`;
+    return h ? `<div class="mquick ybtns wrapb">${h}</div>` : '';
+  }
+  // Der Verwalter liefert Vertragsware aus dem Kontor im Stammsitz selbst aus, per Frachtschiff
+  function ctSteward() {
+    const T = st.contracts; if (!T || !T.list.length || !hasSteward()) return;
+    T.list.slice().forEach(k => {
+      if (k.cid === st.home || st.day < k.due - 12 || st.day > k.due + CT_GRACE || storedQ(k.g) < k.q) return;
+      const days = route(st.home, k.cid, st.day).days, fr = Math.round(k.q * (3 + 1.5 * days) / 10) * 10;
+      if (st.day + days > k.due + CT_GRACE) return;
+      takeGoods(st.kontor.goods, k.g, k.q); st.money -= fr; rpState().cost += fr;
+      ctPaid(k, `vom Verwalter per Frachtschiff aus ${C[st.home].n} geschickt (Fracht ${fmt(fr)} G)`);
+    });
+  }
+  // Große Ereignisse auf den Märkten, zusätzlich zu den kleinen
+  const MAJOR = [
+    {w:2, f() { addMod('luebeck', 'salz', 0.45, st.day + 60); return {t:'In Lüneburg brennt ein Siedehaus. Salz wird in Lübeck für zwei Monate knapp und teuer.', c:'luebeck'}; }},
+    {w:2, m:[3, 4, 5, 6], f() { addMod('bergen', 'stockfisch', 0.5, st.day + 80); return {t:'Die Lofotenfischer kommen mit halben Booten heim. In Bergen ist Stockfisch rar.', c:'bergen'}; }},
+    {w:2, m:[5, 6, 7], f() { addMod('london', 'wolle', 1.7, st.day + 60); addMod('bruegge', 'wolle', 0.7, st.day + 60); return {t:'Eine reiche Schur in England: In London liegt Wolle in Massen, in Brügge warten die Weber.', c:'london'}; }},
+    {w:2, f() { addMod('nowgorod', 'pelze', 0.55, st.day + 70); addMod('reval', 'pelze', 0.6, st.day + 70); return {t:'Ein harter Winter in den Wäldern Russlands: Kaum Pelze in Nowgorod und Reval.', c:'nowgorod'}; }},
+    {w:2, f() { addMod('riga', 'wachs', 0.5, st.day + 70); addMod('riga', 'holz', 0.6, st.day + 70); return {t:'Fehde in Livland zwischen Orden und Erzbischof. In Riga fehlen Wachs und Holz.', c:'riga'}; }},
+    {w:2, f() { const c = pick(['danzig', 'riga', 'reval']); addMod(c, 'eisen', 0.5, st.day + 60); addMod(c, 'getreide', 0.75, st.day + 60); return {t:`Der Deutsche Orden rüstet zu einem Kriegszug. In ${C[c].n} werden Eisen und Getreide teuer bezahlt.`, c}; }},
+    {w:1, f() { const e = era(); if ((e.embargo && e.embargo.until > st.day) || e.war) return null; const c = pick(['bremen', 'visby', 'stockholm', 'reval'].filter(x => x !== st.home)); e.embargo = {c, until:st.day + 50}; return {t:`Der Hansetag verhängt eine Handelssperre gegen ${C[c].n}, bis die Stadt eingelenkt hat. 50 Tage lang kostet jede dort gehandelte Last Ansehen.`, c}; }},
+    {w:1, f() { const c = pick(CITIES.filter(x => x.c.includes('bier'))); addMod(c.id, 'bier', 0.5, st.day + 45); return {t:`In ${c.n} wird ein großes Schützenfest gefeiert. Bier ist gefragt wie nie.`, c:c.id}; }}
+  ];
+  function majorDay() {
+    const e = era();
+    if (e.nextMajor == null) e.nextMajor = st.day + 40 + Math.floor(Math.random() * 40);
+    if (st.day < e.nextMajor) return;
+    e.nextMajor = st.day + 50 + Math.floor(Math.random() * 50);
+    const m = monthOf(st.day), list = MAJOR.filter(x => !x.m || x.m.includes(m)), tot = list.reduce((a, x) => a + x.w, 0);
+    let r = Math.random() * tot, ev = list[0];
+    for (const x of list) { r -= x.w; if (r <= 0) { ev = x; break; } }
+    const res = ev.f();
+    if (res) announce(res.t);
   }
   // Schlusswertung der Kampagne
   const HONOR_KEY = 'kogge-kontor-ehrenbuch';
@@ -2964,7 +3375,8 @@ em.rep.warn{background:#b5523a}
       ['Vermögen', Math.round(w / 100)],
       ['Ansehen', rep],
       ['Amtszeiten als Bürgermeister', (st.mayorTerms || 0) * 400],
-      ['Ältermann der Hanse', st.alderman ? 2500 : 0],
+      ['Ältermann der Hanse', st.alderman ? 2500 + ((st.race || {}).first ? 1500 : 0) : 0],
+      ['Ehre aus Vorhaben und Stiftungen', ehre()],
       ['Ratsaufträge', (st.orders && st.orders.done || 0) * 60],
       ['Siege über Seeräuber', (st.wins || 0) * 40]
     ];
@@ -2983,6 +3395,7 @@ em.rep.warn{background:#b5523a}
       list.sort((a, b) => b.s - a.s);
       localStorage.setItem(HONOR_KEY, JSON.stringify(list.slice(0, 10)));
     } catch (e) {}
+    blUpdate();
     announce(`Mit dem Frieden von Stralsund endet deine Kampagne. Schlusswertung: ${fmt(sc.total)} Punkte, ${st.ended.title}.`, 'rank');
     if (st.sail && !st.enc) { /* die Fahrt darf noch zu Ende gehen */ }
     setTab('lage');
@@ -3021,7 +3434,7 @@ em.rep.warn{background:#b5523a}
     bergen:{n:'Deutsche Brücke in Bergen', s:'Deutsche Brücke', nom:'Die Deutsche Brücke in Bergen', acc:'die Deutsche Brücke in Bergen', dat:'auf der Deutschen Brücke', fee:1600, P:['Vorrang beim Stockfisch', 'Eigene Speicher auf der Brücke', 'Winterlager in Bryggen']},
     nowgorod:{n:'Peterhof in Nowgorod', s:'Peterhof', nom:'Der Peterhof in Nowgorod', acc:'den Peterhof in Nowgorod', dat:'im Peterhof', fee:2200, P:['Freies Geleit auf dem Wolchow', 'Eigene Waage im Peterhof', 'Vorrang beim Pelzkauf']}
   };
-  const HK_RANK = 2, HK_CAP = 60, HK_UP = 2, HK_LOBBY = 600;
+  const HK_RANK = 3, HK_CAP = 60, HK_UP = 2, HK_LOBBY = 600;
   const hkState = () => st.hk || (st.hk = {mem:{}, priv:{bruegge:0, london:0, bergen:0, nowgorod:0}});
   const hkMember = cid => !!(st && st.hk && st.hk.mem[cid]);
   const hkPriv = cid => (st && st.hk && st.hk.priv[cid]) || 0;
@@ -3098,10 +3511,10 @@ em.rep.warn{background:#b5523a}
 
   // Geldgeschäfte: Schiffsparten, Darlehen, Vorkauf ganzer Ernten
   const finState = () => st.fin || (st.fin = {parts:[], loans:[], crops:[], offers:{}, gen:{}, next:1, intro:false});
-  const PART_RANK = 3, GIVE_RANK = 3, CROP_RANK = 3, TAKE_RANK = 1;
+  const PART_RANK = 4, GIVE_RANK = 4, CROP_RANK = 3, TAKE_RANK = 1;   // ab Version 45 über die Ränge verteilt
   const PART_SHIPS = ['Sankt Jürgen', 'Marienknecht', 'Heilig Geist', 'Sankt Peter', 'Christoffer', 'Sankt Gertrud', 'Bunte Kuh', 'Jonas', 'Sankt Nikolaus', 'Dreifaltigkeit', 'Barbara', 'Gotteswind', 'Salvator', 'Ewer von Stade'];
-  const PART_MAX = () => 2 + (st.rank >= 4 ? 2 : 0) + (st.rank >= 5 ? 2 : 0);
-  const GIVE_MAX = () => 2 + (st.rank >= 4 ? 1 : 0) + (st.rank >= 5 ? 1 : 0);
+  const PART_MAX = () => 2 + (st.rank >= 4 ? 2 : 0) + (st.rank >= 5 ? 2 : 0) + (st.rank >= 6 ? 2 : 0);
+  const GIVE_MAX = () => 2 + (st.rank >= 4 ? 1 : 0) + (st.rank >= 5 ? 1 : 0) + (st.rank >= 6 ? 2 : 0);
   const CROP_MAX = () => 2 + (st.rank >= 4 ? 1 : 0);
   const LOAN_CAP = () => [1500, 3000, 6000, 12000, 25000, 50000, 80000][st.rank] || 1500;
   const LENDER = cid => cid === 'bruegge' ? {n:'die Lombarden in Brügge', r:0.02, k:1.5} : cid === st.home ? {n:`der Rat von ${C[cid].n}`, r:0.0125, k:cid === 'luebeck' ? 1 : 0.8} : cid === 'luebeck' ? {n:'die Kämmerei von Lübeck', r:0.015, k:1} : null;
@@ -3129,14 +3542,14 @@ em.rep.warn{background:#b5523a}
   };
   function genFin(cid) {
     const F = finState(), out = {parts:[], req:[], crops:[]}, rk = st.rank, m = monthOf(st.day), y = dateOf(st.day).getFullYear();
-    if (rk >= PART_RANK && Math.random() < 0.75) {
-      const types = ['kogge', 'kogge', 'holk'].concat(y >= 1365 ? ['kraweel'] : []), type = pick(types), share = pick(rk >= 4 ? [8, 4, 4, 2] : [16, 8, 8, 4]);
+    for (let pn = 0; pn < (rk >= 5 ? 2 : 1); pn++) if (rk >= PART_RANK && Math.random() < 0.75) {
+      const types = ['kogge', 'kogge', 'holk'].concat(y >= 1365 ? ['kraweel'] : []), type = pick(types), share = pick(rk >= 5 ? [4, 2, 2] : rk >= 4 ? [8, 4, 4, 2] : [16, 8, 8, 4]);
       const price = Math.round(SHIPS[type].price * 1.3 / share / 50) * 50;
       const dest = pick(CITIES.filter(c => c.id !== cid)).id;
       out.parts.push({id:F.next++, cid, type, share, price, ship:pick(PART_SHIPS), reeder:`${pick(NAMES.m)} ${pick(NAMES.s)}`, dest});
     }
-    if (rk >= GIVE_RANK && Math.random() < 0.6) {
-      const gr = Math.random() < 0.45 ? 0 : Math.random() < 0.65 ? 1 : 2, amt = Math.round([800, 1500, 3000, 5000, 9000, 14000, 20000][rk] * rnd(0.6, 1.4) / 100) * 100;
+    for (let pn = 0; pn < (rk >= 5 ? 2 : 1); pn++) if (rk >= GIVE_RANK && Math.random() < 0.6) {
+      const gr = Math.random() < 0.45 ? 0 : Math.random() < 0.65 ? 1 : 2, amt = Math.round([800, 1500, 3000, 6000, 12000, 25000, 45000][rk] * rnd(0.6, 1.4) / 100) * 100;
       out.req.push({id:F.next++, cid, amt, gr, r:Math.round(rnd(...GRADE[gr].r) * 1000) / 1000, mo:pick([3, 6, 6, 12]), who:`${pick(['Kaufmann', 'Schiffer', 'Brauer', 'Gewandschneider', 'Reeder', 'Krämer'])} ${pick(NAMES.m)} ${pick(NAMES.s)}`});
     }
     if (rk >= CROP_RANK) CROPS.filter(cr => cr.c.includes(cid) && cr.off.includes(m)).forEach(cr => {
@@ -3329,7 +3742,7 @@ em.rep.warn{background:#b5523a}
     if ((st.convoys || []).length && st.money < 600) { F.lowCash = (F.lowCash || 0) + 1; if (F.lowCash === 3 && (!F.cashWarn || st.day - F.cashWarn > 30)) { F.cashWarn = st.day; const t = 'Deine Kapitäne finden kaum Geld in der Truhe und kaufen nichts mehr ein. Ohne Einkauf bringen die Verbände nichts, kosten aber weiter Heuer.'; addLog(t, 'cap'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'cap'}]).slice(-4); } } else F.lowCash = 0;
     if (!F.intro && st.rank >= HK_RANK) {
       F.intro = true;
-      const t = 'Als Kaufmann öffnen sich dir neue Geschäfte: Die Hansekontore in Brügge, London, Bergen und Nowgorod nehmen dich auf, Wechsler leihen dir Geld. Ab Fernhändler kommen Schiffsparten, eigene Darlehen und der Vorkauf ganzer Ernten dazu. Du findest sie im Reiter Markt unter Geschäfte, den Überblick unter Haus.';
+      const t = 'Als Fernhändler öffnen sich dir neue Geschäfte: Die Hansekontore in Brügge, London, Bergen und Nowgorod nehmen dich auf, und Güter verkaufen dir ihre ganze Ernte im Voraus. Ab Großkaufmann kommen Schiffsparten, eigene Darlehen und große Vorhaben dazu. Du findest sie im Reiter Markt unter Geschäfte, den Überblick unter Haus.';
       addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     }
     partsDay(); loansDay(); cropsDay();
@@ -3423,7 +3836,7 @@ em.rep.warn{background:#b5523a}
   }
   const voteRes = id => { const v = st.hanse && st.hanse.votes[id]; return v && v.res; };
   const canVote = () => civicIdx(st.repute || 0) >= 3;
-  const influence = () => Math.min(0.45, 0.08 + (st.repute || 0) / 12000 + (st.mayor ? 0.1 : 0) + (st.alderman ? 0.15 : 0));
+  const influence = () => (st.rvVote && st.rvVote.until > st.day ? 0.5 : 1) * Math.min(0.55, 0.08 + (st.repute || 0) / 12000 + (st.mayor ? 0.1 : 0) + (st.alderman ? 0.15 : 0) + gvSum('infl'));
   function openItems() {
     const H = hanse(), out = [];
     Object.entries(VOTES).forEach(([id, V]) => {
@@ -3485,6 +3898,7 @@ em.rep.warn{background:#b5523a}
     const y = dateOf(st.day).getFullYear();
     let t = V[v.res];
     if (V.kontor && v.res === 'ja') t += ' ' + hkWin(V.kontor);
+    if (v.my && st.rvVote) st.rvVote = null;
     if (v.my) { const won = v.my === v.res; if (won) gainRepute(15); t += won ? ' Deine Stimme hat sich durchgesetzt (+15 Ansehen).' : ' Du hast anders gestimmt.'; }
     announce(`Hansetag ${y}: ${t}`);
     H.past.unshift({id, d:st.day, my:v.my, res:v.res}); H.past = H.past.slice(0, 12);
@@ -3663,6 +4077,7 @@ em.rep.warn{background:#b5523a}
     st.money -= cost; st.stock[st.loc][gid] -= q;
     const c = st.cargo[gid] || (st.cargo[gid] = {q:0, cost:0});
     c.q += q; c.cost += cost;
+    mqTrack(gid, q);
     remember(st.loc);
     trackTrade('buy', gid, cost, 0); qEv('buy');
     breakEmbargo(q);
@@ -3778,6 +4193,7 @@ em.rep.warn{background:#b5523a}
   function waitDay() { if (halted()) return; if (!st.loc || bankrupt() || st.waiting || st.pendingFight || st.ev) return; simDay(); commit(); }
   function setSail(to) {
     if (halted() || !st.loc || to === st.loc || !canSail() || st.waiting || st.pendingFight || st.ev || (to === 'nowgorod' && newaFrozen(st.day))) return;
+    mqSail(to);
     closeVisit();
     setTab('lage');
     const r = route(st.loc, to, st.day);
@@ -4617,6 +5033,7 @@ em.rep.warn{background:#b5523a}
     if (s.escort) p *= 1.4;
     if (s.pirMul) p *= s.pirMul;
     if (st.rank >= PF_RANK && pfOn(s.segs).length) p *= 1.15;
+    else if (st.rank >= 4) p *= st.rank >= 5 ? 0.6 : 0.7;   // ab Version 44
     if (Math.random() >= p) return false;
     s.met = true;
     const pid = pfPick(s.segs);
@@ -8854,6 +9271,8 @@ em.rep.warn{background:#b5523a}
         `<button class="ybtn" type="button" data-slot="new" data-n="${n}">Neu beginnen</button>` +
         (cur ? '' : `<button class="ybtn" type="button" data-slot="del" data-n="${n}">${ui.delAsk === n ? 'Wirklich löschen?' : 'Löschen'}</button>`) + `</div></div>`;
     });
+    h += `</div><div class="xfer"><h3>Bestenliste</h3><div class="chipset" role="group">` + [['a', 'Wer zuerst Ältermann wurde'], ['w', 'Nach Vermögen']].map(([v, l]) => `<button type="button" data-slot="blsort" data-v="${v}" aria-pressed="${!!ui.blW === (v === 'w')}">${l}</button>`).join('') +
+      `</div>${blHTML(!!ui.blW)}<span class="small">Jedes Spiel steht einmal in der Liste, mit dem höchsten Vermögen und dem Jahr, in dem du Ältermann wurdest.${saves.cloud && saves.ok ? ' Gesichert in deinem Claude-Konto.' : ''}</span>`;
     if (!st._temp) h += `</div><div class="xfer"><h3>Jahreszeiten in diesem Spiel</h3><div class="chipset" role="group">` +
       [['spuerbar', 'Spürbar'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-slot="seasons" data-v="${v}" aria-pressed="${st.seasons === v}">${l}</button>`).join('') +
       `</div><span class="small">${st.seasons === 'mild' ? 'Preise schwanken mit der Jahreszeit nur halb so stark, kein Eis.' : 'Deutliche Saisonpreise, Newa von Dezember bis März zugefroren, Treibeis im Januar und Februar.'}</span>`;
@@ -8876,6 +9295,7 @@ em.rep.warn{background:#b5523a}
   }
   async function slotAction(t) {
     const n = +t.dataset.n, act = t.dataset.slot;
+    if (act === 'blsort') { ui.blW = t.dataset.v === 'w'; renderSaves(); return; }
     if (act === 'load') { const sl = getSlot(n); if (sl) { save(); if (saves.db && saves.ok) await flushRemote(); loadState(JSON.parse(JSON.stringify(sl.state)), n); ui.saves = false; renderSaves(); } return; }
     if (act === 'new') { openWizard(n, true); return; }
     if (act === 'minfo') { setMinfo(t.dataset.v === '1'); ui.det.minfo = null; ui.det.rivm = null; renderSaves(); renderMarket(); return; }
@@ -9056,6 +9476,7 @@ em.rep.warn{background:#b5523a}
       (isPest(c.id) ? `<p class="warnline">In ${c.n} geht die Pest um. Die Stadt braucht weniger, Matrosen erkranken beim Anlegen.</p>` : '') +
       (warToll() ? `<span class="small">Pfundzoll für den Krieg: 1 % auf jeden Verkauf.</span>` : '') +
       (() => { const ns = [...new Set(seasonRules(st.loc).filter(r => r.n).map(r => r.n))]; return ns.length ? `<span class="seasonline">${MONTHS[monthOf(st.day)]}: ${ns.join(' · ')}</span>` : ''; })() + `</div>` +
+      mqHTML() +
       `<div class="cols" aria-hidden="true"><span>Ware</span><span>Kauf</span><span>Verkauf</span><span>Bord</span></div>`;
     GOODS.forEach(g => {
       const bp = buyPrice(st.loc, g.id), sp = sellPrice(st.loc, g.id), hq = held(g.id);
@@ -9198,6 +9619,8 @@ em.rep.warn{background:#b5523a}
           hint:() => 'Unter Hansetag (Reiter Haus, Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'haus', sel:'#homecard [data-det="hansetag"]'},
         {t:() => 'Halte zwei Verbände auf Handelsrouten', p:() => [(st.convoys || []).length, 2], ok:() => (st.convoys || []).length >= 2,
           hint:() => 'Reiter Haus: weitere Kapitäne anheuern und neue Handelsrouten anlegen.', tab:'haus', sel:'#housecard'},
+        {t:() => 'Unterschreibe einen Liefervertrag', ok:() => !!(st.contracts && (st.contracts.list.length || st.contracts.done || st.contracts.broken)),
+          hint:() => 'Ab Kaufmann bieten Städte und Kaufleute Lieferverträge an: Reiter Markt, Aufträge, unten. Nimm einen, dessen Ware du nah bekommst.', tab:'markt', sel:'#frbox'},
         gWealth(40000, 'Fernhändler')]},
     {n:'Bürgermeister', rew:3000,
       intro:() => `Am 1. Januar und am 1. Juli wählt ${HN()} den Bürgermeister. Es gewinnt, wer das meiste Ansehen hat.`,
@@ -9206,15 +9629,19 @@ em.rep.warn{background:#b5523a}
         gRep(1200, 4),
         {t:() => 'Gewinne die Wahl zum Bürgermeister', ok:() => !!st.mayor || (st.mayorTerms || 0) > 0,
           hint:() => 'Im Rathaus (Reiter Haus) siehst du, wie du im Ansehen gegen die Konkurrenten stehst und wann gewählt wird.', tab:'haus', sel:'#homecard [data-det="council"]'},
+        {t:() => 'Werde Mitglied eines Hansekontors', ok:() => hkCount() > 0,
+          hint:() => 'Ab Fernhändler nehmen dich die Kontore in Brügge, London, Bergen und Nowgorod auf: dort im Reiter Markt unter Geschäfte. Mitglieder kaufen und verkaufen dort günstiger.', tab:'markt', sel:'#dealcard'},
         gWealth(100000, 'Großkaufmann')]},
     {n:'Ältermann der Hanse', rew:0, last:true,
-      intro:() => 'Der Hansetag wählt jedes Jahr am 24. Juni den Ältermann. Wählbar ist ein Bürgermeister mit 3.000 Ansehen.',
+      intro:() => `Der Hansetag wählt am 24. Juni den Ältermann der Hanse. Wählbar ist ein Bürgermeister mit ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen. Auch ${(st.rivals || []).map(r => r.name).join(', ')} wollen das Amt; wer es zuerst bekommt, steht oben in der Bestenliste.`,
       done:'Du stehst an der Spitze der Hanse. Das Spiel geht weiter, so lange du willst.',
       goals:[
-        {t:() => 'Sammle 3.000 Ansehen', p:() => [Math.round(st.repute || 0), 3000], ok:() => (st.repute || 0) >= 3000,
-          hint:() => 'Ansehen bringen Verkäufe im Stammsitz, Ratsaufträge, Bauten und Siege.', tab:'markt', sel:'#market'},
+        {t:() => 'Beginne ein großes Vorhaben', ok:() => !!(st.gv && (st.gv.job || Object.keys(st.gv.done).length)),
+          hint:() => `Reiter Haus, Große Vorhaben: ein Hospital, ein neuer Hafen oder eine Friedeflotte in ${HN()}. Sie bringen Ehre.`, tab:'haus', sel:'#homecard [data-det="gv"]'},
+        {t:() => `Sammle ${fmt(ALDER_STAND)} Ansehen und Ehre`, p:() => [standing(), ALDER_STAND], ok:() => standing() >= ALDER_STAND,
+          hint:() => 'Ansehen bringen Verkäufe im Stammsitz, Aufträge des Rats, Bauten und Siege; Ehre bringen große Vorhaben und Stiftungen.', tab:'haus', sel:'#homecard [data-det="gv"]'},
         {t:() => 'Werde Ältermann der Hanse', ok:() => !!st.alderman,
-          hint:() => 'Gewählt wird auf dem Hansetag am 24. Juni.', tab:'haus', sel:'#homecard [data-det="hansetag"]'}]}
+          hint:() => 'Gewählt wird auf dem Hansetag am 24. Juni. Unter Haus, Wettlauf um das Ältermannamt, siehst du, wie du gegen die Konkurrenten stehst.', tab:'haus', sel:'#homecard [data-det="race"]'}]}
   ];
   const qCur = () => { const q = qS(); return QUEST[Math.min(q.ch, QUEST.length - 1)]; };
   const qGoal = () => { const q = qS(), Q = qCur(); return Q.goals.find(g => !g.ok(q)) || null; };
@@ -9400,6 +9827,7 @@ em.rep.warn{background:#b5523a}
     if (e.warToll) flags.push('Pfundzoll für den Krieg');
     if (flags.length) h += `<div class="chips" style="margin:6px 0">${flags.map(x => `<span class="chip">${x}</span>`).join('')}</div>`;
     h += `<ol class="chronlist">${e.chron.slice(0, 30).map(x => `<li><time>${fdate(x.d, true)}</time><span>${x.t}</span></li>`).join('') || '<li><span>Noch ist nichts geschehen.</span></li>'}</ol>`;
+    h += `<h3 class="ehead">Bestenliste</h3>${blHTML(false)}<p class="small">Wer zuerst Ältermann wird, steht oben, dann zählt das Vermögen. Ganz unter Spielstände.</p>`;
     const hb = honorBook();
     if (hb.length) h += `<h3 class="ehead">Ehrenbuch</h3><ol class="honor">${hb.slice(0, 5).map(x => `<li><b>${esc(x.n)}</b> <span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.t}</span><span class="num">${fmt(x.s)}</span></li>`).join('')}</ol>`;
     $('#chronbody').innerHTML = h;
@@ -9433,6 +9861,8 @@ em.rep.warn{background:#b5523a}
       sec('kontor', kontorHTML(i), st.kontor ? `${kontorUsed()} / ${st.kontor.cap} Last${hasSteward() ? ' · Verwalter' : ''}` : i >= 1 ? 'kann gebaut werden' : 'ab Bürger', (st.loc === st.home || hasSteward()) && !!st.kontor) +
       sec('works', worksHTML(i), i < 2 ? 'ab Gildebruder' : `${(st.works || []).length} von ${maxWorks()}`, false) +
       sec('hansetag', hanseHTML(i), (() => { const n = openItems().length; return n ? `${n} ${n === 1 ? 'Frage' : 'Fragen'} offen` : st.hanse && st.hanse.escort ? 'Geleit läuft' : 'nächster Hansetag 24. Juni'; })(), openItems().some(x => x.kind === 'gift' || !x.v.my) && (canVote() || openItems().some(x => x.kind === 'gift'))) +
+      sec('race', raceHTML(), raceMeta(), false) +
+      sec('gv', gvHTML(), gvMeta(), !!(st.gv && st.gv.job)) +
       sec('biz', bizHTML(), bizMeta(), false) +
       sec('council', councilHTML(i), `${st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'Auftrag' : 'Aufträge'} · ` : ''}Wahl am ${fdate(nextElection())}`, st.loc === st.home && st.orders.active.some(o => haveFor(o.g) >= o.q));
   }
@@ -9534,7 +9964,8 @@ em.rep.warn{background:#b5523a}
         const canPay = st.money >= e.ransom;
         a.innerHTML = `<button class="btn" type="button" data-act="flee"><b>Fliehen</b><small>${pc(fleeChance())}</small></button>` +
           `<button class="btn" type="button" data-act="pay"><b>${canPay ? 'Zahlen' : 'Abgeben'}</b><small>${canPay ? fmt(e.ransom) + ' G' : '⅓ Ladung'}</small></button>` +
-          `<button class="btn primary" type="button" data-act="fight"><b>Kämpfen</b><small>Klar zum Gefecht</small></button>`;
+          `<button class="btn primary" type="button" data-act="fight"><b>Kämpfen</b><small>Klar zum Gefecht</small></button>` +
+          (capAutoOk() ? `<button class="btn" type="button" data-act="capauto"><b>Kapitän lassen</b><small>klar überlegen</small></button>` : '');
       } else if (e.phase === 'tactic') {
         a.classList.add('grid');
         const b = (act, label, sub, dis, pri) => `<button class="btn${pri ? ' primary' : ''}" type="button" data-act="m-${act}"${dis ? ' disabled' : ''}><b>${label}</b><small>${sub}</small></button>`;
@@ -9941,11 +10372,11 @@ em.rep.warn{background:#b5523a}
     const c = (st && st.city) || {}, H = HOUSE[c.house || 1] || HOUSE[1];
     if (k === 'works') return c.extra || 0;
     if (k === 'rep') return (H.rep || 0) + (c.kirche ? 0.5 : 0) + (c.mauer ? 0.3 : 0);
-    if (k === 'repair') return c.kran ? 0.8 : 1;
+    if (k === 'repair') return (c.kran ? 0.8 : 1) * (gvHas('hafen') ? 0.75 : 1);
     if (k === 'toll') return c.markt ? 1.5 : 1;
     if (k === 'order') return c.markt ? 1.2 : 1;
-    if (k === 'pir') return c.mauer ? 0.85 : 1;
-    if (k === 'elect') return H.elect || 0;
+    if (k === 'pir') return (c.mauer ? 0.85 : 1) * (gvHas('flotte') ? 0.7 : 1);
+    if (k === 'elect') return (H.elect || 0) + gvSum('elect');
     return 0;
   }
   function plotState(p) {
@@ -10212,7 +10643,7 @@ em.rep.warn{background:#b5523a}
     const sg = v => `<span class="${v >= 0 ? 'pos' : 'neg'}">${v >= 0 ? '+' : '−'}${fmt(Math.abs(v))}</span>`;
     let h = `<div class="in"><div class="shead"><div><h2 id="book-title">Handelsbuch</h2><span class="small">Gewinn aus Verkäufen gegenüber dem Einkaufspreis</span></div>` +
       `<button class="close" type="button" data-act="book-close">Zurück</button></div>` +
-      `<div class="tot"><div><span class="small">Gewinn bisher</span><b>${sg(total)} G</b></div><div><span class="small">Letzte 30 Tage</span><b>${sg(recent)} G</b></div></div>`;
+      `<div class="tot"><div><span class="small">Gewinn bisher</span><b>${sg(total)} G</b></div><div><span class="small">Letzte 30 Tage</span><b>${sg(recent)} G</b></div></div>` + playHTML();
     if (goods.length) h += `<h3 class="ysub">Gewinn je Ware</h3><div class="gbars">` + goods.map(([gid, v]) =>
       `<div><span>${icon(gid)} ${G[gid].n}</span><i class="${v < 0 ? 'neg' : ''}" style="width:${Math.abs(v) / mx * 100}%"></i><span>${sg(v)}</span></div>`).join('') + `</div>`;
     h += rows.length ? `<h3 class="ysub">Hafenbesuche</h3><div style="overflow-x:auto"><table><thead><tr><th>Datum</th><th>Hafen</th><th>Einkauf</th><th>Verkauf</th><th>Gewinn</th></tr></thead><tbody>` +
@@ -10324,6 +10755,7 @@ em.rep.warn{background:#b5523a}
   $('#market').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
     if (t.dataset.trade) { const n = +t.dataset.n, a = t.dataset.trade; a === 'buy' ? doBuy(t.dataset.good, n) : a === 'store' ? doSellStore(t.dataset.good, n) : doSell(t.dataset.good, n); return; }
+    if (t.dataset.mq) { if (t.dataset.mq === 'sell') mqSellAll(); else mqRepeat(); return; }
     if (t.dataset.qty) { ui.qty = t.dataset.qty === 'max' ? 'max' : +t.dataset.qty; renderMarket(); return; }
     if (t.dataset.good) { ui.open = ui.open === t.dataset.good ? null : t.dataset.good; renderMarket(); }
   });
@@ -10333,6 +10765,7 @@ em.rep.warn{background:#b5523a}
     const act = t.dataset.act;
     if (act === 'flee') return flee();
     if (act === 'pay') return payTribute();
+    if (act === 'capauto') return capAuto();
     if (act === 'fight') return startFight();
     if (act === 'let-go') return letGo();
     if (act === 'guard') return guardTap();
@@ -10386,6 +10819,8 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.kq) { ui.kq = t.dataset.kq === 'max' ? 'max' : +t.dataset.kq; renderHome(); return; }
     if (t.dataset.steward) return stewardSet(t.dataset.steward === '1');
     if (t.dataset.fin) return finClick(t);
+    if (t.dataset.rv) return rvClick(t);
+    if (t.dataset.gv) return t.dataset.gv === 'stift' ? gvStift() : gvStart(t.dataset.gv);
     if (t.dataset.hkl) return hkLobby(t.dataset.hkl);
     if (t.dataset.wauto && st.kontor) { st.kontor.auto = !st.kontor.auto; return commit(); }
     if (t.dataset.vwg || t.dataset.vwb || t.dataset.vwl) { const v = ui.vw; if (t.dataset.vwg) v.g = t.dataset.vwg; if (t.dataset.vwb) v.b = +t.dataset.vwb; if (t.dataset.vwl) v.k = +t.dataset.vwl; renderHome(); return; }
@@ -10627,6 +11062,9 @@ em.rep.warn{background:#b5523a}
       if (s.era) { s.era.kopWin = (s.day || 0) >= dayOf(1368, 5, 2); s.era.helsbWin = false; }
     }
     if (s.alderman === undefined) s.alderman = null;
+    if (s.stock && !s.gd45) { Object.values(s.stock).forEach(S0 => Object.keys(S0).forEach(g => { S0[g] *= GDEP[g] || 1; })); s.gd45 = true; }
+    if (!s.gid) s.gid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    if (s.alderman && !s.race) s.race = {first:true, day:s.alderman.since};
     if (!s.era) {
       s.era = {done:{}, mods:[], pest:{}, embargo:null, war:0, danger:1, warToll:false, chron:[], nextMinor:(s.day || 0) + 30, embargoLast:0};
       HIST.forEach(h => { const d = dayOf(...h.at); if (d <= (s.day || 0)) { s.era.done[h.id] = true; s.era.chron.unshift({d, t:h.chron}); } });
@@ -10669,7 +11107,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '21400f33fe';
+window.KK_BUILD = '6f8f2671bf';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
