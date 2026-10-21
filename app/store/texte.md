@@ -20,7 +20,7 @@ Alles zum Hineinkopieren in App Store Connect. Längenangaben sind Apples Höchs
 
 ## Werbetext (170, jederzeit änderbar)
 
-Lübeck, 1356. Kaufe Tuch in Brügge, verkaufe es in Nowgorod und werde vor den drei großen Familien Ältermann der Hanse. Die ersten 45 Tage sind kostenlos.
+Lübeck, 1356. Kaufe Tuch in Brügge, verkaufe es in Nowgorod und werde vor den drei großen Familien Ältermann der Hanse. Die ersten 60 Tage sind kostenlos.
 
 ## Beschreibung (4000)
 
@@ -42,7 +42,7 @@ GESCHICHTE ZUM MITSPIELEN
 Die Jahre 1356 bis 1370 mit ihren echten Ereignissen: Pest, Krieg gegen Waldemar von Dänemark, Kölner Konföderation und Frieden von Stralsund.
 
 FAIR
-• Die ersten 45 Spieltage kostenlos
+• Die ersten 60 Spieltage kostenlos
 • Danach einmal die Vollversion kaufen, kein Abo
 • Keine Werbung, keine Datensammlung, spielt offline
 • Drei Spielstände, Übertragung per Code
@@ -71,7 +71,7 @@ Hanse,Handel,Kaufmann,Mittelalter,Lübeck,Kogge,Wirtschaft,Segeln,Patrizier,Stra
 | Beschreibung (DE, 45) | Das ganze Spiel bis 1370 freischalten |
 | Familienfreigabe | Ein (empfohlen) |
 | Screenshot für die Prüfung | store/iap_review.png |
-| Hinweis für die Prüfung | Die Vollversion kann jederzeit gekauft werden: unten „Spielstände und Einstellungen“ → Abschnitt „Vollversion“. Nach der Probezeit (45 Spieltage, 16. Mai 1356 im Spiel) erscheint der Kauf zusätzlich auf dem Startbildschirm. |
+| Hinweis für die Prüfung | Die Vollversion kann jederzeit gekauft werden: unten „Spielstände und Einstellungen“ → Abschnitt „Vollversion“. Nach der Probezeit (60 Spieltage, 31. Mai 1356 im Spiel) erscheint der Kauf zusätzlich auf dem Startbildschirm. |
 
 ## App-Datenschutz („Datenschutzhinweise“ in App Store Connect)
 
@@ -96,7 +96,7 @@ Verwendet die App Verschlüsselung? **Nein** (in der App bereits eingetragen: IT
 ## Hinweise für die App-Prüfung (App Review Information)
 
 Kogge & Kontor ist ein Handelsspiel zur Hansezeit und läuft vollständig offline. Kein Konto nötig.
-Die ersten 45 Spieltage sind kostenlos (bis 16. Mai 1356 im Spiel). Danach hält die Zeit an, bis die Vollversion gekauft ist (nicht verbrauchbarer In-App-Kauf „kogge_kontor_vollversion“).
+Die ersten 60 Spieltage sind kostenlos (bis 31. Mai 1356 im Spiel). Danach hält die Zeit an, bis die Vollversion gekauft ist (nicht verbrauchbarer In-App-Kauf „kogge_kontor_vollversion“).
 Zum Testen des Kaufs: unten auf „Spielstände und Einstellungen“ tippen, Abschnitt „Vollversion“ → „Vollversion freischalten“. „Kauf wiederherstellen“ steht direkt daneben.
 
 ## Screenshots (iPhone 6,9 Zoll, 1320 × 2868)
