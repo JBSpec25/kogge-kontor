@@ -3372,7 +3372,7 @@ em.rep.warn{background:#b5523a}
   // ───────── Probezeit und Vollversion (ab Version 47) ─────────
   // KK_TARGET: 'app' (iPhone-App mit In-App-Kauf), 'web' (Browser, nur Probezeit), sonst ganzes Spiel
   const TARGET = window.KK_TARGET === 'app' || window.KK_TARGET === 'web' ? window.KK_TARGET : 'full';
-  const TRIAL_DAY = dayOf(1357, 6, 24);   // erster Hansetag in Lübeck
+  const TRIAL_DAY = 45;   // Probezeit: die ersten 45 Spieltage, bis 16. Mai 1356
   const FULL_KEY = 'kogge-kontor-vollversion';
   const APP_URL = window.KK_APP_URL || '';
   const full = {on:TARGET === 'full', price:'2,99 €', busy:false, msg:''};
@@ -3382,17 +3382,17 @@ em.rep.warn{background:#b5523a}
   function fullSet(v) { full.on = !!v; try { localStorage.setItem(FULL_KEY, v ? '1' : '0'); } catch (e) {} }
   function trialDay() {
     if (full.on || st._temp || (TARGET === 'web' && st.grand)) return;
-    if (!st.trialWarn && st.day >= TRIAL_DAY - 45 && st.day < TRIAL_DAY) {
+    if (!st.trialWarn && st.day >= TRIAL_DAY - 10 && st.day < TRIAL_DAY) {
       st.trialWarn = true;
       announce(TARGET === 'app'
-        ? `Am 24. Juni 1357 tagt die Hanse zum ersten Mal in Lübeck. Bis dahin spielst du kostenlos; danach geht es mit der Vollversion weiter, einmalig ${full.price}.`
-        : 'Am 24. Juni 1357 tagt die Hanse zum ersten Mal in Lübeck. Bis dahin kannst du im Browser spielen; danach geht es in der App für iPhone weiter.', 'rank');
+        ? `Noch ${TRIAL_DAY - st.day} Tage Probezeit, bis zum 16. Mai 1356. Danach segelt dein Handelshaus mit der Vollversion weiter, einmalig ${full.price}.`
+        : `Noch ${TRIAL_DAY - st.day} Tage Probezeit im Browser, bis zum 16. Mai 1356. Danach geht es in der App für iPhone weiter.`, 'rank');
     }
     if (!st.trialEnd && st.day >= TRIAL_DAY) {
       st.trialEnd = true;
       announce(TARGET === 'app'
-        ? 'Der erste Hansetag ist vorbei und damit die Probezeit. Mit der Vollversion segelt dein Handelshaus weiter bis zum Frieden von Stralsund.'
-        : 'Der erste Hansetag ist vorbei und damit die Probezeit im Browser. Das ganze Spiel gibt es als App für iPhone.', 'rank');
+        ? 'Die 45 Tage Probezeit sind vorbei. Mit der Vollversion segelt dein Handelshaus weiter bis zum Frieden von Stralsund.'
+        : 'Die 45 Tage Probezeit im Browser sind vorbei. Das ganze Spiel gibt es als App für iPhone.', 'rank');
     }
   }
   function fullOk() {
@@ -3431,7 +3431,7 @@ em.rep.warn{background:#b5523a}
   function trialHTML() {
     const app = TARGET === 'app';
     return `<div class="endcard trialcard"><h2>Die Probezeit ist zu Ende</h2>` +
-      `<p>Der erste Hansetag ist vorbei. ${app ? 'Bis hierher war Kogge &amp; Kontor kostenlos.' : 'Bis hierher kannst du Kogge &amp; Kontor im Browser spielen.'} ` +
+      `<p>${app ? 'Die ersten 45 Tage waren kostenlos.' : 'Die ersten 45 Tage kannst du im Browser spielen.'} ` +
       `Im ganzen Spiel steigst du bis 1370 zum Bürgermeister auf, baust große Vorhaben, gründest Hansekontore und läufst den drei Familien im Wettlauf um das Ältermannamt davon.</p>` +
       (app ? `<p class="small">Einmal zahlen, ${esc(full.price)}. Keine Werbung, kein Abo. Dein Spielstand bleibt, wie er ist.</p>` +
           `<div class="ybtns"><button class="btn primary" type="button" data-act="full-buy"${full.busy ? ' disabled' : ''}><b>${full.busy ? 'Einen Moment …' : 'Vollversion freischalten'}</b><small>${esc(full.price)}</small></button>` +
@@ -3450,10 +3450,10 @@ em.rep.warn{background:#b5523a}
     if (TARGET === 'full') return '';
     if (TARGET === 'app') return `</div><div class="xfer"><h3>Vollversion</h3>` + (full.on
       ? `<span class="small">Freigeschaltet. Danke, dass du Kogge &amp; Kontor gekauft hast!</span>`
-      : `<span class="small">Kostenlos bis zum ersten Hansetag am 24. Juni 1357, danach mit der Vollversion für einmalig ${esc(full.price)}.</span>` +
+      : `<span class="small">Die ersten 45 Spieltage sind kostenlos, bis zum 16. Mai 1356. Danach geht es mit der Vollversion weiter, einmalig ${esc(full.price)}.</span>` +
         `<div class="row2"><button class="ybtn" type="button" data-slot="fullbuy"${full.busy ? ' disabled' : ''}>Vollversion freischalten</button><button class="ybtn" type="button" data-slot="fullrestore"${full.busy ? ' disabled' : ''}>Kauf wiederherstellen</button></div>` +
         (full.msg ? `<span class="small" style="color:var(--bad)">${esc(full.msg)}</span>` : ''));
-    return `</div><div class="xfer"><h3>App für iPhone</h3><span class="small">Im Browser spielst du bis zum ersten Hansetag am 24. Juni 1357. Das ganze Spiel gibt es als App, einmalig ${esc(full.price)}. Deinen Spielstand nimmst du mit dem Code unten mit.</span>` +
+    return `</div><div class="xfer"><h3>App für iPhone</h3><span class="small">Im Browser spielst du die ersten 45 Spieltage, bis zum 16. Mai 1356. Das ganze Spiel gibt es als App, einmalig ${esc(full.price)}. Deinen Spielstand nimmst du mit dem Code unten mit.</span>` +
       (APP_URL ? `<div class="row2">${appLink('ybtn', 'Im App Store ansehen')}</div>` : `<span class="small">Die App erscheint in Kürze im App Store.</span>`);
   }
   // Impressum und Datenschutz in der App (Angaben kommen aus dem App-Bau, nicht aus dem Spiel)
