@@ -4,7 +4,7 @@
 Aufruf: python3 build_www.py ../src/kogge-kontor.html
 Danach: npm run native && npx cap sync ios
 """
-import os, re, shutil, sys
+import json, os, re, shutil, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WWW = os.path.join(HERE, 'www')
@@ -55,8 +55,12 @@ def page(src_path):
     body, n = re.subn(r'<link rel="(?:preconnect|stylesheet)" href="https://fonts\.(?:googleapis|gstatic)\.com[^>]*>\n?', '', body)
     assert n == 3, n
     assert 'fonts.googleapis' not in body and 'fonts.gstatic' not in body
-    open(os.path.join(WWW, 'index.html'), 'w', encoding='utf-8').write(HEAD + body)
-    return len(HEAD + body)
+    head = HEAD
+    about = os.path.join(HERE, 'impressum.json')   # Impressum für die App: name, addr, mail, phone, privacy, version, ki
+    if os.path.exists(about):
+        head += '<script>window.KK_ABOUT = ' + json.dumps(json.load(open(about, encoding='utf-8')), ensure_ascii=False) + ';</script>\n'
+    open(os.path.join(WWW, 'index.html'), 'w', encoding='utf-8').write(head + body)
+    return len(head + body)
 
 if __name__ == '__main__':
     os.makedirs(WWW, exist_ok=True)

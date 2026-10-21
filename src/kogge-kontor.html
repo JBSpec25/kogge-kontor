@@ -3456,6 +3456,15 @@ em.rep.warn{background:#b5523a}
     return `</div><div class="xfer"><h3>App für iPhone</h3><span class="small">Im Browser spielst du bis zum ersten Hansetag am 24. Juni 1357. Das ganze Spiel gibt es als App, einmalig ${esc(full.price)}. Deinen Spielstand nimmst du mit dem Code unten mit.</span>` +
       (APP_URL ? `<div class="row2">${appLink('ybtn', 'Im App Store ansehen')}</div>` : `<span class="small">Die App erscheint in Kürze im App Store.</span>`);
   }
+  // Impressum und Datenschutz in der App (Angaben kommen aus dem App-Bau, nicht aus dem Spiel)
+  function aboutHTML() {
+    const A = window.KK_ABOUT;
+    if (!A || !A.name) return '';
+    const L = s => esc(s || '').replace(/\n/g, '<br>');
+    return `<div class="xfer about"><h3>Impressum</h3><span class="small">${L(A.name)}<br>${L(A.addr)}${A.mail ? `<br>E-Mail: ${esc(A.mail)}` : ''}${A.phone ? `<br>Telefon: ${esc(A.phone)}` : ''}</span>` +
+      `<h3>Datenschutz</h3><span class="small">Kogge &amp; Kontor speichert deine Spielstände nur ${HERE_TXT}. Das Spiel sammelt keine Daten, zeigt keine Werbung und braucht kein Internet. Käufe wickelt Apple ab; wir erfahren dabei nichts über dich.${A.privacy ? ` Ausführlich: ${esc(A.privacy)}` : ''}</span>` +
+      `<h3>Über das Spiel</h3><span class="small">Version ${esc(A.version || '1.0')}. ${A.ki ? 'Entwickelt mit Unterstützung von KI. ' : ''}Schriften Alegreya Sans, Alegreya Sans SC, IBM Plex Mono und UnifrakturMaguntia unter der SIL Open Font License 1.1.</span></div>`;
+  }
   // Schlusswertung der Kampagne
   const HONOR_KEY = 'kogge-kontor-ehrenbuch';
   function scoreParts() {
@@ -9377,6 +9386,7 @@ em.rep.warn{background:#b5523a}
       `<div class="row2"><button class="ybtn" type="button" data-slot="copy">Code kopieren</button>${ui.copied ? '<span class="small">Kopiert.</span>' : ''}</div>` +
       `<label class="flabel" for="xfer-in">Code einfügen</label><textarea id="xfer-in" spellcheck="false" placeholder="KK1:…">${ui.xfer || ''}</textarea>` +
       `<div class="row2"><button class="ybtn" type="button" data-slot="import">In Platz ${active} laden</button>${ui.xferErr ? `<span class="small" style="color:var(--bad)">${ui.xferErr}</span>` : ''}</div></div></div>`;
+    h += aboutHTML();
     box.innerHTML = h;
   }
   function renderSaveState() {
