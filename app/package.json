@@ -1,0 +1,22 @@
+{
+  "name": "kogge-kontor-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kogge & Kontor als iPhone-App",
+  "scripts": {
+    "native": "esbuild src/native.js --bundle --format=iife --minify --target=safari15 --outfile=www/native.js"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.3",
+    "@capacitor/ios": "8.5.3",
+    "@capacitor/preferences": "8.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3",
+    "esbuild": "0.27.0",
+    "@fontsource/alegreya-sans": "5.3.0",
+    "@fontsource/alegreya-sans-sc": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/unifrakturmaguntia": "5.3.0"
+  }
+}

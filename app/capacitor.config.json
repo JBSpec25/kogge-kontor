@@ -1,0 +1,13 @@
+{
+  "appId": "io.github.jbspec25.koggekontor",
+  "appName": "Kogge",
+  "webDir": "www",
+  "backgroundColor": "#e5eae4",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#e5eae4",
+    "preferredContentMode": "mobile",
+    "limitsNavigationsToAppBoundDomains": false,
+    "allowsLinkPreview": false
+  }
+}
