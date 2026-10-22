@@ -1,0 +1,262 @@
+{
+"2927e83f": [
+", {0} lasts",
+", {0} lasts"
+],
+"7adc4086": [
+"<div class=\"mhead\"><h2>Hold</h2><span class=\"profile\">The market opens on arrival in {0}.</span></div>",
+"<div class=\"mhead\"><h2>Bodega</h2><span class=\"profile\">El mercado abre al llegar a {0}.</span></div>"
+],
+"4bede832": [
+"<p class=\"hint\">The hold is empty.</p>",
+"<p class=\"hint\">La bodega está vacía.</p>"
+],
+"48641e09": [
+"<div class=\"mhead\"><h2>Market in {0}</h2>",
+"<div class=\"mhead\"><h2>Mercado de {0}</h2>"
+],
+"bcaf4878": [
+"<div class=\"mhold\"><span>{0} / {1} lasts{2}</span><div class=\"bar\"><i style=\"width:{3}%\"></i></div><span>{4} G</span></div>",
+"<div class=\"mhold\"><span>{0} / {1} lasts{2}</span><div class=\"bar\"><i style=\"width:{3}%\"></i></div><span>{4} G</span></div>"
+],
+"aac6c87b": [
+" <small>({0} freight)</small>",
+" <small>({0} de flete)</small>"
+],
+"62fc3e28": [
+"<span class=\"profile\">Produces <b>{0}</b> · needs <b>{1}</b></span>",
+"<span class=\"profile\">Produce <b>{0}</b> · necesita <b>{1}</b></span>"
+],
+"5ef3bf64": [
+"<p class=\"warnline\">Hanseatic embargo until {0}. Every last traded costs 1.5 reputation.</p>",
+"<p class=\"warnline\">Embargo de la Hansa hasta el {0}. Cada last comerciado cuesta 1,5 de reputación.</p>"
+],
+"755f59f5": [
+"<p class=\"warnline\">Plague is going round in {0}. The town needs less, and sailors fall ill when you put in.</p>",
+"<p class=\"warnline\">En {0} hay peste. La ciudad necesita menos y los marineros enferman al atracar.</p>"
+],
+"73535ebc": [
+"<span class=\"small\">Poundage for the war: 1 % on every sale.</span>",
+"<span class=\"small\">Derecho de libra para la guerra: 1 % sobre cada venta.</span>"
+],
+"ee1b46d6": [
+"<div class=\"cols\" aria-hidden=\"true\"><span>Good</span><span>Buy</span><span>Sell</span><span>Aboard</span></div>",
+"<div class=\"cols\" aria-hidden=\"true\"><span>Mercancía</span><span>Compra</span><span>Venta</span><span>A bordo</span></div>"
+],
+"75128139": [
+"<p class=\"legend\">Prices in guilders per last. <span class=\"deal\">Green</span>: cheap to buy or good to sell. ↓ season with plenty on offer, ↑ in demand. Tap a good for quantity, Buy and Sell.{0}</p>",
+"<p class=\"legend\">Precios en florines por last. <span class=\"deal\">Verde</span>: barato para comprar o bueno para vender. ↓ temporada con mucha oferta, ↑ muy demandado. Toca una mercancía para elegir cantidad, Comprar y Vender.{0}</p>"
+],
+"d34c27f6": [
+" Picture, origin and price history are under “More about this good”; you can have them always shown under Saved games.",
+" La imagen, el origen y el historial de precios están en «Más sobre la mercancía»; en Partidas puedes hacer que se muestren siempre."
+],
+"a95e85ae": [
+"Max",
+"Máx."
+],
+"cfc8e759": [
+"Aboard {0} lasts, avg. cost {1} guilders. Here per last <span class=\"{2}\">{3}{4}</span>.",
+"A bordo {0} lasts, compra media {1} florines. Aquí por last <span class=\"{2}\">{3}{4}</span>."
+],
+"e347ec4c": [
+"The hold is full.",
+"La bodega está llena."
+],
+"55458593": [
+"The market is sold out.",
+"El mercado está agotado."
+],
+"317405ea": [
+"You don't have enough money for one last.",
+"No tienes dinero suficiente para un last."
+],
+"be0e9daf": [
+"At most {0} lasts possible.",
+"Como máximo {0} lasts."
+],
+"6a395a57": [
+"In the {0} there are {1} lasts, avg. cost {2} guilders, here per last <span class=\"{3}\">{4}{5}</span>.",
+"En el {0} hay {1} lasts, compra media {2} florines, aquí por last <span class=\"{3}\">{4}{5}</span>."
+],
+"7bc9f683": [
+"<div class=\"panel\"><div class=\"pstat\"><span>Stock here <b>{0} lasts</b></span>",
+"<div class=\"panel\"><div class=\"pstat\"><span>Existencias aquí <b>{0} lasts</b></span>"
+],
+"93294c3a": [
+"<span class=\"szl dn\">Season: plenty on offer, cheaper</span>",
+"<span class=\"szl dn\">Temporada: mucha oferta, más barato</span>"
+],
+"78caf9d7": [
+"<span class=\"szl up\">In demand right now, dearer</span>",
+"<span class=\"szl up\">Muy demandado ahora, más caro</span>"
+],
+"596782a9": [
+"<div class=\"trade\"><button class=\"tbtn buy\" type=\"button\" data-trade=\"buy\" data-good=\"{0}\" data-n=\"{1}\"{2}>Buy<span>{3} lasts · {4} G</span></button>",
+"<div class=\"trade\"><button class=\"tbtn buy\" type=\"button\" data-trade=\"buy\" data-good=\"{0}\" data-n=\"{1}\"{2}>Comprar<span>{3} lasts · {4} G</span></button>"
+],
+"9360d165": [
+"<button class=\"tbtn\" type=\"button\" data-trade=\"sell\" data-good=\"{0}\" data-n=\"{1}\"{2}>Sell<span>{3} lasts · {4} G</span></button>",
+"<button class=\"tbtn\" type=\"button\" data-trade=\"sell\" data-good=\"{0}\" data-n=\"{1}\"{2}>Vender<span>{3} lasts · {4} G</span></button>"
+],
+"53f4bf67": [
+"<button class=\"tbtn store\" type=\"button\" data-trade=\"store\" data-good=\"{0}\" data-n=\"{1}\">Sell from the {2}<span>{3} lasts · {4} G</span></button>",
+"<button class=\"tbtn store\" type=\"button\" data-trade=\"store\" data-good=\"{0}\" data-n=\"{1}\">Vender desde el {2}<span>{3} lasts · {4} G</span></button>"
+],
+"f6e8cb08": [
+"store",
+"depósito"
+],
+"977ac39d": [
+"<details class=\"more minfo\" data-det=\"minfo\"{0}><summary><span>More about this good</span><i class=\"chev\" aria-hidden=\"true\"></i></summary>",
+"<details class=\"more minfo\" data-det=\"minfo\"{0}><summary><span>Más sobre la mercancía</span><i class=\"chev\" aria-hidden=\"true\"></i></summary>"
+],
+"3366d85c": [
+"<div class=\"pchart\"><div class=\"holdrow\"><span class=\"small\">Buying price here{0}</span><span class=\"small\">dashed: base price {1}</span></div>",
+"<div class=\"pchart\"><div class=\"holdrow\"><span class=\"small\">Precio de compra aquí{0}</span><span class=\"small\">discontinua: precio base {1}</span></div>"
+],
+"ddb4bf8e": [
+" since {0}",
+" desde el {0}"
+],
+"6bcd06bf": [
+"<span class=\"small\">You will see the history once you have been here more often.</span>",
+"<span class=\"small\">Verás el historial cuando hayas venido aquí más veces.</span>"
+],
+"6e6a8ad7": [
+"<span class=\"small\">Best known selling price: {0} {1} guilders, as of {2}</span>",
+"<span class=\"small\">Mejor precio de venta conocido: {0} {1} florines, a {2}</span>"
+],
+"be24c1db": [
+"your town",
+"tu ciudad"
+],
+"8cc8dc99": [
+"Become {0}: {1} reputation in {2}",
+"Llega a {0}: {1} de reputación en {2}"
+],
+"08500d10": [
+"Gather {0} reputation in {1}, then you are eligible",
+"Reúne {0} de reputación en {1} y serás elegible"
+],
+"aecc3250": [
+"Reputation comes above all from sales in {0}, especially of goods the town needs ({1}). Also from council commissions, freight and victories.",
+"La reputación viene sobre todo de las ventas en {0}, en especial de mercancías que la ciudad necesita ({1}). Además, de los encargos del concejo, los fletes y las victorias."
+],
+"fc2c4936": [
+"Reach {0} guilders of wealth ({1})",
+"Alcanza {0} florines de riqueza ({1})"
+],
+"04353b69": [
+"Wealth counts money, goods aboard and in store, ships and convoys. It grows with every good deal.",
+"La riqueza incluye dinero, mercancía a bordo y en almacén, barcos y convoyes. Crece con cada buen negocio."
+],
+"0af7d72a": [
+"The first voyage",
+"El primer viaje"
+],
+"0daa7bbd": [
+"A trading house lives on the cycle: buy cheap where a good is made, sell dear where it is lacking. This first voyage shows you step by step how it works.",
+"Una casa comercial vive del ciclo: comprar barato donde se produce una mercancía y vender caro donde falta. Este primer viaje te enseña paso a paso cómo se hace."
+],
+"ade347df": [
+"You now know the cycle. Freight pays without your own money; your own goods pay more once you know the prices.",
+"Ya conoces el ciclo. Los fletes dan ganancias sin dinero propio; la mercancía propia rinde más cuando conoces los precios."
+],
+"352806b6": [
+"Accept a freight order",
+"Acepta un encargo de flete"
+],
+"c1030da6": [
+"In the Market tab, below the list of goods: Orders. Freight costs no money, only hold space. You are paid at the port of destination.",
+"En la pestaña Mercado, bajo la lista de mercancías: Encargos. Un flete no cuesta dinero, solo espacio en la bodega. El pago se cobra en el puerto de destino."
+],
+"229fefdd": [
+"Buy a good that {0} produces",
+"Compra una mercancía que produzca {0}"
+],
+"d80cfed4": [
+"At the top of the market it says what {0} produces ({1}). That is cheap here. Tap the good, choose the quantity and tap Buy. Leave room for the freight.",
+"Arriba en el mercado pone lo que produce {0} ({1}). Aquí es barato. Toca la mercancía, elige la cantidad y toca Comprar. Deja sitio para el flete."
+],
+"c8fde888": [
+"Cast off and sail to the freight's destination",
+"Zarpa y navega al destino del flete"
+],
+"ba7ca9b4": [
+"Tap Cast off at the bottom right. The list of destinations shows for each port what it produces and what it needs; your freight's destination is marked.",
+"Toca Zarpar abajo a la derecha. En la lista de destinos figura para cada puerto lo que produce y lo que necesita; el destino de tu flete está marcado."
+],
+"347141e5": [
+"Deliver the freight",
+"Entrega el flete"
+],
+"e6459ddb": [
+"At the port of destination: Market tab, Orders, Deliver.",
+"En el puerto de destino: pestaña Mercado, Encargos, Entregar."
+],
+"87aaf07e": [
+"Sell a good at a profit",
+"Vende una mercancía con beneficio"
+],
+"f41231d0": [
+"Sell where your good is needed. Green in the Sell column means: they pay well here. Tap the good to see what you paid for it.",
+"Vende donde se necesite tu mercancía. Verde en la columna Venta significa: aquí pagan bien. Al tocar la mercancía ves lo que pagaste por ella."
+],
+"e9fd4b0d": [
+"From pedlar to trader",
+"De buhonero a tratante"
+],
+"a95c9322": [
+"Get to know the ports and win reputation in {0}. Whoever knows the prices finds the good voyages.",
+"Conoce los puertos y gana reputación en {0}. Quien conoce los precios encuentra los buenos viajes."
+],
+"198bb36a": [
+"As a trader your convoy may have two ships, and the shipyard builds you a cog. But pirates are now taking notice of you: arm yourself at the shipyard.",
+"Como tratante tu convoy puede tener dos barcos, y el astillero te construye una coca. Pero ahora los piratas se fijan en ti: ármate en el astillero."
+],
+"88901f58": [
+"Learn the prices in 5 ports",
+"Conoce los precios de 5 puertos"
+],
+"c7956e00": [
+"Every port you call at remembers its prices. After that, the list of destinations in the Map tab shows the best known deal for each destination.",
+"Cada puerto en el que atracas guarda sus precios. Después, la lista de destinos de la pestaña Mapa muestra el mejor negocio conocido para cada destino."
+],
+"fde10ccb": [
+"Burgher and trader",
+"Vecino y tratante"
+],
+"64f24e4d": [
+"As a burgher of {0} you may build a Kontor and take on council commissions.",
+"Como vecino de {0} puedes construir un almacén y aceptar encargos del concejo."
+],
+"80d4a50a": [
+"Well armed and with a store of your own. Next the guild awaits: a branch in another town opens up trade routes and building.",
+"Bien armado y con almacén propio. Ahora te espera el gremio: con una sucursal en otra ciudad se abren las rutas comerciales y la construcción."
+],
+"767f16eb": [
+"Build the Kontor in {0}",
+"Construye el almacén en {0}"
+],
+"a49f8fa4": [
+"House tab, home seat {0}: the Kontor. It is your store in your home seat (150 lasts): store cheaply, sell dear. You can build it when you are in {1}. It is not a branch; a branch is in another town.",
+"Pestaña Casa, sede {0}: el almacén. Es tu depósito en la sede (150 lasts): almacenar barato, vender caro. Puedes construirlo cuando estés en {1}. No es una sucursal; esa está en otra ciudad."
+],
+"7f29951d": [
+"Fulfil a commission from the council of {0}",
+"Cumple un encargo del concejo de {0}"
+],
+"9be3cfb3": [
+"When you are in {0}, there is a council commission under Orders in the Market tab: get the goods where they are cheap and deliver them in {1}. It brings pay and reputation.",
+"Cuando estés en {0}, en Encargos de la pestaña Mercado hay un encargo del concejo: consigue la mercancía donde sea barata y entrégala en {1}. Da pago y reputación."
+],
+"5dc9fbba": [
+"Commission a second ship",
+"Encarga un segundo barco"
+],
+"050e23a0": [
+"Shipyard tab, Build orders. A cog is available from Trader. Finished ships sail to the moorings in your home port.",
+"Pestaña Astillero, Encargos de construcción. La coca está disponible desde tratante. Los barcos terminados van al amarradero de tu puerto de origen."
+]
+}

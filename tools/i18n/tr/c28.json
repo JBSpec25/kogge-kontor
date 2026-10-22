@@ -1,0 +1,326 @@
+{
+"4d239212": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"fight\"><b>Capture</b><small>Clear for action</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"fight\"><b>Apresar</b><small>Zafarrancho de combate</small></button>"
+],
+"c705ceb4": [
+"<button class=\"btn\" type=\"button\" data-act=\"flee\"><b>Flee</b><small>{0}</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"flee\"><b>Huir</b><small>{0}</small></button>"
+],
+"bc838e74": [
+"Hand over",
+"Entregar"
+],
+"6b08988b": [
+"⅓ of the cargo",
+"⅓ de la carga"
+],
+"a193e825": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"fight\"><b>Fight</b><small>Clear for action</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"fight\"><b>Luchar</b><small>Zafarrancho de combate</small></button>"
+],
+"436626c5": [
+"<button class=\"btn\" type=\"button\" data-act=\"capauto\"><b>Leave it to the captain</b><small>clearly superior</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"capauto\"><b>Que lo haga el capitán</b><small>clara superioridad</small></button>"
+],
+"49b85400": [
+"Close in",
+"Acercarse"
+],
+"be196f45": [
+"Hold course",
+"Mantener rumbo"
+],
+"626b2d76": [
+"zone +15 %",
+"zona +15 %"
+],
+"c9336132": [
+"Open range",
+"Distanciarse"
+],
+"87294132": [
+"Gain windward",
+"Ganar barlovento"
+],
+"d5dd7ab2": [
+"chance {0}",
+"probabilidad {0}"
+],
+"b9f3ebc4": [
+"Turn away",
+"Virar y huir"
+],
+"cb694bf6": [
+"<button class=\"btn\" type=\"button\" data-act=\"chase-no\"><b>Let them go</b><small>flotsam</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"chase-no\"><b>Dejarlos ir</b><small>restos flotantes</small></button>"
+],
+"a902f2ea": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"chase-go\"><b>Give chase</b><small>{0}</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"chase-go\"><b>Perseguir</b><small>{0}</small></button>"
+],
+"286db8e9": [
+"<button class=\"btn\" type=\"button\" data-act=\"prize-sell\"><b>Sell prize</b><small>{0} G</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"prize-sell\"><b>Vender la presa</b><small>{0} G</small></button>"
+],
+"3b558a66": [
+"<button class=\"btn\" type=\"button\" data-act=\"prize-sell\"><b>Strip her</b><small>{0} G · too few men</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"prize-sell\"><b>Desguazar</b><small>{0} G · faltan hombres</small></button>"
+],
+"0c2accd6": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"prize-home\"><b>To the moorings</b><small>to {0}, {1}</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"prize-home\"><b>Al amarradero</b><small>a {0}, {1}</small></button>"
+],
+"5e1459f2": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"prize-keep\"{0}><b>Into the convoy</b><small>{1}</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"prize-keep\"{0}><b>Al convoy</b><small>{1}</small></button>"
+],
+"382cc3de": [
+"Back to the trading house",
+"Volver a la casa comercial"
+],
+"273beed8": [
+"To {0}",
+"A {0}"
+],
+"c73a0b97": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"takeover\">Take over the fight</button><button class=\"btn\" type=\"button\" data-act=\"capfight\">Leave it to the captain</button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"takeover\">Tomar el mando del combate</button><button class=\"btn\" type=\"button\" data-act=\"capfight\">Que lo haga el capitán</button>"
+],
+"27a02baf": [
+"<button class=\"btn\" type=\"button\" data-act=\"waitstop\"><b>Stop</b><small>day {0} of waiting</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"waitstop\"><b>Parar</b><small>día {0} de espera</small></button>"
+],
+"66171553": [
+"<button class=\"btn primary\" type=\"button\" disabled>Under sail …</button>",
+"<button class=\"btn primary\" type=\"button\" disabled>Navegando …</button>"
+],
+"4774bdf8": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"restart\">New game</button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"restart\">Nueva partida</button>"
+],
+"0fb2f9ca": [
+"<button class=\"btn\" type=\"button\" data-act=\"wait\"><b>1 day</b><small>wait</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"wait\"><b>1 día</b><small>esperar</small></button>"
+],
+"88489a80": [
+"<button class=\"btn\" type=\"button\" data-act=\"waitrun\"><b>Wait</b><small>{0}</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"waitrun\"><b>Esperar</b><small>{0}</small></button>"
+],
+"6e133628": [
+"until a convoy comes in",
+"hasta que llegue un convoy"
+],
+"6eb1e944": [
+"one week",
+"una semana"
+],
+"f60e0398": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"sail\"{0}><b>Cast off</b><small>{1}</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"sail\"{0}><b>Zarpar</b><small>{1}</small></button>"
+],
+"8a33d74e": [
+"set course",
+"fijar rumbo"
+],
+"1ab3331a": [
+"no ship",
+"sin barco"
+],
+"9546b1d8": [
+"<div class=\"in\"><div class=\"shead\"><div><h2 id=\"sheet-title\">Where to?</h2><span class=\"small\">From {0}{1}</span></div>",
+"<div class=\"in\"><div class=\"shead\"><div><h2 id=\"sheet-title\">¿Adónde navegar?</h2><span class=\"small\">Desde {0}{1}</span></div>"
+],
+"89537fc4": [
+" · winter, the voyage takes longer",
+" · invierno, el viaje dura más"
+],
+"1de07a7c": [
+"<button class=\"close\" type=\"button\" data-act=\"close\" aria-label=\"Close\">Back</button></div>",
+"<button class=\"close\" type=\"button\" data-act=\"close\" aria-label=\"Cerrar\">Atrás</button></div>"
+],
+"d4aaacf3": [
+" <span class=\"frtag\">Freight</span>",
+" <span class=\"frtag\">Flete</span>"
+],
+"03d0d5c3": [
+"Ice",
+"Hielo"
+],
+"c7c92ab8": [
+"<span class=\"dmeta\">Produces {0} · needs {1}{2}{3}{4}{5}{6}{7}</span></button>",
+"<span class=\"dmeta\">Produce {0} · necesita {1}{2}{3}{4}{5}{6}{7}</span></button>"
+],
+"d2a9e8f9": [
+" · overland via Lübeck",
+" · por tierra vía Lübeck"
+],
+"e01e9e50": [
+" · Neva frozen until April",
+" · Nevá helado hasta abril"
+],
+"45972159": [
+" · drift ice",
+" · hielo a la deriva"
+],
+"0140e5f6": [
+" · Danish privateers in the Sound",
+" · corsarios daneses en el Sund"
+],
+"93679d90": [
+" · embargo",
+" · embargo"
+],
+"f2e13c55": [
+" · plague",
+" · peste"
+],
+"aede8f1c": [
+"<span class=\"small\">Prices from your last visit on {0}. They may have changed since.</span>",
+"<span class=\"small\">Precios de tu última visita, el {0}. Pueden haber cambiado desde entonces.</span>"
+],
+"59c8af2f": [
+"<div style=\"overflow-x:auto\"><table class=\"ctable\"><thead><tr><th>Good</th><th>Buy here</th><th>Sell there</th><th>Buy there</th></tr></thead><tbody>",
+"<div style=\"overflow-x:auto\"><table class=\"ctable\"><thead><tr><th>Mercancía</th><th>Compra aquí</th><th>Venta allí</th><th>Compra allí</th></tr></thead><tbody>"
+],
+"2f8b7b8b": [
+"<span class=\"small\">You have never been to {0}. You will only know the prices once you put in there.</span>",
+"<span class=\"small\">Nunca has estado en {0}. Solo conocerás los precios cuando atraques allí.</span>"
+],
+"34a6394b": [
+"The Neva is frozen",
+"El Nevá está helado"
+],
+"a6cd8a35": [
+"Set sail for {0} · {1} {2}",
+"Zarpar hacia {0} · {1} {2}"
+],
+"178e4f62": [
+"close only, at the deck",
+"solo de cerca, a cubierta"
+],
+"9bbcf8ca": [
+"At the deck; the middle is their castle with the marksmen.",
+"A cubierta; el centro es su castillo con los tiradores."
+],
+"bf89fa8e": [
+"Into the sails: fire eats away hull and fighting spirit.",
+"A las velas: el fuego devora casco y moral."
+],
+"dc44c359": [
+"At the deck, close only: wide and devastating.",
+"A cubierta, solo de cerca: amplio y devastador."
+],
+"a33930dd": [
+"Fire · {0}",
+"Fuego · {0}"
+],
+"db577c62": [
+" {0} squads, tap {1} times.",
+" {0} escuadras, toca {1} veces."
+],
+"42c0d630": [
+" Hits the hull: {0}.",
+" {0}: impacto en el casco."
+],
+"3f7e598b": [
+"Trebuchet and gun",
+"Trabuquete y bombarda"
+],
+"a8ddb082": [
+"In the harbour of {0}",
+"En el puerto de {0}"
+],
+"c2a986bc": [
+"At sea · bound for {0} · day {1} of {2}",
+"En el mar · rumbo a {0} · día {1} de {2}"
+],
+"bf477bcc": [
+"At sea",
+"En el mar"
+],
+"147c559c": [
+"<span class=\"k\">{0}</span><h2>{1}</h2><p>{2}</p><p class=\"small\">What do you decide? What comes of it only shows afterwards.</p>",
+"<span class=\"k\">{0}</span><h2>{1}</h2><p>{2}</p><p class=\"small\">¿Qué decides? Lo que resulte solo se verá después.</p>"
+],
+"c6d02b8a": [
+"<span class=\"k\">Event</span><h2>{0}</h2><p><b>{1}.</b> {2}</p>",
+"<span class=\"k\">Suceso</span><h2>{0}</h2><p><b>{1}.</b> {2}</p>"
+],
+"2907cd69": [
+"Danish privateer",
+"Corsario danés"
+],
+"f38abe40": [
+"Pirate band · {0} ships",
+"Banda pirata · {0} barcos"
+],
+"908b824e": [
+"≈ {0} crossbows",
+"≈ {0} ballestas"
+],
+"e5d09c5b": [
+"heavy armour",
+"mucha armadura"
+],
+"3a8b8ea0": [
+" · round {0}",
+" · asalto {0}"
+],
+"af69b44a": [
+"<div class=\"range2\" role=\"img\" aria-label=\"Range {0}\"><span class=\"me\">You</span><div class=\"seg\">{1}</div><span class=\"foe\">Enemy</span></div>",
+"<div class=\"range2\" role=\"img\" aria-label=\"Distancia {0}\"><span class=\"me\">Tú</span><div class=\"seg\">{1}</div><span class=\"foe\">Enemigo</span></div>"
+],
+"e46fbd90": [
+"Wind: <b class=\"ok\">windward is yours</b> · your zone larger, their fire weaker",
+"Viento: <b class=\"ok\">barlovento tuyo</b> · tu zona mayor, su fuego más débil"
+],
+"b9b8a194": [
+"Wind: <b>enemy has windward</b> · their fire stronger, your zone smaller",
+"Viento: <b>barlovento del enemigo</b> · su fuego más fuerte, tu zona menor"
+],
+"72b72666": [
+"Wind: windward still open",
+"Viento: barlovento aún en disputa"
+],
+"191a761f": [
+"<div class=\"cols\"><div class=\"side me\"><h4>You{0}{1}</h4><div class=\"big\"><b>{2}</b><span>men</span></div>",
+"<div class=\"cols\"><div class=\"side me\"><h4>Tú{0}{1}</h4><div class=\"big\"><b>{2}</b><span>hombres</span></div>"
+],
+"19645137": [
+"Hull",
+"Casco"
+],
+"1b7fbfab": [
+"Captain {0} · Combat {1}",
+"Capitán {0} · Combate {1}"
+],
+"baee0e89": [
+"no captain",
+"sin capitán"
+],
+"54e58047": [
+"<div class=\"side foe\"><h4>{0}</h4><div class=\"big\"><b>{1}</b><span>of {2}{3}</span></div>",
+"<div class=\"side foe\"><h4>{0}</h4><div class=\"big\"><b>{1}</b><span>de {2}{3}</span></div>"
+],
+"6d53ae30": [
+"Merchantman",
+"Mercante"
+],
+"8edd932d": [
+"Privateer",
+"Corsario"
+],
+"211c3447": [
+" · {0} on the escort ships",
+" · {0} en los barcos de escolta"
+],
+"e454d2ae": [
+"<div class=\"bdeck\"><div class=\"ml\"><span>Boarding fight {0}</span><em>Round {1} of {2}</em></div>",
+"<div class=\"bdeck\"><div class=\"ml\"><span>Abordaje {0}</span><em>Asalto {1} de {2}</em></div>"
+],
+"b7e53e70": [
+"on their deck",
+"en su cubierta"
+]
+}

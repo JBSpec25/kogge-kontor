@@ -1,0 +1,414 @@
+{
+"9b40e3e3": [
+"{0} charges of powder and stone balls bought.",
+"{0} cargas de pólvora y bolas de piedra compradas."
+],
+"56d28b34": [
+"Captain {0} now commands your convoy.",
+"El capitán {0} manda ahora tu convoy."
+],
+"45470515": [
+"Captain {0} gives up command. Without a captain your convoy cannot cast off.",
+"El capitán {0} deja el mando. Sin capitán tu convoy no puede zarpar."
+],
+"26f00bcd": [
+"{0} repaired in {1}, hull now {2} %.",
+"{0} reparado en {1}, casco ahora al {2} %."
+],
+"fce582dc": [
+"The convoy is repaired in {0} for {1} guilders.",
+"El convoy se repara en {0} por {1} florines."
+],
+"8fdbc079": [
+"Build order in {0}: {1} “{2}” for {3} guilders, ready in {4} days; then she sails to {5}.",
+"Encargo de construcción en {0}: {1} «{2}» por {3} florines, lista en {4} días; después navegará hacia {5}."
+],
+"ef4a0dd9": [
+"For {0} guilders the shipyard of {1} lets you have an old snekke. A new beginning.",
+"Por {0} florines el astillero de {1} te cede una vieja esneca. Un nuevo comienzo."
+],
+"fc26c280": [
+"{0} sold in {1} for {2} guilders.{3}",
+"{0} vendido en {1} por {2} florines.{3}"
+],
+"b6311542": [
+"{0} bundles of fire arrows bought in {1}.",
+"Comprados en {1}: haces de flechas incendiarias ({0})."
+],
+"a09533ec": [
+"sailor",
+"marinero"
+],
+"8aa932d2": [
+"sailors",
+"marineros"
+],
+"8fcc4d65": [
+"Hennig Redbeard",
+"Hennig Barbarroja"
+],
+"13658bd7": [
+"Arnd the Black",
+"Arnd el Negro"
+],
+"3e9f6c29": [
+"Claus Witte",
+"Claus Witte"
+],
+"0bb21ab4": [
+"Tidemann Hake",
+"Tidemann Hake"
+],
+"15c1860e": [
+"Bertold Stint",
+"Bertold Stint"
+],
+"9a6eaf4d": [
+"Wulf of Fehmarn",
+"Wulf de Fehmarn"
+],
+"451b00c0": [
+"Marquard Kule",
+"Marquard Kule"
+],
+"291ab583": [
+"Gödeke Lange",
+"Gödeke Lange"
+],
+"168e4932": [
+"Deck",
+"Cubierta"
+],
+"e678225b": [
+"Crew",
+"Tripulación"
+],
+"b27d7f1c": [
+"Castle",
+"Castillo"
+],
+"98d340af": [
+"Sails",
+"Velas"
+],
+"3a482d9c": [
+"canvas and rigging",
+"lona y aparejo"
+],
+"13670f63": [
+"Square sail",
+"Vela cuadra"
+],
+"7ca83376": [
+"Reckless",
+"Temerario"
+],
+"e3f39778": [
+"seeks close combat and boards early",
+"busca el cuerpo a cuerpo y aborda pronto"
+],
+"e62122fc": [
+"Cautious",
+"Prudente"
+],
+"6e51feea": [
+"prefers to shoot from a distance and gives up quickly",
+"prefiere disparar de lejos y se rinde pronto"
+],
+"045058be": [
+"Tough",
+"Duro"
+],
+"68d0162a": [
+"withstands even heavy losses",
+"aguanta incluso grandes pérdidas"
+],
+"28bd73fa": [
+"Greedy",
+"Codicioso"
+],
+"258f834f": [
+"goes for the ship with the most cargo",
+"va a por el barco con más carga"
+],
+"746cfd7b": [
+"Bolts",
+"Virotes"
+],
+"28e34eb5": [
+"crossbow bolts onto the deck, at any range",
+"virotes de ballesta a la cubierta, a cualquier distancia"
+],
+"aa5e437f": [
+"Fire arrows",
+"Flechas incendiarias"
+],
+"a7f18320": [
+"into the sails: set canvas and hull on fire and break their fighting spirit; not at close range",
+"a las velas: incendian lona y casco y quiebran la moral; no a corta distancia"
+],
+"8e79b089": [
+"Stones",
+"Piedras"
+],
+"1832a1b5": [
+"thrown onto the deck from the fighting top and castle, only at close range, devastating for the crew",
+"lanzadas a la cubierta desde la cofa y el castillo, solo a corta distancia, devastadoras para la tripulación"
+],
+"0157b838": [
+"close",
+"cerca"
+],
+"654edb12": [
+"far",
+"lejos"
+],
+"57732e4a": [
+"A snekke",
+"Una esneca"
+],
+"49024d28": [
+"A cog",
+"Una coca"
+],
+"6be7061c": [
+"A hulk",
+"Una urca"
+],
+"1867e370": [
+"A carvel",
+"Una carabela"
+],
+"823c1e79": [
+"good",
+"buenas"
+],
+"b90fb95d": [
+"even",
+"igualadas"
+],
+"a116f74d": [
+"poor",
+"malas"
+],
+"72a9fa32": [
+"Weather",
+"Tiempo"
+],
+"b20c550e": [
+"Windward",
+"Barlovento"
+],
+"fc69dfb8": [
+"Enemy to windward",
+"Enemigo a barlovento"
+],
+"8f212943": [
+"Course held",
+"Rumbo mantenido"
+],
+"03669ad1": [
+"Captain {0}",
+"Capitán {0}"
+],
+"ec9e3480": [
+"Warned and cleared for action",
+"Avisados y en zafarrancho"
+],
+"02ebfbd0": [
+"{0} crossbows",
+"{0} ballestas"
+],
+"2cb0b4c9": [
+"{0} fires at the hull",
+"{0} dispara al casco"
+],
+"a3f20cfc": [
+"Gun",
+"Bombarda"
+],
+"0258007a": [
+"Heavy sea: their deck is rolling hard",
+"Mar gruesa: su cubierta se balancea mucho"
+],
+"83cd40ea": [
+"The ships of {0} come into sight. You show the letter of safe conduct, and they let you pass.",
+"Aparecen los barcos de {0}. Muestras el salvoconducto y te dejan pasar."
+],
+"8836cb28": [
+"Captain {0}",
+"Capitán {0}"
+],
+"d79fa0a7": [
+"{0} under the Dannebrog, one of King Valdemar’s privateers, bears down {1}on you. About {2} soldiers stand on deck. {3} is known as {4}: {5}.",
+"{0} con el Dannebrog, corsaria del rey Valdemar, se dirige {1}hacia vosotros. En cubierta hay unos {2} soldados. A {3} lo tienen por {4}: {5}."
+],
+"e4b13577": [
+"from windward ",
+"desde barlovento "
+],
+"3ecbe709": [
+"{0} under dark sail bears down {1}on you. About {2} armed men stand on deck. {3} is known as {4}: {5}.",
+"{0} de vela oscura se dirige {1}hacia vosotros. En cubierta hay unos {2} hombres armados. A {3} lo tienen por {4}: {5}."
+],
+"1285a2fb": [
+"A Danish privateer under {0} attacks.",
+"Ataca un corsario danés al mando de {0}."
+],
+"687c0c21": [
+"Pirates under {0} attack.",
+"Atacan piratas al mando de {0}."
+],
+"45253908": [
+"You pay {0} guilders in passage money. {1} lets you go.",
+"Pagas {0} florines de peaje. {1} te deja marchar."
+],
+"640628db": [
+"{0} guilders paid to pirates.",
+"{0} florines pagados a los piratas."
+],
+"dea9790e": [
+"{0} guilders",
+"{0} florines"
+],
+"771526f8": [
+"There is not enough in the chest. The pirates take {0}.",
+"El arcón no alcanza. Los piratas se llevan {0}."
+],
+"ba1ce7a4": [
+"There is nothing to be had from you. The pirates leave cursing.",
+"Contigo no hay nada que rascar. Los piratas se marchan maldiciendo."
+],
+"42e2f16c": [
+"Pirates take {0}{1}.",
+"Los piratas se llevan {0}{1}."
+],
+"36f696e8": [
+" and {0} guilders",
+" y {0} florines"
+],
+"c93cdee3": [
+"Both ships close on each other.",
+"Los dos barcos se acercan el uno al otro."
+],
+"0c9510eb": [
+"You close in.",
+"Os acercáis."
+],
+"e991327e": [
+"{0} keeps you at a distance.",
+"{0} os mantiene a distancia."
+],
+"0838788e": [
+"The ships drift apart.",
+"Los barcos se separan."
+],
+"55029d31": [
+"You gain distance.",
+"Ganáis distancia."
+],
+"f1a859e6": [
+"They are faster and close in.",
+"Son más rápidos y se acercan."
+],
+"140afdfa": [
+"The distance stays the same.",
+"La distancia se mantiene."
+],
+"89c05503": [
+"You gain the windward position; your crossbows have the wind at their backs.",
+"Ganáis el barlovento; vuestras ballestas tienen el viento a favor."
+],
+"798402da": [
+"The enemy holds the windward position.",
+"El enemigo conserva el barlovento."
+],
+"45ef6710": [
+"The manoeuvre fails.",
+"La maniobra fracasa."
+],
+"1c310c67": [
+"You hold your course; they come closer.",
+"Mantenéis el rumbo; ellos se acercan."
+],
+"0cbe4b3d": [
+"You hold your course; they fall back.",
+"Mantenéis el rumbo; ellos se quedan atrás."
+],
+"4b8abba5": [
+"You hold your course and take careful aim.",
+"Mantenéis el rumbo y apuntáis con calma."
+],
+"afc4e4e8": [
+"The enemy gains the windward position.",
+"El enemigo gana el barlovento."
+],
+"8129496b": [
+"{0}, hull −{1} %",
+"{0}, casco −{1} %"
+],
+"e2343d73": [
+"The trebuchet hits",
+"El trabuquete acierta"
+],
+"99b6a47c": [
+"The trebuchets hit",
+"Los trabuquetes aciertan"
+],
+"2f9b10bc": [
+"The gun thunders",
+"La bombarda truena"
+],
+"6d0257bf": [
+"The guns thunder",
+"Las bombardas truenan"
+],
+"096181be": [
+"The gun misfires",
+"La bombarda falla"
+],
+"a0881207": [
+"The gun has no powder",
+"Falta pólvora para la bombarda"
+],
+"e39cc7fe": [
+"The gun lacks a crew",
+"Falta gente para la bombarda"
+],
+"5a48b80e": [
+"The escort ships send {0} men across.",
+"Los barcos de escolta pasan {0} hombres."
+],
+"fb10d380": [
+"Fire on board the enemy ship.",
+"Hay fuego a bordo del enemigo."
+],
+"bb2e5b6c": [
+"They want to flee but cannot break free.",
+"Quieren huir, pero no consiguen soltarse."
+],
+"d4413bfe": [
+"{0}Return fire: {1}{2}.",
+"{0}Fuego enemigo: {1}{2}."
+],
+"dc80cd52": [
+"Perfect cover! ",
+"¡Cobertura perfecta! "
+],
+"9d2c8da5": [
+"Well covered. ",
+"Bien cubiertos. "
+],
+"29179a5b": [
+"hull of the “{0}” {1} %",
+"casco de la «{0}» al {1} %"
+],
+"94592541": [
+"no damage",
+"sin daños"
+],
+"b41c9717": [
+"{0} under {1} {2}. Loot: {3} guilders.",
+"{0} al mando de {1} {2}. Botín: {3} florines."
+]
+}

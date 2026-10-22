@@ -1,0 +1,282 @@
+{
+"8a5bc9a0": [
+"Mild: the seasons move prices only half as much, and no ice closes the routes.",
+"Suaves: las estaciones mueven los precios solo la mitad y el hielo no cierra ninguna ruta."
+],
+"fac71a45": [
+"Noticeable: herring season, Lent, harvest and winter move prices clearly; the Neva freezes from December to March.",
+"Marcadas: la temporada del arenque, la Cuaresma, la cosecha y el invierno mueven mucho los precios; el Nevá se hiela de diciembre a marzo."
+],
+"c5028d6b": [
+"<div class=\"opt\"><label class=\"flabel\" for=\"wiz-ship\">Name of your snekke</label><div class=\"namerow\"><input id=\"wiz-ship\" maxlength=\"22\" autocomplete=\"off\" placeholder=\"e.g. Maria\" value=\"{0}\"><button class=\"dice\" type=\"button\" data-act=\"wiz-ship-dice\">Random</button></div></div>",
+"<div class=\"opt\"><label class=\"flabel\" for=\"wiz-ship\">Nombre de tu esneca</label><div class=\"namerow\"><input id=\"wiz-ship\" maxlength=\"22\" autocomplete=\"off\" placeholder=\"p. ej. Maria\" value=\"{0}\"><button class=\"dice\" type=\"button\" data-act=\"wiz-ship-dice\">Al azar</button></div></div>"
+],
+"4720307f": [
+"<button class=\"btn\" type=\"button\" data-act=\"wiz-back\">Back</button>",
+"<button class=\"btn\" type=\"button\" data-act=\"wiz-back\">Atrás</button>"
+],
+"6be87ab3": [
+"<button class=\"btn\" type=\"button\" data-act=\"wiz-cancel\">Cancel</button>",
+"<button class=\"btn\" type=\"button\" data-act=\"wiz-cancel\">Cancelar</button>"
+],
+"5a65ff99": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"wiz-next\"{0}>Next</button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"wiz-next\"{0}>Siguiente</button>"
+],
+"5c18279a": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"wiz-go\">Found trading house</button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"wiz-go\">Fundar la casa comercial</button>"
+],
+"ee6dfd06": [
+"<div class=\"in\"><div class=\"shead\"><div><h2 id=\"saves-title\">Saved games</h2><span class=\"small\">{0}</span></div>",
+"<div class=\"in\"><div class=\"shead\"><div><h2 id=\"saves-title\">Partidas</h2><span class=\"small\">{0}</span></div>"
+],
+"aefd13a0": [
+"Saved in your Claude account, available on every device.",
+"Guardado en tu cuenta de Claude, disponible en todos tus dispositivos."
+],
+"c80b58d0": [
+"Saved {0}.",
+"Guardado {0}."
+],
+"01b83c5e": [
+"<button class=\"close\" type=\"button\" data-act=\"saves-close\">Back</button></div><div class=\"slots\">",
+"<button class=\"close\" type=\"button\" data-act=\"saves-close\">Atrás</button></div><div class=\"slots\">"
+],
+"bb0a92af": [
+"<div class=\"slot empty\"><span>Slot {0} · empty</span><div class=\"acts\"><button class=\"ybtn\" type=\"button\" data-slot=\"new\" data-n=\"{1}\">New trading house here</button></div></div>",
+"<div class=\"slot empty\"><span>Ranura {0} · vacía</span><div class=\"acts\"><button class=\"ybtn\" type=\"button\" data-slot=\"new\" data-n=\"{1}\">Nueva casa comercial aquí</button></div></div>"
+],
+"6ec82c4e": [
+"<span>Slot {0}{1} · home seat {2}</span>",
+"<span>Ranura {0}{1} · sede {2}</span>"
+],
+"3b0e6db1": [
+" · in play",
+" · en juego"
+],
+"b8e2ce5f": [
+"<span>{0} · {1} guilders · {2}</span>",
+"<span>{0} · {1} florines · {2}</span>"
+],
+"15d95f34": [
+"<span>saved {0}</span>",
+"<span>guardada {0}</span>"
+],
+"daaf38ac": [
+"<button class=\"ybtn\" type=\"button\" data-slot=\"load\" data-n=\"{0}\">Load</button>",
+"<button class=\"ybtn\" type=\"button\" data-slot=\"load\" data-n=\"{0}\">Cargar</button>"
+],
+"5c328a2a": [
+"<button class=\"ybtn\" type=\"button\" data-slot=\"new\" data-n=\"{0}\">Start anew</button>",
+"<button class=\"ybtn\" type=\"button\" data-slot=\"new\" data-n=\"{0}\">Empezar de nuevo</button>"
+],
+"bb84b829": [
+"Really delete?",
+"¿Borrar de verdad?"
+],
+"ffa5a8a7": [
+"Delete",
+"Borrar"
+],
+"ac05c6a4": [
+"</div><div class=\"xfer\"><h3>Leaderboard</h3><div class=\"chipset\" role=\"group\">",
+"</div><div class=\"xfer\"><h3>Clasificación</h3><div class=\"chipset\" role=\"group\">"
+],
+"89de5f64": [
+"First to become Alderman",
+"Quién llegó antes a Decano"
+],
+"8367b216": [
+"By wealth",
+"Por riqueza"
+],
+"0b97533d": [
+"</div>{0}<span class=\"small\">Each game appears once in the list, with its highest wealth and the year you became Alderman.{1}</span>",
+"</div>{0}<span class=\"small\">Cada partida aparece una vez en la lista, con su mayor riqueza y el año en que llegaste a Decano.{1}</span>"
+],
+"cf9fddfb": [
+" Saved in your Claude account.",
+" Guardado en tu cuenta de Claude."
+],
+"aa7567f9": [
+"</div><div class=\"xfer\"><h3>Seasons in this game</h3><div class=\"chipset\" role=\"group\">",
+"</div><div class=\"xfer\"><h3>Estaciones en esta partida</h3><div class=\"chipset\" role=\"group\">"
+],
+"5e56b8ce": [
+"Prices swing with the season only half as much, no ice.",
+"Los precios oscilan con la estación solo la mitad, sin hielo."
+],
+"65b6e7c5": [
+"Clear seasonal prices, the Neva frozen from December to March, drift ice in January and February.",
+"Precios de temporada marcados, el Nevá helado de diciembre a marzo, hielo a la deriva en enero y febrero."
+],
+"51d8f086": [
+"</div><div class=\"xfer\"><h3>Sound</h3><div class=\"chipset\" role=\"group\">",
+"</div><div class=\"xfer\"><h3>Sonido</h3><div class=\"chipset\" role=\"group\">"
+],
+"287efbb2": [
+"Music",
+"Música"
+],
+"9c48e835": [
+"Sea and harbour",
+"Mar y puerto"
+],
+"eb6238e1": [
+"Each can be switched on and off separately; to turn everything off, use the speaker at the top.",
+"Cada uno se activa y desactiva por separado; para apagarlo todo, usa el altavoz de arriba."
+],
+"45ba9649": [
+"Sound is off. Turn it on with the speaker at the top.",
+"El sonido está apagado. Enciéndelo con el altavoz de arriba."
+],
+"4d632b1a": [
+"</div><div class=\"xfer\"><h3>Market</h3><div class=\"chipset\" role=\"group\">",
+"</div><div class=\"xfer\"><h3>Mercado</h3><div class=\"chipset\" role=\"group\">"
+],
+"91d9d48f": [
+"Details on tap",
+"Detalles al tocar"
+],
+"894d7659": [
+"Always show market details",
+"Mostrar siempre los detalles"
+],
+"72ced34e": [
+"Picture, origin{0} are always shown under every good.",
+"La imagen, el origen{0} se muestran abiertos bajo cada mercancía."
+],
+"818682c3": [
+", price history and competitors",
+", el historial de precios y los competidores"
+],
+"0c53acf8": [
+" and price history",
+" y el historial de precios"
+],
+"9b3a5d56": [
+"Under every good, “More about this good” unfolds its picture, origin, price history and the best known price.",
+"Bajo cada mercancía, «Más sobre la mercancía» despliega la imagen, el origen, el historial de precios y el mejor precio conocido."
+],
+"dac2c107": [
+"</div><div class=\"xfer\"><h3>Transfer to another device</h3>",
+"</div><div class=\"xfer\"><h3>Pasar a otro dispositivo</h3>"
+],
+"ccf54045": [
+"<span class=\"small\">Copy the code and paste it here on the other device. It replaces the active saved game there.</span>",
+"<span class=\"small\">Copia el código y pégalo aquí en el otro dispositivo. Allí sustituye la partida activa.</span>"
+],
+"f3fd2f2f": [
+"<div class=\"row2\"><button class=\"ybtn\" type=\"button\" data-slot=\"copy\">Copy code</button>{0}</div>",
+"<div class=\"row2\"><button class=\"ybtn\" type=\"button\" data-slot=\"copy\">Copiar código</button>{0}</div>"
+],
+"64649ee8": [
+"<span class=\"small\">Copied.</span>",
+"<span class=\"small\">Copiado.</span>"
+],
+"14845465": [
+"<label class=\"flabel\" for=\"xfer-in\">Paste code</label><textarea id=\"xfer-in\" spellcheck=\"false\" placeholder=\"KK1:…\">{0}</textarea>",
+"<label class=\"flabel\" for=\"xfer-in\">Pegar código</label><textarea id=\"xfer-in\" spellcheck=\"false\" placeholder=\"KK1:…\">{0}</textarea>"
+],
+"f62648a0": [
+"<div class=\"row2\"><button class=\"ybtn\" type=\"button\" data-slot=\"import\">Load into slot {0}</button>{1}</div></div></div>",
+"<div class=\"row2\"><button class=\"ybtn\" type=\"button\" data-slot=\"import\">Cargar en la ranura {0}</button>{1}</div></div></div>"
+],
+"2ad28506": [
+"Slot {0} · saved in your Claude account",
+"Ranura {0} · guardada en tu cuenta de Claude"
+],
+"0796f7d0": [
+"Slot {0} · saved {1}",
+"Ranura {0} · guardada {1}"
+],
+"039566fc": [
+"The code is incomplete or not a Kogge & Kontor saved game.",
+"El código está incompleto o no es una partida de Kogge & Kontor."
+],
+"853d0acb": [
+"<text class=\"seaname\" x=\"{0}\" y=\"{1}\">NORTH SEA</text><text class=\"seaname\" x=\"{2}\" y=\"{3}\">BALTIC SEA</text>",
+"<text class=\"seaname\" x=\"{0}\" y=\"{1}\">MAR DEL NORTE</text><text class=\"seaname\" x=\"{2}\" y=\"{3}\">MAR BÁLTICO</text>"
+],
+"191d52d9": [
+", Captain {0}",
+", capitán {0}"
+],
+"fe449744": [
+"<span class=\"pin\"><span class=\"pv{0}\">{1} <small>guilders</small></span><span class=\"pw\">Wealth {2}</span></span></div>",
+"<span class=\"pin\"><span class=\"pv{0}\">{1} <small>florines</small></span><span class=\"pw\">Riqueza {2}</span></span></div>"
+],
+"b92477d9": [
+"Turn music off",
+"Apagar la música"
+],
+"023aad10": [
+"Turn music on",
+"Encender la música"
+],
+"8c954e12": [
+"Tap for music",
+"Toca para música"
+],
+"ef9371f1": [
+"Game speed {0}, tap to change",
+"Velocidad de juego {0}, toca para cambiar"
+],
+"3ec76bac": [
+"<p class=\"small\" style=\"margin:0 0 8px\">You stay ashore in {0}. Your convoys trade for you; time passes with “Wait”.</p>",
+"<p class=\"small\" style=\"margin:0 0 8px\">Te quedas en tierra en {0}. Tus convoyes comercian por ti; con «Esperar» pasa el tiempo.</p>"
+],
+"23f096e6": [
+"<div class=\"hold\"><div class=\"holdrow\"><span>{0}</span><span class=\"num\">{1} / {2} lasts</span></div>",
+"<div class=\"hold\"><div class=\"holdrow\"><span>{0}</span><span class=\"num\">{1} / {2} lasts</span></div>"
+],
+"d7bfb7b7": [
+"No ship of your own",
+"Sin barco propio"
+],
+"a8dc6c51": [
+"Hold of the {0}",
+"Bodega de la {0}"
+],
+"ed11e5ee": [
+"Hold of the convoy",
+"Bodega del convoy"
+],
+"ec867429": [
+"<details class=\"more\" data-det=\"status\"{0}><summary><span>Wealth {1} guilders · {2} {3}</span><i class=\"chev\" aria-hidden=\"true\"></i></summary>",
+"<details class=\"more\" data-det=\"status\"{0}><summary><span>Riqueza {1} florines · {2} {3}</span><i class=\"chev\" aria-hidden=\"true\"></i></summary>"
+],
+"f40510d3": [
+"<div class=\"wealth\"><div class=\"holdrow\"><span>Wealth incl. cargo and ships</span><span class=\"small\">{0}</span></div>",
+"<div class=\"wealth\"><div class=\"holdrow\"><span>Riqueza con carga y barcos</span><span class=\"small\">{0}</span></div>"
+],
+"121aeb85": [
+"Highest rank reached",
+"Rango máximo alcanzado"
+],
+"614c25e7": [
+"<div class=\"bar\"><i style=\"width:{0}%\"></i></div><span class=\"small\">{1} sailors · {2} · speed {3} % · wages and upkeep {4} guilders a day</span></div></details>",
+"<div class=\"bar\"><i style=\"width:{0}%\"></i></div><span class=\"small\">{1} marineros · {2} · velocidad {3} % · soldada y mantenimiento {4} florines al día</span></div></details>"
+],
+"0a7275f9": [
+"<div class=\"over\"><strong>Bankrupt.</strong><span>{0}</span><button class=\"btn primary\" type=\"button\" data-act=\"restart\">New game</button></div>",
+"<div class=\"over\"><strong>Bancarrota.</strong><span>{0}</span><button class=\"btn primary\" type=\"button\" data-act=\"restart\">Nueva partida</button></div>"
+],
+"b448690b": [
+"Your debts exceed your wealth. The creditors take over the trading house.",
+"Tus deudas superan tu riqueza. Los acreedores se quedan con la casa comercial."
+],
+"d8b0812a": [
+"The chest is empty and so is the hold. The crew goes ashore.",
+"El arcón está vacío y la bodega también. La tripulación desembarca."
+],
+"ae473eb6": [
+"<li>{0}<span>{1} lasts {2}, avg. cost {3} guilders</span></li>",
+"<li>{0}<span>{1} lasts de {2}, compra media {3} florines</span></li>"
+],
+"67234990": [
+"<li>{0}<span>{1}: {2}{3}, for {4}, by {5}, pay {6} guilders</span></li>",
+"<li>{0}<span>{1}: {2}{3}, para {4}, hasta el {5}, pago {6} florines</span></li>"
+]
+}

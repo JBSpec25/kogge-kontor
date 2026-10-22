@@ -1,0 +1,398 @@
+{
+"587d9961": [
+"2 G per sailor",
+"2 G por marinero"
+],
+"7dff3752": [
+"Every sailor gets a 2-guilder bonus, {0} guilders in all.",
+"Cada marinero recibe 2 florines de plus, {0} florines en total."
+],
+"bf543430": [
+"Stay firm",
+"Mantenerse firme"
+],
+"21750a47": [
+"30 %: 2 to 3 sign off",
+"30 %: se dan de baja 2 o 3"
+],
+"ae346f23": [
+"You stay firm. In the next port {0}.",
+"Te mantienes firme. En el próximo puerto {0}."
+],
+"a96ff7d1": [
+"one sailor signs off",
+"se da de baja un marinero"
+],
+"b1aeca64": [
+"{0} sailors sign off",
+"se dan de baja {0} marineros"
+],
+"c943e5b7": [
+"You stay firm, and the grumbling dies away.",
+"Te mantienes firme y las quejas se apagan."
+],
+"7054fb1e": [
+"Serve beer",
+"Repartir cerveza"
+],
+"68ef0ec3": [
+"1 last of beer or 25 G",
+"1 last de cerveza o 25 G"
+],
+"83e2fe4d": [
+"A barrel of beer for everyone, and spirits are high again.",
+"Un tonel de cerveza para todos, y vuelve el buen ánimo."
+],
+"b9a30c31": [
+"No beer on board. An evening of brandy for 25 guilders does the job too.",
+"No hay cerveza a bordo. Una velada con aguardiente por 25 florines también sirve."
+],
+"f42fa3f2": [
+"A stowaway",
+"Un polizón"
+],
+"737c5511": [
+"Among the sacks the boatswain finds a young lad.",
+"Entre los sacos, el contramaestre encuentra a un muchacho."
+],
+"262ce789": [
+"Put him to work",
+"Ponerlo a trabajar"
+],
+"cf4095ad": [
+"The lad lends a hand and stays on as a sailor.",
+"El muchacho echa una mano y se queda como marinero."
+],
+"d46ba870": [
+"He lends a hand, but there is no room for him. He goes ashore in the next port.",
+"Echa una mano, pero no hay sitio para él. Desembarca en el próximo puerto."
+],
+"21a94b53": [
+"Hand him to the bailiff",
+"Entregarlo al alguacil"
+],
+"6db02892": [
+"The bailiff in the next port pays 30 guilders.",
+"El alguacil del próximo puerto paga 30 florines."
+],
+"77b561c3": [
+"Let him go",
+"Dejarlo marchar"
+],
+"ead26767": [
+"You let him go in port. Reputation +5.",
+"Lo dejas marchar en el puerto. Reputación +5."
+],
+"2d200c0e": [
+"A quarrel over dice",
+"Pelea a los dados"
+],
+"116b0bb7": [
+"Below deck fists are flying, and a knife flashes.",
+"Bajo cubierta vuelan los puños y brilla un cuchillo."
+],
+"23e72ebc": [
+"The captain settles it",
+"El capitán pone paz"
+],
+"8b3cbe96": [
+"The quarrel is settled, but one man has a stab wound and stays in port.",
+"La pelea se calma, pero uno tiene una puñalada y se queda en el puerto."
+],
+"e2b8228f": [
+"A word of command, and the quarrel is over.",
+"Una orden tajante y se acaba la pelea."
+],
+"d7d98a25": [
+"Ban dice",
+"Prohibir los dados"
+],
+"e98de2b2": [
+"The dice go overboard. Peace on deck.",
+"Los dados van por la borda. Calma en cubierta."
+],
+"6d777e41": [
+"Play yourself",
+"Jugar tú mismo"
+],
+"7844bc3f": [
+"−100 to +100 G",
+"−100 a +100 G"
+],
+"359ba63e": [
+"You win {0} guilders.",
+"Ganas {0} florines."
+],
+"152ac9fd": [
+"You lose {0} guilders.",
+"Pierdes {0} florines."
+],
+"af3af6e2": [
+"Man overboard",
+"Hombre al agua"
+],
+"1665c1be": [
+"A gust tears a sailor from the yard.",
+"Una racha arranca a un marinero de la verga."
+],
+"37ec022f": [
+"Turn and search",
+"Virar y buscar"
+],
+"38a62289": [
+"+1 day, 80 % rescued",
+"+1 día, 80 % rescatado"
+],
+"2ce1c9dd": [
+"You find him and haul him aboard: one day lost.",
+"Lo encontráis y lo subís a bordo: un día perdido."
+],
+"7065c516": [
+"You search in vain for a whole day.",
+"Buscáis en vano durante un día entero."
+],
+"54b8f2c5": [
+"Throw a line",
+"Lanzar un cabo"
+],
+"56d50df8": [
+"He gets hold of the line.",
+"Consigue agarrar el cabo."
+],
+"2127e995": [
+"The line misses him. A sailor is lost.",
+"El cabo no le llega. Se pierde un marinero."
+],
+"3f3af67c": [
+"1 sailor lost",
+"1 marinero perdido"
+],
+"82d3095b": [
+"You sail on. A sailor is lost.",
+"Seguís navegando. Se pierde un marinero."
+],
+"6e67b7ca": [
+"Rats in the grain",
+"Ratas en el grano"
+],
+"0f695b04": [
+"Something rustles and gnaws in the sacks.",
+"Algo cruje y roe en los sacos."
+],
+"d81d00b0": [
+"Restow and smoke them out",
+"Reestibar y fumigar"
+],
+"5449e65c": [
+"+1 day, −5 % grain",
+"+1 día, −5 % de grano"
+],
+"2d3784ac": [
+"You restow and smoke them out: one day lost{0}.",
+"Reestibáis y fumigáis: un día perdido{0}."
+],
+"c818e284": [
+"Buy a cat",
+"Comprar un gato"
+],
+"a490de62": [
+"10 G, 50 %: −10 % grain",
+"10 G, 50 %: −10 % de grano"
+],
+"0c286ab5": [
+"The cat is lazy. {0} gnawed.",
+"El gato es un vago. {0} roído."
+],
+"63eba682": [
+"The cat cleans up. Not a sack lost.",
+"El gato pone orden. No se pierde ni un saco."
+],
+"59004ae2": [
+"Do nothing",
+"No hacer nada"
+],
+"bece73c0": [
+"−10 to −20 % grain",
+"−10 a −20 % de grano"
+],
+"0de710cf": [
+"The rats eat {0}.",
+"Las ratas se comen {0}."
+],
+"92e41fe7": [
+"only a little",
+"solo un poco"
+],
+"79aff48f": [
+"Damp in the hold",
+"Humedad en la bodega"
+],
+"bac3786a": [
+"Seawater seeps through the hatches onto the goods.",
+"El agua de mar se filtra por las escotillas sobre la mercancía."
+],
+"cb7f15ed": [
+"Air and cover",
+"Ventilar y cubrir"
+],
+"47c199dd": [
+"You spread out the goods and cover them again: one day lost.",
+"Extendéis la mercancía y la volvéis a cubrir: un día perdido."
+],
+"37b3dae1": [
+"−10 % of the sensitive goods",
+"−10 % de la mercancía delicada"
+],
+"06e18eb5": [
+"Spoiled: {0}.",
+"Echado a perder: {0}."
+],
+"543c26f5": [
+"It turned out fine once again.",
+"Esta vez ha salido bien."
+],
+"ef67b62b": [
+"Tar and canvas",
+"Brea y lona"
+],
+"6cf997a9": [
+"40 G, safe",
+"40 G, seguro"
+],
+"dae62a8d": [
+"You seal the hatches with tar and canvas, 40 guilders.",
+"Selláis las escotillas con brea y lona, 40 florines."
+],
+"06092ed4": [
+"Barrels are leaking",
+"Toneles que gotean"
+],
+"0cad8da9": [
+"In heavy seas barrels have broken loose and sprung leaks.",
+"Con la mar gruesa, unos toneles se han soltado y tienen fugas."
+],
+"f33f9f3b": [
+"Wedge them again",
+"Volver a calzarlos"
+],
+"c1b5ff82": [
+"You wedge the barrels again: one day lost.",
+"Volvéis a calzar los toneles: un día perdido."
+],
+"31a90161": [
+"Serve it to the crew",
+"Repartirlo entre la tripulación"
+],
+"37386a08": [
+"−1 to 2 lasts",
+"−1 o 2 lasts"
+],
+"85bc85bc": [
+"The crew drinks {0} × {1} before it leaks away.",
+"La tripulación se bebe {0} lasts de {1} antes de que se derrame."
+],
+"cfcaf902": [
+"Leaked away: {0}.",
+"Derramado: {0}."
+],
+"9a1ca28b": [
+"little",
+"poco"
+],
+"2591aade": [
+"A merchantman offers a swap",
+"Un mercante ofrece un trueque"
+],
+"7e0fe200": [
+"A skipper waves across: goods for goods, in the middle of the sea.",
+"Un patrón hace señas: mercancía por mercancía, en mitad del mar."
+],
+"1c729ee6": [
+"Swap",
+"Trocar"
+],
+"8cfbc54b": [
+"up to 10 lasts at the average value",
+"hasta 10 lasts al valor medio"
+],
+"cdadc550": [
+"You have nothing to swap.",
+"No tienes nada que trocar."
+],
+"25261a80": [
+"You give {0} lasts of {1} and get {2} lasts of {3}.",
+"Das {0} lasts de {1} y recibes {2} lasts de {3}."
+],
+"6a0ac796": [
+"Decline",
+"Rechazar"
+],
+"a5f2aabe": [
+"You sail on.",
+"Seguís navegando."
+],
+"73f5da8c": [
+"Ask about prices",
+"Preguntar precios"
+],
+"0d38e06f": [
+"He comes from {0}. The prices there are now in your price book.",
+"Viene de {0}. Los precios de allí ya están en tu libro de precios."
+],
+"57a25f61": [
+"He knows nothing.",
+"No sabe nada."
+],
+"c7415c98": [
+"Untaxed goods",
+"Mercancía de contrabando"
+],
+"904a0803": [
+"A stranger in a boat offers goods, past every toll.",
+"Un desconocido en un bote ofrece mercancía, sin pasar por ninguna aduana."
+],
+"5e2f9411": [
+"up to 8 lasts 30 % below price, 20 %: −30 reputation",
+"hasta 8 lasts un 30 % por debajo del precio, 20 %: −30 de reputación"
+],
+"3647b07e": [
+"No room or no money. The stranger rows on.",
+"No hay sitio o no hay dinero. El desconocido sigue remando."
+],
+"34990c38": [
+"You buy {0} lasts of {1} for {2} guilders. Word gets around: reputation −30.",
+"Compras {0} lasts de {1} por {2} florines. Se corre la voz: reputación −30."
+],
+"30fd2bf2": [
+"You buy {0} lasts of {1} for {2} guilders.",
+"Compras {0} lasts de {1} por {2} florines."
+],
+"0f51c486": [
+"You send him away.",
+"Lo despides."
+],
+"21241c0f": [
+"+15 reputation",
+"+15 de reputación"
+],
+"4e42e5d6": [
+"You report the smuggler. Reputation +15.",
+"Denuncias al contrabandista. Reputación +15."
+],
+"75fa7851": [
+"A pilot knows a short cut",
+"Un práctico conoce un atajo"
+],
+"58a06064": [
+"An old fisherman offers to guide you through the skerries.",
+"Un viejo pescador se ofrece a guiaros entre los islotes."
+],
+"c1c1e040": [
+"Accept",
+"Aceptar"
+],
+"cc20615e": [
+"50 G, 1 day faster",
+"50 G, 1 día más rápido"
+]
+}

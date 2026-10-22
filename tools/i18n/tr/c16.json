@@ -1,0 +1,378 @@
+{
+"70d1f390": [
+"He guides you through a narrow channel. You save a day.",
+"Os guía por un canal estrecho. Ganáis un día."
+],
+"3b40364d": [
+"You are almost there; the short cut gains nothing any more.",
+"Ya casi habéis llegado; el atajo no os aporta nada."
+],
+"b04d4dcc": [
+"You stay in the waters you know.",
+"Seguís por aguas conocidas."
+],
+"bd406fe2": [
+"Haggle",
+"Regatear"
+],
+"e2d2e8f7": [
+"50 %: 25 G and 1 day faster",
+"50 %: 25 G y 1 día más rápido"
+],
+"0ffe7b39": [
+"For 25 guilders he pilots you after all. One day saved.",
+"Por 25 florines os guía al final. Ganáis un día."
+],
+"efbed7bf": [
+"He will not haggle and rows away.",
+"No admite regateos y se aleja remando."
+],
+"6a78adf2": [
+"Peace ships of the Hansa",
+"Barcos de paz de la Hansa"
+],
+"c78ef41c": [
+"Armed cogs of the towns offer an escort.",
+"Cocas armadas de las ciudades ofrecen escolta."
+],
+"9429cb37": [
+"Sail with them",
+"Navegar con ellos"
+],
+"35a09d7c": [
+"+1 day, far fewer pirates",
+"+1 día, muchos menos piratas"
+],
+"279f50ae": [
+"You join the escort: one day slower, but safe.",
+"Os unís a la escolta: un día más lentos, pero seguros."
+],
+"b32ecc8d": [
+"Carry on alone",
+"Seguir solos"
+],
+"b6de9ff7": [
+"You sail on alone.",
+"Seguís navegando solos."
+],
+"7dfd3b63": [
+"Donate",
+"Donar"
+],
+"50219a2b": [
+"100 G, +20 reputation",
+"100 G, +20 de reputación"
+],
+"8fd396a9": [
+"You donate 100 guilders to the peace ships. Reputation +20.",
+"Donas 100 florines a los barcos de paz. Reputación +20."
+],
+"54459943": [
+"Fishermen warn of pirates",
+"Pescadores avisan de piratas"
+],
+"a98098ea": [
+"“Behind the headland a strange ship lies in wait.”",
+"«Detrás del cabo acecha un barco desconocido.»"
+],
+"a5c86f75": [
+"+1 day, much less danger",
+"+1 día, mucho menos peligro"
+],
+"5e9092be": [
+"You take a detour: one day lost.",
+"Dais un rodeo: un día perdido."
+],
+"5c96a365": [
+"Clear for action",
+"Zafarrancho de combate"
+],
+"e2292eee": [
+"target zone +15 % in the next fight",
+"zona de tiro +15 % en el próximo combate"
+],
+"fd44e1c4": [
+"The crossbows are cocked and ready. If they come, you will be prepared.",
+"Las ballestas están tensadas y listas. Si vienen, estaréis preparados."
+],
+"25741c32": [
+"Ignore the warning",
+"Ignorar el aviso"
+],
+"5735f390": [
+"Fishermen’s gossip. You hold your course.",
+"Habladurías de pescadores. Mantenéis el rumbo."
+],
+"1ff7e05c": [
+"A rival challenges you to a race",
+"Un rival os reta a una regata"
+],
+"283e583f": [
+"“Whoever reaches port first gets 200 guilders!”",
+"«¡Quien llegue antes al puerto se lleva 200 florines!»"
+],
+"ed74d91a": [
+"stake 200 G, {0} % to win",
+"apuesta 200 G, {0} % de ganar"
+],
+"db52625b": [
+"You reach port first and win 200 guilders. Reputation +5.",
+"Llegáis antes al puerto y ganáis 200 florines. Reputación +5."
+],
+"f4dacd7d": [
+"He is faster. You pay 200 guilders.",
+"Él es más rápido. Pagas 200 florines."
+],
+"a974b069": [
+"You decline. He laughs and pulls away.",
+"Rechazas. Él se ríe y se aleja."
+],
+"972ee2f2": [
+"Accept and cheat",
+"Aceptar con trampa"
+],
+"c58f491b": [
+"60 % to win, otherwise −30 reputation",
+"60 % de ganar; si no, −30 de reputación"
+],
+"0017a8f0": [
+"With a little trick in the harbour mouth you win 200 guilders.",
+"Con una pequeña trampa en la bocana ganas 200 florines."
+],
+"6ee4de64": [
+"The trick is discovered. You pay 200 guilders, and your good name suffers: reputation −30.",
+"Se descubre la trampa. Pagas 200 florines y tu buen nombre se resiente: reputación −30."
+],
+"2c9db8fa": [
+"A messenger of the council",
+"Un mensajero del concejo"
+],
+"8e8682ca": [
+"A boat heads for you, carrying a council messenger with a sealed message.",
+"Un bote se dirige hacia vosotros con un mensajero del concejo y un mensaje sellado."
+],
+"9a71b850": [
+"Take the message",
+"Llevar el mensaje"
+],
+"6a2e0e65": [
+"order: deliver the message",
+"encargo: entregar el mensaje"
+],
+"238a1e3d": [
+"The messenger gives you a sealed message for {0}. It is now among your orders in the Market tab.",
+"El mensajero te da un mensaje sellado para {0}. Ya está entre tus encargos, en la pestaña Mercado."
+],
+"1c6e32b8": [
+"For a fee",
+"A cambio de pago"
+],
+"48a7d9ea": [
+"The council pays 120 guilders for the errand.",
+"El concejo paga 120 florines por el recado."
+],
+"ba43f5f5": [
+"−5 reputation",
+"−5 de reputación"
+],
+"b76f4f41": [
+"You decline. Reputation −5.",
+"Rechazas. Reputación −5."
+],
+"7fe6de5c": [
+"A sealed letter",
+"Una carta sellada"
+],
+"d97c223f": [
+"A sailor finds a letter to a rival in the hold.",
+"Un marinero encuentra en la bodega una carta dirigida a un rival."
+],
+"f2ab41ad": [
+"Read it",
+"Leerla"
+],
+"7dbbe35f": [
+"prices of 2 ports",
+"precios de 2 puertos"
+],
+"e95cda62": [
+"He writes about prices in {0}. They are now in your price book.",
+"Habla de los precios de {0}. Ya están en tu libro de precios."
+],
+"eca202fd": [
+"Deliver it sealed",
+"Entregarla sellada"
+],
+"56f8b1ca": [
+"You deliver the letter. Reputation +15.",
+"Entregas la carta. Reputación +15."
+],
+"d0c91328": [
+"Burn it",
+"Quemarla"
+],
+"2a9b0775": [
+"The letter goes up in flames.",
+"La carta arde."
+],
+"fb4fc42d": [
+"A Danish toll boat in the Sound",
+"Una barca de aduanas danesa en el Sund"
+],
+"d47b4ca6": [
+"The bailiff of Helsingør demands the Sound toll, and he has armed men on board.",
+"El alguacil de Helsingør exige el peaje del Sund, y lleva hombres armados a bordo."
+],
+"9217faf3": [
+"Pay",
+"Pagar"
+],
+"92de56de": [
+"2 % of the cargo value",
+"2 % del valor de la carga"
+],
+"b448d410": [
+"You pay {0} guilders in Sound toll.",
+"Pagas {0} florines de peaje del Sund."
+],
+"8e8fd854": [
+"Bribe",
+"Sobornar"
+],
+"2682adf9": [
+"The bailiff takes the money and then demands the full toll: {0} guilders.",
+"El alguacil acepta el dinero y luego exige el peaje entero: {0} florines."
+],
+"1d8406d6": [
+"A purse for the bailiff, {0} guilders, and you may pass.",
+"Una bolsa para el alguacil, {0} florines, y podéis pasar."
+],
+"aca836b1": [
+"Sail away",
+"Escapar"
+],
+"c545d1a3": [
+"50 %: free, otherwise 4 % and hull −5 %",
+"50 %: libres; si no, 4 % y casco −5 %"
+],
+"48dbcf38": [
+"You outsail the toll boat.",
+"Dejáis atrás la barca de aduanas."
+],
+"3ca555d8": [
+"They catch up with you. Penalty toll {0} guilders, and a thrown stone hits the hull (−5 %).",
+"Os alcanzan. Multa de {0} florines, y una piedra golpea el casco (−5 %)."
+],
+"17adea54": [
+"Survivors of a raid",
+"Supervivientes de un asalto"
+],
+"dccffbcc": [
+"Men drift in a boat; their ship was taken by pirates.",
+"Unos hombres van a la deriva en un bote; los piratas les quitaron el barco."
+],
+"8c5c4d42": [
+"Take them aboard",
+"Subirlos a bordo"
+],
+"0054799b": [
+"+2 sailors, 20 %: pirate spies",
+"+2 marineros, 20 %: espías de los piratas"
+],
+"de0e4756": [
+"{0}One of them signals with lights at night. Pirates are more likely to come upon you on this voyage.",
+"{0}Uno de ellos hace señales con luces por la noche. En este viaje los piratas os encontrarán con más facilidad."
+],
+"4b99e2a2": [
+"man signs",
+"hombre se enrola"
+],
+"6b5f413b": [
+"men sign",
+"hombres se enrolan"
+],
+"bfbb066f": [
+"{0} on with you.",
+"{0} contigo."
+],
+"1c2bab83": [
+"You take them aboard and put them ashore in the next port.",
+"Los subís a bordo y los dejáis en el próximo puerto."
+],
+"f90bf0a7": [
+"Take them prisoner",
+"Hacerlos prisioneros"
+],
+"31f9d360": [
+"bounty 100 G",
+"recompensa 100 G"
+],
+"8967f9d2": [
+"They are pirates themselves, marooned by their comrades. The bailiff pays 100 guilders.",
+"Son piratas, abandonados por sus compinches. El alguacil paga 100 florines."
+],
+"df0be415": [
+"Give them water",
+"Darles agua"
+],
+"1648c1f9": [
+"You give them water and bread and show them the way to the coast. Reputation +5.",
+"Les dais agua y pan y les indicáis el camino a la costa. Reputación +5."
+],
+"9d7dd0ba": [
+"Drifting wine barrels",
+"Toneles de vino a la deriva"
+],
+"24b3d191": [
+"Four barrels bearing the mark of a Bruges merchant drift past.",
+"Pasan flotando cuatro toneles con la marca de un comerciante de Brujas."
+],
+"d2fc1b88": [
+"1 to 2 lasts of wine, 30 % spoiled",
+"1 o 2 lasts de vino, 30 % echado a perder"
+],
+"3ee5fc34": [
+"Seawater has got in; the wine is undrinkable.",
+"Ha entrado agua de mar; el vino no se puede beber."
+],
+"4d4388be": [
+"You fish out {0} last of wine.",
+"Sacáis del agua vino (lasts: {0})."
+],
+"ac619728": [
+"No room in the hold.",
+"No hay sitio en la bodega."
+],
+"3bc4dd13": [
+"Return them to the merchant",
+"Devolverlos al comerciante"
+],
+"b840e905": [
+"+10 reputation",
+"+10 de reputación"
+],
+"9c817329": [
+"You return the barrels to the merchant. Reputation +10.",
+"Devolvéis los toneles al comerciante. Reputación +10."
+],
+"8b02ee04": [
+"Let them drift",
+"Dejarlos a la deriva"
+],
+"e0baa1d8": [
+"You let the barrels drift.",
+"Dejáis los toneles a la deriva."
+],
+"6e6d2b61": [
+"A boy wants to come along",
+"Un chico quiere embarcar"
+],
+"ef8d4e72": [
+"On the quay a boy asks whether he may sail with you as a ship’s boy.",
+"En el muelle, un chico pregunta si puede embarcar como grumete."
+],
+"f8e31bee": [
+"The boy comes aboard.",
+"El chico sube a bordo."
+]
+}

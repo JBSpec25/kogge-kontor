@@ -1,0 +1,306 @@
+{
+"02b43db4": [
+"from Burgher",
+"desde vecino"
+],
+"21fdddab": [
+"from Guild brother",
+"desde cofrade"
+],
+"948e5d4e": [
+"{0} of {1}",
+"{0} de {1}"
+],
+"2e4bccb0": [
+"question",
+"cuestión"
+],
+"0eb5ac7c": [
+"questions",
+"cuestiones"
+],
+"c621022e": [
+"escort under way",
+"escolta en curso"
+],
+"f0f2b7df": [
+"next Diet 24 June",
+"próxima Dieta: 24 de junio"
+],
+"5c46e05e": [
+"{0}election on {1}",
+"{0}elección el {1}"
+],
+"4ec1a905": [
+"commission",
+"encargo"
+],
+"3d15f74d": [
+"commissions",
+"encargos"
+],
+"1e7790bf": [
+"<div class=\"kontor\"><h3>Kontor in {0}</h3>",
+"<div class=\"kontor\"><h3>Almacén en {0}</h3>"
+],
+"16c29d5e": [
+"<p class=\"small kexp\">The Kontor is your store in your home seat. A branch is a store in another town (from {0}, {1} guilders); only a branch opens up trade routes and building.</p>",
+"<p class=\"small kexp\">El almacén es tu depósito en la sede. Una sucursal es un depósito en otra ciudad (desde {0}, {1} florines); solo ella abre las rutas comerciales y la construcción.</p>"
+],
+"cfdd67c3": [
+"<p class=\"small\">From Burgher you can build a Kontor with its own store here.</p></div>",
+"<p class=\"small\">Desde vecino puedes construir aquí un almacén con depósito propio.</p></div>"
+],
+"d2bee93a": [
+"<p class=\"small\">As a burgher you may build a Kontor in {0}. Sail there.</p></div>",
+"<p class=\"small\">Como vecino puedes construir un almacén en {0}. Navega hasta allí.</p></div>"
+],
+"8a4b54fc": [
+"<p class=\"small\">A store of your own for {0} lasts: store cheaply and sell when the season drives prices up. Storage costs {1} guilders a day.</p>",
+"<p class=\"small\">Un depósito propio para {0} lasts: almacena barato y vende cuando la temporada haga subir los precios. {1} florines de almacenaje al día.</p>"
+],
+"f6144c86": [
+"<button class=\"ybtn\" type=\"button\" data-k=\"build\"{0}>Build Kontor · {1} G</button></div>",
+"<button class=\"ybtn\" type=\"button\" data-k=\"build\"{0}>Construir almacén · {1} G</button></div>"
+],
+"a007924a": [
+"<div class=\"holdrow\"><span>Store {0} / {1} lasts</span><span class=\"small\">{2} guilders a day{3}</span></div><div class=\"bar\"><i style=\"width:{4}%\"></i></div>",
+"<div class=\"holdrow\"><span>Depósito {0} / {1} lasts</span><span class=\"small\">{2} florines al día{3}</span></div><div class=\"bar\"><i style=\"width:{4}%\"></i></div>"
+],
+"77711419": [
+" with steward",
+" con administrador"
+],
+"67d8e2e5": [
+"<p class=\"small\">Your steward sells for you at the prices in {0}.</p>",
+"<p class=\"small\">Tu administrador vende por ti a los precios de {0}.</p>"
+],
+"6343afb8": [
+"All",
+"Todo"
+],
+"2886c7ff": [
+"<p class=\"small\">The store is empty.</p>",
+"<p class=\"small\">El depósito está vacío.</p>"
+],
+"4b7e8b8c": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-ksell=\"{2}\" data-n=\"{3}\"{4}>Sell {5} · {6} G</button></span>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-ksell=\"{2}\" data-n=\"{3}\"{4}>Vender {5} · {6} G</button></span>"
+],
+"fe55ca40": [
+"<span class=\"small\">In store {0} · avg. cost {1} guilders · in {2} per last <span class=\"{3}\">{4}{5}</span></span></div>",
+"<span class=\"small\">En depósito {0} · compra media {1} florines · en {2} por last <span class=\"{3}\">{4}{5}</span></span></div>"
+],
+"4bb888cb": [
+"<p class=\"small\">With a steward in {0} you could sell from here. You can hire him on the spot.</p>",
+"<p class=\"small\">Con un administrador en {0} podrías vender desde aquí. Puedes contratarlo allí mismo.</p>"
+],
+"30ce3e77": [
+"<p class=\"small\">Nothing aboard and nothing in store.</p>",
+"<p class=\"small\">Nada a bordo y nada en el depósito.</p>"
+],
+"8bdaadf4": [
+"<button class=\"ybtn\" type=\"button\" data-kmove=\"in\" data-good=\"{0}\"{1}>Store {2}</button>",
+"<button class=\"ybtn\" type=\"button\" data-kmove=\"in\" data-good=\"{0}\"{1}>Almacenar {2}</button>"
+],
+"291b5681": [
+"<button class=\"ybtn\" type=\"button\" data-kmove=\"out\" data-good=\"{0}\"{1}>Load {2}</button></span>",
+"<button class=\"ybtn\" type=\"button\" data-kmove=\"out\" data-good=\"{0}\"{1}>A bordo {2}</button></span>"
+],
+"7dce63c8": [
+"<span class=\"small\">Aboard {0} · in store {1}{2}</span></div>",
+"<span class=\"small\">A bordo {0} · en depósito {1}{2}</span></div>"
+],
+"614e4eee": [
+" · avg. cost {0} guilders",
+" · compra media {0} florines"
+],
+"7733141c": [
+"<div class=\"krow\"><span class=\"gname\">Steward</span><span class=\"ybtns\">{0}</span>",
+"<div class=\"krow\"><span class=\"gname\">Administrador</span><span class=\"ybtns\">{0}</span>"
+],
+"b1ff7dee": [
+"<button class=\"ybtn\" type=\"button\" data-steward=\"0\">Dismiss</button>",
+"<button class=\"ybtn\" type=\"button\" data-steward=\"0\">Despedir</button>"
+],
+"322b5182": [
+"<button class=\"ybtn\" type=\"button\" data-steward=\"1\"{0}>Hire · {1} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-steward=\"1\"{0}>Contratar · {1} G</button>"
+],
+"7c0213dc": [
+"Your steward sells from the Kontor on your instructions and buys for you, even when you are far away. Wages {0} guilders a day.",
+"Tu administrador vende del almacén según tus instrucciones y compra por ti, aunque estés lejos. Sueldo: {0} florines al día."
+],
+"4cb03b84": [
+"A steward sells for you from the Kontor and buys goods for an amount you set, even while you are away: at the prices in {0}. Wages {1} guilders a day.",
+"Un administrador vende por ti del almacén y compra mercancía por la cantidad que fijes, aunque estés de viaje: a los precios de {0}. Sueldo: {1} florines al día."
+],
+"6d54a6a6": [
+"<button class=\"ybtn\" type=\"button\" data-k=\"build\" style=\"margin-top:10px\"{0}>Enlarge to {1} lasts · {2} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-k=\"build\" style=\"margin-top:10px\"{0}>Ampliar a {1} lasts · {2} G</button>"
+],
+"9bc7ac51": [
+"<p class=\"small\" style=\"margin-top:8px\">As {0} you can enlarge the Kontor to {1} lasts.</p>",
+"<p class=\"small\" style=\"margin-top:8px\">Como {0} puedes ampliar el almacén a {1} lasts.</p>"
+],
+"a3d81cb5": [
+"<div class=\"vwbuy\"><span class=\"flabel\">Your steward buys</span>",
+"<div class=\"vwbuy\"><span class=\"flabel\">Tu administrador compra</span>"
+],
+"f44797b9": [
+"<span class=\"small\">{0} costs {2} guilders per last in {1} today ({3}); {4} lasts in the Kontor.</span>",
+"<span class=\"small\">Precio de {0} hoy en {1}: {2} florines por last ({3}); en el almacén, {4} lasts.</span>"
+],
+"dcbba6c1": [
+"{0}{1} % against base price",
+"{0}{1} % sobre el precio base"
+],
+"311faa8e": [
+"<span class=\"flabel\">Amount</span><div class=\"chipset\" role=\"group\" aria-label=\"Amount\">{0}</div>",
+"<span class=\"flabel\">Importe</span><div class=\"chipset\" role=\"group\" aria-label=\"Importe\">{0}</div>"
+],
+"8a191436": [
+"Buy now · {0} lasts · {1} G",
+"Comprar ya · {0} lasts · {1} G"
+],
+"89170409": [
+"The store is full",
+"El depósito está lleno"
+],
+"bef301e3": [
+"Not enough money",
+"Dinero insuficiente"
+],
+"591fcf1d": [
+"Nothing to be had",
+"No hay nada que comprar"
+],
+"a85be32a": [
+"<span class=\"flabel\">Or as an order, when the price falls</span><div class=\"chipset\" role=\"group\" aria-label=\"Maximum price\">{0}</div>",
+"<span class=\"flabel\">O como encargo, cuando baje el precio</span><div class=\"chipset\" role=\"group\" aria-label=\"Precio máximo\">{0}</div>"
+],
+"bb2d887f": [
+"Already {0} orders",
+"Ya hay {0} encargos"
+],
+"32a31c28": [
+"Order: up to {0} G per last, {1} G",
+"Encargo: hasta {0} G por last, {1} G"
+],
+"d423b94d": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1} up to {2} G</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-vwx=\"{3}\">Withdraw</button></span>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1} hasta {2} G</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-vwx=\"{3}\">Retirar</button></span>"
+],
+"16cea345": [
+"<span class=\"small\">{0} lasts bought · {1} of {2} G left · today {3} G per last</span></div>",
+"<span class=\"small\">{0} lasts comprados · quedan {1} de {2} G · hoy {3} G por last</span></div>"
+],
+"87367f4d": [
+"<span class=\"small\">He buys in {0} straight into the Kontor, as an order at most {1} lasts a day, and never lets the chest go into the red.</span></div>",
+"<span class=\"small\">Compra en {0} directamente para el almacén, como encargo como máximo {1} lasts al día, y nunca deja el arcón en números rojos.</span></div>"
+],
+"761f56da": [
+"From your steward",
+"De tu administrador"
+],
+"580509e8": [
+"From your captains",
+"De tus capitanes"
+],
+"3c268b4f": [
+"From the town hall",
+"Del ayuntamiento"
+],
+"572418e3": [
+"Town hall, captains and quay",
+"Ayuntamiento, capitanes y muelle"
+],
+"acdf67fa": [
+"Rumours on the quay",
+"Rumores en el muelle"
+],
+"06f15875": [
+"News",
+"Novedad"
+],
+"7efc3638": [
+"{0} pieces of news",
+"{0} novedades"
+],
+"94dcb3ba": [
+"</ul><button class=\"btn primary\" type=\"button\" data-act=\"news-ok\">Understood</button></div>",
+"</ul><button class=\"btn primary\" type=\"button\" data-act=\"news-ok\">Entendido</button></div>"
+],
+"369c4eef": [
+"<button class=\"btn\" type=\"button\" data-act=\"restart\">New game</button><button class=\"btn primary\" type=\"button\" data-act=\"cont-open\"><b>Play on</b><small>as an open game</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"restart\">Nueva partida</button><button class=\"btn primary\" type=\"button\" data-act=\"cont-open\"><b>Seguir jugando</b><small>como partida libre</small></button>"
+],
+"12565522": [
+"<button class=\"btn primary fire\" type=\"button\" disabled>Look out, return fire …</button>",
+"<button class=\"btn primary fire\" type=\"button\" disabled>¡Cuidado, fuego enemigo …!</button>"
+],
+"c3fc6c93": [
+"Hooks flying …",
+"Vuelan los garfios …"
+],
+"1b20742d": [
+"Taking cover …",
+"A cubierto …"
+],
+"fa4506e6": [
+"Throw!",
+"¡Lanzad!"
+],
+"dc838287": [
+"Next squad …",
+"Siguiente escuadra …"
+],
+"410548fb": [
+"Reloading …",
+"Recargando …"
+],
+"f07dcb51": [
+"Fire! <small>{0}{1}</small>",
+"¡Fuego! <small>{0}{1}</small>"
+],
+"e6c63dd1": [
+" · squad {0} of {1}",
+" · escuadra {0} de {1}"
+],
+"b7ecf148": [
+"Hand-to-hand …",
+"Cuerpo a cuerpo …"
+],
+"6afb6666": [
+"All hands on deck …",
+"Todos a cubierta …"
+],
+"dfaa5017": [
+"Withdraw",
+"Retirarse"
+],
+"60c0bb0e": [
+"Cut the lines",
+"Cortar los cabos"
+],
+"3cbf68d3": [
+"back aboard",
+"de vuelta a bordo"
+],
+"3edd1497": [
+"separate the ships",
+"separar los barcos"
+],
+"0e875d56": [
+"<button class=\"btn\" type=\"button\" data-act=\"bd-hold\"><b>Hold</b><small>fewer losses</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"bd-hold\"><b>Resistir</b><small>menos bajas</small></button>"
+],
+"290bae17": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"bd-storm\"><b>Storm</b><small>more force</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"bd-storm\"><b>Asaltar</b><small>más empuje</small></button>"
+],
+"438555be": [
+"<button class=\"btn\" type=\"button\" data-act=\"let-go\"><b>Let them go</b><small>no fight</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"let-go\"><b>Dejarlos ir</b><small>sin combate</small></button>"
+]
+}

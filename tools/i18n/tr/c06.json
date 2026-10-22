@@ -1,0 +1,278 @@
+{
+"0700d24a": [
+"Attack on Copenhagen failed",
+"Fracasa el ataque contra Copenhague"
+],
+"371382a9": [
+"The Hansa occupies the castles in Scania",
+"La Hansa ocupa los castillos de Escania"
+],
+"6227b7f4": [
+"The Hansa occupies the castles in Scania. The herring grounds are back in its hands, and herring gets cheaper.",
+"La Hansa ocupa los castillos de Escania. Las pesquerías de arenque vuelven a sus manos y el arenque se abarata."
+],
+"577c28a1": [
+"Peace of Stralsund",
+"Paz de Stralsund"
+],
+"06ff9d95": [
+"Settlement with Denmark",
+"Acuerdo con Dinamarca"
+],
+"08c799af": [
+"In Stralsund the towns reach a settlement with Denmark. The war ends, but without the castles on the Sound and without new privileges.",
+"En Stralsund las ciudades llegan a un acuerdo con Dinamarca. La guerra termina, pero sin los castillos del Sund y sin nuevos privilegios."
+],
+"c922ec01": [
+"Peace of Stralsund. Denmark cedes the castles on the Sound to the Hansa for fifteen years and confirms all its privileges. The Hansa stands at the height of its power.",
+"Paz de Stralsund. Dinamarca cede a la Hansa los castillos del Sund durante quince años y confirma todos sus privilegios. La Hansa está en la cima de su poder."
+],
+"e15ef3b0": [
+"A great fire rages in {0}. Timber is urgently needed for rebuilding, and many warehouses have burned down.",
+"Un gran incendio arrasa {0}. Se necesita madera con urgencia para la reconstrucción, y muchos almacenes han ardido."
+],
+"95bfacaf": [
+"Crop failure in Prussia and Livonia. Grain is getting scarce and dear.",
+"Mala cosecha en Prusia y Livonia. El grano escasea y se encarece."
+],
+"2f157619": [
+"A rich harvest in the east. Grain is plentiful.",
+"Una cosecha abundante en el este. El grano sobra."
+],
+"ee359010": [
+"Huge shoals of herring in the Sound. The fishermen can barely keep up with the salting.",
+"Enormes bancos de arenque en el Sund. Los pescadores apenas dan abasto para salarlo."
+],
+"0f3b5d73": [
+"A pestilence is going round in {0}. Anyone who puts in there risks their crew.",
+"En {0} corre una epidemia. Quien atraque allí arriesga a su tripulación."
+],
+"b6819d7c": [
+"The nobility in {0} are celebrating a grand wedding. Wine is in demand as never before.",
+"La nobleza de {0} celebra una gran boda. El vino se pide como nunca."
+],
+"a514e489": [
+"A feud in the country around {0}: iron for weapons fetches a high price.",
+"Una contienda en los alrededores de {0}: el hierro para armas se paga caro."
+],
+"28c6d692": [
+" and $1",
+" y $1"
+],
+"e5df93b5": [
+"Hospital of the Holy Spirit",
+"Hospital del Espíritu Santo"
+],
+"0a49fc23": [
+"A hospital for the old, the sick and pilgrims: 400 honour, 1 reputation a day and 200 more votes in the council election.",
+"Un hospital para ancianos, enfermos y peregrinos: 400 de honor, 1 de reputación al día y 200 votos más en la elección del concejo."
+],
+"cc7594b6": [
+"Harbour and warehouses",
+"Puerto y almacenes"
+],
+"1846a1b1": [
+"New quay walls, cranes and warehouses: 300 honour, the Kontor holds 400 lasts more, and repairs are 25 % cheaper everywhere.",
+"Nuevos muelles, grúas y almacenes: 300 de honor, al almacén le caben 400 lasts más y las reparaciones cuestan un 25 % menos en todas partes."
+],
+"ebbb1b67": [
+"Your own peace fleet",
+"Flota de paz propia"
+],
+"27e388f0": [
+"Two armed hulks cruise for the Hansa: 500 honour, pirates attack you and your convoys 30 % less often. 60 guilders upkeep a day.",
+"Dos urcas armadas patrullan para la Hansa: 500 de honor, los piratas te atacan a ti y a tus convoyes un 30 % menos. 60 florines de mantenimiento al día."
+],
+"c22c9dc6": [
+"Merchants’ Artus Court",
+"Corte de Artús de los mercaderes"
+],
+"07cf7a08": [
+"A splendid hall for guilds and guests: 700 honour, 0.8 reputation a day, and your weight at the Diet rises by 10 points.",
+"Una espléndida sala para gremios e invitados: 700 de honor, 0,8 de reputación al día, y tu peso en la Dieta sube 10 puntos."
+],
+"97315ebc": [
+"Tower of St Mary’s Church",
+"Torre de la iglesia de Santa María"
+],
+"57d58ef7": [
+"The tallest tower on the coast, visible far out at sea: 1,500 honour and 2 reputation a day.",
+"La torre más alta de la costa, visible desde muy lejos en el mar: 1.500 de honor y 2 de reputación al día."
+],
+"9ea32a6a": [
+"Endowment",
+"Donación"
+],
+"54e0d1a7": [
+"finished",
+"terminado"
+],
+"e9724367": [
+"under construction",
+"en obras"
+],
+"83950e78": [
+"only after the current project",
+"solo después de la obra en curso"
+],
+"8cab2836": [
+"Construction begins in {0}: {1}. Ready in {2} days.",
+"Comienza la obra en {0}: {1}. Lista en {2} días."
+],
+"08e6253f": [
+"{0} commissions: {1}",
+"{0} manda construir: {1}"
+],
+"c4869259": [
+"You donate {0} guilders for poor relief, masses for the dead and a church window: {1} honour. The next endowment will cost more, {2} guilders.",
+"Donas {0} florines para dar de comer a los pobres, misas de difuntos y una vidriera para la iglesia: {1} de honor. La próxima donación costará más, {2} florines."
+],
+"cb03625e": [
+"As a great merchant you can build great projects in {0}: hospital, harbour, peace fleet, Artus Court, church tower, plus endowments. They bring honour, and reputation and honour together decide who becomes Alderman of the Hansa. Under House: Great projects.",
+"Como gran mercader puedes levantar grandes obras en {0}: hospital, puerto, flota de paz, Corte de Artús, torre de la iglesia, además de donaciones. Dan honor, y la reputación y el honor juntos deciden quién será Decano de la Hansa. En Casa: Grandes obras."
+],
+"6f4c9ac0": [
+"{0} in {1} is finished! {2} honour for the trading house of {3}.",
+"¡Obra terminada en {1}: {0}! {2} de honor para la casa comercial de {3}."
+],
+"8fd48fa8": [
+"<div class=\"kontor\"><h3>Great projects</h3><p class=\"small\">Projects tie up a lot of money and bring honour; buildings count for half their cost towards your wealth. Reputation and honour together ({0}) decide at the Diet who becomes Alderman of the Hansa.{1}</p>",
+"<div class=\"kontor\"><h3>Grandes obras</h3><p class=\"small\">Las obras inmovilizan mucho dinero y dan honor; los edificios cuentan la mitad de su coste en tu patrimonio. La reputación y el honor juntos ({0}) deciden en la Dieta quién será Decano de la Hansa.{1}</p>"
+],
+"014d82e3": [
+" You can build from {0}.",
+" Puedes construir desde {0}."
+],
+"70f7ca5f": [
+"<div class=\"krow\"><span class=\"gname\">⚒ {0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} days left</span><span class=\"bar\"><i style=\"width:{2}%\"></i></span></div>",
+"<div class=\"krow\"><span class=\"gname\">⚒ {0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">faltan {1} días</span><span class=\"bar\"><i style=\"width:{2}%\"></i></span></div>"
+],
+"495242fe": [
+" Construction time {0} days.",
+" Tiempo de obra: {0} días."
+],
+"5dc3009a": [
+"<span class=\"small\">finished since {0}</span>",
+"<span class=\"small\">terminado desde el {0}</span>"
+],
+"20650fd1": [
+"Build · {0} G",
+"Construir · {0} G"
+],
+"6d3a4f15": [
+"<div class=\"gvrow\"><span class=\"gvart\">{0}</span><span class=\"gvtxt\"><b>Endowment</b><span class=\"small\">Poor relief, masses for the dead, a church window: {1} honour at once and some reputation. Works from anywhere; each further one costs a third more{2}.</span></span>",
+"<div class=\"gvrow\"><span class=\"gvart\">{0}</span><span class=\"gvtxt\"><b>Donación</b><span class=\"small\">Comida para los pobres, misas de difuntos, una vidriera: {1} de honor al instante y algo de reputación. Se puede hacer desde cualquier sitio; cada donación adicional cuesta un tercio más{2}.</span></span>"
+],
+"8bedf9b9": [
+"; so far {0}",
+"; hasta ahora {0}"
+],
+"af60174c": [
+"Donate · {0} G",
+"Donar · {0} G"
+],
+"adf330aa": [
+"<p class=\"small\">You build in {0}; endowments work from anywhere.</p>",
+"<p class=\"small\">Las obras se hacen en {0}; las donaciones, desde cualquier sitio.</p>"
+],
+"472a8cb7": [
+"{0}: {1} days left",
+"{0}: faltan {1} días"
+],
+"5030a6c3": [
+"{0} of {1} · honour {2}",
+"{0} de {1} · honor {2}"
+],
+"4835dcb7": [
+"Hanseatic Diet {0} in Lübeck. As Alderman of the Hansa you preside. The towns pay you {1} guilders a day.",
+"Dieta Hanseática de {0} en Lübeck. Como Decano de la Hansa, la presides. Las ciudades te pagan {1} florines al día."
+],
+"32d0bee0": [
+"Hanseatic Diet {0} in Lübeck. {1} presides as Alderman, elected until {2}. Then there will be a new election.",
+"Dieta Hanseática de {0} en Lübeck. {1} la preside como Decano, elegido hasta {2}. Entonces habrá nueva elección."
+],
+"226d5655": [
+"Hanseatic Diet {0} in Lübeck: the town envoys elect you Alderman of the Hansa!{1} {2} guilders a day, and your convoys are attacked even less often.",
+"Dieta Hanseática de {0} en Lübeck: ¡los enviados de las ciudades te eligen Decano de la Hansa!{1} {2} florines al día, y tus convoyes serán atacados aún menos."
+],
+"723e10c1": [
+" You are the first of your generation, ahead of all rivals.",
+" Eres el primero de tu generación, por delante de todos tus rivales."
+],
+"4644d924": [
+"{0} becomes Alderman of the Hansa",
+"{0} es elegido Decano de la Hansa"
+],
+"2b10bced": [
+"You have reached the highest office of the Hansa. The game goes on as long as you like; your leaderboard is under Saved games.",
+"Has alcanzado el cargo más alto de la Hansa. La partida sigue todo lo que quieras; tu clasificación está en Partidas."
+],
+"4b5a556d": [
+"Hanseatic Diet {0} in Lübeck: {1}, for three years.{2} {3}",
+"Dieta Hanseática de {0} en Lübeck: {1}, por tres años.{2} {3}"
+],
+"3ce33cf1": [
+"{0} remains Alderman of the Hansa",
+"{0} sigue siendo Decano de la Hansa"
+],
+"53c08011": [
+"The town envoys elect {0} Alderman of the Hansa",
+"Los enviados de las ciudades eligen a {0} Decano de la Hansa"
+],
+"ee075760": [
+" You had less reputation and honour.",
+" Tenías menos reputación y honor."
+],
+"e900bee4": [
+"The race is not lost: after his term there will be a new election.",
+"La carrera no está perdida: al acabar su mandato habrá nueva elección."
+],
+"6452ddb3": [
+"Only the mayor of a town is eligible.",
+"Solo es elegible quien es burgomaestre de su ciudad."
+],
+"5a9702fc": [
+"Only those with {0} reputation and honour combined are eligible (you: {1}).",
+"Solo es elegible quien suma {0} de reputación y honor (tú: {1})."
+],
+"1e32bc78": [
+"Hanseatic Diet {0} in Lübeck. The town envoys debate tolls and privileges. No one is elected Alderman. {1}",
+"Dieta Hanseática de {0} en Lübeck. Los enviados de las ciudades debaten sobre aranceles y privilegios. Nadie es elegido Decano. {1}"
+],
+"7761da28": [
+"<div class=\"kontor\"><h3>Race for the office of Alderman</h3>",
+"<div class=\"kontor\"><h3>Carrera por el cargo de Decano</h3>"
+],
+"ece886b2": [
+"<p class=\"small\">The Alderman of the Hansa is elected at the Diet on 24 June. A mayor with {0} reputation and honour combined is eligible. Who will challenge you for the seat will become clear once you sit on the council.</p></div>",
+"<p class=\"small\">El Decano de la Hansa se elige en la Dieta del 24 de junio. Es elegible un burgomaestre que sume {0} de reputación y honor. Quién te disputará el puesto se verá cuando tengas asiento en el concejo.</p></div>"
+],
+"84814985": [
+"You",
+"Tú"
+],
+"c1c02d35": [
+"You have been Alderman since {0}{1}.",
+"Eres Decano desde el {0}{1}."
+],
+"2445c76c": [
+", the first, ahead of all rivals",
+", el primero, por delante de todos tus rivales"
+],
+"1f49ca86": [
+"{0} is Alderman until {1}. After that there will be a new election at the Diet.",
+"{0} es Decano hasta el {1}. Después habrá nueva elección en la Dieta."
+],
+"88d050eb": [
+"Next election at the Diet, {0}. The winner is the mayor with the most points from reputation and honour, at least {1}.",
+"Próxima elección en la Dieta, el {0}. Gana el burgomaestre con más puntos de reputación y honor, como mínimo {1}."
+],
+"7bd6494a": [
+"<b>You</b>",
+"<b>Tú</b>"
+],
+"582c8cea": [
+" <span class=\"pill\">Alderman</span>",
+" <span class=\"pill\">Decano</span>"
+]
+}

@@ -1,16 +1,17 @@
 // Offline-Cache für Kogge & Kontor. Version wechselt mit jedem neuen Spielstand des Codes.
-const CACHE = 'kogge-d8d1f0a422';
-const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
+const CACHE = 'kogge-f3fa9d53cb';
+const CORE = ['./', 'index.html', 'en.html', 'es.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
   const r = e.request; if (r.method !== 'GET') return;
   if (r.mode === 'navigate') { // neue Version bevorzugen, offline die gespeicherte
-    e.respondWith(fetch(r).then(res => { const cp = res.clone(); caches.open(CACHE).then(c => c.put('index.html', cp)); return res; }).catch(() => caches.match('index.html')));
+    const page = /\/(en|es)\.html$/.test(new URL(r.url).pathname) ? new URL(r.url).pathname.split('/').pop() : 'index.html';
+    e.respondWith(fetch(r).then(res => { const cp = res.clone(); caches.open(CACHE).then(c => c.put(page, cp)); return res; }).catch(() => caches.match(page)));
     return;
   }
   e.respondWith(caches.match(r).then(hit => hit || fetch(r).then(res => {
-    if (res.ok && (r.url.startsWith(self.location.origin) || /fonts\.(googleapis|gstatic)\.com/.test(r.url))) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); }
+    if (res.ok && (r.url.startsWith(self.location.origin))) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(r, cp)); }
     return res;
   }).catch(() => hit)));
 });

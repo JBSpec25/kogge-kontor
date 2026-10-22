@@ -1,0 +1,298 @@
+{
+"2d1b94f9": [
+"<p class=\"small\">{0} will lend you money at {1} % a month; every month begun counts in full. Your debts: {2} guilders, room left {3} guilders.</p>",
+"<p class=\"small\">{0} te presta dinero al {1} % mensual; cada mes empezado cuenta entero. Tus deudas: {2} florines; margen: {3} florines.</p>"
+],
+"9d9c45d6": [
+"<div class=\"ybtns wrapb\">{0}<button class=\"ybtn\" type=\"button\" data-fin=\"take\" data-a=\"{1}\" data-m=\"12\"{2}>{3} G for 12 months</button></div>",
+"<div class=\"ybtns wrapb\">{0}<button class=\"ybtn\" type=\"button\" data-fin=\"take\" data-a=\"{1}\" data-m=\"12\"{2}>{3} G a 12 meses</button></div>"
+],
+"a30e653d": [
+"<button class=\"ybtn\" type=\"button\" data-fin=\"take\" data-a=\"{0}\" data-m=\"6\"{1}>{2} G for 6 months</button>",
+"<button class=\"ybtn\" type=\"button\" data-fin=\"take\" data-a=\"{0}\" data-m=\"6\"{1}>{2} G a 6 meses</button>"
+],
+"25632f4c": [
+"<p class=\"small\">At your rank no one will lend you more.</p>",
+"<p class=\"small\">Con tu rango no te prestan más.</p>"
+],
+"9a9accf7": [
+"<div class=\"krow\"><span class=\"gname\">✍ {0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">asks for {2} guilders for {3} months at {4} % a month: repays {5} guilders. His security is considered {6}.</span>",
+"<div class=\"krow\"><span class=\"gname\">✍ {0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">pide {2} florines a {3} meses al {4} % mensual: devolverá {5} florines. Su aval se considera {6}.</span>"
+],
+"6dfc32f1": [
+"Already {0} loans",
+"Ya tienes {0} préstamos"
+],
+"450c8b69": [
+"Lend · {0} G",
+"Prestar · {0} G"
+],
+"cec59875": [
+"<h2>Business in {0}</h2>",
+"<h2>Negocios en {0}</h2>"
+],
+"eba20e8b": [
+"<div class=\"kontor\"><h3>Contracts and money business</h3>",
+"<div class=\"kontor\"><h3>Contratos y negocios de dinero</h3>"
+],
+"af3f7936": [
+"<span class=\"flabel\">Hanseatic Kontors</span>",
+"<span class=\"flabel\">Factorías hanseáticas</span>"
+],
+"f170a2ea": [
+"<div class=\"krow\"><span class=\"gname\">{0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} of 3</span><span class=\"small\">±{2} % on prices in {3}, warehouse {4} / {5} lasts</span></div>",
+"<div class=\"krow\"><span class=\"gname\">{0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} de 3</span><span class=\"small\">±{2} % en los precios de {3}, almacén {4} / {5} lasts</span></div>"
+],
+"35219d5c": [
+"<span class=\"flabel\">Supply contracts</span>",
+"<span class=\"flabel\">Contratos de suministro</span>"
+],
+"34fa44be": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{2} lasts</span><span class=\"small\">to {3} for {4} · delivery {5} of {6} by {7} · {8} G per last</span></div>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{2} lasts</span><span class=\"small\">a {3} para {4} · entrega {5} de {6} antes del {7} · {8} G el last</span></div>"
+],
+"1c9c24a0": [
+"<span class=\"flabel\">Ship shares</span>",
+"<span class=\"flabel\">Participaciones en barcos</span>"
+],
+"0cb609fe": [
+"<div class=\"krow\"><span class=\"gname\">⚓ “{0}”</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">{2} from {3}, bought for {4} G, paid out so far {5}{6} G</span></div>",
+"<div class=\"krow\"><span class=\"gname\">⚓ «{0}»</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">{2} de {3}, comprada por {4} G, repartido hasta ahora {5}{6} G</span></div>"
+],
+"414c605b": [
+"<span class=\"flabel\">Your debts</span>",
+"<span class=\"flabel\">Tus deudas</span>"
+],
+"a7545f02": [
+"<div class=\"krow\"><span class=\"gname\">{0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} G</span><span class=\"small\">borrowed {2} G at {3} % a month, due {4}{5}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-fin=\"repay\" data-id=\"{6}\"{7}>Repay · {8} G</button></span></div>",
+"<div class=\"krow\"><span class=\"gname\">{0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} G</span><span class=\"small\">prestado {2} G al {3} % mensual, vence el {4}{5}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-fin=\"repay\" data-id=\"{6}\"{7}>Saldar · {8} G</button></span></div>"
+],
+"12b54c4e": [
+", already extended",
+", ya prorrogado"
+],
+"9cc60971": [
+"<span class=\"flabel\">Money lent</span>",
+"<span class=\"flabel\">Dinero prestado</span>"
+],
+"965028cf": [
+"<div class=\"krow\"><span class=\"gname\">{0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} G</span><span class=\"small\">in {2}, {3} % a month, due {4}, security {5}</span></div>",
+"<div class=\"krow\"><span class=\"gname\">{0}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1} G</span><span class=\"small\">en {2}, {3} % mensual, vence el {4}, aval {5}</span></div>"
+],
+"3dc549bf": [
+"<span class=\"flabel\">Forward purchases</span>",
+"<span class=\"flabel\">Compras anticipadas</span>"
+],
+"5fce63f6": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{2}</span><span class=\"small\">{3} from {4} in {5} · {6}</span></div>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{2}</span><span class=\"small\">{3}: {4}, en {5} · {6}</span></div>"
+],
+"7a278966": [
+"≈ {0} lasts",
+"≈ {0} lasts"
+],
+"77f69ec5": [
+"ready until {0}{1}",
+"lista hasta el {0}{1}"
+],
+"e175b00e": [
+", balance {0} G outstanding",
+", pago restante de {0} G pendiente"
+],
+"680a19f4": [
+"delivery on {0}, balance {1} G",
+"entrega el {0}, resto {1} G"
+],
+"25968bdb": [
+"<p class=\"small\">{0}You find offers in the ports in the Market tab under Orders and Business.{1}</p>",
+"<p class=\"small\">{0}Encontrarás ofertas en los puertos, en la pestaña Mercado, en Encargos y Negocios.{1}</p>"
+],
+"658de10c": [
+"From the rank of {0}, towns and merchants offer you supply contracts, the Hanseatic Kontors admit you, and money changers lend you larger sums. ",
+"A partir del rango de {0}, ciudades y comerciantes te ofrecen contratos de suministro, las factorías hanseáticas te admiten y los cambistas te prestan sumas mayores. "
+],
+"3dc3272f": [
+"Nothing running yet. ",
+"Todavía no hay nada en curso. "
+],
+"93e03e05": [
+" Money is lent to you by the council of {0} (1.25 % a month){1} and the Lombards in Bruges (2 %); your credit limit is {2} guilders.",
+" Te prestan dinero el concejo de {0} (1,25 % mensual){1} y los lombardos de Brujas (2 %); tu límite es de {2} florines."
+],
+"33ef2ac5": [
+", the treasury in Lübeck (1.5 %)",
+", la tesorería de Lübeck (1,5 %)"
+],
+"b850584b": [
+"contract",
+"contrato"
+],
+"83748428": [
+"contracts",
+"contratos"
+],
+"88be9d62": [
+"share",
+"participación"
+],
+"88d97072": [
+"shares",
+"participaciones"
+],
+"4fc6078a": [
+"Debts {0} G",
+"Deudas {0} G"
+],
+"75413443": [
+"The Diet summons the town envoys. You vote by {0}: {1} You find the vote under Home seat.",
+"La Dieta convoca a los enviados de las ciudades. Votas antes del {0}: {1} Encontrarás la votación en Sede."
+],
+"291f3e5d": [
+"A question lies before the Midsummer Diet: {0} You can vote under Home seat.",
+"Hay una cuestión para la Dieta de San Juan: {0} Puedes votar en Sede."
+],
+"d992b188": [
+"{0} Under Home seat you can contribute money or a ship, until {1}.",
+"{0} En Sede puedes aportar dinero o un barco, hasta el {1}."
+],
+"e5db8500": [
+"With the peace, your letter of marque expires.",
+"Con la paz caduca tu patente de corso."
+],
+"62c0d2bb": [
+"The merchantmen have sailed without you. The council is annoyed.",
+"Los mercantes han zarpado sin ti. El concejo está molesto."
+],
+"d52b8a92": [
+" Your vote prevailed (+15 reputation).",
+" Tu voto se ha impuesto (+15 de reputación)."
+],
+"0c64a306": [
+" You voted differently.",
+" Tú votaste otra cosa."
+],
+"38663abd": [
+"Diet {0}: {1}",
+"Dieta de {0}: {1}"
+],
+"cb0fe982": [
+"Diet: {0} {1}",
+"Dieta: {0}. Resultado: {1}"
+],
+"c2c80ce4": [
+"adopted",
+"aprobado"
+],
+"0fdf68f1": [
+"rejected",
+"rechazado"
+],
+"d7bff751": [
+"At the Diet you vote {0}: {1}",
+"En la Dieta votas {0}: {1}"
+],
+"283c735c": [
+"Yes",
+"Sí"
+],
+"70bb8137": [
+"No",
+"No"
+],
+"35f6617d": [
+"{0} sails with the Hanseatic fleet.",
+"{0} zarpa con la flota de la Hansa."
+],
+"fe59a3c0": [
+"{0} guilders given to the Hanseatic war fleet.",
+"{0} florines entregados a la flota de guerra de la Hansa."
+],
+"7ad37404": [
+"The Hansa thanks you for your contribution with {0} reputation.",
+"La Hansa te agradece tu aportación con {0} de reputación."
+],
+"581bfaf3": [
+"From the loot you receive {0} guilders.",
+"Del botín recibes {0} florines."
+],
+"dea9200f": [
+"{0} has been sunk in battle.",
+"{0} se ha hundido en combate."
+],
+"5b3998f2": [
+"{0} returns with hull {1} %.",
+"{0} vuelve con el casco al {1} %."
+],
+"0bae8e69": [
+"{0} returns and goes to the moorings in {1}.",
+"{0} vuelve y pasa al amarradero de {1}."
+],
+"7b7cb759": [
+"{0} returns; the moorings are full, so the Hansa buys it from you for {1} guilders.",
+"{0} vuelve; el amarradero está lleno, así que la Hansa te la compra por {1} florines."
+],
+"ac3384f6": [
+"You receive a Hanseatic letter of marque against Denmark (200 guilders sealing fee). You may now seize Danish merchantmen in the Sound and off Gotland.",
+"Recibes una patente de corso de la Hansa contra Dinamarca (200 florines de sello). Ahora puedes apresar mercantes daneses en el Sund y frente a Gotland."
+],
+"64ffa2ca": [
+"Henning Podebusk",
+"Henning Podebusk"
+],
+"e7cf3b08": [
+"Vicko Moltke",
+"Vicko Moltke"
+],
+"2d661138": [
+"Stig Andersen",
+"Stig Andersen"
+],
+"74f2e6d9": [
+"Claus Limbek",
+"Claus Limbek"
+],
+"e4e3ee65": [
+"Erik Kaas",
+"Erik Kaas"
+],
+"fb163113": [
+"Jens Uffesøn",
+"Jens Uffesøn"
+],
+"84f7eaa4": [
+"A Danish merchantman, {0}, heavily laden with {1}. Only about {2} men on deck. Your letter of marque allows you to seize her.",
+"Un mercante danés, {0}, muy cargado de {1}. En cubierta, solo unos {2} hombres. Tu patente de corso te permite apresarlo."
+],
+"0668d68f": [
+"A Danish merchantman comes into sight.",
+"Aparece a la vista un mercante danés."
+],
+"5f21df25": [
+"You let the merchantman go.",
+"Dejas marchar al mercante."
+],
+"8b997bfc": [
+"Escort accepted: merchantmen from {0} to {1}, departure by {2}. Required: {3} ships and {4} men. Pay {5} guilders.",
+"Escolta aceptada: mercantes de {0} a {1}, salida antes del {2}. Se necesitan {3} barcos y {4} hombres. Pago: {5} florines."
+],
+"d17d1f3d": [
+"Escort failed. {0}",
+"Escolta fallida. {0}"
+],
+"ddd7dd3b": [
+"You lack ships or men for the escort: {0} ships and {1} men are required.",
+"Te faltan barcos o gente para la escolta: se exigen {0} barcos y {1} hombres."
+],
+"4e429b3f": [
+"The merchantmen follow your convoy to {0}.",
+"Los mercantes siguen a tu convoy hasta {0}."
+],
+"fc569b52": [
+"The merchantmen did not reach their destination.",
+"Los mercantes no han llegado a su destino."
+],
+"2e715765": [
+"Escort safely brought to {0}. The merchants pay {1} guilders, {2} reputation.",
+"Escolta llevada a buen puerto en {0}. Los comerciantes pagan {1} florines y {2} de reputación."
+]
+}

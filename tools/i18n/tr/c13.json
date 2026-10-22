@@ -1,0 +1,366 @@
+{
+"d829ce48": [
+"The crew rows in the ship’s boat and tows the ship: one day lost, 20 guilders bonus.",
+"La tripulación rema en el bote y remolca el barco: un día perdido y 20 florines de plus."
+],
+"d5742833": [
+"Beer for the rowers",
+"Cerveza para los remeros"
+],
+"c18fae66": [
+"2 lasts of beer or 40 G, no day lost",
+"2 lasts de cerveza o 40 G, sin perder un día"
+],
+"16f1f741": [
+"For two lasts of beer the crew rows you out of the calm.",
+"Por dos lasts de cerveza la tripulación os saca a remo de la calma."
+],
+"33327c5d": [
+"No beer on board: 40 guilders bonus, and the crew rows you out of the calm.",
+"No hay cerveza a bordo: 40 florines de plus, y la tripulación os saca a remo de la calma."
+],
+"4281a0c1": [
+"A fog bank",
+"Un banco de niebla"
+],
+"9af96a54": [
+"Thick fog settles over the water; you can barely see the bow.",
+"Una niebla espesa cubre el agua; apenas se ve la proa."
+],
+"a5276594": [
+"Sound slowly",
+"Sondar despacio"
+],
+"5443aef5": [
+"+1 day, fewer pirates",
+"+1 día, menos piratas"
+],
+"02fbafc6": [
+"You feel your way forward with the lead: one day lost, but in the fog hardly anyone finds you.",
+"Avanzáis a tientas con la sonda: un día perdido, pero en la niebla casi nadie os encuentra."
+],
+"ee15b86e": [
+"Full speed",
+"A toda vela"
+],
+"523dbe1c": [
+"no time lost, 15 % chance of running aground",
+"sin perder tiempo, 15 % de riesgo de encallar"
+],
+"2b187c52": [
+"Full speed in the fog, and you run onto a sandbank. Hull −{0} %.",
+"A toda vela en la niebla, y encalláis en un banco de arena. Casco −{0} %."
+],
+"b2c355df": [
+"Full speed in the fog, and all goes well.",
+"A toda vela en la niebla, y todo sale bien."
+],
+"739ed468": [
+"Follow a fisherman",
+"Seguir a un pescador"
+],
+"14cf32d3": [
+"30 G, safe",
+"30 G, seguro"
+],
+"607082ef": [
+"A fisherman knows the channel and pilots you through for 30 guilders.",
+"Un pescador conoce el canal y os guía por 30 florines."
+],
+"d41e23b6": [
+"Drift ice",
+"Hielo a la deriva"
+],
+"87dd727b": [
+"Floes drift side by side, grinding against the hull.",
+"Los témpanos flotan muy juntos y crujen contra el costado."
+],
+"e1155dcd": [
+"Break through",
+"Romper el hielo"
+],
+"b0bf6fae": [
+"Hull −10 %",
+"Casco −10 %"
+],
+"782074f0": [
+"You break through the ice. Hull −{0} %.",
+"Rompéis el hielo. Casco −{0} %."
+],
+"252afec9": [
+"Detour",
+"Rodeo"
+],
+"360f6fd7": [
+"+2 days",
+"+2 días"
+],
+"56c2cef4": [
+"You sail around the ice field: two days lost.",
+"Rodeáis el campo de hielo: dos días perdidos."
+],
+"194458cd": [
+"Follow in the wake",
+"Seguir la estela"
+],
+"782a4512": [
+"+1 day, 30 % hull −15 %",
+"+1 día, 30 % casco −15 %"
+],
+"f0d0f485": [
+"You follow a lead in the ice, but a floe hits you: one day lost, hull −{0} %.",
+"Seguís un canal en el hielo, pero un témpano os golpea: un día perdido, casco −{0} %."
+],
+"d73e81e1": [
+"You follow an open lead: one day lost, nothing else.",
+"Seguís un canal abierto: un día perdido, nada más."
+],
+"d8db4454": [
+"Shoal ahead",
+"Bajío a la vista"
+],
+"880f7751": [
+"The water turns light and shallow; ahead of you small waves break over a bank.",
+"El agua se vuelve clara y somera; delante de vosotros rompen olas pequeñas sobre un banco."
+],
+"2c2ad51c": [
+"Take a pilot",
+"Tomar un práctico"
+],
+"555ae678": [
+"A pilot takes you safely over the bank for 40 guilders.",
+"Un práctico os pasa sin peligro por el banco por 40 florines."
+],
+"9cd046d5": [
+"Pilot yourselves",
+"Guiaros solos"
+],
+"f383bb5c": [
+"25 % hull −15 %",
+"25 % casco −15 %"
+],
+"96fc6d28": [
+"You pilot yourselves and scrape over the bottom. Hull −{0} %.",
+"Os guiáis solos y rozáis el fondo. Casco −{0} %."
+],
+"01425963": [
+"You find the channel yourselves.",
+"Encontráis el canal vosotros solos."
+],
+"c7f016fd": [
+"Wait for high tide",
+"Esperar a la pleamar"
+],
+"63597e63": [
+"+1 day",
+"+1 día"
+],
+"b57ce972": [
+"You anchor and wait for the tide: one day lost.",
+"Fondeáis y esperáis la marea: un día perdido."
+],
+"62b02436": [
+"Leak in the hull",
+"Vía de agua"
+],
+"6fff0f5f": [
+"Water is standing in the hold. Somewhere a plank is working loose.",
+"Hay agua en la bodega. En algún sitio cede una tabla."
+],
+"abff357c": [
+"Pump and carry on",
+"Achicar y seguir"
+],
+"380de9aa": [
+"Hull −8 %",
+"Casco −8 %"
+],
+"12affa0e": [
+"You pump day and night. Hull −{0} %.",
+"Achicáis día y noche. Casco −{0} %."
+],
+"a566217b": [
+"Lighten ship",
+"Aligerar"
+],
+"ea7d8c99": [
+"−10 % cargo, hull safe",
+"−10 % de carga, casco a salvo"
+],
+"0fd17154": [
+"You throw {0} overboard; the ship rides higher and the leak comes out of the water.",
+"Arrojáis {0} por la borda; el barco flota más alto y la vía queda fuera del agua."
+],
+"c815d159": [
+"The hold is empty, the ship rides high enough. You patch the leak as best you can.",
+"La bodega está vacía y el barco flota lo bastante alto. Tapáis la vía como podéis."
+],
+"67689c7e": [
+"Caulk on the beach",
+"Calafatear en la playa"
+],
+"030735fa": [
+"+1 day, 60 G, hull +5 %",
+"+1 día, 60 G, casco +5 %"
+],
+"07b3420b": [
+"You beach the ship and caulk the seam: one day, 60 guilders for oakum and pitch, and the hull is better than before.",
+"Varáis el barco en una playa y calafateáis la costura: un día y 60 florines de estopa y brea, y el casco queda mejor que antes."
+],
+"523a91b4": [
+"Fire in the galley",
+"Fuego en la cocina"
+],
+"1a723dcb": [
+"Smoke rises from the hatch, and the cook shouts for water.",
+"Sale humo de la escotilla y el cocinero pide agua a gritos."
+],
+"0ab8807f": [
+"All hands to put it out",
+"Todos a apagarlo"
+],
+"c2dfb786": [
+"30 %: 1 sailor injured",
+"30 %: 1 marinero herido"
+],
+"d2ef42d2": [
+"You put out the fire. One sailor is badly burned and stays behind in the next port.",
+"Apagáis el fuego. Un marinero sufre graves quemaduras y se queda en el próximo puerto."
+],
+"d3b848ae": [
+"With bucket chains the fire is quickly out.",
+"Con cadenas de cubos el fuego se apaga enseguida."
+],
+"66c84ab8": [
+"Flammables overboard",
+"Lo inflamable por la borda"
+],
+"7fe8cdc6": [
+"lose cloth, wax, furs or timber",
+"perder paño, cera, pieles o madera"
+],
+"4b611ec2": [
+"You throw {0} overboard before the fire spreads.",
+"Arrojáis {0} por la borda antes de que el fuego se extienda."
+],
+"6757e752": [
+"Nothing burnable in the hold. The fire smothers itself.",
+"Nada inflamable en la bodega. El fuego se ahoga solo."
+],
+"a88adbb3": [
+"Make the boat ready",
+"Preparar el bote"
+],
+"5e9053cd": [
+"30 %: hull −20 %",
+"30 %: casco −20 %"
+],
+"bdf5036d": [
+"The fire eats into the deck before you put it out. Hull −{0} %.",
+"El fuego prende en la cubierta antes de que lo apaguéis. Casco −{0} %."
+],
+"355ced14": [
+"The boat was ready but not needed. The fire is out.",
+"El bote estaba listo, pero no hizo falta. El fuego está apagado."
+],
+"df5dcc32": [
+"The mainsail tears",
+"Se rasga la vela mayor"
+],
+"8dfa489e": [
+"With a bang the canvas tears from top to bottom.",
+"Con un estallido, la lona se rasga de arriba abajo."
+],
+"28c62911": [
+"Patch",
+"Remendar"
+],
+"790acd25": [
+"The sailmaker patches the canvas: one day lost.",
+"El velero remienda la lona: un día perdido."
+],
+"2cd2af04": [
+"Spare sail",
+"Vela de respeto"
+],
+"3efe9fe1": [
+"You bend on the spare sail. A new one costs 60 guilders.",
+"Envergáis la vela de respeto. Una nueva cuesta 60 florines."
+],
+"f621e113": [
+"Under half sail",
+"Con media vela"
+],
+"92cff09b": [
+"50 %: +1 day",
+"50 %: +1 día"
+],
+"d5ee99f4": [
+"Under half sail you make slower progress: one day lost.",
+"Con media vela avanzáis más despacio: un día perdido."
+],
+"626ad8b5": [
+"The wind is fair; even with half a sail you lose no time.",
+"El viento es favorable; incluso con media vela no perdéis tiempo."
+],
+"dc58faba": [
+"The rudder breaks",
+"Se rompe el timón"
+],
+"81f5bd69": [
+"The rudder blade hangs loose, and the ship yaws off course.",
+"La pala del timón cuelga suelta y el barco se desvía del rumbo."
+],
+"20e092f6": [
+"Rig a jury rudder",
+"Improvisar un timón"
+],
+"1443fe5d": [
+"The carpenter makes a jury rudder from a spar: one day lost.",
+"El carpintero improvisa un timón con una percha: un día perdido."
+],
+"aeec0e39": [
+"Take in tow",
+"Dar remolque"
+],
+"5c26918d": [
+"a ship in the convoy tows",
+"remolca un barco del convoy"
+],
+"0ff157d7": [
+"no second ship: +2 days",
+"no hay segundo barco: +2 días"
+],
+"85268605": [
+"A ship of your convoy takes you in tow. No time lost.",
+"Un barco de tu convoy os da remolque. No se pierde tiempo."
+],
+"3acdb940": [
+"No ship available to tow. With sweeps and lines you make slow progress: two days lost.",
+"No hay barco que remolque. Con remos y cabos avanzáis despacio: dos días perdidos."
+],
+"d13e2d10": [
+"Steer with lines",
+"Gobernar con cabos"
+],
+"c1f611bf": [
+"50 %: no loss, otherwise +2 days",
+"50 %: sin pérdida; si no, +2 días"
+],
+"4b111b5d": [
+"With two lines at the stern you steer surprisingly well.",
+"Con dos cabos a popa gobernáis sorprendentemente bien."
+],
+"fea1b5f9": [
+"Steering with lines barely works: two days lost.",
+"Gobernar con cabos apenas funciona: dos días perdidos."
+],
+"f78eabc8": [
+"A ship in distress",
+"Un barco en apuros"
+],
+"d833786a": [
+"A merchantman lies heavily on her side, firing distress signals.",
+"Un mercante escora mucho y lanza señales de socorro."
+]
+}

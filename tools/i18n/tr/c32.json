@@ -1,0 +1,274 @@
+{
+"9d9747a7": [
+"<button class=\"ybtn\" type=\"button\" data-bs=\"{0}\">Choose</button>",
+"<button class=\"ybtn\" type=\"button\" data-bs=\"{0}\">Elegir</button>"
+],
+"fc1f923c": [
+"Build",
+"Construir"
+],
+"34be1cd4": [
+"Set up",
+"Instalar"
+],
+"1b480490": [
+"<h3 class=\"bh\">In your town <small>{0}</small></h3><div class=\"bgrid\">",
+"<h3 class=\"bh\">En tu ciudad <small>{0}</small></h3><div class=\"bgrid\">"
+],
+"4091efd8": [
+"<span class=\"bar\"><i style=\"width:{0}%\"></i></span><span class=\"small\">{1} {2} left</span>",
+"<span class=\"bar\"><i style=\"width:{0}%\"></i></span><span class=\"small\">{1} {2} para terminar</span>"
+],
+"9176fc09": [
+"{0} / {1} lasts",
+"{0} / {1} lasts"
+],
+"664f7ec1": [
+"{0} lasts delivered",
+"{0} lasts entregados"
+],
+"e4b0a13b": [
+"your home",
+"tu vivienda"
+],
+"8da6328c": [
+"<h3 class=\"bh\">Later</h3><ul class=\"blater\">",
+"<h3 class=\"bh\">Más adelante</h3><ul class=\"blater\">"
+],
+"1a66ff49": [
+"Market",
+"Mercado"
+],
+"995f10c2": [
+"Ships and crews",
+"Barcos y tripulación"
+],
+"71bb7c47": [
+"Town hall",
+"Ayunta&shy;miento"
+],
+"8221cc23": [
+"Election {0}",
+"Elección: {0}"
+],
+"7d02fa4c": [
+"Captains",
+"Capitanes"
+],
+"b91bf7dd": [
+"<button type=\"button\" class=\"ptile\" data-go=\"markt\"><span class=\"pfac\">{0}</span><b>Branch</b><span class=\"small\">Store {1} / {2}</span></button>",
+"<button type=\"button\" class=\"ptile\" data-go=\"markt\"><span class=\"pfac\">{0}</span><b>Sucursal</b><span class=\"small\">Depósito {1} / {2}</span></button>"
+],
+"79e63467": [
+"<div class=\"ptile\"><span class=\"pfac\">{0}</span><b>Branch</b>{1}</div>",
+"<div class=\"ptile\"><span class=\"pfac\">{0}</span><b>Sucursal</b>{1}</div>"
+],
+"d798738b": [
+"<button class=\"ybtn\" type=\"button\" data-k=\"branch\"{0}>Found {1} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-k=\"branch\"{0}>Fundar {1} G</button>"
+],
+"9a15b24a": [
+"Finished on",
+"Terminado el"
+],
+"ecaa0a12": [
+"Remaining",
+"Restante"
+],
+"d37d1a5d": [
+"<p class=\"bup\"><b>Upgrade: {0}.</b> {1}</p>",
+"<p class=\"bup\"><b>Ampliación: {0}.</b> {1}</p>"
+],
+"9bc18433": [
+"Cost",
+"Coste"
+],
+"41110d41": [
+"Building time",
+"Construcción"
+],
+"6921ad43": [
+"Building sites",
+"Obras"
+],
+"a3906dfa": [
+"{0} of {1} free",
+"{0} de {1} libres"
+],
+"0b75d5b9": [
+"Upgrade to {0}",
+"Ampliar a {0}"
+],
+"730c6483": [
+"Commission",
+"Encargar"
+],
+"39bb8600": [
+"<div class=\"cityview\"><canvas id=\"citycv\" role=\"img\" aria-label=\"{0}\"></canvas><button class=\"cvbig\" type=\"button\" data-act=\"city-big\" aria-label=\"View town large\">⤢ Enlarge</button></div>",
+"<div class=\"cityview\"><canvas id=\"citycv\" role=\"img\" aria-label=\"{0}\"></canvas><button class=\"cvbig\" type=\"button\" data-act=\"city-big\" aria-label=\"Ver la ciudad en grande\">⤢ Ampliar</button></div>"
+],
+"4f9e197d": [
+"Drawn view of your home seat",
+"Vista dibujada de tu sede"
+],
+"5a9daf19": [
+"Drawn view of the town",
+"Vista dibujada de la ciudad"
+],
+"e8672b50": [
+"Harbour of {0}",
+"Puerto de {0}"
+],
+"e9cf26e7": [
+"building site",
+"obra"
+],
+"8fd85878": [
+"Tap a building",
+"Toca un edificio"
+],
+"50cfda8e": [
+"What there is here",
+"Qué hay aquí"
+],
+"95b19f2d": [
+"<div class=\"cfbar\"><b>{0}</b><span class=\"cfz\"><button type=\"button\" data-cz=\"-\" aria-label=\"Smaller\"{1}>−</button><button type=\"button\" data-cz=\"+\" aria-label=\"Larger\"{2}>+</button><button type=\"button\" data-cz=\"x\">Close</button></span></div><div class=\"cfscroll\"><canvas id=\"citybig\" style=\"width:{3}px;height:{4}px\"></canvas></div>",
+"<div class=\"cfbar\"><b>{0}</b><span class=\"cfz\"><button type=\"button\" data-cz=\"-\" aria-label=\"Más pequeño\"{1}>−</button><button type=\"button\" data-cz=\"+\" aria-label=\"Más grande\"{2}>+</button><button type=\"button\" data-cz=\"x\">Cerrar</button></span></div><div class=\"cfscroll\"><canvas id=\"citybig\" style=\"width:{3}px;height:{4}px\"></canvas></div>"
+],
+"293c93ff": [
+"<div class=\"in\"><div class=\"shead\"><div><h2 id=\"book-title\">Ledger</h2><span class=\"small\">Profit from sales against the purchase price</span></div>",
+"<div class=\"in\"><div class=\"shead\"><div><h2 id=\"book-title\">Libro de cuentas</h2><span class=\"small\">Beneficio de las ventas frente al precio de compra</span></div>"
+],
+"d440d898": [
+"<button class=\"close\" type=\"button\" data-act=\"book-close\">Back</button></div>",
+"<button class=\"close\" type=\"button\" data-act=\"book-close\">Atrás</button></div>"
+],
+"4b3e72a9": [
+"<div class=\"tot\"><div><span class=\"small\">Profit so far</span><b>{0} G</b></div><div><span class=\"small\">Last 30 days</span><b>{1} G</b></div></div>",
+"<div class=\"tot\"><div><span class=\"small\">Beneficio hasta ahora</span><b>{0} G</b></div><div><span class=\"small\">Últimos 30 días</span><b>{1} G</b></div></div>"
+],
+"09256132": [
+"<h3 class=\"ysub\">Profit per good</h3><div class=\"gbars\">",
+"<h3 class=\"ysub\">Beneficio por mercancía</h3><div class=\"gbars\">"
+],
+"1f6e96b6": [
+"<h3 class=\"ysub\">Port calls</h3><div style=\"overflow-x:auto\"><table><thead><tr><th>Date</th><th>Port</th><th>Bought</th><th>Sold</th><th>Profit</th></tr></thead><tbody>",
+"<h3 class=\"ysub\">Escalas</h3><div style=\"overflow-x:auto\"><table><thead><tr><th>Fecha</th><th>Puerto</th><th>Compra</th><th>Venta</th><th>Beneficio</th></tr></thead><tbody>"
+],
+"20a10d5f": [
+"now",
+"ahora"
+],
+"b1466ad7": [
+"<br><small class=\"small\">Capt. {0}</small>",
+"<br><small class=\"small\">Cap. {0}</small>"
+],
+"57b965ef": [
+"<p class=\"small\">No business yet. Every port where you buy or sell appears here.</p>",
+"<p class=\"small\">Todavía no hay negocios. Aquí aparece cada puerto en el que compres o vendas.</p>"
+],
+"ffbcda4e": [
+"Status",
+"Estado"
+],
+"b1636a3d": [
+"Map",
+"Mapa"
+],
+"0d10947f": [
+"Town",
+"Ciudad"
+],
+"22b78e2d": [
+"House",
+"Casa"
+],
+"a3388e9b": [
+"<h2>Destinations from {0}</h2><p class=\"small\" style=\"margin:2px 0 0\">Tap a destination here or on the map.</p><ul class=\"dlist\">",
+"<h2>Destinos desde {0}</h2><p class=\"small\" style=\"margin:2px 0 0\">Toca un destino aquí o en el mapa.</p><ul class=\"dlist\">"
+],
+"772263e4": [
+"Plague",
+"Peste"
+],
+"a3e49a3f": [
+"Embargo",
+"Embargo"
+],
+"79e75ba3": [
+"Privateers in the Sound",
+"Corsarios en el Sund"
+],
+"9cd2ae25": [
+"{0} from here fetches {1} G more per last there, as of {2}",
+"{0} de aquí rinde allí {1} G más por last, a {2}"
+],
+"cd4f5a47": [
+"Prices from {0}",
+"Precios del {0}"
+],
+"adcf43e0": [
+"Produces {0} · needs {1}",
+"Produce {0} · necesita {1}"
+],
+"d3f00b9d": [
+"<h2>Bound for {0}</h2><p class=\"small\" style=\"margin:6px 0 0\">Day {1} of {2}{3}.</p>",
+"<h2>Rumbo a {0}</h2><p class=\"small\" style=\"margin:6px 0 0\">Día {1} de {2}{3}.</p>"
+],
+"38822c0e": [
+", from {0}",
+", desde {0}"
+],
+"6e6b48db": [
+"<h2 style=\"margin-top:14px\">Your convoys</h2><ul class=\"dlist\">",
+"<h2 style=\"margin-top:14px\">Tus convoyes</h2><ul class=\"dlist\">"
+],
+"818f2d88": [
+"You will reach the shipyard in the next port. Right now you are at sea.",
+"Llegarás al astillero en el próximo puerto. Ahora mismo estás en el mar."
+],
+"8272a174": [
+"There is nothing to do here right now.",
+"Ahora mismo no hay nada que hacer aquí."
+],
+"f450dedf": [
+"You hire captains at the skippers' house of {0}. Then they lead further convoys for you, and here you see your trading house.",
+"Los capitanes se contratan en la casa de patrones de {0}. Después dirigen otros convoyes para ti, y aquí ves tu casa comercial."
+],
+"35912873": [
+"You see the town when you are in a port. Your home seat {0} with Kontor, council and Hanseatic Diet is in the House tab.",
+"Ves la ciudad cuando estás en un puerto. Tu sede, {0}, con almacén, concejo y Dieta Hanseática, está en la pestaña Casa."
+],
+"58396d6f": [
+"The market opens in port.",
+"El mercado abre en el puerto."
+],
+"9078f46e": [
+"The council sets the poundage to {0}.",
+"El concejo fija el derecho de libra en {0}."
+],
+"49413f60": [
+"New: a convoy has at most {0} ships. {1} {2} sold for {3} guilders.",
+"Novedad: un convoy tiene como máximo {0} barcos. {1} {2} por {3} florines."
+],
+"dd96ba7d": [
+"was",
+"se vendió"
+],
+"5903cdf7": [
+"were",
+"se vendieron"
+],
+"df93e0b6": [
+"New: seasons move prices, and the Neva freezes in winter. Under “Saved games” you can switch to “Mild”.",
+"Novedad: las estaciones mueven los precios y el Nevá se hiela en invierno. En «Partidas» puedes cambiar a «Suaves»."
+],
+"f2fd3647": [
+"New: every convoy needs a captain. Captain {0} now leads your convoy; new ships are commissioned at the shipyard.",
+"Novedad: cada convoy necesita un capitán. El capitán {0} dirige ahora tu convoy; los barcos nuevos se encargan en el astillero."
+],
+"689d08fe": [
+"New: your workshops work more slowly and yield less; they pay for themselves after about three to four months. Your steward now also buys, under Home seat at the Kontor.",
+"Novedad: tus talleres trabajan más despacio y rinden menos; se amortizan en unos tres o cuatro meses. Tu administrador ahora también compra, en Sede, junto al almacén."
+]
+}

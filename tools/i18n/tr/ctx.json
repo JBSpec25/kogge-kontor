@@ -1,0 +1,34 @@
+[
+{
+"key": "3ae4a0e5",
+"re": "l:'Bergen'",
+"t": [
+"Salvage",
+"Rescatar"
+]
+},
+{
+"key": "c0b36558",
+"re": "clothN",
+"t": [
+"brown",
+"marrón"
+]
+},
+{
+"key": "e1588771",
+"re": "clothN",
+"t": [
+"red",
+"rojo"
+]
+},
+{
+"key": "8c6817dd",
+"re": "clothN",
+"t": [
+"black",
+"negro"
+]
+}
+]

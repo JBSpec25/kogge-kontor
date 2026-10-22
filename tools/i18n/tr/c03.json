@@ -1,0 +1,366 @@
+{
+"87eaba41": [
+"Captain {0} enters your service for a signing-on fee of {1} guilders, on wages of {2} guilders a day.",
+"El capitán {0} entra a tu servicio por {1} florines de enganche, soldada de {2} florines al día."
+],
+"280affa3": [
+"Captain {0} leaves your service.",
+"El capitán {0} deja tu servicio."
+],
+"2a699aaf": [
+"Choose at least one ship.",
+"Elige al menos un barco."
+],
+"41ffd4f2": [
+"At most {0} ships per convoy.",
+"Como máximo {0} barcos por convoy."
+],
+"0087dafc": [
+"You are {0} guilders short for the crew of the ships at the moorings.",
+"Te faltan {0} florines para la tripulación de los barcos del amarradero."
+],
+"55b72961": [
+"Choose a captain.",
+"Elige un capitán."
+],
+"08a1267a": [
+"Choose at least one more port.",
+"Elige al menos otro puerto."
+],
+"ab0ab801": [
+"Unload {0} lasts first: your own convoy would be left with too little hold space.",
+"Descarga primero {0} lasts: a tu propio convoy le quedaría muy poca bodega."
+],
+"5b23dea5": [
+"At most {0} convoys under captains.",
+"Como máximo {0} convoyes bajo capitanes."
+],
+"743c6d11": [
+"Captain {0} takes over {1} with {2} {3} and {4} sailors. Route: {5}.{6}{7}",
+"El capitán {0} se hace cargo de {1} con {2} {3} y {4} marineros. Ruta: {5}.{6}{7}"
+],
+"54563a91": [
+"ship",
+"barco"
+],
+"4f03d00c": [
+"ships",
+"barcos"
+],
+"c7d4f9e8": [
+" Loaded: {0}.",
+" Cargado: {0}."
+],
+"eb40d274": [
+" {0} men sign off.",
+" {0} hombres se dan de baja."
+],
+"e57529b0": [
+"{0} rejoins your own convoy{1}.",
+"{0} vuelve a tu propio convoy{1}."
+],
+"00007171": [
+", Captain {0} awaits a new order",
+", el capitán {0} espera un nuevo encargo"
+],
+"eca5d1d6": [
+"New route for {0}: {1}.",
+"Nueva ruta para {0}: {1}."
+],
+"19d2173b": [
+"{0} {1} “{2}” {3} for {4}, {5} {6}.",
+"{0} {1} «{2}» {3} hacia {4}, {5} {6}."
+],
+"0febb69d": [
+"The prize",
+"La presa"
+],
+"545fccfc": [
+"sails",
+"navega"
+],
+"0bee75bc": [
+"has been launched in {0} and sails",
+"ha sido botada en {0} y navega"
+],
+"e8f25179": [
+"{0} {1} “{2}” lies at the moorings in {3}. In the House tab you assign it to your own convoy or a captain’s.",
+"{0} {1} «{2}» está en el amarradero de {3}. En la pestaña Casa puedes asignar el barco a tu convoy o al de un capitán."
+],
+"e6da631c": [
+"The new ship",
+"El nuevo barco"
+],
+"fb372031": [
+"{0} orders running",
+"{0} encargos en curso"
+],
+"9553cca6": [
+"Moorings full",
+"Amarradero lleno"
+],
+"e0d23093": [
+"{0} joins your convoy. Hire more sailors at the shipyard.",
+"{0} se une a tu convoy. Contrata más marineros en el astillero."
+],
+"575cd657": [
+"{0} reinforces {1}; Captain {2} hires the crew.",
+"{0} refuerza {1}; el capitán {2} contrata la tripulación."
+],
+"a15fe370": [
+"{0} sold from the moorings in {1} for {2} guilders.",
+"{0} vendido desde el amarradero de {1} por {2} florines."
+],
+"037261ff": [
+"{0} goes to the moorings in {1}.{2}",
+"{0} pasa al amarradero de {1}.{2}"
+],
+"ab7440b6": [
+"{0} leaves {1} and goes to the moorings.{2}",
+"{0} deja {1} y pasa al amarradero.{2}"
+],
+"bafb481c": [
+"<p class=\"small\">No ship at the moorings.</p>",
+"<p class=\"small\">Ningún barco en el amarradero.</p>"
+],
+"a14e8673": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0}</b><span class=\"small\">{1} · {2} lasts · hull {3} % · mooring fee {4} G a day</span></span><span class=\"ybtns wrapb\">",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0}</b><span class=\"small\">{1} · {2} lasts · casco {3} % · amarre {4} G al día</span></span><span class=\"ybtns wrapb\">"
+],
+"012f8a55": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"dockown\" data-sh=\"{0}\">To your convoy</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"dockown\" data-sh=\"{0}\">A tu convoy</button>"
+],
+"8786bf77": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"dockcv\" data-id=\"{0}\" data-sh=\"{1}\">To {2}</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"dockcv\" data-id=\"{0}\" data-sh=\"{1}\">A {2}</button>"
+],
+"2f284276": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"docksell\" data-sh=\"{0}\">Sell · {1} G</button></span></div>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"docksell\" data-sh=\"{0}\">Vender · {1} G</button></span></div>"
+],
+"879550ba": [
+"<p class=\"small\">You can assign ships as soon as your convoy or a captain’s convoy is in {0}.</p>",
+"<p class=\"small\">Podrás asignarlos en cuanto tu convoy o el de un capitán esté en {0}.</p>"
+],
+"e2027971": [
+"<div class=\"ysub\">Being built and under way</div>",
+"<div class=\"ysub\">En construcción y en camino</div>"
+],
+"7e1e9465": [
+"being built in {0}, ready in {1} {2}",
+"en construcción en {0}, lista en {1} {2}"
+],
+"8c3427b8": [
+"days",
+"días"
+],
+"65e905dd": [
+"sailing to {0}, {1} {2} to go",
+"navegando hacia {0}, faltan {1} {2}"
+],
+"ebd8efac": [
+"Pirates attack {0} on the way to {1}.",
+"Los piratas atacan {0} de camino a {1}."
+],
+"39bb6f79": [
+"{0} is stuck in {1}: {2}, and there is not enough money in the chest.",
+"{0} está retenido en {1}: {2}, y el arcón no alcanza."
+],
+"5c0184f7": [
+"too few sailors",
+"faltan marineros"
+],
+"64423a6a": [
+"a ship is not seaworthy",
+"un barco no está en condiciones de navegar"
+],
+"f88b875c": [
+"Captain {0} gains experience: {1} now {2} of 5.",
+"El capitán {0} gana experiencia: {1} ahora {2} de 5."
+],
+"fcf1ab18": [
+"sold for {0} guilders ({1} {2})",
+"vendido por {0} florines ({1} {2})"
+],
+"2bca04ea": [
+"Profit",
+"ganancia"
+],
+"036a9711": [
+"Loss",
+"pérdida"
+],
+"0228a10f": [
+"Captain {0} in {1}: {2}.",
+"El capitán {0} en {1}: {2}."
+],
+"e86772c7": [
+"Buy",
+"Comprar"
+],
+"b8efa68f": [
+"Sell",
+"Vender"
+],
+"480b1d89": [
+"Store",
+"Almacenar"
+],
+"d456e116": [
+"Withdraw",
+"Retirar"
+],
+"48a139a9": [
+"Warehouse full, {0} stays on board",
+"Almacén lleno, queda a bordo: {0}"
+],
+"bc295c97": [
+"{0} held back, price too low",
+"Se retiene la venta de {0}: precio demasiado bajo"
+],
+"a2f182a4": [
+"{0} sold off below cost",
+"Venta de {0} por debajo del coste"
+],
+"7cd73fe5": [
+"{0} not bought, not worth it right now",
+"Sin comprar {0}: ahora no compensa"
+],
+"37c4dc6d": [
+"bundle of fire arrows",
+"haces de flechas incendiarias"
+],
+"441124ad": [
+"charge of powder",
+"carga de pólvora"
+],
+"91a6cd78": [
+"charges of powder",
+"cargas de pólvora"
+],
+"003b89a5": [
+"Captain {0} restocks in {1}: {2} for {3} guilders.",
+"El capitán {0} se reabastece en {1}: {2} por {3} florines."
+],
+"b4cedf78": [
+"Round {0} finished",
+"Ronda {0} terminada"
+],
+"1e32d57c": [
+"{0} {1} guilders",
+"{0} {1} florines"
+],
+"62594567": [
+"fight",
+"combate"
+],
+"f390ba2d": [
+"fights",
+"combates"
+],
+"cc738d87": [
+"{0} sailors lost",
+"{0} marineros perdidos"
+],
+"e9266c22": [
+"ships",
+"barcos"
+],
+"56ab3354": [
+"Captain {0} reports from {1}: {2}.{3}{4}",
+"El capitán {0} informa desde {1}: {2}.{3}{4}"
+],
+"f5a7f126": [
+" Damage over 25 %: {0}.",
+" Daños de más del 25 %: {0}."
+],
+"3dfb7d1e": [
+" Please check in the trading house.",
+" Revísalo en la casa comercial."
+],
+"4e8d7b6e": [
+" The convoy is ready for the next round.",
+" El convoy está listo para la siguiente ronda."
+],
+"a23d73a6": [
+"{0} is repaired in {1} for {2} guilders.",
+"{0} se repara en {1} por {2} florines."
+],
+"9e3ac4bb": [
+"{0} sailors hired for {1} in {2}.",
+"{0} marineros contratados para {1} en {2}."
+],
+"4b0fb74f": [
+"<div class=\"redit\"><span class=\"flabel\">Repair when a ship is below</span><div class=\"chipset\">{0}{1}{2}{3}</div>",
+"<div class=\"redit\"><span class=\"flabel\">Reparar cuando un barco baje de</span><div class=\"chipset\">{0}{1}{2}{3}</div>"
+],
+"9df1ac4d": [
+"never",
+"nunca"
+],
+"f1cb538b": [
+"<span class=\"flabel\">Crew</span><div class=\"chipset\">{0}{1}</div>",
+"<span class=\"flabel\">Tripulación</span><div class=\"chipset\">{0}{1}</div>"
+],
+"0094552a": [
+"Minimum crew + 2 per ship",
+"Tripulación mínima + 2 por barco"
+],
+"63e6b907": [
+"<span class=\"flabel\">Weapons</span><div class=\"chipset\">{0}{1}{2}</div>",
+"<span class=\"flabel\">Armas</span><div class=\"chipset\">{0}{1}{2}</div>"
+],
+"7ca63286": [
+"top up crossbows",
+"reponer ballestas"
+],
+"f93daa31": [
+"plus pavises and armour",
+"además paveses y armaduras"
+],
+"0a2ffb1b": [
+"<span class=\"flabel\">Supplies</span><div class=\"chipset\">{0}{1}</div>",
+"<span class=\"flabel\">Pertrechos</span><div class=\"chipset\">{0}{1}</div>"
+],
+"df0b60bf": [
+"restock fire arrows and powder",
+"reponer flechas incendiarias y pólvora"
+],
+"12da2085": [
+"<span class=\"flabel\">Pirate bands</span><div class=\"chipset\">{0}{1}{2}</div>",
+"<span class=\"flabel\">Bandas piratas</span><div class=\"chipset\">{0}{1}{2}</div>"
+],
+"0229517d": [
+"avoid warned areas",
+"evitar zonas avisadas"
+],
+"661a156c": [
+"pay tribute",
+"pagar tributo"
+],
+"c85a94e3": [
+"fight",
+"luchar"
+],
+"96184683": [
+"<span class=\"small\">The captain carries out the orders in every port and always leaves 300 guilders in your chest.</span></div>",
+"<span class=\"small\">El capitán cumple las órdenes en cada puerto y siempre deja 300 florines en tu arcón.</span></div>"
+],
+"4ea2be58": [
+"A shuttle needs exactly two ports.",
+"Una lanzadera necesita exactamente dos puertos."
+],
+"3d8d19ab": [
+"Choose at least two ports.",
+"Elige al menos dos puertos."
+],
+"d090d6ba": [
+"Choose at least one good for the outward or return leg.",
+"Elige al menos una mercancía para la ida o la vuelta."
+],
+"871dacce": [
+"New order for {0}: {1}{2}.",
+"Nuevo encargo para {0}: {1}{2}."
+]
+}

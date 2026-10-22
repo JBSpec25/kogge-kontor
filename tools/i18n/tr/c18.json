@@ -1,0 +1,326 @@
+{
+"85d81e6e": [
+"The legend. His men fight to the last; whoever surrenders to him keeps his life.",
+"La leyenda. Sus hombres luchan hasta el final; quien se le rinde conserva la vida."
+],
+"f92523b5": [
+"Gödeke Michels",
+"Gödeke Michels"
+],
+"d8a33a73": [
+"off Heligoland and the mouth of the Elbe",
+"frente a Heligoland y la desembocadura del Elba"
+],
+"bb93a327": [
+"Störtebeker’s companion. He boards early and hard.",
+"Compañero de Störtebeker. Aborda pronto y con dureza."
+],
+"77fff27a": [
+"Magister Wigbold",
+"Magister Wigbold"
+],
+"8a2614e9": [
+"around Gotland",
+"alrededor de Gotland"
+],
+"a0eefc1d": [
+"A learned man. He comes from windward and prefers to shoot from a distance.",
+"Un hombre instruido. Ataca desde barlovento y prefiere disparar de lejos."
+],
+"521fc054": [
+"Hennig Wichmann",
+"Hennig Wichmann"
+],
+"9b08935b": [
+"off Bornholm and Falsterbo",
+"frente a Bornholm y Falsterbo"
+],
+"99348b5c": [
+"Fast ships: fleeing rarely works.",
+"Barcos rápidos: huir rara vez funciona."
+],
+"7a63e9d9": [
+"Klaus Scheld",
+"Klaus Scheld"
+],
+"fb357471": [
+"in the skerries off Livonia and Reval",
+"en los islotes frente a Livonia y Reval"
+],
+"61b80e3a": [
+"Lurks among the islands and demands a high tribute.",
+"Acecha entre las islas y exige un tributo alto."
+],
+"ecbb8f4c": [
+"{0} has not been seen {1} any more. The waters are considered calmer again.",
+"{0} ya no ha sido visto {1}. Las aguas vuelven a considerarse más tranquilas."
+],
+"1769a869": [
+"Warning in all ports: {0} is cruising with {1} ships {2}, probably until {3}. {4} A detour, a letter of safe conduct or fast ships help.",
+"Aviso en todos los puertos: {0} merodea con {1} barcos {2}, probablemente hasta el {3}. {4} Un rodeo, un salvoconducto o barcos rápidos ayudan a evitarlo."
+],
+"7782517f": [
+"three",
+"tres"
+],
+"89f7b2e9": [
+"two",
+"dos"
+],
+"0e7d2df8": [
+"{0} ships under dark sails cut across your path, {1} in the lead: the band of {2}. Together they have about {3} armed men on deck. {4}",
+"{0} barcos de velas oscuras os cortan el paso, {1} en cabeza: la banda de {2}. Entre todos llevan unos {3} hombres armados en cubierta. {4}"
+],
+"7234a56f": [
+"Three",
+"Tres"
+],
+"8fde177a": [
+"Two",
+"Dos"
+],
+"bcc2e52a": [
+"a",
+"una"
+],
+"eaa2e2ff": [
+"a",
+"un"
+],
+"69838aad": [
+" He knows you: you have already paid him tribute {0}, and this time he wants more.",
+" Te conoce: ya le has pagado tributo {0}, y esta vez quiere más."
+],
+"b7ae22ea": [
+"once",
+"una vez"
+],
+"444ac92c": [
+" You have escaped him once before. This time his men are furious.",
+" Ya te escapaste de él una vez. Esta vez sus hombres están furiosos."
+],
+"c163e3ec": [
+"The band of {0} attacks: {1} ships, about {2} armed men.",
+"La banda de {0} ataca: {1} barcos, unos {2} hombres armados."
+],
+"7b6f8e41": [
+"Through a middleman in the port you buy a letter of safe conduct from {1} for {0} guilders. It is valid until {2}.",
+"Por medio de un intermediario del puerto compras a {1} un salvoconducto por {0} florines. Vale hasta el {2}."
+],
+"47a79e47": [
+"The Hansa pays you a bounty of {0} guilders: the band of {1} is broken up. {2}",
+"La Hansa te paga {0} florines de recompensa: la banda de {1} ha sido desarticulada. {2}"
+],
+"ab3c9c10": [
+"Is the legend really finished? Time will tell.",
+"¿Se ha acabado de verdad la leyenda? Ya se verá."
+],
+"7ca61caa": [
+"The waters ",
+"Las aguas "
+],
+"d36d5094": [
+" are safe for now.",
+" están seguras por ahora."
+],
+"1369067b": [
+" Hanseatic bounty: {0} guilders.",
+" Recompensa de la Hansa: {0} florines."
+],
+"5877e7ae": [
+"Avoid",
+"Evitar"
+],
+"fe26c73b": [
+"Fight",
+"Luchar"
+],
+"3110791d": [
+"Captain {0} stays in {2} with {1}: {3} is cruising on the way to {4}.",
+"El capitán {0} se queda en {2} con {1}: {3} merodea en la ruta hacia {4}."
+],
+"b9c3ea19": [
+"{0} meets the band of {1}. The letter of safe conduct is honoured, and they let it pass.",
+"{0} se cruza con la banda de {1}. El salvoconducto vale y le dejan pasar."
+],
+"a9a4a4ba": [
+"{0} runs into the band of {1}. Following your rule, Captain {2} pays {3} guilders in tribute.",
+"{0} se topa con la banda de {1}. Siguiendo tu regla, el capitán {2} paga {3} florines de tributo."
+],
+"78d79e4c": [
+"{0} runs into {1}. There is not enough in the chest for the tribute, so they take {2}.",
+"{0} se topa con {1}. El arcón no alcanza para el tributo y se llevan {2}."
+],
+"49fd2d1b": [
+"<h3 class=\"pfh\">Pirate bands</h3><p class=\"small\">No warnings at present. Bands cruise their waters for a few weeks at a time.</p>",
+"<h3 class=\"pfh\">Bandas piratas</h3><p class=\"small\">Por ahora no hay avisos. Cada banda merodea unas semanas por su zona.</p>"
+],
+"b36e01c8": [
+"<h3 class=\"pfh\">Pirate bands</h3><ul class=\"pflist\">",
+"<h3 class=\"pfh\">Bandas piratas</h3><ul class=\"pflist\">"
+],
+"e5573959": [
+"<li><div><b>{0}</b><span class=\"small\">{1} ships {2}, until {3}. {4}</span></div>",
+"<li><div><b>{0}</b><span class=\"small\">{1} barcos {2}, hasta el {3}. {4}</span></div>"
+],
+"ac1aedfd": [
+"<span class=\"small pfok\">Safe conduct until {0}</span>",
+"<span class=\"small pfok\">Salvoconducto hasta el {0}</span>"
+],
+"11bfbe4f": [
+"<button class=\"ybtn\" type=\"button\" data-pfpass=\"{0}\"{1}>Safe conduct {2} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-pfpass=\"{0}\"{1}>Salvoconducto {2} G</button>"
+],
+"4883ae16": [
+"{0} crossbows bought for {1} in {2} for {3} guilders.",
+"{0} ballestas compradas para {1} en {2} por {3} florines."
+],
+"0e91023e": [
+"{0} reinforces {1}; {2} {3} across with it.",
+"{0} refuerza {1}; {2} {3} con él."
+],
+"9d7ca7f9": [
+"{0} moves from {1} into your convoy; {2} {3} along.",
+"{0} pasa de {1} a tu convoy; {2} {3} con él."
+],
+"c05a7944": [
+"sailor comes",
+"marinero viene"
+],
+"32374632": [
+"sailors come",
+"marineros vienen"
+],
+"7500265e": [
+"waiting for you",
+"te espera"
+],
+"314a7ef7": [
+"casts off in {0} days",
+"zarpa en {0} días"
+],
+"75e10f58": [
+"casts off the day after tomorrow",
+"zarpa pasado mañana"
+],
+"2ddfd70b": [
+"casts off tomorrow",
+"zarpa mañana"
+],
+"ee4663d6": [
+"<div class=\"ysub\">Your convoys in {0}</div><p class=\"small\">Captains stay 2 to 3 days in every port and prepare the next voyage. While you are here, you can fit them out.</p>",
+"<div class=\"ysub\">Tus convoyes en {0}</div><p class=\"small\">Los capitanes pasan de 2 a 3 días en cada puerto preparando el siguiente viaje. Mientras estés aquí puedes equiparlos.</p>"
+],
+"6f4e0831": [
+"<div class=\"cvy\"><div class=\"yrow\"><span class=\"yl\"><b>{0}</b><span class=\"small\">Captain {1} · {2}{3} · {4} sailors · {5} · {6} / {7} lasts</span></span>",
+"<div class=\"cvy\"><div class=\"yrow\"><span class=\"yl\"><b>{0}</b><span class=\"small\">Capitán {1} · {2}{3} · {4} marineros · {5} · {6} / {7} lasts</span></span>"
+],
+"9044634d": [
+" for {0}",
+" hacia {0}"
+],
+"91fe35e2": [
+"<span class=\"ybtns wrapb\"><button class=\"ybtn\" type=\"button\" data-cvy=\"stay\" data-id=\"{0}\"{1}>1 day longer</button><button class=\"ybtn\" type=\"button\" data-h=\"hold\" data-id=\"{2}\">{3}</button></span></div>",
+"<span class=\"ybtns wrapb\"><button class=\"ybtn\" type=\"button\" data-cvy=\"stay\" data-id=\"{0}\"{1}>1 día más</button><button class=\"ybtn\" type=\"button\" data-h=\"hold\" data-id=\"{2}\">{3}</button></span></div>"
+],
+"54fdc21d": [
+"Let it sail",
+"Dejarlo zarpar"
+],
+"65491a35": [
+"Hold",
+"Retener"
+],
+"5e975553": [
+"<div class=\"yrow sub\"><span class=\"yl\"><b>{0}</b><span class=\"small\">{1} · {2} lasts · hull {3} %</span><span class=\"hbar{4}\"><i style=\"width:{5}%\"></i></span></span>",
+"<div class=\"yrow sub\"><span class=\"yl\"><b>{0}</b><span class=\"small\">{1} · {2} lasts · casco {3} %</span><span class=\"hbar{4}\"><i style=\"width:{5}%\"></i></span></span>"
+],
+"fcfdb852": [
+"<span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-cvy=\"take\" data-id=\"{0}\" data-sh=\"{1}\"{2}>To your convoy</button></span></div>",
+"<span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-cvy=\"take\" data-id=\"{0}\" data-sh=\"{1}\"{2}>A tu convoy</button></span></div>"
+],
+"a9185d60": [
+"<button class=\"ybtn\" type=\"button\" data-cvy=\"arms\" data-id=\"{0}\"{1}>Top up crossbows · {2} · {3} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-cvy=\"arms\" data-id=\"{0}\"{1}>Reponer ballestas · {2} · {3} G</button>"
+],
+"8fd11bd8": [
+"<button class=\"ybtn\" type=\"button\" data-cvy=\"give\" data-id=\"{0}\" data-n=\"{1}\"{2}>Hand over “{3}”</button>",
+"<button class=\"ybtn\" type=\"button\" data-cvy=\"give\" data-id=\"{0}\" data-n=\"{1}\"{2}>Ceder «{3}»</button>"
+],
+"9fc90161": [
+"Crossbows",
+"Ballestas"
+],
+"62670f22": [
+"Crossbow",
+"Ballesta"
+],
+"80f1ddaa": [
+"Every manned crossbow strengthens the volley, at any range.",
+"Cada ballesta con tirador refuerza la andanada, a cualquier distancia."
+],
+"49f124f3": [
+"Pavises",
+"Paveses"
+],
+"d309afa3": [
+"Pavise",
+"Pavés"
+],
+"8478656a": [
+"Standing shields along the rail. If they cover the whole rail, about a third fewer are wounded in return fire.",
+"Escudos a lo largo de la borda. Si cubren toda la borda, el fuego enemigo causa un buen tercio menos de heridos."
+],
+"54723b2a": [
+"Suits of armour",
+"Armaduras"
+],
+"48c30adb": [
+"Suit of armour",
+"Armadura"
+],
+"7bd2fcfc": [
+"Breastplate and iron hat: stronger when boarding, fewer losses.",
+"Peto y capacete: más fuerza al abordar y menos bajas."
+],
+"d9e6f9f7": [
+"Grappling hooks",
+"Garfios"
+],
+"3a6eac31": [
+"When boarding, the zone for throwing the hooks is larger and they cut the lines less often; a battered enemy has a harder time breaking free.",
+"Al abordar, la zona para lanzar los garfios es mayor y cortan los cabos con menos frecuencia; a un enemigo maltrecho le cuesta más soltarse."
+],
+"584933c8": [
+"Trebuchets",
+"Trabuquetes"
+],
+"a55bb8e4": [
+"Trebuchet",
+"Trabuquete"
+],
+"4901a8de": [
+"Small stone thrower on the castle: hits hull and rigging at medium and long range.",
+"Pequeña catapulta en el castillo: alcanza casco y aparejo a media y larga distancia."
+],
+"a16500fa": [
+"Stone guns",
+"Bombardas"
+],
+"49c6785e": [
+"Stone gun",
+"Bombarda"
+],
+"8cabceb9": [
+"New firearm: heavy hull damage at medium and long range, needs powder, sometimes misfires.",
+"Nueva arma de fuego: grandes daños al casco a media y larga distancia, necesita pólvora y a veces falla."
+],
+"00b7c07e": [
+"no weapons",
+"sin armas"
+],
+"6ec77677": [
+"{0} {1} bought in {2} for {3} guilders.",
+"Compra en {2}: {0} {1} por {3} florines."
+]
+}

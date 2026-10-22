@@ -1,0 +1,298 @@
+{
+"a78f9b95": [
+"Shuttle",
+"Lanzadera"
+],
+"5e80627f": [
+"Circuit",
+"Circuito"
+],
+"ac1464c5": [
+" by your rules",
+" según tus reglas"
+],
+"cdf07ca7": [
+"Order for {0}",
+"Encargo para {0}"
+],
+"95326142": [
+"New trade route from {0}",
+"Nueva ruta comercial desde {0}"
+],
+"bd8a4550": [
+"<span class=\"flabel\">Ships</span><div class=\"chipset\">",
+"<span class=\"flabel\">Barcos</span><div class=\"chipset\">"
+],
+"1decd09d": [
+"<button type=\"button\" data-rw=\"ship\" data-v=\"{0}\" aria-pressed=\"{1}\">{2} · {3} · moorings</button>",
+"<button type=\"button\" data-rw=\"ship\" data-v=\"{0}\" aria-pressed=\"{1}\">{2} · {3} · amarradero</button>"
+],
+"dc9de6d4": [
+"<span class=\"flabel\">Captain</span><div class=\"chipset\">{0}</div>",
+"<span class=\"flabel\">Capitán</span><div class=\"chipset\">{0}</div>"
+],
+"bea3c399": [
+"<button type=\"button\" data-rw=\"cap\" data-v=\"{0}\" aria-pressed=\"{1}\">{2} · trade {3}</button>",
+"<button type=\"button\" data-rw=\"cap\" data-v=\"{0}\" aria-pressed=\"{1}\">{2} · comercio {3}</button>"
+],
+"1e67abd0": [
+"<span class=\"small\">The convoy gets the sailors it needs and a share of your weapons; for ships from the moorings a new crew is hired. More ships on the same route add little, because the markets get saturated: one or two ships per convoy on different routes pay off fastest.</span>",
+"<span class=\"small\">El convoy recibe los marineros necesarios y una parte de tus armas; para los barcos del amarradero se contrata tripulación nueva. Más barcos en la misma ruta aportan poco, porque los mercados se saturan: uno o dos barcos por convoy en rutas distintas son lo más rentable.</span>"
+],
+"f3075cd9": [
+"2 to 4 ports in a loop. The captain buys and sells on his own; the better his trading, the smarter.",
+"De 2 a 4 puertos en círculo. El capitán compra y vende por su cuenta; cuanto mejor comerciante, más listo."
+],
+"ef8569fc": [
+"Two ports back and forth. You decide which goods go out and which come back.",
+"Dos puertos de ida y vuelta. Tú decides qué mercancías van y cuáles vuelven."
+],
+"7732d10c": [
+"<button type=\"button\" class=\"rwpro\" data-rw=\"pro\" aria-pressed=\"{0}\"><b>Expert mode</b><span>Decide for each port yourself: buy, sell, store or withdraw</span></button>",
+"<button type=\"button\" class=\"rwpro\" data-rw=\"pro\" aria-pressed=\"{0}\"><b>Modo experto</b><span>Decide tú en cada puerto: comprar, vender, almacenar o retirar</span></button>"
+],
+"1ca17e2d": [
+"<span class=\"flabel\">Ports in order ({0}){1}</span><div class=\"chipset\">",
+"<span class=\"flabel\">Puertos en orden ({0}){1}</span><div class=\"chipset\">"
+],
+"59708749": [
+"2 to 4",
+"de 2 a 4"
+],
+"f6faa8cc": [
+", starting in {0}",
+", salida desde {0}"
+],
+"19da627c": [
+"</div><span class=\"small\">{0} · ⌂ = your warehouse</span>",
+"</div><span class=\"small\">{0} · ⌂ = tu almacén</span>"
+],
+"5f8d99f2": [
+"No ports yet",
+"Aún no hay puertos"
+],
+"6d77e727": [
+"<span class=\"flabel\">Out: buy in {0}, sell in {1}</span><div class=\"chipset\">{2}</div>",
+"<span class=\"flabel\">Ida: comprar en {0}, vender en {1}</span><div class=\"chipset\">{2}</div>"
+],
+"2b73b898": [
+"<span class=\"flabel\">Back: buy in {0}, sell in {1}</span><div class=\"chipset\">{2}</div>",
+"<span class=\"flabel\">Vuelta: comprar en {0}, vender en {1}</span><div class=\"chipset\">{2}</div>"
+],
+"58fe7e1f": [
+"<span class=\"small\">Figures: last known buying and selling price; green pays off as far as you know. Visit unknown ports first or wait for price reports.</span>",
+"<span class=\"small\">Cifras: último precio de compra y venta conocido; en verde lo que compensa según lo que sabes. Visita antes los puertos desconocidos o espera noticias de precios.</span>"
+],
+"f982e850": [
+"<span class=\"small\">Tap a good several times: buy, sell{0}, nothing. The captain buys as long as it pays against the next selling port; he never sells below 80 % of the purchase price.</span>",
+"<span class=\"small\">Toca una mercancía varias veces: comprar, vender{0}, nada. El capitán compra mientras compense frente al siguiente puerto de venta; nunca vende por debajo del 80 % de la compra.</span>"
+],
+"734ef099": [
+", store, withdraw (only with warehouse ⌂)",
+", almacenar, retirar (solo con almacén ⌂)"
+],
+"6d4963d3": [
+"<span class=\"flabel\">Goods the captain should not buy</span><div class=\"chipset\">{0}</div>",
+"<span class=\"flabel\">Mercancías que el capitán no debe comprar</span><div class=\"chipset\">{0}</div>"
+],
+"879926f0": [
+"<button class=\"ybtn\" type=\"button\" data-rw=\"prev\">Back</button>",
+"<button class=\"ybtn\" type=\"button\" data-rw=\"prev\">Atrás</button>"
+],
+"80734a9e": [
+"<div class=\"ybtns\">{0}{1}<button class=\"ybtn\" type=\"button\" data-rw=\"cancel\">Cancel</button></div></div>",
+"<div class=\"ybtns\">{0}{1}<button class=\"ybtn\" type=\"button\" data-rw=\"cancel\">Cancelar</button></div></div>"
+],
+"d8db3a06": [
+"<button class=\"ybtn on\" type=\"button\" data-rw=\"next\"{0}>Next</button>",
+"<button class=\"ybtn on\" type=\"button\" data-rw=\"next\"{0}>Siguiente</button>"
+],
+"59430842": [
+"Apply",
+"Aplicar"
+],
+"31e9fc59": [
+"Start route",
+"Iniciar ruta"
+],
+"1cda79b3": [
+"<div class=\"cvrep{0}\"><b>Report: round {1}</b><span class=\"small\">{2} · {3} · {4} {5} G · {6} {7} · {8}{9}</span>",
+"<div class=\"cvrep{0}\"><b>Informe: ronda {1}</b><span class=\"small\">{2} · {3} · {4} {5} G · {6} {7} · {8}{9}</span>"
+],
+"127c9481": [
+"no losses",
+"sin pérdidas"
+],
+"20b3d77b": [
+" · {0} {1} lost",
+" · {0} {1} perdidos"
+],
+"d5242063": [
+"<span class=\"small\">Damage over 25 %: {0}</span>",
+"<span class=\"small\">Daños de más del 25 %: {0}</span>"
+],
+"0aca1c27": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"repfix\" data-id=\"{0}\"{1}>Repair · {2} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"repfix\" data-id=\"{0}\"{1}>Reparar · {2} G</button>"
+],
+"4b2377f4": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"rephire\" data-id=\"{0}\"{1}>Hire more · {2} · {3} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"rephire\" data-id=\"{0}\"{1}>Contratar · {2} · {3} G</button>"
+],
+"80ce043b": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"repok\" data-id=\"{0}\">Read</button></div>{1}</div>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"repok\" data-id=\"{0}\">Leído</button></div>{1}</div>"
+],
+"2a84b0ec": [
+"<span class=\"small\">The convoy is at sea; the orders apply in the next port.</span>",
+"<span class=\"small\">El convoy está en el mar; las órdenes se aplicarán en el próximo puerto.</span>"
+],
+"c41eb0c5": [
+"pays {0} guilders in tribute",
+"paga {0} florines de tributo"
+],
+"1e71cedf": [
+"has nothing the pirates want",
+"no lleva nada que quieran los piratas"
+],
+"66e50eb7": [
+"escapes the pirates under full sail",
+"escapa de los piratas a toda vela"
+],
+"27c2d6b2": [
+"beats off the pirates and seizes {0} guilders{1}",
+"rechaza a los piratas y se hace con {0} florines{1}"
+],
+"a47321ce": [
+"; {0} {1} lost",
+"; {0} {1} perdidos"
+],
+"fafc5a0b": [
+"man",
+"hombre"
+],
+"83e8f42a": [
+"men",
+"hombres"
+],
+"9abc1682": [
+"fights back but has to give up: {0} {1} lost, he {2}",
+"se defiende pero tiene que rendirse: {0} {1} perdidos, y {2}"
+],
+"541d3d2e": [
+"Captain {0} ({1}) {2}.",
+"El capitán {0} ({1}) {2}."
+],
+"2a037786": [
+"Captain {0} is back in {1} and awaits a new order.",
+"El capitán {0} ha vuelto a {1} y espera un nuevo encargo."
+],
+"6d0d299d": [
+"Your steward buys {1} lasts of {2} in {0} for the workshops, {3} guilders.",
+"Tu administrador compra en {0} {1} lasts de {2} para los talleres, {3} florines."
+],
+"451b4e8f": [
+" Idle: the Kontor is full.",
+" Parado: el almacén está lleno."
+],
+"234aa3e8": [
+" Idle: the chest is empty.",
+" Parado: el arcón está vacío."
+],
+"83335e49": [
+" Idle: there is no {0} in the Kontor.",
+" Parado: falta {0} en el almacén."
+],
+"7d4db8a1": [
+" Idle: warehouse full or raw material missing.",
+" Parado: almacén lleno o falta materia prima."
+],
+"10c95eaa": [
+" With barrels from your cooperage, a quarter more.",
+" Con toneles de tu tonelería, una cuarta parte más."
+],
+"7a89225c": [
+"In the Kontor {0} lasts of {1}{2}.",
+"En el almacén, {0} lasts de {1}{2}."
+],
+"32a00876": [
+", enough for about {0} {1}",
+", para aprox. {0} {1}"
+],
+"83fe0436": [
+"the Lombards",
+"los lombardos"
+],
+"e881ce0a": [
+"A contract is already running",
+"Ya hay un contrato en curso"
+],
+"a6d819ab": [
+"{0} contracts already running",
+"Ya hay {0} contratos en curso"
+],
+"c64c9246": [
+"Supply contract signed: {0} times {1} lasts of {2} for {3}, every {4} days in {5}, at {6} guilders per last. The first delivery is due by {7}.",
+"Contrato de suministro firmado: {0} veces {1} lasts de {2} para {3}, cada {4} días en {5}, a {6} florines el last. La primera entrega vence el {7}."
+],
+"4c8bc3fd": [
+"Delivery {0} of {1} for {2}: {3} lasts of {4} {5}, {6} guilders.",
+"Entrega {0} de {1} para {2}: {3} lasts de {4} {5}, {6} florines."
+],
+"cde6425e": [
+"The contract with {0} is fulfilled: {1} of {2} deliveries{3}.",
+"El contrato con {0} se ha cumplido: {1} de {2} entregas{3}."
+],
+"55be98f3": [
+", {0} reputation",
+", {0} de reputación"
+],
+"dba2b638": [
+"{0} cancels the supply contract for {1}: for the second time nothing came. Penalty {2} guilders, and your good name suffers.",
+"{0} rescinde el contrato de suministro de {1}: por segunda vez no ha llegado nada. Multa de {2} florines, y tu buen nombre se resiente."
+],
+"e5f8ff78": [
+"Delivery missed: {0} lasts of {1} did not reach {2} in time. Penalty {3} guilders. The second time, {4} will cancel the contract.",
+"Entrega fallida: {0} lasts de {1} no llegaron a tiempo a {2}. Multa de {3} florines. La segunda vez, {4} rescindirá el contrato."
+],
+"bbddc259": [
+"delivered",
+"entregados"
+],
+"7c1010ab": [
+"You cancel the supply contract with {0}. The contractual penalty is {1} guilders, and your good name suffers.",
+"Rescindes el contrato de suministro con {0}. La penalización es de {1} florines, y tu buen nombre se resiente."
+],
+"4eebfb5d": [
+"delivers {0} lasts of {1} for the contract with {2}",
+"entrega {0} lasts de {1} para el contrato con {2}"
+],
+"5658da2c": [
+"As a merchant you are offered supply contracts: fixed quantities at a fixed price, every 30 days for several months. You find them in the Market tab under Orders. Whoever delivers late pays a penalty.",
+"Como mercader te ofrecen contratos de suministro: cantidades fijas a precio fijo, cada 30 días durante varios meses. Los encontrarás en la pestaña Mercado, en Encargos. Quien entrega tarde paga multa."
+],
+"6874ef74": [
+"delivered from your warehouse in {0}",
+"entregados desde tu almacén de {0}"
+],
+"b4de3e51": [
+"In one week {0} expects {2} lasts of {3} in {1} (delivery {4} of {5}).",
+"Dentro de una semana, {0} espera {2} lasts de {3} en {1} (entrega {4} de {5})."
+],
+"72d88912": [
+"Delivery {0} of {1} · {2}{3}",
+"Entrega {0} de {1} · {2}{3}"
+],
+"fc155f24": [
+"due by {0}",
+"vence el {0}"
+],
+"3915e18d": [
+"<b class=\"frlate\">overdue, final deadline {0}</b>",
+"<b class=\"frlate\">atrasada, plazo final {0}</b>"
+],
+"c0cb5151": [
+" · missed {0}×",
+" · fallada {0}×"
+]
+}

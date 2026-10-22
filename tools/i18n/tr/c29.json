@@ -1,0 +1,238 @@
+{
+"7a05b099": [
+"on your deck",
+"en tu cubierta"
+],
+"39aa4f01": [
+"<div class=\"tug\" role=\"img\" aria-label=\"Who holds the deck: {0} of 100 for you\"><div class=\"tb\"><i style=\"width:{1}%\"></i><b style=\"left:{2}%\"></b></div><div class=\"tl\"><span>Enemy</span><span>who holds the deck</span><span>You</span></div></div>",
+"<div class=\"tug\" role=\"img\" aria-label=\"Quién domina la cubierta: {0} de 100 para ti\"><div class=\"tb\"><i style=\"width:{1}%\"></i><b style=\"left:{2}%\"></b></div><div class=\"tl\"><span>Enemigo</span><span>quién domina la cubierta</span><span>Tú</span></div></div>"
+],
+"c34573ed": [
+"Courage",
+"Valor"
+],
+"eb00d236": [
+"<small>Chance <b>{0}</b>. {1} Whoever holds the whole deck wins; if your men's courage breaks, {2}.</small></div>",
+"<small>Probabilidad <b>{0}</b>. {1} Gana quien domine toda la cubierta; si se quiebra el valor de tus hombres, {2}.</small></div>"
+],
+"f7af9c14": [
+"They are defending their own deck and have the advantage.",
+"Defienden su propia cubierta y tienen ventaja."
+],
+"710ef44d": [
+"You are defending your own deck and have the advantage.",
+"Defiendes tu propia cubierta y tienes ventaja."
+],
+"977c9a00": [
+"they throw you back",
+"os rechazan"
+],
+"efa413b9": [
+"they take the ship",
+"toman el barco"
+],
+"86ae6bc1": [
+"<div class=\"mor\"><div class=\"ml\"><span>Enemy's fighting spirit</span><em>{0}</em></div><div class=\"mb\"><i style=\"width:{1}%\"></i><b style=\"left:{2}%\"></b></div>",
+"<div class=\"mor\"><div class=\"ml\"><span>Moral del enemigo</span><em>{0}</em></div><div class=\"mb\"><i style=\"width:{1}%\"></i><b style=\"left:{2}%\"></b></div>"
+],
+"5382fcd1": [
+"Below the flight threshold: they want to flee.",
+"Por debajo del umbral de huida: quieren huir."
+],
+"fd1b5723": [
+"Below {0} (the line) they want to flee. It sinks with losses, direct hits and fire.",
+"Por debajo de {0} (la raya) quieren huir. La moral desciende con las pérdidas, los impactos de lleno y el fuego."
+],
+"04daecf9": [
+"Manoeuvre",
+"Maniobra"
+],
+"c51dda74": [
+"Your volley",
+"Tu andanada"
+],
+"c320b24b": [
+"Return fire",
+"Fuego enemigo"
+],
+"ef4a6cc2": [
+"<details class=\"more\" data-det=\"enchelp\"{0}><summary><span>{1}How the fight works</span><i class=\"chev\" aria-hidden=\"true\"></i></summary><p class=\"small\" style=\"margin:0 0 6px\">Each round: choose a manoeuvre, then your men shoot. Bolts and stones go at the deck, fire arrows into the sails; their ship is rolling, so tap when the pointer is in the zone. Many crossbows shoot in squads one after the other; you tap once for each. The middle is their castle: direct hits there strike their marksmen. Trebuchets and guns fire at the hull by themselves. Then the enemy announces his fire and you take cover. Close up, stones and boarding work best; at range, fire arrows. Windward enlarges your zone and weakens their fire. If their fighting spirit falls below the line, they want to flee or surrender. Boarding only works close up: first you throw the hooks at the right moment, then follow up to three rounds of hand-to-hand fighting with Storm, Hold or Withdraw. Whoever defends his own deck has the advantage; luck plays its part. If your attack fails, you withdraw and keep your ship.</p></details>",
+"<details class=\"more\" data-det=\"enchelp\"{0}><summary><span>{1}Cómo funciona el combate</span><i class=\"chev\" aria-hidden=\"true\"></i></summary><p class=\"small\" style=\"margin:0 0 6px\">En cada asalto: elige una maniobra y después disparan tus hombres. Los virotes y las piedras van a cubierta, las flechas incendiarias a las velas; su barco se balancea, así que toca cuando el indicador esté en la zona. Si hay muchas ballestas, disparan por escuadras una tras otra, y tocas una vez por cada una. El centro es su castillo: los impactos de lleno allí alcanzan a sus tiradores. Trabuquetes y bombardas disparan solos contra el casco. Después el enemigo anuncia su fuego y te pones a cubierto. De cerca funcionan las piedras y el abordaje; de lejos, las flechas incendiarias. El barlovento amplía tu zona y debilita su fuego. Si su moral cae por debajo de la raya, quieren huir o se rinden. Solo se puede abordar de cerca: primero lanzas los garfios en el momento justo y luego siguen hasta tres asaltos cuerpo a cuerpo con Asaltar, Resistir o Retirarse. Quien defiende su propia cubierta tiene ventaja; la suerte también cuenta. Si tu ataque fracasa, te retiras y conservas tu barco.</p></details>"
+],
+"897d0629": [
+"They are aiming at the “{0}”. ",
+"Apuntan a la «{0}». "
+],
+"2a71441f": [
+"<p class=\"small\">{0} sailors, {1}, {2} bundles of fire arrows{3} aboard. The sailors man the weapons{4}; when boarding, everyone fights. ",
+"<p class=\"small\">{0} marineros, {1}, {2} haces de flechas incendiarias{3} a bordo. Los marineros manejan las armas{4}; en el abordaje luchan todos. "
+],
+"4630d727": [
+", {0} charges of powder",
+", {0} cargas de pólvora"
+],
+"e882f931": [
+", Captain {0} leads the fight",
+", el capitán {0} dirige el combate"
+],
+"c9af238f": [
+"If they board you and you lose the fight on deck, {0}. If your own boarding attack fails, you withdraw.</p>",
+"Si te abordan y pierdes la lucha en cubierta, {0}. Si fracasa tu propio abordaje, te retiras.</p>"
+],
+"93ed7145": [
+"your only ship is lost with its cargo, and you only go free against a ransom",
+"tu único barco se pierde con su carga y solo quedas libre pagando un rescate"
+],
+"90e68546": [
+"they take the ship they are aiming at",
+"toman el barco al que apuntan"
+],
+"f24924d8": [
+"You have no ship. Commission one at a shipyard or fetch one from the moorings.",
+"No tienes barco. Encarga uno en un astillero o recoge uno del amarradero."
+],
+"bfce87ef": [
+"Your convoy needs a captain. Appoint one in the House tab under “Your captains” or hire one at the skippers' house in your home seat.",
+"Tu convoy necesita un capitán. Nombra uno en la pestaña Casa, en «Tus capitanes», o contrata uno en la casa de patrones de tu sede."
+],
+"9ab36551": [
+"The convoy is not ready for sea: you need at least {0} sailors. Hire more at the shipyard.",
+"El convoy no está listo para zarpar: necesitas al menos {0} marineros. Contrata más en el astillero."
+],
+"9652a803": [
+"A ship is not seaworthy: every ship needs at least 20 % hull. Repair at the shipyard.",
+"Un barco no está en condiciones de navegar: cada barco necesita al menos un 20 % de casco. Repáralo en el astillero."
+],
+"fbc62484": [
+"<p class=\"small\" style=\"margin:4px 0 6px\">Every ship has weapon places: a crossbow needs one, a trebuchet four, a stone gun five. They are manned by your sailors; half the minimum crew stays at sails and rudder.</p>",
+"<p class=\"small\" style=\"margin:4px 0 6px\">Cada barco tiene puestos de armas: una ballesta necesita uno, un trabuquete cuatro y una bombarda cinco. Los manejan tus marineros; la mitad de la tripulación mínima se queda en velas y timón.</p>"
+],
+"eb287393": [
+"There are no guns for ships yet.",
+"Todavía no hay bombardas para barcos."
+],
+"305bbf82": [
+"up to {0}{1}{2} · {3} G",
+"hasta {0}{1}{2} · {3} G"
+],
+"49314ed7": [
+" · {0} {1} each",
+" · {0} {1} por unidad"
+],
+"6ea3f736": [
+"place",
+"puesto"
+],
+"883203fb": [
+"places",
+"puestos"
+],
+"bc3f26d0": [
+" · not on snekkes",
+" · no en esnecas"
+],
+"1af5e88e": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} of {1} charges of powder</b><span class=\"small\">every gun needs one charge per volley</span></span><span class=\"ybtns\">{2}</span></div>",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} de {1} cargas de pólvora</b><span class=\"small\">cada bombarda necesita una carga por andanada</span></span><span class=\"ybtns\">{2}</span></div>"
+],
+"897cf084": [
+"<p class=\"small\" style=\"margin:8px 0 0\">Manned in a fight: {0} of {1} crossbows{2}{3}. {4}</p>",
+"<p class=\"small\" style=\"margin:8px 0 0\">En combate se manejan: {0} de {1} ballestas{2}{3}. {4}</p>"
+],
+"b29dcf33": [
+", {0} of {1} trebuchets",
+", {0} de {1} trabuquetes"
+],
+"73bbdb3f": [
+", {0} of {1} guns",
+", {0} de {1} bombardas"
+],
+"6d9f0d88": [
+"Captain {0} leads your convoy (Combat {1} of 5).",
+"El capitán {0} dirige tu convoy (Combate {1} de 5)."
+],
+"14a35578": [
+"Your convoy has no captain; appoint one in the House tab.",
+"Tu convoy no tiene capitán; nombra uno en la pestaña Casa."
+],
+"b0768930": [
+"<h2>Shipyard &amp; Crew</h2><div class=\"ysub\">Your convoy · {0} {1}</div>",
+"<h2>Astillero y tripulación</h2><div class=\"ysub\">Tu convoy · {0} {1}</div>"
+],
+"ac64c8bf": [
+"<p class=\"small fleetcap\">As {0} at most {1} {2} sail in your own convoy{3}. More ships wait at the moorings in {4} or sail under captains.</p>",
+"<p class=\"small fleetcap\">Como {0} navegan como máximo {1} {2} en tu propio convoy{3}. Los demás barcos esperan en el amarradero de {4} o navegan con capitanes.</p>"
+],
+"417f3bd1": [
+", as {0} {1}",
+", como {0} {1}"
+],
+"c771da6b": [
+"<p class=\"small\">You have no ship left.{0}</p>",
+"<p class=\"small\">Ya no te queda ningún barco.{0}</p>"
+],
+"c0d1e959": [
+" In {0} the shipyard would let you have an old snekke.",
+" En {0} el astillero te cedería una vieja esneca."
+],
+"547a4275": [
+"<div class=\"yrow\"><span class=\"yl\"><b>Old snekke</b><span class=\"small\">30 lasts, hull 55 %, from the shipyard of your home seat</span></span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-yard=\"old\"{0}>Take over · {1} G</button></span></div>",
+"<div class=\"yrow\"><span class=\"yl\"><b>Vieja esneca</b><span class=\"small\">30 lasts, casco 55 %, del astillero de tu sede</span></span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-yard=\"old\"{0}>Quedársela · {1} G</button></span></div>"
+],
+"03120887": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0}{1}</b><span class=\"small\">{2} · {3} lasts · hull {4} %</span>",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0}{1}</b><span class=\"small\">{2} · {3} lasts · casco {4} %</span>"
+],
+"998bef33": [
+"Repair",
+"Reparar"
+],
+"3b47e721": [
+"<button class=\"ybtn\" type=\"button\" data-yard=\"todock\" data-n=\"{0}\"{1}>Moorings</button>",
+"<button class=\"ybtn\" type=\"button\" data-yard=\"todock\" data-n=\"{0}\"{1}>Amarradero</button>"
+],
+"4d79c50a": [
+"<button class=\"ybtn\" type=\"button\" data-yard=\"sell\" data-n=\"{0}\"{1}>Sell · {2} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-yard=\"sell\" data-n=\"{0}\"{1}>Vender · {2} G</button>"
+],
+"471a0557": [
+"<div class=\"yrow\"><span class=\"yl\"><b>Whole convoy</b><span class=\"small\">{0} guilders per percent, big ships cost more</span></span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-yard=\"repairall\"{1}>Repair all · {2} G</button></span></div>",
+"<div class=\"yrow\"><span class=\"yl\"><b>Todo el convoy</b><span class=\"small\">{0} florines por punto porcentual, los barcos grandes cuestan más</span></span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-yard=\"repairall\"{1}>Reparar todo · {2} G</button></span></div>"
+],
+"9f5e2fbb": [
+"<div class=\"ysub\">Crew</div>",
+"<div class=\"ysub\">Tripulación</div>"
+],
+"5284f7a7": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} of {1} sailors</b><span class=\"small\">at least {2} to cast off; they sail, and fight when boarding</span></span><span class=\"ybtns\">{3}{4}</span></div>",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} de {1} marineros</b><span class=\"small\">al menos {2} para zarpar; navegan y luchan en el abordaje</span></span><span class=\"ybtns\">{3}{4}</span></div>"
+],
+"16d48f21": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} of {1} bundles of fire arrows</b><span class=\"small\">for volleys at medium and long range</span></span><span class=\"ybtns\">{2}</span></div>",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} de {1} haces de flechas incendiarias</b><span class=\"small\">para andanadas a media y larga distancia</span></span><span class=\"ybtns\">{2}</span></div>"
+],
+"497fd287": [
+"<p class=\"small\" style=\"margin:8px 0 0\">Wages {0}, weapons {1} and upkeep {2} guilders a day.</p>",
+"<p class=\"small\" style=\"margin:8px 0 0\">Soldada {0}, armas {1} y mantenimiento {2} florines al día.</p>"
+],
+"459fb9ee": [
+"Armoury",
+"Armería"
+],
+"de04abe2": [
+"{0} of {1} places free",
+"{0} de {1} puestos libres"
+],
+"06d8ee23": [
+"<p class=\"small\" style=\"margin-top:10px\">{0}{1}{2}; assign them in the House tab.</p>",
+"<p class=\"small\" style=\"margin-top:10px\">{0}{1}{2}; asígnalos en la pestaña Casa.</p>"
+],
+"885f5cc5": [
+"{0} {1} being built or under way",
+"{0} {1} en construcción o en camino"
+],
+"fc252e49": [
+"{0} at the moorings in {1}",
+"{0} en el amarradero de {1}"
+]
+}

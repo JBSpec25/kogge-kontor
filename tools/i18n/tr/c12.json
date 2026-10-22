@@ -1,0 +1,314 @@
+{
+"24fc20a2": [
+"<div class=\"kontor\"><h3>Hanseatic Diet</h3>",
+"<div class=\"kontor\"><h3>Dieta Hanseática</h3>"
+],
+"c279c8be": [
+"<div class=\"vote\"><b>{0}</b><span class=\"small\">Decision on {1}{2}</span>",
+"<div class=\"vote\"><b>{0}</b><span class=\"small\">Decisión el {1}{2}</span>"
+],
+"c16f2bd3": [
+" · your vote: {0}",
+" · tu voto: {0}"
+],
+"04f69c6c": [
+"<div class=\"ybtns\"><button class=\"ybtn{0}\" type=\"button\" data-vote=\"{1}\" data-v=\"ja\">Yes</button><button class=\"ybtn{2}\" type=\"button\" data-vote=\"{3}\" data-v=\"nein\">No</button></div>",
+"<div class=\"ybtns\"><button class=\"ybtn{0}\" type=\"button\" data-vote=\"{1}\" data-v=\"ja\">Sí</button><button class=\"ybtn{2}\" type=\"button\" data-vote=\"{3}\" data-v=\"nein\">No</button></div>"
+],
+"98d87ad7": [
+"<span class=\"small\">Your weight at the Diet: {0} %.</span>",
+"<span class=\"small\">Tu peso en la Dieta: {0} %.</span>"
+],
+"65bbb1b8": [
+"<span class=\"small\">Only councillors may vote.</span>",
+"<span class=\"small\">Solo los regidores pueden votar.</span>"
+],
+"9c860a7d": [
+"<div class=\"vote\"><b>{0}</b><span class=\"small\">Contributions until {1}{2}{3}</span>",
+"<div class=\"vote\"><b>{0}</b><span class=\"small\">Aportaciones hasta el {1}{2}{3}</span>"
+],
+"b3dd724c": [
+" · given: {0} guilders",
+" · aportado: {0} florines"
+],
+"69248879": [
+" · {0} sails with them",
+" · {0} navega con ellos"
+],
+"2c9f7daa": [
+"<div class=\"ybtns wrapb\"><button class=\"ybtn\" type=\"button\" data-give=\"{0}\" data-v=\"small\"{1}>1,000 guilders</button>",
+"<div class=\"ybtns wrapb\"><button class=\"ybtn\" type=\"button\" data-give=\"{0}\" data-v=\"small\"{1}>1.000 florines</button>"
+],
+"dd486438": [
+"<button class=\"ybtn\" type=\"button\" data-give=\"{0}\" data-v=\"big\"{1}>3,000 guilders</button>",
+"<button class=\"ybtn\" type=\"button\" data-give=\"{0}\" data-v=\"big\"{1}>3.000 florines</button>"
+],
+"3c2dd55f": [
+"<button class=\"ybtn\" type=\"button\" data-give=\"{0}\" data-v=\"ship\"{1}>A ship</button></div>",
+"<button class=\"ybtn\" type=\"button\" data-give=\"{0}\" data-v=\"ship\"{1}>Un barco</button></div>"
+],
+"b8cd5adb": [
+"<span class=\"small\">The more the towns give, the better the prospects. Whoever gives gains reputation and, after a victory, a share of the loot. A ship comes back damaged, and after a defeat perhaps not at all.</span></div>",
+"<span class=\"small\">Cuanto más aporten las ciudades, mejores serán las perspectivas. Quien aporta gana reputación y, si hay victoria, una parte del botín. Un barco vuelve dañado y, tras una derrota, quizá no vuelva.</span></div>"
+],
+"271128d6": [
+"<p class=\"small\">There is nothing before the Diet to vote on at present. {0}</p>",
+"<p class=\"small\">Por ahora no hay nada que votar en la Dieta. {0}</p>"
+],
+"2156b295": [
+"As a councillor you vote as soon as the towns deliberate.",
+"Como regidor votarás en cuanto las ciudades deliberen."
+],
+"9868d3fd": [
+"From Councillor you have a vote.",
+"Desde regidor tienes voto."
+],
+"2be339f8": [
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Letter of marque against Denmark</span>",
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Patente de corso contra Dinamarca</span>"
+],
+"368f0179": [
+"<p class=\"small\">You hold a letter of marque. In the Sound and off Gotland you meet Danish merchantmen that you may seize. It expires with the peace.</p>",
+"<p class=\"small\">Tienes una patente de corso. En el Sund y frente a Gotland encontrarás mercantes daneses que puedes apresar. Caduca con la paz.</p>"
+],
+"0c342e51": [
+"<div class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-kaper=\"1\"{0}>Take letter of marque · 200 G</button></div><span class=\"small\">Allows you to capture Danish merchantmen: cargo and ship are yours.</span>",
+"<div class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-kaper=\"1\"{0}>Obtener patente · 200 G</button></div><span class=\"small\">Permite apresar mercantes daneses: carga y barco son tuyos.</span>"
+],
+"980dd3f4": [
+"<p class=\"small\">The council issues letters of marque from Burgher on.</p>",
+"<p class=\"small\">El concejo expide patentes de corso a partir de vecino.</p>"
+],
+"74efd5b5": [
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Escort</span>",
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Escolta</span>"
+],
+"5dc5bfd9": [
+"<p class=\"small\"><b>{0} → {1}</b>: {2} Pay {3} guilders, {4} reputation.</p>",
+"<p class=\"small\"><b>{0} → {1}</b>: {2} Pago: {3} florines y {4} de reputación.</p>"
+],
+"3e337e3f": [
+"The merchantmen are following you.",
+"Los mercantes te siguen."
+],
+"57eb46fd": [
+"Departure from {0} by {1}. Required: {2} ships, {3} men (you have {4} and {5}).",
+"Salida desde {0} antes del {1}. Se necesitan {2} barcos y {3} hombres (tienes {4} y {5})."
+],
+"5175b00b": [
+"<p class=\"small\">From Burgher on, merchants entrust their escort to you.</p>",
+"<p class=\"small\">A partir de vecino, los comerciantes te confían su escolta.</p>"
+],
+"ef87ffa3": [
+"<p class=\"small\">No one is looking for an escort right now.</p>",
+"<p class=\"small\">Ahora mismo nadie busca escolta.</p>"
+],
+"2a08df78": [
+"<div class=\"krow\"><span class=\"gname\">{0} → {1}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-escort=\"{2}\">Accept</button></span>",
+"<div class=\"krow\"><span class=\"gname\">{0} → {1}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-escort=\"{2}\">Aceptar</button></span>"
+],
+"1c17124c": [
+"<span class=\"small\">Departure by {0} · {1} ships, {2} men · pay {3} G, {4} reputation. Raiders are more likely to attack on the way.</span></div>",
+"<span class=\"small\">Salida antes del {0} · {1} barcos, {2} hombres · pago {3} G y {4} de reputación. Por el camino los piratas atacan con más facilidad.</span></div>"
+],
+"cc7132d4": [
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Resolutions</span><ol class=\"chronlist\">",
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Acuerdos</span><ol class=\"chronlist\">"
+],
+"d3f94764": [
+" · you: {0}",
+" · tú: {0}"
+],
+"e4076a93": [
+"{0} lasts of {1} bought in {2} for {3} guilders.",
+"{0} lasts de {1} comprados en {2} por {3} florines."
+],
+"8b3d014b": [
+"{0} lasts of {1} sold in {2} for {3} guilders ({4} {5}).",
+"{0} lasts de {1} vendidos en {2} por {3} florines ({4} {5})."
+],
+"864f1029": [
+"{0}{1} in {2}{3} {4} guilders ({5} {6}).",
+"{0}{1} de {2}{3} {4} florines ({5} {6})."
+],
+"c80d8a50": [
+"Your steward sells",
+"Tu administrador vende"
+],
+"39b2eb96": [
+"{0} lasts of {1}",
+"{0} lasts de {1}"
+],
+"56fbc2cd": [
+" {0} lasts of {1} from the Kontor",
+" {0} lasts de {1} del almacén"
+],
+"f25165c3": [
+" from the {0}",
+" del {0}"
+],
+"bdf3813b": [
+"Kontor",
+"almacén"
+],
+"fef1359f": [
+"branch warehouse",
+"almacén de la sucursal"
+],
+"d01a6cbf": [
+" sold for",
+" vendidos por"
+],
+"6db968a6": [
+"base price",
+"precio base"
+],
+"e487ad10": [
+"Your steward buys {1} lasts of {2} in {0} for {3} guilders for the Kontor.",
+"Tu administrador compra en {0} {1} lasts de {2} por {3} florines para el almacén."
+],
+"8a52ddfd": [
+"Order to your steward: buy {0} as soon as it costs at most {2} guilders per last in {1}, for up to {3} guilders.",
+"Orden a tu administrador: comprar {0} en cuanto cueste en {1} como mucho {2} florines el last, hasta {3} florines."
+],
+"b302a1b1": [
+"You withdraw the order for {0}. Your steward has bought {1} lasts for {2} guilders.",
+"Retiras la orden de {0}. Tu administrador ha comprado {1} lasts por {2} florines."
+],
+"033e2952": [
+"Your steward reports from {0}: {1} lasts of {2} bought for the Kontor for {3} guilders{4}. The order is complete.",
+"Tu administrador informa desde {0}: {1} lasts de {2} comprados para el almacén por {3} florines{4}. La orden está cumplida."
+],
+"41f7f531": [
+", the warehouse is full",
+", el almacén está lleno"
+],
+"c422f7a4": [
+"You hire a steward in {0}. On your instructions he sells goods from the Kontor and buys for you, even when you are far away.",
+"Contratas un administrador en {0}. Siguiendo tus instrucciones vende mercancía del almacén y compra por ti, aunque estés lejos."
+],
+"5cbe9982": [
+"You dismiss your steward.",
+"Despides a tu administrador."
+],
+"8c152345": [
+"You trade in Bruges despite the embargo. The Hansa notes every sack: your reputation falls, and when the embargo ends, the bill will come.",
+"Comercias en Brujas pese al embargo. La Hansa toma nota de cada saco: tu reputación baja y, cuando se levante el embargo, llegará la cuenta."
+],
+"62607734": [
+"Cast off in {0}, course for {1}. {2} {3} at sea{4}{5}.",
+"Zarpas de {0} rumbo a {1}. {2} {3} de mar{4}{5}."
+],
+"72c6d696": [
+", partly overland",
+", un tramo por tierra"
+],
+"0574af98": [
+", slowed by drift ice",
+", el hielo a la deriva frena"
+],
+"d1465ea1": [
+", slowed by winter weather",
+", el tiempo invernal frena"
+],
+"a8688517": [
+"Arrived in {0}.",
+"Llegada a {0}."
+],
+"c94c1e51": [
+"In port lies {0}. At the shipyard you can fit {1} out.",
+"En el puerto está {0}. En el astillero puedes equipar{1}."
+],
+"c9305591": [
+"it",
+"lo"
+],
+"8d78e8e1": [
+"them",
+"los"
+],
+"e9c63c36": [
+"The plague is going round in {0}. {1} {2} ashore.",
+"En {0} corre la peste. {1} {2} en tierra."
+],
+"abfa9b18": [
+"sailor falls ill and stays",
+"marinero enferma y se queda"
+],
+"90adafcd": [
+"sailors fall ill and stay",
+"marineros enferman y se quedan"
+],
+"0fbd38d6": [
+"A storm is brewing",
+"Se avecina una tormenta"
+],
+"d5af5ae1": [
+"The sky to the west turns black, the sea is short and steep.",
+"El cielo se vuelve negro por el oeste; el mar está corto y empinado."
+],
+"08d398b1": [
+"Heave to",
+"Capear"
+],
+"8a88e7c3": [
+"+1 day, little damage",
+"+1 día, pocos daños"
+],
+"d07b48e1": [
+"You heave to and ride out the storm. One day lost, hull −{0} %.",
+"Capeáis el temporal. Un día perdido, casco −{0} %."
+],
+"d2eea071": [
+"Sail through",
+"Atravesar"
+],
+"75483ac4": [
+"no time lost, hull −10 to −25 %",
+"sin perder tiempo, casco de −10 a −25 %"
+],
+"2842f9f4": [
+"You hold your course through the storm. Hull −{0} %.",
+"Mantenéis el rumbo a través de la tormenta. Casco −{0} %."
+],
+"cffcb4bf": [
+"Port of refuge",
+"Puerto de refugio"
+],
+"7ce27a53": [
+"+2 days, 40 G harbour dues",
+"+2 días, 40 G de amarre"
+],
+"44515bf1": [
+"You put into a sheltered bay and wait out the storm: two days and 40 guilders harbour dues.",
+"Entráis en una bahía resguardada y esperáis a que pase la tormenta: dos días y 40 florines de amarre."
+],
+"26ed48f9": [
+"Becalmed",
+"Calma chicha"
+],
+"81edb979": [
+"Not a breath stirs, the sails hang slack.",
+"No corre ni un soplo; las velas cuelgan flojas."
+],
+"447cfb15": [
+"Wait",
+"Esperar"
+],
+"6506764b": [
+"+1 to 2 days",
+"+1 o 2 días"
+],
+"17080054": [
+"You wait for wind. {0} lost.",
+"Esperáis viento. Tiempo perdido: {0}."
+],
+"e0d181c4": [
+"Tow with the boat",
+"Remolcar con el bote"
+],
+"8e53c8cc": [
+"+1 day, 20 G bonus",
+"+1 día, 20 G de plus"
+]
+}

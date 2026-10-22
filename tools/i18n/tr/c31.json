@@ -1,0 +1,334 @@
+{
+"05064983": [
+" As Mayor: citizenship 10 %, {0} guilders a day, your convoys are attacked 30 % less often.",
+" Como burgomaestre: ciudadanía 10 %, {0} florines al día, y tus convoyes sufren un 30 % menos de ataques."
+],
+"cd691c38": [
+"<div class=\"kontor\"><h3>Workshops</h3>",
+"<div class=\"kontor\"><h3>Talleres</h3>"
+],
+"9032ea96": [
+"<p class=\"small\">From Guild brother you can found workshops of your own here that deliver to the Kontor.</p></div>",
+"<p class=\"small\">Desde cofrade puedes fundar aquí talleres propios que entregan al almacén.</p></div>"
+],
+"4b78592a": [
+"lasts of timber",
+"lasts de madera"
+],
+"d1c69a85": [
+"lasts",
+"lasts"
+],
+"9568b405": [
+"<span class=\"small\">{0}. Wages {1} guilders a day{2}.{3}{4}</span></div>",
+"<span class=\"small\">{0}. Sueldos {1} florines al día{2}.{3}{4}</span></div>"
+],
+"426b68bb": [
+", materials {0} % of the base price per last",
+", material {0} % del precio base por last"
+],
+"e63a8063": [
+"<div class=\"krow\"><span class=\"gname\">Raw materials</span><span class=\"ybtns\"><button class=\"ybtn{0}\" type=\"button\" data-wauto=\"1\">{1}</button></span><span class=\"small\">{2}</span></div>",
+"<div class=\"krow\"><span class=\"gname\">Materias primas</span><span class=\"ybtns\"><button class=\"ybtn{0}\" type=\"button\" data-wauto=\"1\">{1}</button></span><span class=\"small\">{2}</span></div>"
+],
+"5a539be4": [
+"Steward restocks",
+"El administrador repone"
+],
+"67f76e7e": [
+"Restocking off",
+"Reposición desactivada"
+],
+"74c6479e": [
+"Your steward buys missing raw materials at the market in {0} when the supply drops below four days.",
+"Tu administrador compra las materias primas que falten en el mercado de {0} cuando las existencias bajan de cuatro días."
+],
+"e959e841": [
+"Your steward can buy missing raw materials at the market in {0}. It is cheaper to bring them yourself or with a convoy.",
+"Tu administrador puede comprar las materias primas que falten en el mercado de {0}. Sale más barato traerlas tú mismo o con un convoy."
+],
+"67de5813": [
+"<p class=\"small\">You bring raw materials to the Kontor yourself or with a convoy. A steward can also buy them at the market in {0}.</p>",
+"<p class=\"small\">Las materias primas las llevas al almacén tú mismo o con un convoy. Un administrador también puede comprarlas en el mercado de {0}.</p>"
+],
+"b6c1cef6": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">being built</span><span class=\"small\">Finished in {2} {3}.</span></div>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">en obras</span><span class=\"small\">Fin de obra en {2} {3}.</span></div>"
+],
+"d93c63a9": [
+"<span class=\"small\">You can build {0}.</span>",
+"<span class=\"small\">Podrás construir {0}.</span>"
+],
+"2439d118": [
+"<span class=\"small\">{0} more {1} possible, building time {2} days{3}:</span><div class=\"ybtns wrapb\">",
+"<span class=\"small\">Aún se pueden construir {0} {1}, obra de {2} días{3}:</span><div class=\"ybtns wrapb\">"
+],
+"87ce3886": [
+"workshop",
+"taller"
+],
+"c18ef73d": [
+"workshops",
+"talleres"
+],
+"f9355aa6": [
+"; both building sites are busy right now",
+"; ahora mismo las dos obras están ocupadas"
+],
+"7b342684": [
+"<span class=\"small\">You commission new workshops in person in {0}.</span>",
+"<span class=\"small\">Los talleres nuevos se encargan en persona en {0}.</span>"
+],
+"f94831ae": [
+"<span class=\"small\">You open up further building plots in the town view.</span>",
+"<span class=\"small\">Más solares se habilitan en la vista de la ciudad.</span>"
+],
+"1882467e": [
+"Store {0}",
+"Depósito {0}"
+],
+"d2946ac4": [
+"Branch and Kontor store in {0}",
+"Sucursal y depósito de la factoría en {0}"
+],
+"bd2ca6d0": [
+"Branch in {0}",
+"Sucursal en {0}"
+],
+"a86f8b44": [
+"<p class=\"small\">A branch of your own adds {0} lasts.</p><button class=\"ybtn\" type=\"button\" data-k=\"branch\"{1}>{2}</button>",
+"<p class=\"small\">Con una sucursal propia se añaden {0} lasts.</p><button class=\"ybtn\" type=\"button\" data-k=\"branch\"{1}>{2}</button>"
+],
+"8096fcc0": [
+"Maximum reached",
+"Máximo alcanzado"
+],
+"b7a3bcd0": [
+"Add a branch · {0} G",
+"Añadir sucursal · {0} G"
+],
+"47edbf3a": [
+"<p class=\"small\">As a guild brother you may set up a store for {1} lasts in up to {0} other towns, {2} guilders a day. That way goods can wait there for better prices.</p>",
+"<p class=\"small\">Como cofrade puedes instalar en hasta {0} otras ciudades un depósito para {1} lasts, {2} florines al día. Así la mercancía espera allí mejores precios.</p>"
+],
+"1e35e7d9": [
+"Set up branch · {0} G",
+"Instalar sucursal · {0} G"
+],
+"acdf7f6e": [
+"<div class=\"holdrow\"><span>Store {0} / {1} lasts</span><span class=\"small\">{2} guilders a day</span></div><div class=\"bar\"><i style=\"width:{3}%\"></i></div>",
+"<div class=\"holdrow\"><span>Depósito {0} / {1} lasts</span><span class=\"small\">{2} florines al día</span></div><div class=\"bar\"><i style=\"width:{3}%\"></i></div>"
+],
+"f9e0f027": [
+"Burgher's house",
+"Casa burguesa"
+],
+"835c2977": [
+"Your home on the market square.",
+"Tu vivienda en la plaza del mercado."
+],
+"6d573ec8": [
+"Gabled house",
+"Casa de hastial"
+],
+"ccfcadab": [
+"Three storeys with a stepped gable: 0.25 reputation a day.",
+"Tres plantas con hastial escalonado: 0,25 de reputación al día."
+],
+"a8d20223": [
+"Patrician house",
+"Casa patricia"
+],
+"e415cb6a": [
+"The house of a council family: 0.6 reputation a day and 150 more votes at the council election.",
+"La casa de un linaje del concejo: 0,6 de reputación al día y 150 votos más en la elección del concejo."
+],
+"7e28e60f": [
+"Endow a chapel",
+"Donar una capilla"
+],
+"45fe136e": [
+"A chapel at St Mary's Church: 0.5 reputation a day.",
+"Una capilla en la iglesia de Santa María: 0,5 de reputación al día."
+],
+"523a69f5": [
+"Harbour crane",
+"Grúa del puerto"
+],
+"a51f6a35": [
+"Treadwheel crane and shipwrights of your own: repairs 20 % cheaper everywhere.",
+"Grúa de rueda y carpinteros de ribera propios: reparar cuesta un 20 % menos en todas partes."
+],
+"e99295da": [
+"Market hall",
+"Mercado cubierto"
+],
+"983ddf73": [
+"Covered market by the town hall: 50 % more poundage, council commissions paid 20 % better.",
+"Mercado cubierto junto al ayuntamiento: un 50 % más de derecho de libra, encargos del concejo un 20 % mejor pagados."
+],
+"13365baf": [
+"Town wall and towers",
+"Muralla y torres"
+],
+"2d8b0c64": [
+"New walls and watchtowers at the harbour: attacks 15 % less frequent, 0.3 reputation a day.",
+"Murallas nuevas y atalayas en el puerto: un 15 % menos de ataques, 0,3 de reputación al día."
+],
+"35ffa0cc": [
+"after your first branch in another town",
+"tras tu primera sucursal en otra ciudad"
+],
+"09750f42": [
+"You can build now: in {0} you commission workshops, a bigger house and civic buildings. Every building takes its time, at most two building sites at once. Tap a building plot in the town.",
+"Ya puedes construir: en {0} encargas talleres, una casa mayor y edificios cívicos. Cada obra lleva su tiempo, como máximo dos a la vez. Toca un solar de la ciudad."
+],
+"998d1130": [
+"Your {0} in {1} is finished and starts work. It delivers to the Kontor.",
+"Ya funciona tu {0} en {1}. Entrega al almacén."
+],
+"7e4d8343": [
+"You have moved into your new {0} in {1}. {2}",
+"Te has mudado a tu nueva {0} en {1}. {2}"
+],
+"e8f8de2c": [
+"A further building plot for a workshop in {0} has been opened up.",
+"Se ha habilitado otro solar para un taller en {0}."
+],
+"07204e2e": [
+"Your house",
+"Tu casa"
+],
+"5c22275b": [
+"Chapel",
+"Capilla"
+],
+"8f98f1ab": [
+"Town wall",
+"Muralla"
+],
+"f1c1f3ff": [
+"Kontor, {0} lasts",
+"Almacén, {0} lasts"
+],
+"9886264e": [
+"Building plot",
+"Obra"
+],
+"7a22ac51": [
+"needs the Kontor",
+"necesita el almacén"
+],
+"18d499c1": [
+"after the previous workshop",
+"tras el taller anterior"
+],
+"e4ff6f91": [
+"open up the previous plot first",
+"primero habilita el solar anterior"
+],
+"e1e47ac3": [
+"Building begins in {0}: {1}. Finished in {2} days.",
+"Comienza la obra en {0}: {1}. Terminada en {2} días."
+],
+"810da549": [
+"Building begins in {0}: your {1}. Finished in {2} days.",
+"Comienza la obra en {0}: tu {1}. Terminada en {2} días."
+],
+"30a3a505": [
+"A further building plot is being opened up in {0}. Finished in {1} days.",
+"En {0} se habilita otro solar. Terminado en {1} días."
+],
+"3cbc3078": [
+"Store for {0} lasts, {1} in use. Store and remove goods in the House tab under Kontor.",
+"Depósito para {0} lasts, {1} ocupados. Almacenar y sacar en la pestaña Casa, en Almacén."
+],
+"e51a4cac": [
+"<button class=\"ybtn\" type=\"button\" data-go=\"kontor\">To the store</button>",
+"<button class=\"ybtn\" type=\"button\" data-go=\"kontor\">Al depósito</button>"
+],
+"20315608": [
+"A store of your own for {0} lasts, {1} guilders a day. Set up at once.",
+"Un depósito propio para {0} lasts, {1} florines al día. Se instala al momento."
+],
+"fd0c7dda": [
+"{0} being built",
+"{0} en obras"
+],
+"5c480e47": [
+"Possible {0}",
+"Posible {0}"
+],
+"5597a1cb": [
+"Both building sites busy",
+"Las dos obras ocupadas"
+],
+"3ea3954e": [
+"{0} lasts of timber processed so far.",
+"Hasta ahora, {0} lasts de madera procesados."
+],
+"6ece5e37": [
+"{0} lasts so far.",
+"Hasta ahora, {0} lasts."
+],
+"1fcbf7cb": [
+"Open up building plot {0}",
+"Habilitar el solar {0}"
+],
+"3db59781": [
+"Buy the land for a further workshop.",
+"Compra el terreno para otro taller."
+],
+"487238a5": [
+"Found a workshop",
+"Fundar un taller"
+],
+"b243e97d": [
+"Delivers to the Kontor. Building time {0} days.",
+"Entrega al almacén. Construcción: {0} días."
+],
+"6c5bbef1": [
+"Building plot {0}",
+"Solar {0}"
+],
+"f5c5232d": [
+"{0} days",
+"{0} días"
+],
+"c3db5669": [
+"at once",
+"al momento"
+],
+"46f6a71a": [
+"Building",
+"Obra"
+],
+"e159cb30": [
+"<button type=\"button\" class=\"bslot\" data-bs=\"{0}\"><b>⚒ {1}</b><span class=\"bar\"><i style=\"width:{2}%\"></i></span><span class=\"small\">{3} {4} left</span></button>",
+"<button type=\"button\" class=\"bslot\" data-bs=\"{0}\"><b>⚒ {1}</b><span class=\"bar\"><i style=\"width:{2}%\"></i></span><span class=\"small\">{3} {4} para terminar</span></button>"
+],
+"2a5de4d0": [
+"Building site free",
+"Obra libre"
+],
+"28d46c17": [
+"No building site yet",
+"Aún no hay obra"
+],
+"5d77a81b": [
+"up to two at once",
+"hasta dos a la vez"
+],
+"e1c72b88": [
+"Building {0}",
+"Construir {0}"
+],
+"f3ed2e2a": [
+"Upgrade to {0}",
+"Ampliar a {0}"
+],
+"12ce9f3d": [
+"<h3 class=\"bh\">Possible now <small>{0}</small></h3><div class=\"bgrid\">",
+"<h3 class=\"bh\">Posible ahora <small>{0}</small></h3><div class=\"bgrid\">"
+]
+}

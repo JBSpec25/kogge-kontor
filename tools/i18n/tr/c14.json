@@ -1,0 +1,390 @@
+{
+"98c99039": [
+"Rescue",
+"Rescatar"
+],
+"73dd9d35": [
+"+1 day, +15 reputation, sailors sign on",
+"+1 día, +15 de reputación, se enrolan marineros"
+],
+"1d7d568c": [
+"You rescue the crew: one day lost, reputation +15{0}.",
+"Rescatáis a la tripulación: un día perdido, reputación +15{0}."
+],
+"f689680b": [
+", {0} on with you",
+", {0} contigo"
+],
+"21e771df": [
+"sailor signs",
+"marinero se enrola"
+],
+"0ebf77de": [
+"sailors sign",
+"marineros se enrolan"
+],
+"453fdade": [
+"Salvage only the cargo",
+"Salvar solo la carga"
+],
+"d14d32f9": [
+"+4 to 8 lasts of goods, −10 reputation",
+"+4 a 8 lasts de mercancía, −10 de reputación"
+],
+"867d8ece": [
+"You salvage {0} lasts of {1} and leave the people adrift in their boat. Reputation −10.",
+"Salváis {0} lasts de {1} y dejáis a la gente a la deriva en el bote. Reputación −10."
+],
+"c97ae338": [
+"No room in the hold. You sail on without helping. Reputation −10.",
+"No hay sitio en la bodega. Seguís sin ayudar. Reputación −10."
+],
+"12b3844d": [
+"Sail past",
+"Pasar de largo"
+],
+"9f260776": [
+"nothing",
+"nada"
+],
+"85441f49": [
+"You sail past. Soon the ship is below the horizon.",
+"Pasáis de largo. Pronto el barco desaparece tras el horizonte."
+],
+"71a28b16": [
+"A wreck drifts by",
+"Pasa un pecio a la deriva"
+],
+"80cd71b3": [
+"A hull drifts keel up, with barrels and planks around it.",
+"Un casco flota quilla arriba, rodeado de toneles y tablas."
+],
+"d16bb287": [
+"+1 day, 3 to 8 lasts of goods",
+"+1 día, 3 a 8 lasts de mercancía"
+],
+"62534205": [
+"You salvage {0} lasts of {1}: one day lost.",
+"Rescatáis {0} lasts de {1}: un día perdido."
+],
+"24a055de": [
+"You find goods, but there is no room in the hold: one day lost.",
+"Encontráis mercancía, pero no hay sitio en la bodega: un día perdido."
+],
+"8f79a2d6": [
+"Report it in port",
+"Avisar en el puerto"
+],
+"f60784ab": [
+"finder’s reward 50 to 150 G",
+"recompensa 50 a 150 G"
+],
+"bf00a4a4": [
+"The council pays you {0} guilders as a finder’s reward for the report.",
+"El concejo te paga {0} florines de recompensa por el aviso."
+],
+"6e4e40ef": [
+"Leave it",
+"Dejarlo"
+],
+"714374ae": [
+"You let the wreck drift.",
+"Dejáis el pecio a la deriva."
+],
+"0d132344": [
+"A castaway",
+"Un náufrago"
+],
+"8be7b87b": [
+"A man clings to a plank, half frozen.",
+"Un hombre se aferra a una tabla, medio congelado."
+],
+"b9afd932": [
+"Sign him on",
+"Enrolarlo"
+],
+"6970b928": [
+"+1 sailor",
+"+1 marinero"
+],
+"301c05c4": [
+"The man is an experienced seaman and signs on with you.",
+"El hombre es un marinero experimentado y se enrola contigo."
+],
+"1c09c812": [
+"You take him aboard, but there is no room. He goes ashore in the next port.",
+"Lo subís a bordo, pero no hay sitio. Desembarca en el próximo puerto."
+],
+"40145053": [
+"Drop him in port",
+"Dejarlo en puerto"
+],
+"cce2c0e8": [
+"+5 reputation",
+"+5 de reputación"
+],
+"f7238d66": [
+"You put him ashore in the next port. Reputation +5.",
+"Lo dejáis en el próximo puerto. Reputación +5."
+],
+"ed26af45": [
+"Question him",
+"Interrogarlo"
+],
+"92a111c6": [
+"prices of one port",
+"precios de un puerto"
+],
+"b558b4a5": [
+"He comes from {0} and knows the prices there; they are now in your price book.",
+"Viene de {0} y conoce los precios de allí; ya están en tu libro de precios."
+],
+"4ee80b5e": [
+"He knows nothing useful.",
+"No sabe nada útil."
+],
+"75ff3ff4": [
+"A barrel full of silver",
+"Un tonel lleno de plata"
+],
+"9e546374": [
+"Among the flotsam floats a heavy barrel. Inside: silver coins.",
+"Entre los restos flota un tonel pesado. Dentro: monedas de plata."
+],
+"99f6d4d3": [
+"Keep it",
+"Quedárselo"
+],
+"15be36c8": [
+"+150 to 400 G",
+"+150 a 400 G"
+],
+"e6f7ac78": [
+"The silver is worth {0} guilders.",
+"La plata vale {0} florines."
+],
+"7919627e": [
+"Hand it to the council",
+"Entregarlo al concejo"
+],
+"fd34fff2": [
+"+25 reputation",
+"+25 de reputación"
+],
+"7d0b233f": [
+"You hand the barrel over to the council. Reputation +25.",
+"Entregas el tonel al concejo. Reputación +25."
+],
+"528ad393": [
+"Share with the crew",
+"Repartir con la tripulación"
+],
+"4e44277b": [
+"+80 G, +5 reputation",
+"+80 G, +5 de reputación"
+],
+"5276ebda": [
+"Everyone gets his share, and 80 guilders are left for you. Word gets around: reputation +5.",
+"Cada uno recibe su parte y a ti te quedan 80 florines. Se corre la voz: reputación +5."
+],
+"be19bddc": [
+"A shoal of herring",
+"Un banco de arenques"
+],
+"58d5ebda": [
+"The water boils with fish, and gulls dive into it.",
+"El agua hierve de peces y las gaviotas se lanzan sobre ellos."
+],
+"fc5d7383": [
+"Fish",
+"Pescar"
+],
+"9b1c845c": [
+"+1 day, 4 to 8 lasts of herring",
+"+1 día, 4 a 8 lasts de arenque"
+],
+"61710371": [
+"You catch and salt {0} lasts of herring: one day lost.",
+"Pescáis y saláis {0} lasts de arenque: un día perdido."
+],
+"d75edeee": [
+"No room for the catch. One day lost.",
+"No hay sitio para la pesca. Un día perdido."
+],
+"dd3bda64": [
+"Tell the fishermen",
+"Avisar a los pescadores"
+],
+"f4699613": [
+"Fishermen from Scania pay you 80 guilders for the tip.",
+"Pescadores de Escania te pagan 80 florines por el aviso."
+],
+"ebe72b59": [
+"Sail on",
+"Seguir navegando"
+],
+"96131869": [
+"You sail on through the shoal.",
+"Atravesáis el banco y seguís navegando."
+],
+"b53244af": [
+"A light on the coast",
+"Una luz en la costa"
+],
+"93c7b210": [
+"At night a light flashes where there should be no harbour.",
+"De noche parpadea una luz donde no debería haber puerto."
+],
+"c720faf5": [
+"Keep your distance",
+"Mantener la distancia"
+],
+"01bf0dbc": [
+"You keep your distance. By morning the light has vanished.",
+"Mantenéis la distancia. Por la mañana la luz ha desaparecido."
+],
+"745a4dd3": [
+"Follow the light",
+"Seguir la luz"
+],
+"e680c90e": [
+"1 day faster, 40 %: wreckers",
+"1 día más rápido, 40 %: raqueros"
+],
+"ef658ee8": [
+"Wreckers! The light lures you onto a reef. Hull −{0} %{1}.",
+"¡Raqueros! La luz os atrae hacia un arrecife. Casco −{0} %{1}."
+],
+"8266c01f": [
+", they take {0}",
+", se llevan {0}"
+],
+"9ab3cc5a": [
+"The light is a beacon at a short cut. You save a day.",
+"La luz es una baliza en un atajo. Ganáis un día."
+],
+"52fdf6ff": [
+"Send the boat ahead",
+"Enviar el bote"
+],
+"dabd00c2": [
+"30 %: the wreckers’ loot",
+"30 %: el botín de los raqueros"
+],
+"e76b3d83": [
+"Your boat surprises wreckers and takes {0} guilders off them.",
+"Vuestro bote sorprende a unos raqueros y les quita {0} florines."
+],
+"62dca172": [
+"Your boat runs into an ambush. One sailor does not come back.",
+"Vuestro bote cae en una emboscada. Un marinero no vuelve."
+],
+"3fa29f2e": [
+"Your boat finds only an abandoned fire.",
+"Vuestro bote solo encuentra una hoguera abandonada."
+],
+"0d6d688f": [
+"Fever on board",
+"Fiebre a bordo"
+],
+"fcd28ddf": [
+"Two men lie burning with fever in their bunks.",
+"Dos hombres arden de fiebre en sus literas."
+],
+"9321d8ee": [
+"Isolate the sick",
+"Aislar a los enfermos"
+],
+"763c471c": [
+"1 sailor drops out",
+"1 marinero de baja"
+],
+"73dbdc0e": [
+"You put the sick in the forecastle. One stays ashore in the next port.",
+"Lleváis a los enfermos al castillo de proa. Uno se queda en tierra en el próximo puerto."
+],
+"53cf8b77": [
+"30 %: 2 to 4 sailors lost",
+"30 %: se pierden de 2 a 4 marineros"
+],
+"72d3ac52": [
+"The fever spreads. {0} ashore.",
+"La fiebre se extiende. {0} en tierra."
+],
+"9033a959": [
+"sailor stays",
+"marinero se queda"
+],
+"bbd3e029": [
+"sailors stay",
+"marineros se quedan"
+],
+"0f7511d1": [
+"The fever passes.",
+"La fiebre remite."
+],
+"ef335d5e": [
+"To the barber-surgeon",
+"Al barbero cirujano"
+],
+"8d1fc8a7": [
+"+1 day, 50 G",
+"+1 día, 50 G"
+],
+"b360824f": [
+"A barber-surgeon in a fishing village cures the men: one day and 50 guilders.",
+"Un barbero cirujano de un pueblo de pescadores cura a los hombres: un día y 50 florines."
+],
+"1dfaab22": [
+"Spoiled provisions",
+"Víveres podridos"
+],
+"eea295c9": [
+"The salt meat stinks, and there are maggots in the ship’s biscuit.",
+"La carne salada apesta y la galleta tiene gusanos."
+],
+"9ea44477": [
+"Eat it anyway",
+"Comer de todos modos"
+],
+"c8ffa3f6": [
+"25 %: 1 to 3 sailors fall ill",
+"25 %: enferman de 1 a 3 marineros"
+],
+"30192592": [
+"Bellyache on board. {0} in the next port.",
+"Retortijones a bordo. {0} en el próximo puerto."
+],
+"4c41054e": [
+"The men grumble, but all goes well.",
+"Los hombres refunfuñan, pero todo va bien."
+],
+"3ac8f028": [
+"Fish and forage",
+"Pescar y recolectar"
+],
+"3162aff4": [
+"You fish and fetch water ashore: one day lost.",
+"Pescáis y cogéis agua en tierra: un día perdido."
+],
+"0d97998c": [
+"Buy from fishermen",
+"Comprar a pescadores"
+],
+"81f46303": [
+"You buy fresh fish and bread from fishermen, 30 guilders.",
+"Compráis pescado fresco y pan a unos pescadores, 30 florines."
+],
+"6d57991c": [
+"Grumbling about wages",
+"Quejas por la soldada"
+],
+"68c9f714": [
+"The men stand at the mast and want more money.",
+"Los hombres se plantan junto al mástil y quieren más dinero."
+],
+"8c378a23": [
+"Pay a bonus",
+"Pagar un plus"
+]
+}

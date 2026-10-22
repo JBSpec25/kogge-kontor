@@ -17,6 +17,8 @@ Die App wird ohne Mac auf GitHub gebaut (Workflow „iPhone-App“ unter Actions
 4. Benutzer und Zugriff → Integrationen → App Store Connect API → Teamschlüssel → „+“: Name „GitHub“, Zugriff **Admin** (nötig, damit GitHub das Zertifikat für die Signatur selbst anlegen darf). Die Datei `AuthKey_….p8` herunterladen (geht nur einmal), Schlüssel-ID und Issuer-ID notieren.
 5. developer.apple.com → Account → Mitgliedschaft: die Team-ID notieren (10 Zeichen).
 
+**Sprachen:** Das Spiel gibt es auf Deutsch, Englisch und Spanisch. In App Store Connect unter „App-Informationen“ → „Lokalisierbare Informationen“ oben rechts die Sprachen „Englisch (UK)“, „Englisch (USA)“, „Spanisch (Spanien)“ und „Spanisch (Mexiko)“ hinzufügen und Texte aus `store/texte_en.md` bzw. `store/texte_es.md` eintragen, ebenso die englischen und spanischen Screenshots aus `store/en/` und `store/es/`. Beim In-App-Kauf unter „Lokalisierung“ dieselben Sprachen mit Anzeigename und Beschreibung anlegen. Unter „Preise und Verfügbarkeit“ alle Länder wählen.
+
 ## Schritt 3: Geheimnisse in GitHub eintragen
 
 github.com/JBSpec25/kogge-kontor → Settings → Secrets and variables → Actions → New repository secret:

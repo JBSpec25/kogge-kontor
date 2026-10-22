@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="de">
 <head>
+<script>(function(){var F={"de": "index.html", "en": "en.html", "es": "es.html"};window.KK_LANGS=F;var me=document.documentElement.lang;try{var L=localStorage.getItem('kogge-kontor-sprache');if(!L){var n=((navigator.languages&&navigator.languages[0])||navigator.language||'de').slice(0,2).toLowerCase();L=n==='de'?'de':n==='es'?'es':'en';}if(L!==me&&F[L])location.replace(F[L]+location.hash);}catch(e){}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Kogge & Kontor: rundenbasiertes Handelsspiel zur Hansezeit fürs Telefon.">
+<meta name="description" content="Kogge &amp; Kontor: rundenbasiertes Handelsspiel zur Hansezeit fürs Telefon.">
 <meta name="theme-color" content="#1b2830">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -13,10 +14,8 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>[hidden]{display:none!important}body{margin:0}</style>
+<link rel="stylesheet" href="fonts/fonts.css">
 <title>Kogge &amp; Kontor</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans+SC:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=UnifrakturMaguntia&display=swap">
 <style>
 /* Layout: phone column — Kopf, gemalte Szene (Hafen/See), Status, Seekarte, Markt, Logbuch; ab 900px zwei Spalten. Feste Aktionsleiste unten. */
 :root{
@@ -255,6 +254,8 @@ button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
 .honor li{display:flex;gap:8px;align-items:baseline}
 .honor .num{margin-left:auto;font:600 .9rem var(--f-mono)}
 .endcard{border:1px solid var(--brass);background:var(--purse);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+a.btn,a.ybtn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;text-decoration:none;color:inherit;box-sizing:border-box}
+.trialcard .ybtns{display:flex;flex-direction:column;gap:8px;margin-top:8px}.trialcard .btn{width:100%;flex:none}
 .endcard h2{margin:0 0 6px;font:700 1.15rem var(--f-sc)}
 .endcard p{margin:4px 0}
 .score{width:100%;border-collapse:collapse;margin:8px 0}
@@ -1502,6 +1503,7 @@ em.rep.warn{background:#b5523a}
     ctDay();
     ctSteward();
     mqDay();
+    trialDay();
     finDay();
     gvDay();
     if (dateOf(st.day).getDate() === 1 && dateOf(st.day).getMonth() === 0) blUpdate();
@@ -1562,11 +1564,11 @@ em.rep.warn{background:#b5523a}
   const ORD_MAX = () => 2 + (st.rank >= 1 ? 1 : 0) + (st.rank >= 3 ? 1 : 0);
   const freightOpen = () => true;
   const ORD_K = {fracht:'Fracht', abholen:'Abholen', besorgen:'Besorgen', brief:'Botschaft', pilger:'Überfahrt'};
-  const CLIENT = {getreide:['Bäcker', 'Brauer', 'Kloster'], bier:['Schankwirt', 'Bergenfahrer'], holz:['Werft', 'Böttcher', 'Zimmermann'], salz:['Heringssalzer', 'Schonenfahrer'],
-    hering:['Fischhändler', 'Kloster'], stockfisch:['Fischhändler', 'Kloster'], eisen:['Schmied', 'Werft'], wein:['Ratskeller', 'Domkapitel'], tuch:['Gewandschneider', 'Schneidergilde'],
-    wachs:['Domkapitel', 'Kerzengießer'], pelze:['Kürschner', 'Gewandschneider'], wolle:['Tuchmacher', 'Weber']};
-  const CLIENT_INST = new Set(['Kloster', 'Bergenfahrer', 'Werft', 'Schonenfahrer', 'Ratskeller', 'Domkapitel', 'Schneidergilde']);
-  const clientFor = g => { const r = pick(CLIENT[g] || ['Kaufmann']); return CLIENT_INST.has(r) ? (r === 'Bergenfahrer' || r === 'Schonenfahrer' ? `die ${r}` : r === 'Werft' ? 'die Werft' : r === 'Schneidergilde' ? 'die Schneidergilde' : r === 'Ratskeller' ? 'der Ratskeller' : `das ${r}`) : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
+  // Personen bekommen einen Namen dazu, Einrichtungen (mit Artikel) nicht
+  const CLIENT = {getreide:[['Bäcker'], ['Brauer'], ['das Kloster', 1]], bier:[['Schankwirt'], ['die Bergenfahrer', 1]], holz:[['die Werft', 1], ['Böttcher'], ['Zimmermann']], salz:[['Heringssalzer'], ['die Schonenfahrer', 1]],
+    hering:[['Fischhändler'], ['das Kloster', 1]], stockfisch:[['Fischhändler'], ['das Kloster', 1]], eisen:[['Schmied'], ['die Werft', 1]], wein:[['der Ratskeller', 1], ['das Domkapitel', 1]], tuch:[['Gewandschneider'], ['die Schneidergilde', 1]],
+    wachs:[['das Domkapitel', 1], ['Kerzengießer']], pelze:[['Kürschner'], ['Gewandschneider']], wolle:[['Tuchmacher'], ['Weber']]};
+  const clientFor = g => { const [r, inst] = pick(CLIENT[g] || [['Kaufmann']]); return inst ? r : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
   function freightState() {
     const F = st.freight || (st.freight = {offers:{}, gen:{}, active:[], next:1, done:0});
     F.active.forEach(f => { if (!f.k) f.k = 'fracht'; });
@@ -2430,7 +2432,7 @@ em.rep.warn{background:#b5523a}
 
   // Warten an Land: Tag für Tag im gewählten Tempo, bis ein Verband einläuft
   function startWait() {
-    if (halted() || !st.loc || st.waiting || st.pendingFight || st.ev || bankrupt()) return;
+    if (halted() || locked() || !st.loc || st.waiting || st.pendingFight || st.ev || bankrupt()) return;
     st.waiting = {left:anyAtSea() ? 21 : 7, arr:anyAtSea(), n:0};
     commit();
     timer = setTimeout(waitTick, tickMs());
@@ -2439,7 +2441,7 @@ em.rep.warn{background:#b5523a}
   function waitTick() {
     timer = null;
     const w = st.waiting;
-    if (!w || !st.loc) { st.waiting = null; return; }
+    if (!w || !st.loc || locked()) { st.waiting = null; commit(); return; }
     simDay(); w.left--; w.n++;
     if (st.pendingFight || w.left <= 0 || (w.arr && st.arrived) || bankrupt()) st.waiting = null;
     commit();
@@ -3374,6 +3376,111 @@ em.rep.warn{background:#b5523a}
     const res = ev.f();
     if (res) announce(res.t);
   }
+  // ───────── Probezeit und Vollversion (ab Version 47) ─────────
+  // Sprachen: KK_LANGS kommt von der Web- und App-Fassung ({de:'index.html', en:'en.html', es:'es.html'})
+  const LANGS = window.KK_LANGS || null;
+  const LANG = (document.documentElement.lang || 'de').slice(0, 2);
+  function langHTML() {
+    if (!LANGS) return '';
+    return `</div><div class="xfer"><h3>Sprache</h3><div class="chipset" role="group">` +
+      [['de', 'Deutsch'], ['en', 'English'], ['es', 'Español']].filter(([v]) => LANGS[v]).map(([v, l]) => `<button type="button" data-slot="lang" data-v="${v}" lang="${v}" aria-pressed="${LANG === v}">${l}</button>`).join('') +
+      `</div><span class="small">Dein Spielstand bleibt erhalten. Ältere Einträge im Logbuch bleiben in ihrer Sprache.</span>`;
+  }
+  // KK_TARGET: 'app' (iPhone-App mit In-App-Kauf), 'web' (Browser, nur Probezeit), sonst ganzes Spiel
+  const TARGET = window.KK_TARGET === 'app' || window.KK_TARGET === 'web' ? window.KK_TARGET : 'full';
+  const TRIAL_DAY = 60;   // Probezeit: die ersten 60 Spieltage, bis 31. Mai 1356
+  const FULL_KEY = 'kogge-kontor-vollversion';
+  const APP_URL = window.KK_APP_URL || '';
+  const full = {on:TARGET === 'full', price:'2,99 €', busy:false, msg:''};
+  try { if (TARGET === 'app' && localStorage.getItem(FULL_KEY) === '1') full.on = true; } catch (e) {}
+  const HERE_TXT = TARGET === 'app' ? 'auf diesem Gerät' : 'in diesem Browser';
+  function locked() { return !full.on && !st._temp && !(TARGET === 'web' && st.grand) && st.day >= TRIAL_DAY; }
+  function fullSet(v) { full.on = !!v; try { localStorage.setItem(FULL_KEY, v ? '1' : '0'); } catch (e) {} }
+  function trialDay() {
+    if (full.on || st._temp || (TARGET === 'web' && st.grand)) return;
+    if (!st.trialWarn && st.day >= TRIAL_DAY - 10 && st.day < TRIAL_DAY) {
+      st.trialWarn = true;
+      announce(TARGET === 'app'
+        ? `Noch ${TRIAL_DAY - st.day} Tage Probezeit, bis zum 31. Mai 1356. Danach segelt dein Handelshaus mit der Vollversion weiter, einmalig ${full.price}.`
+        : `Noch ${TRIAL_DAY - st.day} Tage Probezeit im Browser, bis zum 31. Mai 1356. Danach geht es in der App für iPhone weiter.`, 'rank');
+    }
+    if (!st.trialEnd && st.day >= TRIAL_DAY) {
+      st.trialEnd = true;
+      announce(TARGET === 'app'
+        ? 'Die 60 Tage Probezeit sind vorbei. Mit der Vollversion segelt dein Handelshaus weiter bis zum Frieden von Stralsund.'
+        : 'Die 60 Tage Probezeit im Browser sind vorbei. Das ganze Spiel gibt es als App für iPhone.', 'rank');
+    }
+  }
+  function fullOk() {
+    fullSet(true); full.msg = '';
+    announce('Danke! Die Vollversion ist freigeschaltet. Dein Handelshaus segelt weiter bis zum Frieden von Stralsund 1370.', 'rank');
+    commit();
+    if (st.sail && !st.enc && !timer) schedTick();
+  }
+  async function fullInit() {
+    const S = window.KK_STORE; if (TARGET !== 'app' || !S) return;
+    try { const p = await S.price(); if (p) full.price = p; } catch (e) {}
+    try { const o = await S.owned(); if (o === true && !full.on) { fullSet(true); if (st && st.sail && !st.enc && !timer) schedTick(); } else if (o === false && full.on) fullSet(false); } catch (e) {}
+    if (st) render();
+  }
+  async function fullBuy() {
+    const S = window.KK_STORE;
+    if (!S) { full.msg = 'Der Kauf ist nur in der App möglich.'; render(); return; }
+    if (full.busy) return;
+    full.busy = true; full.msg = ''; render();
+    try {
+      const r = await S.buy();
+      if (r === 'purchased') { full.busy = false; fullOk(); return; }
+      if (r === 'pending') full.msg = 'Der Kauf wartet noch auf eine Bestätigung, zum Beispiel durch die Eltern.';
+    } catch (e) { full.msg = 'Der Kauf hat nicht geklappt. Prüfe die Verbindung und versuch es noch einmal.'; }
+    full.busy = false; render();
+  }
+  async function fullRestore() {
+    const S = window.KK_STORE;
+    if (!S || full.busy) return;
+    full.busy = true; full.msg = ''; render();
+    try { if (await S.restore()) { full.busy = false; fullOk(); return; } full.msg = 'Zu deiner Apple-ID ist noch kein Kauf der Vollversion gespeichert.'; }
+    catch (e) { full.msg = 'Die Käufe konnten nicht geladen werden. Prüfe die Verbindung und versuch es noch einmal.'; }
+    full.busy = false; render();
+  }
+  const appLink = (cls, label) => APP_URL ? `<a class="${cls}" href="${esc(APP_URL)}" target="_blank" rel="noopener">${label}</a>` : '';
+  function trialHTML() {
+    const app = TARGET === 'app';
+    return `<div class="endcard trialcard"><h2>Die Probezeit ist zu Ende</h2>` +
+      `<p>${app ? 'Die ersten 60 Tage waren kostenlos.' : 'Die ersten 60 Tage kannst du im Browser spielen.'} ` +
+      `Im ganzen Spiel steigst du bis 1370 zum Bürgermeister auf, baust große Vorhaben, gründest Hansekontore und läufst den drei Familien im Wettlauf um das Ältermannamt davon.</p>` +
+      (app ? `<p class="small">Einmal zahlen, ${esc(full.price)}. Keine Werbung, kein Abo. Dein Spielstand bleibt, wie er ist.</p>` +
+          `<div class="ybtns"><button class="btn primary" type="button" data-act="full-buy"${full.busy ? ' disabled' : ''}><b>${full.busy ? 'Einen Moment …' : 'Vollversion freischalten'}</b><small>${esc(full.price)}</small></button>` +
+          `<button class="btn" type="button" data-act="full-restore"${full.busy ? ' disabled' : ''}><b>Kauf wiederherstellen</b><small>schon gekauft</small></button></div>`
+        : `<p class="small">Das ganze Spiel gibt es als App für iPhone, einmalig ${esc(full.price)}. ${APP_URL ? '' : 'Die App erscheint in Kürze im App Store. '}Deinen Spielstand nimmst du mit: unter „Spielstände und Einstellungen“ den Code kopieren und in der App einfügen.</p>` +
+          (APP_URL ? `<div class="ybtns">${appLink('btn primary', '<b>Zur App im App Store</b><small>für iPhone</small>')}</div>` : '')) +
+      (full.msg ? `<p class="small" style="color:var(--bad)">${esc(full.msg)}</p>` : '') + `</div>`;
+  }
+  function trialActs() {
+    if (TARGET === 'app') return `<button class="btn" type="button" data-act="full-restore"${full.busy ? ' disabled' : ''}><b>Wiederherstellen</b><small>schon gekauft</small></button>` +
+      `<button class="btn primary" type="button" data-act="full-buy"${full.busy ? ' disabled' : ''}><b>Vollversion</b><small>${esc(full.price)}</small></button>`;
+    return `<button class="btn" type="button" data-act="full-saves"><b>Spielstände</b><small>Code für die App</small></button>` +
+      (APP_URL ? appLink('btn primary', '<b>Zur App</b><small>App Store</small>') : `<button class="btn primary" type="button" disabled><b>Probezeit vorbei</b><small>App bald im Store</small></button>`);
+  }
+  function fullSavesHTML() {
+    if (TARGET === 'full') return '';
+    if (TARGET === 'app') return `</div><div class="xfer"><h3>Vollversion</h3>` + (full.on
+      ? `<span class="small">Freigeschaltet. Danke, dass du Kogge &amp; Kontor gekauft hast!</span>`
+      : `<span class="small">Die ersten 60 Spieltage sind kostenlos, bis zum 31. Mai 1356. Danach geht es mit der Vollversion weiter, einmalig ${esc(full.price)}.</span>` +
+        `<div class="row2"><button class="ybtn" type="button" data-slot="fullbuy"${full.busy ? ' disabled' : ''}>Vollversion freischalten</button><button class="ybtn" type="button" data-slot="fullrestore"${full.busy ? ' disabled' : ''}>Kauf wiederherstellen</button></div>` +
+        (full.msg ? `<span class="small" style="color:var(--bad)">${esc(full.msg)}</span>` : ''));
+    return `</div><div class="xfer"><h3>App für iPhone</h3><span class="small">Im Browser spielst du die ersten 60 Spieltage, bis zum 31. Mai 1356. Das ganze Spiel gibt es als App, einmalig ${esc(full.price)}. Deinen Spielstand nimmst du mit dem Code unten mit.</span>` +
+      (APP_URL ? `<div class="row2">${appLink('ybtn', 'Im App Store ansehen')}</div>` : `<span class="small">Die App erscheint in Kürze im App Store.</span>`);
+  }
+  // Impressum und Datenschutz in der App (Angaben kommen aus dem App-Bau, nicht aus dem Spiel)
+  function aboutHTML() {
+    const A = window.KK_ABOUT;
+    if (!A || !A.name) return '';
+    const L = s => esc(s || '').replace(/\n/g, '<br>');
+    return `<div class="xfer about"><h3>Impressum</h3><span class="small">${L(A.name)}<br>${L(A.addr)}${A.mail ? `<br>E-Mail: ${esc(A.mail)}` : ''}${A.phone ? `<br>Telefon: ${esc(A.phone)}` : ''}</span>` +
+      `<h3>Datenschutz</h3><span class="small">Kogge &amp; Kontor speichert deine Spielstände nur ${HERE_TXT}. Das Spiel sammelt keine Daten, zeigt keine Werbung und braucht kein Internet. Käufe wickelt Apple ab; wir erfahren dabei nichts über dich.${A.privacy ? ` Ausführlich: ${esc(A.privacy)}` : ''}</span>` +
+      `<h3>Über das Spiel</h3><span class="small">Version ${esc(A.version || '1.0')}. ${A.ki ? 'Entwickelt mit Unterstützung von KI. ' : ''}Schriften Alegreya Sans, Alegreya Sans SC, IBM Plex Mono und UnifrakturMaguntia unter der SIL Open Font License 1.1.</span></div>`;
+  }
   // Schlusswertung der Kampagne
   const HONOR_KEY = 'kogge-kontor-ehrenbuch';
   function scoreParts() {
@@ -4197,9 +4304,9 @@ em.rep.warn{background:#b5523a}
     if (first) addLog('Du handelst trotz der Sperre in Brügge. Die Hanse merkt sich jeden Sack: Ansehen sinkt, und wenn die Sperre fällt, kommt die Rechnung.', 'tip');
   }
   const halted = () => !!(st.ended && !st.ended.cont);
-  function waitDay() { if (halted()) return; if (!st.loc || bankrupt() || st.waiting || st.pendingFight || st.ev) return; simDay(); commit(); }
+  function waitDay() { if (halted() || locked()) return; if (!st.loc || bankrupt() || st.waiting || st.pendingFight || st.ev) return; simDay(); commit(); }
   function setSail(to) {
-    if (halted() || !st.loc || to === st.loc || !canSail() || st.waiting || st.pendingFight || st.ev || (to === 'nowgorod' && newaFrozen(st.day))) return;
+    if (halted() || locked() || !st.loc || to === st.loc || !canSail() || st.waiting || st.pendingFight || st.ev || (to === 'nowgorod' && newaFrozen(st.day))) return;
     mqSail(to);
     closeVisit();
     setTab('lage');
@@ -4217,7 +4324,7 @@ em.rep.warn{background:#b5523a}
   }
   function tick() {
     timer = null;
-    if (!st.sail || st.enc || st.ev || halted()) return;
+    if (!st.sail || st.enc || st.ev || halted() || locked()) { if (st.sail && locked()) render(); return; }
     simDay();
     st.sail.t++;
     scene.tickAt = performance.now();
@@ -5029,7 +5136,8 @@ em.rep.warn{background:#b5523a}
   }
   function maybePirates() {
     const s = st.sail;
-    if (s.met || st.day < 6 || st.rank < 1 || s.weather === 'storm' || !st.fleet.length) return false;
+    const first = !st.encs && !s.met && st.day >= 30 && s.weather !== 'storm' && st.fleet.length && !s.escort;   // ab Version 47
+    if (!first && (s.met || st.day < 6 || st.rank < 1 || s.weather === 'storm' || !st.fleet.length)) return false;
     let p = (0.07 + Math.min(0.08, cargoValue() / 30000) + st.rank * 0.005) * ENC_K;
     if (s.weather === 'fog') p *= 0.4;
     if (st.home === 'visby') p *= 0.6;
@@ -5041,7 +5149,7 @@ em.rep.warn{background:#b5523a}
     if (s.pirMul) p *= s.pirMul;
     if (st.rank >= PF_RANK && pfOn(s.segs).length) p *= 1.15;
     else if (st.rank >= 4) p *= st.rank >= 5 ? 0.6 : 0.7;   // ab Version 44
-    if (Math.random() >= p) return false;
+    if (!first && Math.random() >= p) return false;
     s.met = true;
     const pid = pfPick(s.segs);
     if (pid && pfPassValid(pid)) { addLog(`Die Schiffe von ${PF[pid].n} kommen in Sicht. Du zeigst den Geleitbrief, und sie lassen dich ziehen.`, 'tip'); return false; }
@@ -9261,7 +9369,7 @@ em.rep.warn{background:#b5523a}
     box.hidden = !ui.saves;
     $('#scrim').hidden = !(ui.saves || ui.sheet || ui.book);
     if (!ui.saves) { box.innerHTML = ''; return; }
-    let h = `<div class="in"><div class="shead"><div><h2 id="saves-title">Spielstände</h2><span class="small">${saves.cloud && saves.ok ? 'Gesichert in deinem Claude-Konto, auf jedem Gerät verfügbar.' : 'Gesichert in diesem Browser.'}</span></div>` +
+    let h = `<div class="in"><div class="shead"><div><h2 id="saves-title">Spielstände</h2><span class="small">${saves.cloud && saves.ok ? 'Gesichert in deinem Claude-Konto, auf jedem Gerät verfügbar.' : `Gesichert ${HERE_TXT}.`}</span></div>` +
       `<button class="close" type="button" data-act="saves-close">Zurück</button></div><div class="slots">`;
     SLOTS.forEach(n => {
       const sl = n === active && !st._temp ? {meta:slotMeta(st)} : getSlot(n);
@@ -9278,6 +9386,7 @@ em.rep.warn{background:#b5523a}
         `<button class="ybtn" type="button" data-slot="new" data-n="${n}">Neu beginnen</button>` +
         (cur ? '' : `<button class="ybtn" type="button" data-slot="del" data-n="${n}">${ui.delAsk === n ? 'Wirklich löschen?' : 'Löschen'}</button>`) + `</div></div>`;
     });
+    h += langHTML();
     h += `</div><div class="xfer"><h3>Bestenliste</h3><div class="chipset" role="group">` + [['a', 'Wer zuerst Ältermann wurde'], ['w', 'Nach Vermögen']].map(([v, l]) => `<button type="button" data-slot="blsort" data-v="${v}" aria-pressed="${!!ui.blW === (v === 'w')}">${l}</button>`).join('') +
       `</div>${blHTML(!!ui.blW)}<span class="small">Jedes Spiel steht einmal in der Liste, mit dem höchsten Vermögen und dem Jahr, in dem du Ältermann wurdest.${saves.cloud && saves.ok ? ' Gesichert in deinem Claude-Konto.' : ''}</span>`;
     if (!st._temp) h += `</div><div class="xfer"><h3>Jahreszeiten in diesem Spiel</h3><div class="chipset" role="group">` +
@@ -9289,20 +9398,25 @@ em.rep.warn{background:#b5523a}
     h += `</div><div class="xfer"><h3>Markt</h3><div class="chipset" role="group">` +
       [['0', 'Infos beim Antippen'], ['1', 'Marktinfos immer zeigen']].map(([v, l]) => `<button type="button" data-slot="minfo" data-v="${v}" aria-pressed="${minfoPref() === (v === '1')}">${l}</button>`).join('') +
       `</div><span class="small">${minfoPref() ? `Bild, Herkunft${rivShown() ? ', Preisverlauf und Konkurrenten' : ' und Preisverlauf'} stehen offen unter jeder Ware.` : 'Unter jeder Ware klappt „Mehr zur Ware“ Bild, Herkunft, Preisverlauf und den besten bekannten Preis auf.'}</span>`;
+    h += fullSavesHTML();
     h += `</div><div class="xfer"><h3>Auf ein anderes Gerät übertragen</h3>` +
       `<span class="small">Kopiere den Code und füge ihn auf dem anderen Gerät hier ein. Er ersetzt dort den aktiven Spielstand.</span>` +
       `<div class="row2"><button class="ybtn" type="button" data-slot="copy">Code kopieren</button>${ui.copied ? '<span class="small">Kopiert.</span>' : ''}</div>` +
       `<label class="flabel" for="xfer-in">Code einfügen</label><textarea id="xfer-in" spellcheck="false" placeholder="KK1:…">${ui.xfer || ''}</textarea>` +
       `<div class="row2"><button class="ybtn" type="button" data-slot="import">In Platz ${active} laden</button>${ui.xferErr ? `<span class="small" style="color:var(--bad)">${ui.xferErr}</span>` : ''}</div></div></div>`;
+    h += aboutHTML();
     box.innerHTML = h;
   }
   function renderSaveState() {
     const el = $('#savestate');
-    if (el) el.textContent = saves.cloud && saves.ok ? `Platz ${active} · gesichert in deinem Claude-Konto` : `Platz ${active} · gesichert in diesem Browser`;
+    if (el) el.textContent = saves.cloud && saves.ok ? `Platz ${active} · gesichert in deinem Claude-Konto` : `Platz ${active} · gesichert ${HERE_TXT}`;
   }
   async function slotAction(t) {
     const n = +t.dataset.n, act = t.dataset.slot;
     if (act === 'blsort') { ui.blW = t.dataset.v === 'w'; renderSaves(); return; }
+    if (act === 'lang') { const v = t.dataset.v; if (!LANGS || !LANGS[v] || v === LANG) return; save(); try { localStorage.setItem('kogge-kontor-sprache', v); } catch (e) { /* dann nur diesmal */ } location.replace(LANGS[v]); return; }
+    if (act === 'fullbuy') { await fullBuy(); renderSaves(); return; }
+    if (act === 'fullrestore') { await fullRestore(); renderSaves(); return; }
     if (act === 'load') { const sl = getSlot(n); if (sl) { save(); if (saves.db && saves.ok) await flushRemote(); loadState(JSON.parse(JSON.stringify(sl.state)), n); ui.saves = false; renderSaves(); } return; }
     if (act === 'new') { openWizard(n, true); return; }
     if (act === 'minfo') { setMinfo(t.dataset.v === '1'); ui.det.minfo = null; ui.det.rivm = null; renderSaves(); renderMarket(); return; }
@@ -9463,6 +9577,7 @@ em.rep.warn{background:#b5523a}
           `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} Matrosen · ${armsLine()} · Tempo ${Math.round(fleetSpeed() * 100)} % · Heuer und Unterhalt ${wage()} Gulden am Tag</span></div></details>`;
       })();
     if (halted()) h = endHTML() + h;
+    else if (locked()) h = trialHTML() + h;
     if (bankrupt()) h += `<div class="over"><strong>Bankrott.</strong><span>${st.money < 0 && wealth() < 0 ? 'Deine Schulden übersteigen dein Vermögen. Die Gläubiger übernehmen das Handelshaus.' : 'Die Truhe ist leer und der Laderaum auch. Die Mannschaft geht von Bord.'}</span><button class="btn primary" type="button" data-act="restart">Neues Spiel</button></div>`;
     $('#status').innerHTML = h;
   }
@@ -9950,6 +10065,7 @@ em.rep.warn{background:#b5523a}
   function renderActions() {
     const a = $('#actions');
     a.classList.remove('grid');
+    if (locked() && !st.enc && !st.ev && !st.pendingFight && !halted()) { a.innerHTML = trialActs(); return; }
     if (halted()) { a.innerHTML = `<button class="btn" type="button" data-act="restart">Neues Spiel</button><button class="btn primary" type="button" data-act="cont-open"><b>Weiterspielen</b><small>als offenes Spiel</small></button>`; return; }
     if (st.enc) {
       const e = st.enc, pc = x => `${Math.round(x * 100)} %`;
@@ -10324,7 +10440,7 @@ em.rep.warn{background:#b5523a}
     {n:'Giebelhaus', cost:4000, civic:1, rep:0.25, d:'Dreigeschossig mit Treppengiebel: täglich 0,25 Ansehen.'},
     {n:'Patrizierhaus', cost:12000, civic:3, rep:0.6, elect:150, d:'Das Haus eines Ratsgeschlechts: täglich 0,6 Ansehen und 150 Stimmen mehr bei der Ratswahl.'}];
   const CIVIC_B = {
-    kirche:{n:'Kapelle stiften', cost:7000, civic:1, d:'Eine Kapelle an der Marienkirche: täglich 0,5 Ansehen.'},
+    kirche:{n:'Kapelle stiften', s:'Kapelle', cost:7000, civic:1, d:'Eine Kapelle an der Marienkirche: täglich 0,5 Ansehen.'},
     kran:{n:'Hafenkran', cost:5000, civic:3, d:'Tretradkran und eigene Werftleute: Ausbessern überall 20 % günstiger.'},
     markt:{n:'Markthalle', cost:6000, civic:3, d:'Gedeckter Markt am Rathaus: Pfundzoll 50 % mehr, Aufträge des Rats 20 % besser bezahlt.'},
     mauer:{n:'Stadtmauer und Türme', cost:10000, civic:4, d:'Neue Mauern und Wachtürme am Hafen: Angriffe 15 % seltener, täglich 0,3 Ansehen.'}
@@ -10360,7 +10476,7 @@ em.rep.warn{background:#b5523a}
       if (j.kind === 'work') { const W = WORKS[j.g]; st.works.push({id:st.nextWork++, g:j.g, d0:st.day, made:0}); t = `Deine ${W.n} in ${C[st.home].n} ist fertig und nimmt die Arbeit auf. Sie liefert ins Kontor.`; }
       else if (j.kind === 'haus') { st.city.house = (st.city.house || 1) + 1; const H = HOUSE[st.city.house]; t = `Dein neues ${H.n} in ${C[st.home].n} ist bezogen. ${H.d}`; }
       else if (j.kind === 'plot') { st.city.extra = (st.city.extra || 0) + 1; t = `Ein weiterer Bauplatz für einen Betrieb in ${C[st.home].n} ist erschlossen.`; }
-      else { const B = CIVIC_B[j.k]; st.city[j.k] = true; t = `${B.n.replace(' stiften', '')} in ${C[st.home].n} vollendet. ${B.d}`; }
+      else { const B = CIVIC_B[j.k]; st.city[j.k] = true; t = `${(B.s || B.n)} in ${C[st.home].n} vollendet. ${B.d}`; }
       gainRepute(3);
       addLog(t, 'gain'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     });
@@ -10401,8 +10517,8 @@ em.rep.warn{background:#b5523a}
       return {lock:'erst den vorigen Bauplatz erschließen'};
     }
     const B = CIVIC_B[p.k];
-    if (c[p.k]) return {built:true, t:B.n.replace(' stiften', '')};
-    if (jobAt(p.k)) return {job:jobAt(p.k), t:B.n.replace(' stiften', '')};
+    if (c[p.k]) return {built:true, t:(B.s || B.n)};
+    if (jobAt(p.k)) return {job:jobAt(p.k), t:(B.s || B.n)};
     return ci < B.civic ? {lock:`ab ${CIVIC[B.civic][1]}`} : !buildOpen() ? {lock:buildLock()} : {free:true};
   }
   function buildCivic(k) {
@@ -10505,7 +10621,7 @@ em.rep.warn{background:#b5523a}
     return G36.vignette(kind, {w:o.w || 96, cid, winter:!!(st && isWinter(st.day)), g:o.g, lvl:o.lvl, idle:o.idle, job:!!job, frac:job ? Math.max(0.08, 1 - jobLeft(job) / job.days) : 0});
   }
   // Bauen: Stadtansicht (nur Gebäude) + Baubuch + Baublatt
-  const civName = k => CIVIC_B[k].n.replace(' stiften', '');
+  const civName = k => (CIVIC_B[k].s || CIVIC_B[k].n);
   function bEntry(k) { // alles, was ein Bauplatz im Baubuch und im Baublatt braucht
     const p = PLOTS.find(q => q.k === k); if (!p) return null;
     const ps = plotState(p), ci = civicIdx(st.repute || 0), busy = buildOpen() && !canStartJob(), w0 = k[0] === 'w';
@@ -10791,6 +10907,9 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.act === 'wait') waitDay();
     if (t.dataset.act === 'sail') openSheet(null);
     if (t.dataset.act === 'restart') restart();
+    if (t.dataset.act === 'full-buy') return fullBuy();
+    if (t.dataset.act === 'full-restore') return fullRestore();
+    if (t.dataset.act === 'full-saves') { ui.saves = true; ui.delAsk = null; renderSaves(); return; }
     if (t.dataset.act === 'cont-open') { continueOpen(); if (st.sail && !st.enc && !timer) schedTick(); return; }
   });
   $('#tempo').addEventListener('click', () => setTempo(TEMPI[(TEMPI.indexOf(tempo) + 1) % TEMPI.length]));
@@ -10910,7 +11029,7 @@ em.rep.warn{background:#b5523a}
   $('#tabs').addEventListener('click', e => { const t = e.target.closest('[data-tab-btn]'); if (t) setTab(t.dataset.tabBtn); });
   $('#bookbtn').addEventListener('click', () => { ui.book = true; renderBook(); });
   $('#book').addEventListener('click', e => { if (e.target.closest('[data-act="book-close"]')) { ui.book = false; renderBook(); } });
-  $('#status').addEventListener('click', e => { const t = e.target.closest('[data-act="restart"]'); if (t) restart(); });
+  $('#status').addEventListener('click', e => { const t = e.target.closest('[data-act="restart"]'); if (t) restart(); const f = e.target.closest('[data-act^="full-"]'); if (f) { if (f.dataset.act === 'full-buy') fullBuy(); else if (f.dataset.act === 'full-restore') fullRestore(); } });
   $('#map').addEventListener('click', e => { const g = e.target.closest('.city'); if (g) openSheet(g.dataset.city); });
   $('#map').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.city')) { e.preventDefault(); openSheet(e.target.closest('.city').dataset.city); } });
   $('#sheet').addEventListener('click', e => {
@@ -11069,6 +11188,7 @@ em.rep.warn{background:#b5523a}
       if (s.era) { s.era.kopWin = (s.day || 0) >= dayOf(1368, 5, 2); s.era.helsbWin = false; }
     }
     if (s.alderman === undefined) s.alderman = null;
+    if (s.trialV === undefined) { if (TARGET === 'web' && (s.day || 0) >= TRIAL_DAY) s.grand = true; s.trialV = 1; }
     if (s.stock && !s.gd45) { Object.values(s.stock).forEach(S0 => Object.keys(S0).forEach(g => { S0[g] *= GDEP[g] || 1; })); s.gd45 = true; }
     if (!s.gid) s.gid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     if (s.alderman && !s.race) s.race = {first:true, day:s.alderman.since};
@@ -11108,13 +11228,14 @@ em.rep.warn{background:#b5523a}
   if (window.claude && window.claude.hot && window.claude.hot.snapshot) {
     window.claude.hot.snapshot(() => ({st, active, ui:{open:ui.open, qty:ui.qty}}));
   }
-  window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+  const go = () => { window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {}); fullInit(); };
+  window.KK_READY && window.KK_READY.then ? window.KK_READY.then(go, go) : go();
 })();
 </script>
 
 
 <script>
-window.KK_BUILD = 'd8d1f0a422';
+window.KK_BUILD = 'f3fa9d53cb';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }

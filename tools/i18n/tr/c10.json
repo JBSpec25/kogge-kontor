@@ -1,0 +1,290 @@
+{
+"35a04426": [
+"the treasury of Lübeck",
+"la tesorería de Lübeck"
+],
+"20f12efc": [
+"safe",
+"solvente"
+],
+"0898395b": [
+"sound",
+"fiable"
+],
+"5c39aba8": [
+"shaky",
+"dudoso"
+],
+"bcbaeacc": [
+"an estate of the Order",
+"una finca de la Orden"
+],
+"c90854fb": [
+"the monastery of Oliva",
+"el monasterio de Oliva"
+],
+"9bf9db80": [
+"an estate on the Vistula",
+"una finca junto al Vístula"
+],
+"c2de2a62": [
+"an estate in Livonia",
+"una finca en Livonia"
+],
+"9df9a5be": [
+"vintage",
+"Vendimia"
+],
+"8a50b52a": [
+"a wine merchant from Cologne",
+"un comerciante de vinos de Colonia"
+],
+"5c257982": [
+"a wine merchant from Bordeaux",
+"un comerciante de vinos de Burdeos"
+],
+"a0a4ba69": [
+"shearing",
+"Esquila"
+],
+"4e96dd51": [
+"an abbey in Yorkshire",
+"una abadía de Yorkshire"
+],
+"fa32ce67": [
+"a sheep farm on the heath",
+"una granja de ovejas en el brezal"
+],
+"016e1ca4": [
+"an estate in Lincolnshire",
+"una finca de Lincolnshire"
+],
+"983d3e9d": [
+"catch",
+"Pesca"
+],
+"66768246": [
+"a fishing camp in Scania",
+"un campamento pesquero de Escania"
+],
+"2ac21fe7": [
+"the Lübeck merchants’ camp at Falsterbo",
+"el asentamiento de los de Lübeck en Falsterbo"
+],
+"2966d5ab": [
+"wild honey harvest",
+"Recolección de miel"
+],
+"a1d6ab70": [
+"the beekeepers’ guild on the Daugava",
+"el gremio de colmeneros del Daugava"
+],
+"d749fd03": [
+"a boyar on the Volkhov",
+"un boyardo del Vóljov"
+],
+"ea46319f": [
+"Skipper",
+"Patrón"
+],
+"7210532d": [
+"Shipowner",
+"Armador"
+],
+"51a053a3": [
+"You buy a {0} share in the {1} “{2}” from shipowner {3} for {4} guilders. Every month the partners share the profit of the voyages.",
+"Compras una participación de {0} en la {1} «{2}» al armador {3} por {4} florines. Cada mes los socios se reparten la ganancia de los viajes."
+],
+"1a03d1aa": [
+"half",
+"la mitad"
+],
+"f6460623": [
+"Shipowner {0} buys back your share in the “{1}” for {2} guilders.",
+"El armador {0} te compra tu participación en la «{1}» por {2} florines."
+],
+"66424dd6": [
+"Bad news from shipowner {0}: the “{1}” has been lost on the voyage to {2}. Your share worth {3} guilders is gone.",
+"Malas noticias del armador {0}: la «{1}» se ha perdido en el viaje a {2}. Tu participación de {3} florines se ha esfumado."
+],
+"95c3b1ef": [
+"“{0}” contribution to repairs {1}",
+"«{0}» aportación para reparaciones {1}"
+],
+"6b38d007": [
+"“{0}” no profit",
+"«{0}» sin ganancia"
+],
+"68bfac1c": [
+"Settlement of your ship shares: {0} guilders.",
+"Liquidación de tus participaciones en barcos: {0} florines."
+],
+"664459f5": [
+"You borrow {0} guilders from {1}, at {2} % a month, to be repaid by {3}. You can repay at any time under House.",
+"Contratas con {1} un préstamo de {0} florines, al {2} % mensual, a devolver antes del {3}. Puedes devolverlo cuando quieras en Casa."
+],
+"ff2c3f45": [
+"Loan from {0} repaid: {1} guilders with interest.",
+"Préstamo saldado con {0}: {1} florines con intereses."
+],
+"ece7ac70": [
+"You lend {0} in {1} {2} guilders for {3} months, at {4} % a month. He repays by bill of exchange.",
+"Prestas a {0} de {1} {2} florines a {3} meses, al {4} % mensual. Devolverá el dinero con una letra de cambio."
+],
+"6a5d21ea": [
+"{0} from {1} cannot pay. In court you get back only {2} of {3} guilders.",
+"{0} de {1} no puede pagar. Ante el tribunal solo recuperas {2} de {3} florines."
+],
+"2fe40ff7": [
+"{0} from {1} repays his loan by bill of exchange: {2} guilders, including {3} interest.",
+"{0} de {1} devuelve su préstamo con una letra de cambio: {2} florines, de ellos {3} de intereses."
+],
+"48683099": [
+"Your loan from {0} is due and is paid off from the chest: {1} guilders.",
+"Tu préstamo con {0} vence y se salda con el arcón: {1} florines."
+],
+"9c2aa3f1": [
+"You cannot pay {0} the {1} guilders. The deadline is extended by three months, at {2} % a month. After that the creditors will distrain.",
+"No puedes pagar los {1} florines de tu deuda con {0}. El plazo se amplía tres meses, al {2} % mensual. Después los acreedores embargarán."
+],
+"4423f356": [
+"{0} had your goods seized: money and goods from your warehouses went to the creditors. Your good name has suffered badly.",
+"{0} ordena el embargo: el dinero y la mercancía de tus almacenes van a los acreedores. Tu buen nombre ha sufrido mucho."
+],
+"a57895fc": [
+"Forward purchase: you buy the whole {1} from {0}, about {2} lasts of {3} at {4} guilders per last. Deposit {5} guilders, the rest on delivery on {6} in {7}.",
+"Compra anticipada con {0}: toda la {1}, unos {2} lasts de {3} a {4} florines el last. Anticipo de {5} florines y el resto a la entrega, el {6} en {7}."
+],
+"c2bff05a": [
+"The {0} is poor: only {1} instead of {2} lasts.",
+"La {0} es escasa: solo {1} lasts en lugar de {2}."
+],
+"bcd91e35": [
+"The {0} is rich: {1} instead of {2} lasts.",
+"La {0} es abundante: {1} lasts en lugar de {2}."
+],
+"7368053c": [
+"The {0} is in: {1} lasts.",
+"La {0} está recogida: {1} lasts."
+],
+"512fb1a1": [
+"{0} The {1} from {2} is ready in {3}.{4}{5}{6}",
+"{0} Vendedor: {2}. Mercancía ({1}) lista en {3}.{4}{5}{6}"
+],
+"2574925c": [
+" The balance of {0} guilders is still outstanding.",
+" Aún queda pendiente el pago restante de {0} florines."
+],
+"added0ae": [
+" {0} lasts go into your warehouse there.",
+" {0} lasts pasan a tu almacén de allí."
+],
+"e95e0e68": [
+" Collect the rest within 45 days, otherwise the estate’s steward will sell it for you.",
+" Recoge el resto en un plazo de 45 días; si no, el administrador de la finca lo venderá por ti."
+],
+"061f1701": [
+"The remaining {0} lasts of {1} in {2} were sold for you{3}: {4}{5} guilders.",
+"Los {0} lasts restantes de {1} en {2} se han vendido por ti{3}: {4}{5} florines."
+],
+"56d148d3": [
+" and set against the outstanding balance",
+" y compensados con el pago pendiente"
+],
+"f4db6e4b": [
+"{0} lasts of {1} loaded from the forward purchase{2}.",
+"{0} lasts de {1} cargados de la compra anticipada{2}."
+],
+"32440d54": [
+", {0} lasts are still waiting",
+", aún esperan {0} lasts"
+],
+"4461fbdf": [
+"loads {0} lasts of {1} from your forward purchase",
+"carga {0} lasts de {1} de tu compra anticipada"
+],
+"51ff1c1e": [
+"As a trader you get credit: the council of {0}{1} and the Lombards in Bruges lend you money, say for another ship that soon pays for itself. In the shipyards of these towns you can build straight away with a loan; otherwise in the Market tab under Business.",
+"Como tratante tienes crédito: el concejo de {0}{1} y los lombardos de Brujas te prestan dinero, por ejemplo para otro barco que se pague pronto. En los astilleros de esas ciudades puedes construir directamente con un préstamo; si no, en la pestaña Mercado, en Negocios."
+],
+"ff2ce705": [
+", the treasury in Lübeck",
+", la tesorería de Lübeck"
+],
+"44704da9": [
+"Your captains find hardly any money in the chest and stop buying. Without purchases the convoys earn nothing but still cost wages.",
+"Tus capitanes apenas encuentran dinero en el arcón y ya no compran nada. Sin compras los convoyes no ganan nada, pero siguen costando soldada."
+],
+"4b5d9da0": [
+"As a long-distance trader new business opens up: the Hanseatic Kontors in Bruges, London, Bergen and Novgorod admit you, and estates sell you their whole harvest in advance. From Great merchant on, ship shares, your own loans and great projects are added. You find them in the Market tab under Business, and the overview under House.",
+"Como mercader de ultramar se te abren nuevos negocios: las factorías hanseáticas de Brujas, Londres, Bergen y Nóvgorod te admiten, y las fincas te venden su cosecha entera por adelantado. A partir de gran mercader se suman las participaciones en barcos, tus propios préstamos y las grandes obras. Los encontrarás en la pestaña Mercado, en Negocios, y el resumen en Casa."
+],
+"a82b9af1": [
+"<button class=\"ybtn\" type=\"button\" data-yard=\"loanbuild\" data-n=\"{0}\">With a loan · {1} G at {2} %</button>",
+"<button class=\"ybtn\" type=\"button\" data-yard=\"loanbuild\" data-n=\"{0}\">Con préstamo · {1} G al {2} %</button>"
+],
+"7e3863d2": [
+"<div class=\"kontor\"><h3>Buying the harvest in advance</h3><p class=\"small\">You buy the whole harvest in advance: 40 % deposit now, the rest on delivery. Only the harvest will show how much it will be.</p>",
+"<div class=\"kontor\"><h3>Compra anticipada de la cosecha</h3><p class=\"small\">Compras la cosecha entera por adelantado: un 40 % de anticipo ahora y el resto a la entrega. Cuánta será, solo lo dirá la cosecha.</p>"
+],
+"5f0547ad": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{2} lasts ready</span><span class=\"small\">From {3}.{4}</span>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{2} lasts listos</span><span class=\"small\">De {3}.{4}</span>"
+],
+"e0bd55d6": [
+" Balance {0} guilders.",
+" Pago restante: {0} florines."
+],
+"f7c5906c": [
+"No hold space",
+"Bodega llena"
+],
+"38b01d5d": [
+"Load · {0} lasts",
+"Cargar · {0} lasts"
+],
+"045a4bc2": [
+"Pay and load · {0} G",
+"Pagar y cargar · {0} G"
+],
+"93a40292": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">≈ {2} lasts</span><span class=\"small\">The {3} from {4}, delivery on {5}. {6} guilders per last, {7} guilders in all.</span>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1}</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">≈ {2} lasts</span><span class=\"small\">{3}: {4}. Entrega el {5}. {6} florines el last, {7} florines en total.</span>"
+],
+"e4c312c1": [
+"Already {0} forward purchases",
+"Ya tienes {0} compras anticipadas"
+],
+"07b47155": [
+"Pay deposit · {0} G",
+"Anticipar · {0} G"
+],
+"0818f90b": [
+"<div class=\"kontor\"><h3>Ship shares</h3><p class=\"small\">As a part-owner you carry a share of ship and cargo. Every month the partners share the profit; sometimes a contribution to repairs is due, and rarely a ship is lost. You can sell back to the shipowner in his home port.</p>",
+"<div class=\"kontor\"><h3>Participaciones en barcos</h3><p class=\"small\">Como copropietario cargas con una parte del barco y del cargamento. Cada mes los socios se reparten la ganancia; a veces hay que aportar para reparaciones y, rara vez, se pierde un barco. Puedes revender al armador en su puerto de origen.</p>"
+],
+"94a72b5f": [
+"<div class=\"krow\"><span class=\"gname\">⚓ “{0}”</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">{2} of shipowner {3} · paid out so far {4}{5} guilders</span>",
+"<div class=\"krow\"><span class=\"gname\">⚓ «{0}»</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">{2} del armador {3} · repartido hasta ahora {4}{5} florines</span>"
+],
+"4ce77903": [
+"<span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-fin=\"psell\" data-id=\"{0}\"{1}>Sell · {2} G</button></span></div>",
+"<span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-fin=\"psell\" data-id=\"{0}\"{1}>Vender · {2} G</button></span></div>"
+],
+"497bfefe": [
+"<div class=\"krow\"><span class=\"gname\">⚓ “{0}”</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">{2} of shipowner {3}, next bound for {4}.</span>",
+"<div class=\"krow\"><span class=\"gname\">⚓ «{0}»</span><span class=\"num small\" style=\"grid-column:auto;margin:0\">{1}</span><span class=\"small\">{2} del armador {3}, próximo destino {4}.</span>"
+],
+"a1f9345f": [
+"Already {0} shares",
+"Ya tienes {0} participaciones"
+],
+"e701dcfa": [
+"Buy share · {0} G",
+"Comprar participación · {0} G"
+],
+"743899bf": [
+"<div class=\"kontor\"><h3>Money changers and loans</h3>",
+"<div class=\"kontor\"><h3>Cambistas y préstamos</h3>"
+]
+}

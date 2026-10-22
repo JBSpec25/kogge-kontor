@@ -1,0 +1,362 @@
+{
+"fb30ea4c": [
+"Sheep shearing",
+"Esquileo"
+],
+"78257033": [
+"The herring shoals off Scania have arrived. Until October, Lübeck and Visby have herring in plenty, and salt is in demand.",
+"Los bancos de arenque han llegado a Escania. Hasta octubre habrá arenque de sobra en Lübeck y Visby, y se buscará sal."
+],
+"810a1bf2": [
+"Lent is approaching. Herring and stockfish are wanted everywhere.",
+"Se acerca la Cuaresma. El arenque y el bacalao seco se buscan en todas partes."
+],
+"887aa7cf": [
+"Harvest time in Prussia and Livonia: grain is getting cheap in Danzig and Riga.",
+"Época de cosecha en Prusia y Livonia: el grano se abarata en Danzig y Riga."
+],
+"18518123": [
+"The new wine has arrived in Bruges.",
+"El vino nuevo ha llegado a Brujas."
+],
+"8ff4a47f": [
+"The stockfish fleet from the north has put in at Bergen.",
+"La flota del bacalao seco del norte ha entrado en Bergen."
+],
+"83bbe67d": [
+"The Neva is freezing over. No ship will reach Novgorod until April, and soon there will be drift ice in the Gulf of Finland too.",
+"El Nevá se hiela. Hasta abril ningún barco llegará a Nóvgorod, y pronto habrá hielo a la deriva también en el golfo de Finlandia."
+],
+"7a871a60": [
+"The ice on the Neva is breaking, Novgorod can be reached again. The winter furs are coming to market.",
+"El hielo del Nevá se rompe y Nóvgorod vuelve a ser accesible. Las pieles de invierno llegan al mercado."
+],
+"b36c4fbb": [
+"The winter furs from Reval and Novgorod are coming to market.",
+"Las pieles de invierno de Reval y Nóvgorod llegan al mercado."
+],
+"e813de51": [
+"clear",
+"despejado"
+],
+"32dd3450": [
+"cloudy",
+"nublado"
+],
+"eb5c821c": [
+"rain",
+"lluvia"
+],
+"8aa84cf8": [
+"storm",
+"tormenta"
+],
+"40738fd5": [
+"fog",
+"niebla"
+],
+"0454f268": [
+"snow flurries",
+"ventisca"
+],
+"dc64d109": [
+"North",
+"Norte"
+],
+"be814acb": [
+"Northeast",
+"Nordeste"
+],
+"a1a55b33": [
+"East",
+"Este"
+],
+"90fbdeed": [
+"Southeast",
+"Sudeste"
+],
+"3e9dadb3": [
+"South",
+"Sur"
+],
+"c96d657f": [
+"Southwest",
+"Sudoeste"
+],
+"dd322f2d": [
+"West",
+"Oeste"
+],
+"cf952f62": [
+"Northwest",
+"Noroeste"
+],
+"d95ef45d": [
+"Seat of the Diet",
+"Sede de la Dieta"
+],
+"ea7f891e": [
+"Reputation in your home seat grows half again as fast.",
+"La reputación en tu sede crece un cincuenta por ciento más rápido."
+],
+"522da1cf": [
+"Brewers of the Elbe",
+"Cerveceros del Elba"
+],
+"e0b1f62a": [
+"You buy beer 10 % cheaper everywhere.",
+"Compras cerveza un 10 % más barata en todas partes."
+],
+"5f21d911": [
+"Weser shipyard",
+"Astillero del Weser"
+],
+"b94aaf85": [
+"Repairs cost 5 instead of 8 guilders per percent.",
+"Reparar cuesta 5 florines por punto en lugar de 8."
+],
+"6e523f9c": [
+"Danzig shipwrights",
+"Carpinteros de Danzig"
+],
+"6eca62c2": [
+"Your first ship holds 5 lasts more.",
+"Tu primer barco carga 5 lasts más."
+],
+"f41e90e2": [
+"Livonia trade",
+"Comercio de Livonia"
+],
+"efb62c14": [
+"You buy furs and wax 10 % cheaper everywhere.",
+"Compras pieles y cera un 10 % más baratas en todas partes."
+],
+"68a3c49c": [
+"Town watch",
+"Guardia de la ciudad"
+],
+"ff774fbf": [
+"You start with 4 crossbows instead of 2 and 2 suits of armour on board.",
+"Empiezas con 4 ballestas en lugar de 2 y 2 armaduras a bordo."
+],
+"9f82ea3b": [
+"Gotland pilots",
+"Prácticos de Gotland"
+],
+"d711dbe1": [
+"Pirates attack 40 % less often.",
+"Los piratas atacan un 40 % menos."
+],
+"1ae3bceb": [
+"Ore from the mines",
+"Mineral de las minas"
+],
+"0d5c3147": [
+"You start with 3,000 guilders instead of 2,000.",
+"Empiezas con 3.000 florines en lugar de 2.000."
+],
+"b9f7ad74": [
+"Newcomer",
+"Recién llegado"
+],
+"a7ab1499": [
+"Burgher",
+"Vecino"
+],
+"d7acf3fc": [
+"Guild brother",
+"Cofrade"
+],
+"fc1039c0": [
+"Councillor",
+"Regidor"
+],
+"23bb598f": [
+"Mayor",
+"Burgomaestre"
+],
+"06a580da": [
+"Alderman of the Hansa",
+"Decano de la Hansa"
+],
+"60677b53": [
+"Kontor in your home seat, council commissions",
+"Almacén en tu sede, encargos del concejo"
+],
+"5ee3a1db": [
+"Expand the Kontor, workshops, branches",
+"Ampliar el almacén, talleres, sucursales"
+],
+"9ad9d10b": [
+"Seat on the council: set tolls, bigger commissions",
+"Asiento en el concejo: fijar aranceles, encargos mayores"
+],
+"bef83eb5": [
+"Eligible from 1,200 reputation, elections on 1 January and 1 July",
+"Elegible desde 1.200 de reputación; elecciones el 1 de enero y el 1 de julio"
+],
+"c26b37f9": [
+"Mayors are eligible from 3,000 reputation, election at the Hanseatic Diet on 24 June",
+"Elegible como burgomaestre desde 3.000 de reputación; elección en la Dieta Hanseática el 24 de junio"
+],
+"9bc47f38": [
+"Surplus weapons go to the shipyard for {0} guilders.",
+"Las armas sobrantes van al astillero por {0} florines."
+],
+"dcc911a1": [
+"The council of {0} accepts you as {1}.",
+"El concejo de {0} te acepta como {1}."
+],
+"c6cc6315": [
+"Lübeck, 1 April 1356. This summer the first general Hanseatic Diet is to meet here. {0} founds a trading house in {1}: an old snekke, the “{2}”, with {3} lasts and {4} guilders in the chest.",
+"Lübeck, 1 de abril de 1356. Este verano se reunirá aquí la primera Dieta Hanseática general. {0} funda una casa comercial en {1}: una vieja esneca, la «{2}», con {3} lasts y {4} florines en el arcón."
+],
+"27901c08": [
+"As a burgher of {0} you buy 5 % cheaper there and sell 5 % dearer. {1}",
+"Como vecino de {0} compras allí un 5 % más barato y vendes un 5 % más caro. {1}"
+],
+"e4867d73": [
+"Origin: {0}. {1}",
+"Origen: {0}. {1}"
+],
+"1e7e65b7": [
+"Captain {0} commands your snekke, a skipper with little experience, wages {1} guilders a day. No pirates hunt a humble pedlar yet; that changes once you make a name as a trader.",
+"El capitán {0} manda tu esneca, un patrón con poca experiencia, soldada de {1} florines al día. Ningún pirata persigue todavía a un humilde buhonero; eso cambiará cuando destaques como tratante."
+],
+"fab2f8f8": [
+"Tip: Buy what a town produces and sell it where it is needed. Large quantities push the price down.",
+"Consejo: compra lo que produce una ciudad y véndelo donde se necesita. Las grandes cantidades hacen bajar el precio."
+],
+"af7734cd": [
+"Your campaign runs until the Peace of Stralsund on 24 May 1370. “Course of time” on the goals card records what happens in the Hansa.",
+"Tu campaña dura hasta la Paz de Stralsund, el 24 de mayo de 1370. «El paso del tiempo», en la tarjeta de objetivos, recoge lo que sucede en la Hansa."
+],
+"29cfc929": [
+"not a saved game",
+"no es una partida"
+],
+"6962d819": [
+"Crop failure: grain is getting scarce in {c}.",
+"Mala cosecha: el grano escasea en {c}."
+],
+"5cf2efa1": [
+"Poor catch, {c} is short of herring.",
+"Mala pesca: en {c} falta arenque."
+],
+"e2bae80e": [
+"{c} has run out of stockfish.",
+"En {c} se ha acabado el bacalao seco."
+],
+"79e569a8": [
+"A fire in {c}, timber is urgently needed.",
+"Un incendio en {c}: se necesita madera con urgencia."
+],
+"9d7b91e9": [
+"{c} is short of salt for pickling.",
+"En {c} falta sal para salar."
+],
+"caa79b5b": [
+"Furs are in demand at court in {c}.",
+"En la corte de {c} se piden pieles."
+],
+"61ae9585": [
+"Word from {0}: a glut of {1}, prices are falling.",
+"Llegan noticias de {0}: exceso de {1}, los precios bajan."
+],
+"d215a8ea": [
+"{0} has become scarce in {c}.",
+"En {c} hay escasez de {0}."
+],
+"45249ca9": [
+"The chest is empty. Wages, upkeep and storage keep costing money, and the workshops stand idle. Sell goods or ships before your debts exceed your wealth.",
+"El arcón está vacío. La soldada, el mantenimiento y el almacén siguen costando dinero, y los talleres están parados. Vende mercancías o barcos antes de que las deudas superen tu patrimonio."
+],
+"5022444f": [
+"In {0} the skippers expect a storm tomorrow.",
+"En {0} los patrones esperan tormenta para mañana."
+],
+"af0453ea": [
+"The swell is getting heavier, clouds are piling up on the horizon. A storm threatens for tomorrow.",
+"El oleaje se hace más fuerte y se acumulan nubes en el horizonte. Mañana amenaza tormenta."
+],
+"57899f8e": [
+"The storm is dying down.",
+"La tormenta amaina."
+],
+"880a801b": [
+"A storm is brewing. You have to heave to, and the voyage takes a day longer.{0}",
+"Se avecina una tormenta. Tenéis que capear y el viaje dura un día más.{0}"
+],
+"0ed43736": [
+" {0} takes damage, hull {1} %.",
+" {0} sufre daños, casco {1} %."
+],
+"5655a60d": [
+"Storm at sea. The crew reefs the sails.",
+"Tormenta en el mar. La tripulación arriza las velas."
+],
+"0f8e4a29": [
+"Thick fog. The pilot casts the sounding lead.",
+"Niebla espesa. El práctico echa la sonda."
+],
+"5dcfa945": [
+"Your reputation is growing. People now call you {0}.",
+"Tu reputación crece. Ahora te llaman {0}."
+],
+"0a80c373": [
+"As a trader you attract attention: from now on pirates lie in wait on your routes. Your convoy may now have two ships, and the shipyard will build you a cog.",
+"Como tratante llamas la atención: desde ahora los piratas acechan en tus rutas. Tu convoy puede tener ya dos barcos, y el astillero te construye una coca."
+],
+"3f4dc178": [
+"As a merchant your convoy may have three ships; the big shipyards now build you a hulk as well. Carvels are available from the rank of Long-distance trader.",
+"Como mercader tu convoy puede tener tres barcos; los grandes astilleros te construyen ahora también una urca. Las carabelas llegan con el rango de mercader de ultramar."
+],
+"b40aeaa9": [
+"Freight",
+"Flete"
+],
+"2f9652f8": [
+"Collect",
+"Recoger"
+],
+"0925ca66": [
+"Procure",
+"Conseguir"
+],
+"01c70eb0": [
+"Message",
+"Mensaje"
+],
+"389849e1": [
+"Passage",
+"Pasaje"
+],
+"6597cd20": [
+"Baker",
+"Panadero"
+],
+"32516cbb": [
+"Brewer",
+"Cervecero"
+],
+"d8f9e7c0": [
+"Monastery",
+"Monasterio"
+],
+"870447ef": [
+"Innkeeper",
+"Tabernero"
+],
+"ee479557": [
+"Cooper",
+"Tonelero"
+],
+"44e764e7": [
+"Carpenter",
+"Carpintero"
+],
+"5739302e": [
+"Herring salter",
+"Salador de arenques"
+]
+}

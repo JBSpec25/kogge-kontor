@@ -1,0 +1,370 @@
+{
+"ad5f8a5c": [
+"Full beard",
+"Barba poblada"
+],
+"226fc7a7": [
+"Chin beard",
+"Perilla"
+],
+"9c3e5581": [
+"Moustache",
+"Bigote"
+],
+"8b6b4004": [
+"Stubble",
+"Barba de tres días"
+],
+"5592bab6": [
+"Curls",
+"Rizos"
+],
+"3c2a2382": [
+"Plait",
+"Trenza"
+],
+"b9dc9c3a": [
+"Bun",
+"Moño"
+],
+"176ee1a3": [
+"plain",
+"sencillo"
+],
+"8b1ed60a": [
+"Gold chain",
+"Cadena de oro"
+],
+"7209fbcc": [
+"Fur collar",
+"Cuello de piel"
+],
+"b36fbc6e": [
+"Sand",
+"Arena"
+],
+"4b4498a1": [
+"Dove",
+"Gris paloma"
+],
+"db22802c": [
+"Brick",
+"Ladrillo"
+],
+"4c60838a": [
+"Sage",
+"Salvia"
+],
+"9264cde5": [
+"Ochre",
+"Ocre"
+],
+"227bc883": [
+"Merchant family",
+"Familia de mercaderes"
+],
+"78537e1e": [
+"Your father leaves you 500 guilders more in the chest.",
+"Tu padre te deja 500 florines más en el arcón."
+],
+"775cc247": [
+"Seafaring family",
+"Familia de patrones"
+],
+"4848973f": [
+"Your captain is an old friend of the family: Seamanship 2, plus 2 more sailors on board.",
+"Tu capitán es un viejo amigo de la familia: Náutica 2, y además 2 marineros más a bordo."
+],
+"1f1d64c9": [
+"Craftsman's family",
+"Familia de artesanos"
+],
+"07e8d1fe": [
+"The guilds know your name: 40 reputation in your home seat from the first day.",
+"Los gremios conocen tu nombre: 40 de reputación en tu sede desde el primer día."
+],
+"3ebf6d5d": [
+"Kontor clerk",
+"Escribiente de factoría"
+],
+"41c92d3f": [
+"You spent years writing price lists in the Kontor: you know the prices of all Hanseatic towns from the start.",
+"Pasaste años escribiendo listas de precios en la factoría: desde el inicio conoces los precios de todas las ciudades hanseáticas."
+],
+"08e323c7": [
+"Mercenary family",
+"Familia de mercenarios"
+],
+"6efd93d8": [
+"2 more crossbows on board, and your captain fights better: Combat 2.",
+"2 ballestas más a bordo, y tu capitán lucha mejor: Combate 2."
+],
+"31883601": [
+"<h1 id=\"wiz-title\">A new trading house</h1><p>Lübeck, 1 April 1356. Who is founding the trading house?</p>",
+"<h1 id=\"wiz-title\">Una nueva casa comercial</h1><p>Lübeck, 1 de abril de 1356. ¿Quién funda la casa comercial?</p>"
+],
+"2582499b": [
+"<div class=\"opt\"><label class=\"flabel\" for=\"wiz-name\">Name</label><div class=\"namerow\"><input id=\"wiz-name\" maxlength=\"28\" autocomplete=\"off\" placeholder=\"e.g. {0}\" value=\"{1}\"><button class=\"dice\" type=\"button\" data-act=\"wiz-dice\">Random</button></div></div>",
+"<div class=\"opt\"><label class=\"flabel\" for=\"wiz-name\">Nombre</label><div class=\"namerow\"><input id=\"wiz-name\" maxlength=\"28\" autocomplete=\"off\" placeholder=\"p. ej. {0}\" value=\"{1}\"><button class=\"dice\" type=\"button\" data-act=\"wiz-dice\">Al azar</button></div></div>"
+],
+"2f7a559c": [
+"<div class=\"opt\"><span class=\"flabel\">Character</span>{0}<button class=\"dice\" type=\"button\" data-act=\"wiz-look\" style=\"margin-top:6px\">Random appearance</button></div>",
+"<div class=\"opt\"><span class=\"flabel\">Personaje</span>{0}<button class=\"dice\" type=\"button\" data-act=\"wiz-look\" style=\"margin-top:6px\">Aspecto al azar</button></div>"
+],
+"560b83da": [
+"Merchant woman",
+"Mercadera"
+],
+"2893456f": [
+"<div class=\"opt\"><span class=\"flabel\">Age</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Edad</span>{0}</div>"
+],
+"42eaad30": [
+"<div class=\"opt\"><span class=\"flabel\">Headwear</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Tocado</span>{0}</div>"
+],
+"89894273": [
+"<div class=\"opt\"><span class=\"flabel\">Hairstyle</span>{0}{1}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Peinado</span>{0}{1}</div>"
+],
+"9994fd37": [
+"<span class=\"small\">Under a coif, veil or barbette the hair cannot be seen.</span>",
+"<span class=\"small\">Bajo la cofia, el velo o el barboquejo no se ve el cabello.</span>"
+],
+"b6a271bb": [
+"<div class=\"opt\"><span class=\"flabel\">Beard</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Barba</span>{0}</div>"
+],
+"0542ff56": [
+"<div class=\"opt\"><span class=\"flabel\">Hair</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Cabello</span>{0}</div>"
+],
+"79f57ba7": [
+"<div class=\"opt\"><span class=\"flabel\">Skin</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Piel</span>{0}</div>"
+],
+"569e6265": [
+"<div class=\"opt\"><span class=\"flabel\">Garb</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Vestimenta</span>{0}</div>"
+],
+"f0ce28a7": [
+"<div class=\"opt\"><span class=\"flabel\">Finery</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Adorno</span>{0}</div>"
+],
+"0fb14a63": [
+"<h1 id=\"wiz-title\">Origin and house mark</h1><p>Where do you come from, and with which sign do you mark your barrels and bales?</p>",
+"<h1 id=\"wiz-title\">Origen y marca de la casa</h1><p>¿De dónde vienes y con qué signo marcas tus barriles y fardos?</p>"
+],
+"c024bd3f": [
+"<div class=\"opt\"><span class=\"flabel\">House mark</span><div class=\"hmset\" role=\"group\">",
+"<div class=\"opt\"><span class=\"flabel\">Marca de la casa</span><div class=\"hmset\" role=\"group\">"
+],
+"7fe0509c": [
+"<div class=\"opt\"><span class=\"flabel\">House colour</span>{0}</div>",
+"<div class=\"opt\"><span class=\"flabel\">Color de la casa</span>{0}</div>"
+],
+"01eb3e1e": [
+"<h1 id=\"wiz-title\">Your home seat</h1><p>Here you hold citizenship: buy 5 % cheaper, sell 5 % dearer. With reputation in your home seat you rise, from newcomer to mayor.</p><div class=\"homes\">",
+"<h1 id=\"wiz-title\">Tu sede</h1><p>Aquí tienes la ciudadanía: compras un 5 % más barato y vendes un 5 % más caro. Con reputación en tu sede asciendes, de recién llegado a burgomaestre.</p><div class=\"homes\">"
+],
+"e91f2066": [
+"<span class=\"pk\">{0}</span><span>{1}</span><span>Produces {2} · needs {3}</span></button>",
+"<span class=\"pk\">{0}</span><span>{1}</span><span>Produce {2} · necesita {3}</span></button>"
+],
+"5ff8798d": [
+"<h1 id=\"wiz-title\">Trading house {0}</h1><div class=\"summary\">{1}<dl>",
+"<h1 id=\"wiz-title\">Casa comercial {0}</h1><div class=\"summary\">{1}<dl>"
+],
+"dd8ba2f9": [
+"<dt>House mark</dt><dd>{0}</dd><dt>Origin</dt><dd>{1}: {2}</dd>",
+"<dt>Marca de la casa</dt><dd>{0}</dd><dt>Origen</dt><dd>{1}: {2}</dd>"
+],
+"3a69049e": [
+"<dt>Home seat</dt><dd>{0}</dd><dt>Advantage</dt><dd>{1}: {2}</dd>",
+"<dt>Sede</dt><dd>{0}</dd><dt>Ventaja</dt><dd>{1}: {2}</dd>"
+],
+"27c30be5": [
+"<dt>Start</dt><dd>{0} guilders, an old snekke of {1} lasts, 9 sailors, {2}, an inexperienced captain</dd>",
+"<dt>Inicio</dt><dd>{0} florines, una vieja esneca de {1} lasts, 9 marineros, {2}, un capitán sin experiencia</dd>"
+],
+"7db35f4e": [
+"4 crossbows and 2 suits of armour",
+"4 ballestas y 2 armaduras"
+],
+"114c8ceb": [
+"2 crossbows",
+"2 ballestas"
+],
+"0bbfe39e": [
+"<dt>Saved game</dt><dd>Slot {0}{1}</dd></dl></div>",
+"<dt>Partida</dt><dd>Ranura {0}{1}</dd></dl></div>"
+],
+"d9a9b6bd": [
+" (will be overwritten)",
+" (se sobrescribirá)"
+],
+"4798d5cc": [
+"<div class=\"opt\"><span class=\"flabel\">Game mode</span><div class=\"chipset\" role=\"group\">",
+"<div class=\"opt\"><span class=\"flabel\">Modo de juego</span><div class=\"chipset\" role=\"group\">"
+],
+"79ea8caf": [
+"Open game",
+"Partida libre"
+],
+"0608e9a8": [
+"Campaign until 1370",
+"Campaña hasta 1370"
+],
+"d5407f0a": [
+"Campaign: the game ends with the Peace of Stralsund on 24 May 1370. Then your wealth, reputation, offices and deeds are counted, and you earn your place in the Book of Honour.",
+"Campaña: la partida termina con la Paz de Stralsund el 24 de mayo de 1370. Entonces cuentan tu riqueza, reputación, cargos y hazañas, y obtienes tu lugar en el Libro de Honor."
+],
+"53d91e5a": [
+"Open game: no end. Your aim is to rise from pedlar to Alderman of the Hansa; the goals card leads you there chapter by chapter.",
+"Partida libre: sin final. Tu meta es ascender de buhonero a Decano de la Hansa; la tarjeta de objetivos te lleva hasta allí capítulo a capítulo."
+],
+"1512581d": [
+"<div class=\"opt\"><span class=\"flabel\">Seasons</span><div class=\"chipset\" role=\"group\">",
+"<div class=\"opt\"><span class=\"flabel\">Estaciones</span><div class=\"chipset\" role=\"group\">"
+],
+"bce5a988": [
+"Noticeable",
+"Marcadas"
+],
+"17538a96": [
+"Mild",
+"Suaves"
+],
+"30aeef0b": [
+"<span class=\"small\">{0} You can change this later under “Saved games”.</span></div>",
+"<span class=\"small\">{0} Puedes cambiarlo más tarde en «Partidas».</span></div>"
+],
+"0ee24bb7": [
+"Hinrik",
+"Hinrik"
+],
+"57a4862f": [
+"Gerd",
+"Gerd"
+],
+"5cfc9096": [
+"Tidemann",
+"Tidemann"
+],
+"8f3b546f": [
+"Bertram",
+"Bertram"
+],
+"ecd34f4e": [
+"Johan",
+"Johan"
+],
+"f8ab363f": [
+"Marquard",
+"Marquard"
+],
+"5fc5205f": [
+"Hermen",
+"Hermen"
+],
+"9e822661": [
+"Albert",
+"Albert"
+],
+"e43aa576": [
+"Claus",
+"Claus"
+],
+"27d72bf2": [
+"Detmar",
+"Detmar"
+],
+"10b3ee7b": [
+"Alheyd",
+"Alheyd"
+],
+"ee950b30": [
+"Gesche",
+"Gesche"
+],
+"ee1e7a46": [
+"Wobbeke",
+"Wobbeke"
+],
+"82f25090": [
+"Tale",
+"Tale"
+],
+"89fa04c3": [
+"Geseke",
+"Geseke"
+],
+"2d94cb2d": [
+"Elsebe",
+"Elsebe"
+],
+"5c559b7c": [
+"Grete",
+"Grete"
+],
+"a1a282aa": [
+"Hilleke",
+"Hilleke"
+],
+"72912c48": [
+"Vöge",
+"Vöge"
+],
+"a952cb6b": [
+"Swarte",
+"Swarte"
+],
+"f549052f": [
+"Warendorp",
+"Warendorp"
+],
+"28ad9dae": [
+"Kerkring",
+"Kerkring"
+],
+"3cfae720": [
+"Hövelen",
+"Hövelen"
+],
+"8d758d96": [
+"Plescow",
+"Plescow"
+],
+"bb73cd2a": [
+"Mornewech",
+"Mornewech"
+],
+"dd6a1741": [
+"Darsow",
+"Darsow"
+],
+"9c1f3d2e": [
+"Wickede",
+"Wickede"
+],
+"533964af": [
+"Brekelvelde",
+"Brekelvelde"
+],
+"010522e9": [
+"Castorp",
+"Castorp"
+],
+"2e65c3a1": [
+"Hadewerk",
+"Hadewerk"
+],
+"52c3d226": [
+"Alheyd Warendorp",
+"Alheyd Warendorp"
+],
+"97ba022d": [
+"Hinrik Vöge",
+"Hinrik Vöge"
+]
+}

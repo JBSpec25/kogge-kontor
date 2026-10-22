@@ -1,0 +1,370 @@
+{
+"f8b9eb62": [
+"Fishmonger",
+"Pescadero"
+],
+"8762f69d": [
+"Smith",
+"Herrero"
+],
+"40bf986f": [
+"Cathedral chapter",
+"Cabildo catedralicio"
+],
+"455db2a2": [
+"Draper",
+"Pañero"
+],
+"86c79f15": [
+"Chandler",
+"Cerero"
+],
+"e666eb03": [
+"Furrier",
+"Peletero"
+],
+"9e978805": [
+"Clothmaker",
+"Fabricante de paños"
+],
+"4bdba3d7": [
+"Weaver",
+"Tejedor"
+],
+"496f8e27": [
+"the shipyard",
+"el astillero"
+],
+"156ff60d": [
+"the tailors’ guild",
+"el gremio de sastres"
+],
+"2b12c6cf": [
+"the council cellar",
+"la bodega del concejo"
+],
+"a3f8cd33": [
+"the council of {0}",
+"el concejo de {0}"
+],
+"0288111a": [
+"Already {0} orders taken",
+"Ya tienes {0} encargos"
+],
+"e5c294a6": [
+"{0} lasts short of hold space",
+"Faltan {0} lasts de bodega"
+],
+"ce83228f": [
+"only in your home seat",
+"solo en tu sede"
+],
+"93f89cd3": [
+"Freight taken on: {0} lasts of {1} for {2} to {3}, to be delivered by {4}. Pay {5} guilders.",
+"Flete aceptado: {0} lasts de {1} para {2} a {3}, entrega antes del {4}. Pago: {5} florines."
+],
+"6a300cd5": [
+"Collection order accepted: load {0} lasts of {1} in {2} and bring them to {4} by {3}, for {5}. Pay {6} guilders.",
+"Encargo de recogida aceptado: carga {0} lasts de {1} en {2} y llévalos a {4} antes del {3}, para {5}. Pago: {6} florines."
+],
+"4ee5266e": [
+"Order accepted: procure {0} lasts of {1} for {2} and deliver them to {4} by {3}. Pay {5} guilders{6}.",
+"Encargo aceptado: consigue {0} lasts de {1} para {2} y entrégalos en {4} antes del {3}. Pago: {5} florines{6}."
+],
+"78733de0": [
+" and {0} reputation",
+" y {0} de reputación"
+],
+"f639ff08": [
+"You give up the order for {0}. {1} lasts of {2} go back to his factor; your good name suffers a little.",
+"Renuncias al encargo para {0}. {1} lasts de {2} vuelven a su factor; tu buen nombre se resiente un poco."
+],
+"67900855": [
+"You give up the order for {0}; your good name suffers a little.",
+"Renuncias al encargo para {0}; tu buen nombre se resiente un poco."
+],
+"232ae7a2": [
+"In {0} {1}: Market tab, Orders.",
+"En {0} {1}: pestaña Mercado, Encargos."
+],
+"99690ae4": [
+"one order",
+"un encargo"
+],
+"9d5b0ed1": [
+"{0} orders",
+"{0} encargos"
+],
+"0ae0e79f": [
+"goods are waiting to be collected",
+"hay mercancía esperando a ser recogida"
+],
+"8a93b3a2": [
+"{0} lasts of {1} for {2} loaded in {3}. Deliver to {4} by {5}.",
+"{0} lasts de {1} para {2} cargados en {3}. Entrega en {4} antes del {5}."
+],
+"61fd8185": [
+"The message has been delivered",
+"El mensaje ha sido entregado"
+],
+"ba4784ac": [
+"The pilgrims go ashore",
+"Los peregrinos desembarcan"
+],
+"39934eea": [
+"{0} lasts of {1} delivered",
+"{0} lasts de {1} entregados"
+],
+"de0ac16b": [
+"{0} in {1}, for {2}. Pay {3} guilders{4}{5}.",
+"{0} en {1}, para {2}. Pago: {3} florines{4}{5}."
+],
+"31a286fc": [
+", halved for being late",
+", reducido a la mitad por el retraso"
+],
+"711bd07f": [
+"The order for {0} is lost with your ship.",
+"El encargo para {0} se ha perdido con tu barco."
+],
+"453f7ebe": [
+"Council commission failed: {0} lasts of {1} did not arrive in time. The council is displeased.",
+"Encargo del concejo fallido: {0} lasts de {1} no llegaron a tiempo. El concejo está disgustado."
+],
+"309f6187": [
+"{0} has lost patience: the order to {1} has lapsed, and your good name suffers.",
+"{0} ha perdido la paciencia: el encargo a {1} ha caducado y tu buen nombre se resiente."
+],
+"83cd5f32": [
+"{0} to {1}",
+"{0} a {1}"
+],
+"afa5a065": [
+"Procure {0} for {1}",
+"Conseguir {0} para {1}"
+],
+"ce43b5ec": [
+"Message to {0}",
+"Mensaje a {0}"
+],
+"9829a6ab": [
+"Pilgrims to {0}",
+"Peregrinos a {0}"
+],
+"4ad62e9e": [
+"<b class=\"frlate\">{0} {1} late, half pay</b>",
+"<b class=\"frlate\">{0} {1} de retraso, media paga</b>"
+],
+"982963c1": [
+"day",
+"día"
+],
+"e94f59f3": [
+"days",
+"días"
+],
+"62cf68b8": [
+"{0} {1} left, by {2}",
+"aún {0} {1}, hasta el {2}"
+],
+"864e4140": [
+"{0} days there, back by {1}",
+"{0} días de ida, vuelta antes del {1}"
+],
+"2235e916": [
+"about {0} {1}, by {2}",
+"aprox. {0} {1}, hasta el {2}"
+],
+"99aadaf8": [
+"{0} lasts short of space",
+"Faltan {0} lasts de espacio"
+],
+"32ee84b1": [
+"Load",
+"Cargar"
+],
+"953952ed": [
+"<span class=\"frwhere\">Collect in {0}</span>",
+"<span class=\"frwhere\">Recoger en {0}</span>"
+],
+"575eedda": [
+"{0} lasts still missing",
+"faltan {0} lasts"
+],
+"39ffafcf": [
+"Deliver · {0} G",
+"Entregar · {0} G"
+],
+"0c8a2f33": [
+"<span class=\"frwhere\">Deliver in {0} · you have {1}</span>",
+"<span class=\"frwhere\">Entregar en {0} · tienes {1}</span>"
+],
+"8f927820": [
+"<button class=\"ybtn on\" type=\"button\" data-fr=\"give\" data-id=\"{0}\"{1}>Deliver · {2} G</button>",
+"<button class=\"ybtn on\" type=\"button\" data-fr=\"give\" data-id=\"{0}\"{1}>Entregar · {2} G</button>"
+],
+"7ca24bdc": [
+"<span class=\"frwhere\">Deliver in {0}</span>",
+"<span class=\"frwhere\">Entregar en {0}</span>"
+],
+"dece3aa4": [
+"<button class=\"linkbtn\" type=\"button\" data-fr=\"drop\" data-id=\"{0}\">Give up</button>",
+"<button class=\"linkbtn\" type=\"button\" data-fr=\"drop\" data-id=\"{0}\">Renunciar</button>"
+],
+"8121ffc4": [
+"<button class=\"ybtn\" type=\"button\" data-fr=\"take\" data-id=\"{0}\"{1}>Accept</button>{2}",
+"<button class=\"ybtn\" type=\"button\" data-fr=\"take\" data-id=\"{0}\"{1}>Aceptar</button>{2}"
+],
+"06246689": [
+"no hold space",
+"sin bodega"
+],
+"9abe1cec": [
+"{0} lasts of space",
+"{0} lasts de espacio"
+],
+"dfdfed58": [
+"{0} lasts",
+"{0} lasts"
+],
+"c1cf7a81": [
+"<li class=\"frow{0}\"><span class=\"fri\">{1}</span><span class=\"frm\"><b><span class=\"frk\">{2}</span> {3}</b><span class=\"frs\">{4}{5}</span><span class=\"frs\">for {6}{7}</span></span>",
+"<li class=\"frow{0}\"><span class=\"fri\">{1}</span><span class=\"frm\"><b><span class=\"frk\">{2}</span> {3}</b><span class=\"frs\">{4}{5}</span><span class=\"frs\">para {6}{7}</span></span>"
+],
+"1d62943a": [
+" · {0} reputation",
+" · {0} de reputación"
+],
+"8343b76b": [
+"{0} to do here",
+"{0} pendientes aquí"
+],
+"f30528b2": [
+"offer",
+"oferta"
+],
+"53bcfa75": [
+"offers",
+"ofertas"
+],
+"8051e05a": [
+"<h3 class=\"frh\">Accepted <small>{0} of {1}</small></h3><ul class=\"frl\">{2}</ul>",
+"<h3 class=\"frh\">Aceptados <small>{0} de {1}</small></h3><ul class=\"frl\">{2}</ul>"
+],
+"b438036d": [
+"<h3 class=\"frh\">Offers in {0}</h3><p class=\"small frhint\">Freight and collection only need hold space; you are paid on delivery. For procurement you buy the goods yourself wherever they are cheap{1}. New offers roughly every week.</p><ul class=\"frl\">{2}</ul>",
+"<h3 class=\"frh\">Ofertas en {0}</h3><p class=\"small frhint\">Los fletes y las recogidas solo necesitan bodega; se cobran al entregar. Para conseguir mercancía la compras tú mismo donde esté barata{1}. Hay ofertas nuevas más o menos cada semana.</p><ul class=\"frl\">{2}</ul>"
+],
+"4911c2ca": [
+"; the council adds reputation",
+"; el concejo añade reputación"
+],
+"610d55b1": [
+"<p class=\"small frhint\">There are no further orders in {0} right now.</p>",
+"<p class=\"small frhint\">Ahora mismo no hay más encargos en {0}.</p>"
+],
+"b7e7ba7a": [
+"Your Kontor in {0} is finished: a warehouse for {1} lasts.",
+"Tu almacén en {0} está terminado: caben {1} lasts."
+],
+"df73924c": [
+"The Kontor in {0} has been expanded and now holds {1} lasts.",
+"El almacén de {0} se ha ampliado y ahora caben {1} lasts."
+],
+"80f4e26b": [
+"Seamanship",
+"Náutica"
+],
+"9694a9aa": [
+"Trade",
+"Comercio"
+],
+"bdaecd29": [
+"Combat",
+"Combate"
+],
+"0824319c": [
+"Convoy “{0}”",
+"Convoy «{0}»"
+],
+"2d8cc647": [
+"Brewery",
+"Cervecería"
+],
+"6927f80b": [
+"brews 2 lasts of beer from 1 last of grain from the Kontor, about 7 lasts a week",
+"elabora 2 lasts de cerveza con 1 last de grano del almacén, unos 7 lasts por semana"
+],
+"16e35576": [
+"Saltworks",
+"Salinas"
+],
+"226aa071": [
+"boils about 5 lasts of salt a week",
+"produce unos 5 lasts de sal por semana"
+],
+"fdaba1be": [
+"Herring fishery",
+"Pesquería de arenque"
+],
+"42090cdc": [
+"catches about 10 lasts a week in herring season, otherwise just under 2",
+"pesca unos 10 lasts por semana en temporada de arenque; si no, algo menos de 2"
+],
+"febab367": [
+"Timber yard",
+"Maderería"
+],
+"15a911ea": [
+"fells about 6 lasts of timber a week",
+"tala unos 6 lasts de madera por semana"
+],
+"250aaef7": [
+"Estate farm",
+"Granja"
+],
+"de7d8f5b": [
+"harvests about 11 lasts a week in autumn, otherwise 1 to 2",
+"cosecha unos 11 lasts por semana en otoño; si no, de 1 a 2"
+],
+"fdf02c14": [
+"Hammer mill",
+"Martinete"
+],
+"6dcce165": [
+"forges about 4 lasts of iron a week",
+"forja unos 4 lasts de hierro por semana"
+],
+"56b3c21c": [
+"Wax works",
+"Cerería"
+],
+"9bf45f46": [
+"yields just under 2 lasts of wax a week",
+"obtiene algo menos de 2 lasts de cera por semana"
+],
+"5a2f740a": [
+"Fur trade",
+"Peletería"
+],
+"a209acaf": [
+"buys just under 2 lasts of furs a week from trappers",
+"compra a los tramperos algo menos de 2 lasts de pieles por semana"
+],
+"8e0847ac": [
+"Cloth workshop",
+"Taller de paños"
+],
+"0ce82489": [
+"weaves 2 lasts of cloth from 3 lasts of wool from the Kontor, about 3 to 4 lasts a week. Wool is sold in London and Hamburg",
+"teje 2 lasts de paño con 3 lasts de lana del almacén, unos 3 o 4 lasts por semana. La lana se vende en Londres y Hamburgo"
+],
+"c10142f5": [
+"Cooperage",
+"Tonelería"
+],
+"8041100b": [
+"makes barrels from timber from the Kontor, about 3 to 4 lasts of timber a week. Each cooperage lets two breweries, herring fisheries or saltworks deliver a quarter more",
+"fabrica toneles con madera del almacén, unos 3 o 4 lasts de madera por semana. Cada tonelería hace que dos cervecerías, pesquerías de arenque o salinas entreguen una cuarta parte más"
+]
+}

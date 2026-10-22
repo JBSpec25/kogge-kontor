@@ -1,0 +1,20 @@
+{
+"<title>Kogge &amp; Kontor</title>": ["<title>Kogge &amp; Kontor</title>", "<title>Kogge &amp; Kontor</title>"],
+">Ein Handelsspiel der Hansezeit<": [">A trading game of the Hanseatic age<", ">Un juego de comercio de la época hanseática<"],
+">Das Spiel startet in dieser Vorschau nicht.<": [">The game does not start in this preview.<", ">El juego no se inicia en esta vista previa.<"],
+">Die Vorschau in Nachrichten, Mail oder der Dateien-App führt kein JavaScript aus. Öffne Kogge &amp; Kontor über einen Link in Safari oder die Datei an einem Computer in Chrome, Safari, Firefox oder Edge.<": [">The preview in Messages, Mail or the Files app does not run JavaScript. Open Kogge &amp; Kontor via a link in Safari, or open the file on a computer in Chrome, Safari, Firefox or Edge.<", ">La vista previa de Mensajes, Mail o la app Archivos no ejecuta JavaScript. Abre Kogge &amp; Kontor desde un enlace en Safari, o el archivo en un ordenador con Chrome, Safari, Firefox o Edge.<"],
+">Lauf der Zeit<": [">Course of time<", ">El paso del tiempo<"],
+">Tippe eine Stadt an, um Kurs zu setzen<": [">Tap a town to set course<", ">Toca una ciudad para fijar rumbo<"],
+"<h2>Aufträge</h2>": ["<h2>Orders</h2>", "<h2>Encargos</h2>"],
+"<h2>Logbuch</h2>": ["<h2>Logbook</h2>", "<h2>Bitácora</h2>"],
+">Spielstand wird gespeichert.<": [">Saving game.<", ">Guardando la partida.<"],
+">Handelsbuch<": [">Ledger<", ">Libro de cuentas<"],
+">Spielstände und Einstellungen<": [">Saved games and settings<", ">Partidas y ajustes<"],
+"aria-label=\"Gemalte Szene: Hafen oder Kogge auf See\"": ["aria-label=\"Painted scene: harbour or cog at sea\"", "aria-label=\"Escena pintada: puerto o coca en el mar\""],
+"aria-label=\"Zielleiste: tippen zum Feuern oder für Deckung\"": ["aria-label=\"Aiming bar: tap to fire or to take cover\"", "aria-label=\"Barra de tiro: toca para disparar o ponerte a cubierto\""],
+"aria-label=\"Dein Weg in der Hanse\"": ["aria-label=\"Your path in the Hansa\"", "aria-label=\"Tu camino en la Hansa\""],
+"aria-label=\"Seekarte von Nord- und Ostsee mit den Hansestädten\"": ["aria-label=\"Sea chart of the North Sea and Baltic with the Hanseatic towns\"", "aria-label=\"Carta náutica del mar del Norte y el Báltico con las ciudades hanseáticas\""],
+"aria-label=\"Aktionen\"": ["aria-label=\"Actions\"", "aria-label=\"Acciones\""],
+"aria-label=\"Bereiche\"": ["aria-label=\"Sections\"", "aria-label=\"Secciones\""],
+"aria-label=\"Stadtansicht groß\"": ["aria-label=\"Large town view\"", "aria-label=\"Vista grande de la ciudad\""]
+}

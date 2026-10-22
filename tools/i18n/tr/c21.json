@@ -1,0 +1,382 @@
+{
+"1eb24433": [
+"you barely get away",
+"escapáis por poco"
+],
+"b58471c6": [
+"You withdraw to your own ship{0}. The ships are still lying side by side.",
+"Os retiráis a vuestro barco{0}. Los barcos siguen costado con costado."
+],
+"7257002b": [
+", {0} {1} behind",
+", {0} {1} atrás"
+],
+"26681007": [
+"man stays",
+"hombre se queda"
+],
+"1b5e0bcf": [
+"men stay",
+"hombres se quedan"
+],
+"fe35dd5c": [
+"Boarding attack on {0} broken off.",
+"Abordaje contra {0} interrumpido."
+],
+"6e3f8eda": [
+"Axes to the lines!",
+"¡Hachas a los cabos!"
+],
+"864ebf53": [
+"You cut the lines, and the ships drift apart. Whoever stayed on board is driven over the rail.",
+"Cortáis los cabos y los barcos se separan. A quien se quedó a bordo lo echan por la borda."
+],
+"505008e6": [
+"The lines hold. ",
+"Los cabos aguantan. "
+],
+"a75fa173": [
+"{0} {1} admits defeat, but first his men set fire to the hold. You get back on board with {2} guilders of loot, and their ship burns down.",
+"{0} {1} se da por vencido, pero antes sus hombres prenden fuego a la bodega. Volvéis a bordo con {2} florines de botín y su barco arde por completo."
+],
+"e427e0af": [
+"{0} Victory in the boarding fight! {1} Loot: {2} guilders.",
+"{0} ¡Victoria en el abordaje! {1} Botín: {2} florines."
+],
+"e11dccc7": [
+"{0} strikes his colours.",
+"{0} arría la bandera."
+],
+"6c1c4036": [
+"Their deck is yours.",
+"Su cubierta es vuestra."
+],
+"b8a885fc": [
+"The pirates overwhelm the convoy and take the “{0}” with her cargo. For {1} guilders ransom Captain {2} is set free and returns to {3}.",
+"Los piratas vencen al convoy y se llevan la «{0}» con su carga. Por {1} florines de rescate el capitán {2} queda libre y vuelve a {3}."
+],
+"bb5030c9": [
+"The pirates overwhelm you and take the “{0}” with her cargo. For {1} guilders ransom {2} puts you ashore in {3}.",
+"Los piratas os vencen y se llevan la «{0}» con su carga. Por {1} florines de rescate, {2} te deja en tierra en {3}."
+],
+"6231057e": [
+"Captured by pirates under {0}. {1} lost, {2} guilders ransom.",
+"Capturado por los piratas de {0}. {1} perdido, {2} florines de rescate."
+],
+"667c8c2e": [
+"{0} The pirates capture the “{1}”{2}. {3} {4} lost. The rest of the convoy escapes.",
+"{0} Los piratas apresan la «{1}»{2}. {3} {4}. El resto del convoy escapa."
+],
+"09ba8639": [
+" with {0}",
+" con {0}"
+],
+"ebfe9680": [
+"man is",
+"hombre perdido"
+],
+"d81f0a38": [
+"men are",
+"hombres perdidos"
+],
+"a1ed111c": [
+"{0} lost to pirates under {1}.",
+"{0} perdido ante los piratas de {1}."
+],
+"759fb440": [
+"You let them go. Among the flotsam you find {0} guilders.",
+"Los dejáis marchar. Entre los restos encontráis {0} florines."
+],
+"abff0901": [
+"Set all sail, after them!",
+"¡Desplegad todo el trapo, tras ellos!"
+],
+"e456e217": [
+"You catch up with them! They have to fight.",
+"¡Los alcanzáis! Tienen que plantar cara."
+],
+"6d721ebf": [
+"They are too fast and get away. Among the flotsam you find {0} guilders.",
+"Son demasiado rápidos y escapan. Entre los restos encontráis {0} florines."
+],
+"e7b85ebd": [
+"A prize crew takes the ship as the “{0}” via {1} to the moorings in {2}.",
+"Una tripulación de presa lleva el barco como «{0}», pasando por {1}, al amarradero de {2}."
+],
+"ba1726d9": [
+"{0} {1} now sails in your convoy as the “{2}”, hull {3} %.",
+"{0} {1} apresada navega ahora en tu convoy como «{2}», casco al {3} %."
+],
+"542f84db": [
+"The captured",
+"La"
+],
+"1a1e5e1a": [
+"The captured",
+"La"
+],
+"656a7149": [
+"The captured",
+"La"
+],
+"5976f2f4": [
+"A prize crew sails the ship to the next port. The prize brings {0} guilders in prize money.",
+"Una tripulación de presa lleva el barco al próximo puerto. La presa rinde {0} florines."
+],
+"327cf18b": [
+"You lack men for a prize crew ({0} sailors needed). You strip the ship, take rope, sails and weapons worth {1} guilders and scuttle her.",
+"Os faltan hombres para una tripulación de presa (se necesitan {0} marineros). Desmanteláis el barco, os lleváis cabos, velas y armas por valor de {1} florines y lo echáis a pique."
+],
+"83cbd849": [
+" From their hold: {0} lasts of {1}.",
+" De su bodega: {0} lasts de {1}."
+],
+"ab2a4c61": [
+"Your convoy is lost, and the merchantmen are defenceless.",
+"Tu convoy se ha perdido y los mercantes quedan indefensos."
+],
+"87032dea": [
+"Back in {0} without a ship. The shipyard here lets you have an old snekke for {1} guilders.",
+"De vuelta en {0} sin barco. El astillero de aquí te cede una vieja esneca por {1} florines."
+],
+"4ae092ad": [
+"Board!",
+"¡Al abordaje!"
+],
+"bd854b98": [
+"700 {0}px \"Alegreya Sans SC\",\"Alegreya Sans\",sans-serif",
+"700 {0}px \"Alegreya Sans SC\",\"Alegreya Sans\",sans-serif"
+],
+"05054628": [
+"“Fire!”",
+"«¡Fuego!»"
+],
+"83d096b9": [
+"<div class=\"big\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 2l10 18H2z\" fill=\"#ffb4a8\"/><path d=\"M12 9v5M12 16.5v.5\" stroke=\"#5c1b17\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></svg>Return fire coming!</div>",
+"<div class=\"big\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 2l10 18H2z\" fill=\"#ffb4a8\"/><path d=\"M12 9v5M12 16.5v.5\" stroke=\"#5c1b17\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></svg>¡Llega el fuego enemigo!</div>"
+],
+"33baadb7": [
+"<div class=\"wsub\">{0}: {1} · get ready to tap “Cover!”</div><div class=\"dots\"><i></i><i></i><i></i></div>",
+"<div class=\"wsub\">{0}: {1} · prepárate para tocar «¡A cubierto!»</div><div class=\"dots\"><i></i><i></i><i></i></div>"
+],
+"fccfb841": [
+"<div class=\"ah\"><b class=\"g\">{0}</b><span class=\"hint\">tap in the green zone · bright = perfect</span></div>",
+"<div class=\"ah\"><b class=\"g\">{0}</b><span class=\"hint\">toca en la zona verde · claro = perfecto</span></div>"
+],
+"f4abff0b": [
+"Throw the hooks!",
+"¡Lanzad los garfios!"
+],
+"ccc580b1": [
+"Rail",
+"Borda"
+],
+"1df6d6df": [
+"Impact",
+"Impacto"
+],
+"a378e13d": [
+"<div class=\"chips\"><span class=\"up\">Pavises: zone +{0} %</span></div>",
+"<div class=\"chips\"><span class=\"up\">Paveses: zona +{0} %</span></div>"
+],
+"832c736a": [
+"<span style=\"left:{0};color:{1}\">{2}<span class=\"tx\">{3} · centre {4}</span></span>",
+"<span style=\"left:{0};color:{1}\">{2}<span class=\"tx\">{3} · centro {4}</span></span>"
+],
+"2a194c43": [
+"<div class=\"ah\"><b>{0} · {1}{2}</b><span class=\"hint\">tap to aim {3}</span></div>",
+"<div class=\"ah\"><b>{0} · {1}{2}</b><span class=\"hint\">toca {3}</span></div>"
+],
+"d91a2a87": [
+"squad {0} of {1}",
+"escuadra {0} de {1}"
+],
+"5541dc5b": [
+"volley",
+"andanada"
+],
+"cd3785a6": [
+"into the sails",
+"a las velas"
+],
+"2ec29509": [
+"onto the deck",
+"a la cubierta"
+],
+"e919553d": [
+"Victory!",
+"¡Victoria!"
+],
+"15a57dc6": [
+"Plundered",
+"Saqueados"
+],
+"4e9d60a9": [
+"Sailed on",
+"Seguimos navegando"
+],
+"4e7abb37": [
+"Escaped",
+"Escapados"
+],
+"b789f53a": [
+"Passage money paid",
+"Peaje pagado"
+],
+"bc3b77a5": [
+"Merchantman in sight",
+"Mercante a la vista"
+],
+"db4589ae": [
+"Danish privateers!",
+"¡Corsarios daneses!"
+],
+"377a0e6d": [
+"Pirates!",
+"¡Piratas!"
+],
+"6623dec5": [
+"<span class=\"eb\">At sea · course for {0}</span><span class=\"ttl\">{1}</span><span class=\"ln\">{2} · {3}</span>",
+"<span class=\"eb\">En el mar · rumbo a {0}</span><span class=\"ttl\">{1}</span><span class=\"ln\">{2} · {3}</span>"
+],
+"76a3113a": [
+"<span class=\"eb\">At sea · day {0} of {1}</span><span class=\"ttl\">Course for {2}</span>",
+"<span class=\"eb\">En el mar · día {0} de {1}</span><span class=\"ttl\">Rumbo a {2}</span>"
+],
+"94ad221c": [
+"<span class=\"ln\">Wind from the {0} · {1}</span>",
+"<span class=\"ln\">Viento del {0} · {1}</span>"
+],
+"04432276": [
+"<span class=\"eb\">In port · {0}</span><span class=\"ttl\">{1}</span><span class=\"ln\">{2}</span>",
+"<span class=\"eb\">En puerto · {0}</span><span class=\"ttl\">{1}</span><span class=\"ln\">{2}</span>"
+],
+"fb5ef8e3": [
+"North Wind",
+"Viento del Norte"
+],
+"658dda7b": [
+"Baltic Song",
+"Canción del Báltico"
+],
+"7808ccac": [
+"Gull’s Tune",
+"Tonada de la Gaviota"
+],
+"6536a8e7": [
+"Grey Sea",
+"Mar Gris"
+],
+"19eff520": [
+"Harbour",
+"Puerto"
+],
+"db3cb33b": [
+"Sailing",
+"Navegando"
+],
+"b2f86d91": [
+"Shanty on board",
+"Saloma a bordo"
+],
+"317a95df": [
+"Storm at sea",
+"Tormenta en el mar"
+],
+"dc400f0c": [
+"Calm in the fog",
+"Calma en la niebla"
+],
+"a5cec7af": [
+"light",
+"clara"
+],
+"3e2f251a": [
+"dark",
+"oscura"
+],
+"034a7ed1": [
+"pale",
+"pálida"
+],
+"ec30adc7": [
+"golden",
+"dorada"
+],
+"97987fa4": [
+"deep brown",
+"morena"
+],
+"c0b36558": [
+"brown",
+"castaño"
+],
+"f198a029": [
+"blond",
+"rubio"
+],
+"8c6817dd": [
+"black",
+"negro"
+],
+"ce14e8b8": [
+"grey",
+"gris"
+],
+"e1588771": [
+"red",
+"rojo"
+],
+"cf845de8": [
+"chestnut",
+"caoba"
+],
+"3b377337": [
+"white",
+"blanco"
+],
+"25fcdae0": [
+"blue",
+"azul"
+],
+"bbbb29c0": [
+"green",
+"verde"
+],
+"ab88f2f6": [
+"purple",
+"púrpura"
+],
+"188eeeb7": [
+"ochre",
+"ocre"
+],
+"3994c4dc": [
+"Beret",
+"Birrete"
+],
+"f899d2f6": [
+"Hood",
+"Capirote"
+],
+"65ecc524": [
+"Felt hat",
+"Sombrero de fieltro"
+],
+"3ca81a21": [
+"Coif",
+"Cofia"
+],
+"6ad96ea7": [
+"Veil",
+"Velo"
+],
+"5845d939": [
+"Barbette",
+"Barboquejo"
+],
+"41a65106": [
+"Wreath",
+"Corona de flores"
+]
+}

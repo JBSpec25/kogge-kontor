@@ -1,0 +1,382 @@
+{
+"8cf33981": [
+"There is no room for him on board.",
+"No hay sitio para él a bordo."
+],
+"eaa7a57e": [
+"Take him as a clerk",
+"Tomarlo como escribiente"
+],
+"e16027f3": [
+"He can read and write and knows the prices in {0}.",
+"Sabe leer y escribir, y conoce los precios de {0}."
+],
+"199af99f": [
+"He knows nothing new.",
+"No sabe nada nuevo."
+],
+"57ba981d": [
+"You send him home.",
+"Lo mandas a casa."
+],
+"113b10a7": [
+"Pilgrims ask for passage",
+"Unos peregrinos piden pasaje"
+],
+"ab2cca37": [
+"A group of pilgrims wants to travel on your ship to the next port.",
+"Un grupo de peregrinos quiere viajar en tu barco hasta el próximo puerto."
+],
+"d517d3d2": [
+"Take them along",
+"Llevarlos"
+],
+"51584081": [
+"order: passage",
+"encargo: pasaje"
+],
+"a96622b1": [
+"There is no room for them on board. They look for another ship.",
+"No hay sitio para ellos a bordo. Buscan otro barco."
+],
+"bbd05d45": [
+"a group of pilgrims",
+"un grupo de peregrinos"
+],
+"6c7ab184": [
+"The pilgrims want to go to {0}. They pay on arrival; the order is in the Market tab.",
+"Los peregrinos quieren ir a {0}. Pagan a la llegada; el encargo está en la pestaña Mercado."
+],
+"ea2d2a84": [
+"In exchange for work",
+"A cambio de trabajo"
+],
+"ddcb7a45": [
+"One of the pilgrims stays on as a sailor.",
+"Uno de los peregrinos se queda como marinero."
+],
+"d71cde82": [
+"No room on board.",
+"No hay sitio a bordo."
+],
+"8e18bd89": [
+"The pilgrims look for another ship.",
+"Los peregrinos buscan otro barco."
+],
+"b4698c98": [
+"The harbour master wants a special fee",
+"El capitán del puerto exige una tasa especial"
+],
+"df41165f": [
+"“This month there is a surcharge for foreign ships.”",
+"«Este mes hay un recargo para los barcos forasteros.»"
+],
+"bfe5d561": [
+"You pay {0} guilders.",
+"Pagas {0} florines."
+],
+"4e9e3f89": [
+"Negotiate",
+"Negociar"
+],
+"031623b7": [
+"chance rises with reputation, otherwise double",
+"éxito según tu reputación; si falla, el doble"
+],
+"69860704": [
+"Your name counts for something here. The harbour master waives it.",
+"Aquí tu nombre cuenta. El capitán del puerto renuncia a la tasa."
+],
+"0c4bb55d": [
+"He stays firm and now demands double: {0} guilders.",
+"No cede y ahora exige el doble: {0} florines."
+],
+"255e850b": [
+"Lie in the roads",
+"Fondear en la rada"
+],
+"1ae22d22": [
+"no money, wait 1 day",
+"sin pagar, esperar 1 día"
+],
+"edc1f743": [
+"You lie in the roads for a day until the harbour master gives in.",
+"Pasáis un día fondeados en la rada hasta que el capitán del puerto cede."
+],
+"bf2f337f": [
+"Fire in the harbour quarter",
+"Incendio en el barrio del puerto"
+],
+"873913d3": [
+"Flames leap up between the warehouses.",
+"Entre los almacenes se alzan las llamas."
+],
+"1270c6de": [
+"Help put it out",
+"Ayudar a apagarlo"
+],
+"b05ba20c": [
+"+25 reputation, 20 %: 1 sailor injured",
+"+25 de reputación, 20 %: 1 marinero herido"
+],
+"f6eac5e2": [
+"Your people help put out the fire. Reputation +25. A sailor is injured and stays ashore.",
+"Tu gente ayuda a apagar el fuego. Reputación +25. Un marinero resulta herido y se queda en tierra."
+],
+"96b40db6": [
+"Your people help put out the fire. Reputation +25.",
+"Tu gente ayuda a apagar el fuego. Reputación +25."
+],
+"ec27cb81": [
+"Guard the warehouse",
+"Vigilar el almacén"
+],
+"5f0dee10": [
+"For 30 guilders you post guards at ship and warehouse. Nothing is lost.",
+"Por 30 florines pones guardias en el barco y el almacén. No se pierde nada."
+],
+"53608fe6": [
+"Stay on board",
+"Quedarse a bordo"
+],
+"5868b9ce": [
+"You stay on board and watch the fire being put out.",
+"Os quedáis a bordo y veis cómo apagan el fuego."
+],
+"57267eee": [
+"Suspected plague",
+"Sospecha de peste"
+],
+"26f028b7": [
+"The town physician lets no ship berth without quarantine.",
+"El médico de la ciudad no deja atracar a ningún barco sin cuarentena."
+],
+"5822bf40": [
+"Quarantine",
+"Cuarentena"
+],
+"9e297ce6": [
+"3 days, safe",
+"3 días, seguro"
+],
+"0bb5ff4a": [
+"Three days of quarantine outside the town. No one falls ill.",
+"Tres días de cuarentena frente a la ciudad. Nadie enferma."
+],
+"ef130569": [
+"80 G, 20 %: 1 to 2 fall ill",
+"80 G, 20 %: enferman 1 o 2"
+],
+"e1280f21": [
+"80 guilders for the guard. {0} in the town.",
+"80 florines para la guardia. {0} en la ciudad."
+],
+"636f75ab": [
+"sailor falls ill",
+"marinero enferma"
+],
+"198d89cc": [
+"sailors fall ill",
+"marineros enferman"
+],
+"e260483c": [
+"80 guilders for the guard, and you may berth at once.",
+"80 florines para la guardia, y podéis atracar enseguida."
+],
+"228a39fa": [
+"Wait a day",
+"Esperar un día"
+],
+"c7f1b042": [
+"1 day, 10 %: 1 falls ill",
+"1 día, 10 %: enferma 1"
+],
+"a939b223": [
+"You wait a day. A sailor falls ill anyway.",
+"Esperáis un día. Aun así, un marinero enferma."
+],
+"2d05ac6a": [
+"You wait a day, then the physician lets you in.",
+"Esperáis un día y luego el médico os da paso."
+],
+"f65405a0": [
+"Festival in port",
+"Fiesta en el puerto"
+],
+"ca238fd1": [
+"The town is celebrating; in the market spits are turning and beer is flowing.",
+"La ciudad está de fiesta; en el mercado giran los asadores y corre la cerveza."
+],
+"f8661041": [
+"Shore leave",
+"Permiso en tierra"
+],
+"b7691279": [
+"40 G, +10 reputation",
+"40 G, +10 de reputación"
+],
+"5186493b": [
+"You give the crew a feast day, 40 guilders. People speak well of you: reputation +10.",
+"Das a la tripulación un día de fiesta, 40 florines. Hablan bien de ti: reputación +10."
+],
+"2c318a0e": [
+"Use festival prices",
+"Aprovechar los precios de fiesta"
+],
+"5677eba1": [
+"up to 4 lasts of beer or wine at festival prices",
+"hasta 4 lasts de cerveza o vino a precio de fiesta"
+],
+"69c57e9d": [
+"You have neither beer nor wine on board.",
+"No tienes ni cerveza ni vino a bordo."
+],
+"70f9ab2b": [
+"You serve {0} lasts of {1} at the festival and take {2} guilders.",
+"Sirves en la fiesta {1} (lasts: {0}) y ganas {2} florines."
+],
+"2361bf0a": [
+"Carry on as planned",
+"Seguir con lo previsto"
+],
+"e4ec1227": [
+"You stick to your business.",
+"Sigues con tus negocios."
+],
+"fcbf3e23": [
+"The merchants invite you to a feast",
+"Los mercaderes te invitan a un banquete"
+],
+"a0fa2027": [
+"In the Artus Court or the guild hall there is drinking and storytelling.",
+"En la Corte de Artús o en la sala del gremio se bebe y se cuentan historias."
+],
+"6da7531e": [
+"Go",
+"Ir"
+],
+"4d08a2fb": [
+"30 G, prices of 2 ports",
+"30 G, precios de 2 puertos"
+],
+"721a44a4": [
+"30 guilders for the evening, but now you know what is paid in {0}.",
+"30 florines por la velada, pero ahora sabes lo que se paga en {0}."
+],
+"fce4ac0c": [
+"Visit the council",
+"Visitar al concejo"
+],
+"0c2c44b7": [
+"You pay your respects to the council. Reputation +{0}.",
+"Presentas tus respetos al concejo. Reputación +{0}."
+],
+"2dda319a": [
+"You stay on board.",
+"Te quedas a bordo."
+],
+"65244a01": [
+"Sailors want to sign off",
+"Unos marineros quieren darse de baja"
+],
+"4e3ae0d1": [
+"A few men have found better wages in the town.",
+"Unos cuantos hombres han encontrado mejor soldada en la ciudad."
+],
+"6eef0eff": [
+"Pay bounty",
+"Pagar enganche"
+],
+"685d43d9": [
+"3 G per sailor, all stay",
+"3 G por marinero, se quedan todos"
+],
+"0e318ab4": [
+"Everyone gets a bounty of 3 guilders, {0} guilders in all. They all stay.",
+"Cada uno recibe 3 florines de enganche, {0} florines en total. Se quedan todos."
+],
+"f0790445": [
+"Let them go",
+"Dejarlos marchar"
+],
+"5cf1caa6": [
+"−{0} sailors",
+"−{0} marineros"
+],
+"833f14a6": [
+"{0} ashore.",
+"{0} a tierra."
+],
+"0fa32f61": [
+"sailor goes",
+"marinero se va"
+],
+"235d5ba1": [
+"sailors go",
+"marineros se van"
+],
+"04bce460": [
+"Hire new ones",
+"Contratar a otros"
+],
+"12136731": [
+"{0} G, replaced at once",
+"{0} G, reemplazados al momento"
+],
+"bddd132d": [
+"{0} go, {1} new ones come aboard. Bounty {2} guilders.",
+"Se van {0} y suben a bordo {1} nuevos. Enganche: {2} florines."
+],
+"cbc08d8e": [
+"A merchant urgently needs goods",
+"Un mercader necesita mercancía con urgencia"
+],
+"eaac81f3": [
+"A trader on the quay grabs your sleeve: a delivery has fallen through, and his customers are waiting.",
+"Un comerciante del muelle te agarra de la manga: le ha fallado una entrega y sus clientes esperan."
+],
+"526d7bce": [
+"Agree",
+"Comprometerse"
+],
+"137f53f6": [
+"rush order",
+"encargo urgente"
+],
+"f8e92238": [
+"You agree: {0} lasts of {1} here by {2}, {3} guilders. The order is in the Market tab.",
+"Te comprometes: {0} lasts de {1} aquí antes del {2}, {3} florines. El encargo está en la pestaña Mercado."
+],
+"64209bc4": [
+"Ask for more",
+"Pedir más"
+],
+"1aec0b00": [
+"rush order at a higher price",
+"encargo urgente más caro"
+],
+"04c7a15b": [
+"He swallows and agrees: {0} lasts of {1} by {2}, {3} guilders.",
+"Traga saliva y acepta: {0} lasts de {1} antes del {2}, {3} florines."
+],
+"e4e904b1": [
+"That is too much for him. He looks for another skipper.",
+"Le parece demasiado. Busca otro patrón."
+],
+"25be003f": [
+"You have enough to do.",
+"Ya tienes bastante trabajo."
+],
+"7419e64c": [
+"Captain {0} ({1}): {2}. He decides: {3}. {4}",
+"El capitán {0} ({1}): {2}. Decide: {3}. {4}"
+],
+"2d9babe4": [
+"Klaus Störtebeker",
+"Klaus Störtebeker"
+],
+"57fca8b0": [
+"between Skagen, the Sound and Gotland",
+"entre Skagen, el Sund y Gotland"
+]
+}

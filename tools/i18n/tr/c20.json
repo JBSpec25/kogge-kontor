@@ -1,0 +1,402 @@
+{
+"75f45f41": [
+"Danish merchantman",
+"Mercantes daneses"
+],
+"84ac79d0": [
+"Danish privateers",
+"Corsarios daneses"
+],
+"6edbeffc": [
+"Pirates",
+"Piratas"
+],
+"76ffe87d": [
+"driven off",
+"rechazados"
+],
+"2db77e2b": [
+"sunk",
+"hundidos"
+],
+"19ba5b76": [
+"defeated in boarding; their ship went up in flames",
+"vencidos al abordaje; su barco ardió"
+],
+"773bd2da": [
+"defeated, their ship captured",
+"vencidos, su barco apresado"
+],
+"1bdf4e09": [
+"Convoy full",
+"Convoy completo"
+],
+"f747ed70": [
+"{0} sailors needed",
+"Se necesitan {0} marineros"
+],
+"a9fec640": [
+"Clear for action! The pirates are still far off. {0}",
+"¡Zafarrancho de combate! Los piratas aún están lejos. {0}"
+],
+"1852f2e1": [
+"They have the windward position.",
+"Tienen el barlovento."
+],
+"e45147fb": [
+"Whoever gains the windward position shoots with the wind.",
+"Quien gane el barlovento dispara con el viento a favor."
+],
+"5639bca9": [
+"You turn away, all hands to the sheets!",
+"¡Viráis, todos a las escotas!"
+],
+"a27347ae": [
+"Escaped! {0} falls astern.",
+"¡Escapáis! {0} se queda atrás, por la popa."
+],
+"efa3d82b": [
+"Escaped from the pirates under {0}.",
+"Escapado de los piratas de {0}."
+],
+"0293d901": [
+"The escape fails, they are gaining.",
+"La huida fracasa; os ganan terreno."
+],
+"05553fa2": [
+"The escape fails, they are gaining. ",
+"La huida fracasa; os ganan terreno. "
+],
+"ef3ec4ee": [
+"Miss",
+"Fallo"
+],
+"87c87418": [
+"Direct hit · {0}",
+"Impacto de lleno · {0}"
+],
+"c50b79d4": [
+"Hit · {0}",
+"Impacto · {0}"
+],
+"f7aac66a": [
+"The stones",
+"Las piedras"
+],
+"c6a24f95": [
+"The fire arrows",
+"Las flechas incendiarias"
+],
+"261c390b": [
+"All squads",
+"Todas las escuadras"
+],
+"4dc74f7a": [
+"The volley",
+"La andanada"
+],
+"7d050ecb": [
+"man falls",
+"hombre cae"
+],
+"93d76627": [
+"pirate falls",
+"pirata cae"
+],
+"afbd5506": [
+"men fall",
+"hombres caen"
+],
+"423e953c": [
+"pirates fall",
+"piratas caen"
+],
+"399932f1": [
+"{0} {1} into the water.",
+"{0} {1} al agua."
+],
+"fb8a7fa5": [
+"go",
+"van"
+],
+"b992ee01": [
+"goes",
+"va"
+],
+"6dbda200": [
+"Direct hit on the square sail! ",
+"¡Impacto de lleno en la vela cuadra! "
+],
+"f57a412c": [
+"Hits in the sails. ",
+"Impactos en las velas. "
+],
+"dd5ccfcb": [
+"Barely hit. ",
+"Apenas hay impactos. "
+],
+"1e410bc3": [
+"Their sails −{0} %, they are slowing down.",
+"Sus velas −{0} %, van más despacio."
+],
+"324077f8": [
+"The squads mostly miss.",
+"Las escuadras fallan casi todos los tiros."
+],
+"597fc430": [
+"Barely hit.",
+"Apenas hay impactos."
+],
+"fc5095f5": [
+"{0} of {1} squads hit{2}.",
+"Aciertan {0} de {1} escuadras{2}."
+],
+"bb6ec035": [
+", {0} right into the castle",
+", {0} de lleno en el castillo"
+],
+"310a5169": [
+"Direct hit on the castle!",
+"¡Impacto de lleno en el castillo!"
+],
+"f4104777": [
+"Hits on deck.",
+"Impactos en cubierta."
+],
+"ca958cf0": [
+" {0} {1} {2}, and their return fire weakens.",
+" {0} {1} {2}, y su fuego se debilita."
+],
+"e957f801": [
+"of their crossbowmen",
+"de sus ballesteros"
+],
+"7c636e78": [
+"falls",
+"cae"
+],
+"615270ba": [
+"fall",
+"caen"
+],
+"f3ab5795": [
+" The sail catches fire!",
+" ¡La vela se incendia!"
+],
+"73c05502": [
+" Their hull −{0} %.",
+" Su casco −{0} %."
+],
+"cc55cb32": [
+" Their fighting spirit is wavering.",
+" Su moral flaquea."
+],
+"701d09c6": [
+"“Fight back, men!”",
+"«¡Defendeos, hombres!»"
+],
+"55ffd1e8": [
+"“Cock whatever you have!”",
+"«¡Tensad lo que tengáis!»"
+],
+"d56b9a6a": [
+"“For King Valdemar! Shoot!”",
+"«¡Por el rey Valdemar! ¡Disparad!»"
+],
+"c49ed73c": [
+"“Crossbows up – fire!”",
+"«¡Ballestas arriba, fuego!»"
+],
+"39b3df08": [
+"“Match to the gun!”",
+"«¡Mecha a la bombarda!»"
+],
+"99ab9c43": [
+"“Give the Hansa men a taste of our bolts!”",
+"«¡Que los hanseáticos prueben los virotes!»"
+],
+"7058f7e7": [
+"“Load the trebuchet – loose!”",
+"«¡Cargad el trabuquete, ya!»"
+],
+"ae42745b": [
+"“Cock the crossbows! Fire!”",
+"«¡Tensad las ballestas! ¡Fuego!»"
+],
+"b45086e0": [
+"“Let them have it!”",
+"«¡Dadles duro!»"
+],
+"d0fb8ecb": [
+"“Get them, lads!”",
+"«¡A por ellos, muchachos!»"
+],
+"103e4a39": [
+"“Open fire!”",
+"«¡Fuego a discreción!»"
+],
+"904ec210": [
+"Perfect cover!",
+"¡Cobertura perfecta!"
+],
+"1d54640a": [
+"Cover!",
+"¡A cubierto!"
+],
+"f8dc72cd": [
+"Too early",
+"Demasiado pronto"
+],
+"68d95114": [
+"Too late",
+"Demasiado tarde"
+],
+"1bd4d4d0": [
+"Men −{0}",
+"Bajas −{0}"
+],
+"2dd6d0ae": [
+"Hull −{0} %",
+"Casco −{0} %"
+],
+"47957284": [
+"{0}No one is left standing on the pirate ship. You take it without a fight. Loot: {1} guilders.",
+"{0}En el barco pirata no queda nadie en pie. Lo tomáis sin luchar. Botín: {1} florines."
+],
+"0d0c3e19": [
+"{0}The pirate ship burns down and sinks. You fish {1} guilders out of the water.",
+"{0}El barco pirata arde y se hunde. Sacáis del agua {1} florines."
+],
+"c45bf2a1": [
+"{0}{1} strikes sail and surrenders! Loot: {2} guilders.",
+"{0}¡{1} arría las velas y se rinde! Botín: {2} florines."
+],
+"278ffebd": [
+"{0}{1} turns away and flees!",
+"{0}¡{1} vira y huye!"
+],
+"680e394b": [
+"{0}{1} Dusk falls and separates the ships.",
+"{0}{1} Cae la noche y separa los barcos."
+],
+"d0de68ca": [
+"Fight with {0} ended inconclusively.",
+"Combate con {0} sin resultado."
+],
+"1b28477f": [
+" Their ship is yours now.",
+" Su barco es vuestro."
+],
+"340e393d": [
+" Their ship is yours, but you lack men for a prize crew: {0} sailors are needed.",
+" Su barco es vuestro, pero os falta gente para una tripulación de presa: se necesitan {0} marineros."
+],
+"d2e6f05b": [
+"{0} grappling hooks",
+"{0} garfios"
+],
+"b77ef004": [
+"Ready to board! Throw the hooks when the pointer is in the zone above the rail.",
+"¡Listos para el abordaje! Lanza los garfios cuando el indicador esté en la zona sobre la borda."
+],
+"a7f4d717": [
+"They throw their grappling hooks and leap across! Defend the deck.",
+"¡Lanzan los garfios y saltan a bordo! Defended la cubierta."
+],
+"a3dbf97b": [
+"They are on deck. Holding means defending from the castle, and you fight with an advantage. Storming may throw them back, but costs more men. Cutting the lines separates the ships, if it works.",
+"Están en cubierta. Resistir es defenderse desde el castillo, y luchas con ventaja. Cargar quizá los rechace, pero cuesta más hombres. Cortar los cabos separa los barcos, si sale bien."
+],
+"1d590005": [
+"The hooks bite, but they cut the lines with axes.",
+"Los garfios agarran, pero cortan los cabos con hachas."
+],
+"6fe6766a": [
+"The hooks miss and splash into the water.",
+"Los garfios fallan y caen al agua."
+],
+"3012e4e7": [
+"Lines cut",
+"Cabos cortados"
+],
+"94f09636": [
+"Perfect throw! You are across before they can form up.",
+"¡Lanzamiento perfecto! Estáis al otro lado antes de que se organicen."
+],
+"b3c8a929": [
+"The hooks bite. The crew leaps across.",
+"Los garfios agarran. La tripulación salta al otro barco."
+],
+"08f18084": [
+" Now hand-to-hand fighting decides: at most three rounds.",
+" Ahora decide el cuerpo a cuerpo: como mucho tres rondas."
+],
+"5a0599a1": [
+"charge",
+"cargan"
+],
+"6e4e5953": [
+"hold their line",
+"mantienen la línea"
+],
+"01b560ab": [
+"Forward! Your men charge.",
+"¡Adelante! Tu gente carga."
+],
+"5419b7cb": [
+"Hold the line!",
+"¡Mantened la línea!"
+],
+"2bdd341f": [
+"You charge",
+"Cargáis"
+],
+"54690584": [
+"You hold",
+"Resistís"
+],
+"14f6264d": [
+"{0} of them {1}",
+"{0} de ellos {1}"
+],
+"7dab0c7e": [
+"none of them falls",
+"No cae ninguno de ellos"
+],
+"eab34ebd": [
+"{0} {1} of yours",
+"{0} de los tuyos {1}"
+],
+"146ff164": [
+"none of yours",
+"ninguno de los tuyos"
+],
+"0a28ec7f": [
+" You push them back.",
+" Los hacéis retroceder."
+],
+"92e62394": [
+" They push you back.",
+" Os hacen retroceder."
+],
+"f13619cb": [
+" The melee surges back and forth.",
+" La refriega va y viene."
+],
+"70d56bc5": [
+"{0} After three rounds the attack flags. You withdraw to your own ship; the ships are still lying side by side.",
+"{0} Tras tres rondas el ataque se agota. Os retiráis a vuestro barco; los barcos siguen costado con costado."
+],
+"77b613f8": [
+"{0} They cannot break through and withdraw to their ship. Their fighting spirit has suffered.",
+"{0} No consiguen abrirse paso y se retiran a su barco. Su moral se ha resentido."
+],
+"61a1eebe": [
+"They throw you back! In the retreat {0}. You keep your ship.",
+"¡Os rechazan! En la retirada {0}. Conserváis vuestro barco."
+],
+"67ca6206": [
+"losses rise by {0} {1}",
+"caen {0} {1} más"
+]
+}

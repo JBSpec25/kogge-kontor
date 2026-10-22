@@ -1557,11 +1557,11 @@ em.rep.warn{background:#b5523a}
   const ORD_MAX = () => 2 + (st.rank >= 1 ? 1 : 0) + (st.rank >= 3 ? 1 : 0);
   const freightOpen = () => true;
   const ORD_K = {fracht:'Fracht', abholen:'Abholen', besorgen:'Besorgen', brief:'Botschaft', pilger:'Überfahrt'};
-  const CLIENT = {getreide:['Bäcker', 'Brauer', 'Kloster'], bier:['Schankwirt', 'Bergenfahrer'], holz:['Werft', 'Böttcher', 'Zimmermann'], salz:['Heringssalzer', 'Schonenfahrer'],
-    hering:['Fischhändler', 'Kloster'], stockfisch:['Fischhändler', 'Kloster'], eisen:['Schmied', 'Werft'], wein:['Ratskeller', 'Domkapitel'], tuch:['Gewandschneider', 'Schneidergilde'],
-    wachs:['Domkapitel', 'Kerzengießer'], pelze:['Kürschner', 'Gewandschneider'], wolle:['Tuchmacher', 'Weber']};
-  const CLIENT_INST = new Set(['Kloster', 'Bergenfahrer', 'Werft', 'Schonenfahrer', 'Ratskeller', 'Domkapitel', 'Schneidergilde']);
-  const clientFor = g => { const r = pick(CLIENT[g] || ['Kaufmann']); return CLIENT_INST.has(r) ? (r === 'Bergenfahrer' || r === 'Schonenfahrer' ? `die ${r}` : r === 'Werft' ? 'die Werft' : r === 'Schneidergilde' ? 'die Schneidergilde' : r === 'Ratskeller' ? 'der Ratskeller' : `das ${r}`) : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
+  // Personen bekommen einen Namen dazu, Einrichtungen (mit Artikel) nicht
+  const CLIENT = {getreide:[['Bäcker'], ['Brauer'], ['das Kloster', 1]], bier:[['Schankwirt'], ['die Bergenfahrer', 1]], holz:[['die Werft', 1], ['Böttcher'], ['Zimmermann']], salz:[['Heringssalzer'], ['die Schonenfahrer', 1]],
+    hering:[['Fischhändler'], ['das Kloster', 1]], stockfisch:[['Fischhändler'], ['das Kloster', 1]], eisen:[['Schmied'], ['die Werft', 1]], wein:[['der Ratskeller', 1], ['das Domkapitel', 1]], tuch:[['Gewandschneider'], ['die Schneidergilde', 1]],
+    wachs:[['das Domkapitel', 1], ['Kerzengießer']], pelze:[['Kürschner'], ['Gewandschneider']], wolle:[['Tuchmacher'], ['Weber']]};
+  const clientFor = g => { const [r, inst] = pick(CLIENT[g] || [['Kaufmann']]); return inst ? r : `${r} ${pick(NAMES.m)} ${pick(NAMES.s)}`; };
   function freightState() {
     const F = st.freight || (st.freight = {offers:{}, gen:{}, active:[], next:1, done:0});
     F.active.forEach(f => { if (!f.k) f.k = 'fracht'; });
@@ -3370,6 +3370,15 @@ em.rep.warn{background:#b5523a}
     if (res) announce(res.t);
   }
   // ───────── Probezeit und Vollversion (ab Version 47) ─────────
+  // Sprachen: KK_LANGS kommt von der Web- und App-Fassung ({de:'index.html', en:'en.html', es:'es.html'})
+  const LANGS = window.KK_LANGS || null;
+  const LANG = (document.documentElement.lang || 'de').slice(0, 2);
+  function langHTML() {
+    if (!LANGS) return '';
+    return `</div><div class="xfer"><h3>Sprache</h3><div class="chipset" role="group">` +
+      [['de', 'Deutsch'], ['en', 'English'], ['es', 'Español']].filter(([v]) => LANGS[v]).map(([v, l]) => `<button type="button" data-slot="lang" data-v="${v}" lang="${v}" aria-pressed="${LANG === v}">${l}</button>`).join('') +
+      `</div><span class="small">Dein Spielstand bleibt erhalten. Ältere Einträge im Logbuch bleiben in ihrer Sprache.</span>`;
+  }
   // KK_TARGET: 'app' (iPhone-App mit In-App-Kauf), 'web' (Browser, nur Probezeit), sonst ganzes Spiel
   const TARGET = window.KK_TARGET === 'app' || window.KK_TARGET === 'web' ? window.KK_TARGET : 'full';
   const TRIAL_DAY = 60;   // Probezeit: die ersten 60 Spieltage, bis 31. Mai 1356
@@ -9370,6 +9379,7 @@ em.rep.warn{background:#b5523a}
         `<button class="ybtn" type="button" data-slot="new" data-n="${n}">Neu beginnen</button>` +
         (cur ? '' : `<button class="ybtn" type="button" data-slot="del" data-n="${n}">${ui.delAsk === n ? 'Wirklich löschen?' : 'Löschen'}</button>`) + `</div></div>`;
     });
+    h += langHTML();
     h += `</div><div class="xfer"><h3>Bestenliste</h3><div class="chipset" role="group">` + [['a', 'Wer zuerst Ältermann wurde'], ['w', 'Nach Vermögen']].map(([v, l]) => `<button type="button" data-slot="blsort" data-v="${v}" aria-pressed="${!!ui.blW === (v === 'w')}">${l}</button>`).join('') +
       `</div>${blHTML(!!ui.blW)}<span class="small">Jedes Spiel steht einmal in der Liste, mit dem höchsten Vermögen und dem Jahr, in dem du Ältermann wurdest.${saves.cloud && saves.ok ? ' Gesichert in deinem Claude-Konto.' : ''}</span>`;
     if (!st._temp) h += `</div><div class="xfer"><h3>Jahreszeiten in diesem Spiel</h3><div class="chipset" role="group">` +
@@ -9397,6 +9407,7 @@ em.rep.warn{background:#b5523a}
   async function slotAction(t) {
     const n = +t.dataset.n, act = t.dataset.slot;
     if (act === 'blsort') { ui.blW = t.dataset.v === 'w'; renderSaves(); return; }
+    if (act === 'lang') { const v = t.dataset.v; if (!LANGS || !LANGS[v] || v === LANG) return; save(); try { localStorage.setItem('kogge-kontor-sprache', v); } catch (e) { /* dann nur diesmal */ } location.replace(LANGS[v]); return; }
     if (act === 'fullbuy') { await fullBuy(); renderSaves(); return; }
     if (act === 'fullrestore') { await fullRestore(); renderSaves(); return; }
     if (act === 'load') { const sl = getSlot(n); if (sl) { save(); if (saves.db && saves.ok) await flushRemote(); loadState(JSON.parse(JSON.stringify(sl.state)), n); ui.saves = false; renderSaves(); } return; }
@@ -10422,7 +10433,7 @@ em.rep.warn{background:#b5523a}
     {n:'Giebelhaus', cost:4000, civic:1, rep:0.25, d:'Dreigeschossig mit Treppengiebel: täglich 0,25 Ansehen.'},
     {n:'Patrizierhaus', cost:12000, civic:3, rep:0.6, elect:150, d:'Das Haus eines Ratsgeschlechts: täglich 0,6 Ansehen und 150 Stimmen mehr bei der Ratswahl.'}];
   const CIVIC_B = {
-    kirche:{n:'Kapelle stiften', cost:7000, civic:1, d:'Eine Kapelle an der Marienkirche: täglich 0,5 Ansehen.'},
+    kirche:{n:'Kapelle stiften', s:'Kapelle', cost:7000, civic:1, d:'Eine Kapelle an der Marienkirche: täglich 0,5 Ansehen.'},
     kran:{n:'Hafenkran', cost:5000, civic:3, d:'Tretradkran und eigene Werftleute: Ausbessern überall 20 % günstiger.'},
     markt:{n:'Markthalle', cost:6000, civic:3, d:'Gedeckter Markt am Rathaus: Pfundzoll 50 % mehr, Aufträge des Rats 20 % besser bezahlt.'},
     mauer:{n:'Stadtmauer und Türme', cost:10000, civic:4, d:'Neue Mauern und Wachtürme am Hafen: Angriffe 15 % seltener, täglich 0,3 Ansehen.'}
@@ -10458,7 +10469,7 @@ em.rep.warn{background:#b5523a}
       if (j.kind === 'work') { const W = WORKS[j.g]; st.works.push({id:st.nextWork++, g:j.g, d0:st.day, made:0}); t = `Deine ${W.n} in ${C[st.home].n} ist fertig und nimmt die Arbeit auf. Sie liefert ins Kontor.`; }
       else if (j.kind === 'haus') { st.city.house = (st.city.house || 1) + 1; const H = HOUSE[st.city.house]; t = `Dein neues ${H.n} in ${C[st.home].n} ist bezogen. ${H.d}`; }
       else if (j.kind === 'plot') { st.city.extra = (st.city.extra || 0) + 1; t = `Ein weiterer Bauplatz für einen Betrieb in ${C[st.home].n} ist erschlossen.`; }
-      else { const B = CIVIC_B[j.k]; st.city[j.k] = true; t = `${B.n.replace(' stiften', '')} in ${C[st.home].n} vollendet. ${B.d}`; }
+      else { const B = CIVIC_B[j.k]; st.city[j.k] = true; t = `${(B.s || B.n)} in ${C[st.home].n} vollendet. ${B.d}`; }
       gainRepute(3);
       addLog(t, 'gain'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     });
@@ -10499,8 +10510,8 @@ em.rep.warn{background:#b5523a}
       return {lock:'erst den vorigen Bauplatz erschließen'};
     }
     const B = CIVIC_B[p.k];
-    if (c[p.k]) return {built:true, t:B.n.replace(' stiften', '')};
-    if (jobAt(p.k)) return {job:jobAt(p.k), t:B.n.replace(' stiften', '')};
+    if (c[p.k]) return {built:true, t:(B.s || B.n)};
+    if (jobAt(p.k)) return {job:jobAt(p.k), t:(B.s || B.n)};
     return ci < B.civic ? {lock:`ab ${CIVIC[B.civic][1]}`} : !buildOpen() ? {lock:buildLock()} : {free:true};
   }
   function buildCivic(k) {
@@ -10603,7 +10614,7 @@ em.rep.warn{background:#b5523a}
     return G36.vignette(kind, {w:o.w || 96, cid, winter:!!(st && isWinter(st.day)), g:o.g, lvl:o.lvl, idle:o.idle, job:!!job, frac:job ? Math.max(0.08, 1 - jobLeft(job) / job.days) : 0});
   }
   // Bauen: Stadtansicht (nur Gebäude) + Baubuch + Baublatt
-  const civName = k => CIVIC_B[k].n.replace(' stiften', '');
+  const civName = k => (CIVIC_B[k].s || CIVIC_B[k].n);
   function bEntry(k) { // alles, was ein Bauplatz im Baubuch und im Baublatt braucht
     const p = PLOTS.find(q => q.k === k); if (!p) return null;
     const ps = plotState(p), ci = civicIdx(st.repute || 0), busy = buildOpen() && !canStartJob(), w0 = k[0] === 'w';

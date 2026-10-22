@@ -1,0 +1,294 @@
+{
+"3a50330e": [
+"Change",
+"Variación"
+],
+"455b90ab": [
+"Own trade",
+"Comercio propio"
+],
+"52c7d606": [
+"{0}{1} G from {2} {3}",
+"{0}{1} G de {2} {3}"
+],
+"87fc17e3": [
+"sale",
+"venta"
+],
+"626c78e5": [
+"sales",
+"ventas"
+],
+"d018bdd8": [
+"no sale",
+"ninguna venta"
+],
+"7fc39bba": [
+"Pay, contracts, interest",
+"Pagos, contratos, intereses"
+],
+"401bf457": [
+"Running costs",
+"Gastos corrientes"
+],
+"582ffa7f": [
+"In the chest",
+"En el arcón"
+],
+"e36624d1": [
+"<p class=\"small\">Best deal: {0} lasts of {1} in {2}, {3} guilders profit.</p>",
+"<p class=\"small\">Mejor negocio: {0} lasts de {1} en {2}, {3} florines de beneficio.</p>"
+],
+"ce83d818": [
+"<p class=\"small\">Running costs are wages, upkeep of ships and weapons, stores, captains and convoys.{0}</p>",
+"<p class=\"small\">Los gastos corrientes son soldadas, mantenimiento de barcos y armas, almacenes, capitanes y convoyes.{0}</p>"
+],
+"1ec0454f": [
+" They were higher than your profit from trade and freight.",
+" Fueron mayores que tu beneficio por comercio y fletes."
+],
+"bff04ea8": [
+"<h3 class=\"rph\">Your rivals</h3><div class=\"rvcmp\"><div class=\"rvh\"><span></span><span>Wealth</span><span>Reputation</span></div>",
+"<h3 class=\"rph\">Tus rivales</h3><div class=\"rvcmp\"><div class=\"rvh\"><span></span><span>Riqueza</span><span>Reputación</span></div>"
+],
+"4e7154e1": [
+"{0}{1}<small> from {2}</small>",
+"{0}{1}<small> de {2}</small>"
+],
+"f40bfb8d": [
+"</div><p class=\"small\">Whoever has the most reputation wins the mayoral election (from {0}). Their trade moves prices; what they last bought and sold is shown in the market.</p>",
+"</div><p class=\"small\">Quien tenga más reputación gana la elección a burgomaestre (desde {0}). Su comercio mueve los precios; lo último que compraron y vendieron aparece en el mercado.</p>"
+],
+"8d873df2": [
+"{0}: {1} by {2}",
+"{0}: {1} hasta el {2}"
+],
+"e8703de2": [
+"Council commission {0} lasts of {1} by {2}",
+"Encargo del concejo: {0} lasts de {1} hasta el {2}"
+],
+"4c3bffe8": [
+"Contract: {0} lasts of {1} to {2} by {3}",
+"Contrato: {0} lasts de {1} a {2} hasta el {3}"
+],
+"8357e512": [
+"Loan from {0} due on {1}: {2} guilders",
+"Préstamo de {0}, vence el {1}: {2} florines"
+],
+"72f6e187": [
+"{0} repays on {1}",
+"{0} devuelve el {1}"
+],
+"5564c5b2": [
+"Collect {0} from the advance purchase in {1} by {2}",
+"Recoge {0} de la compra anticipada en {1} hasta el {2}"
+],
+"f95f4cff": [
+"Advance purchase of {0} in {1} arrives on {2}",
+"La compra anticipada de {0} en {1} llega el {2}"
+],
+"e679bacd": [
+"Mayoral election in {0} on {1}",
+"Elección a burgomaestre en {0} el {1}"
+],
+"e75a1735": [
+"Hanseatic Diet in Lübeck on {0}",
+"Dieta Hanseática en Lübeck el {0}"
+],
+"62e12826": [
+"Building site finished on {0}",
+"Obra terminada el {0}"
+],
+"32a63f58": [
+"{0} “{1}” finished on {2}",
+"{0} «{1}», terminada el {2}"
+],
+"2e4f6f8c": [
+"Storm threatening tomorrow",
+"Mañana amenaza tormenta"
+],
+"31e3e990": [
+"<h3 class=\"rph\">Coming up</h3>",
+"<h3 class=\"rph\">Lo que viene</h3>"
+],
+"62deb099": [
+"<p class=\"small\">Nothing with a fixed deadline.</p>",
+"<p class=\"small\">Nada con plazo fijo.</p>"
+],
+"0ca81ba5": [
+"<h3 class=\"rph\">Your next goal</h3><p><b>{0}</b><br><span class=\"small\">{1}</span></p><button class=\"ybtn\" type=\"button\" data-qshow=\"{2}\" data-qtab=\"{3}\">Show</button>",
+"<h3 class=\"rph\">Tu próximo objetivo</h3><p><b>{0}</b><br><span class=\"small\">{1}</span></p><button class=\"ybtn\" type=\"button\" data-qshow=\"{2}\" data-qtab=\"{3}\">Mostrar</button>"
+],
+"7e9d7ee7": [
+"<label class=\"rpauto\"><input type=\"checkbox\" data-qauto=\"1\"{0}> Show the report automatically every 14 days</label></div>",
+"<label class=\"rpauto\"><input type=\"checkbox\" data-qauto=\"1\"{0}> Mostrar el informe automáticamente cada 14 días</label></div>"
+],
+"d43f576e": [
+"<div class=\"in qwel\"><span class=\"k\">{0}, {1}</span><h2 id=\"q-title\">Welcome, {2}</h2>",
+"<div class=\"in qwel\"><span class=\"k\">{0}, {1}</span><h2 id=\"q-title\">Te damos la bienvenida, {2}</h2>"
+],
+"146965c8": [
+"<p>You start as a humble pedlar with an old snekke. <b>Your goal:</b> rise from pedlar to Alderman of the Hansa. Trade brings you wealth and rank; sales in {0} bring reputation and offices.</p>",
+"<p>Empiezas como modesto buhonero con una vieja esneca. <b>Tu meta:</b> ascender de buhonero a Decano de la Hansa. El comercio te da riqueza y rango; las ventas en {0}, reputación y cargos.</p>"
+],
+"04a01d3e": [
+"You are playing the campaign until the Peace of Stralsund on 24 May 1370. Then wealth, reputation, offices and deeds count for the Book of Honour.",
+"Juegas la campaña hasta la Paz de Stralsund, el 24 de mayo de 1370. Entonces cuentan la riqueza, la reputación, los cargos y las hazañas para el Libro de Honor."
+],
+"f937759d": [
+"You are playing an open game: it never ends, and you rise as far as you like.",
+"Juegas una partida libre: no termina nunca y asciendes hasta donde quieras."
+],
+"bba5b666": [
+"<p>The card <b>Your path in the Hansa</b> in the Status tab always shows your next goal, with a button that shows you the right place. The first chapter guides you through your first voyage. Every 14 days your clerk presents you with a report.</p>",
+"<p>La tarjeta <b>Tu camino en la Hansa</b> de la pestaña Estado te muestra siempre el próximo objetivo, con un botón que te lleva al lugar adecuado. El primer capítulo te guía en tu primer viaje. Cada 14 días tu escribiente te presenta un informe.</p>"
+],
+"8f5cae8a": [
+"<div class=\"ybtns qbtns\"><button class=\"btn\" type=\"button\" data-qwel=\"skip\"><b>No introduction</b><small>play freely right away</small></button><button class=\"btn primary\" type=\"button\" data-qwel=\"go\"><b>Let's go</b><small>first voyage</small></button></div></div>",
+"<div class=\"ybtns qbtns\"><button class=\"btn\" type=\"button\" data-qwel=\"skip\"><b>Sin introducción</b><small>jugar libremente ya</small></button><button class=\"btn primary\" type=\"button\" data-qwel=\"go\"><b>¡Adelante!</b><small>primer viaje</small></button></div></div>"
+],
+"30b18cd9": [
+"<div class=\"in qwel\"><span class=\"k\">Chapter {0} completed</span><h2 id=\"q-title\">{1}</h2><p>{2}</p>",
+"<div class=\"in qwel\"><span class=\"k\">Capítulo {0} superado</span><h2 id=\"q-title\">{1}</h2><p>{2}</p>"
+],
+"88c5f8ed": [
+"<p class=\"qrew\">The guild gives you <b>{0} guilders</b>.</p>",
+"<p class=\"qrew\">El gremio te regala <b>{0} florines</b>.</p>"
+],
+"52a87d6e": [
+"<h3 class=\"rph\">Chapter {0}: {1}</h3><p class=\"small\">{2}</p>",
+"<h3 class=\"rph\">Capítulo {0}: {1}</h3><p class=\"small\">{2}</p>"
+],
+"f1d456ad": [
+"<button class=\"btn primary wide\" type=\"button\" data-qclose=\"1\">Continue</button></div>",
+"<button class=\"btn primary wide\" type=\"button\" data-qclose=\"1\">Continuar</button></div>"
+],
+"3c26ee89": [
+"You skip the introduction. The goals card keeps showing you the way.",
+"Te saltas la introducción. La tarjeta de objetivos te sigue mostrando el camino."
+],
+"fceff412": [
+"Campaign: {0} left",
+"Campaña: quedan {0}"
+],
+"42f28ece": [
+"Campaign over: {0} points, {1}.",
+"Campaña terminada: {0} puntos, {1}."
+],
+"e18c9d36": [
+"Campaign until the Peace of Stralsund on 24 May 1370. Standing today: {0} points, {1}.",
+"Campaña hasta la Paz de Stralsund, el 24 de mayo de 1370. Situación hoy: {0} puntos, {1}."
+],
+"6551e5b8": [
+"War against Denmark, the Hansa has the upper hand",
+"Guerra contra Dinamarca, la Hansa lleva ventaja"
+],
+"8212711e": [
+"War against Denmark, privateers in the Sound",
+"Guerra contra Dinamarca, corsarios en el Sund"
+],
+"2763b1e8": [
+"Embargo against {0}",
+"Embargo contra {0}"
+],
+"d36824d3": [
+"Plague in {0}",
+"Peste en {0}"
+],
+"d3acc01f": [
+"Poundage for the war",
+"Derecho de libra para la guerra"
+],
+"f6c4a6ea": [
+"<li><span>Nothing has happened yet.</span></li>",
+"<li><span>Todavía no ha pasado nada.</span></li>"
+],
+"ca9f9481": [
+"<h3 class=\"ehead\">Leaderboard</h3>{0}<p class=\"small\">Whoever becomes Alderman first is at the top, then wealth counts. Full list under Saved games.</p>",
+"<h3 class=\"ehead\">Clasificación</h3>{0}<p class=\"small\">Quien llega antes a Decano va arriba; después cuenta la riqueza. Lista completa en Partidas.</p>"
+],
+"9416ced0": [
+"<h3 class=\"ehead\">Book of Honour</h3><ol class=\"honor\">{0}</ol>",
+"<h3 class=\"ehead\">Libro de Honor</h3><ol class=\"honor\">{0}</ol>"
+],
+"25aeca0c": [
+"<div class=\"endcard\"><h2>Peace of Stralsund, 24 May 1370</h2><p>Your campaign is over. This is the Hansa's verdict on the trading house {0}:</p>",
+"<div class=\"endcard\"><h2>Paz de Stralsund, 24 de mayo de 1370</h2><p>Tu campaña ha terminado. Así juzga la Hansa a la casa comercial {0}:</p>"
+],
+"1cb6ab82": [
+"<table class=\"score\">{0}<tr class=\"tot\"><td>Total</td><td class=\"num\">{1}</td></tr></table>",
+"<table class=\"score\">{0}<tr class=\"tot\"><td>Total</td><td class=\"num\">{1}</td></tr></table>"
+],
+"4856c664": [
+"<p class=\"etitle\">{0}</p><p class=\"small\">Your result is in the Book of Honour below the chronicle. You can carry on as an open game or found a new trading house.</p></div>",
+"<p class=\"etitle\">{0}</p><p class=\"small\">Tu resultado figura en el Libro de Honor, bajo la crónica. Puedes seguir como partida libre o fundar una nueva casa comercial.</p></div>"
+],
+"e7367ef0": [
+"Rumour",
+"Rumor"
+],
+"76c01bef": [
+"Rise",
+"Ascenso"
+],
+"34aefad9": [
+"Tip",
+"Consejo"
+],
+"3a85e484": [
+"History",
+"Historia"
+],
+"e6407070": [
+"<div class=\"hmhead\">{0}<div><h2>Home seat {1}</h2><span class=\"sub2\">Trading house {2} · {3}{4}</span></div></div>",
+"<div class=\"hmhead\">{0}<div><h2>Sede: {1}</h2><span class=\"sub2\">Casa comercial {2} · {3}{4}</span></div></div>"
+],
+"46d5c404": [
+"<p class=\"small awayline\">{0} What you can only do here in person, such as storing goods or taking commissions, is possible in {1}.{2}</p>",
+"<p class=\"small awayline\">{0} Lo que solo puedes hacer aquí en persona, como almacenar o aceptar encargos, se hace en {1}.{2}</p>"
+],
+"97e4b2c8": [
+"You are in {0}.",
+"Estás atracado en {0}."
+],
+"33f1d80b": [
+"You are at sea.",
+"Estás en el mar."
+],
+"57d3b8fc": [
+" Your steward trades for you from afar.",
+" Tu administrador comercia por ti a distancia."
+],
+"4e7b0927": [
+"<div class=\"perks\"><div><b>Citizenship:</b> buy 5 % cheaper and sell 5 % dearer here.</div><div><b>{0}:</b> {1}</div></div>",
+"<div class=\"perks\"><div><b>Ciudadanía:</b> aquí compras un 5 % más barato y vendes un 5 % más caro.</div><div><b>{0}:</b> {1}</div></div>"
+],
+"c3c5a75f": [
+"<div class=\"wealth\"><div class=\"holdrow\"><span>Reputation {0}</span><span class=\"small\">{1}</span></div><div class=\"bar\"><i style=\"width:{2}%\"></i></div>",
+"<div class=\"wealth\"><div class=\"holdrow\"><span>Reputación {0}</span><span class=\"small\">{1}</span></div><div class=\"bar\"><i style=\"width:{2}%\"></i></div>"
+],
+"7fb4ba8a": [
+"Highest standing reached",
+"Posición máxima alcanzada"
+],
+"50218821": [
+"<span class=\"small\">Reputation comes from sales here, especially of goods the town needs, plus council commissions, workshops, buildings and victories over pirates.</span></div>",
+"<span class=\"small\">La reputación viene de las ventas aquí, sobre todo de mercancías que la ciudad necesita, además de encargos del concejo, talleres, construcciones y victorias sobre piratas.</span></div>"
+],
+"15c0e8ab": [
+"Offices and unlocks",
+"Cargos y desbloqueos"
+],
+"ecea9e3a": [
+"{0} / {1} lasts{2}",
+"{0} / {1} lasts{2}"
+],
+"84383b49": [
+" · steward",
+" · administrador"
+],
+"5cd51568": [
+"can be built",
+"se puede construir"
+]
+}

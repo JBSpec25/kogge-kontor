@@ -1,0 +1,258 @@
+{
+"e1bf26c0": [
+"<p class=\"small\">New ships are built here and then sail to your home port {0}. There, in the House tab, you assign them to your own convoy or a captain's convoy. At most {1} orders at a time, {2} places at the moorings; you pay when you order.</p><div class=\"shipname\"><input id=\"ship-name\" maxlength=\"22\" autocomplete=\"off\" aria-label=\"Name for the new ship\" placeholder=\"Name of the new ship\" value=\"{3}\"><button class=\"dice\" type=\"button\" data-act=\"ship-dice\">Random</button></div>",
+"<p class=\"small\">Aquí se construyen barcos nuevos, que luego navegan a tu puerto de origen, {0}. Allí, en la pestaña Casa, los asignas a tu convoy o al de un capitán. Como máximo {1} encargos a la vez y {2} plazas en el amarradero; se paga al encargar.</p><div class=\"shipname\"><input id=\"ship-name\" maxlength=\"22\" autocomplete=\"off\" aria-label=\"Nombre del barco nuevo\" placeholder=\"Nombre del barco nuevo\" value=\"{3}\"><button class=\"dice\" type=\"button\" data-act=\"ship-dice\">Al azar</button></div>"
+],
+"f336f93f": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} · {1} days to build</b><span class=\"small\">{2} lasts · speed {3} % · {4} to {5} sailors · {6} weapon places · {7} G a day</span><span class=\"small\">{8}</span></span>",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0} · {1} días de construcción</b><span class=\"small\">{2} lasts · velocidad {3} % · {4} a {5} marineros · {6} puestos de armas · {7} G al día</span><span class=\"small\">{8}</span></span>"
+],
+"0bdf5a6d": [
+"Order · {0} G",
+"Encargar · {0} G"
+],
+"b044f611": [
+"<p class=\"small\" style=\"margin-top:10px\">No shipyard in {0} builds new ships.</p>",
+"<p class=\"small\" style=\"margin-top:10px\">En {0} ningún astillero construye barcos nuevos.</p>"
+],
+"4be775f8": [
+"In a fight",
+"En combate"
+],
+"c1ae7c23": [
+"Under attack by pirates!",
+"¡Lo atacan los piratas!"
+],
+"b61d308f": [
+"At sea bound for {0}, day {1} of {2}",
+"En el mar rumbo a {0}, día {1} de {2}"
+],
+"2823ec37": [
+"Halted in {0}",
+"Detenido en {0}"
+],
+"468f55a2": [
+"Stuck in {0}",
+"Retenido en {0}"
+],
+"c84511cb": [
+"In {0}, {1}{2}",
+"En {0}, {1}{2}"
+],
+"b7e2c505": [
+"<h2>Trading house</h2><span class=\"sub2\">{0}Costs {1} guilders a day</span>",
+"<h2>Casa comercial</h2><span class=\"sub2\">{0}Gastos {1} florines al día</span>"
+],
+"1f8de394": [
+"{0} {1} under captains · ",
+"{0} {1} con capitanes · "
+],
+"9430dee0": [
+"convoy",
+"convoy"
+],
+"577865ae": [
+"convoys",
+"convoyes"
+],
+"c42e6dfa": [
+"Moorings in {0}",
+"Amarradero de {0}"
+],
+"93349751": [
+" · {0} being built",
+" · {0} en construcción"
+],
+"79d1718a": [
+"<p class=\"small\">Captains lead further convoys on fixed routes and trade there on their own. Their price reports add to your knowledge of the markets.{0}</p>",
+"<p class=\"small\">Los capitanes dirigen otros convoyes en rutas fijas y comercian allí por su cuenta. Sus informes de precios se suman a lo que sabes de los mercados.{0}</p>"
+],
+"352dbaa4": [
+" You hire captains at the skippers' house of {0}.",
+" Los capitanes se contratan en la casa de patrones de {0}."
+],
+"5cdc57c5": [
+"<details class=\"cv\" data-det=\"cv{0}\"{1}><summary><span class=\"cvh\"><b>{2}</b><span class=\"small\">Captain {3}</span></span>",
+"<details class=\"cv\" data-det=\"cv{0}\"{1}><summary><span class=\"cvh\"><b>{2}</b><span class=\"small\">Capitán {3}</span></span>"
+],
+"0f940409": [
+" <em class=\"rep{0}\">Report</em>",
+" <em class=\"rep{0}\">Informe</em>"
+],
+"19cb8edf": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"cvdock\" data-id=\"{0}\" data-sh=\"{1}\"{2}>“{3}” to the moorings</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"cvdock\" data-id=\"{0}\" data-sh=\"{1}\"{2}>«{3}» al amarradero</button>"
+],
+"d931c352": [
+"<span class=\"small\">{0} / {1} lasts · {2} sailors · {3} · {4} G a day</span>",
+"<span class=\"small\">{0} / {1} lasts · {2} marineros · {3} · {4} G al día</span>"
+],
+"5e244737": [
+"<span class=\"small\">Route {0} · {1} voyages · profit <span class=\"{2}\">{3}{4} G</span></span>",
+"<span class=\"small\">Ruta {0} · {1} viajes · beneficio <span class=\"{2}\">{3}{4} G</span></span>"
+],
+"2867eafd": [
+" · by your rules",
+" · según tus reglas"
+],
+"cee5b6ed": [
+" · captain trades freely",
+" · el capitán comercia libremente"
+],
+"6967d5d5": [
+"<div class=\"ybtns wrapb\"><button class=\"ybtn{0}\" type=\"button\" data-h=\"redit\" data-id=\"{1}\">Route and goods</button>",
+"<div class=\"ybtns wrapb\"><button class=\"ybtn{0}\" type=\"button\" data-h=\"redit\" data-id=\"{1}\">Ruta y mercancías</button>"
+],
+"8dbc5bd5": [
+"<button class=\"ybtn{0}\" type=\"button\" data-h=\"orders\" data-id=\"{1}\">Orders</button>",
+"<button class=\"ybtn{0}\" type=\"button\" data-h=\"orders\" data-id=\"{1}\">Encargos</button>"
+],
+"8acbc11d": [
+"Sail on",
+"Seguir viaje"
+],
+"55ba4638": [
+"Halt",
+"Detener"
+],
+"1bb8ebbb": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"merge\" data-id=\"{0}\">Into your convoy</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"merge\" data-id=\"{0}\">A tu convoy</button>"
+],
+"bbc35694": [
+"<p class=\"small\">Trade routes with convoys of your own open up with your first branch (from {0}, {1} guilders, in the Town tab of another port).</p>",
+"<p class=\"small\">Las rutas comerciales con convoyes propios se abren con tu primera sucursal (desde {0}, {1} florines, en la pestaña Ciudad de otro puerto).</p>"
+],
+"a30d0bd9": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"rnew\" style=\"margin-top:10px\"{0}>New trade route</button>{1}",
+"<button class=\"ybtn\" type=\"button\" data-h=\"rnew\" style=\"margin-top:10px\"{0}>Nueva ruta comercial</button>{1}"
+],
+"1870a797": [
+"<span class=\"small\"> For that you need a free captain from the skippers' house.</span>",
+"<span class=\"small\"> Para ello necesitas un capitán libre de la casa de patrones.</span>"
+],
+"502513e1": [
+"Your captains",
+"Tus capitanes"
+],
+"5cc0e62c": [
+"<span class=\"small\">{0} · {1} G a day · {2} voyages</span></span>",
+"<span class=\"small\">{0} · {1} G al día · {2} viajes</span></span>"
+],
+"b5fe757e": [
+"leads the {0}",
+"dirige el {0}"
+],
+"c6a8d87e": [
+"leads your convoy",
+"dirige tu convoy"
+],
+"2bdc8122": [
+"unassigned",
+"sin destino"
+],
+"78997b62": [
+"<span class=\"ybtns\"><button class=\"ybtn{0}\" type=\"button\" data-h=\"aboard\" data-id=\"{1}\"{2}>{3}</button><button class=\"ybtn\" type=\"button\" data-h=\"fire\" data-id=\"{4}\"{5}>Dismiss</button></span>",
+"<span class=\"ybtns\"><button class=\"ybtn{0}\" type=\"button\" data-h=\"aboard\" data-id=\"{1}\"{2}>{3}</button><button class=\"ybtn\" type=\"button\" data-h=\"fire\" data-id=\"{4}\"{5}>Despedir</button></span>"
+],
+"676a8924": [
+"Relieve captain",
+"Relevar del mando"
+],
+"65f2ed4c": [
+"Lead your convoy",
+"Dirigir tu convoy"
+],
+"c4432ebb": [
+"<span class=\"small\">New captains every month. Seamanship makes the convoy faster, Trade makes you shrewder at buying and selling, Combat enlarges your target zone and strengthens boarding when you take over their fight or they lead your own convoy. Every convoy needs a captain, yours too.</span>",
+"<span class=\"small\">Capitanes nuevos cada mes. La Náutica da más velocidad, el Comercio más acierto al comprar y vender, y el Combate amplía tu zona de tiro y refuerza el abordaje cuando tomas el mando de su combate o dirigen tu propio convoy. Cada convoy necesita un capitán, también el tuyo.</span>"
+],
+"5ac1b4b0": [
+"<div class=\"yrow\"><span class=\"yl\"><b>{0}</b><span class=\"small\">{1} {2} · {3} {4} · {5} {6}</span><span class=\"small\">Wages {7} G a day</span></span>",
+"<div class=\"yrow\"><span class=\"yl\"><b>{0}</b><span class=\"small\">{1} {2} · {3} {4} · {5} {6}</span><span class=\"small\">Soldada {7} G al día</span></span>"
+],
+"d791c696": [
+"Enough captains",
+"Capitanes suficientes"
+],
+"75b1b275": [
+"Hire · {0} G",
+"Contratar · {0} G"
+],
+"f52f656a": [
+"3 applicants",
+"3 aspirantes"
+],
+"2cb7e784": [
+"<div class=\"in\" role=\"alertdialog\" aria-live=\"assertive\"><span class=\"k\">Messenger from the harbour</span><h2>Pirates!</h2>",
+"<div class=\"in\" role=\"alertdialog\" aria-live=\"assertive\"><span class=\"k\">Mensajero del puerto</span><h2>¡Piratas!</h2>"
+],
+"2832a4eb": [
+"<p>The {0} under Captain {1} is being attacked on the way to {2}. {3} lasts aboard, {4} sailors, {5}.</p>",
+"<p>El {0}, al mando del capitán {1}, es atacado camino de {2}. {3} lasts a bordo, {4} marineros, {5}.</p>"
+],
+"7668c764": [
+"<p class=\"small\">If you take over yourself, you lead the fight as with your own convoy. {0}</p>",
+"<p class=\"small\">Si tomas el mando, diriges el combate como con tu propio convoy. {0}</p>"
+],
+"5dc90164": [
+"With Captain {0} (Combat {1} of 5) your target zone is {2} % larger.",
+"Con el capitán {0} (Combate {1} de 5) tu zona de tiro es un {2} % mayor."
+],
+"d47fb9ec": [
+"<div class=\"ybtns wrapb\"><button class=\"btn primary\" type=\"button\" data-act=\"takeover\">Take over the fight</button><button class=\"btn\" type=\"button\" data-act=\"capfight\">Let the captain decide</button></div>",
+"<div class=\"ybtns wrapb\"><button class=\"btn primary\" type=\"button\" data-act=\"takeover\">Tomar el mando del combate</button><button class=\"btn\" type=\"button\" data-act=\"capfight\">Que decida el capitán</button></div>"
+],
+"6aefd60e": [
+"<p class=\"small\">If you let him decide, he flees, fights with his men or pays tribute, depending on how strong his convoy is.</p></div>",
+"<p class=\"small\">Si le dejas decidir, huye, lucha con sus hombres o paga tributo, según la fuerza de su convoy.</p></div>"
+],
+"c4e401bb": [
+"<div class=\"kontor\"><h3>Town hall of {0}</h3>",
+"<div class=\"kontor\"><h3>Ayuntamiento de {0}</h3>"
+],
+"6bd7ca1a": [
+"<p class=\"small\">From Burgher the council gives procurement commissions with pay and reputation; you find them in the Market tab under Orders when you are in {0}.</p>",
+"<p class=\"small\">Desde vecino, el concejo da encargos de suministro con pago y reputación; los encuentras en la pestaña Mercado, en Encargos, cuando estés en {0}.</p>"
+],
+"7c9101fa": [
+"<p class=\"small\">Council commissions are now listed with all other orders in the Market tab under Orders. They bring pay and reputation.</p>",
+"<p class=\"small\">Los encargos del concejo figuran ahora con todos los demás en la pestaña Mercado, en Encargos. Dan pago y reputación.</p>"
+],
+"4128a315": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1} lasts of {2}</span><span class=\"ybtns\">",
+"<div class=\"krow\"><span class=\"gname\">{0}{1} lasts de {2}</span><span class=\"ybtns\">"
+],
+"b1816f23": [
+"<button class=\"ybtn\" type=\"button\" data-order=\"give\" data-id=\"{0}\"{1}>Deliver</button>",
+"<button class=\"ybtn\" type=\"button\" data-order=\"give\" data-id=\"{0}\"{1}>Entregar</button>"
+],
+"a4b4447b": [
+"<span class=\"small\">Pay {0} G and {1} reputation · {2} {3} left · you have {4} aboard and in the Kontor</span></div>",
+"<span class=\"small\">Pago {0} G y {1} de reputación · {2} {3} de plazo · tienes {4} a bordo y en el almacén</span></div>"
+],
+"92cb8a3d": [
+"<div class=\"krow\"><span class=\"gname\">{0}{1} lasts of {2}</span>",
+"<div class=\"krow\"><span class=\"gname\">{0}{1} lasts de {2}</span>"
+],
+"7e08f5eb": [
+"<span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-order=\"take\" data-id=\"{0}\">Accept</button></span>",
+"<span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-order=\"take\" data-id=\"{0}\">Aceptar</button></span>"
+],
+"ce08868c": [
+"<span class=\"small\">Offer: pay {0} G and {1} reputation, delivery by {2}</span></div>",
+"<span class=\"small\">Oferta: pago {0} G y {1} de reputación, entrega hasta el {2}</span></div>"
+],
+"f8657a84": [
+"<span class=\"flabel\" style=\"margin-top:8px;display:block\">Poundage</span><div class=\"chipset\" role=\"group\">",
+"<span class=\"flabel\" style=\"margin-top:8px;display:block\">Derecho de libra</span><div class=\"chipset\" role=\"group\">"
+],
+"2ffdbedc": [
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Reputation on the council · Mayor: {0}</span><div class=\"gbars\">",
+"<span class=\"flabel\" style=\"margin-top:10px;display:block\">Reputación en el concejo · Burgomaestre: {0}</span><div class=\"gbars\">"
+],
+"60a1b511": [
+"<span class=\"small\">Next council election on {0}. Anyone with {1} reputation is eligible; whoever has the most wins.{2}</span>",
+"<span class=\"small\">Próxima elección del concejo el {0}. Es elegible quien tenga {1} de reputación; gana quien tenga más.{2}</span>"
+]
+}

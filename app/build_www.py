@@ -2,7 +2,8 @@
 """Baut den Ordner www/ der iPhone-App aus der Spieldatei.
 
 Aufruf: python3 build_www.py ../src/kogge-kontor.html
-Danach: npm run native && npx cap sync ios
+Die englische und spanische Fassung liegen daneben (kogge-kontor.en.html, kogge-kontor.es.html)
+und werden zu en.html und es.html. Danach: npm run native && npx cap sync ios
 """
 import json, os, re, shutil, sys
 
@@ -27,6 +28,7 @@ body{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webki
 input,textarea{-webkit-user-select:text;user-select:text}</style>
 <link rel="stylesheet" href="fonts/fonts.css">
 <script>window.KK_TARGET = 'app';</script>
+__LANG__
 <script src="native.js"></script>
 """
 
@@ -48,21 +50,30 @@ def fonts():
     open(os.path.join(out, 'fonts.css'), 'w', encoding='utf-8').write('\n'.join(css) + '\n')
     return len(css)
 
-def page(src_path):
+LANGS = {'de': 'index.html', 'en': 'en.html', 'es': 'es.html'}
+LANG_JS = ("<script>(function(){var F=" + json.dumps(LANGS) + ";window.KK_LANGS=F;var me=document.documentElement.lang;"
+           "try{var L=localStorage.getItem('kogge-kontor-sprache');"
+           "if(!L){var n=((navigator.languages&&navigator.languages[0])||navigator.language||'de').slice(0,2).toLowerCase();L=n==='de'?'de':n==='es'?'es':'en';}"
+           "if(L!==me&&F[L])location.replace(F[L]);}catch(e){}})();</script>")
+
+def page(src_path, lang='de'):
     s = open(src_path, encoding='utf-8').read()
     body = s[s.index('<title>'):]
     # Google Fonts raus, die Schriften liegen in der App
     body, n = re.subn(r'<link rel="(?:preconnect|stylesheet)" href="https://fonts\.(?:googleapis|gstatic)\.com[^>]*>\n?', '', body)
     assert n == 3, n
     assert 'fonts.googleapis' not in body and 'fonts.gstatic' not in body
-    head = HEAD
+    head = HEAD.replace('<html lang="de">', f'<html lang="{lang}">').replace('__LANG__', LANG_JS)
     about = os.path.join(HERE, 'impressum.json')   # Impressum für die App: name, addr, mail, phone, privacy, version, ki
     if os.path.exists(about):
         head += '<script>window.KK_ABOUT = ' + json.dumps(json.load(open(about, encoding='utf-8')), ensure_ascii=False) + ';</script>\n'
-    open(os.path.join(WWW, 'index.html'), 'w', encoding='utf-8').write(head + body)
+    open(os.path.join(WWW, LANGS[lang]), 'w', encoding='utf-8').write(head + body)
     return len(head + body)
 
 if __name__ == '__main__':
     os.makedirs(WWW, exist_ok=True)
     print('Schriften:', fonts(), 'Schnitte')
-    print('index.html:', page(sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'src', 'kogge-kontor.html')), 'Zeichen')
+    de = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'src', 'kogge-kontor.html')
+    for lang in LANGS:
+        src = de if lang == 'de' else de.replace('.html', f'.{lang}.html')
+        print(LANGS[lang] + ':', page(src, lang), 'Zeichen')

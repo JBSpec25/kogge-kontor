@@ -1,0 +1,214 @@
+{
+"4ae0d62a": [
+"you can deliver {0}",
+"puedes entregar {0}"
+],
+"eb7aa442": [
+"collect {0} in {1}",
+"recoger {0} en {1}"
+],
+"bfa6e981": [
+"by {0}",
+"hasta el {0}"
+],
+"ccc6dca2": [
+"{0} accepted",
+"{0} aceptados"
+],
+"2478354a": [
+"not here",
+"aquí no"
+],
+"8f9f3d27": [
+"nothing sold",
+"nada vendido"
+],
+"9ef2f1f0": [
+"loaded: {0}",
+"cargado: {0}"
+],
+"47d49ee1": [
+"{0} {1} put into store",
+"{0} de {1} al almacén"
+],
+"b9fff66b": [
+"{0} {1} taken aboard",
+"{0} de {1} a bordo"
+],
+"fd38ce6b": [
+"{0} {1} lost",
+"perdidos: {0} {1}"
+],
+"b5a191ed": [
+"leave as is",
+"dejar así"
+],
+"74cfc3de": [
+"don't restock",
+"no reponer"
+],
+"8df958c0": [
+"den $1",
+"den $1"
+],
+"fdc3ea8f": [
+"den $1n",
+"den $1n"
+],
+"028de888": [
+"delivered by the {0}",
+"entregados por el {0}"
+],
+"3edb4738": [
+"{0} in {1} completed",
+"Terminada la obra: {0} en {1}"
+],
+"b48d8c99": [
+", {0} {1} wounded",
+", heridos: {0} {1}"
+],
+"e3b7b5cf": [
+"btn primary",
+"btn primary"
+],
+"3db28698": [
+"nothing outstanding",
+"nada pendiente"
+],
+"376d02fc": [
+"the {0} ({1})",
+"el {0} ({1})"
+],
+"069c12ab": [
+"50 % rescued",
+"50 % de rescate"
+],
+"d0320be0": [
+", {0} spoiled",
+", se estropean {0}"
+],
+"8e7f9092": [
+"1 %, 30 %: double",
+"1 %, 30 %: el doble"
+],
+"25f45d42": [
+"<g class=\"pfzone\" aria-label=\"Warning: {0}\">{1}<text x=\"{2}\" y=\"{3}\" text-anchor=\"middle\">⚠ {4}</text></g>",
+"<g class=\"pfzone\" aria-label=\"Aviso: {0}\">{1}<text x=\"{2}\" y=\"{3}\" text-anchor=\"middle\">⚠ {4}</text></g>"
+],
+"816c1a2c": [
+"is stuck",
+"está retenido"
+],
+"7ffd22d4": [
+"{0} {1} hired in {2}.",
+"Contratados en {2}: {0} {1}."
+],
+"b3a6f8b2": [
+"very poor",
+"muy malas"
+],
+"516c3c29": [
+"so do they",
+"ellos también"
+],
+"53e07a32": [
+"use strict",
+"use strict"
+],
+"28bd48fb": [
+"<span class=\"rot\" aria-label=\"Squad {0} of {1}\">{2}</span>",
+"<span class=\"rot\" aria-label=\"Escuadra {0} de {1}\">{2}</span>"
+],
+"c583b696": [
+"<button type=\"button\" data-av=\"mark\" data-v=\"{0}\" aria-pressed=\"{1}\" aria-label=\"House mark {2}\">{3}</button>",
+"<button type=\"button\" data-av=\"mark\" data-v=\"{0}\" aria-pressed=\"{1}\" aria-label=\"Marca de la casa {2}\">{3}</button>"
+],
+"edcd607b": [
+"<div class=\"stat date\" aria-label=\"Date {0}\"><span class=\"d1\">{1}</span><span class=\"d2\">{2}</span></div>",
+"<div class=\"stat date\" aria-label=\"Fecha: {0}\"><span class=\"d1\">{1}</span><span class=\"d2\">{2}</span></div>"
+],
+"61e7ce39": [
+"<div class=\"purse\" aria-label=\"Chest {0} guilders, wealth {1} guilders\">",
+"<div class=\"purse\" aria-label=\"Arcón: {0} florines, riqueza: {1} florines\">"
+],
+"9b6d10dc": [
+"<button class=\"rank\" type=\"button\" data-act=\"rank\" aria-label=\"{0}: show your next goal\">{1}</button>",
+"<button class=\"rank\" type=\"button\" data-act=\"rank\" aria-label=\"{0}: mostrar tu próximo objetivo\">{1}</button>"
+],
+"9041c421": [
+"<button class=\"mbtn\" type=\"button\" data-act=\"music\" aria-pressed=\"{0}\" aria-label=\"{1}\">",
+"<button class=\"mbtn\" type=\"button\" data-act=\"music\" aria-pressed=\"{0}\" aria-label=\"{1}\">"
+],
+"fabb9aa6": [
+"<span class=\"sz dn\" title=\"Season: plenty on offer\">↓</span>",
+"<span class=\"sz dn\" title=\"Temporada: mucha oferta\">↓</span>"
+],
+"49161627": [
+"<span class=\"sz up\" title=\"In demand right now\">↑</span>",
+"<span class=\"sz up\" title=\"Muy demandado ahora\">↑</span>"
+],
+"d8c4bad0": [
+"<small class=\"ks\" title=\"in store\">⌂{0}</small>",
+"<small class=\"ks\" title=\"en depósito\">⌂{0}</small>"
+],
+"1cd71713": [
+"<div class=\"qty\" role=\"group\" aria-label=\"Quantity in lasts\">{0}</div>",
+"<div class=\"qty\" role=\"group\" aria-label=\"Cantidad en lasts\">{0}</div>"
+],
+"f0fe350e": [
+"<svg class=\"spark\" viewBox=\"0 0 {0} {1}\" preserveAspectRatio=\"none\" role=\"img\" aria-label=\"Buying price between {2} and {3} guilders\">",
+"<svg class=\"spark\" viewBox=\"0 0 {0} {1}\" preserveAspectRatio=\"none\" role=\"img\" aria-label=\"Precio de compra entre {2} y {3} florines\">"
+],
+"6e9b1468": [
+"button, input",
+"button, input"
+],
+"cc528030": [
+"{0} {1} open",
+"pendientes: {0} {1}"
+],
+"1f51e7a2": [
+"<div class=\"kq\" role=\"group\" aria-label=\"Quantity\">{0}</div>",
+"<div class=\"kq\" role=\"group\" aria-label=\"Cantidad\">{0}</div>"
+],
+"b28c649a": [
+"<div class=\"chipset vwg\" role=\"group\" aria-label=\"Good\">{0}</div>",
+"<div class=\"chipset vwg\" role=\"group\" aria-label=\"Mercancía\">{0}</div>"
+],
+"99a14d1e": [
+"already close",
+"ya cerca"
+],
+"41d31232": [
+"already far",
+"ya lejos"
+],
+"7391a485": [
+"close in first",
+"acércate primero"
+],
+"955878b9": [
+"<div class=\"ammo2\" role=\"group\" aria-label=\"Weapon\">",
+"<div class=\"ammo2\" role=\"group\" aria-label=\"Arma\">"
+],
+"04895cdb": [
+"Build orders",
+"Encargos de construcción"
+],
+"fbcc369b": [
+"Skippers’ house",
+"Casa de patrones"
+],
+"464e9e83": [
+"needs {0}",
+"necesita {0}"
+],
+"11a7e0ad": [
+"already {0}",
+"ya {0}"
+],
+"3451e2e9": [
+"<div class=\"in\"><div class=\"bsh\"><span class=\"bshart\">{0}</span><div><h2 id=\"bs-title\">{1}</h2><p class=\"small\">{2}</p></div><button class=\"close\" type=\"button\" data-act=\"bs-close\" aria-label=\"Close\">✕</button></div>",
+"<div class=\"in\"><div class=\"bsh\"><span class=\"bshart\">{0}</span><div><h2 id=\"bs-title\">{1}</h2><p class=\"small\">{2}</p></div><button class=\"close\" type=\"button\" data-act=\"bs-close\" aria-label=\"Cerrar\">✕</button></div>"
+]
+}

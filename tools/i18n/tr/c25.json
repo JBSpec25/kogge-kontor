@@ -1,0 +1,274 @@
+{
+"1c18319d": [
+"Fit out 4 crossbows",
+"Equipa 4 ballestas"
+],
+"ea2889b9": [
+"Shipyard tab, Armoury. Every crossbow needs a place and a sailor to man it.",
+"Pestaña Astillero, Armería. Cada ballesta necesita un puesto y un marinero que la maneje."
+],
+"bf306b1e": [
+"Guild brother and the first branch",
+"Cofrade y la primera sucursal"
+],
+"867a8b80": [
+"A branch is a store in another town. The first one opens trade routes for your own convoys and, as a guild brother, building in your town.",
+"Una sucursal es un depósito en otra ciudad. Con la primera se abren las rutas comerciales para tus convoyes y, como cofrade, la construcción en tu ciudad."
+],
+"2082644b": [
+"Your trading house is growing beyond its own town. Now you can build in your town: workshops, a bigger house, civic buildings.",
+"Tu casa comercial crece más allá de su propia ciudad. Ahora puedes construir en tu ciudad: talleres, una casa mayor, edificios cívicos."
+],
+"b1b21ac0": [
+"Found a branch in another town",
+"Funda una sucursal en otra ciudad"
+],
+"c2490ade": [
+"Sail to a port other than {0}, open the Town tab there and tap Found on the Branch tile ({1} guilders, from {2}). The Kontor at home does not count.",
+"Navega a un puerto distinto de {0}, abre allí la pestaña Ciudad y toca Fundar en la casilla Sucursal ({1} florines, desde {2}). El almacén de tu sede no cuenta."
+],
+"6be47e5c": [
+"Hire a second captain",
+"Contrata a un segundo capitán"
+],
+"b232c90e": [
+"Applicants are waiting at the skippers' house in {0} (House tab). A captain leads a convoy of his own.",
+"En la casa de patrones de {0} (pestaña Casa) esperan aspirantes. Un capitán dirige un convoy propio."
+],
+"196ccc9f": [
+"Send a convoy on a trade route",
+"Envía un convoy a una ruta comercial"
+],
+"13acdcb5": [
+"House tab, New trade route: choose ships and captain, circuit or shuttle, ports and goods. The captain then trades on his own.",
+"Pestaña Casa, Nueva ruta comercial: elige barcos y capitán, circuito o lanzadera, puertos y mercancías. Después el capitán comercia por su cuenta."
+],
+"c416f76c": [
+"Builder and merchant",
+"Constructor y mercader"
+],
+"b3973f68": [
+"Building takes time but pays off. Workshops deliver goods to the Kontor, civic buildings bring reputation.",
+"Construir lleva tiempo, pero compensa. Los talleres entregan mercancía al almacén y los edificios cívicos dan reputación."
+],
+"f327dbc1": [
+"With workshops and routes of your own, your house works even when you are not sailing yourself. The council takes notice of you.",
+"Con talleres y rutas propias, tu casa trabaja aunque no navegues tú. El concejo se fija en ti."
+],
+"3c283c35": [
+"Commission a workshop",
+"Encarga un taller"
+],
+"9453b354": [
+"Town tab in {0}: building book, Possible now. A workshop needs the Kontor and delivers a little of its goods every day.",
+"Pestaña Ciudad en {0}: libro de obras, Posible ahora. Un taller necesita el almacén y entrega cada día un poco de mercancía."
+],
+"90d17b11": [
+"Enlarge your house",
+"Amplía tu casa"
+],
+"b898c3a6": [
+"In the town view of {0}, tap your house. A bigger house brings reputation.",
+"En la vista de la ciudad de {0}, toca tu casa. Una casa mayor da reputación."
+],
+"974b1571": [
+"On the council you have a say: tolls, commissions and your town's vote at the Diet. But three families want the same as you: {0}. From now on the clerk's report shows how you stand against them.",
+"En el concejo tienes voz: aranceles, encargos y el voto de tu ciudad en la Dieta. Pero tres familias quieren lo mismo que tú: {0}. A partir de ahora el informe del escribiente muestra cómo vas frente a ellas."
+],
+"6ac60794": [
+"You sit on the council and have your say at the Diet. The highest office of the town is drawing near.",
+"Te sientas en el concejo y tienes voz en la Dieta. El cargo más alto de la ciudad está cada vez más cerca."
+],
+"f26bbb4c": [
+"Vote at the Hanseatic Diet",
+"Vota en la Dieta Hanseática"
+],
+"44c4ef46": [
+"The open questions are under Hanseatic Diet (House tab, home seat). Your vote counts according to reputation and offices.",
+"Las cuestiones abiertas están en Dieta Hanseática (pestaña Casa, sede). Tu voto cuenta según tu reputación y tus cargos."
+],
+"57ad7bf4": [
+"Keep two convoys on trade routes",
+"Mantén dos convoyes en rutas comerciales"
+],
+"ff031278": [
+"House tab: hire more captains and set up new trade routes.",
+"Pestaña Casa: contrata más capitanes y crea nuevas rutas comerciales."
+],
+"e40834aa": [
+"Sign a supply contract",
+"Firma un contrato de suministro"
+],
+"2bf18181": [
+"From Merchant, towns and merchants offer supply contracts: Market tab, Orders, at the bottom. Take one whose goods you can get nearby.",
+"Desde mercader, ciudades y mercaderes ofrecen contratos de suministro: pestaña Mercado, Encargos, abajo. Acepta uno cuya mercancía consigas cerca."
+],
+"af0a7854": [
+"On 1 January and 1 July {0} elects its mayor. Whoever has the most reputation wins.",
+"El 1 de enero y el 1 de julio {0} elige burgomaestre. Gana quien tenga más reputación."
+],
+"9ce884e8": [
+"As Mayor you are one of the great men of the Hansa. One office remains: Alderman of the Hansa.",
+"Como burgomaestre eres uno de los grandes de la Hansa. Queda el cargo más alto: Decano de la Hansa."
+],
+"252cad0a": [
+"Win the election for Mayor",
+"Gana la elección a burgomaestre"
+],
+"0df38e47": [
+"In the town hall (House tab) you can see how your reputation compares with your rivals' and when the election is held.",
+"En el ayuntamiento (pestaña Casa) ves cómo va tu reputación frente a los competidores y cuándo se vota."
+],
+"bd7dfa1c": [
+"Become a member of a Hanseatic Kontor",
+"Hazte miembro de una factoría hanseática"
+],
+"d3a83efd": [
+"From Long-distance trader, the Kontors in Bruges, London, Bergen and Novgorod accept you: there, in the Market tab under Business. Members buy and sell more cheaply there.",
+"Desde mercader de ultramar te admiten las factorías de Brujas, Londres, Bergen y Nóvgorod: allí, en la pestaña Mercado, en Negocios. Los miembros compran y venden allí más barato."
+],
+"1c831970": [
+"On 24 June the Hanseatic Diet elects the Alderman of the Hansa. A mayor with {0} reputation and honour combined is eligible. {1} want the office too; whoever gets it first tops the leaderboard.",
+"El 24 de junio la Dieta Hanseática elige al Decano de la Hansa. Es elegible un burgomaestre con {0} de reputación y honor sumados. También {1} quieren el cargo; quien lo consiga primero encabeza la clasificación."
+],
+"83888bc9": [
+"You stand at the head of the Hansa. The game goes on as long as you like.",
+"Estás a la cabeza de la Hansa. La partida sigue todo lo que quieras."
+],
+"087922cf": [
+"Begin a great project",
+"Empieza una gran obra"
+],
+"dc149095": [
+"House tab, Great projects: a hospital, a new harbour or a peace fleet in {0}. They bring honour.",
+"Pestaña Casa, Grandes obras: un hospital, un puerto nuevo o una flota de paz en {0}. Dan honor."
+],
+"22564082": [
+"Gather {0} reputation and honour",
+"Reúne {0} de reputación y honor"
+],
+"43b611a0": [
+"Reputation comes from sales in your home seat, council commissions, buildings and victories; honour comes from great projects and endowments.",
+"La reputación viene de las ventas en tu sede, los encargos del concejo, las construcciones y las victorias; el honor, de las grandes obras y las donaciones."
+],
+"3541061e": [
+"Become Alderman of the Hansa",
+"Llega a Decano de la Hansa"
+],
+"6a96a5b9": [
+"The election is held at the Hanseatic Diet on 24 June. Under House, Race for the office of Alderman, you see how you stand against your rivals.",
+"La elección es en la Dieta Hanseática del 24 de junio. En Casa, Carrera por el cargo de Decano, ves cómo vas frente a los competidores."
+],
+"6a72e1de": [
+"Goal reached: {0}.",
+"Objetivo cumplido: {0}."
+],
+"515821bc": [
+"Chapter completed: {0}.{1} Next: {2}.",
+"Capítulo superado: {0}.{1} A continuación: {2}."
+],
+"71dda1c2": [
+" The guild gives you {0} guilders.",
+" El gremio te regala {0} florines."
+],
+"23729984": [
+"<span class=\"qbar\"><i style=\"width:{0}%\"></i></span><small>{1} of {2}</small>",
+"<span class=\"qbar\"><i style=\"width:{0}%\"></i></span><small>{1} de {2}</small>"
+],
+"96166024": [
+"<small class=\"qhint\">{0}</small><button class=\"ybtn\" type=\"button\" data-qshow=\"{1}\" data-qtab=\"{2}\">Show</button>",
+"<small class=\"qhint\">{0}</small><button class=\"ybtn\" type=\"button\" data-qshow=\"{1}\" data-qtab=\"{2}\">Mostrar</button>"
+],
+"ec047d64": [
+"<div class=\"qhead\"><span class=\"k\">Your path in the Hansa · Chapter {0} of {1}</span><h2>{2}</h2>",
+"<div class=\"qhead\"><span class=\"k\">Tu camino en la Hansa · Capítulo {0} de {1}</span><h2>{2}</h2>"
+],
+"62e86a13": [
+"<span class=\"small\">Campaign until 24 May 1370 · {0} left · {1} points</span>",
+"<span class=\"small\">Campaña hasta el 24 de mayo de 1370 · quedan {0} · {1} puntos</span>"
+],
+"b7205a2b": [
+"<span class=\"small\">Reward: {0} guilders</span>",
+"<span class=\"small\">Recompensa: {0} florines</span>"
+],
+"175a2cf4": [
+"<button class=\"linkbtn\" type=\"button\" data-qskip=\"1\">Skip introduction</button>",
+"<button class=\"linkbtn\" type=\"button\" data-qskip=\"1\">Saltar la introducción</button>"
+],
+"bf4cda03": [
+"<button class=\"qrep\" type=\"button\" data-qrep=\"1\"><span><b>Clerk's report</b><small>{0} to {1}{2}</small></span><i class=\"chev\" aria-hidden=\"true\"></i></button>",
+"<button class=\"qrep\" type=\"button\" data-qrep=\"1\"><span><b>Informe del escribiente</b><small>{0} al {1}{2}</small></span><i class=\"chev\" aria-hidden=\"true\"></i></button>"
+],
+"6c233c48": [
+" · new",
+" · nuevo"
+],
+"cc141f26": [
+"<p class=\"small qnext\">The clerk presents his first report on {0}.</p>",
+"<p class=\"small qnext\">El escribiente presentará su primer informe el {0}.</p>"
+],
+"24c16deb": [
+"The clerk presents his report for {0} to {1}.",
+"El escribiente presenta su informe del {0} al {1}."
+],
+"fe0e4a9b": [
+"A merchant",
+"Un mercader"
+],
+"cedb067c": [
+"today",
+"hoy"
+],
+"919025ea": [
+"yesterday",
+"ayer"
+],
+"403257dc": [
+"{0} days ago",
+"hace {0} días"
+],
+"c7dfc526": [
+"<details class=\"more rivhere\" data-det=\"rivm\"{0}><summary><span>Competitors in {1} <small>· {2} {3}</small></span><i class=\"chev\" aria-hidden=\"true\"></i></summary><ul>",
+"<details class=\"more rivhere\" data-det=\"rivm\"{0}><summary><span>Competidores en {1} <small>· {2} {3}</small></span><i class=\"chev\" aria-hidden=\"true\"></i></summary><ul>"
+],
+"ca6cd4af": [
+"deal",
+"negocio"
+],
+"980a37e1": [
+"deals",
+"negocios"
+],
+"bc08f48b": [
+"bought {1} lasts of {2}{3} {0}",
+"compró {0} {1} lasts de {2}{3}"
+],
+"af04a480": [
+" for {0}",
+" para {0}"
+],
+"584cc516": [
+"sold {1} lasts of {2}{3} {0}",
+"vendió {0} {1} lasts de {2}{3}"
+],
+"dc29ceda": [
+" from {0}",
+" de {0}"
+],
+"d2492092": [
+"This raised the buying price by",
+"Con ello el precio de compra subió un"
+],
+"d713ade0": [
+"This lowered the selling price by",
+"Con ello el precio de venta bajó un"
+],
+"6692429c": [
+"<div class=\"in rpt\"><div class=\"shead\"><div><span class=\"k\">Clerk's report</span><h2 id=\"q-title\">{0} to {1}</h2></div><button class=\"close\" type=\"button\" data-qclose=\"1\">Done</button></div>",
+"<div class=\"in rpt\"><div class=\"shead\"><div><span class=\"k\">Informe del escribiente</span><h2 id=\"q-title\">{0} al {1}</h2></div><button class=\"close\" type=\"button\" data-qclose=\"1\">Leído</button></div>"
+],
+"88876f95": [
+"<h3 class=\"rph\">Your trading house</h3><div class=\"rpgrid\">",
+"<h3 class=\"rph\">Tu casa comercial</h3><div class=\"rpgrid\">"
+]
+}

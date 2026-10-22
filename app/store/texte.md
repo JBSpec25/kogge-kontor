@@ -8,13 +8,13 @@ Alles zum Hineinkopieren in App Store Connect. Längenangaben sind Apples Höchs
 |---|---|
 | Name (30) | Kogge & Kontor |
 | Untertitel (30) | Handel und Ehre zur Hansezeit |
-| Hauptsprache | Deutsch |
+| Hauptsprache | Deutsch (weitere Lokalisierungen: Englisch (UK) und Englisch (USA), Spanisch (Spanien) und Spanisch (Mexiko) – Texte in texte_en.md und texte_es.md) |
 | Bundle-ID | io.github.jbspec25.koggekontor |
 | SKU | kogge-kontor-ios |
 | Primäre Kategorie | Spiele → Strategie |
 | Sekundäre Kategorie | Spiele → Simulation |
 | Preis der App | Gratis (Vollversion als In-App-Kauf) |
-| Verfügbarkeit | Zunächst Deutschland, Österreich, Schweiz, Liechtenstein, Luxemburg, Belgien (Spiel nur auf Deutsch) |
+| Verfügbarkeit | Alle Länder (Spiel auf Deutsch, Englisch und Spanisch; es folgt der Sprache des iPhones und lässt sich unter „Spielstände und Einstellungen“ umstellen) |
 | Geräte | nur iPhone |
 | Copyright | 2026 [Vor- und Nachname] |
 
@@ -30,7 +30,7 @@ HANDELN WIE DIE HANSE
 Zwölf Häfen von London bis Nowgorod, jeder mit eigenen Waren und eigenem Bedarf. Salz und Hering aus Lübeck, Stockfisch aus Bergen, Pelze aus Nowgorod, Tuch aus Brügge. Die Preise reagieren auf jeden Kauf, auf Jahreszeit und Ereignisse: ein harter Winter, eine Fehde in Livland, eine Handelssperre des Hansetags.
 
 SCHIFFE, KAPITÄNE UND SEERÄUBER
-Vom kleinen Schnigge bis zum großen Holk. Stelle Kapitäne ein, schicke Verbände auf eigene Fahrt und rüste sie mit Armbrüsten, Bliden und den ersten Steinbüchsen aus. Wer zur See fährt, trifft auf Seeräuber und muss entscheiden: fliehen, Abstand halten oder entern.
+Von der kleinen Schnigge bis zum großen Holk. Stelle Kapitäne ein, schicke Verbände auf eigene Fahrt und rüste sie mit Armbrüsten, Bliden und den ersten Steinbüchsen aus. Wer zur See fährt, trifft auf Seeräuber und muss entscheiden: fliehen, Abstand halten oder entern.
 
 DEINE STADT WÄCHST MIT DIR
 Baue Kontor, Brauerei und Salzsiederei, stifte eine Kirche, einen Kran oder ein Hospital. Deine Heimatstadt wächst sichtbar, Haus für Haus.
@@ -67,8 +67,8 @@ Hanse,Handel,Kaufmann,Mittelalter,Lübeck,Kogge,Wirtschaft,Segeln,Patrizier,Stra
 | Referenzname | Vollversion |
 | Produkt-ID | kogge_kontor_vollversion |
 | Preis | 2,99 € |
-| Anzeigename (DE) | Vollversion |
-| Beschreibung (DE, 45) | Das ganze Spiel bis 1370 freischalten |
+| Anzeigename (DE / EN / ES) | Vollversion / Full version / Versión completa |
+| Beschreibung (45) | DE: Das ganze Spiel bis 1370 freischalten · EN: Unlock the whole game up to 1370 · ES: Desbloquea el juego completo hasta 1370 |
 | Familienfreigabe | Ein (empfohlen) |
 | Screenshot für die Prüfung | store/iap_review.png |
 | Hinweis für die Prüfung | Die Vollversion kann jederzeit gekauft werden: unten „Spielstände und Einstellungen“ → Abschnitt „Vollversion“. Nach der Probezeit (60 Spieltage, 31. Mai 1356 im Spiel) erscheint der Kauf zusätzlich auf dem Startbildschirm. |
@@ -101,5 +101,5 @@ Zum Testen des Kaufs: unten auf „Spielstände und Einstellungen“ tippen, Abs
 
 ## Screenshots (iPhone 6,9 Zoll, 1320 × 2868)
 
-In dieser Reihenfolge hochladen: store/1_stadt.png, 2_markt.png, 3_karte.png, 5_see.png, 6_gefecht.png, 4_haus.png.
+Je Sprache eigene Bilder: Deutsch store/*.png, Englisch store/en/*.png, Spanisch store/es/*.png. In dieser Reihenfolge hochladen: 1_stadt.png, 2_markt.png, 3_karte.png, 5_see.png, 6_gefecht.png, 4_haus.png.
 Apple nutzt sie auch für die kleineren iPhones.

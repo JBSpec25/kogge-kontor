@@ -1,0 +1,85 @@
+[
+[
+"cs.join(' und ')",
+"cs.join(' and ')",
+"cs.join(' y ')"
+],
+[
+[
+"SHIP_A[e.ptype].replace(/^Eine?/, m => m === 'Eine' ? 'a' : 'a')",
+"SHIP_A[e.ptype].replace(/^Eine?/, m => m === 'Eine' ? 'una' : 'un')"
+],
+"SHIP_A[e.ptype].replace(/^A /, 'a ')",
+"SHIP_A[e.ptype].replace(/^Una /, 'una ')"
+],
+[
+"SHIP_A[ptype].replace(/^Eine? /, 'eine ').replace(/^ein /, '')",
+"SHIP_A[ptype].replace(/^A /, 'a ')",
+"SHIP_A[ptype].replace(/^Una /, 'una ')"
+],
+[
+"const DIST = ['close', 'mittel', 'far']",
+"const DIST = ['close', 'medium', 'far']",
+null
+],
+[
+"const DIST = ['cerca', 'mittel', 'lejos']",
+null,
+"const DIST = ['cerca', 'media', 'lejos']"
+],
+[
+"['ohne','ohne']",
+"['ohne','none']",
+"['ohne','ninguno']"
+],
+[
+"skinN:['light','mittel'",
+"skinN:['light','medium'",
+null
+],
+[
+"skinN:['clara','mittel'",
+null,
+"skinN:['clara','media'"
+],
+[
+".join(' und ')",
+".join(' and ')",
+".join(' y ')"
+],
+[
+"`${d.getDate()}. ${MONTHS[d.getMonth()]}` + (withYear ? ` ${d.getFullYear()}` : '')",
+"`${d.getDate()} ${MONTHS[d.getMonth()]}` + (withYear ? ` ${d.getFullYear()}` : '')",
+"`${d.getDate()} de ${MONTHS[d.getMonth()]}` + (withYear ? ` de ${d.getFullYear()}` : '')"
+],
+[
+"'Schiffer&shy;haus'",
+"'Skippers’ house'",
+"'Casa de patrones'"
+],
+[
+"hsM:[['kurz','kurz'],['lang','lang'],['locken','Curls'],['licht','licht']], hsF:[['offen','offen'],['zopf','Plait'],['knoten','Bun']]",
+"hsM:[['kurz','Short'],['lang','Long'],['locken','Curls'],['licht','Thinning']], hsF:[['offen','Loose'],['zopf','Plait'],['knoten','Bun']]",
+null
+],
+[
+"hsM:[['kurz','kurz'],['lang','lang'],['locken','Rizos'],['licht','licht']], hsF:[['offen','offen'],['zopf','Trenza'],['knoten','Moño']]",
+null,
+"hsM:[['kurz','Corto'],['lang','Largo'],['locken','Rizos'],['licht','Ralo']], hsF:[['offen','Suelto'],['zopf','Trenza'],['knoten','Moño']]"
+],
+[
+"age:[['jung','jung'],['reif','reif'],['alt','alt']]",
+"age:[['jung','Young'],['reif','Mature'],['alt','Old']]",
+"age:[['jung','Juventud'],['reif','Madurez'],['alt','Vejez']]"
+],
+[
+"const d = fdate(st.day, true), i = d.lastIndexOf(' ');",
+null,
+"const d = fdate(st.day, true).replace(/ de (\\d+)$/, ' $1'), i = d.lastIndexOf(' ');"
+],
+[
+"`${o.share}tel`",
+"`1/${o.share}`",
+"`1/${o.share}`"
+]
+]

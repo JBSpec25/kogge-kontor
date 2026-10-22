@@ -1,0 +1,262 @@
+{
+"99ec43de": [
+"Deliver · {0} G",
+"Entregar · {0} G"
+],
+"4684aa43": [
+"Deliver in {0}",
+"Entregar en {0}"
+],
+"d61a7a12": [
+"Delivery window from {0}",
+"Plazo de entrega desde el {0}"
+],
+"057f1e40": [
+"<button class=\"linkbtn\" type=\"button\" data-ct=\"drop\" data-id=\"{0}\">Cancel · {1} G penalty</button>",
+"<button class=\"linkbtn\" type=\"button\" data-ct=\"drop\" data-id=\"{0}\">Rescindir · {1} G de multa</button>"
+],
+"b224f7bc": [
+"{0} times {1} lasts, every {2} days · {3} G per last",
+"{0} veces {1} lasts, cada {2} días · {3} G el last"
+],
+"6831921c": [
+" · <b class=\"frlate\">{0} is bidding too, until {1}</b>",
+" · <b class=\"frlate\">{0} también puja, hasta el {1}</b>"
+],
+"98ac0fb1": [
+"<button class=\"ybtn\" type=\"button\" data-ct=\"take\" data-id=\"{0}\"{1}>Sign</button>{2}",
+"<button class=\"ybtn\" type=\"button\" data-ct=\"take\" data-id=\"{0}\"{1}>Firmar</button>{2}"
+],
+"4d8be25c": [
+"<li class=\"frow{0}\"><span class=\"fri\">{1}</span><span class=\"frm\"><b><span class=\"frk\">Contract</span> {2} to {3}</b><span class=\"frs\">{4}</span><span class=\"frs\">for {5} · penalty for delay {6} G</span></span>",
+"<li class=\"frow{0}\"><span class=\"fri\">{1}</span><span class=\"frm\"><b><span class=\"frk\">Contrato</span> {2} a {3}</b><span class=\"frs\">{4}</span><span class=\"frs\">para {5} · multa por retraso {6} G</span></span>"
+],
+"86949779": [
+"<h3 class=\"frh\">Supply contracts <small>{0} of {1}</small></h3>",
+"<h3 class=\"frh\">Contratos de suministro <small>{0} de {1}</small></h3>"
+],
+"ab432b2f": [
+"<p class=\"small frhint\">A contract binds you for months: every {0} days the same quantity at a fixed price, whatever the market does. You can deliver any time before the deadline, yourself or with a convoy; if the goods are in your warehouse in that town, they go out on their own when due. Whoever is late pays a penalty.</p><ul class=\"frl\">{1}</ul>",
+"<p class=\"small frhint\">Un contrato te ata durante meses: cada {0} días la misma cantidad a precio fijo, haga lo que haga el mercado. Puedes entregar cuando quieras antes del plazo, tú mismo o con un convoy; si la mercancía está en tu almacén de esa ciudad, sale sola a su debido tiempo. Quien llega tarde paga multa.</p><ul class=\"frl\">{1}</ul>"
+],
+"10fd4950": [
+"Construction begins in {0}: {1}. Ready in {2} days, then it delivers to the Kontor.",
+"Comienza la obra en {0}: {1}. Lista en {2} días; después entregará al almacén."
+],
+"b2bf6b57": [
+"Your branch in {0} is set up: a warehouse for {1} lasts.",
+"Tu sucursal en {0} está instalada: un almacén para {1} lasts."
+],
+"c9a6cba4": [
+"You can now send convoys on trade routes: in the House tab you give a captain ships and a route. He trades on his own or by your rules and can store goods in and withdraw them from your warehouses.",
+"Ahora puedes enviar convoyes por rutas comerciales: en la pestaña Casa das a un capitán barcos y una ruta. Comercia por su cuenta o según tus reglas, y puede guardar y sacar mercancía de tus almacenes."
+],
+"2fef7a8e": [
+"Low",
+"Bajo"
+],
+"167e18e4": [
+"The merchants are grateful: a little reputation every day, but no income.",
+"Los comerciantes te lo agradecen: algo de reputación cada día, pero ningún ingreso."
+],
+"48577b86": [
+"Medium",
+"Medio"
+],
+"a852a082": [
+"15 guilders a day from the poundage.",
+"15 florines al día del derecho de libra."
+],
+"bc2ace52": [
+"High",
+"Alto"
+],
+"114d19d9": [
+"40 guilders a day, but the merchants grumble and your reputation falls.",
+"40 florines al día, pero los comerciantes refunfuñan y tu reputación baja."
+],
+"6701e0b4": [
+"Council commission accepted: {0} lasts of {1} to {3} by {2}, pay {4} guilders.",
+"Encargo del concejo aceptado: {0} lasts de {1} a {3} antes del {2}, pago de {4} florines."
+],
+"cd045e27": [
+"Council commission fulfilled: {0} lasts of {1} delivered. The council pays {2} guilders.",
+"Encargo del concejo cumplido: {0} lasts de {1} entregados. El concejo paga {2} florines."
+],
+"75241ad1": [
+"Council commission failed: {0} lasts of {1} did not arrive in time. The council is displeased.",
+"Encargo del concejo fallido: {0} lasts de {1} no llegaron a tiempo. El concejo está disgustado."
+],
+"fe2690c7": [
+"Council election in {0}: no one has enough reputation, {1} remains Mayor.",
+"Elección del concejo en {0}: nadie tiene reputación suficiente, {1} sigue de burgomaestre."
+],
+"76a43773": [
+"Council election in {0}: you remain Mayor.",
+"Elección del concejo en {0}: sigues de burgomaestre."
+],
+"34762907": [
+"Council election in {0}: the council elects you Mayor! Citizenship 10 %, {1} guilders a day, peace ships protect your convoys.",
+"Elección del concejo en {0}: ¡el concejo te elige burgomaestre! Ciudadanía al 10 %, {1} florines al día, y los barcos de paz protegen tus convoyes."
+],
+"e33a16d5": [
+"Council election in {0}: {1} becomes Mayor{2}.",
+"Elección del concejo en {0}: {1} es elegido burgomaestre{2}."
+],
+"b526168e": [
+", you lose the office",
+", pierdes el cargo"
+],
+"dc54be59": [
+"First general Hanseatic Diet in Lübeck",
+"Primera Dieta Hanseática general en Lübeck"
+],
+"0f31a4e7": [
+"The first general Hanseatic Diet meets in Lübeck. From now on the towns want to decide together how to protect their merchants abroad.",
+"En Lübeck se reúne la primera Dieta Hanseática general. A partir de ahora las ciudades quieren decidir juntas cómo proteger a sus comerciantes en el extranjero."
+],
+"04e26053": [
+"The embargo on Flanders is in force",
+"Rige el embargo contra Flandes"
+],
+"74e59f69": [
+"Bruges stays without an embargo",
+"Brujas queda libre de embargo"
+],
+"bb4dd367": [
+"Without an embargo Bruges stays open, but the Flemings curtail the rights of the Hanseatic merchants. Furs and wax fetch less there.",
+"Al no haber embargo, Brujas sigue abierta, pero los flamencos recortan los derechos de los comerciantes hanseáticos. Allí las pieles y la cera rinden menos."
+],
+"4f6704b4": [
+"The embargo on Flanders is in force. In Bruges furs, wax, grain and herring become scarce, and Flemish cloth goes unsold. Anyone who trades there anyway loses reputation with the Hansa.",
+"Rige el embargo contra Flandes. En Brujas escasean las pieles, la cera, el grano y el arenque, y el paño flamenco no se vende. Quien comercie allí de todos modos pierde reputación ante la Hansa."
+],
+"28f2d39f": [
+"Valdemar IV of Denmark takes Scania",
+"Valdemar IV de Dinamarca toma Escania"
+],
+"80d9741e": [
+"King Valdemar IV of Denmark takes Scania. The herring grounds on the Sound are in Danish hands, and herring is getting dearer everywhere.",
+"El rey Valdemar IV de Dinamarca ocupa Escania. Las pesquerías de arenque del Sund quedan en manos danesas y el arenque se encarece en todas partes."
+],
+"b276a952": [
+"Flanders confirms the privileges, Bruges is open again",
+"Flandes confirma los privilegios, Brujas vuelve a estar abierta"
+],
+"9c2babd9": [
+"Flanders gives in and confirms the privileges of the Hansa. The Kontor returns to Bruges, and trade is free again.",
+"Flandes cede y confirma los privilegios de la Hansa. La factoría vuelve a Brujas y el comercio es libre de nuevo."
+],
+"c5325c8c": [
+"The Diet has not forgotten who broke the embargo: you lose {0} reputation.",
+"La Dieta no ha olvidado quién rompió el embargo: pierdes {0} de reputación."
+],
+"62bea7a8": [
+"The plague returns",
+"Vuelve la peste"
+],
+"876994e4": [
+"The plague returns. Grim news comes from {x}. Many are dying there, and sailors are hard to find.",
+"Vuelve la peste. De {x} llegan malas noticias. Allí muere mucha gente y apenas se encuentran marineros."
+],
+"6fc3ebe9": [
+"Valdemar IV conquers Gotland and sacks Visby",
+"Valdemar IV conquista Gotland y saquea Visby"
+],
+"901876d4": [
+"Valdemar IV conquers Gotland and sacks Visby. The town buys its freedom with silver, and its market is empty. The Hansa arms for war, and Danish privateers make the Sound unsafe.",
+"Valdemar IV conquista Gotland y saquea Visby. La ciudad compra su libertad con plata y su mercado está vacío. La Hansa se arma para la guerra y los corsarios daneses hacen inseguro el Sund."
+],
+"0e4de198": [
+"The Danes plunder your Kontor too: {0} lasts are lost.",
+"Los daneses saquean también tu almacén: se pierden {0} lasts."
+],
+"784cc716": [
+"Great Drowning: storm flood on the North Sea",
+"Gran Ahogamiento: marea tormentosa en el mar del Norte"
+],
+"1a84cc8c": [
+"The Great Drowning of Men: a storm flood devastates the North Sea coast. Dykes break, whole parishes sink, and grain and cattle are lost.",
+"El Gran Ahogamiento: una marea tormentosa asola la costa del mar del Norte. Se rompen los diques, se hunden parroquias enteras y se pierden grano y ganado."
+],
+"b9f93e34": [
+"Your convoy is caught by the flood too: {0} takes heavy damage, hull {1} %.",
+"También tu convoy queda atrapado por la marea: {0} sufre graves daños, casco {1} %."
+],
+"25183ce6": [
+"Defeat of the Hanseatic fleet off Helsingborg",
+"Derrota de la flota hanseática frente a Helsingborg"
+],
+"f9f9f74c": [
+"Valdemar controls the Sound",
+"Valdemar domina el Sund"
+],
+"ffef102d": [
+"Without a Hanseatic fleet the Sound stays in Valdemar’s hands. His privateers seize whatever they find.",
+"Sin flota hanseática, el Sund sigue en manos de Valdemar. Sus corsarios apresan todo lo que encuentran."
+],
+"61841b40": [
+"The Hanseatic fleet under the Lübeck mayor Johann Wittenborg is defeated off Helsingborg. Valdemar’s privateers now control the Sound.",
+"La flota de la Hansa al mando del burgomaestre de Lübeck Johann Wittenborg es derrotada frente a Helsingborg. Los corsarios de Valdemar dominan ahora el Sund."
+],
+"9cecaee5": [
+"Off Helsingborg the Hanseatic fleet under Johann Wittenborg defeats the Danes! The privateers flee the Sound.",
+"¡Frente a Helsingborg la flota de la Hansa al mando de Johann Wittenborg derrota a los daneses! Los corsarios huyen del Sund."
+],
+"8ca2922a": [
+"Victory of the Hanseatic fleet off Helsingborg",
+"Victoria de la flota hanseática frente a Helsingborg"
+],
+"88b7451b": [
+"Johann Wittenborg executed in Lübeck",
+"Johann Wittenborg ejecutado en Lübeck"
+],
+"dbd9b9de": [
+"Johann Wittenborg is celebrated",
+"Johann Wittenborg es aclamado"
+],
+"f24f835f": [
+"In Lübeck Johann Wittenborg is celebrated as the victor of Helsingborg. The town endows a mass of thanksgiving.",
+"En Lübeck se aclama a Johann Wittenborg como vencedor de Helsingborg. La ciudad costea una misa de acción de gracias."
+],
+"ce06a7d9": [
+"Johann Wittenborg is beheaded in the Lübeck market square. He is blamed for the defeat off Helsingborg.",
+"Johann Wittenborg es decapitado en la plaza del mercado de Lübeck. Se le culpa de la derrota frente a Helsingborg."
+],
+"c401400a": [
+"Peace of Vordingborg",
+"Paz de Vordingborg"
+],
+"4722e45f": [
+"Peace of Vordingborg. The weapons fall silent for now, and the war toll is lifted. But Valdemar barely respects the privileges of the Hansa.",
+"Paz de Vordingborg. Las armas callan por ahora y se suprime el arancel de guerra. Pero Valdemar apenas respeta los privilegios de la Hansa."
+],
+"a1531c10": [
+"First stone guns for ships",
+"Primeras bombardas para barcos"
+],
+"a9818eb0": [
+"In Lübeck a gun founder casts the first stone guns that can be mounted on cogs and hulks. The shipyards sell them, along with powder and stone balls. Soon privateers and pirates will carry them too.",
+"En Lübeck un maestro fundidor funde las primeras bombardas que pueden montarse en cocas y urcas. Los astilleros las venden, junto con pólvora y bolas de piedra. Pronto también los corsarios y los piratas las llevarán."
+],
+"55ce2968": [
+"New wave of plague",
+"Nueva ola de peste"
+],
+"f885db1a": [
+"A new wave of plague sweeps through the ports. Affected: {x}.",
+"Una nueva ola de peste recorre los puertos. Afectados: {x}."
+],
+"8b5bcdea": [
+"The Confederation’s fleet takes Copenhagen",
+"La flota de la Confederación toma Copenhague"
+],
+"8b287ea8": [
+"The Confederation’s fleet takes Copenhagen and razes the castle. Valdemar flees his kingdom. The privateers withdraw.",
+"La flota de la Confederación toma Copenhague y arrasa el castillo. Valdemar huye de su reino. Los corsarios se retiran."
+],
+"8ec73715": [
+"The Confederation’s attack on Copenhagen fails at the walls. The war drags on.",
+"El ataque de la Confederación contra Copenhague fracasa ante las murallas. La guerra se alarga."
+]
+}

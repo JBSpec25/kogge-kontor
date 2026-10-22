@@ -1,0 +1,286 @@
+{
+"a5467e8b": [
+" · not yet mayor",
+" · aún no es burgomaestre"
+],
+"57ab4204": [
+"<p class=\"small\"><i class=\"sw rr\"></i> Reputation <i class=\"sw re\"></i> Honour · line: {0} points</p>",
+"<p class=\"small\"><i class=\"sw rr\"></i> Reputación <i class=\"sw re\"></i> Honor · línea: {0} puntos</p>"
+],
+"6d10adaa": [
+"You are Alderman",
+"Eres Decano"
+],
+"c829cc60": [
+"{0} is Alderman",
+"{0} es Decano"
+],
+"1ddce27f": [
+"you {0} of {1}",
+"tú {0} de {1}"
+],
+"1c625b96": [
+"from Councillor",
+"desde regidor"
+],
+"2d52755c": [
+"<p class=\"small\">No entries yet.</p>",
+"<p class=\"small\">Todavía no hay entradas.</p>"
+],
+"2921741d": [
+"Alderman {0}{1}",
+"Decano en {0}{1}"
+],
+"a8edc820": [
+", the first",
+", el primero"
+],
+"667c7081": [
+", after {0}",
+", después de {0}"
+],
+"3e58bf0b": [
+"{0} became Alderman first",
+"{0} fue Decano antes"
+],
+"684bb3f3": [
+" · this game",
+" · esta partida"
+],
+"ceb84953": [
+"{0} min",
+"{0} min"
+],
+"c3783c31": [
+"{0} h {1} min",
+"{0} h {1} min"
+],
+"7a5043b8": [
+"<p class=\"small\">Played: {0}, about {1} per game month.{2} Time only counts while the game is open and you are doing something.</p>",
+"<p class=\"small\">Tiempo jugado: {0}, unos {1} por mes de juego.{2} Solo cuenta mientras el juego está abierto y haces algo.</p>"
+],
+"2208448b": [
+"{0} endows {1} and gains {2} honour.",
+"{0} dona {1} y gana {2} de honor."
+],
+"ca6cffd2": [
+"a window in St Mary’s Church",
+"una vidriera en la iglesia de Santa María"
+],
+"5ce94309": [
+"poor relief",
+"una comida para los pobres"
+],
+"38013631": [
+"an altar",
+"un altar"
+],
+"482ee22a": [
+"a house for pilgrims",
+"una casa para peregrinos"
+],
+"e429e190": [
+"a bell",
+"una campana"
+],
+"273d49e3": [
+"{0} wants to become Alderman and has {1} built before the Diet: {2} honour.",
+"{0} quiere ser Decano y antes de la Dieta manda construir {1}: {2} de honor."
+],
+"684c108d": [
+"a chapel",
+"una capilla"
+],
+"b9f8de5f": [
+"a guildhall",
+"una casa gremial"
+],
+"45528662": [
+"a fountain in the market square",
+"una fuente en la plaza del mercado"
+],
+"65f5500d": [
+"an infirmary",
+"un hospital"
+],
+"b7e8ad7d": [
+"{0} spreads rumours about your business in the council of {1}: {2} reputation lost. Under House, Race for the office of Alderman, you can give a rebuttal within 20 days.",
+"{0} difunde rumores sobre tus negocios en el concejo de {1}: pierdes {2} de reputación. En Casa, Carrera por el cargo de Decano, puedes dar una réplica en un plazo de 20 días."
+],
+"72a71a64": [
+"{0} dumps large amounts of {1} on the market in {2}. Prices there will drop for a few weeks.",
+"{0} vuelca grandes cantidades de {1} en el mercado de {2}. Allí los precios bajarán durante unas semanas."
+],
+"7666ce85": [
+"{0} buys up nearly all the {2} in {1}. It will be dear there for a few weeks.",
+"{0} compra en {1} casi todas las existencias de {2}. Allí estará caro durante unas semanas."
+],
+"05455ecb": [
+"{0} canvasses the town envoys against you. In the next vote at the Diet your voice will count for less.",
+"{0} hace campaña contra ti entre los enviados de las ciudades. En la próxima votación de la Dieta tu voto contará menos."
+],
+"7e407429": [
+"{0} is bidding in the ports for the same supply contracts as you. Whoever hesitates goes away empty-handed.",
+"{0} puja en los puertos por los mismos contratos de suministro que tú. Quien duda se queda sin nada."
+],
+"434f3a66": [
+"{0} has taken over the supply contract for {1} in {2}.",
+"{0} se ha quedado con el contrato de suministro de {1} en {2}."
+],
+"c4a6238b": [
+"Alliance with {0} for one year, sealed with {1} guilders: the family will not stand against you, will vote for you and will leave you in peace.",
+"Alianza con {0} durante un año, sellada con {1} florines: la familia no se presentará contra ti, votará por ti y te dejará en paz."
+],
+"b61aaaf8": [
+"You settle the feud with {0}, for 3,000 guilders in compensation.",
+"Pones fin a la contienda con {0} a cambio de 3.000 florines de compensación."
+],
+"f468ac91": [
+"You declare a feud on {0}. Now you can make countermoves, but the family strikes back more often.",
+"Declaras la contienda a {0}. Ahora puedes hacer contraataques, pero la familia devuelve los golpes más a menudo."
+],
+"845d595b": [
+"Your people on the council and on the quays make life hard for {0}: the family loses {1} reputation and business.",
+"Tu gente en el concejo y en los muelles le complica la vida a {0}: la familia pierde {1} de reputación y negocios."
+],
+"9b8c3cbd": [
+"Your rebuttal before the council works: you win back {0} reputation, and {1} looks bad.",
+"Tu réplica ante el concejo surte efecto: recuperas {0} de reputación y {1} queda mal."
+],
+"45dfb465": [
+"<div class=\"krow\"><span class=\"gname\">Rumours from {0}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-rv=\"reply\"{1}>Rebuttal · {2} G</button></span><span class=\"small\">Until {3}: you win back {4} reputation, and he loses almost as much.</span></div>",
+"<div class=\"krow\"><span class=\"gname\">Rumores de {0}</span><span class=\"ybtns\"><button class=\"ybtn\" type=\"button\" data-rv=\"reply\"{1}>Réplica · {2} G</button></span><span class=\"small\">Hasta el {3}: recuperas {4} de reputación y él pierde casi otro tanto.</span></div>"
+],
+"69d226f0": [
+"<span class=\"flabel\">The families</span>",
+"<span class=\"flabel\">Las familias</span>"
+],
+"719fbe4f": [
+"Alliance",
+"Alianza"
+],
+"cccb1382": [
+"Feud",
+"Contienda"
+],
+"52274e77": [
+"<span class=\"small\">from {0} · wealth {1} G · reputation {2} · honour {3}{4}</span><span class=\"ybtns wrapb\">",
+"<span class=\"small\">de {0} · patrimonio {1} G · reputación {2} · honor {3}{4}</span><span class=\"ybtns wrapb\">"
+],
+"856d767e": [
+" · alliance until {0}",
+" · alianza hasta el {0}"
+],
+"539d9e96": [
+"<button class=\"ybtn\" type=\"button\" data-rv=\"bund\" data-id=\"{0}\"{1}>{2}</button><button class=\"ybtn\" type=\"button\" data-rv=\"fehde\" data-id=\"{3}\">Declare feud</button>",
+"<button class=\"ybtn\" type=\"button\" data-rv=\"bund\" data-id=\"{0}\"{1}>{2}</button><button class=\"ybtn\" type=\"button\" data-rv=\"fehde\" data-id=\"{3}\">Declarar contienda</button>"
+],
+"8e60ee41": [
+"wants to be Alderman himself",
+"quiere ser Decano él mismo"
+],
+"70cbb32e": [
+"Alliance · {0} G",
+"Alianza · {0} G"
+],
+"2cfb4d81": [
+"<button class=\"ybtn\" type=\"button\" data-rv=\"gegen\" data-id=\"{0}\"{1}>{2}</button><button class=\"ybtn\" type=\"button\" data-rv=\"fehde\" data-id=\"{3}\"{4}>Settle feud · 3,000 G</button>",
+"<button class=\"ybtn\" type=\"button\" data-rv=\"gegen\" data-id=\"{0}\"{1}>{2}</button><button class=\"ybtn\" type=\"button\" data-rv=\"fehde\" data-id=\"{3}\"{4}>Terminar contienda · 3.000 G</button>"
+],
+"4b8ea26a": [
+"Countermove in {0} days",
+"Contraataque en {0} días"
+],
+"61c5c0af": [
+"Countermove · {0} G",
+"Contraataque · {0} G"
+],
+"e14e4258": [
+"<p class=\"small\">In an alliance a family will not stand against you for a year, will vote for you and will leave you in peace. In a feud you can harm it every {0} days, but it strikes back twice as often.</p>",
+"<p class=\"small\">En una alianza, una familia no se presentará contra ti durante un año, votará por ti y te dejará en paz. En una contienda puedes perjudicarla cada {0} días, pero te devolverá los golpes el doble de veces.</p>"
+],
+"173dbb5e": [
+"Your captain lets the crossbows speak, and {0} turns away after a few volleys. Loot {1} guilders{2}.",
+"Tu capitán hace hablar a las ballestas y {0} vira tras unas pocas andanadas. Botín: {1} florines{2}."
+],
+"6f2cf149": [
+"Pirates under {0} driven off without you having to step in. Loot {1} guilders.",
+"Piratas al mando de {0} rechazados sin que tuvieras que intervenir. Botín: {1} florines."
+],
+"db9289d9": [
+"<button class=\"ybtn\" type=\"button\" data-mq=\"sell\">Sell everything at a profit · {0} lasts · {1} G</button>",
+"<button class=\"ybtn\" type=\"button\" data-mq=\"sell\">Vender todo con ganancia · {0} lasts · {1} G</button>"
+],
+"6db8feb2": [
+"<button class=\"ybtn\" type=\"button\" data-mq=\"buy\"{0}>Same as last time for {1}: {2}</button>",
+"<button class=\"ybtn\" type=\"button\" data-mq=\"buy\"{0}>Como la última vez para {1}: {2}</button>"
+],
+"bb0bb005": [
+"You and your crew have seen so much that you can tell at a glance what pays. In the market you can now sell everything that makes a profit with one button, and repeat your last purchase for the same destination.",
+"Tú y tu tripulación habéis visto tanto que sabéis al instante qué compensa. En el mercado ahora vendes con un botón todo lo que da ganancia y repites la última compra para el mismo destino."
+],
+"e90eef74": [
+"sent by the steward on a freighter from {0} (freight {1} G)",
+"enviado por el administrador en un barco de flete desde {0} (flete {1} G)"
+],
+"50622119": [
+"A boiling house burns down in Lüneburg. Salt will be scarce and dear in Lübeck for two months.",
+"Arde una salina en Luneburgo. La sal escaseará y estará cara en Lübeck durante dos meses."
+],
+"927aa786": [
+"The Lofoten fishermen come home with half-empty boats. Stockfish is rare in Bergen.",
+"Los pescadores de las Lofoten vuelven con las barcas medio vacías. En Bergen escasea el bacalao seco."
+],
+"6e7450fd": [
+"A rich shearing in England: London is full of wool, and the weavers in Bruges are waiting.",
+"Un esquileo abundante en Inglaterra: en Londres sobra lana y en Brujas esperan los tejedores."
+],
+"29195028": [
+"A hard winter in the forests of Russia: hardly any furs in Novgorod and Reval.",
+"Un invierno duro en los bosques de Rusia: apenas hay pieles en Nóvgorod y Reval."
+],
+"11891392": [
+"Feud in Livonia between the Order and the Archbishop. Riga is short of wax and timber.",
+"Contienda en Livonia entre la Orden y el arzobispo. En Riga faltan cera y madera."
+],
+"166b3c26": [
+"The Teutonic Order is arming for a campaign. In {0} iron and grain fetch high prices.",
+"La Orden Teutónica se arma para una campaña. En {0} el hierro y el grano se pagan caros."
+],
+"7139c2ad": [
+"The Diet imposes an embargo on {0} until the town gives in. For 50 days every last traded there costs reputation.",
+"La Dieta impone un embargo a {0} hasta que la ciudad ceda. Durante 50 días, cada last que se comercie allí cuesta reputación."
+],
+"bc14df95": [
+"A great shooting festival is being held in {0}. Beer is in demand as never before.",
+"En {0} se celebra una gran fiesta de tiro. La cerveza se pide como nunca."
+],
+"59626521": [
+"on this device",
+"en este dispositivo"
+],
+"8b81060c": [
+"in this browser",
+"en este navegador"
+],
+"af2d66ea": [
+"{0} days of trial left, until 31 May 1356. After that your trading house sails on with the full version, a one-off {1}.",
+"Quedan {0} días de prueba gratuita, hasta el 31 de mayo de 1356. Después tu casa comercial sigue navegando con la versión completa, por un pago único de {1}."
+],
+"97d066a4": [
+"{0} days of trial left in the browser, until 31 May 1356. After that the game continues in the iPhone app.",
+"Quedan {0} días de prueba en el navegador, hasta el 31 de mayo de 1356. Después la partida continúa en la app para iPhone."
+],
+"ddb26237": [
+"The 60-day trial is over. With the full version your trading house sails on until the Peace of Stralsund.",
+"Los 60 días de prueba han terminado. Con la versión completa tu casa comercial sigue navegando hasta la Paz de Stralsund."
+],
+"7f695087": [
+"The 60-day trial in the browser is over. The whole game is available as an iPhone app.",
+"Los 60 días de prueba en el navegador han terminado. El juego completo está disponible como app para iPhone."
+],
+"a61276e7": [
+"Thank you! The full version is unlocked. Your trading house sails on until the Peace of Stralsund in 1370.",
+"¡Gracias! La versión completa está desbloqueada. Tu casa comercial sigue navegando hasta la Paz de Stralsund de 1370."
+]
+}

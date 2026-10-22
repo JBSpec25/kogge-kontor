@@ -1,0 +1,270 @@
+{
+"4dc3a615": [
+"Purchases are only possible in the app.",
+"La compra solo es posible en la app."
+],
+"95880326": [
+"The purchase is still waiting for approval, for example from a parent.",
+"La compra aún espera una confirmación, por ejemplo de tus padres."
+],
+"542dc06b": [
+"The purchase did not go through. Check your connection and try again.",
+"La compra no se ha completado. Comprueba la conexión e inténtalo de nuevo."
+],
+"2aaa6c6d": [
+"No purchase of the full version is stored for your Apple ID yet.",
+"Todavía no hay ninguna compra de la versión completa guardada en tu ID de Apple."
+],
+"26afef11": [
+"Your purchases could not be loaded. Check your connection and try again.",
+"No se han podido cargar las compras. Comprueba la conexión e inténtalo de nuevo."
+],
+"7b32dacf": [
+"<div class=\"endcard trialcard\"><h2>Your trial is over</h2>",
+"<div class=\"endcard trialcard\"><h2>La prueba gratuita ha terminado</h2>"
+],
+"aff33c9e": [
+"The first 60 days were free.",
+"Los primeros 60 días han sido gratis."
+],
+"493a6203": [
+"You can play the first 60 days in the browser.",
+"Los primeros 60 días puedes jugarlos en el navegador."
+],
+"3d7c78bc": [
+"In the full game you rise to Mayor by 1370, build great projects, found Hanseatic Kontors and outrun the three families in the race for the office of Alderman.</p>",
+"En el juego completo llegas a burgomaestre antes de 1370, levantas grandes obras, fundas factorías hanseáticas y dejas atrás a las tres familias en la carrera por el cargo de Decano.</p>"
+],
+"4c2df7b4": [
+"<p class=\"small\">Pay once, {0}. No ads, no subscription. Your saved game stays just as it is.</p>",
+"<p class=\"small\">Un solo pago, {0}. Sin anuncios ni suscripción. Tu partida se queda tal como está.</p>"
+],
+"75172d42": [
+"One moment …",
+"Un momento…"
+],
+"e2c3ff94": [
+"Unlock full version",
+"Desbloquear versión completa"
+],
+"e3123342": [
+"<button class=\"btn\" type=\"button\" data-act=\"full-restore\"{0}><b>Restore purchase</b><small>already bought</small></button></div>",
+"<button class=\"btn\" type=\"button\" data-act=\"full-restore\"{0}><b>Restaurar compra</b><small>ya la compré</small></button></div>"
+],
+"db087a87": [
+"<p class=\"small\">The whole game is available as an iPhone app, a one-off {0}. {1}You can take your saved game with you: copy the code under “Saved games and settings” and paste it into the app.</p>",
+"<p class=\"small\">El juego completo está disponible como app para iPhone, por un pago único de {0}. {1}Puedes llevarte tu partida: copia el código en «Partidas y ajustes» y pégalo en la app.</p>"
+],
+"2e745bfb": [
+"The app will be in the App Store soon. ",
+"La app llegará pronto al App Store. "
+],
+"3051d9c6": [
+"<b>Go to the app in the App Store</b><small>for iPhone</small>",
+"<b>Ir a la app en el App Store</b><small>para iPhone</small>"
+],
+"3588fa0d": [
+"<button class=\"btn\" type=\"button\" data-act=\"full-restore\"{0}><b>Restore</b><small>already bought</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"full-restore\"{0}><b>Restaurar</b><small>ya la compré</small></button>"
+],
+"df464b73": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"full-buy\"{0}><b>Full version</b><small>{1}</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"full-buy\"{0}><b>Versión completa</b><small>{1}</small></button>"
+],
+"3e55c043": [
+"<button class=\"btn\" type=\"button\" data-act=\"full-saves\"><b>Saved games</b><small>code for the app</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"full-saves\"><b>Partidas</b><small>código para la app</small></button>"
+],
+"47eebb65": [
+"<b>Get the app</b><small>App Store</small>",
+"<b>Ir a la app</b><small>App Store</small>"
+],
+"b3d9e2db": [
+"<button class=\"btn primary\" type=\"button\" disabled><b>Trial over</b><small>app coming soon</small></button>",
+"<button class=\"btn primary\" type=\"button\" disabled><b>Prueba terminada</b><small>app muy pronto</small></button>"
+],
+"6f433f94": [
+"</div><div class=\"xfer\"><h3>Full version</h3>",
+"</div><div class=\"xfer\"><h3>Versión completa</h3>"
+],
+"71afb952": [
+"<span class=\"small\">Unlocked. Thank you for buying Kogge &amp; Kontor!</span>",
+"<span class=\"small\">Desbloqueada. ¡Gracias por comprar Kogge &amp; Kontor!</span>"
+],
+"14aff9ef": [
+"<span class=\"small\">The first 60 game days are free, until 31 May 1356. After that you continue with the full version, a one-off {0}.</span>",
+"<span class=\"small\">Los primeros 60 días de juego son gratis, hasta el 31 de mayo de 1356. Después sigues con la versión completa, por un pago único de {0}.</span>"
+],
+"b1a12a5e": [
+"<div class=\"row2\"><button class=\"ybtn\" type=\"button\" data-slot=\"fullbuy\"{0}>Unlock full version</button><button class=\"ybtn\" type=\"button\" data-slot=\"fullrestore\"{1}>Restore purchase</button></div>",
+"<div class=\"row2\"><button class=\"ybtn\" type=\"button\" data-slot=\"fullbuy\"{0}>Desbloquear versión completa</button><button class=\"ybtn\" type=\"button\" data-slot=\"fullrestore\"{1}>Restaurar compra</button></div>"
+],
+"76aa3357": [
+"</div><div class=\"xfer\"><h3>iPhone app</h3><span class=\"small\">In the browser you play the first 60 game days, until 31 May 1356. The whole game is available as an app, a one-off {0}. Take your saved game with you using the code below.</span>",
+"</div><div class=\"xfer\"><h3>App para iPhone</h3><span class=\"small\">En el navegador juegas los primeros 60 días de juego, hasta el 31 de mayo de 1356. El juego completo está disponible como app, por un pago único de {0}. Llévate tu partida con el código de abajo.</span>"
+],
+"24647aa5": [
+"View in the App Store",
+"Ver en el App Store"
+],
+"6375cbf4": [
+"<span class=\"small\">The app will be in the App Store soon.</span>",
+"<span class=\"small\">La app llegará pronto al App Store.</span>"
+],
+"9ec97ad0": [
+"<div class=\"xfer about\"><h3>Legal notice</h3><span class=\"small\">{0}<br>{1}{2}{3}</span>",
+"<div class=\"xfer about\"><h3>Aviso legal</h3><span class=\"small\">{0}<br>{1}{2}{3}</span>"
+],
+"276b663e": [
+"<br>Email: {0}",
+"<br>Correo: {0}"
+],
+"44dca5f8": [
+"<br>Phone: {0}",
+"<br>Teléfono: {0}"
+],
+"e1655160": [
+"<h3>Privacy</h3><span class=\"small\">Kogge &amp; Kontor stores your saved games only {0}. The game collects no data, shows no ads and needs no internet. Purchases are handled by Apple; we learn nothing about you.{1}</span>",
+"<h3>Privacidad</h3><span class=\"small\">Kogge &amp; Kontor guarda tus partidas solo {0}. El juego no recoge datos, no muestra anuncios y no necesita internet. Las compras las gestiona Apple; no sabemos nada de ti.{1}</span>"
+],
+"0ae13b3a": [
+" Details: {0}",
+" Más información: {0}"
+],
+"14efc39a": [
+"<h3>About the game</h3><span class=\"small\">Version {0}. {1}Fonts Alegreya Sans, Alegreya Sans SC, IBM Plex Mono and UnifrakturMaguntia under the SIL Open Font License 1.1.</span></div>",
+"<h3>Sobre el juego</h3><span class=\"small\">Versión {0}. {1}Tipografías Alegreya Sans, Alegreya Sans SC, IBM Plex Mono y UnifrakturMaguntia bajo la SIL Open Font License 1.1.</span></div>"
+],
+"a70dbb78": [
+"Developed with the help of AI. ",
+"Desarrollado con ayuda de IA. "
+],
+"a32e41e0": [
+"Wealth",
+"Patrimonio"
+],
+"97d7cee1": [
+"Reputation",
+"Reputación"
+],
+"3898603c": [
+"Terms as Mayor",
+"Mandatos como burgomaestre"
+],
+"e803af08": [
+"Honour from projects and endowments",
+"Honor por obras y donaciones"
+],
+"7ce4cfaf": [
+"Council commissions",
+"Encargos del concejo"
+],
+"c736b893": [
+"Victories over pirates",
+"Victorias sobre piratas"
+],
+"6a38ec12": [
+"Petty shopkeeper",
+"Alma de buhonero"
+],
+"526467ab": [
+"Honourable merchant",
+"Mercader honrado"
+],
+"d0dbdeb7": [
+"Respected Hanseatic merchant",
+"Respetado mercader hanseático"
+],
+"f8156eb9": [
+"Great lord of the Hansa",
+"Gran señor de la Hansa"
+],
+"a59dec48": [
+"Legend of the Hansa",
+"Leyenda de la Hansa"
+],
+"62cd9569": [
+"End of the campaign: {0}, {1}",
+"Fin de la campaña: {0}, {1}"
+],
+"75e423ad": [
+"With the Peace of Stralsund your campaign ends. Final score: {0} points, {1}.",
+"Con la Paz de Stralsund termina tu campaña. Puntuación final: {0} puntos, {1}."
+],
+"5878eeb8": [
+"You carry on your trading house beyond the end of the campaign.",
+"Sigues al frente de tu casa comercial más allá del final de la campaña."
+],
+"e8210844": [
+"Embargo on Flanders",
+"Embargo contra Flandes"
+],
+"07ca050e": [
+"Should the Hansa impose a trade embargo on Flanders until Bruges confirms the merchants’ privileges?",
+"¿Debe la Hansa imponer un embargo comercial a Flandes hasta que Brujas confirme los privilegios de los comerciantes?"
+],
+"05e9f0fc": [
+"The Diet decides on the embargo against Flanders. From 1 May no Hanseatic merchant may trade in Bruges, and the Kontor moves to Dordrecht.",
+"La Dieta aprueba el embargo contra Flandes. Desde el 1 de mayo ningún comerciante hanseático puede comerciar en Brujas, y la factoría se traslada a Dordrecht."
+],
+"a4e7e0e8": [
+"The Diet forgoes an embargo and keeps negotiating with Flanders.",
+"La Dieta renuncia al embargo y sigue negociando con Flandes."
+],
+"4cc967e8": [
+"War on Denmark and poundage",
+"Guerra contra Dinamarca y derecho de libra"
+],
+"13ba60ec": [
+"Should the Hansa declare war on Denmark and levy a poundage of one percent to pay for it?",
+"¿Debe la Hansa declarar la guerra a Dinamarca y cobrar para ello un derecho de libra del uno por ciento?"
+],
+"40a0798f": [
+"The Diet in Greifswald declares war on Valdemar and levies a poundage: one percent of every sale goes to the war chest.",
+"La Dieta reunida en Greifswald declara la guerra a Valdemar y cobra un derecho de libra: el uno por ciento de cada venta va a la caja de guerra."
+],
+"4def9317": [
+"The Diet shrinks from war. Without a fleet the Sound stays in the hands of the Danish privateers.",
+"La Dieta rehúye la guerra. Sin flota, el Sund sigue en manos de los corsarios daneses."
+],
+"907d6f4e": [
+"Confederation of Cologne",
+"Confederación de Colonia"
+],
+"454fc175": [
+"Should the Hansa form the Confederation of Cologne with Holland, Zeeland and Sweden and march against Valdemar together?",
+"¿Debe la Hansa formar la Confederación de Colonia con Holanda, Zelanda y Suecia y marchar juntos contra Valdemar?"
+],
+"6327cde1": [
+"In Cologne the Hanseatic towns form the Confederation of Cologne against Denmark with Holland, Zeeland and Sweden. A great fleet is to sail in spring. The poundage is levied again.",
+"En Colonia las ciudades hanseáticas forman con Holanda, Zelanda y Suecia la Confederación de Colonia contra Dinamarca. En primavera zarpará una gran flota. Vuelve a cobrarse el derecho de libra."
+],
+"cb27a588": [
+"The towns remain divided. Valdemar’s privateers go on raiding in the Sound.",
+"Las ciudades siguen divididas. Los corsarios de Valdemar siguen apresando barcos en el Sund."
+],
+"b9a7ff5a": [
+"Peace ships against pirates",
+"Barcos de paz contra los piratas"
+],
+"1757b717": [
+"Should the towns fit out peace ships against the pirates? For a year, half a percent of every sale would go to the fleet.",
+"¿Deben las ciudades armar barcos de paz contra los piratas? Durante un año, el medio por ciento de cada venta iría a la flota."
+],
+"5a9f9158": [
+"The Diet fits out peace ships. For a year pirates attack less often, and sales carry a toll of half a percent.",
+"La Dieta arma barcos de paz. Durante un año los piratas atacan menos, y las ventas pagan un arancel del medio por ciento."
+],
+"037dfbc5": [
+"The Diet will not pay for peace ships.",
+"La Dieta no quiere pagar barcos de paz."
+],
+"f3cd63ea": [
+"Embassy to Novgorod",
+"Embajada a Nóvgorod"
+],
+"3c291a79": [
+"Should an embassy travel to Novgorod to renew the privileges of the Peterhof?",
+"¿Debe viajar una embajada a Nóvgorod para renovar los privilegios del Peterhof?"
+]
+}
