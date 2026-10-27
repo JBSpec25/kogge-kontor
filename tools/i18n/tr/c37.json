@@ -1,0 +1,26 @@
+{
+"9883f338": [
+"{0} days of trial left, until {1}. After that your trading house sails on with the full version, a one-off {2}.",
+"Quedan {0} días de prueba gratuita, hasta el {1}. Después tu casa comercial sigue navegando con la versión completa, por un pago único de {2}."
+],
+"56488a22": [
+"{0} days of trial left in the browser, until {1}. After that the game continues in the iPhone app.",
+"Quedan {0} días de prueba en el navegador, hasta el {1}. Después la partida continúa en la app para iPhone."
+],
+"173b349c": [
+"The first {0} days were free.",
+"Los primeros {0} días han sido gratis."
+],
+"d798eeb2": [
+"You can play the first {0} days in the browser.",
+"Los primeros {0} días puedes jugarlos en el navegador."
+],
+"1c5494ef": [
+"<span class=\"small\">The first {0} game days are free, until {1}. After that you continue with the full version, a one-off {2}.</span>",
+"<span class=\"small\">Los primeros {0} días de juego son gratis, hasta el {1}. Después sigues con la versión completa, por un pago único de {2}.</span>"
+],
+"a3912d55": [
+"</div><div class=\"xfer\"><h3>iPhone app</h3><span class=\"small\">In the browser you play the first {0} game days, until {1}. The whole game is available as an app, a one-off {2}. Take your saved game with you using the code below.</span>",
+"</div><div class=\"xfer\"><h3>App para iPhone</h3><span class=\"small\">En el navegador juegas los primeros {0} días de juego, hasta el {1}. El juego completo está disponible como app, por un pago único de {2}. Llévate tu partida con el código de abajo.</span>"
+]
+}
