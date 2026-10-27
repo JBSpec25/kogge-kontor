@@ -1087,6 +1087,7 @@ em.rep.warn{background:#b5523a}
     return `${d.getDate()} de ${MONTHS[d.getMonth()]}` + (withYear ? ` de ${d.getFullYear()}` : '');
   }
   const isWinter = day => [11, 0, 1].includes(dateOf(day).getMonth());
+  const seasonOf = day => { const m = dateOf(day).getMonth(); return m === 11 || m < 2 ? 'winter' : m < 5 ? 'fruehling' : m < 8 ? 'sommer' : 'herbst'; };
 
   function route(a, b, day, spd) {
     const dist = {}, prev = {}, seen = new Set();
@@ -7060,6 +7061,15 @@ em.rep.warn{background:#b5523a}
       stone:['#ddd6c6', '#cfc6b3', '#e4ddcf', '#d6cdb8'], wood:['#a8442f', '#c08a3a', '#e3dccb', '#b4553a', '#d2a24c', '#9a3c2c'], log:['#7a5636', '#86613f', '#6e4d30']};
     const ROOFS = {tile:['#7e3a2a', '#9a4a32', '#6b3a2c', '#8a4630'], red:['#a24a30', '#b0553a', '#93402a', '#a85036'], slate:['#4f5a60', '#5a646a', '#454e53'], shingle:['#7a6a52', '#6e5f49', '#85745a'], brown:['#6b3a2c', '#5e3326', '#73402f']};
 
+    // Ab Version 50: Farben je Jahreszeit (Sommer sind die Grundfarben in S, Winter zeichnet Schnee)
+    const SEASON = {
+      fruehling:{garden:'#a6bb74', garden2:'#94ab66', meadow:'#b4c47e', meadow2:'#a3b770', field:'#a9bb76', field2:'#bcae88', hedge:'#7f9c52',
+        trees:[['#86a85c', '#6d9248', '#a7c47a'], ['#7c9f55', '#638a43', '#9cbd70'], ['#86a85c', '#6d9248', '#a7c47a'], ['#eadde2', '#d6b9c5', '#f6eef1']]},
+      sommer:{field:'#c4bb7c'},
+      herbst:{garden:'#ada66e', garden2:'#9d9661', meadow:'#b7ad72', meadow2:'#a89f66', field:'#b89c68', field2:'#9e845c', hedge:'#8c7f48',
+        trees:[['#c98a3a', '#a4672c', '#e2b157'], ['#b8592f', '#8f4224', '#d97c4c'], ['#b3a13e', '#8c7d30', '#d1c05c'], ['#8a8a46', '#6d6c36', '#a8a85e']]}
+    };
+    const seasonS = s => SEASON[s] ? Object.assign({}, S, SEASON[s]) : S;
     // Isometrische Sicht: Mittelpunkt in Metern, Breite des Bildes in Bildachsen-Metern
     function view(W, H, center, span, cy) {
       const a = PROJ[0], b = PROJ[1];
@@ -7071,7 +7081,8 @@ em.rep.warn{background:#b5523a}
     // ───── eine Szene zeichnen: Boden, Schatten, Bauten nach Tiefe ─────
     function draw(ctx, v, scene, opt) {
       opt = opt || {};
-      const winter = !!opt.winter, k = v.k, L = S.L, M = scene.mats || {}, roofSet = ROOFS[scene.roof || 'tile'];
+      const S = seasonS(opt.season);   // ab Version 50: Bäume, Wiesen, Gärten und Felder nach Jahreszeit
+      const winter = !!opt.winter || opt.season === 'winter', k = v.k, L = S.L, M = scene.mats || {}, roofSet = ROOFS[scene.roof || 'tile'];
       let zOff = 0;
       const P = (x, y, z) => v.P(x, y, (z || 0) + zOff);
       const P3 = q => P(q[0], q[1], q[2]);
@@ -7428,7 +7439,7 @@ em.rep.warn{background:#b5523a}
         for (let s = 0; s < 4; s++) { const a = pts[s], b = pts[s + 1], n = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / 1.2); for (let q = 0; q < n; q++) { const px = lerp(a[0], b[0], q / n), py = lerp(a[1], b[1], q / n); lineP(P(px, py, 0), P(px, py, 2.6), wd, Math.max(0.5, 0.3 * k)); } } }
       function tree(o) { const c = P(o.x, o.y, 0), rr = o.s * k, top = P(o.x, o.y, o.s * 2.1);
         ctx.fillStyle = '#5a4030'; ctx.fillRect(c[0] - 0.25 * k, top[1], 0.5 * k, c[1] - top[1]);
-        const T = winter ? ['#d9dedd', '#c4cbca', '#eef1f0'] : (o.pine ? ['#4e6a44', '#3e573a', '#5f7d52'] : S.tree);
+        const T = winter ? ['#d9dedd', '#c4cbca', '#eef1f0'] : (o.pine ? ['#4e6a44', '#3e573a', '#5f7d52'] : S.trees ? S.trees[Math.abs(Math.round(o.x * 7 + o.y * 13)) % S.trees.length] : S.tree);
         if (o.pine) { ctx.fillStyle = T[1]; ctx.beginPath(); ctx.moveTo(top[0], top[1] - rr * 1.6); ctx.lineTo(top[0] + rr * 0.9, c[1] - rr * 0.4); ctx.lineTo(top[0] - rr * 0.9, c[1] - rr * 0.4); ctx.closePath(); ctx.fill(); return; }
         [[0, 0, 1, T[1]], [-0.3, -0.35, 0.72, T[0]], [0.25, -0.5, 0.55, T[2]]].forEach(([dx, dy, sc, col]) => { ctx.beginPath(); ctx.ellipse(top[0] + dx * rr, top[1] + dy * rr, rr * sc, rr * sc * 0.9, 0, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill(); if (sc === 1) { ctx.strokeStyle = S.outline; ctx.lineWidth = S.ow; ctx.stroke(); } }); }
       function cargo(o) { const {x, y} = o, t = o.tt;
@@ -7449,7 +7460,8 @@ em.rep.warn{background:#b5523a}
         [0, 4].forEach(dx => lineP(P(x + dx, y, 0), P(x + dx, y, 4.6), post, Math.max(0.8, 0.3 * k)));
         fillPts([P(x - 0.4, y, 2.4), P(x + 4.4, y, 2.4), P(x + 4.4, y, 4.9), P(x - 0.4, y, 4.9)], '#e6d6b0', S.outline, S.ow);
         if (!tiny) { fillPts([P(x + 0.1, y, 2.8), P(x + 1.4, y, 2.8), P(x + 1.4, y, 4.5), P(x + 0.1, y, 4.5)], o.hc || '#a8342a'); for (let q = 0; q < 3; q++) lineP(P(x + 1.8, y, 3.1 + q * 0.5), P(x + 4, y, 3.1 + q * 0.5), 'rgba(60,40,20,.55)', Math.max(0.4, 0.12 * k)); } }
-      const DRAW = {wallS, sign, stake, house, church, rathaus, gateTower, tower, wall:wallX, wallY, gate, crane, krantor, roland, belfry, castle, ruin, sophia, halle, stalls, shed, work, woodpile, mill, slip, scaffold, hill, platform, bridgeHouses, fence, tree, cargo,
+      function well(o) { const {x, y} = o, st = matCol('stone', 1); cylF(x, y, 1.5, 0, 1.1, st, 12); lineP(P(x - 1.2, y, 1.1), P(x - 1.2, y, 3.4), '#4a3426', Math.max(0.6, 0.2 * k)); lineP(P(x + 1.2, y, 1.1), P(x + 1.2, y, 3.4), '#4a3426', Math.max(0.6, 0.2 * k)); pyramid(x, y, 1.6, 3.4, 1.4, roofCol(1)); }
+      const DRAW = {well, wallS, sign, stake, house, church, rathaus, gateTower, tower, wall:wallX, wallY, gate, crane, krantor, roland, belfry, castle, ruin, sophia, halle, stalls, shed, work, woodpile, mill, slip, scaffold, hill, platform, bridgeHouses, fence, tree, cargo,
         ship:o => Ships36.draw(ctx, v, Object.assign({light:L}, o))};
 
       // ── Himmel ──
@@ -7501,6 +7513,7 @@ em.rep.warn{background:#b5523a}
         if (g.t === 'gardenOut') { const [x0, y0] = g.pts[0], [x1, y1] = g.pts[2]; fillPts(poly, winter ? '#e9eded' : S.garden2, winter ? null : S.hedge, 1.4);
           if (!winter && !tiny) for (let x = x0 + 2; x < x1; x += 2.4) lineP(P(x, y0 + 1), P(x, y1 - 1), 'rgba(70,90,40,.35)', 0.7); return; }
         if (g.t === 'yard') { fillPts(poly, winter ? '#e2e6e5' : S.yard); return; }
+        if (g.t === 'kai') { fillPts(poly, winter ? '#e4e8e8' : S.quay); (g.faces || []).forEach(([x0, y0, x1, y1]) => fillPts([P(x0, y0, 0), P(x1, y1, 0), P(x1, y1, -3.2), P(x0, y0, -3.2)], winter ? '#c9cfd0' : tint(S.stone, -0.18), S.outline, S.ow)); return; }
         if (g.t === 'tile') { fillPts(poly, winter ? '#e9eded' : S[g.col || 'plaza'], S.outline, S.ow * 0.6); return; }
         if (g.t === 'canal') { const [x0, y0, x1, y1] = g.rect; fillPts(quad(x0, y0, x1, y1), winter ? '#cfdce0' : S.water[1]); fillPts([P(x1, y0, 0), P(x1, y1, 0), P(x1, y1, -2), P(x1, y0, -2)], tint(S.stone, -0.1)); glints.push(g.rect); return; }
         if (g.t === 'bridge') { const {x0, x1, y0, y1} = g, z = 2.2;
@@ -7569,6 +7582,7 @@ em.rep.warn{background:#b5523a}
         case 'tree': return [o.x - 0.5, o.y - 0.5, o.x + 0.5, o.y + 0.5, 1];
         case 'stake': return [o.x, o.y, o.x + 3.5, o.y + 3, 1.8];
         case 'sign': return [o.x, o.y, o.x + 4, o.y + 0.3, 4.9];
+        case 'well': return [o.x - 1.6, o.y - 1.6, o.x + 1.6, o.y + 1.6, 4.8];
         case 'wallS': { const t = o.th || 2.2, len = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]), nx = (o.b[1] - o.a[1]) / len * t, ny = -(o.b[0] - o.a[0]) / len * t, xs = [o.a[0], o.b[0], o.a[0] + nx, o.b[0] + nx], ys = [o.a[1], o.b[1], o.a[1] + ny, o.b[1] + ny];
           return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys), o.h]; }
         case 'cargo': return [o.x, o.y, o.x + 1.6, o.y + 1.4, 1.5];
@@ -7855,16 +7869,31 @@ em.rep.warn{background:#b5523a}
     // geschlossener Ring (cfg.wallPoly) mit einem Turm an jeder Ecke und an beiden Enden des Kais. Rechts unten liegt dein Viertel:
     // im Stammsitz erst Bauland, dann Kontor, Haus, Betriebe, Vorhaben und die Häuser deiner Familie; in fremden Häfen Bürgerhäuser.
     const VQ = [212, 16, 268, 92];
-    const SLOT50 = {kontor:[214, 16, 10, 15], haus:[226, 17, 9, 13], speicher:[254, 16, 10, 15], w0:[214, 38], w1:[228, 38], w2:[242, 38], w3:[214, 49], w4:[228, 49],
-      hospital:[214, 67, 13, 21], artushof:[233, 66, 20, 14]};
-    // zwölf Plätze für die Häuser deiner Familie, in der Reihenfolge, in der sie entstehen: [x, y, Breite, Tiefe]
-    const FAM = [[236, 18, 6, 12], [242.5, 18, 6, 12], [249, 18, 5, 12], [243, 48, 6.5, 9.5], [250, 48, 6.5, 9.5], [257, 38, 7, 9], [257, 48, 7, 9],
-      [256, 66, 7, 10], [256, 77, 7, 10], [233, 82, 6.5, 9], [240, 82, 6.5, 9], [247, 82, 6.5, 9]];
-    const STREETS50 = [[-41, 10, 272, 16], [44, 16, 52, 150], [96, 16, 101, 169], [150, 16, 155, 150], [-34, 58, 268, 64], [-34, 150, 214, 158], [-33, 16, -28, 150], [205, 16, 212, 150], [212, 32, 266, 37]];
+    const STREETS50 = [[-41, 10, 212, 16], [44, 16, 52, 150], [96, 16, 101, 169], [150, 16, 155, 150], [-34, 58, 212, 64], [-34, 150, 214, 158], [-33, 16, -28, 150], [205, 16, 212, 150]];
+    // Dein Viertel in drei Varianten (zur Abstimmung): Kontorhof, eigener Platz, eigenes Hafenbecken.
+    // Bauplätze [x, y, Breite, Tiefe, Front]; Front S/N heißt Giebel zur Straße längs x, E/W Giebel längs y.
+    const VIERTEL = {
+      kontorhof:{quay:[[-41, 272]], streets:[[212, 10, 272, 16], [212, 32, 266, 37], [212, 58, 268, 64]], meadow:[[212, 16, 268, 32], [212, 37, 268, 58], [212, 64, 268, 92]],
+        kontor:[214, 16, 10, 15, 'S'], haus:[226, 17, 9, 13, 'S'], speicher:[254, 16, 10, 15, 'S'], cranes:[[246, 4]], hospital:[214, 67, 13, 21], artushof:[233, 66, 20, 14, 'S'],
+        works:[[214, 38], [228, 38], [242, 38], [214, 49], [228, 49]], sign:[244.5, 31], cargo:[[226, 5, 'b'], [212, 6, 'c'], [222, 3, 's']], trees:[[262, 88], [216, 90.5]],
+        fam:[[236, 18, 6, 12], [242.5, 18, 6, 12], [249, 18, 5, 12], [243, 48, 6.5, 9.5], [250, 48, 6.5, 9.5], [257, 38, 7, 9], [257, 48, 7, 9], [256, 66, 7, 10], [256, 77, 7, 10], [233, 82, 6.5, 9], [240, 82, 6.5, 9], [247, 82, 6.5, 9]]},
+      platz:{quay:[[-41, 272]], streets:[[212, 10, 272, 16], [226, 40, 229, 58], [256.5, 40, 258, 58], [212, 58, 268, 64]], meadow:[[212, 31, 226, 58], [229, 54, 256.5, 58], [258, 31, 268, 58], [212, 64, 268, 92]],
+        plaza:[226, 16, 258, 40], well:[242, 28],
+        kontor:[214, 16, 12, 15, 'S'], haus:[229, 41, 9, 13, 'S'], speicher:[258, 16, 10, 15, 'S'], cranes:[[263, 4]], hospital:[214, 66, 13, 21], artushof:[238.5, 40.5, 18, 14, 'S'],
+        works:[[229, 66], [243, 66], [256, 66], [229, 77], [243, 77]], sign:[240, 16.6], cargo:[[219, 4, 'b'], [226, 6, 'c'], [212, 3, 's']], trees:[[262, 88], [216, 90.5]], plazaTrees:[[228.5, 37.5], [255.5, 37.5]],
+        fam:[[214, 33, 7, 12, 'E'], [214, 40.5, 7, 12, 'E'], [214, 48, 8, 12, 'E'], [258, 32, 7, 10, 'W'], [258, 39.5, 7, 10, 'W'], [258, 47, 8, 10, 'W'],
+          [257, 77, 8, 9], [229.5, 86, 6.5, 6], [236.5, 86, 6.5, 6], [243.5, 86, 6.5, 6], [250.5, 86, 6.5, 6], [257, 86.5, 8, 5.5]]},
+      becken:{quay:[[-41, 230], [254, 272]], streets:[[212, 34, 268, 38], [212, 58, 268, 64]], meadow:[[212, 38, 268, 58], [212, 64, 268, 92]],
+        basin:[230, 0, 254, 28], kai:[[212, 0, 230, 34, [[230, 0, 230, 28]]], [230, 28, 254, 34, [[230, 28, 254, 28]]], [254, 0, 272, 34, []]],
+        kontor:[214, 12, 14, 9, 'E'], haus:[236, 39, 9, 13, 'S'], speicher:[258, 6, 10, 15, 'S'], cranes:[[227, 21], [256.5, 3.5]], hospital:[214, 66, 13, 21], artushof:[246, 38, 20, 14, 'S'],
+        works:[[229, 66], [243, 66], [256, 66], [229, 77], [243, 77]], sign:[240, 34.4], cargo:[[226, 5, 'b'], [224, 10, 'c'], [215, 4, 's']], trees:[[262, 88], [216, 90.5]], ship:[242, 13],
+        fam:[[214, 39, 7, 9], [221.5, 39, 7, 9], [228.5, 39, 7, 9], [214, 49, 7, 9], [221.5, 49, 7, 9], [228.5, 49, 7, 9], [257, 77, 8, 9], [229, 86, 6.5, 6], [243, 86, 6.5, 6], [255, 24, 7, 6], [262.5, 24, 7, 6], [257, 86.5, 8, 5.5]]}
+    };
     function build50(cid, o, cfg) {
       const seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1, r = rngF(seed);
       const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [], ring = cfg.wallPoly, GV = (P && P.gv) || {};
       const hc = o.house && o.house.hc || '#8a3a2a', mark = o.house && o.house.mark || null;
+      const QV = (home && VIERTEL[o.viertel || cfg.viertel]) || VIERTEL.kontorhof;   // fremde Häfen: Bürgerhäuser im Raster des Kontorhofs
       const own = q => Object.assign(q, {hc, mark});   // Bau deines Hauses: Hausfarbe und Hausmarke
       const pick = a => a[Math.floor(r() * a.length)];
       const busy = (x0, y0, x1, y1) => keep.some(([a, b, c, d]) => x0 < c && x1 > a && y0 < d && y1 > b);
@@ -7908,8 +7937,10 @@ em.rep.warn{background:#b5523a}
       ground.push({t:'fill', col:'land'});
       ground.push({t:'water', rect:[-420, -420, 640, 0], waves:220, seed:seed % 97});
       ground.push({t:'reeds', x0:-170, x1:-47, y:0}); ground.push({t:'reeds', x0:278, x1:430, y:0});
-      STREETS50.forEach(s => ground.push({t:'street', rect:s}));
-      ground.push({t:'quay', x0:-41, x1:272});
+      STREETS50.concat(QV.streets).forEach(s => ground.push({t:'street', rect:s}));
+      QV.quay.forEach(([x0, x1]) => ground.push({t:'quay', x0, x1}));
+      if (QV.basin) { const [x0, y0, x1, y1] = QV.basin; ground.push({t:'water', rect:[x0, y0 - 1, x1, y1], waves:14, grad:false, seed:5}); }
+      (QV.kai || []).forEach(([x0, y0, x1, y1, faces]) => ground.push({t:'kai', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]], faces}));
       // Häuserblöcke der Altstadt
       BLOCKS.forEach(([x0, y0, x1, y1], bi) => { if (bi === 6 && fullEast) return; block(x0, y0, x1, y1, y0 === 16, y0 === 16 ? 16 : 13, 12, !(bi === 5 && cfg.west) && !(bi === 6 && cfg.east)); });
       [[60, 32, 0], [117, 32, 2], [170, 34, 4]].forEach(([x, y, n]) => objs.push({t:'shed', x, y, w:8, d:6, h:4.4, mat:'fach', chimney:n === 2}));
@@ -7989,38 +8020,41 @@ em.rep.warn{background:#b5523a}
       // Dein Viertel
       const [qx0, qy0, qx1, qy1] = VQ;
       if (home) {
-        [[qy0, 32], [37, 58], [64, qy1]].forEach(([y0, y1]) => ground.push({t:'land', col:'meadow', pts:[[qx0, y0], [qx1, y0], [qx1, y1], [qx0, y1]]}));
+        const hb = (s, extra) => { const [x, y, w, d, f] = s, fr = f || 'S'; return Object.assign({t:'house', x, y, w, d, ridge:fr === 'S' || fr === 'N' ? 'y' : 'x', front:fr}, extra); };
+        const at = s => s[4] === 'E' || s[4] === 'W' ? [s[0], s[1], s[0] + s[3], s[1] + s[2]] : [s[0], s[1], s[0] + s[2], s[1] + s[3]];   // Grundriss eines Bauplatzes
+        QV.meadow.forEach(([x0, y0, x1, y1]) => ground.push({t:'land', col:'meadow', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}));
+        if (QV.plaza) { const [x0, y0, x1, y1] = QV.plaza; ground.push({t:'plaza', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}); objs.push({t:'well', x:QV.well[0], y:QV.well[1]}); }
         let n = 0;
-        const [kx, ky, kw, kd] = SLOT50.kontor;
-        if (P.kontor === 'built') { n++; objs.push(own({t:'house', x:kx, y:ky, w:kw, d:kd, h:(P.kontorLvl || 1) > 1 ? 17 : 13, rh:kw * 1.2, ridge:'y', front:'S', kind:base === 'wood' || base === 'log' || base === 'fach' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:2, ri:0, storage:true, hm:true, plot:'kontor', flag:'hm'}));
-          [[226, 5, 'b'], [212, 6, 'c'], [222, 3, 's']].forEach(([x, y, t]) => objs.push({t:'cargo', x, y, tt:t, noShadow:true})); }
-        else objs.push({t:'stake', x:kx + 3, y:ky + 6});
-        const [hx, hy, hw, hd] = SLOT50.haus, lv = P.hausLvl || 1;
-        if (P.haus === 'job' && lv < 2) objs.push({t:'scaffold', x:hx, y:hy, w:hw, d:hd - 1, h:14, frac:P.hausF || 0.3, plot:'haus'});
-        else { objs.push(own({t:'house', x:hx, y:hy, w:hw, d:hd, h:lv === 1 ? 10 + tall : lv === 2 ? 14 + tall : 17 + tall, rh:lv === 1 ? 7 : 9.5, ridge:'y', front:'S', kind:lv === 1 ? kindOf(hmMat, r, ['plain']) : hmMat === 'brick' ? 'step' : hmMat, mat:lv === 3 && hmMat === 'brick' ? 'white' : hmMat, wi:4, ri:0, chimney:true, hm:true, oriel:lv === 3, plot:'haus', diele:true, flag:lv > 1 ? 'hm' : null}));
-          if (P.haus === 'job') objs.push({t:'scaffold', x:hx - 1, y:hy - 2, w:hw + 2, d:1.2, h:16, frac:P.hausF || 0.3, plot:'haus', noWalls:true}); }
-        ['w0', 'w1', 'w2', 'w3', 'w4'].forEach(k => { const [x, y] = SLOT50[k], s0 = P[k] || {};
+        if (P.kontor === 'built') { n++; objs.push(own(hb(QV.kontor, {h:(P.kontorLvl || 1) > 1 ? 17 : 13, rh:Math.min(QV.kontor[2], 12) * 1.2, kind:base === 'wood' || base === 'log' || base === 'fach' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:2, ri:0, storage:true, hm:true, plot:'kontor', flag:'hm'})));
+          QV.cargo.forEach(([x, y, t]) => objs.push({t:'cargo', x, y, tt:t, noShadow:true})); }
+        else { const f = at(QV.kontor); objs.push({t:'stake', x:(f[0] + f[2]) / 2 - 1.7, y:(f[1] + f[3]) / 2 - 1.5}); }
+        const lv = P.hausLvl || 1, hf = at(QV.haus);
+        if (P.haus === 'job' && lv < 2) objs.push({t:'scaffold', x:hf[0], y:hf[1], w:hf[2] - hf[0], d:hf[3] - hf[1] - 1, h:14, frac:P.hausF || 0.3, plot:'haus'});
+        else { objs.push(own(hb(QV.haus, {h:lv === 1 ? 10 + tall : lv === 2 ? 14 + tall : 17 + tall, rh:lv === 1 ? 7 : 9.5, kind:lv === 1 ? kindOf(hmMat, r, ['plain']) : hmMat === 'brick' ? 'step' : hmMat, mat:lv === 3 && hmMat === 'brick' ? 'white' : hmMat, wi:4, ri:0, chimney:true, hm:true, oriel:lv === 3, plot:'haus', diele:true, flag:lv > 1 ? 'hm' : null})));
+          if (P.haus === 'job') objs.push({t:'scaffold', x:hf[0] - 1, y:hf[1] - 2, w:hf[2] - hf[0] + 2, d:1.2, h:16, frac:P.hausF || 0.3, plot:'haus', noWalls:true}); }
+        ['w0', 'w1', 'w2', 'w3', 'w4'].forEach((k, i) => { const [x, y] = QV.works[i], s0 = P[k] || {};
           if (s0.s === 'built') { n++; objs.push(own({t:'work', x, y, g:s0.g, idle:s0.idle, plot:k})); }
           else if (s0.s === 'job') objs.push({t:'scaffold', x, y, w:9, d:6, h:5, frac:s0.f || 0.3, mat:'fach', plot:k});
           else if (s0.s === 'free' || s0.s === 'open') { ground.push({t:'yard', pts:[[x - 0.5, y - 0.5], [x + 12.5, y - 0.5], [x + 12.5, y + 8], [x - 0.5, y + 8]]}); objs.push({t:'fence', x0:x - 0.5, y0:y - 0.5, x1:x + 12.5, y1:y + 8}); }
           else objs.push({t:'stake', x:x + 4, y:y + 2});
         });
-        // große Vorhaben: Speicher am Kai mit zweitem Kran, Hospital, Artushof
-        const [sx, sy, sw, sd] = SLOT50.speicher;
-        if (GV.hafen === 'built') { n++; objs.push(own({t:'house', x:sx, y:sy, w:sw, d:sd, h:15, rh:sw * 1.2, ridge:'y', front:'S', kind:'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, storage:true, hm:true, flag:'hm', plot:'hafen'}), own({t:'crane', x:246, y:4, plot:'hafen', flagAt:[246, 4, 14]})); }
-        else if (GV.hafen === 'job') objs.push({t:'scaffold', x:sx, y:sy, w:sw, d:sd - 2, h:14, frac:0.5, plot:'hafen'});
-        const [px, py, pw, pd] = SLOT50.hospital;
+        // große Vorhaben: Speicher am Kai mit Kränen, Hospital, Artushof, im Hafenbecken die Friedeflotte
+        if (GV.hafen === 'built') { n++; objs.push(own(hb(QV.speicher, {h:15, rh:QV.speicher[2] * 1.2, kind:'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, storage:true, hm:true, flag:'hm', plot:'hafen'})));
+          QV.cranes.forEach(([x, y]) => objs.push(own({t:'crane', x, y, plot:'hafen', flagAt:[x, y, 14]}))); }
+        else if (GV.hafen === 'job') { const f = at(QV.speicher); objs.push({t:'scaffold', x:f[0], y:f[1], w:f[2] - f[0], d:f[3] - f[1] - 2, h:14, frac:0.5, plot:'hafen'}); }
+        const [px, py, pw, pd] = QV.hospital;
         if (GV.hospital === 'built') { n++; objs.push(own({t:'church', x:px, y:py, w:pw, d:pd, h:9, towers:0, ridgeTurret:true, mat:M.mat, plot:'hospital', flagAt:[px + pw / 2, py + 2, 22]})); }
         else if (GV.hospital === 'job') objs.push({t:'scaffold', x:px, y:py, w:pw, d:pd, h:10, frac:0.5, plot:'hospital', mat:M.mat});
-        const [ax, ay, aw, ad] = SLOT50.artushof;
-        if (GV.artushof === 'built') { n++; objs.push(own({t:'house', x:ax, y:ay, w:aw, d:ad, h:13 + tall, rh:10, ridge:'y', front:'S', kind:base === 'fach' || base === 'wood' || base === 'log' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, hm:true, flag:'hm', plot:'artushof', chimney:true}));
-          ground.push({t:'plaza', pts:[[ax - 1, 64], [ax + aw + 1, 64], [ax + aw + 1, ay], [ax - 1, ay]]}); }
-        else if (GV.artushof === 'job') objs.push({t:'scaffold', x:ax, y:ay, w:aw, d:ad, h:12, frac:0.5, plot:'artushof'});
+        const af = at(QV.artushof);
+        if (GV.artushof === 'built') { n++; objs.push(own(hb(QV.artushof, {h:13 + tall, rh:10, kind:base === 'fach' || base === 'wood' || base === 'log' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, hm:true, flag:'hm', plot:'artushof', chimney:true}))); }
+        else if (GV.artushof === 'job') objs.push({t:'scaffold', x:af[0], y:af[1], w:af[2] - af[0], d:af[3] - af[1], h:12, frac:0.5, plot:'artushof'});
+        if (QV.ship && (GV.flotte === 'built' || GV.hafen === 'built')) objs.push({t:'ship', type:GV.flotte === 'built' ? 'holk' : 'kogge', X:QV.ship[0], Y:QV.ship[1], heading:Math.PI / 2, furled:true});
         // Häuser deiner Familie aus der festen Reihe
-        FAM.slice(0, Math.min(12, P.fam || 0)).forEach(([x, y, w, d], i) => { const m = pickW(r, cfg.mat);
-          objs.push(own({t:'house', x, y, w, d, h:9 + (i * 7 % 4) + tall / 2, rh:w * 0.95, ridge:'y', front:'S', kind:kindOf(m, r, cfg.front), mat:m, wi:i + 1, ri:i, chimney:i % 3 === 0})); });
-        if (n < 2) objs.push({t:'sign', x:244.5, y:31, hc});
-        if (!(P.fam > 9)) [[262, 88], [216, 90.5]].forEach(([x, y]) => objs.push({t:'tree', x, y, s:3.2}));
+        QV.fam.slice(0, Math.min(12, P.fam || 0)).forEach((s, i) => { const m = pickW(r, cfg.mat), w = s[2];
+          objs.push(own(hb(s, {h:9 + (i * 7 % 4) + tall / 2, rh:w * 0.95, kind:kindOf(m, r, cfg.front), mat:m, wi:i + 1, ri:i, chimney:i % 3 === 0}))); });
+        if (n < 2) objs.push({t:'sign', x:QV.sign[0], y:QV.sign[1], hc});
+        if (!(P.fam > 9)) QV.trees.forEach(([x, y]) => objs.push({t:'tree', x, y, s:3.2}));
+        (QV.plazaTrees || []).forEach(([x, y]) => objs.push({t:'tree', x, y, s:2.8}));
       } else {
         // fremder Hafen: Bürgerhäuser; mit Niederlassung steht dein Speicher mit deiner Fahne am Kai
         if (o.branch) { keep.push([qx0, qy0, qx0 + 13, qy0 + 15]); objs.push(own({t:'house', x:214, y:16, w:10, d:15, h:13, rh:12, ridge:'y', front:'S', kind:base === 'wood' || base === 'log' || base === 'fach' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:2, ri:0, storage:true, hm:true, flag:'hm'})); }
@@ -8036,7 +8070,7 @@ em.rep.warn{background:#b5523a}
       if (!cfg.hills) objs.push({t:'mill', x:-76, y:96});
       return {objs, ground, roof:cfg.roof, seed, berths:[66, 96, 136, 166, 194], cfg};
     }
-    return {build, CITY, SLOT, SLOT50};
+    return {build, CITY, SLOT, VIERTEL};
   })();
   // ───── Anbindung ans Spiel: Stadtbild mit Leben, Antippen, Baubilder, Schiffsbilder für die Segelansicht ─────
   const G36 = (function () {
@@ -8045,12 +8079,12 @@ em.rep.warn{background:#b5523a}
     // ── Stadtbild ──
     // Grundbild wird einmal je Zustand gezeichnet, darüber laufen Schiffe, Rauch, Fahnen, Mühlen und Möwen
     function cityBase(o) {
-      const sc = Plans36.build(o.cid, {plots:o.plots, branch:o.branch, flag:o.flag, house:o.house});
+      const sc = Plans36.build(o.cid, {plots:o.plots, branch:o.branch, flag:o.flag, house:o.house, viertel:o.viertel});
       const W = o.W, H = o.H, dpr = o.dpr || 1, cv = document.createElement('canvas');
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const v = K36.view(W, H, VIEW.center, VIEW.span, VIEW.cy);
-      const R = K36.draw(ctx, v, sc, {winter:o.winter, haze:sc.cfg.hills ? 0.1 : 0.2});
+      const R = K36.draw(ctx, v, sc, {winter:o.winter, season:o.season, haze:sc.cfg.hills ? 0.1 : 0.2});
       if (R.smokeAt.length > 16) { const n = R.smokeAt.length; R.smokeAt = Array.from({length:16}, (_, i) => R.smokeAt[Math.floor(i * n / 16)]); }
       R.gulls = [0, 1, 2].map(q => ({x:(q * 0.37 + 0.1) % 1, y:0.06 + q * 0.07, ph:q * 2.1}));
       return {cv, R, v, sc, W, H, dpr, winter:!!o.winter};
@@ -10821,8 +10855,15 @@ em.rep.warn{background:#b5523a}
     ['w0', 'w1', 'w2', 'w3', 'w4'].forEach(k => { const q = ps(k); P[k] = q.built ? {s:'built', g:q.w.g, idle:!!q.w.idle} : q.job ? {s:'job', f:Math.round(fr(q.job) * 5) / 5} : q.free ? {s:'free'} : q.open ? {s:'open'} : {s:'lock'}; });
     ['kran', 'markt', 'kirche', 'mauer'].forEach(k => { const q = ps(k); P[k] = q.built ? 'built' : q.job ? 'job' : null; P[k + 'F'] = Math.round(fr(q.job) * 5) / 5; });
     P.hausF = Math.round(P.hausF * 5) / 5;
+    // ab Version 50: große Vorhaben im Viertel und die Häuser deiner Familie (je fertigem Bau ein bis zwei)
+    const G0 = st.gv || {}, done = G0.done || {};
+    P.gv = {}; GV_ORDER.forEach(k => { P.gv[k] = done[k] ? 'built' : G0.job && G0.job.k === k ? 'job' : null; });
+    const n = (P.kontor ? 1 : 0) + (P.hausLvl - 1) + ['w0', 'w1', 'w2', 'w3', 'w4'].filter(k => P[k].s === 'built').length + ['kran', 'markt', 'kirche', 'mauer'].filter(k => P[k] === 'built').length + Object.keys(done).length;
+    P.fam = Math.min(12, Math.floor(n * 1.5));
     return P;
   }
+  // Hausfarbe im Stadtbild: kräftigere Fassung der fünf Farben der Hausmarke (Sand, Taube, Ziegel, Salbei, Ocker)
+  const HM_CITY = ['#a8895a', '#4f7896', '#b0503a', '#5f8a52', '#c09030'];
   let cityBaseMem = null, cityLocSeen = null;
   function drawCityCore(force, tgt) {
     const cv = tgt ? tgt.cv : $('#citycv');
@@ -10831,15 +10872,16 @@ em.rep.warn{background:#b5523a}
     const r = tgt ? {width:tgt.W, height:tgt.H} : cv.getBoundingClientRect();
     if (r.width < 2) return;
     const W = Math.round(r.width), H = Math.round(r.height), dm = Math.min(2, window.devicePixelRatio || 1), dpr = W * dm > 3200 ? Math.max(1, 3200 / W) : dm;
-    const plots = home ? cityPlots() : null, winter = isWinter(st.day), branch = !home && !!(st.branches || {})[cid];
+    const plots = home ? cityPlots() : null, season = seasonOf(st.day), winter = season === 'winter', branch = !home && !!(st.branches || {})[cid];
     const ships = (st.loc === cid ? st.fleet.map(sh => ({type:sh.type})) : []).concat((st.convoys || []).filter(c => c.loc === cid).map(c => ({type:((c.fleet || [])[0] || {}).type || 'kogge'})));
-    const sig = [cid, W, H, dpr, winter, JSON.stringify(plots), branch].join('|'), full = sig + '|' + ships.map(q => q.type).join(',');
+    const pa = (st.player && st.player.avatar) || {}, house = {hc:HM_CITY[pa.col || 0] || HM_CITY[0], mark:AV.marks[pa.mark || 0] || AV.marks[0]};
+    const sig = [cid, W, H, dpr, season, JSON.stringify(plots), branch, house.hc, pa.mark || 0].join('|'), full = sig + '|' + ships.map(q => q.type).join(',');
     if (!tgt && full === citySig && force !== true) return;
     const arrive = !tgt && st.loc === cid && cityLocSeen != null && cityLocSeen !== cid && ships.length > 0;
     if (!tgt) cityLocSeen = st.loc;
     let base;
     if (!tgt && cityBaseMem && cityBaseMem.sig === sig) base = cityBaseMem.base;
-    else { base = G36.cityBase({cid, plots, branch, W, H, dpr, winter}); if (!tgt) cityBaseMem = {sig, base}; }
+    else { base = G36.cityBase({cid, plots, branch, W, H, dpr, winter, season, house}); if (!tgt) cityBaseMem = {sig, base}; }
     if (!tgt) { citySig = full; cityView.base = base; }
     G36.show(cv, {base, ships, arrive, every:tgt ? 50 : 33});
   }
