@@ -7317,8 +7317,14 @@ em.rep.warn{background:#b5523a}
       }
       function tower(o) {
         const {x, y, r, h} = o, wall = matCol(o.mat || 'brick', o.wi == null ? 3 : o.wi), roofC = snowy(o.roofC || roofCol(0));
-        if (o.kind === 'round') { cylF(x, y, r, 0, h, wall, 16); if (o.flat) { for (let q = 0; q < 8; q++) { const a = q / 8 * Math.PI * 2; boxF(x + Math.cos(a) * r * 0.85 - 0.5, y + Math.sin(a) * r * 0.85 - 0.5, h, x + Math.cos(a) * r * 0.85 + 0.5, y + Math.sin(a) * r * 0.85 + 0.5, h + 1.2, wall, null); } } else coneF(x, y, r * 1.12, h, r * (o.steep || 1.7), roofC, 16); }
-        else { boxF(x - r, y - r, 0, x + r, y + r, h, wall, null); if (o.flat) { for (let q = -2; q <= 2; q++) { boxF(x + q * r / 2.5 - 0.4, y - r, h, x + q * r / 2.5 + 0.4, y - r + 0.6, h + 1.2, wall, null); boxF(x + r - 0.6, y + q * r / 2.5 - 0.4, h, x + r, y + q * r / 2.5 + 0.4, h + 1.2, wall, null); } } else pyramid(x, y, r * 1.05, h, r * (o.steep || 1.6), roofC); }
+        if (o.kind === 'round') { cylF(x, y, r, 0, h, wall, 16); if (o.flat) { face(Array.from({length:16}, (_, q) => [x + Math.cos(q / 16 * Math.PI * 2) * r, y + Math.sin(q / 16 * Math.PI * 2) * r, h]), tint(wall, 0.12), [0, 0, 1]); for (let q = 0; q < 8; q++) { const a = q / 8 * Math.PI * 2; boxF(x + Math.cos(a) * r * 0.85 - 0.5, y + Math.sin(a) * r * 0.85 - 0.5, h, x + Math.cos(a) * r * 0.85 + 0.5, y + Math.sin(a) * r * 0.85 + 0.5, h + 1.2, wall, null); } } else coneF(x, y, r * 1.12, h, r * (o.steep || 1.7), roofC, 16); }
+        else if (o.rot) {   // ab Version 50: viereckiger Mauerturm in der Flucht seiner Mauer
+          const ca = Math.cos(o.rot), sa = Math.sin(o.rot), C = (u, w) => [x + ca * u - sa * w, y + sa * u + ca * w];
+          prism([C(-r, -r), C(r, -r), C(r, r), C(-r, r)], 0, h, wall, o.flat ? tint(wall, 0.12) : null);
+          if (o.flat) for (let q = -2; q <= 2; q++) { const m = q * r / 2.5; prism([C(m - 0.4, -r), C(m + 0.4, -r), C(m + 0.4, -r + 0.6), C(m - 0.4, -r + 0.6)], h, h + 1.2, wall, tint(wall, 0.12)); prism([C(r - 0.6, m - 0.4), C(r, m - 0.4), C(r, m + 0.4), C(r - 0.6, m + 0.4)], h, h + 1.2, wall, tint(wall, 0.12)); }
+          else { const R2 = r * 1.05, rh = r * (o.steep || 1.6), tp = [x, y, h + rh], c4 = [C(-R2, -R2), C(R2, -R2), C(R2, R2), C(-R2, R2)];
+            for (let i = 0; i < 4; i++) { const a = c4[i], b = c4[(i + 1) % 4], m = [(a[0] + b[0]) / 2 - x, (a[1] + b[1]) / 2 - y]; face([[a[0], a[1], h], [b[0], b[1], h], tp], roofC, norm([m[0] * rh, m[1] * rh, R2 * R2])); } } }
+        else { boxF(x - r, y - r, 0, x + r, y + r, h, wall, o.flat ? tint(wall, 0.12) : null); if (o.flat) { for (let q = -2; q <= 2; q++) { boxF(x + q * r / 2.5 - 0.4, y - r, h, x + q * r / 2.5 + 0.4, y - r + 0.6, h + 1.2, wall, null); boxF(x + r - 0.6, y + q * r / 2.5 - 0.4, h, x + r, y + q * r / 2.5 + 0.4, h + 1.2, wall, null); } } else pyramid(x, y, r * 1.05, h, r * (o.steep || 1.6), roofC); }
         if (!tiny) { const p = P(x, y - r, h * 0.6); ctx.fillStyle = S.glass; ctx.fillRect(p[0] - 0.35 * k, p[1] - 0.9 * k, 0.7 * k, 1.8 * k); }
       }
       function wallX(o) { const {x0, x1, y, h} = o, c = matCol(o.mat || 'brick', 0); boxF(x0, y, 0, x1, y + 2.2, h, c, tint(c, 0.15)); if (vis([0, -1, 0]) && !tiny) for (let x = x0 + 0.6; x < x1 - 0.6; x += 2.4) boxF(x, y, h, x + 1.2, y + 1, h + 1.2, c, tint(c, 0.15)); }
@@ -7464,7 +7470,8 @@ em.rep.warn{background:#b5523a}
       function prism(pts, z0, z1, col, top, o2) { pts = ccw(pts);
         for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; face([[p[0], p[1], z0], [q[0], q[1], z0], [q[0], q[1], z1], [p[0], p[1], z1]], col, norm([q[1] - p[1], -(q[0] - p[0]), 0]), o2); }
         if (top) face(pts.map(([x, y]) => [x, y, z1]), top, [0, 0, 1], o2); }
-      function wallS(o) { const [ax, ay] = o.a, [bx, by] = o.b, len = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / len, uy = (by - ay) / len, t = o.th || 2.2, nx = uy * t, ny = -ux * t, h = o.h, c = matCol(o.mat || 'brick', 0), top = tint(c, 0.15), za = o.za || 0, zb = o.zb || 0;
+      function wallS(o) { let [ax, ay] = o.a, [bx, by] = o.b; const len = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / len, uy = (by - ay) / len, t = o.th || 2.2, nx = uy * t, ny = -ux * t, h = o.h, c = matCol(o.mat || 'brick', 0), top = tint(c, 0.15), za = o.za || 0, zb = o.zb || 0;
+        if (o.ctr) { ax -= nx / 2; ay -= ny / 2; bx -= nx / 2; by -= ny / 2; }   // mittig auf der Linie (Mauerring), Zinnen außen
         if (!za && !zb) prism([[ax, ay], [bx, by], [bx + nx, by + ny], [ax + nx, ay + ny]], 0, h, c, top);
         else { let q = [[ax, ay, za], [bx, by, zb], [bx + nx, by + ny, zb], [ax + nx, ay + ny, za]], ar = 0; q.forEach((p, i) => { const n2 = q[(i + 1) % 4]; ar += p[0] * n2[1] - n2[0] * p[1]; }); if (ar < 0) q = q.reverse();
           q.forEach((p, i) => { const n2 = q[(i + 1) % 4]; face([[p[0], p[1], p[2]], [n2[0], n2[1], n2[2]], [n2[0], n2[1], n2[2] + h], [p[0], p[1], p[2] + h]], c, norm([n2[1] - p[1], -(n2[0] - p[0]), 0])); });
@@ -7548,16 +7555,22 @@ em.rep.warn{background:#b5523a}
       // ── Schatten auf dem Boden ──
       if (scene.clip) { ctx.save(); const [cx0, cy0, cx1, cy1] = scene.clip; path(quad(cx0, cy0, cx1, cy1)); ctx.clip(); }
       ctx.fillStyle = S.shadow;
-      const shadowBox = (x0, y0, x1, y1, h, zb) => { const dx = -L[0] / L[2] * h, dy = -L[1] / L[2] * h, c = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
-        const all = c.concat(c.map(([x, y]) => [x + dx, y + dy])).map(([x, y]) => v.P(x, y, zb || 0)); all.sort((p, q) => p[0] - q[0] || p[1] - q[1]);
+      // ab Version 50: alle Schatten in einem Pfad, damit Überlappungen nicht dunkler werden (keine Streifen an Mauern);
+      // Mauern mit ihrem echten Umriss, am Hang liegt der Schatten auf dem Boden
+      const shadows = [];
+      const shadowOf = (c, h, zf) => { const dx = -L[0] / L[2] * h, dy = -L[1] / L[2] * h;
+        const all = c.concat(c.map(([x, y]) => [x + dx, y + dy])).map(([x, y]) => v.P(x, y, zf(x, y))); all.sort((p, q) => p[0] - q[0] || p[1] - q[1]);
         const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]), lo = [], up = [];
         all.forEach(p => { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); });
         for (let i = all.length - 1; i >= 0; i--) { const p = all[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); }
-        path(lo.slice(0, -1).concat(up.slice(0, -1))); ctx.fill(); };
+        shadows.push(lo.slice(0, -1).concat(up.slice(0, -1))); };
       (scene.objs || []).forEach(o => { const fp = foot(o); if (!fp || o.noShadow) return;
-        if (o.t === 'tree') { const c = v.P(o.x - L[0] / L[2] * o.s * 1.1, o.y - L[1] / L[2] * o.s * 1.1, o.z || 0); ctx.save(); ctx.globalAlpha = 0.55; ctx.beginPath(); ctx.ellipse(c[0], c[1], o.s * k * 0.85, o.s * k * 0.42, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); return; }
+        const zf = SL ? zAt : () => o.z || 0;
+        if (o.t === 'tree') { const sx = o.x - L[0] / L[2] * o.s * 1.1, sy = o.y - L[1] / L[2] * o.s * 1.1, c = v.P(sx, sy, zf(sx, sy)); ctx.save(); ctx.globalAlpha = 0.55; ctx.beginPath(); ctx.ellipse(c[0], c[1], o.s * k * 0.85, o.s * k * 0.42, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); return; }
         if (o.t === 'hill' || o.t === 'ship') return;
-        shadowBox(fp[0], fp[1], fp[2], fp[3], fp[4], o.z || 0); });
+        if (o.t === 'wallS') { shadowOf(wallPts(o), o.h + 0.6, zf); return; }
+        shadowOf([[fp[0], fp[1]], [fp[2], fp[1]], [fp[2], fp[3]], [fp[0], fp[3]]], fp[4], zf); });
+      ctx.beginPath(); shadows.forEach(pts => { pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); }); ctx.fill('nonzero');
       if (scene.clip) ctx.restore();
       // ── Bauten nach Tiefe ──
       const order = (scene.objs || []).map(o => { const fp = foot(o) || [o.x || 0, o.y || 0, o.x || 0, o.y || 0]; return {o, z:v.depth([(fp[0] + fp[2]) / 2, (fp[1] + fp[3]) / 2, 0]) + (o.bias || 0)}; }).sort((p, q) => p.z - q.z);
@@ -7570,6 +7583,9 @@ em.rep.warn{background:#b5523a}
       });
       return {smokeAt, flagsAt, millsAt, hits, glints};
     }
+    // Ecken einer Mauer (wallS) am Boden
+    function wallPts(o) { const t = o.th || 2.2, len = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]), nx = (o.b[1] - o.a[1]) / len * t, ny = -(o.b[0] - o.a[0]) / len * t, sx = o.ctr ? -nx / 2 : 0, sy = o.ctr ? -ny / 2 : 0;
+      return [[o.a[0] + sx, o.a[1] + sy], [o.b[0] + sx, o.b[1] + sy], [o.b[0] + sx + nx, o.b[1] + sy + ny], [o.a[0] + sx + nx, o.a[1] + sy + ny]]; }
     // Grundriss [x0, y0, x1, y1, Höhe] eines Objekts für Schatten, Tiefe und Antippen
     function foot(o) {
       switch (o.t) {
@@ -7604,8 +7620,7 @@ em.rep.warn{background:#b5523a}
         case 'stake': return [o.x, o.y, o.x + 3.5, o.y + 3, 1.8];
         case 'sign': return [o.x, o.y, o.x + 4, o.y + 0.3, 4.9];
         case 'well': return [o.x - 1.6, o.y - 1.6, o.x + 1.6, o.y + 1.6, 4.8];
-        case 'wallS': { const t = o.th || 2.2, len = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]), nx = (o.b[1] - o.a[1]) / len * t, ny = -(o.b[0] - o.a[0]) / len * t, xs = [o.a[0], o.b[0], o.a[0] + nx, o.b[0] + nx], ys = [o.a[1], o.b[1], o.a[1] + ny, o.b[1] + ny];
-          return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys), o.h]; }
+        case 'wallS': { const c = wallPts(o), xs = c.map(p => p[0]), ys = c.map(p => p[1]); return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys), o.h]; }
         case 'cargo': return [o.x, o.y, o.x + 1.6, o.y + 1.4, 1.5];
         case 'ship': return [o.X - 10, o.Y - 3, o.X + 10, o.Y + 3, 0];
       }
@@ -8006,29 +8021,56 @@ em.rep.warn{background:#b5523a}
       const mauerOwn = home && P.mauer === 'built';
       const T = (x, y, rr, h, kind, extra) => objs.push(Object.assign({t:'tower', x, y, r:rr, h, kind, mat:wmat, roofC:tw === 'roundRed' ? '#a24a30' : null, steep:tw === 'roundRed' ? 2.2 : null}, extra || {}));
       if (wm !== 'none') {
-        const GA = L.gateAt || cfg.gateAt || [98.5, 169], half = cfg.gate === 'holsten' ? 12.5 : 6;
+        // Mauer mittig auf der Ringlinie; sie endet an der Außenseite jedes Turms und des Tors, damit nichts vor einem Turm in der Luft hängt.
+        // Viereckige Türme stehen in der Flucht ihrer Mauer.
+        const GA = L.gateAt || cfg.gateAt || [98.5, 169], half = cfg.gate === 'holsten' ? 12.5 : 6, WT = 2.2, N = ring.length, Q = Math.PI / 2;
         let gate = null, gi = -1, gt = 0, gd = 1e9;
-        for (let i = 0; i < ring.length - 1; i++) { const [ax, ay] = ring[i], [bx, by] = ring[i + 1], L2 = (bx - ax) ** 2 + (by - ay) ** 2, t = Math.max(0, Math.min(1, ((GA[0] - ax) * (bx - ax) + (GA[1] - ay) * (by - ay)) / L2)), dd = Math.hypot(ax + (bx - ax) * t - GA[0], ay + (by - ay) * t - GA[1]); if (dd < gd) { gd = dd; gi = i; gt = t; } }
-        for (let i = 0; i < ring.length - 1; i++) {
-          const [ax, ay] = ring[i], [bx, by] = ring[i + 1], len = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.ceil(len / 9));
-          const at = t => [ax + (bx - ax) * t, ay + (by - ay) * t], seg = (t0, t1) => ({t:'wallS', a:at(t0), b:at(t1), h:wh, mat:wmat});
+        for (let i = 0; i < N - 1; i++) { const [ax, ay] = ring[i], [bx, by] = ring[i + 1], L2 = (bx - ax) ** 2 + (by - ay) ** 2, t = Math.max(0, Math.min(1, ((GA[0] - ax) * (bx - ax) + (GA[1] - ay) * (by - ay)) / L2)), dd = Math.hypot(ax + (bx - ax) * t - GA[0], ay + (by - ay) * t - GA[1]); if (dd < gd) { gd = dd; gi = i; gt = t; } }
+        const ang = i => Math.atan2(ring[i + 1][1] - ring[i][1], ring[i + 1][0] - ring[i][0]);
+        const fold = a => { let f = ((a % Q) + Q) % Q; return f >= Q / 2 ? f - Q : f; };
+        const obs = [];   // Hindernisse: {x, y, r} rund, {x, y, hx, hy, rot} eckig
+        ring.forEach(([x, y], i) => { const end = i === 0 || i === N - 1;
+          if (i === 0 && cfg.margarethe) { objs.push({t:'tower', x, y:y + 3, r:9, h:16, kind:'round', mat:'stone', flat:true}); obs.push({x, y:y + 3, r:9}); return; }   // Dicke Margarethe
+          const rr = end ? 5.2 : 4.8, sq = tw === 'square';
+          let a0 = i > 0 ? fold(ang(i - 1)) : null, a1 = i < N - 1 ? fold(ang(i)) : null;
+          if (a0 != null && a1 != null) { if (a1 - a0 > Q / 2) a1 -= Q; if (a1 - a0 < -Q / 2) a1 += Q; }
+          const rot = a0 == null ? a1 : a1 == null ? a0 : fold((a0 + a1) / 2);
+          T(x, y, rr, wm === 'log' ? 10 : end ? 17 : 15, sq ? 'square' : 'round', Object.assign(sq ? {rot} : {}, end ? {plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, (wm === 'log' ? 10 : 17) + 9] : null, hc, mark} : {}));
+          obs.push(sq ? {x, y, hx:rr, hy:rr, rot} : {x, y, r:rr}); });
+        const edges = [];
+        for (let i = 0; i < N - 1; i++) {
+          const [ax, ay] = ring[i], [bx, by] = ring[i + 1], len = Math.hypot(bx - ax, by - ay), at = t => [ax + (bx - ax) * t, ay + (by - ay) * t];
           let g0 = null, g1 = null;
           if (i === gi) { gt = Math.max(half / len + 0.02, Math.min(1 - half / len - 0.02, gt)); gate = at(gt).concat([Math.abs(by - ay) > Math.abs(bx - ax) ? 'y' : 'x']); g0 = gt - half / len; g1 = gt + half / len; }
-          for (let q = 0; q < n; q++) { const t0 = q / n, t1 = (q + 1) / n;
-            if (g0 != null && t1 > g0 && t0 < g1) { if (t0 < g0) objs.push(seg(t0, g0)); if (t1 > g1) objs.push(seg(g1, t1)); continue; }
-            objs.push(seg(t0, t1)); }
           const nt = Math.floor(len / 46);
-          for (let q = 1; q <= nt; q++) { const t = q / (nt + 1); if (g0 != null && t > g0 - 0.08 && t < g1 + 0.08) continue; const [x, y] = at(t); T(x, y, tw === 'square' ? 3.8 : 4.2, wm === 'log' ? 9 : tw === 'square' ? 16 : 14, tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : q % 2 ? 'square' : 'round'); }
+          for (let q = 1; q <= nt; q++) { const t = q / (nt + 1); if (g0 != null && t > g0 - 0.08 && t < g1 + 0.08) continue; const [x, y] = at(t), rr = tw === 'square' ? 3.8 : 4.2;
+            const kind = tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : q % 2 ? 'square' : 'round', rot = fold(ang(i));
+            T(x, y, rr, wm === 'log' ? 9 : tw === 'square' ? 16 : 14, kind, kind === 'square' ? {rot} : null); obs.push(kind === 'square' ? {x, y, hx:rr, hy:rr, rot} : {x, y, r:rr}); }
+          edges.push({a:[ax, ay], u:[(bx - ax) / len, (by - ay) / len], len});
         }
-        ring.forEach(([x, y], i) => { const end = i === 0 || i === ring.length - 1;
-          if (i === 0 && cfg.margarethe) { objs.push({t:'tower', x, y:y + 3, r:9, h:16, kind:'round', mat:'stone', flat:true}); return; }   // Dicke Margarethe
-          T(x, y, end ? 5.2 : 4.8, wm === 'log' ? 10 : end ? 17 : 15, tw === 'square' ? 'square' : 'round', end ? {plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, (wm === 'log' ? 10 : 17) + 9] : null, hc, mark} : null); });
-        if (gate) { const [gx, gy, ax2] = gate, ys = ax2 === 'y';
-          const cx = ys ? gx + 1.1 : gx, cy = ys ? gy : gy - 1.1;
-          if (cfg.gate === 'holsten') objs.push(Object.assign(ys ? {t:'gateTower', axis:'y', x:cx - 4.5, y:cy - 11, w:22, d:9} : {t:'gateTower', x:cx - 11, y:cy - 4.5, w:22, d:9}, mauerOwn ? {flagAt:[cx, cy, 27], hc, mark} : {}));
-          else objs.push(Object.assign({t:'gate', x:cx, y:cy, mat:wmat}, mauerOwn ? {flagAt:[cx, cy, 30], hc, mark} : {}));
+        if (gate) { const [gx, gy, ax2] = gate, ys = ax2 === 'y', cx = gx, cy = gy;
+          const g = cfg.gate === 'holsten' ? Object.assign(ys ? {t:'gateTower', axis:'y', x:cx - 4.5, y:cy - 11, w:22, d:9} : {t:'gateTower', x:cx - 11, y:cy - 4.5, w:22, d:9}, mauerOwn ? {flagAt:[cx, cy, 27], hc, mark} : {})
+            : Object.assign({t:'gate', x:cx, y:cy, mat:wmat}, mauerOwn ? {flagAt:[cx, cy, 30], hc, mark} : {});
+          objs.push(g); const f = K36.foot(g); obs.push({x:(f[0] + f[2]) / 2, y:(f[1] + f[3]) / 2, hx:(f[2] - f[0]) / 2, hy:(f[3] - f[1]) / 2, rot:0});
           if (!L.island) ground.push({t:'road', pts:ys ? [[-330, cy - 3], [cx, cy - 3], [cx, cy + 3], [-330, cy + 3]] : [[cx - 3, cy], [cx + 3, cy], [cx + 3, 330], [cx - 3, 330]], col:L.streetCol});
         }
+        // Eintritt und Austritt einer Mauerkante (um s neben der Mittellinie) in ein Hindernis, als Strecke ab dem Kantenanfang
+        const cross = (A, u, s, ob) => { const px = A[0] + u[1] * s - ob.x, py = A[1] - u[0] * s - ob.y;
+          if (ob.r != null) { const b = px * u[0] + py * u[1], D = b * b - (px * px + py * py - ob.r * ob.r); if (D < 0) return null; const r2 = Math.sqrt(D); return [-b - r2, -b + r2]; }
+          const c = Math.cos(-ob.rot), sn = Math.sin(-ob.rot), lx = c * px - sn * py, ly = sn * px + c * py, vx = c * u[0] - sn * u[1], vy = sn * u[0] + c * u[1];
+          let t0 = -1e9, t1 = 1e9;
+          for (const [p0, w, h2] of [[lx, vx, ob.hx], [ly, vy, ob.hy]]) { if (Math.abs(w) < 1e-9) { if (Math.abs(p0) > h2) return null; continue; } const e0 = (-h2 - p0) / w, e1 = (h2 - p0) / w; t0 = Math.max(t0, Math.min(e0, e1)); t1 = Math.min(t1, Math.max(e0, e1)); }
+          return t1 < t0 ? null : [t0, t1]; };
+        edges.forEach(({a:A, u, len}) => {
+          const cuts = [];
+          obs.forEach(ob => { const c1 = cross(A, u, -WT / 2, ob), c2 = cross(A, u, WT / 2, ob), c = c1 && c2 ? [(c1[0] + c2[0]) / 2, (c1[1] + c2[1]) / 2] : c1 || c2;
+            if (c && c[1] > 0 && c[0] < len) cuts.push([Math.max(0, c[0]), Math.min(len, c[1])]); });
+          cuts.sort((p, q) => p[0] - q[0]);
+          let s0 = 0; const spans = [];
+          cuts.forEach(([c0, c1]) => { if (c0 > s0) spans.push([s0, c0]); s0 = Math.max(s0, c1); }); if (s0 < len) spans.push([s0, len]);
+          spans.forEach(([l0, l1]) => { if (l1 - l0 < 0.4) return; const m = Math.max(1, Math.ceil((l1 - l0) / 9));
+            for (let q = 0; q < m; q++) { const e0 = l0 + (l1 - l0) * q / m, e1 = l0 + (l1 - l0) * (q + 1) / m; objs.push({t:'wallS', a:[A[0] + u[0] * e0, A[1] + u[1] * e0], b:[A[0] + u[0] * e1, A[1] + u[1] * e1], h:wh, mat:wmat, ctr:true}); } });
+        });
       } else [ring[0], ring[ring.length - 1]].forEach(([x, y], i) => T(x, y, 3.6, 14, 'square', {mat:'stone', steep:2, plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, 21] : null, hc, mark}));
       if (home && P.mauer === 'job') { const [x, y] = ring[ring.length - 1]; objs.push({t:'scaffold', x:x - 7, y:y - 5, w:12, d:12, h:18, frac:P.mauerF || 0.3, noWalls:true, plot:'mauer'}); }
       // ── Häuserblöcke der Stadt, Bryggen, hinter deinem Viertel ──
@@ -8096,7 +8138,7 @@ em.rep.warn{background:#b5523a}
       // Visby: alles am Hang steht auf seiner Höhe; Mauerstücke folgen dem Hang an beiden Enden
       let slope = null;
       if (L.slope) { const S0 = L.slope, zAt = (x, y) => Math.max(0, Math.min(S0.max, (y - S0.y0) * S0.k)); slope = S0;
-        objs.forEach(q => { if (q.t === 'wallS') { q.za = zAt(q.a[0], q.a[1]); q.zb = zAt(q.b[0], q.b[1]); return; } const f = K36.foot(q); if (f) q.z = (q.z || 0) + zAt((f[0] + f[2]) / 2, (f[1] + f[3]) / 2); }); }
+        objs.forEach(q => { if (q.t === 'wallS') { q.za = zAt(q.a[0], q.a[1]); q.zb = zAt(q.b[0], q.b[1]); return; } const f = K36.foot(q); if (f) q.z = (q.z || 0) + zAt((f[0] + f[2]) / 2, f[1]); }); }   // vorn (hangab) auf dem Boden, hinten im Hang
       return {objs, ground, roof:cfg.roof, seed, berths:[66, 96, 136, 166, 194], cfg, slope};
     }
     return {build, CITY, VIERTEL, LAYOUT};
@@ -9510,8 +9552,8 @@ em.rep.warn{background:#b5523a}
   // ───────── Avatar ─────────
   const AV = {
     skin:['#f1d3b8','#d8a47c','#9f6c48','#f7e3d1','#e3b48c','#6f4630'], skinN:['clara','media','oscura','pálida','dorada','morena'], skinOrder:[3,0,4,1,2,5],
-    hair:['#5b3a22','#c7a05a','#221c18','#9b9993','#8e3b1f','#7a4a2a','#e8e2d6'], hairN:['castaño','rubio','negro','gris','rojo','caoba','blanco'], hairOrder:[1,4,5,0,2,3,6],
-    cloth:['#2f4f7a','#8a2f2a','#3e6a46','#6b4a2f','#2a2a2e','#5a3a6b','#a07a2a'], clothN:['azul','rojo','verde','marrón','negro','púrpura','ocre'],
+    hair:['#5b3a22','#c7a05a','#221c18','#9b9993','#8e3b1f','#7a4a2a','#e8e2d6'], hairN:['castaño','rubio','negro','gris','rot','caoba','blanco'], hairOrder:[1,4,5,0,2,3,6],
+    cloth:['#2f4f7a','#8a2f2a','#3e6a46','#6b4a2f','#2a2a2e','#5a3a6b','#a07a2a'], clothN:['azul','rot','verde','marrón','negro','púrpura','ocre'],
     hatM:[['barett','Birrete'],['gugel','Capirote'],['filzhut','Sombrero de fieltro'],['ohne','ninguno']], hatF:[['haube','Cofia'],['schleier','Velo'],['gebende','Barboquejo'],['kranz','Corona de flores'],['ohne','ninguno']],
     beard:[['voll','Barba poblada'],['kinn','Perilla'],['schnurr','Bigote'],['stoppel','Barba de tres días'],['ohne','ninguno']],
     hsM:[['kurz','Corto'],['lang','Largo'],['locken','Rizos'],['licht','Ralo']], hsF:[['offen','Suelto'],['zopf','Trenza'],['knoten','Moño']],
@@ -11544,7 +11586,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '9b26051937';
+window.KK_BUILD = 'a79eb772bc';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
