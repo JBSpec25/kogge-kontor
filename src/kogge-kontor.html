@@ -7083,8 +7083,9 @@ em.rep.warn{background:#b5523a}
       opt = opt || {};
       const S = seasonS(opt.season);   // ab Version 50: Bäume, Wiesen, Gärten und Felder nach Jahreszeit
       const winter = !!opt.winter || opt.season === 'winter', k = v.k, L = S.L, M = scene.mats || {}, roofSet = ROOFS[scene.roof || 'tile'];
-      let zOff = 0;
-      const P = (x, y, z) => v.P(x, y, (z || 0) + zOff);
+      let zOff = 0, gPh = false;
+      const SL = scene.slope, zAt = (x, y) => SL ? Math.max(0, Math.min(SL.max, (y - SL.y0) * SL.k)) : 0;   // ab Version 50: Hang (Visby)
+      const P = (x, y, z) => v.P(x, y, (z || 0) + zOff + (gPh && SL ? zAt(x, y) : 0));
       const P3 = q => P(q[0], q[1], q[2]);
       const path = pts => { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); };
       const fillPts = (pts, col, line, lw) => { path(pts); ctx.fillStyle = col; ctx.fill(); if (line) { ctx.strokeStyle = line; ctx.lineWidth = lw || S.ow; ctx.lineJoin = 'round'; ctx.stroke(); } };
@@ -7453,9 +7454,12 @@ em.rep.warn{background:#b5523a}
       function prism(pts, z0, z1, col, top, o2) { pts = ccw(pts);
         for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; face([[p[0], p[1], z0], [q[0], q[1], z0], [q[0], q[1], z1], [p[0], p[1], z1]], col, norm([q[1] - p[1], -(q[0] - p[0]), 0]), o2); }
         if (top) face(pts.map(([x, y]) => [x, y, z1]), top, [0, 0, 1], o2); }
-      function wallS(o) { const [ax, ay] = o.a, [bx, by] = o.b, len = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / len, uy = (by - ay) / len, t = o.th || 2.2, nx = uy * t, ny = -ux * t, h = o.h, c = matCol(o.mat || 'brick', 0), top = tint(c, 0.15);
-        prism([[ax, ay], [bx, by], [bx + nx, by + ny], [ax + nx, ay + ny]], 0, h, c, top);
-        if (!tiny) for (let u = 0.6; u < len - 1.6; u += 2.4) { const x0 = ax + ux * u, y0 = ay + uy * u, x1 = x0 + ux * 1.2, y1 = y0 + uy * 1.2, mx = nx / t, my = ny / t; prism([[x0, y0], [x1, y1], [x1 + mx, y1 + my], [x0 + mx, y0 + my]], h, h + 1.2, c, top); } }
+      function wallS(o) { const [ax, ay] = o.a, [bx, by] = o.b, len = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / len, uy = (by - ay) / len, t = o.th || 2.2, nx = uy * t, ny = -ux * t, h = o.h, c = matCol(o.mat || 'brick', 0), top = tint(c, 0.15), za = o.za || 0, zb = o.zb || 0;
+        if (!za && !zb) prism([[ax, ay], [bx, by], [bx + nx, by + ny], [ax + nx, ay + ny]], 0, h, c, top);
+        else { let q = [[ax, ay, za], [bx, by, zb], [bx + nx, by + ny, zb], [ax + nx, ay + ny, za]], ar = 0; q.forEach((p, i) => { const n2 = q[(i + 1) % 4]; ar += p[0] * n2[1] - n2[0] * p[1]; }); if (ar < 0) q = q.reverse();
+          q.forEach((p, i) => { const n2 = q[(i + 1) % 4]; face([[p[0], p[1], p[2]], [n2[0], n2[1], n2[2]], [n2[0], n2[1], n2[2] + h], [p[0], p[1], p[2] + h]], c, norm([n2[1] - p[1], -(n2[0] - p[0]), 0])); });
+          face(q.map(p => [p[0], p[1], p[2] + h]), top, [0, 0, 1]); }
+        if (!tiny) for (let u = 0.6; u < len - 1.6; u += 2.4) { const x0 = ax + ux * u, y0 = ay + uy * u, x1 = x0 + ux * 1.2, y1 = y0 + uy * 1.2, mx = nx / t, my = ny / t, zz = za + (zb - za) * (u + 0.6) / len; prism([[x0, y0], [x1, y1], [x1 + mx, y1 + my], [x0 + mx, y0 + my]], zz + h, zz + h + 1.2, c, top); } }
       function sign(o) { const {x, y} = o, post = '#4a3426';
         [0, 4].forEach(dx => lineP(P(x + dx, y, 0), P(x + dx, y, 4.6), post, Math.max(0.8, 0.3 * k)));
         fillPts([P(x - 0.4, y, 2.4), P(x + 4.4, y, 2.4), P(x + 4.4, y, 4.9), P(x - 0.4, y, 4.9)], '#e6d6b0', S.outline, S.ow);
@@ -7468,6 +7472,7 @@ em.rep.warn{background:#b5523a}
       if (!opt.noSky) { const sky = ctx.createLinearGradient(0, 0, 0, v.H); sky.addColorStop(0, winter ? '#cfd8dc' : S.sky[0]); sky.addColorStop(1, winter ? '#eceeee' : S.sky[1]); ctx.fillStyle = sky; ctx.fillRect(0, 0, v.W, v.H); }
       // ── Boden in der Reihenfolge der Szene ──
       const rr0 = rngF(scene.seed || 9);
+      gPh = true;
       (scene.ground || []).forEach(g => {
         const poly = g.pts ? g.pts.map(([x, y]) => P(x, y, g.z || 0)) : g.rect ? quad(g.rect[0], g.rect[1], g.rect[2], g.rect[3], g.z) : null;
         if (g.t === 'ridge') { const [a0, a1] = g.a, [b0, b1] = g.b;
@@ -7504,7 +7509,7 @@ em.rep.warn{background:#b5523a}
           if (!tiny) for (let x = x0; x < x1; x += 3.2) lineP(P(x, 0, 0), P(x, 0, -3.2), 'rgba(50,40,30,.3)', 0.5);
           if (!tiny) for (let x = x0 + 4; x < x1; x += 14) { const q = P(x, 0.6); ctx.fillStyle = '#2b2622'; ctx.fillRect(q[0] - 0.5 * k, q[1] - 1.4 * k, 1 * k, 1.4 * k); }
           return; }
-        if (g.t === 'street' || g.t === 'road') { fillPts(poly, winter ? '#dfe3e2' : S.street);
+        if (g.t === 'street' || g.t === 'road') { fillPts(poly, winter ? '#dfe3e2' : g.col || S.street);
           if (!winter && !tiny && g.t === 'street') { const [x0, y0, x1, y1] = g.rect, r2 = rngF((x0 * 7 + y0) | 1); ctx.fillStyle = 'rgba(80,62,44,.16)'; const n = Math.round(Math.abs((x1 - x0) * (y1 - y0)) / 7); for (let q = 0; q < n; q++) { const p = P(lerp(x0, x1, r2()), lerp(y0, y1, r2()), g.z || 0); ctx.fillRect(p[0] - 0.5 * k, p[1] - 0.2 * k, 1 * k, 0.4 * k); } } return; }
         if (g.t === 'plaza') { fillPts(poly, winter ? '#e3e7e6' : g.green ? S.garden2 : S.plaza, S.outline, S.ow * 0.6);
           if (!g.green && !winter && !tiny) { const [x0, y0] = g.pts[0], [x1, y1] = g.pts[2]; for (let x = x0; x < x1; x += 3) lineP(P(x, y0), P(x, y1), 'rgba(90,70,50,.14)', 0.5); } return; }
@@ -7515,12 +7520,18 @@ em.rep.warn{background:#b5523a}
         if (g.t === 'yard') { fillPts(poly, winter ? '#e2e6e5' : S.yard); return; }
         if (g.t === 'kai') { fillPts(poly, winter ? '#e4e8e8' : S.quay); (g.faces || []).forEach(([x0, y0, x1, y1]) => fillPts([P(x0, y0, 0), P(x1, y1, 0), P(x1, y1, -3.2), P(x0, y0, -3.2)], winter ? '#c9cfd0' : tint(S.stone, -0.18), S.outline, S.ow)); return; }
         if (g.t === 'tile') { fillPts(poly, winter ? '#e9eded' : S[g.col || 'plaza'], S.outline, S.ow * 0.6); return; }
-        if (g.t === 'canal') { const [x0, y0, x1, y1] = g.rect; fillPts(quad(x0, y0, x1, y1), winter ? '#cfdce0' : S.water[1]); fillPts([P(x1, y0, 0), P(x1, y1, 0), P(x1, y1, -2), P(x1, y0, -2)], tint(S.stone, -0.1)); glints.push(g.rect); return; }
-        if (g.t === 'bridge') { const {x0, x1, y0, y1} = g, z = 2.2;
-          const side = [P(x1, y0, -3), P(x1, y1, -3), P(x1, y1, z), P(x1, y0, z)]; fillPts(side, tint(S.stone, -0.25), S.outline, S.ow);
+        if (g.t === 'canal') { const [x0, y0, x1, y1] = g.rect, ax = x1 - x0 > y1 - y0; fillPts(quad(x0, y0, x1, y1), winter ? '#cfdce0' : S.water[1]);
+          fillPts(ax ? [P(x0, y1, 0), P(x1, y1, 0), P(x1, y1, -2), P(x0, y1, -2)] : [P(x0, y0, 0), P(x0, y1, 0), P(x0, y1, -2), P(x0, y0, -2)], tint(S.stone, -0.1), S.outline, S.ow * 0.6); glints.push(g.rect); return; }
+        if (g.t === 'bridgeX') { const {x0, x1, y0, y1} = g, z = 1.3, st = winter ? '#c9cfd0' : tint(S.stone, -0.22);   // Brücke über einen Kanal längs y
+          fillPts([P(x0, y0, -2), P(x1, y0, -2), P(x1, y0, z), P(x0, y0, z)], st, S.outline, S.ow);
+          if (!tiny) { const c = P((x0 + x1) / 2, y0, -2); ctx.fillStyle = tint(S.water[0], -0.35); ctx.beginPath(); ctx.ellipse(c[0], c[1], (x1 - x0) * 0.34 * k, 2.2 * k, 0, Math.PI, 0); ctx.fill(); }
+          fillPts([P(x0, y0, z), P(x1, y0, z), P(x1, y1, z), P(x0, y1, z)], winter ? '#e9ecec' : g.col || S.street, S.outline, S.ow); return; }
+        if (g.t === 'bridge') { const {x0, x1, y0, y1} = g, z = g.low ? 1.3 : 2.2;
+          const side = [P(x1, y0, -3), P(x1, y1, -3), P(x1, y1, z), P(x1, y0, z)]; fillPts(side, g.wood ? '#6e5236' : tint(S.stone, -0.25), S.outline, S.ow);
           ctx.fillStyle = tint(S.water[0], -0.35); const n = Math.max(1, Math.round((y1 - y0) / 12)); for (let a = 0; a < n; a++) { const yy = lerp(y0, y1, (a + 0.5) / n), c = P(x1, yy, -3); ctx.beginPath(); ctx.ellipse(c[0], c[1], 2.4 * k, 2 * k, 0, Math.PI, 0); ctx.fill(); }
-          fillPts([P(x0, y0, z), P(x1, y0, z), P(x1, y1, z), P(x0, y1, z)], winter ? '#e9ecec' : S.street, S.outline, S.ow); return; }
+          fillPts([P(x0, y0, z), P(x1, y0, z), P(x1, y1, z), P(x0, y1, z)], winter ? '#e9ecec' : g.wood ? '#8d7353' : S.street, S.outline, S.ow); return; }
       });
+      gPh = false;
       // Dunst zum Horizont
       if (!opt.noHaze) { const hz = opt.haze || 0.2, g = ctx.createLinearGradient(0, 0, 0, v.H * hz), sc = hex2(winter ? '#e6e9e8' : S.sky[1]); g.addColorStop(0, rgb(sc, 1)); g.addColorStop(0.35, rgb(sc, 0.92)); g.addColorStop(1, rgb(sc, 0)); ctx.fillStyle = g; ctx.fillRect(0, 0, v.W, v.H * hz);
         const sg = ctx.createRadialGradient(v.W * 0.86, v.H * 0.04, 4, v.W * 0.86, v.H * 0.04, v.W * 0.5); sg.addColorStop(0, winter ? 'rgba(255,255,255,.5)' : 'rgba(255,240,200,.7)'); sg.addColorStop(1, 'rgba(255,240,200,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, v.W, v.H); }
@@ -7636,11 +7647,8 @@ em.rep.warn{background:#b5523a}
   const Plans36 = (function () {
     'use strict';
     const {rngF, lerp, tint} = K36;
-    const STREETS = [[-34, 10, 214, 16], [44, 16, 52, 150], [96, 16, 101, 150], [150, 16, 155, 150], [-34, 58, 214, 64], [-34, 150, 214, 158], [-33, 16, -28, 150], [205, 16, 212, 150]];
     const BLOCKS = [[-28, 16, 44, 58], [52, 16, 96, 58], [101, 16, 150, 58], [155, 16, 205, 58], [-28, 64, 44, 150], [52, 64, 96, 150], [155, 64, 205, 150]];
     const MARKT = [116, 64, 147, 88];
-    // Bauplätze im Stammsitz (Grundriss in Metern)
-    const SLOT = {kontor:[14, 16, 10, 15], haus:[103, 72, 9, 13], w0:[60, 32], w1:[73, 40], w2:[117, 32], w3:[130, 40], w4:[170, 34]};
     const CHURCH_W = {x:62, y:80, w:16, d:30, h:16, th:44, sh:34}, CHURCH_E = {x:170, y:76, w:18, d:34, h:17, th:46, sh:28}, CHURCH_M = {x:118, y:104, w:28, d:44, h:18, th:46, sh:34, aisles:true, choir:true};
     const CITY = {
       luebeck:{plan:50, gate:'holsten', gateAt:[-40.5, 61], coast:'gerade', wallPoly:[[-40, 7], [-41, 92], [-38, 150], [-24, 167], [60, 169], [140, 169], [214, 167], [252, 138], [272, 92], [272, 7]],
@@ -7673,197 +7681,7 @@ em.rep.warn{background:#b5523a}
     const kindOf = (m, r, list) => m === 'fach' ? 'fach' : m === 'wood' ? 'wood' : m === 'log' ? 'log' : list[Math.floor(r() * list.length)];
 
     // Szene einer Stadt. plots: Zustand der Bauplätze im Stammsitz (sonst null), branch: eigene Niederlassung
-    function build(cid, o) {
-      o = o || {};
-      if ((CITY[cid] || {}).plan === 50) return build50(cid, o, CITY[cid]);
-      const cfg = CITY[cid] || CITY.luebeck, seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1, r = rngF(seed);
-      const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [];
-      const pick = a => a[Math.floor(r() * a.length)];
-      const busy = (x0, y0, x1, y1) => keep.some(([a, b, c, d]) => x0 < c && x1 > a && y0 < d && y1 > b);
-      const tall = cfg.tall || 0;
-      // Bauplätze vorab freihalten
-      Object.entries(SLOT).forEach(([k, s]) => { if (k[0] === 'w') keep.push([s[0] - 1, s[1] - 1, s[0] + 13, s[1] + 9]); else keep.push([s[0], s[1], s[0] + (k === 'haus' ? s[3] : s[2]), s[1] + (k === 'haus' ? s[2] : s[3])]); });
-      const fullEast = typeof cfg.east === 'string';
-      if (fullEast) keep.push([155, 64, 205, 150]);
-      const lmKeep = (spec, base) => { if (!spec || typeof spec === 'string') return; const q = Object.assign({}, base, spec), w = q.w || (q.r ? q.r * 2 : 10), d = q.d || (q.r ? q.r * 2 : 10), x = q.r ? q.x - q.r : q.x, y = q.r ? q.y - q.r : q.y; keep.push([x + 1, y - 2, x + w, y + d]); };
-      lmKeep(cfg.west, cfg.west && cfg.west.t === 'church' ? CHURCH_W : {}); lmKeep(cfg.east, cfg.east && cfg.east.t === 'church' ? CHURCH_E : {});
-      if (cfg.canal) keep.push([-28, 99, 44, 107]);
-      const H = (x, y, w, d, h, rh, ridge, front, extra) => { const m = pickW(r, cfg.mat); return Object.assign({t:'house', x, y, w, d, h, rh, ridge, front, mat:m, kind:kindOf(m, r, ['plain', 'step', 'plain']), wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:r() < 0.22}, extra || {}); };
-      function row(x0, x1, y, depth, face, front) {
-        let x = x0;
-        while (x < x1 - 4) {
-          const w = Math.min(x1 - x, 6 + Math.floor(r() * 4)), d = depth - r() * 3, h = (front ? 11 + r() * 6 : 7 + r() * 4) + (front ? tall : tall / 2), yy = face === 'S' ? y : y - d;
-          if (busy(x, yy, x + w, yy + d)) { x += w; continue; }
-          const m = pickW(r, cfg.mat), kind = kindOf(m, r, front ? cfg.front : ['plain', 'step', 'plain']);
-          objs.push({t:'house', x, y:yy, w, d, h, rh:w * (0.85 + r() * 0.25), ridge:'y', front:face, kind, mat:m, wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:r() < 0.25, shop:front && r() < 0.3});
-          x += w;
-        }
-      }
-      function rowX(y0, y1, x, depth, face) {
-        let y = y0;
-        while (y < y1 - 4) {
-          const w = Math.min(y1 - y, 6 + Math.floor(r() * 3)), d = depth - r() * 2, h = 7 + r() * 5 + tall / 2, xx = face === 'W' ? x : x - d;
-          if (busy(xx, y, xx + d, y + w)) { y += w; continue; }
-          objs.push(H(xx, y, w, d, h, w * 0.9, 'x', face));
-          y += w;
-        }
-      }
-      function trees(x0, y0, x1, y1, n, s0) { for (let q = 0; q < n; q++) { const x = lerp(x0, x1, r()), y = lerp(y0, y1, r()); if (busy(x - 2, y - 2, x + 2, y + 2)) continue; objs.push({t:'tree', x, y, s:(s0 || 3) + r() * 2.5}); } }
-      // Boden
-      ground.push({t:'fill', col:'land'});
-      if (cfg.water === 'sea') {
-        ground.push({t:'water', rect:[-420, -420, 640, 0], waves:220, seed:seed % 97});
-        ground.push({t:'land', pts:[[-420, -46], [-40, -46], [-36, 0], [-420, 0]]});
-        ground.push({t:'reeds', x0:-160, x1:-40, y:-46});
-      } else {
-        ground.push({t:'water', rect:[-420, -42, 640, 0], waves:120, seed:seed % 97});
-        ground.push({t:'reeds', x0:-160, x1:300, y:-42, skip:[30, 54]});
-      }
-      STREETS.forEach(s => ground.push({t:'street', rect:s}));
-      ground.push({t:'quay', x0:-36, x1:216});
-      // Häuserblöcke
-      BLOCKS.forEach(([x0, y0, x1, y1], bi) => {
-        if (bi === 6 && fullEast) return;
-        const front = y0 === 16, dS = front ? 16 : 13, dN = 12;
-        row(x0, x1, y0, dS, 'S', front);
-        row(x0, x1, y1, dN, 'N', false);
-        rowX(y0 + dS, y1 - dN, x0, 11, 'W');
-        rowX(y0 + dS, y1 - dN, x1, 11, 'E');
-        ground.push({t:'garden', pts:[[x0 + 11, y0 + dS], [x1 - 11, y0 + dS], [x1 - 11, y1 - dN], [x0 + 11, y1 - dN]]});
-        if (!(bi === 5 && cfg.west) && !(bi === 6 && cfg.east)) trees(x0 + 13, y0 + dS + 2, x1 - 13, y1 - dN - 2, Math.max(2, Math.round((x1 - x0) * (y1 - y0) / 480)));
-      });
-      // Markt, Rathaus, Hauptkirche
-      ground.push({t:'plaza', pts:[[MARKT[0], MARKT[1]], [MARKT[2], MARKT[1]], [MARKT[2], MARKT[3]], [MARKT[0], MARKT[3]]]});
-      ground.push({t:'plaza', pts:[[101, 88], [150, 88], [150, 150], [101, 150]]});
-      ground.push({t:'plaza', pts:[[101, 64], [116, 64], [116, 88], [101, 88]]});
-      const bm = pickW(r, cfg.mat), bmS = bm === 'fach' || bm === 'wood' || bm === 'log' ? bm : 'brick';
-      objs.push({t:'house', x:103, y:64, w:8, d:13, h:12 + tall, rh:8, ridge:'x', front:'E', kind:kindOf(bm, r, cfg.front), mat:bm, wi:0, ri:1});
-      objs.push({t:'house', x:103, y:81, w:7, d:12, h:11 + tall, rh:7, ridge:'x', front:'E', kind:kindOf(bm, r, ['plain']), mat:bm === 'brick' ? 'white' : bm, wi:1, ri:2});
-      if (cfg.belfry) objs.push({t:'belfry', x:131.5, y:92});
-      else objs.push({t:'rathaus', x:116, y:88, w:31, d:9, h:15, style:cfg.rat, mat:cfg.mat[0][0] === 'brickL' ? 'brickL' : cfg.mat[0][0] === 'brick' ? 'brick' : 'stone', tower:cfg.rtower});
-      const M = Object.assign({}, CHURCH_M, cfg.main || {}, {t:'church'});
-      if (!M.mat) M.mat = cfg.walls === 'brickL' ? 'brickL' : 'brick';
-      if (cfg.belfry) { M.y = 112; M.d = 38; }
-      objs.push(M);
-      if (cfg.roland) objs.push({t:'roland', x:cfg.roland[0], y:cfg.roland[1]});
-      // Westlicher und östlicher Block: Kirche, Ruine oder Turm
-      const place = (spec, base) => { if (!spec) return; const q = Object.assign({}, base, spec); if (q.t === 'church' && !q.mat) q.mat = M.mat; objs.push(q); };
-      if (cfg.west) place(cfg.west, cfg.west.t === 'church' ? CHURCH_W : {});
-      if (cfg.east && !fullEast) place(cfg.east, cfg.east.t === 'church' ? CHURCH_E : {});
-      if (cfg.east === 'toompea') { // Domberg: Kalksteinterrasse mit Burg und Dom
-        ground.push({t:'garden', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]});
-        objs.push({t:'platform', x:157, y:68, w:46, d:80, h:12});
-        objs.push({t:'castle', x:160, y:104, w:38, d:40, th:44, z:12, style:'reval'});
-        objs.push({t:'church', x:166, y:72, w:13, d:24, h:12, th:26, sh:14, towers:1, spire:'tent', mat:'stone', z:12, roofC:'#8a4630'});
-        for (let q = 0; q < 6; q++) objs.push({t:'tree', x:186 + (q % 3) * 5, y:74 + Math.floor(q / 3) * 8, s:2.6, z:12});
-      }
-      if (cfg.east === 'kronor') { ground.push({t:'yard', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]}); objs.push({t:'castle', x:158, y:72, w:44, d:60, th:40, style:'kronor', mat:'stone'}); trees(158, 136, 204, 148, 5); }
-      if (cfg.east === 'tower') { ground.push({t:'garden', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]});
-        for (let x = 158; x < 202; x += 11) objs.push({t:'wall', x0:x, x1:Math.min(202, x + 11), y:68, h:8, mat:'stone'});
-        [[158, 70], [202, 70]].forEach(([x, y]) => objs.push({t:'tower', x, y, r:3.6, h:12, kind:'round', mat:'stone', flat:true}));
-        objs.push({t:'castle', x:166, y:88, w:28, d:26, style:'white', mat:'white'}); trees(160, 122, 202, 146, 8); }
-      if (cfg.east === 'kremlin') { // Detinez: Ziegelmauer mit Türmen, darin die Sophienkathedrale
-        ground.push({t:'yard', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]});
-        for (let x = 156; x < 204; x += 12) objs.push({t:'wall', x0:x, x1:Math.min(204, x + 12), y:64, h:9, mat:'brick'});
-        for (let y = 64; y < 150; y += 14) { objs.push({t:'wallY', x:154, y0:y, y1:Math.min(150, y + 14), h:9, mat:'brick'}); objs.push({t:'wallY', x:203, y0:y, y1:Math.min(150, y + 14), h:9, mat:'brick'}); }
-        [[155, 64], [204, 64], [155, 107], [204, 107]].forEach(([x, y]) => objs.push({t:'tower', x, y, r:3.4, h:15, kind:'square', mat:'brick', steep:2.2, roofC:'#5e6a52'}));
-        objs.push({t:'sophia', x:166, y:92, w:26, d:24});
-        trees(160, 124, 200, 146, 5);
-      }
-      // Kai und Hafen
-      if (home) { if (P.kran === 'built') objs.push({t:'crane', x:118, y:4, plot:'kran'}); else if (P.kran === 'job') objs.push({t:'scaffold', x:114, y:1, w:8, d:6, h:10, frac:P.kranF || 0.3, plot:'kran', mat:'wood'}); }
-      else if (cfg.crane != null) objs.push({t:'crane', x:cfg.crane, y:4, big:!!cfg.bigCrane});
-      if (cfg.bigCrane && home && cfg.crane !== 118) objs.push({t:'crane', x:cfg.crane, y:4, big:true});
-      if (cfg.krantor) objs.push({t:'krantor', x:cfg.krantor, y:0.5});
-      const cargo = [[56, 4, 'b'], [70, 7, 'c'], [84, 3, 's'], [104, 6, 'b'], [131, 5, 'c'], [146, 4, 's'], [186, 6, 'b'], [-6, 5, 'c'], [24, 4, 's']];
-      cargo.forEach(([x, y, t]) => { if ((cfg.krantor && x > cfg.krantor - 3 && x < cfg.krantor + 22) || Math.abs(x - 118) < 5) return; objs.push({t:'cargo', x, y, tt:t, noShadow:true}); });
-      // Stadtmauer
-      const wm = cfg.walls;
-      if (wm !== 'none') {
-        const wh = wm === 'log' ? 5 : 7, wmat = wm === 'log' ? 'log' : wm;
-        for (let x = -34; x < 214; x += 16) objs.push({t:'wall', x0:x, x1:Math.min(214, x + 16), y:160, h:wh, mat:wmat});
-        for (let y = 14; y < 160; y += 16) { objs.push({t:'wallY', x:-35, y0:y, y1:Math.min(160, y + 16), h:wh, mat:wmat}); objs.push({t:'wallY', x:213, y0:y, y1:Math.min(160, y + 16), h:wh, mat:wmat}); }
-        const tw = cfg.wallTowers || 'mixed', tmat = wm === 'log' ? 'log' : wm;
-        const T = (x, y, rr, h, kind) => objs.push({t:'tower', x, y, r:rr, h, kind, mat:tmat, roofC:tw === 'roundRed' ? '#a24a30' : null, steep:tw === 'roundRed' ? 2.2 : null});
-        const xs = tw === 'square' || tw === 'roundRed' ? [0, 30, 60, 140, 170, 196] : [20, 60, 140, 180];
-        xs.forEach((x, n) => T(x, 162, tw === 'square' ? 3.8 : 4.5, wm === 'log' ? 9 : tw === 'square' ? 17 : 15, tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : n % 2 ? 'square' : 'round'));
-        objs.push({t:'gate', x:98.5, y:161, mat:wm === 'log' ? 'log' : wm});
-        [[-34, 162], [214, 162]].forEach(([x, y]) => T(x, y, 5.5, wm === 'log' ? 10 : 17, tw === 'square' ? 'square' : 'round'));
-        // Ecktürme am Wasser, an denen die Seitenmauern enden
-        [[-33.9, 13], [214.1, 13]].forEach(([x, y]) => T(x, y, 4.8, wm === 'log' ? 9 : 15, 'round'));
-        [36, 60, 110, 136].forEach((y, n) => { if ((tw === 'mixed') && n % 2) return; T(-35, y, 4.2, wm === 'log' ? 9 : 14, tw === 'roundRed' ? 'round' : 'square'); T(215, y, 4.2, wm === 'log' ? 9 : 14, tw === 'roundRed' ? 'round' : 'square'); });
-      }
-      // Wachtürme am Hafen (im Stammsitz: Stadtmauer und Türme)
-      const harbor = home ? P.mauer === 'built' : wm !== 'none';
-      if (harbor) [[-16, 4, null], [194, 4, 'mauer']].forEach(([x, y, pk]) => objs.push({t:'tower', x, y, r:3.4, h:14, kind:'square', steep:2, mat:wm === 'none' || wm === 'log' ? 'stone' : wm, plot:home ? pk : null, roofC:cfg.wallTowers === 'roundRed' ? '#a24a30' : null}));
-      if (home && P.mauer === 'job') objs.push({t:'scaffold', x:190, y:0, w:8, d:8, h:14, frac:P.mauerF || 0.3, plot:'mauer', mat:wm === 'none' || wm === 'log' ? 'stone' : wm});
-      if (cfg.margarethe) objs.push({t:'tower', x:-48, y:20, r:9, h:16, kind:'round', mat:'stone', flat:true});
-      // Bauplätze: Kontor, Haus, Betriebe, Markthalle, Kapelle
-      const [kx, ky, kw, kd] = SLOT.kontor, kst = home ? P.kontor : (o.branch ? 'built' : null);
-      if (kst === 'built') { const big = home ? (P.kontorLvl || 1) > 1 : false; objs.push({t:'house', x:kx, y:ky, w:kw, d:kd, h:big ? 17 : 13, rh:kw * 1.2, ridge:'y', front:'S', kind:cfg.mat[0][0] === 'wood' || cfg.mat[0][0] === 'log' || cfg.mat[0][0] === 'fach' ? 'plain' : 'step', mat:cfg.mat[0][0] === 'fach' ? 'brick' : cfg.mat[0][0], wi:2, ri:0, storage:true, hm:true, plot:home ? 'kontor' : null, flag:o.branch ? o.flag || 'red' : null}); }
-      else objs.push({t:'house', x:kx, y:ky, w:kw, d:kd - 2, h:12 + tall, rh:kw, ridge:'y', front:'S', kind:kindOf(cfg.mat[0][0], r, cfg.front), mat:cfg.mat[0][0], wi:3, ri:2, shop:true});
-      const [hx, hy, hw, hd] = SLOT.haus;
-      if (home && P.haus === 'job' && (P.hausLvl || 1) < 2) objs.push({t:'scaffold', x:hx, y:hy, w:hd - 1, d:hw, h:14, frac:P.hausF || 0.3, plot:'haus'});
-      else { const lv = home ? P.hausLvl || 1 : 2, hm = home ? (cfg.mat[0][0] === 'fach' || cfg.mat[0][0] === 'wood' || cfg.mat[0][0] === 'log' ? cfg.mat[0][0] : 'brick') : bmS;
-        objs.push({t:'house', x:hx, y:hy, w:hw, d:hd, h:lv === 1 ? 10 + tall : lv === 2 ? 14 + tall : 17 + tall, rh:lv === 1 ? 7 : 9.5, ridge:'x', front:'E', kind:lv === 1 ? kindOf(hm, r, ['plain']) : hm === 'brick' ? 'step' : hm, mat:lv === 3 && hm === 'brick' ? 'white' : hm, wi:4, ri:0, chimney:true, hm:home, oriel:lv === 3, plot:home ? 'haus' : null, diele:true});
-        if (home && P.haus === 'job') objs.push({t:'scaffold', x:hx + hd - 1, y:hy - 1, w:2, d:hw + 2, h:16, frac:P.hausF || 0.3, plot:'haus', noWalls:true}); }
-      ['w0', 'w1', 'w2', 'w3', 'w4'].forEach((k, n) => { const [x, y] = SLOT[k];
-        if (!home) { if (n % 2 === 0) objs.push({t:'shed', x, y, w:8, d:6, h:4.4, mat:'fach', chimney:n === 2}); return; }
-        const s = P[k] || {};
-        if (s.s === 'built') objs.push({t:'work', x, y, g:s.g, idle:s.idle, plot:k});
-        else if (s.s === 'job') objs.push({t:'scaffold', x, y, w:9, d:6, h:5, frac:s.f || 0.3, mat:'fach', plot:k});
-        else if (s.s === 'free' || s.s === 'open') { ground.push({t:'yard', pts:[[x - 0.5, y - 0.5], [x + 12.5, y - 0.5], [x + 12.5, y + 8], [x - 0.5, y + 8]]}); objs.push({t:'fence', x0:x - 0.5, y0:y - 0.5, x1:x + 12.5, y1:y + 8}); }
-      });
-      if (home && P.markt === 'built') objs.push({t:'halle', x:120, y:66, w:22, d:7, h:5.5, plot:'markt'});
-      else if (home && P.markt === 'job') objs.push({t:'scaffold', x:121, y:66, w:20, d:6, h:6, frac:P.marktF || 0.3, plot:'markt', mat:'wood'});
-      else if (!cfg.belfry) objs.push({t:'stalls', x:121, y:70, n:7});
-      if (home && P.kirche === 'built') objs.push({t:'church', x:147, y:122, w:7, d:13, h:8, towers:0, ridgeTurret:true, mat:M.mat, plot:'kirche'});
-      else if (home && P.kirche === 'job') objs.push({t:'scaffold', x:146, y:122, w:7, d:12, h:9, frac:P.kircheF || 0.3, plot:'kirche', mat:M.mat});
-      // Gegenüber am Fluss: Weg, Brücke, Werft und Gärten
-      if (cfg.water === 'river') {
-        ground.push({t:'road', pts:[[38, -96], [46, -96], [46, -42], [38, -42]]});
-        ground.push({t:'road', pts:[[-160, -92], [300, -92], [300, -86], [-160, -86]]});
-        if (cfg.bridgeHouses) objs.push({t:'bridgeHouses', x:36, y0:0, y1:-42, w:10});
-        else ground.push({t:'bridge', x0:38, x1:46, y0:-42, y1:0});
-        ground.push({t:'yard', pts:[[62, -84], [168, -84], [168, -44], [62, -44]]});
-        objs.push({t:'slip', x:112, y:-62, type:'kogge'});
-        [[72, -52], [76, -76], [150, -74], [156, -52], [90, -80]].forEach(([x, y], n) => objs.push({t:'woodpile', x, y, n}));
-        objs.push({t:'shed', x:140, y:-60, w:10, d:7, h:4, chimney:true, mat:'fach'});
-        if (cfg.south === 'luebeck') {
-          objs.push({t:'gateTower', x:31, y:-82, w:22, d:9});
-          [[2, 6.5, 0], [8.5, 7, 1], [15.5, 7.5, 2], [23, 7.5, 3], [30.5, 6.5, 4]].forEach(([x, w, q]) => objs.push({t:'house', x, y:-56, w, d:11, h:9 + (q === 2 ? 2 : 0), rh:w * 1.25, ridge:'y', front:'N', kind:'step', mat:'brick', wi:q + 1, ri:3, storage:true, shared:q > 0 && q < 4}));
-        } else if (cfg.south === 'torg') {
-          objs.push({t:'church', x:-6, y:-78, w:12, d:18, h:9, towers:0, domes:[[0, 0, 2.8, true]], mat:'white'});
-          [[14, -60], [24, -64], [-24, -62]].forEach(([x, y], q) => objs.push({t:'house', x, y, w:7, d:9, h:6, rh:6, ridge:'y', front:'N', kind:'log', mat:'log', wi:q, ri:q}));
-        } else {
-          [[-2, 7, 0], [6, 8, 1], [15, 7, 2], [23, 8, 3]].forEach(([x, w, q]) => objs.push({t:'house', x, y:-58, w, d:12, h:8, rh:w, ridge:'y', front:'N', kind:pickW(r, cfg.mat) === 'fach' ? 'fach' : 'plain', mat:q % 2 ? 'fach' : cfg.mat[0][0], wi:q, ri:q + 1, storage:q === 1, shared:q > 0 && q < 3}));
-        }
-        objs.push({t:'mill', x:196, y:-56});
-        for (let q = 0; q < 22; q++) { const x = -150 + r() * 420, y = -140 + r() * 46; if (x > 30 && x < 175 && y > -100) continue; objs.push({t:'tree', x, y, s:2.6 + r() * 2.6}); }
-        for (let q = 0; q < 10; q++) { const x = -120 + r() * 110, y = -80 + r() * 30; objs.push({t:'tree', x, y, s:2.4 + r() * 2}); }
-        ground.push({t:'fields', rect:[-260, -150, -60, -96]});
-      } else {
-        objs.push({t:'slip', x:-78, y:-24, type:'kogge'});
-        ground.push({t:'yard', pts:[[-100, -38], [-50, -38], [-50, -8], [-100, -8]]});
-        objs.push({t:'shed', x:-62, y:-6, w:9, d:6, h:4, chimney:true, mat:'wood', wi:1});
-        [[-96, -6], [-90, -36]].forEach(([x, y], n) => objs.push({t:'woodpile', x, y, n}));
-        [[60, -140, 22, 6, 1], [196, -150, 13, 4, 0], [-30, -86, 9, 3, 0], [120, -230, 30, 8, 1]].forEach(([x, y, rr, h, g]) => { objs.push({t:'hill', x, y, r:rr, h, rock:!g, col:g ? '#8a9a6a' : '#8d8f86', flat:0.8}); if (g) for (let q = 0; q < 4; q++) objs.push({t:'tree', x:x - rr * 0.3 + q * rr * 0.2, y:y + (q % 2 ? 3 : -2), s:2.2, z:h * 0.6, pine:true, noShadow:true}); });
-        if (cfg.rocks) [[-150, -10, 20, 9], [-120, -70, 18, 7], [260, -60, 26, 10]].forEach(([x, y, rr, h]) => objs.push({t:'hill', x, y, r:rr, h, rock:true, col:'#8d8f86'}));
-      }
-      if (cfg.canal) { ground.push({t:'canal', rect:[-28, 100, 44, 106]}); }
-      // vor den Mauern: Gärten, Felder, Wald, Mühle, Berge
-      [[-90, 20, -44, 70], [-90, 80, -44, 150], [224, 30, 268, 90], [224, 100, 268, 150], [-30, 168, 40, 182], [120, 168, 200, 182]].forEach(([x0, y0, x1, y1]) => ground.push({t:'gardenOut', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}));
-      ground.push({t:'fields', rect:[-120, 190, 330, 262]});
-      for (let q = 0; q < 40; q++) { const side = q % 4, x = side === 0 ? -100 + r() * 56 : side === 1 ? 222 + r() * 60 : -40 + r() * 260, y = side < 2 ? 15 + r() * 140 : 166 + r() * 18; if (cfg.margarethe && x < -38 && y < 32) continue; objs.push({t:'tree', x, y, s:2.4 + r() * 2.4, pine:cfg.water === 'sea' && r() < 0.5}); }
-      for (let q = 0; q < 30; q++) objs.push({t:'tree', x:-80 + r() * 380, y:262 + r() * 40, s:3 + r() * 3, pine:cfg.hills || cfg.rocks});
-      if (!cfg.hills) objs.push({t:'mill', x:-78, y:64});
-      if (cfg.hills) ground.push({t:'ridge', a:[-200, -66], b:[180, 314], layers:[[58, '#9aa9a0', 1.3, 30], [40, '#71866a', 4.1, 0]]});
-      // Liegeplätze am Kai
-      let berths = [66, 96, 136, 166, 194];
-      if (cfg.krantor) berths = [66, 96, 132, 190, 20];
-      if (cfg.hills) for (let i = objs.length - 1; i >= 0; i--) { const q = objs[i]; if (q.t === 'tree' && q.x - q.y < -120) objs.splice(i, 1); }
-      return {objs, ground, roof:cfg.roof, seed, berths, cfg};
-    }
+    function build(cid, o) { return build50(cid, o || {}, CITY[cid] || CITY.luebeck); }
     // ───── Ab Version 50: Stadtplan nach Patrizier-Art ─────
     // Wasser bis zum unteren Bildrand, kein Gegenufer. Der Kai reicht von der Werft links bis zum Turm rechts; die Mauer ist ein
     // geschlossener Ring (cfg.wallPoly) mit einem Turm an jeder Ecke und an beiden Enden des Kais. Rechts unten liegt dein Viertel:
@@ -7874,110 +7692,269 @@ em.rep.warn{background:#b5523a}
     // Dein Viertel in drei Varianten (zur Abstimmung): Kontorhof, eigener Platz, eigenes Hafenbecken.
     // Bauplätze [x, y, Breite, Tiefe, Front]; Front S/N heißt Giebel zur Straße längs x, E/W Giebel längs y.
     const VIERTEL = {
-      kontorhof:{quay:[[-41, 272]], streets:[[212, 10, 272, 16], [212, 32, 266, 37], [212, 58, 268, 64]], meadow:[[212, 16, 268, 32], [212, 37, 268, 58], [212, 64, 268, 92]],
+      kontorhof:{quay:[[212, 272]], streets:[[212, 10, 272, 16], [212, 32, 266, 37], [212, 58, 268, 64]], meadow:[[212, 16, 268, 32], [212, 37, 268, 58], [212, 64, 268, 92]],
         kontor:[214, 16, 10, 15, 'S'], haus:[226, 17, 9, 13, 'S'], speicher:[254, 16, 10, 15, 'S'], cranes:[[246, 4]], hospital:[214, 67, 13, 21], artushof:[233, 66, 20, 14, 'S'],
         works:[[214, 38], [228, 38], [242, 38], [214, 49], [228, 49]], sign:[244.5, 31], cargo:[[226, 5, 'b'], [212, 6, 'c'], [222, 3, 's']], trees:[[262, 88], [216, 90.5]],
         fam:[[236, 18, 6, 12], [242.5, 18, 6, 12], [249, 18, 5, 12], [243, 48, 6.5, 9.5], [250, 48, 6.5, 9.5], [257, 38, 7, 9], [257, 48, 7, 9], [256, 66, 7, 10], [256, 77, 7, 10], [233, 82, 6.5, 9], [240, 82, 6.5, 9], [247, 82, 6.5, 9]]},
-      platz:{quay:[[-41, 272]], streets:[[212, 10, 272, 16], [226, 40, 229, 58], [256.5, 40, 258, 58], [212, 58, 268, 64]], meadow:[[212, 31, 226, 58], [229, 54, 256.5, 58], [258, 31, 268, 58], [212, 64, 268, 92]],
+      platz:{quay:[[212, 272]], streets:[[212, 10, 272, 16], [226, 40, 229, 58], [256.5, 40, 258, 58], [212, 58, 268, 64]], meadow:[[212, 31, 226, 58], [229, 54, 256.5, 58], [258, 31, 268, 58], [212, 64, 268, 92]],
         plaza:[226, 16, 258, 40], well:[242, 28],
         kontor:[214, 16, 12, 15, 'S'], haus:[229, 41, 9, 13, 'S'], speicher:[258, 16, 10, 15, 'S'], cranes:[[263, 4]], hospital:[214, 66, 13, 21], artushof:[238.5, 40.5, 18, 14, 'S'],
         works:[[229, 66], [243, 66], [256, 66], [229, 77], [243, 77]], sign:[240, 16.6], cargo:[[219, 4, 'b'], [226, 6, 'c'], [212, 3, 's']], trees:[[262, 88], [216, 90.5]], plazaTrees:[[228.5, 37.5], [255.5, 37.5]],
         fam:[[214, 33, 7, 12, 'E'], [214, 40.5, 7, 12, 'E'], [214, 48, 8, 12, 'E'], [258, 32, 7, 10, 'W'], [258, 39.5, 7, 10, 'W'], [258, 47, 8, 10, 'W'],
           [257, 77, 8, 9], [229.5, 86, 6.5, 6], [236.5, 86, 6.5, 6], [243.5, 86, 6.5, 6], [250.5, 86, 6.5, 6], [257, 86.5, 8, 5.5]]},
-      becken:{quay:[[-41, 230], [254, 272]], streets:[[212, 34, 268, 38], [212, 58, 268, 64]], meadow:[[212, 38, 268, 58], [212, 64, 268, 92]],
+      becken:{quay:[[212, 230], [254, 272]], streets:[[212, 34, 268, 38], [212, 58, 268, 64]], meadow:[[212, 38, 268, 58], [212, 64, 268, 92]],
         basin:[230, 0, 254, 28], kai:[[212, 0, 230, 34, [[230, 0, 230, 28]]], [230, 28, 254, 34, [[230, 28, 254, 28]]], [254, 0, 272, 34, []]],
         kontor:[214, 12, 14, 9, 'E'], haus:[236, 39, 9, 13, 'S'], speicher:[258, 6, 10, 15, 'S'], cranes:[[227, 21], [256.5, 3.5]], hospital:[214, 66, 13, 21], artushof:[246, 38, 20, 14, 'S'],
         works:[[229, 66], [243, 66], [256, 66], [229, 77], [243, 77]], sign:[240, 34.4], cargo:[[226, 5, 'b'], [224, 10, 'c'], [215, 4, 's']], trees:[[262, 88], [216, 90.5]], ship:[242, 13],
         fam:[[214, 39, 7, 9], [221.5, 39, 7, 9], [228.5, 39, 7, 9], [214, 49, 7, 9], [221.5, 49, 7, 9], [228.5, 49, 7, 9], [257, 77, 8, 9], [229, 86, 6.5, 6], [243, 86, 6.5, 6], [255, 24, 7, 6], [262.5, 24, 7, 6], [257, 86.5, 8, 5.5]]}
     };
+    // ───── Grundrisse der zwölf Häfen (ab Version 50) ─────
+    // Gemeinsam sind der Kai bei y 0 bis 10, die Ostseite des Mauerrings und rechts unten dein Viertel (x 212 bis 272).
+    // Alles andere ist je Stadt eigen, nach den wesentlichen Zügen des echten Stadtbilds um 1360 (docs/stadtplaene_v50.md).
+    // Rechtecke [x0, y0, x1, y1]; Blöcke werden am Rand mit Häusern gefüllt (Giebel zur Straße), innen Gärten.
+    const TAIL = [[250, 136], [272, 92], [272, 7]];
+    const gr = (xs, y0, y1, w) => xs.map(x => [x, y0, x + (w || 2), y1]);   // schmale Gassen längs y
+    const between = (xs, y0, y1, o) => xs.slice(0, -1).map((x, i) => [x + (o ? 0 : 0), y0, xs[i + 1], y1]);
+    const LAYOUT = {
+      luebeck:() => ({
+        ring:[[-40, 7], [-41, 92], [-38, 150], [-24, 167], [60, 169], [140, 169], [214, 167], [252, 138], [272, 92], [272, 7]],
+        streets:STREETS50, quay:[[-41, 212]],
+        blocks:BLOCKS.map(([x0, y0, x1, y1], bi) => [x0, y0, x1, y1, {front:y0 === 16, tr:bi !== 5 && bi !== 6}]),
+        plazas:[MARKT, [101, 88, 150, 150], [101, 64, 116, 88]],
+        extra:[{t:'house', x:103, y:64, w:8, d:13, h:12, rh:8, ridge:'x', front:'E', kind:'step', mat:'brick', wi:0, ri:1}, {t:'house', x:103, y:72.5, w:8, d:12, h:10, rh:7, ridge:'x', front:'E', kind:'plain', mat:'brick', wi:2, ri:3},
+          {t:'house', x:103, y:81, w:7, d:12, h:11, rh:7, ridge:'x', front:'E', kind:'plain', mat:'white', wi:1, ri:2}],
+        rat:{x:116, y:88}, main:{x:118, y:104}, west:{x:62, y:80}, east:{x:170, y:76},
+        sheds:[[60, 32], [117, 32], [170, 34]], halle:[120, 66], stalls:[121, 70], chapel:[147, 122], crane:118
+      }),
+      // Hamburg: Fleete von der Elbe in die Stadt, Häuser mit dem Giebel zum Fleet, Nikolaikirche am Hopfenmarkt, Rathaus an der Trostbrücke
+      hamburg:() => ({
+        ring:[[-40, 7], [-44, 64], [-38, 122], [-16, 154], [36, 170], [118, 176], [188, 170], [214, 164]].concat(TAIL), gateAt:[118, 176],
+        quay:[[-40, 24], [35, 134], [145, 212]], canals:[[24, 0, 35, 118], [134, 0, 145, 100]],
+        streets:[[-40, 10, 24, 16], [35, 10, 134, 16], [145, 10, 212, 16], [35, 16, 42, 118], [145, 16, 152, 100], [-32, 16, -27, 150], [-32, 46, 24, 51], [42, 46, 134, 51], [150, 46, 205, 51], [80, 16, 85, 150], [178, 16, 183, 150],
+          [-30, 118, 205, 124], [150, 100, 178, 104], [0, 150, 205, 156], [205, 16, 212, 158]],
+        bridgesX:[[24, 35, 10, 16], [134, 145, 10, 16], [24, 35, 46, 51], [134, 145, 46, 51]],
+        blocks:[[-27, 16, 24, 46, {front:true}], [42, 16, 80, 46, {front:true}], [85, 16, 134, 46, {front:true}], [152, 16, 178, 46, {front:true}], [183, 16, 205, 46, {front:true}],
+          [-27, 51, 24, 118, {}], [42, 51, 80, 118, {}], [152, 62, 178, 100, {dS:10}], [183, 51, 205, 118, {}], [-27, 124, 80, 150, {}], [85, 124, 205, 150, {}]],
+        plazas:[[85, 51, 134, 118]], main:{x:96, y:64, w:24, d:40}, west:{x:44, y:128, w:14, d:20}, east:{x:186, y:66, w:14, d:30},
+        rat:{x:152, y:51, w:25, d:9, h:13}, stalls:[96, 56], halle:[110, 106], chapel:[124, 70], sheds:[[0, 30], [100, 30]], crane:166
+      }),
+      // Bremen: lang am Fluss; vorn die Schlachte mit Speichern, dahinter die Balge als alter Hafen, Markt mit Rathaus und Roland, Dom daneben
+      bremen:() => ({
+        ring:[[-40, 7], [-44, 52], [-32, 98], [-6, 128], [60, 142], [140, 146], [214, 150]].concat(TAIL), gateAt:[60, 142],
+        quay:[[-40, -34], [-27, 150], [157, 212]], canals:[[-27, 62, 157, 70], [-34, 0, -27, 70], [150, 0, 157, 62]],
+        streets:[[-27, 10, 150, 16], [157, 10, 212, 16], [-27, 16, -21, 62], [157, 16, 163, 75], [-21, 56, 40, 62], [100, 56, 150, 62], [24, 16, 28, 56], [36, 16, 40, 56], [100, 16, 104, 56],
+          [24, 70, 28, 110], [106, 70, 110, 140], [150, 75, 155, 146], [-24, 110, 205, 115], [0, 128, 205, 133], [205, 16, 212, 146]],
+        bridges:[[24, 28, 62, 70], [106, 110, 62, 70]], bridgesX:[[-34, -27, 10, 16], [150, 157, 10, 16]],
+        blocks:[[-21, 16, 24, 56, {front:true, storageFront:true}], [28, 16, 36, 56, {front:true, storageFront:true}], [40, 16, 100, 30, {front:true, dS:14, dN:0, storage:true}], [104, 16, 150, 56, {front:true, storageFront:true}],
+          [163, 16, 205, 75, {front:true}], [-27, 70, 24, 110, {front:true, dS:12}], [110, 70, 150, 110, {front:true, dS:12}], [155, 75, 205, 110, {}], [-24, 115, 106, 128, {dN:0}], [110, 115, 205, 128, {dN:0}], [0, 133, 205, 146, {dN:0}]],
+        plazas:[[40, 30, 100, 62], [28, 70, 106, 110]], rat:{x:30, y:72, w:30, d:9}, roland:[72, 44], main:{x:70, y:74, w:26, d:34}, west:{x:2, y:80, w:14, d:24},
+        stalls:[46, 34], halle:[60, 48], chapel:[120, 80], sheds:[], crane:96, yard:{slip:-10}
+      }),
+      // Danzig: Rechtstadt im Raster, lange Gassen quer zur Mottlau, der Lange Markt vom Grünen Tor am Kai bis zum Rathaus, Marienkirche und Krantor
+      danzig:() => ({
+        ring:[[-40, 7], [-42, 140], [-30, 152], [60, 156], [150, 156], [214, 154]].concat(TAIL), gateAt:[97, 156],
+        quay:[[-40, 212]],
+        streets:[[-40, 10, 212, 16], [-32, 16, -28, 140], [12, 16, 16, 140], [38, 16, 42, 140], [62, 16, 66, 140], [84, 16, 110, 156], [132, 16, 136, 70], [158, 16, 162, 140], [184, 16, 188, 140], [205, 16, 212, 150],
+          [-28, 134, 205, 140], [110, 70, 158, 74]],
+        blocks:[[-28, 16, 12, 134, {front:true, wN:[5, 7]}], [16, 16, 38, 134, {front:true, wN:[5, 7]}], [42, 16, 62, 134, {front:true, wN:[5, 7]}], [66, 16, 84, 96, {front:true, wN:[5, 7]}], [66, 112, 84, 134, {wN:[5, 7]}],
+          [110, 16, 132, 70, {front:true, wN:[5, 7], side:9}], [136, 16, 158, 70, {front:true, wN:[5, 7]}], [162, 16, 184, 134, {front:true, wN:[5, 7]}], [188, 16, 205, 134, {front:true, wN:[5, 7]}]],
+        plazas:[[110, 74, 158, 134]], main:{x:116, y:84, w:32, d:46}, rat:{x:66, y:99, w:18, d:12, tower:44}, west:null, east:null,
+        extra:[{t:'gate', x:97, y:20, mat:'brick'}, {t:'house', x:110, y:38, w:15, d:12, h:17, rh:9, ridge:'x', front:'W', kind:'step', mat:'brick', wi:2, ri:0}, {t:'well', x:97, y:96}],
+        stalls:[88, 50], halle:[18, 112], chapel:[146, 116], sheds:[], crane:60
+      }),
+      // Riga: unregelmäßige Gassen, Ordensburg am Westende des Kais, Domplatz, Rathausplatz mit dem Schwarzhäupterhaus, Petrikirche mit gestufter Spitze
+      riga:() => ({
+        ring:[[-40, 7], [-46, 48], [-42, 96], [-24, 136], [10, 160], [70, 172], [140, 170], [196, 160], [214, 156]].concat(TAIL), gateAt:[70, 172],
+        quay:[[-40, 212]],
+        streets:[[-40, 10, 212, 16], [-44, 44, 205, 48], [-38, 84, 205, 88], [-20, 122, 190, 126], [-4, 16, 0, 150], [60, 16, 65, 160], [104, 16, 108, 84], [150, 16, 154, 150], [176, 48, 180, 122],
+          [65, 100, 104, 104], [205, 16, 212, 150]],
+        blocks:[[0, 16, 60, 44, {front:true}], [65, 16, 104, 44, {front:true}], [108, 16, 150, 44, {front:true}], [154, 16, 205, 44, {front:true}], [65, 48, 104, 84, {}], [154, 48, 176, 84, {}], [180, 48, 205, 84, {}],
+          [-40, 50, -4, 84, {}], [-30, 88, -4, 116, {}],
+          [0, 88, 60, 122, {}], [65, 88, 104, 100, {dS:6, dN:6}], [65, 104, 104, 122, {dS:9, dN:9}], [154, 88, 176, 122, {}], [180, 88, 205, 122, {}], [-20, 126, 60, 150, {}], [65, 126, 150, 160, {}], [154, 126, 196, 155, {}]],
+        plazas:[[0, 48, 60, 84], [108, 48, 150, 84], [108, 88, 150, 122]], main:{x:116, y:92, w:24, d:30}, west:{x:14, y:92, w:20, d:28}, east:{x:158, y:92, w:14, d:26},
+        rat:{x:110, y:76, w:28, d:8}, extra:[{t:'castle', x:-38, y:18, w:30, d:28, th:30, style:'reval', mat:'brick'}, {t:'well', x:40, y:70}, {t:'tree', x:3, y:80, s:3}, {t:'tree', x:57, y:80, s:3}, {t:'tree', x:57, y:60, s:2.8}, {t:'house', x:110, y:50, w:12, d:14, h:17, rh:10, ridge:'x', front:'E', kind:'step', mat:'brick', wi:1, ri:0}],
+        stalls:[24, 56], halle:[66, 52], chapel:[140, 128], sheds:[[20, 30]], crane:118, yard:{slip:-19, area:null}
+      }),
+      // Reval: Unterstadt mit langer Gasse vom Hafentor hinauf, Rathausplatz, Olaikirche am Hafen, Dicke Margarethe am Westende, Domberg im Osten
+      reval:() => ({
+        ring:[[-40, 7], [-52, 40], [-48, 86], [-30, 122], [0, 150], [40, 168], [100, 174], [150, 168], [205, 160], [214, 156]].concat(TAIL), gateAt:[100, 174],
+        quay:[[-40, 212]],
+        streets:[[-40, 10, 212, 16], [6, 16, 11, 144], [32, 16, 36, 108], [60, 16, 64, 60], [126, 16, 130, 60], [-34, 56, 150, 60], [155, 56, 205, 64], [-26, 104, 150, 108], [11, 140, 150, 144], [150, 16, 155, 160], [205, 16, 212, 156]],
+        blocks:[[-34, 16, 6, 56, {front:true}], [11, 16, 32, 56, {front:true}], [36, 16, 60, 56, {front:true}], [64, 16, 126, 56, {front:true}], [130, 16, 150, 56, {front:true}],
+          [155, 16, 205, 56, {front:true}], [11, 60, 32, 104, {}], [36, 60, 64, 104, {}], [124, 60, 150, 104, {}], [-26, 108, 6, 140, {}], [11, 108, 64, 140, {}], [64, 108, 150, 140, {}], [24, 144, 140, 160, {dN:0}]],
+        plazas:[[64, 60, 124, 104], [-34, 60, 6, 104]], main:{x:-26, y:64, w:18, d:36}, west:{x:40, y:112, w:14, d:24}, east:null,
+        rat:{x:70, y:96, w:30, d:9, tower:38}, extra:[{t:'church', x:110, y:66, w:10, d:16, h:9, th:20, sh:12, towers:1, spire:'needle', mat:'stone'}],
+        stalls:[78, 66], halle:[90, 62], chapel:[136, 114], sheds:[], crane:118
+      }),
+      // Visby: Stadt am Hang, lange Straßen parallel zum Ufer, steile Gassen hinauf, Ringmauer nur zur Landseite, Dom St. Marien, viele Kirchenruinen
+      visby:() => ({
+        ring:[[-40, 7], [-40, 60], [-36, 120], [-20, 165], [60, 172], [140, 172], [214, 166]].concat(TAIL), gateAt:[60, 172], slope:{y0:34, k:0.22, max:30},
+        quay:[[-40, 212]],
+        streets:[[-40, 10, 212, 16], [-34, 50, 205, 54], [-34, 90, 205, 94], [-26, 128, 205, 132]].concat(gr([-30, 20, 56, 100, 140, 176], 16, 160, 3)).concat([[205, 16, 212, 160]]),
+        blocks:[].concat(...[[16, 50, true], [54, 90, false], [94, 128, false], [132, 160, false]].map(([y0, y1, f]) => between([-27, 20, 56, 100, 140, 176, 205], y0, y1).map(([a, , b]) => [a + (a === -27 ? 0 : 3), y0, b, y1, {front:f, dS:f ? 14 : 11, dN:y1 === 160 ? 0 : 10}]))),
+        plazas:[[59, 54, 100, 90]], main:{x:106, y:98, w:24, d:28}, west:null, east:null, rat:{x:62, y:82, w:24, d:8, h:11},
+        extra:[{t:'ruin', x:-24, y:58, w:20, d:28}, {t:'ruin', x:64, y:98, w:18, d:26}, {t:'ruin', x:148, y:100, w:12, d:22}, {t:'ruin', x:146, y:136, w:14, d:20}, {t:'ruin', x:28, y:136, w:12, d:18}],
+        stalls:[70, 60], halle:[60, 56], chapel:[186, 100], sheds:[], crane:118
+      }),
+      // Stockholm: Insel mit Wasser auch links und hinten, Skeppsbron am Kai, schmale Gränder hinauf zur Österlånggatan, Stortorget, Storkyrkan neben Tre Kronor
+      stockholm:() => ({
+        ring:[[-8, 7], [-2, 56], [-6, 104], [-10, 130], [4, 170], [40, 192], [110, 198], [170, 190], [214, 170]].concat(TAIL), gateAt:[110, 198], island:true,
+        water:[[[-420, -2], [-12, -2], [-6, 40], [-10, 90], [-16, 130], [-2, 176], [30, 206], [110, 214], [200, 208], [256, 176], [420, 160], [420, 330], [-420, 330]]],
+        quay:[[-8, 212]],
+        streets:[[-8, 10, 212, 16], [-4, 30, 205, 34], [0, 64, 155, 68], [30, 68, 34, 132], [104, 68, 108, 132], [150, 68, 155, 150], [2, 132, 150, 136], [16, 166, 175, 170], [205, 16, 212, 165]]
+          .concat(gr([6, 19, 32, 45, 58, 84, 97, 110, 136, 149, 175, 188], 16, 30)).concat(gr([19, 45, 84, 110, 149], 34, 64)),
+        blocks:between([-4, 8, 21, 34, 47, 60, 86, 99, 112, 138, 151, 177, 190, 205], 16, 30).map(([a, , b]) => [a, 16, b - 2, 30, {front:true, dS:14, dN:0, wN:[4.5, 6.5]}])
+          .concat([[-2, 34, 19, 64, {}], [21, 34, 45, 64, {}], [47, 34, 84, 64, {}], [86, 34, 110, 64, {}], [112, 34, 149, 64, {}], [151, 34, 205, 64, {}], [4, 68, 30, 132, {}], [34, 68, 60, 132, {}], [60, 108, 104, 132, {dS:8}],
+            [8, 136, 150, 166, {dN:0}], [24, 170, 168, 188, {dS:12, dN:0}]]),
+        plazas:[[60, 68, 104, 108], [108, 68, 150, 132]], main:{x:116, y:80, w:22, d:36}, west:null, rat:{x:62, y:100, w:26, d:8, h:11},
+        extra:[{t:'well', x:82, y:84}], stalls:[64, 72], halle:[78, 70], chapel:[126, 120], sheds:[], crane:118, yard:{slip:10, area:null}, ridge:[236, 34, '#8f978a']
+      }),
+      // Brügge: Reien durch die Stadt mit Brücken, Markt mit Belfried, Wasserhalle über dem Kanal, Burgplatz mit Stadthaus, Liebfrauenkirche, Kran am Kanal
+      bruegge:() => ({
+        ring:[[-40, 7], [-48, 60], [-40, 112], [-14, 150], [40, 172], [110, 178], [180, 166], [214, 156]].concat(TAIL), gateAt:[110, 178],
+        quay:[[-40, 146], [152, 212]], canals:[[-34, 72, 205, 80], [146, 0, 152, 72]],
+        streets:[[-40, 10, 146, 16], [152, 10, 212, 16], [152, 16, 158, 72], [-34, 64, 146, 72], [158, 64, 205, 72], [36, 16, 40, 64], [100, 16, 104, 64], [20, 80, 24, 150], [90, 80, 94, 150], [146, 80, 150, 150], [205, 16, 212, 150]],
+        bridges:[[20, 24, 72, 80], [90, 94, 72, 80]], bridgesX:[[146, 152, 10, 16]],
+        blocks:[[-34, 16, 36, 64, {front:true}], [40, 16, 100, 26, {front:true, dS:10, dN:0}], [104, 16, 146, 26, {front:true, dS:10, dN:0}], [158, 16, 205, 64, {front:true}],
+          [-34, 80, 20, 150, {front:true}], [24, 80, 90, 150, {front:true}], [94, 80, 146, 150, {front:true}], [150, 80, 205, 150, {front:true}]],
+        plazas:[[40, 26, 100, 64], [104, 26, 146, 64]], belfry:{x:70, y:28}, main:{x:36, y:102, w:20, d:36}, west:{x:-24, y:102, w:14, d:30}, east:{x:162, y:102, w:14, d:28},
+        rat:{x:108, y:54, w:30, d:9, h:12}, extra:[{t:'crane', x:132, y:68, big:true}], halleFix:[104, 72.5], stalls:[46, 46], chapel:[120, 34], sheds:[], crane:118
+      }),
+      // London: Mauer im Halbkreis, Old St Paul's auf dem Ludgate Hill links, Tower rechts, London Bridge, Stalhof der Hanse am Fluss, Cheapside
+      london:() => ({
+        ring:[[-40, 7], [-52, 60], [-48, 112], [-26, 150], [20, 176], [100, 184], [170, 174], [214, 160]].concat(TAIL), gateAt:[-50, 72],
+        quay:[[-40, 212]],
+        streets:[[-40, 10, 212, 16], [3, 16, 13, 96], [-36, 46, 110, 52], [150, 46, 205, 52], [20, 96, 150, 106], [60, 16, 65, 46], [60, 52, 65, 150], [100, 52, 105, 96], [150, 16, 155, 150], [6, 150, 150, 154], [205, 16, 212, 160]],
+        blocks:[[-34, 16, 3, 46, {front:true}], [13, 16, 60, 46, {front:true}], [65, 16, 110, 46, {front:true}], [155, 16, 205, 46, {front:true}], [13, 52, 60, 96, {}], [65, 52, 100, 96, {}], [105, 52, 150, 96, {}],
+          [155, 52, 205, 64, {dS:12, dN:0}], [10, 106, 60, 150, {}], [65, 106, 150, 150, {}], [26, 154, 150, 170, {dN:0}]],
+        plazas:[[110, 46, 150, 52]], main:{x:-30, y:94, w:28, d:44, z:5}, west:null, rat:{x:66, y:84, w:26, d:9, h:13},
+        extra:[{t:'platform', x:-42, y:84, w:46, d:62, h:5},
+          // Stalhof: ummauerter Hof der Hanse am Fluss mit Gildehalle, Speichern und Garten
+          {t:'wallS', a:[110, 46], b:[110, 16], h:4, mat:'stone'}, {t:'wallS', a:[150, 16], b:[150, 46], h:4, mat:'stone'}, {t:'wallS', a:[150, 46], b:[134, 46], h:4, mat:'stone'}, {t:'wallS', a:[126, 46], b:[110, 46], h:4, mat:'stone'},
+          {t:'house', x:113, y:30, w:22, d:13, h:12, rh:9, ridge:'y', front:'S', kind:'step', mat:'stone', wi:0, ri:0, flag:'red'}, {t:'house', x:138, y:17, w:9, d:14, h:11, rh:9, ridge:'y', front:'S', kind:'step', mat:'brick', wi:1, ri:1, storage:true},
+          {t:'house', x:113, y:17, w:8, d:11, h:9, rh:8, ridge:'y', front:'S', kind:'plain', mat:'brick', wi:2, ri:2, storage:true}, {t:'tree', x:142, y:38, s:3}, {t:'tree', x:126, y:20, s:2.6}],
+        stalls:[24, 98], halle:[70, 98], chapel:[130, 120], sheds:[], crane:118, bridgeHouses:true
+      }),
+      // Bergen: Bryggen mit langen Holzspeichern, Giebel zum Wasser, schmale Gänge dazwischen; Bergenhus am Westende, Marienkirche, Berge dicht dahinter, keine Mauer
+      bergen:() => ({
+        ring:[[-44, 7], [-46, 60], [-40, 110], [0, 120], [100, 124], [200, 120], [214, 120]].concat(TAIL), noWall:true, streetCol:'#9b8667',
+        quay:[[-44, 212]],
+        streets:[[-44, 10, 212, 16], [-4, 52, 205, 58], [60, 58, 64, 118], [120, 58, 124, 118], [205, 16, 212, 118]],
+        bryggen:[-2, 204, 16, 50],
+        blocks:[[-4, 58, 60, 118, {}], [64, 58, 120, 118, {}], [124, 58, 205, 118, {}]],
+        main:{x:70, y:66, w:18, d:30}, west:{t:'tower', x:150, y:92, r:6, h:24, kind:'square', mat:'stone', flat:true}, rat:null,
+        extra:[{t:'house', x:-40, y:20, w:13, d:26, h:12, rh:9, ridge:'y', front:'S', kind:'step', mat:'stone', wi:0, ri:0}, {t:'tower', x:-16, y:34, r:6, h:24, kind:'square', mat:'stone', flat:true},
+          {t:'wallS', a:[-44, 14], b:[-44, 54], h:5, mat:'stone'}, {t:'wallS', a:[-44, 54], b:[-8, 54], h:5, mat:'stone'}],
+        stalls:[176, 62], halle:[170, 60], chapel:[100, 104], sheds:[], crane:118, yard:null
+      }),
+      // Nowgorod: Handelsseite aus Holz, Bohlenstraßen, Jaroslawhof mit Lauben und Nikolaikathedrale, Peterhof der Hanse, Große Brücke über den Wolchow, Detinez rechts
+      nowgorod:() => ({
+        ring:[[-40, 7], [-48, 70], [-40, 130], [-14, 162], [60, 176], [140, 176], [214, 164]].concat(TAIL), gateAt:[60, 176], streetCol:'#9b8667',
+        quay:[[-40, 212]],
+        streets:[[-40, 10, 212, 16], [3, 16, 11, 160], [100, 16, 105, 170], [-34, 70, 150, 75], [-20, 128, 150, 133], [150, 16, 155, 150], [205, 16, 212, 160]],
+        blocks:[[-34, 16, 3, 70, {front:true}], [105, 16, 150, 70, {front:true}], [-34, 75, 3, 128, {}], [11, 75, 100, 128, {}], [105, 75, 150, 128, {}], [-14, 133, 100, 160, {dN:0}], [105, 133, 150, 165, {dN:0}]],
+        plazas:[[11, 16, 100, 70]], main:{x:52, y:30, w:22, d:24, aisles:false, choir:false}, west:{x:20, y:44, w:10, d:14}, rat:null,
+        extra:[{t:'stalls', x:16, y:20, n:8}, {t:'stalls', x:74, y:56, n:4}, {t:'church', x:80, y:24, w:9, d:12, h:7, th:16, sh:16, towers:1, spire:'onion', mat:'white'},
+          // Peterhof: Hof der Hanse mit Palisade, steinerner Peterskirche und Blockspeichern
+          {t:'fence', x0:110, y0:18, x1:148, y1:52}, {t:'church', x:122, y:26, w:12, d:18, h:9, th:22, sh:10, towers:1, spire:'tent', mat:'stone'},
+          {t:'house', x:137, y:20, w:9, d:12, h:7, rh:6, ridge:'y', front:'S', kind:'log', mat:'log', wi:0, ri:0, storage:true, flag:'red'}, {t:'house', x:112, y:38, w:8, d:11, h:7, rh:6, ridge:'y', front:'S', kind:'log', mat:'log', wi:1, ri:1, storage:true}],
+        bridge:{x0:3, x1:11, y0:-110, y1:0, wood:true}, stalls:null, halle:[30, 60], chapel:[130, 100], sheds:[], crane:118
+      })
+    };
     function build50(cid, o, cfg) {
+      const L = (LAYOUT[cid] || LAYOUT.luebeck)();
       const seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1, r = rngF(seed);
-      const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [], ring = cfg.wallPoly || RING50, GV = (P && P.gv) || {};
+      const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [], ring = L.ring, GV = (P && P.gv) || {};
       const hc = o.house && o.house.hc || '#8a3a2a', mark = o.house && o.house.mark || null;
-      const QV = (home && VIERTEL[o.viertel || cfg.viertel]) || VIERTEL.kontorhof;   // fremde Häfen: Bürgerhäuser im Raster des Kontorhofs
+      const QV = (home && VIERTEL[o.viertel || cfg.viertel || 'becken']) || VIERTEL.kontorhof;   // fremde Häfen: Bürgerhäuser im Raster des Kontorhofs
       const own = q => Object.assign(q, {hc, mark});   // Bau deines Hauses: Hausfarbe und Hausmarke
-      const pick = a => a[Math.floor(r() * a.length)];
       const busy = (x0, y0, x1, y1) => keep.some(([a, b, c, d]) => x0 < c && x1 > a && y0 < d && y1 > b);
+      const keepObj = q => { const f = K36.foot(q); if (f) keep.push([f[0] - 0.5, f[1] - 0.5, f[2] + 0.5, f[3] + 0.5]); return q; };
       const tall = cfg.tall || 0, base = cfg.mat[0][0], hmMat = base === 'fach' || base === 'wood' || base === 'log' ? base : 'brick';
       const fullEast = typeof cfg.east === 'string';
-      if (fullEast) keep.push([155, 64, 205, 150]);
-      const lmKeep = (spec, b0) => { if (!spec || typeof spec === 'string') return; const q = Object.assign({}, b0, spec), w = q.w || (q.r ? q.r * 2 : 10), d = q.d || (q.r ? q.r * 2 : 10), x = q.r ? q.x - q.r : q.x, y = q.r ? q.y - q.r : q.y; keep.push([x + 1, y - 2, x + w, y + d]); };
-      lmKeep(cfg.west, cfg.west && cfg.west.t === 'church' ? CHURCH_W : {}); lmKeep(cfg.east, cfg.east && cfg.east.t === 'church' ? CHURCH_E : {});
-      if (cfg.canal) keep.push([-28, 99, 44, 107]);
-      keep.push([-28, 16, -12, 32]);   // Werftplatz am linken Ende des Kais
-      [[60, 32], [117, 32], [170, 34]].forEach(([x, y]) => keep.push([x - 1, y - 1, x + 9, y + 7]));
-      function row(x0, x1, y, depth, face, front) {
-        let x = x0;
-        while (x < x1 - 4) {
-          const w = Math.min(x1 - x, 6 + Math.floor(r() * 4)), d = depth - r() * 3, h = (front ? 11 + r() * 6 : 7 + r() * 4) + (front ? tall : tall / 2), yy = face === 'S' ? y : y - d;
-          if (busy(x, yy, x + w, yy + d)) { x += w; continue; }
-          const m = pickW(r, cfg.mat), kind = kindOf(m, r, front ? cfg.front : ['plain', 'step', 'plain']);
-          objs.push({t:'house', x, y:yy, w, d, h, rh:w * (0.85 + r() * 0.25), ridge:'y', front:face, kind, mat:m, wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:r() < 0.25, shop:front && r() < 0.3});
+      const yb = ring[ring.length - 4][1];   // Höhe des Rings bei x 214, über dem Viertel
+      // Wasser der Insel (Stockholm), Mündung, Bucht: was trocken ist, bekommt Bäume und Gärten
+      const RIVER = [[281, -4], [297, -4], [300, 40], [307, 120], [314, 340], [293, 340], [287, 120], [282, 40]];
+      const dry = (x, y) => !(cfg.coast === 'muendung' && x > 276 && x < 320) && !(cfg.coast === 'bucht' && x + y < -30 && y < 4) && !(L.water || []).some(w => K36.inPoly([x, y], w));
+      function row(x0, x1, y, depth, face, front, op) {
+        let x = x0; const [w0, w1] = op.wN || [6, 9];
+        while (x < x1 - 3.5) {
+          const w = Math.min(x1 - x, w0 + Math.floor(r() * (w1 - w0 + 1))), d = depth - r() * 3, h = (front ? 11 + r() * 6 : 7 + r() * 4) + (front ? tall : tall / 2), yy = face === 'S' ? y : y - d;
+          if (busy(x, yy, x + w, yy + d)) { x += 1; continue; }
+          const sto = op.storage || (op.storageFront && front && face === 'S');
+          const m = sto ? (base === 'fach' ? 'brick' : base) : pickW(r, cfg.mat), kind = sto && m !== 'wood' && m !== 'log' ? 'step' : kindOf(m, r, front ? cfg.front : ['plain', 'step', 'plain']);
+          objs.push({t:'house', x, y:yy, w, d, h:sto ? h + 2 : h, rh:w * (0.85 + r() * 0.25), ridge:'y', front:face, kind, mat:m, wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:!sto && r() < 0.25, shop:front && !sto && r() < 0.3, storage:!!sto});
           x += w;
         }
       }
-      function rowX(y0, y1, x, depth, face) {
-        let y = y0;
-        while (y < y1 - 4) {
-          const w = Math.min(y1 - y, 6 + Math.floor(r() * 3)), d = depth - r() * 2, h = 7 + r() * 5 + tall / 2, xx = face === 'W' ? x : x - d;
-          if (busy(xx, y, xx + d, y + w)) { y += w; continue; }
+      function rowX(y0, y1, x, depth, face, op) {
+        let y = y0; const [w0, w1] = op.wN || [6, 8];
+        while (y < y1 - 3.5) {
+          const w = Math.min(y1 - y, w0 + Math.floor(r() * (w1 - w0 + 1))), d = depth - r() * 2, h = 7 + r() * 5 + tall / 2, xx = face === 'W' ? x : x - d;
+          if (busy(xx, y, xx + d, y + w)) { y += 1; continue; }
           const m = pickW(r, cfg.mat);
           objs.push({t:'house', x:xx, y, w, d, h, rh:w * 0.9, ridge:'x', front:face, mat:m, kind:kindOf(m, r, ['plain', 'step', 'plain']), wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:r() < 0.22});
           y += w;
         }
       }
       function trees(x0, y0, x1, y1, n, s0, out) { for (let q = 0; q < n; q++) { const x = lerp(x0, x1, r()), y = lerp(y0, y1, r()); if (busy(x - 2, y - 2, x + 2, y + 2) || (out && (K36.inPoly([x, y], ring) || !dry(x, y)))) continue; objs.push({t:'tree', x, y, s:(s0 || 3) + r() * 2.5, pine:out && cfg.water === 'sea' && r() < 0.5}); } }
-      function block(x0, y0, x1, y1, front, dS, dN, tr) {
-        row(x0, x1, y0, dS, 'S', front); if (dN > 1) row(x0, x1, y1, dN, 'N', false);
+      // Block: Häuser an allen Rändern mit dem Giebel zur Straße, innen Gärten mit Bäumen
+      function block(x0, y0, x1, y1, op) {
+        op = op || {}; const front = !!op.front, dS = op.dS != null ? op.dS : front ? 16 : 13, dN = op.dN != null ? op.dN : 12, side = op.side || 11;
+        row(x0, x1, y0, dS, 'S', front, op); if (dN > 1) row(x0, x1, y1, dN, 'N', false, op);
         if (y1 - dN - (y0 + dS) < 4) return;
-        rowX(y0 + dS, y1 - dN, x0, 11, 'W'); rowX(y0 + dS, y1 - dN, x1, 11, 'E');
-        ground.push({t:'garden', pts:[[x0 + 11, y0 + dS], [x1 - 11, y0 + dS], [x1 - 11, y1 - dN], [x0 + 11, y1 - dN]]});
-        if (tr) trees(x0 + 13, y0 + dS + 2, x1 - 13, y1 - dN - 2, Math.max(1, Math.round((x1 - x0) * (y1 - y0) / 480)));
+        rowX(y0 + dS, y1 - dN, x0, side, 'W', op); if (x1 - x0 > side + 6) rowX(y0 + dS, y1 - dN, x1, side, 'E', op);
+        if (x1 - x0 > 2 * side + 3) { ground.push({t:'garden', pts:[[x0 + side, y0 + dS], [x1 - side, y0 + dS], [x1 - side, y1 - dN], [x0 + side, y1 - dN]]});
+          if (op.tr !== false) trees(x0 + side + 2, y0 + dS + 2, x1 - side - 2, y1 - dN - 2, Math.max(1, Math.round((x1 - x0) * (y1 - y0) / 520))); }
       }
-      // Boden: Wasser bis zum unteren Bildrand, Schilf am Ufer vor der Mauer
+      // Bryggen: lange Holzspeicher paarweise, Giebel zum Wasser, schmale Gänge dazwischen
+      function bryggen(x0, x1, y0, y1) {
+        let x = x0, q = 0;
+        while (x < x1 - 7) { const w = 6.5 + r() * 1.5, h = 8 + r() * 3;
+          if (!busy(x, y0, x + w, y1)) objs.push({t:'house', x, y:y0, w, d:y1 - y0 - r() * 4, h, rh:w * 0.95, ridge:'y', front:'S', kind:'wood', mat:'wood', wi:Math.floor(r() * 6), ri:Math.floor(r() * 3), storage:true});
+          x += w; if (++q % 2 === 0) { ground.push({t:'street', rect:[x, y0, x + 2.4, y1], col:L.streetCol}); x += 2.4; } }
+      }
+      // ── Boden: Wasser bis zum unteren Bildrand, Schilf am Ufer, Küstenform ──
       ground.push({t:'fill', col:'land'});
       ground.push({t:'water', rect:[-420, -420, 640, 0], waves:220, seed:seed % 97});
-      ground.push({t:'reeds', x0:-170, x1:-47, y:0}); ground.push({t:'reeds', x0:278, x1:430, y:0});
-      // Küstenform: gerade, Bucht (Landzunge am linken Rand) oder Mündung (Fluss rechts neben der Stadt)
-      const RIVER = [[281, -4], [297, -4], [300, 40], [307, 120], [314, 340], [293, 340], [287, 120], [282, 40]];
-      if (cfg.coast === 'bucht') { ground.push({t:'land', pts:[[-300, 0], [-46, 0], [-22, -30], [18, -62], [58, -92], [98, -130], [138, -180], [160, -240], [-300, -240]]});
+      if (!L.island) { ground.push({t:'reeds', x0:-170, x1:ring[0][0] - 7, y:0}); ground.push({t:'reeds', x0:278, x1:430, y:0}); }
+      if (cfg.coast === 'bucht' && !L.island) { ground.push({t:'land', pts:[[-300, 0], [-46, 0], [-22, -30], [18, -62], [58, -92], [98, -130], [138, -180], [160, -240], [-300, -240]]});
         ground.push({t:'land', col:'meadow2', pts:[[-300, 8], [-58, 8], [-38, -26], [2, -58], [44, -92], [82, -132], [118, -186], [130, -240], [-300, -240]]}); }
       if (cfg.coast === 'muendung') { ground.push({t:'water', pts:RIVER, waves:0, grad:false}); ground.push({t:'reeds', x0:300, x1:420, y:40}); }
-      const dry = (x, y) => !(cfg.coast === 'muendung' && x > 276 && x < 320) && !(cfg.coast === 'bucht' && x + y < -30 && y < 4);
-      // Hügel hinter der Stadt (Visby, Stockholm); Reval hat den Domberg im Osten
-      STREETS50.concat(QV.streets).forEach(s => ground.push({t:'street', rect:s}));
-      QV.quay.forEach(([x0, x1]) => ground.push({t:'quay', x0, x1}));
+      (L.water || []).forEach(pts => ground.push({t:'water', pts, waves:0, grad:false}));
+      // Straßen, Kanäle mit Brücken, Kai
+      const streets = (L.streets || []).concat(QV.streets, [[212, 92, 262, 98]]);
+      streets.forEach(s => ground.push({t:'street', rect:s, col:L.streetCol}));
+      (L.canals || []).forEach(c => ground.push({t:'canal', rect:c}));
+      (L.bridges || []).forEach(([x0, x1, y0, y1]) => ground.push({t:'bridge', x0, x1, y0, y1, low:true}));
+      (L.bridgesX || []).forEach(([x0, x1, y0, y1]) => ground.push({t:'bridgeX', x0, x1, y0, y1}));
+      if (L.bridge) ground.push(Object.assign({t:'bridge'}, L.bridge));
+      L.quay.concat(QV.quay).sort((a, b) => a[0] - b[0]).reduce((m, s0) => { const l = m[m.length - 1]; if (l && Math.abs(l[1] - s0[0]) < 0.6) l[1] = s0[1]; else m.push(s0.slice()); return m; }, []).forEach(([x0, x1]) => ground.push({t:'quay', x0, x1}));
       if (QV.basin) { const [x0, y0, x1, y1] = QV.basin; ground.push({t:'water', rect:[x0, y0 - 1, x1, y1], waves:14, grad:false, seed:5}); }
       (QV.kai || []).forEach(([x0, y0, x1, y1, faces]) => ground.push({t:'kai', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]], faces}));
-      // Häuserblöcke der Altstadt
-      BLOCKS.forEach(([x0, y0, x1, y1], bi) => { if (bi === 6 && fullEast) return; block(x0, y0, x1, y1, y0 === 16, y0 === 16 ? 16 : 13, 12, !(bi === 5 && cfg.west) && !(bi === 6 && cfg.east)); });
-      [[60, 32, 0], [117, 32, 2], [170, 34, 4]].forEach(([x, y, n]) => objs.push({t:'shed', x, y, w:8, d:6, h:4.4, mat:'fach', chimney:n === 2}));
-      // Markt, Rathaus, Hauptkirche
-      ground.push({t:'plaza', pts:[[MARKT[0], MARKT[1]], [MARKT[2], MARKT[1]], [MARKT[2], MARKT[3]], [MARKT[0], MARKT[3]]]});
-      ground.push({t:'plaza', pts:[[101, 88], [150, 88], [150, 150], [101, 150]]});
-      ground.push({t:'plaza', pts:[[101, 64], [116, 64], [116, 88], [101, 88]]});
-      const bm = pickW(r, cfg.mat);
-      objs.push({t:'house', x:103, y:64, w:8, d:13, h:12 + tall, rh:8, ridge:'x', front:'E', kind:kindOf(bm, r, cfg.front), mat:bm, wi:0, ri:1});
-      objs.push({t:'house', x:103, y:72.5, w:8, d:12, h:10 + tall, rh:7, ridge:'x', front:'E', kind:kindOf(bm, r, ['plain']), mat:bm, wi:2, ri:3});
-      objs.push({t:'house', x:103, y:81, w:7, d:12, h:11 + tall, rh:7, ridge:'x', front:'E', kind:kindOf(bm, r, ['plain']), mat:bm === 'brick' ? 'white' : bm, wi:1, ri:2});
-      if (cfg.belfry) objs.push({t:'belfry', x:131.5, y:92});
-      else objs.push({t:'rathaus', x:116, y:88, w:31, d:9, h:15, style:cfg.rat, mat:base === 'brickL' ? 'brickL' : base === 'brick' ? 'brick' : 'stone', tower:cfg.rtower});
-      const M = Object.assign({}, CHURCH_M, cfg.main || {}, {t:'church'});
+      (L.plazas || []).forEach(([x0, y0, x1, y1]) => ground.push({t:'plaza', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}));
+      // ── Wahrzeichen zuerst, damit die Häuserreihen ihnen ausweichen ──
+      if (fullEast) keep.push([155, 64, 205, 150]);
+      (L.extra || []).forEach(q => objs.push(keepObj(Object.assign({}, q))));
+      if (L.belfry) objs.push(keepObj({t:'belfry', x:L.belfry.x, y:L.belfry.y}));
+      if (L.rat) objs.push(keepObj(Object.assign({t:'rathaus', w:31, d:9, h:15, style:cfg.rat, mat:base === 'brickL' ? 'brickL' : base === 'brick' ? 'brick' : 'stone', tower:cfg.rtower}, L.rat)));
+      const M = Object.assign({}, CHURCH_M, cfg.main || {}, L.main || {}, {t:'church'});
       if (!M.mat) M.mat = cfg.walls === 'brickL' ? 'brickL' : 'brick';
-      if (cfg.belfry) { M.y = 112; M.d = 38; }
+      if (cfg.main && cfg.main.domes) { M.aisles = false; M.choir = false; }
       if (GV.turm === 'built') { M.th = (M.th || 46) + 14; M.sh = (M.sh || 34) + 8; own(M).flag = 'hm'; M.plot = 'turm'; }
-      objs.push(M);
-      if (GV.turm === 'job') objs.push({t:'scaffold', x:M.x + 1, y:M.y - 3, w:M.w - 2, d:2, h:M.th || 46, frac:0.5, noWalls:true, plot:'turm'});
-      if (cfg.roland) objs.push({t:'roland', x:cfg.roland[0], y:cfg.roland[1]});
-      const place = (spec, b0) => { if (!spec) return; const q = Object.assign({}, b0, spec); if (q.t === 'church' && !q.mat) q.mat = M.mat; objs.push(q); };
-      if (cfg.west) place(cfg.west, cfg.west.t === 'church' ? CHURCH_W : {});
-      if (cfg.east && !fullEast) place(cfg.east, cfg.east.t === 'church' ? CHURCH_E : {});
+      objs.push(keepObj(M));
+      if (GV.turm === 'job') objs.push({t:'scaffold', x:M.x + 1, y:M.y - 3, w:M.w - 2, d:2, h:M.th || 46, frac:0.5, noWalls:true, plot:'turm', z:M.z});
+      const roland = L.roland || cfg.roland; if (roland) objs.push(keepObj({t:'roland', x:roland[0], y:roland[1]}));
+      const place = (spec, lay, b0) => { if (!spec || typeof spec === 'string' || lay === null) return; const q = Object.assign({}, spec.t === 'church' ? b0 : {}, spec, lay || {}); if (q.t === 'church' && !q.mat) q.mat = M.mat; objs.push(keepObj(q)); };
+      place(cfg.west, L.west, CHURCH_W);
+      if (!fullEast) place(cfg.east, L.east, CHURCH_E);
       if (cfg.east === 'toompea') { // Domberg: Kalksteinterrasse mit Burg und Dom
         ground.push({t:'garden', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]});
         objs.push({t:'platform', x:157, y:68, w:46, d:80, h:12});
         objs.push({t:'castle', x:160, y:104, w:38, d:40, th:44, z:12, style:'reval'});
         objs.push({t:'church', x:166, y:72, w:13, d:24, h:12, th:26, sh:14, towers:1, spire:'tent', mat:'stone', z:12, roofC:'#8a4630'});
-        for (let q = 0; q < 6; q++) objs.push({t:'tree', x:186 + (q % 3) * 5, y:74 + Math.floor(q / 3) * 8, s:2.6, z:12});
+        [[183, 70, 8], [191.5, 70, 7], [184, 84, 9]].forEach(([x, y, w], q) => objs.push({t:'house', x, y, w, d:11, h:9 + q, rh:7, ridge:'y', front:'S', kind:q === 1 ? 'step' : 'plain', mat:q === 2 ? 'stone' : 'plaster', wi:q + 2, ri:q, z:12}));
+        [[196, 88], [199, 96], [190, 99]].forEach(([x, y]) => objs.push({t:'tree', x, y, s:2.6, z:12}));
       }
       if (cfg.east === 'kronor') { ground.push({t:'yard', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]}); objs.push({t:'castle', x:158, y:72, w:44, d:60, th:40, style:'kronor', mat:'stone'}); trees(158, 136, 204, 148, 5); }
       if (cfg.east === 'tower') { ground.push({t:'garden', pts:[[155, 64], [205, 64], [205, 150], [155, 150]]});
@@ -7992,59 +7969,62 @@ em.rep.warn{background:#b5523a}
         objs.push({t:'sophia', x:166, y:92, w:26, d:24});
         trees(160, 124, 200, 146, 5);
       }
-      // Markthalle und Kapelle bleiben an ihrem Platz und tragen deine Fahne
-      if (home && P.markt === 'built') objs.push(own({t:'halle', x:120, y:66, w:22, d:7, h:5.5, plot:'markt', flagAt:[131, 69.5, 9]}));
-      else if (home && P.markt === 'job') objs.push({t:'scaffold', x:121, y:66, w:20, d:6, h:6, frac:P.marktF || 0.3, plot:'markt', mat:'wood'});
-      else if (!cfg.belfry) objs.push({t:'stalls', x:121, y:70, n:7});
-      if (home && P.kirche === 'built') objs.push(own({t:'church', x:147, y:122, w:7, d:13, h:8, towers:0, ridgeTurret:true, mat:M.mat, plot:'kirche', flagAt:[150.5, 129, 17]}));
-      else if (home && P.kirche === 'job') objs.push({t:'scaffold', x:146, y:122, w:7, d:12, h:9, frac:P.kircheF || 0.3, plot:'kirche', mat:M.mat});
-      // Werft am linken Ende des Kais
-      ground.push({t:'yard', pts:[[-28, 16], [-12, 16], [-12, 32], [-28, 32]]});
-      objs.push({t:'slip', x:-19, y:5, type:'kogge'});
-      objs.push({t:'shed', x:-27, y:19, w:10, d:7, h:4.2, chimney:true, mat:'fach'});
-      [[-26, 28], [-19, 28.5]].forEach(([x, y], n) => objs.push({t:'woodpile', x, y, n}));
-      // Kai: Kran (im Stammsitz dein Bauplatz), Ladung
-      if (home) { if (P.kran === 'built') objs.push(own({t:'crane', x:118, y:4, plot:'kran', flagAt:[118, 4, 14]})); else if (P.kran === 'job') objs.push({t:'scaffold', x:114, y:1, w:8, d:6, h:10, frac:P.kranF || 0.3, plot:'kran', mat:'wood'}); }
-      else if (cfg.crane != null) objs.push({t:'crane', x:cfg.crane, y:4, big:!!cfg.bigCrane});
-      if (cfg.bigCrane && home && cfg.crane !== 118) objs.push({t:'crane', x:cfg.crane, y:4, big:true});
+      // Markthalle (im Stammsitz dein Bauplatz), Stände, Kapelle an der Hauptkirche
+      const HL = L.halleFix || L.halle;
+      if (home && P.markt === 'built') objs.push(keepObj(own({t:'halle', x:HL[0], y:HL[1], w:22, d:7, h:5.5, plot:'markt', flagAt:[HL[0] + 11, HL[1] + 3.5, 9]})));
+      else if (home && P.markt === 'job') objs.push(keepObj({t:'scaffold', x:HL[0] + 1, y:HL[1], w:20, d:6, h:6, frac:P.marktF || 0.3, plot:'markt', mat:'wood'}));
+      else if (L.halleFix) objs.push(keepObj({t:'halle', x:HL[0], y:HL[1], w:22, d:7, h:5.5}));
+      if (L.stalls) objs.push(keepObj({t:'stalls', x:L.stalls[0], y:L.stalls[1], n:7}));
+      const CH = L.chapel;
+      if (home && P.kirche === 'built') objs.push(keepObj(own({t:'church', x:CH[0], y:CH[1], w:7, d:13, h:8, towers:0, ridgeTurret:true, mat:M.mat, plot:'kirche', flagAt:[CH[0] + 3.5, CH[1] + 7, 17]})));
+      else if (home && P.kirche === 'job') objs.push(keepObj({t:'scaffold', x:CH[0] - 1, y:CH[1], w:7, d:12, h:9, frac:P.kircheF || 0.3, plot:'kirche', mat:M.mat}));
+      (L.sheds || []).forEach(([x, y], n) => objs.push(keepObj({t:'shed', x, y, w:8, d:6, h:4.4, mat:'fach', chimney:n === 1})));
+      // Werft am linken Ende des Kais (nicht in Bergen, dort steht Bergenhus)
+      const Y = L.yard === undefined ? {slip:-19, area:[-28, 16, -12, 32]} : L.yard;
+      if (Y) { objs.push({t:'slip', x:Y.slip, y:5, type:'kogge'});
+        if (Y.area) { const [x0, y0, x1, y1] = Y.area; keep.push(Y.area); ground.push({t:'yard', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}); objs.push({t:'shed', x:x0 + 1, y:y0 + 3, w:10, d:7, h:4.2, chimney:true, mat:'fach'}); [[x0 + 2, y0 + 12], [x0 + 9, y0 + 12.5]].forEach(([x, y], n) => objs.push({t:'woodpile', x, y, n})); } }
+      // Kai: Kran (im Stammsitz dein Bauplatz), Krantor, Ladung
+      const KX = L.crane != null ? L.crane : 118;
+      if (home) { if (P.kran === 'built') objs.push(own({t:'crane', x:KX, y:4, plot:'kran', flagAt:[KX, 4, 14]})); else if (P.kran === 'job') objs.push({t:'scaffold', x:KX - 4, y:1, w:8, d:6, h:10, frac:P.kranF || 0.3, plot:'kran', mat:'wood'}); }
+      else objs.push({t:'crane', x:KX, y:4, big:!!cfg.bigCrane});
       if (cfg.krantor) objs.push({t:'krantor', x:cfg.krantor, y:0.5});
-      [[cfg.bridgeHouses ? 20 : 14, 4, 's'], [32, 6, 'c'], [56, 4, 'b'], [70, 7, 'c'], [84, 3, 's'], [104, 6, 'b'], [131, 5, 'c'], [146, 4, 's'], [186, 6, 'b']].forEach(([x, y, t]) => {
-        if ((cfg.krantor && x > cfg.krantor - 3 && x < cfg.krantor + 22) || Math.abs(x - 118) < 5) return; objs.push({t:'cargo', x, y, tt:t, noShadow:true}); });
-      // Mauerring mit Türmen; Tor an der Landseite, Türme an beiden Enden des Kais
-      const wm = cfg.walls, wh = wm === 'log' ? 5 : 7, wmat = wm === 'log' ? 'log' : wm === 'none' ? 'stone' : wm, tw = cfg.wallTowers || 'mixed';
+      const onQuay = x => L.quay.some(([a, b]) => x > a + 2 && x < b - 2);
+      [[14, 4, 's'], [32, 6, 'c'], [56, 4, 'b'], [70, 7, 'c'], [84, 3, 's'], [104, 6, 'b'], [131, 5, 'c'], [146, 4, 's'], [186, 6, 'b']].forEach(([x, y, t]) => {
+        if (!onQuay(x) || (cfg.krantor && x > cfg.krantor - 3 && x < cfg.krantor + 22) || Math.abs(x - KX) < 5 || (L.bridgeHouses || L.bridge) && x < 20 || (Y && Math.abs(x - Y.slip) < 18)) return; objs.push({t:'cargo', x, y, tt:t, noShadow:true}); });
+      // ── Mauerring mit Türmen; Tor an der Landseite, Türme an beiden Enden des Kais ──
+      const wm = L.noWall ? 'none' : cfg.walls, wh = wm === 'log' ? 5 : 7, wmat = wm === 'log' ? 'log' : wm === 'none' ? 'stone' : wm, tw = cfg.wallTowers || 'mixed';
       const mauerOwn = home && P.mauer === 'built';
       const T = (x, y, rr, h, kind, extra) => objs.push(Object.assign({t:'tower', x, y, r:rr, h, kind, mat:wmat, roofC:tw === 'roundRed' ? '#a24a30' : null, steep:tw === 'roundRed' ? 2.2 : null}, extra || {}));
       if (wm !== 'none') {
-        // Landtor: an der Stelle cfg.gateAt (sonst hinten am Ende der Hauptstraße), Lücke in der Mauer
-        const GA = cfg.gateAt || [98.5, 169], half = cfg.gate === 'holsten' ? 12.5 : 6;
+        const GA = L.gateAt || cfg.gateAt || [98.5, 169], half = cfg.gate === 'holsten' ? 12.5 : 6;
         let gate = null, gi = -1, gt = 0, gd = 1e9;
         for (let i = 0; i < ring.length - 1; i++) { const [ax, ay] = ring[i], [bx, by] = ring[i + 1], L2 = (bx - ax) ** 2 + (by - ay) ** 2, t = Math.max(0, Math.min(1, ((GA[0] - ax) * (bx - ax) + (GA[1] - ay) * (by - ay)) / L2)), dd = Math.hypot(ax + (bx - ax) * t - GA[0], ay + (by - ay) * t - GA[1]); if (dd < gd) { gd = dd; gi = i; gt = t; } }
         for (let i = 0; i < ring.length - 1; i++) {
           const [ax, ay] = ring[i], [bx, by] = ring[i + 1], len = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.ceil(len / 9));
           const at = t => [ax + (bx - ax) * t, ay + (by - ay) * t], seg = (t0, t1) => ({t:'wallS', a:at(t0), b:at(t1), h:wh, mat:wmat});
           let g0 = null, g1 = null;
-          if (i === gi) { gate = at(gt).concat([Math.abs(by - ay) > Math.abs(bx - ax) ? 'y' : 'x']); g0 = gt - half / len; g1 = gt + half / len; }
+          if (i === gi) { gt = Math.max(half / len + 0.02, Math.min(1 - half / len - 0.02, gt)); gate = at(gt).concat([Math.abs(by - ay) > Math.abs(bx - ax) ? 'y' : 'x']); g0 = gt - half / len; g1 = gt + half / len; }
           for (let q = 0; q < n; q++) { const t0 = q / n, t1 = (q + 1) / n;
             if (g0 != null && t1 > g0 && t0 < g1) { if (t0 < g0) objs.push(seg(t0, g0)); if (t1 > g1) objs.push(seg(g1, t1)); continue; }
             objs.push(seg(t0, t1)); }
-          // Zwischentürme auf langen Strecken, nicht am Tor
           const nt = Math.floor(len / 46);
           for (let q = 1; q <= nt; q++) { const t = q / (nt + 1); if (g0 != null && t > g0 - 0.08 && t < g1 + 0.08) continue; const [x, y] = at(t); T(x, y, tw === 'square' ? 3.8 : 4.2, wm === 'log' ? 9 : tw === 'square' ? 16 : 14, tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : q % 2 ? 'square' : 'round'); }
         }
         ring.forEach(([x, y], i) => { const end = i === 0 || i === ring.length - 1;
+          if (i === 0 && cfg.margarethe) { objs.push({t:'tower', x, y:y + 3, r:9, h:16, kind:'round', mat:'stone', flat:true}); return; }   // Dicke Margarethe
           T(x, y, end ? 5.2 : 4.8, wm === 'log' ? 10 : end ? 17 : 15, tw === 'square' ? 'square' : 'round', end ? {plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, (wm === 'log' ? 10 : 17) + 9] : null, hc, mark} : null); });
         if (gate) { const [gx, gy, ax2] = gate, ys = ax2 === 'y';
-          // Mitte des Tors auf der Mauerachse; die Mauer liegt 2,2 m nach innen
           const cx = ys ? gx + 1.1 : gx, cy = ys ? gy : gy - 1.1;
           if (cfg.gate === 'holsten') objs.push(Object.assign(ys ? {t:'gateTower', axis:'y', x:cx - 4.5, y:cy - 11, w:22, d:9} : {t:'gateTower', x:cx - 11, y:cy - 4.5, w:22, d:9}, mauerOwn ? {flagAt:[cx, cy, 27], hc, mark} : {}));
           else objs.push(Object.assign({t:'gate', x:cx, y:cy, mat:wmat}, mauerOwn ? {flagAt:[cx, cy, 30], hc, mark} : {}));
-          ground.push({t:'road', pts:ys ? [[-330, cy - 3], [cx, cy - 3], [cx, cy + 3], [-330, cy + 3]] : [[cx - 3, cy], [cx + 3, cy], [cx + 3, 330], [cx - 3, 330]]});
+          if (!L.island) ground.push({t:'road', pts:ys ? [[-330, cy - 3], [cx, cy - 3], [cx, cy + 3], [-330, cy + 3]] : [[cx - 3, cy], [cx + 3, cy], [cx + 3, 330], [cx - 3, 330]], col:L.streetCol});
         }
-      } else {
-        // ohne Mauer: zwei Wachtürme an den Enden des Kais
-        [ring[0], ring[ring.length - 1]].forEach(([x, y], i) => T(x, y, 3.6, 14, 'square', {mat:'stone', steep:2, plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, 21] : null, hc, mark}));
-      }
+      } else [ring[0], ring[ring.length - 1]].forEach(([x, y], i) => T(x, y, 3.6, 14, 'square', {mat:'stone', steep:2, plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, 21] : null, hc, mark}));
       if (home && P.mauer === 'job') { const [x, y] = ring[ring.length - 1]; objs.push({t:'scaffold', x:x - 7, y:y - 5, w:12, d:12, h:18, frac:P.mauerF || 0.3, noWalls:true, plot:'mauer'}); }
+      // ── Häuserblöcke der Stadt, Bryggen, hinter deinem Viertel ──
+      (L.blocks || []).forEach(([x0, y0, x1, y1, op]) => block(x0, y0, x1, y1, op));
+      if (L.bryggen) bryggen(...L.bryggen);
+      if (Math.min(130, yb - 26) - 98 > 16) block(212, 98, 248, Math.min(130, yb - 26), {dS:12, dN:10});
       // Dein Viertel
       const [qx0, qy0, qx1, qy1] = VQ;
       if (home) {
@@ -8086,25 +8066,30 @@ em.rep.warn{background:#b5523a}
       } else {
         // fremder Hafen: Bürgerhäuser; mit Niederlassung steht dein Speicher mit deiner Fahne am Kai
         if (o.branch) { keep.push([qx0, qy0, qx0 + 13, qy0 + 15]); objs.push(own({t:'house', x:214, y:16, w:10, d:15, h:13, rh:12, ridge:'y', front:'S', kind:base === 'wood' || base === 'log' || base === 'fach' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:2, ri:0, storage:true, hm:true, flag:'hm'})); }
-        block(qx0, qy0, qx1 - 2, 32, true, 16, 0, false);
-        block(qx0, 37, qx1 - 2, 58, false, 11, 10, true);
-        block(qx0, 64, qx1 - 2, qy1, false, 13, 12, true);
+        block(qx0, qy0, qx1 - 2, 32, {front:true, dS:16, dN:0, tr:false});
+        block(qx0, 37, qx1 - 2, 58, {dS:11, dN:10});
+        block(qx0, 64, qx1 - 2, qy1, {dS:13, dN:12});
       }
-      // vor der Mauer: Gärten, Felder, Bäume, Mühle
-      [[-98, 16, -54, 52], [-98, 70, -54, 150], [-30, 178, 40, 192], [120, 178, 200, 192]].concat(cfg.coast === 'muendung' ? [[322, 16, 360, 52]] : [[284, 16, 322, 52]]).forEach(([x0, y0, x1, y1]) => ground.push({t:'gardenOut', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}));
-      if (!cfg.ridge) ground.push({t:'fields', rect:[-120, 198, 330, 272]});
-      if (cfg.ridge) { const [ry, rh, rc] = cfg.ridge; ground.push({t:'ridge', a:[-160, ry], b:[360, ry], layers:[[rh, rc, 1.7, 14], [rh * 0.62, tint(rc, -0.12), 3.3, 0]]}); }
-
-      trees(-112, 6, -50, 165, 16, 2.4, true); trees(-40, 174, 240, cfg.ridge ? cfg.ridge[0] - 14 : 198, 12, 2.4, true); trees(278, 6, 330, 120, 12, 2.4, true);
-      for (let q = 0; q < (cfg.ridge ? 0 : 30); q++) { const x = -80 + r() * 380, y = 272 + r() * 40; if (dry(x, y)) objs.push({t:'tree', x, y, s:3 + r() * 3, pine:cfg.hills || cfg.rocks}); }
-      if (cfg.coast === 'bucht') for (let q = 0; q < 10; q++) { const t = r(), x = lerp(-40, 110, t) - 18 - r() * 12, y = lerp(-6, -170, t); if (x + y < -46) objs.push({t:'tree', x, y, s:2.4 + r() * 1.6, pine:true}); }
-      if (!cfg.hills) objs.push({t:'mill', x:-76, y:96});
-      if (cfg.hills) for (let i = objs.length - 1; i >= 0; i--) { const q = objs[i]; if (q.t === 'tree' && q.x - q.y < -150) objs.splice(i, 1); }
-      // London Bridge: Häuser auf Bögen, vom Kai links aus dem Bild hinaus
-      if (cfg.bridgeHouses) objs.push({t:'bridgeHouses', x:3, y0:0, y1:-100, w:10});
-      return {objs, ground, roof:cfg.roof, seed, berths:[66, 96, 136, 166, 194], cfg};
+      // vor der Mauer: Gärten, Felder, Bäume, Mühle (Stockholm: nur Wasser)
+      if (!L.island) {
+        [[-98, 16, -54, 52], [-98, 70, -54, 150], [-30, 178, 40, 192], [120, 178, 200, 192]].concat(cfg.coast === 'muendung' ? [[322, 16, 360, 52]] : [[284, 16, 322, 52]]).forEach(([x0, y0, x1, y1]) => { if (!K36.inPoly([x0, y0], ring) && !K36.inPoly([x1, y1], ring)) ground.push({t:'gardenOut', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}); });
+        const RG = L.ridge || cfg.ridge;
+        if (!RG) ground.push({t:'fields', rect:[-120, 198, 330, 272]});
+        trees(-112, 6, -50, 165, 16, 2.4, true); trees(-40, 174, 240, RG ? RG[0] - 14 : 198, 12, 2.4, true); trees(278, 6, 330, 120, 12, 2.4, true);
+        for (let q = 0; q < (RG ? 0 : 30); q++) { const x = -80 + r() * 380, y = 272 + r() * 40; if (dry(x, y)) objs.push({t:'tree', x, y, s:3 + r() * 3, pine:cfg.hills || cfg.rocks}); }
+        if (cfg.coast === 'bucht') for (let q = 0; q < 10; q++) { const t = r(), x = lerp(-40, 110, t) - 18 - r() * 12, y = lerp(-6, -170, t); if (x + y < -46) objs.push({t:'tree', x, y, s:2.4 + r() * 1.6, pine:true}); }
+        if (!cfg.hills) objs.push({t:'mill', x:-76, y:96});
+      } else trees(278, 6, 330, 100, 8, 2.4, true);
+      const RG = L.ridge || cfg.ridge;
+      if (RG) { const [ry, rh, rc] = RG; ground.push({t:'ridge', a:[-160, ry], b:[360, ry], layers:[[rh, rc, 1.7, 14], [rh * 0.62, tint(rc, -0.12), 3.3, 0]]}); }
+      if (L.bridgeHouses) objs.push({t:'bridgeHouses', x:3, y0:0, y1:-100, w:10});
+      // Visby: alles am Hang steht auf seiner Höhe; Mauerstücke folgen dem Hang an beiden Enden
+      let slope = null;
+      if (L.slope) { const S0 = L.slope, zAt = (x, y) => Math.max(0, Math.min(S0.max, (y - S0.y0) * S0.k)); slope = S0;
+        objs.forEach(q => { if (q.t === 'wallS') { q.za = zAt(q.a[0], q.a[1]); q.zb = zAt(q.b[0], q.b[1]); return; } const f = K36.foot(q); if (f) q.z = (q.z || 0) + zAt((f[0] + f[2]) / 2, (f[1] + f[3]) / 2); }); }
+      return {objs, ground, roof:cfg.roof, seed, berths:[66, 96, 136, 166, 194], cfg, slope};
     }
-    return {build, CITY, SLOT, VIERTEL};
+    return {build, CITY, VIERTEL, LAYOUT};
   })();
   // ───── Anbindung ans Spiel: Stadtbild mit Leben, Antippen, Baubilder, Schiffsbilder für die Segelansicht ─────
   const G36 = (function () {
