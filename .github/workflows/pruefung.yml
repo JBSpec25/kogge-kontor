@@ -1,0 +1,55 @@
+# Prüft jede Änderung, bevor sie nach main und damit auf GitHub Pages oder in die App kommt.
+# 1. Die gebauten Dateien (Englisch, Spanisch, Beta) passen zur deutschen Quelle, keine Übersetzung fehlt.
+# 2. Rauchtest im iPhone-Format: Beta, Hauptseite, Probe-Fassung und App, je Deutsch, Englisch, Spanisch.
+# Bildschirmfotos und Bericht liegen danach unter „Artifacts“ des Laufs (rauchtest).
+name: Prüfung
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pruefung-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruefung:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            tools/package-lock.json
+            app/package-lock.json
+
+      - name: Werkzeuge
+        run: |
+          npm ci --prefix tools
+          npm ci --prefix app
+
+      - name: Gebaute Dateien aktuell, Übersetzung vollständig
+        run: python3 tools/build.py --check --probe tools/out/probe --app
+
+      - name: App-Brücke bündeln
+        run: npm run native --prefix app
+
+      - name: Browser für den Rauchtest
+        working-directory: tools
+        run: npx playwright install --with-deps chromium
+
+      - name: Rauchtest
+        run: node tools/test/smoke.js
+
+      - name: Bericht und Bildschirmfotos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rauchtest
+          path: tools/out/smoke
+          retention-days: 14

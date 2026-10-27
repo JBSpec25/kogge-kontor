@@ -1,0 +1,17 @@
+{
+ "de": {
+  "desc": "Kogge &amp; Kontor: rundenbasiertes Handelsspiel zur Hansezeit fürs Telefon.",
+  "neu": "Eine neue Version von Kogge &amp; Kontor ist da. Dein Spielstand bleibt.",
+  "laden": "Neu laden"
+ },
+ "en": {
+  "desc": "Kogge &amp; Kontor: a turn-based trading game of the Hanseatic age for your phone.",
+  "neu": "A new version of Kogge &amp; Kontor is here. Your saved game stays.",
+  "laden": "Reload"
+ },
+ "es": {
+  "desc": "Kogge &amp; Kontor: juego de comercio por turnos de la época hanseática para el móvil.",
+  "neu": "Hay una nueva versión de Kogge &amp; Kontor. Tu partida se conserva.",
+  "laden": "Recargar"
+ }
+}

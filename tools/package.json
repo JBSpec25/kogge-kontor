@@ -1,0 +1,15 @@
+{
+  "name": "kogge-kontor-tools",
+  "private": true,
+  "description": "Bau, Übersetzung und Prüfung von Kogge & Kontor",
+  "scripts": {
+    "build": "python3 build.py",
+    "check": "python3 build.py --check",
+    "smoke": "node test/smoke.js"
+  },
+  "devDependencies": {
+    "acorn": "8.14.0",
+    "acorn-walk": "8.3.4",
+    "playwright": "1.63.0"
+  }
+}

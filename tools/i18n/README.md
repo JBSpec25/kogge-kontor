@@ -7,7 +7,7 @@ Das Spiel wird auf Deutsch geschrieben. Die englische und spanische Fassung ents
 3. `tr/srcfix.json`: Ersetzungen im übersetzten Quelltext für Stellen, die keine Textbausteine sind (Datumsformat, Bezeichner, Satzbau). `tr/html.json`: statisches HTML außerhalb des Skripts.
 4. `build2.js SPIEL.html UNITS.json AUS.html en|es` setzt alles zusammen; `check.py` prüft Platzhalter, Tags und Ränder; `parsecheck.js` prüft, ob das Ergebnis gültiges JavaScript ist.
 
-Ablauf bei einer neuen Spielversion: `rebuild.sh` (Pfade darin anpassen) baut Einheiten und beide Sprachen. Neue Schlüssel ohne Übersetzung meldet build2.js als „fehlend“; diese in eine neue `tr/cNN.json` eintragen. Begriffe stehen in `glossar.md`.
+Ablauf bei einer neuen Spielversion: `python3 tools/build.py` (im Wurzelordner) baut Einheiten und beide Sprachen und prüft sie. Neue Schlüssel ohne Übersetzung meldet build2.js als „fehlend“, und der Bau bricht ab; diese in eine neue `tr/cNN.json` eintragen (`{"schlüssel": ["englisch", "spanisch"]}`). Begriffe stehen in `glossar.md`.
 
 Die Übersetzung wurde von einem zweiten Modell (Claude Sonnet) gegen das Deutsche geprüft (`PRUEFAUFTRAG.md`); 134 Befunde sind eingearbeitet.
 
