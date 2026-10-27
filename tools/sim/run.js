@@ -14,7 +14,7 @@ const PROFILE = {
   bot45: {},
   mensch: {aim:{crit:0.55, hit:0.4}, mutig:true, repBias:0.12}
 };
-const MARKS = [['rank1', 'Händler'], ['rank2', 'Kaufmann'], ['civic1', 'Bürger'], ['civic2', 'Gildebruder'], ['niederlassung', 'Niederlassung'], ['betrieb', 'erster Betrieb'], ['rank3', 'Fernhändler'], ['civic3', 'Ratsherr'], ['verband', 'erster Verband'], ['rank4', 'Großkaufmann'], ['buergermeister', 'Bürgermeister'], ['rank5', 'Handelsherr'], ['aeltermann', 'Ältermann'], ['rank6', 'Patrizier']];
+const MARKS = [['rank1', 'Händler'], ['rank2', 'Kaufmann'], ['civic1', 'Bürger'], ['civic2', 'Gildebruder'], ['niederlassung', 'Niederlassung'], ['betrieb', 'erster Betrieb'], ['rank3', 'Fernhändler'], ['civic3', 'Ratsherr'], ['verband', 'erster Verband'], ['rank4', 'Großkaufmann'], ['buergermeister', 'Bürgermeister'], ['rank5', 'Handelsherr'], ['aeltermann', 'Ältermann'], ['aeltermann_gegner', 'Gegner Ältermann'], ['rank6', 'Patrizier']];
 const med = a => { const b = a.filter(x => x != null).sort((x, y) => x - y); return b.length ? b[Math.floor(b.length / 2)] : null; };
 (async () => {
   const browser = await chromium.launch();
@@ -32,5 +32,5 @@ const med = a => { const b = a.filter(x => x != null).sort((x, y) => x - y); ret
   console.log(`\nProfil ${PROFIL}, ${SPIELE} Spiele à ${TAGE} Tage, Stammsitz ${HOME}`);
   tab.forEach(t => console.log(`${t.n.padEnd(16)} ${t.median == null ? '–' : String(t.median).padStart(5) + ' Tage'}   (${t.erreicht}/${SPIELE})`));
   console.log(`Vermögen am Ende (Median) ${med(runs.map(r => r.wealth))}`);
-  const out = arg('--json'); if (out) fs.writeFileSync(out, JSON.stringify({profil:PROFIL, spiele:SPIELE, tage:TAGE, tab, runs:runs.map(r => ({marks:r.marks, wealth:r.wealth, rank:r.rank, bankrupt:r.bankrupt, use:r.use}))}, null, 1));
+  const out = arg('--json'); if (out) fs.writeFileSync(out, JSON.stringify({profil:PROFIL, spiele:SPIELE, tage:TAGE, tab, runs:runs.map(r => ({score:r.score, marks:r.marks, wealth:r.wealth, rank:r.rank, bankrupt:r.bankrupt, use:r.use, series:r.series}))}, null, 1));
 })();

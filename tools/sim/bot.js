@@ -295,7 +295,7 @@
       const F = st.fin || {parts:[], loans:[], crops:[]};
       A.series.push({d:st.day, w:Math.round(wealth()), m:Math.round(st.money), rank:st.rank, civic:civicIdx(st.repute || 0), rep:Math.round(st.repute || 0),
         ships:st.fleet.length, cvShips:(st.convoys || []).reduce((x, cv) => x + cv.fleet.length, 0), cv:(st.convoys || []).length, works:(st.works || []).length, br:ownBranches(), hk:hkCount(),
-        debt:debt(), ehre:Math.round(st.ehre || 0), ald:!!st.alderman, aldR:!!st.aldRival, voy:A.voy});
+        debt:debt(), ehre:Math.round(st.ehre || 0), stand:typeof standing === 'function' ? standing() : 0, mayor:!!st.mayor, ald:!!st.alderman, aldR:!!st.aldRival, voy:A.voy});
     }
     // Meilensteine: erster Spieltag, an dem etwas erreicht ist
     function marks() {
@@ -307,6 +307,7 @@
       set('verband', (st.convoys || []).length > 0);
       set('buergermeister', !!st.mayor);
       set('aeltermann', !!st.alderman);
+      set('aeltermann_gegner', !!st.aldRival);
     }
     function run(opt) {
       P = Object.assign({contracts:true, loans:true, kontore:true, parts:true, lend:true, crops:true, works:true, convoys:true, maxConvoys:4, branches:3, branchCities:['danzig', 'bergen', 'riga', 'stockholm', 'bruegge', 'london', 'visby', 'reval', 'hamburg'],
@@ -321,6 +322,7 @@
         if (bankrupt()) { A.bankrupt = st.day; break; }
         if (st.day - lastSnap >= P.snapEvery) { snap(); lastSnap = st.day; }
         marks();
+        if (!A.score && st.day >= CAMPAIGN_END) A.score = scoreParts();
         if (P.stopAt && A.marks[P.stopAt] != null) break;
         if (st.sail || st.enc || st.ev || st.pendingFight) { sailDays(); continue; }
         if (!st.fleet.length) { if (st.loc === st.home && st.money >= OLD_SHIP) yard('old'); else { simDay(); continue; } }
@@ -340,7 +342,7 @@
         sailDays();
       }
       marks(); snap();
-      return {home:P.home, days:st.day, ms:Math.round(performance.now() - t0), wealth:Math.round(wealth()), money:Math.round(st.money), rank:st.rank, civic:civicIdx(st.repute || 0), repute:Math.round(st.repute || 0),
+      return {score:A.score || null, home:P.home, days:st.day, ms:Math.round(performance.now() - t0), wealth:Math.round(wealth()), money:Math.round(st.money), rank:st.rank, civic:civicIdx(st.repute || 0), repute:Math.round(st.repute || 0),
         marks:A.marks, cat:A.cat, use:A.use, series:A.series, voy:A.voy, idle:A.idle, bankrupt:A.bankrupt || null, mayor:!!st.mayor, alder:!!st.alderman,
         works:(st.works || []).map(w => [w.g, w.made]), convoys:(st.convoys || []).map(cv => ({route:cv.route, ships:cv.fleet.map(s => s.type), prof:Math.round(cv.prof), trips:cv.trips}))};
     }

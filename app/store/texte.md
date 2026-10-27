@@ -39,7 +39,7 @@ AUFSTIEG UND WETTLAUF
 Vom Krämer zum Ratsherrn, Bürgermeister und schließlich Ältermann der Hanse. Drei Kaufmannsfamilien wollen das Amt auch. Schließe Bündnisse, beginne Fehden, gewinne die Stimmen am Hansetag und trag dich in deine Bestenliste ein.
 
 GESCHICHTE ZUM MITSPIELEN
-Die Jahre 1356 bis 1370 mit ihren echten Ereignissen: Pest, Krieg gegen Waldemar von Dänemark, Kölner Konföderation und Frieden von Stralsund.
+Die Jahre 1356 bis 1372 mit ihren echten Ereignissen: Pest, Krieg gegen Waldemar von Dänemark, Kölner Konföderation und Frieden von Stralsund.
 
 FAIR
 • Die ersten 50 Spieltage kostenlos
@@ -68,7 +68,7 @@ Hanse,Handel,Kaufmann,Mittelalter,Lübeck,Kogge,Wirtschaft,Segeln,Patrizier,Stra
 | Produkt-ID | kogge_kontor_vollversion |
 | Preis | 2,99 € |
 | Anzeigename (DE / EN / ES) | Vollversion / Full version / Versión completa |
-| Beschreibung (45) | DE: Das ganze Spiel bis 1370 freischalten · EN: Unlock the whole game up to 1370 · ES: Desbloquea el juego completo hasta 1370 |
+| Beschreibung (45) | DE: Das ganze Spiel bis 1372 freischalten · EN: Unlock the whole game up to 1372 · ES: Desbloquea el juego completo hasta 1372 |
 | Familienfreigabe | Ein (empfohlen) |
 | Screenshot für die Prüfung | store/iap_review.png |
 | Hinweis für die Prüfung | Die Vollversion kann jederzeit gekauft werden: unten „Spielstände und Einstellungen“ → Abschnitt „Vollversion“. Nach der Probezeit (50 Spieltage, 21. Mai 1356 im Spiel) erscheint der Kauf zusätzlich auf dem Startbildschirm. |

@@ -1016,7 +1016,9 @@ em.rep.warn{background:#b5523a}
   ];
   const C = Object.fromEntries(CITIES.map(c => [c.id, c]));
   const G = Object.fromEntries(GOODS.map(g => [g.id, g]));
-  const RANKS = [[0,'Krämer'],[6000,'Händler'],[15000,'Kaufmann'],[40000,'Fernhändler'],[100000,'Großkaufmann'],[250000,'Handelsherr'],[500000,'Patrizier']];
+  // Ab Version 49 auf die Kampagne bis 1372 abgestimmt. Bot „mensch“ (tools/sim), Stammsitz Riga, Median Spieltag:
+  // Kaufmann 345, Fernhändler 1169, Großkaufmann 1956, Handelsherr 3909, Patrizier 4996
+  const RANKS = [[0,'Krämer'],[6000,'Händler'],[50000,'Kaufmann'],[170000,'Fernhändler'],[450000,'Großkaufmann'],[800000,'Handelsherr'],[1300000,'Patrizier']];
   const icon = id => `<svg class="gi" aria-hidden="true"><use href="#gi-${id}"/></svg>`;
   const GOOD_ART = {
     getreide:'<path d="M18 22c-3 8-5 18-3 28 1 5 6 8 17 8s16-3 17-8c2-10 0-20-3-28z" fill="#c9a66b" stroke="#6b4e2e" stroke-width="2"/><path d="M20 22c4-3 20-3 24 0l-3-6c-5-2-13-2-18 0z" fill="#b48c52" stroke="#6b4e2e" stroke-width="2"/><path d="M24 15c2-1 14-1 16 0" stroke="#6b4e2e" stroke-width="3" stroke-linecap="round"/><g fill="#e6c36a" stroke="#9a7a2e"><path d="M30 6c-2 3-2 6 0 9 2-3 2-6 0-9z"/><path d="M36 4c-2 3-2 6 0 9 2-3 2-6 0-9z"/><path d="M25 8c-1 3 0 6 2 8 1-3 0-6-2-8z"/></g><path d="M24 36h16M22 44h20" stroke="#8a6a3e" stroke-width="1.5" opacity=".6"/>',
@@ -1275,8 +1277,16 @@ em.rep.warn{background:#b5523a}
     visby:{t:'Lotsen von Gotland', d:'Seeräuber greifen 40 % seltener an.'},
     stockholm:{t:'Erz aus den Bergwerken', d:'Du startest mit 3.000 statt 2.000 Gulden.'}
   };
-  const CIVIC = [[0,'Neubürger'],[60,'Bürger'],[200,'Gildebruder'],[500,'Ratsherr'],[1200,'Bürgermeister'],[3000,'Ältermann der Hanse']];
-  const UNLOCK = {1:'Kontor im Stammsitz, Aufträge des Rats', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wählbar ab 1.200 Ansehen, Wahl am 1. Januar und 1. Juli', 5:'Als Bürgermeister wählbar ab 3.000 Ansehen, Wahl auf dem Hansetag am 24. Juni'};
+  // Ab Version 49 auf die Kampagne bis 1372 abgestimmt. Bot „mensch“, Riga, Median Spieltag: Gildebruder 669 (erster Betrieb 706),
+  // Ratsherr 1427, Bürgermeister 2466, Ältermann 4833. Lübeck mit 1,5fachem Ansehen ist bei den Ämtern etwa ein Drittel schneller.
+  // Bürgermeister: Mindestansehen für die Wahl (ELECT_MIN); Ältermann: Ansehen und Ehre zusammen (ALDER_STAND)
+  const CIVIC = [[0,'Neubürger'],[60,'Bürger'],[1200,'Gildebruder'],[3300,'Ratsherr'],[7000,'Bürgermeister'],[25000,'Ältermann der Hanse']];
+  const UNLOCK = {1:'Kontor im Stammsitz, Aufträge des Rats', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wahl am 1. Januar und 1. Juli, es gewinnt das meiste Ansehen', 5:'Als Bürgermeister, mit Ansehen und Ehre zusammen; Wahl auf dem Hansetag am 24. Juni'};
+  // Umrechnung des Ansehens aus Spielständen vor Version 49: gleiches Amt, gleicher Anteil am Weg zum nächsten
+  const REP_OLD = [0, 60, 200, 500, 1200, 3000];
+  const repV49 = r => { r = r || 0; const N = CIVIC.map(c => c[0]), L = REP_OLD.length - 1;
+    for (let i = L; i >= 0; i--) if (r >= REP_OLD[i]) return Math.round(i === L ? N[i] + r - REP_OLD[i] : N[i] + (r - REP_OLD[i]) / (REP_OLD[i + 1] - REP_OLD[i]) * (N[i + 1] - N[i]));
+    return r; };
   const civicIdx = r => { let i = 0; CIVIC.forEach(([m], k) => { if (r >= m) i = k; }); if (i >= 5 && !(st && st.alderman)) i = 4; return i >= 4 && !(st && (st.mayor || st.alderman)) ? 3 : i; };
   const repairPrice = () => (st.home === 'bremen' ? 5 : REPAIR) * (st && st.city ? cityBonus('repair') : 1);
   const applyHome = () => { CAP = st.fleet ? st.fleet.reduce((x, sh) => x + shipCap(sh), 0) : 60; };
@@ -1349,7 +1359,7 @@ em.rep.warn{background:#b5523a}
     const stock = {};
     CITIES.forEach(c => { stock[c.id] = {}; GOODS.forEach(g => { stock[c.id][g.id] = Math.round(baseE(c, g.id) * (0.8 + Math.random() * 0.4)); }); });
     const shipName = (opts && opts.ship || '').trim() || 'Maria';
-    st = {v:1, day:0, money:START + (home === 'stockholm' ? 1000 : 0), loc:home, sail:null, cargo:{}, stock, known:{}, log:[], rank:0,
+    st = {v:1, repV:49, day:0, money:START + (home === 'stockholm' ? 1000 : 0), loc:home, sail:null, cargo:{}, stock, known:{}, log:[], rank:0,
       fleet:[{id:1, type:'schnigge', name:shipName, hull:100, capB:home === 'danzig' ? 5 : 0}], nextShip:2,
       crew:9, arms:home === 'reval' ? {armbrust:4, harnisch:2} : {armbrust:2}, pulver:0, capOwn:null, wx:{w:'clear', hold:4, next:null}, enc:null, pending:[], inbox:[], brand:0,
       seasons:(opts && opts.seasons) === 'mild' ? 'mild' : 'spuerbar', kontor:null, hist:{}, book:[], visit:null, gprof:{},
@@ -1373,7 +1383,7 @@ em.rep.warn{background:#b5523a}
     addLog(`Herkunft: ${ORIGINS[og].n}. ${ORIGINS[og].d}`, 'tip');
     addLog(`Kapitän ${st.captains[0].name} führt deine Schnigge, ein Schiffer mit wenig Erfahrung, Heuer ${st.captains[0].wage} Gulden am Tag. Noch kreuzen keine Seeräuber hinter einem kleinen Krämer her; das ändert sich, wenn du als Händler auffällst.`, 'cap');
     addLog('Tipp: Kaufe, was eine Stadt erzeugt, und verkaufe es dort, wo es gebraucht wird. Große Mengen drücken den Preis.', 'tip');
-    if (st.mode === 'kampagne') addLog('Deine Kampagne läuft bis zum Frieden von Stralsund am 24. Mai 1370. „Lauf der Zeit“ in der Ziele-Karte hält fest, was in der Hanse geschieht.', 'tip');
+    if (st.mode === 'kampagne') addLog('Deine Kampagne läuft bis zum Hansetag am 24. Juni 1372, zwei Jahre nach dem Frieden von Stralsund. „Lauf der Zeit“ in der Ziele-Karte hält fest, was in der Hanse geschieht.', 'tip');
     era();
     st.q = {ch:0, ev:{}, gd:{}, pop:{k:'welcome'}, rpAuto:true, skipTut:false};
     st.rp = rpFresh();
@@ -2701,7 +2711,7 @@ em.rep.warn{background:#b5523a}
     mittel:{n:'Mittel', inc:15, rep:0, d:'15 Gulden am Tag aus dem Pfundzoll.'},
     hoch:{n:'Hoch', inc:40, rep:-0.3, d:'40 Gulden am Tag, aber die Kaufleute murren und dein Ansehen sinkt.'}
   };
-  const MAYOR_PAY = 60, ELECT_MIN = 1200;
+  const MAYOR_PAY = 60, ELECT_MIN = CIVIC[4][0];
   // Ab Version 39: Die Konkurrenten handeln im Hintergrund und treten erst im Kapitel „Ratsherr“ als Gegner auf.
   // Dann werden ihre Werte an deine angeglichen, damit der Vergleich etwas bedeutet.
   const RIV_CH = 5;
@@ -2815,11 +2825,12 @@ em.rep.warn{background:#b5523a}
     st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
   }
 
-  // ───────── Geschichte 1356–1370: Zeitleiste mit Spielraum ─────────
+  // ───────── Geschichte 1356–1372: Zeitleiste mit Spielraum ─────────
   const dayOf = (y, m, d) => Math.round((new Date(y, m - 1, d) - new Date(1356, 3, 1)) / 864e5);
   const WAR_NODES = new Set(['kattegat', 'helsingoer', 'oeresund', 'falsterbo', 'bornholm']);
-  const CAMPAIGN_END = dayOf(1370, 5, 24);
-  const ALDER_MIN = 3000, ALDER_PAY = 100;
+  // Ab Version 49: Die Kampagne endet mit dem Hansetag 1372, zwei Jahre nach dem Frieden von Stralsund
+  const PEACE_DAY = dayOf(1370, 5, 24), CAMPAIGN_END = dayOf(1372, 6, 24);
+  const ALDER_PAY = 100;
   const PEST_POOL = ['luebeck', 'hamburg', 'bremen', 'danzig', 'riga', 'reval', 'visby', 'stockholm', 'bruegge', 'london', 'bergen'];
   // fx bekommt den Spielstand; Texte mit {x} werden vom Effekt gefüllt
   const HIST = [
@@ -2972,7 +2983,7 @@ em.rep.warn{background:#b5523a}
   // ───────── Ab Version 43: Große Vorhaben, Ehre, Wettlauf um das Ältermannamt, Bestenliste, Spielzeit ─────────
   // Ab Großkaufmann bindet Geld sich in großen Vorhaben im Stammsitz. Sie bringen Ehre; Ansehen und Ehre zusammen
   // entscheiden am Hansetag, wer Ältermann der Hanse wird: du oder einer der drei Konkurrenten.
-  const GV_RANK = 4, ALDER_STAND = 3000, RIVAL_TERM = 3 * 365;
+  const GV_RANK = 4, ALDER_STAND = CIVIC[5][0], RIVAL_TERM = 3 * 365;
   const GV = {
     hospital:{n:'Hospital zum Heiligen Geist', cost:30000, days:90, ehre:400, rep:1, elect:200, art:'kirche',
       d:'Ein Hospital für Alte, Kranke und Pilger: 400 Ehre, täglich 1 Ansehen und 200 Stimmen mehr bei der Ratswahl.'},
@@ -3054,7 +3065,7 @@ em.rep.warn{background:#b5523a}
   }
   const gvMeta = () => { const S = gvState(), n = Object.keys(S.done).length; return S.job ? `${GV[S.job.k].n}: noch ${gvLeft()} Tage` : st.rank < GV_RANK ? `ab ${RANKS[GV_RANK][1]}` : `${n} von ${GV_ORDER.length} · Ehre ${fmt(ehre())}`; };
 
-  // Wettlauf um das Ältermannamt: Kandidaten sind Bürgermeister mit 3.000 Ansehen und Ehre zusammen
+  // Wettlauf um das Ältermannamt: Kandidaten sind Bürgermeister mit ALDER_STAND Ansehen und Ehre zusammen
   const rivStand = r => Math.round(r.repute + (r.ehre || 0));
   const rivAld = () => st.aldRival && (st.rivals || []).find(r => r.id === st.aldRival.id);
   function hansetag() {
@@ -3419,7 +3430,7 @@ em.rep.warn{background:#b5523a}
   }
   function fullOk() {
     fullSet(true); full.msg = '';
-    announce('Danke! Die Vollversion ist freigeschaltet. Dein Handelshaus segelt weiter bis zum Frieden von Stralsund 1370.', 'rank');
+    announce('Danke! Die Vollversion ist freigeschaltet. Dein Handelshaus segelt weiter bis zum Hansetag 1372.', 'rank');
     commit();
     if (st.sail && !st.enc && !timer) schedTick();
   }
@@ -3454,7 +3465,7 @@ em.rep.warn{background:#b5523a}
     const app = TARGET === 'app';
     return `<div class="endcard trialcard"><h2>Die Probezeit ist zu Ende</h2>` +
       `<p>${app ? `Die ersten ${TRIAL_DAY} Tage waren kostenlos.` : `Die ersten ${TRIAL_DAY} Tage kannst du im Browser spielen.`} ` +
-      `Im ganzen Spiel steigst du bis 1370 zum Bürgermeister auf, baust große Vorhaben, gründest Hansekontore und läufst den drei Familien im Wettlauf um das Ältermannamt davon.</p>` +
+      `Im ganzen Spiel steigst du bis 1372 zum Bürgermeister auf, baust große Vorhaben, gründest Hansekontore und läufst den drei Familien im Wettlauf um das Ältermannamt davon.</p>` +
       (app ? `<p class="small">Einmal zahlen, ${esc(full.price)}. Keine Werbung, kein Abo. Dein Spielstand bleibt, wie er ist.</p>` +
           `<div class="ybtns"><button class="btn primary" type="button" data-act="full-buy"${full.busy ? ' disabled' : ''}><b>${full.busy ? 'Einen Moment …' : 'Vollversion freischalten'}</b><small>${esc(full.price)}</small></button>` +
           `<button class="btn" type="button" data-act="full-restore"${full.busy ? ' disabled' : ''}><b>Kauf wiederherstellen</b><small>schon gekauft</small></button></div>`
@@ -3502,7 +3513,8 @@ em.rep.warn{background:#b5523a}
     ];
     return {parts, total:parts.reduce((a, p) => a + p[1], 0)};
   }
-  const TITLES = [[0, 'Krämerseele'], [1500, 'Ehrbarer Kaufmann'], [4000, 'Angesehener Hansekaufmann'], [8000, 'Großer Herr der Hanse'], [14000, 'Legende der Hanse']];
+  // Ab Version 49 für die Kampagne bis 1372: Bot „mensch“ 76.000 (Riga) bis 109.000 Punkte (Lübeck), Bot „bot45“ 52.000
+  const TITLES = [[0, 'Krämerseele'], [10000, 'Ehrbarer Kaufmann'], [30000, 'Angesehener Hansekaufmann'], [60000, 'Großer Herr der Hanse'], [100000, 'Legende der Hanse']];
   const titleFor = n => TITLES.reduce((a, t) => n >= t[0] ? t[1] : a, TITLES[0][1]);
   function honorBook() { try { return JSON.parse(localStorage.getItem(HONOR_KEY) || '[]'); } catch (e) { return []; } }
   function endCampaign() {
@@ -3516,7 +3528,7 @@ em.rep.warn{background:#b5523a}
       localStorage.setItem(HONOR_KEY, JSON.stringify(list.slice(0, 10)));
     } catch (e) {}
     blUpdate();
-    announce(`Mit dem Frieden von Stralsund endet deine Kampagne. Schlusswertung: ${fmt(sc.total)} Punkte, ${st.ended.title}.`, 'rank');
+    announce(`Mit dem Hansetag 1372 endet deine Kampagne. Schlusswertung: ${fmt(sc.total)} Punkte, ${st.ended.title}.`, 'rank');
     if (st.sail && !st.enc) { /* die Fahrt darf noch zu Ende gehen */ }
     setTab('lage');
   }
@@ -9335,8 +9347,8 @@ em.rep.warn{background:#b5523a}
         `<dt>Start</dt><dd>${fmt(START + (w.home === 'stockholm' ? 1000 : 0) + (w.origin === 'kaufmann' ? 500 : 0))} Gulden, alte Schnigge mit ${w.home === 'danzig' ? 35 : 30} Last, 9 Matrosen, ${w.home === 'reval' ? '4 Armbrüste und 2 Harnische' : '2 Armbrüste'}, ein unerfahrener Kapitän</dd>` +
         `<dt>Spielstand</dt><dd>Platz ${w.slot}${getSlot(w.slot) ? ' (wird überschrieben)' : ''}</dd></dl></div>` +
         `<div class="opt"><span class="flabel">Spielart</span><div class="chipset" role="group">` +
-        [['offen', 'Offenes Spiel'], ['kampagne', 'Kampagne bis 1370']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
-        `<span class="small">${w.mode === 'kampagne' ? 'Kampagne: Das Spiel endet mit dem Frieden von Stralsund am 24. Mai 1370. Dann zählen Vermögen, Ansehen, Ämter und Taten, und du bekommst deinen Platz im Ehrenbuch.' : 'Offenes Spiel: kein Ende. Dein Ziel ist der Aufstieg vom Krämer zum Ältermann der Hanse; die Ziele-Karte führt dich Kapitel für Kapitel dorthin.'}</span></div>` +
+        [['offen', 'Offenes Spiel'], ['kampagne', 'Kampagne bis 1372']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
+        `<span class="small">${w.mode === 'kampagne' ? 'Kampagne: Das Spiel endet mit dem Hansetag am 24. Juni 1372, zwei Jahre nach dem Frieden von Stralsund. Dann zählen Vermögen, Ansehen, Ämter und Taten, und du bekommst deinen Platz im Ehrenbuch.' : 'Offenes Spiel: kein Ende. Dein Ziel ist der Aufstieg vom Krämer zum Ältermann der Hanse; die Ziele-Karte führt dich Kapitel für Kapitel dorthin.'}</span></div>` +
         `<div class="opt"><span class="flabel">Jahreszeiten</span><div class="chipset" role="group">` +
         [['spuerbar', 'Spürbar'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-wseason="${v}" aria-pressed="${w.seasons === v}">${l}</button>`).join('') + `</div>` +
         `<span class="small">${w.seasons === 'mild' ? 'Mild: Die Jahreszeiten bewegen die Preise nur halb so stark, keine Sperren durch Eis.' : 'Spürbar: Heringszeit, Fastenzeit, Ernte und Winter bewegen die Preise deutlich; die Newa friert von Dezember bis März zu.'} Du kannst das später unter „Spielstände“ ändern.</span></div>` +
@@ -9680,7 +9692,7 @@ em.rep.warn{background:#b5523a}
   const W0 = () => Math.round(wealth());
   const gRep = (n, lvl) => ({t:() => lvl <= 3 ? `Werde ${CIVIC[lvl][1]}: ${fmt(n)} Ansehen in ${HN()}` : `Sammle ${fmt(n)} Ansehen in ${HN()}, dann bist du wählbar`, p:() => [Math.round(st.repute || 0), n], ok:() => (st.repute || 0) >= n,
     hint:() => `Ansehen bringen vor allem Verkäufe in ${HN()}, besonders von Waren, die die Stadt braucht (${C[st.home].c.map(g => G[g].n).join(', ')}). Dazu Ratsaufträge, Frachten und Siege.`, tab:'markt', sel:'#market'});
-  const gWealth = (n, rank) => ({t:() => `Erreiche ${fmt(n)} Gulden Vermögen (${rank})`, p:() => [Math.max(0, W0()), n], ok:() => wealth() >= n,
+  const gWealth = i => ({t:() => `Erreiche ${fmt(RANKS[i][0])} Gulden Vermögen (${RANKS[i][1]})`, p:() => [st.rank >= i ? RANKS[i][0] : Math.max(0, W0()), RANKS[i][0]], ok:() => st.rank >= i || wealth() >= RANKS[i][0],
     hint:() => 'Zum Vermögen zählen Geld, Ware an Bord und im Lager, Schiffe und Verbände. Es wächst mit jedem guten Handel.', tab:'lage', sel:'#status'});
   const QUEST = [
     {n:'Die erste Fahrt', tut:true, rew:150,
@@ -9703,8 +9715,8 @@ em.rep.warn{background:#b5523a}
       goals:[
         {t:() => 'Lerne die Preise in 5 Häfen kennen', p:() => [Object.keys(st.known || {}).length, 5], ok:() => Object.keys(st.known || {}).length >= 5,
           hint:() => 'Jeder Hafen, den du anläufst, merkt sich seine Preise. Danach zeigt die Zielliste im Reiter Karte den besten bekannten Handel je Ziel.', tab:'karte', sel:'#mapinfo'},
-        gRep(60, 1),
-        gWealth(6000, 'Händler')]},
+        gRep(CIVIC[1][0], 1),
+        gWealth(1)]},
     {n:'Bürger und Händler', rew:500,
       intro:() => `Als Bürger von ${HN()} darfst du ein Kontor bauen und Aufträge des Rats übernehmen.`,
       done:'Gut gerüstet und mit eigenem Lager. Als Nächstes wartet die Gilde: Mit einer Niederlassung in einer anderen Stadt öffnen sich Handelsrouten und das Bauen.',
@@ -9721,7 +9733,7 @@ em.rep.warn{background:#b5523a}
       intro:() => 'Eine Niederlassung ist ein Lager in einer anderen Stadt. Mit der ersten öffnen sich Handelsrouten für eigene Verbände und, als Gildebruder, das Bauen in deiner Stadt.',
       done:'Dein Handelshaus wächst über die eigene Stadt hinaus. Jetzt kannst du in deiner Stadt bauen: Betriebe, ein größeres Haus, Bürgerbauten.',
       goals:[
-        gRep(200, 2),
+        gRep(CIVIC[2][0], 2),
         {t:() => 'Gründe eine Niederlassung in einer anderen Stadt', ok:() => ownBranches() > 0,
           hint:() => `Segle in einen anderen Hafen als ${HN()}, öffne dort den Reiter Stadt und tippe bei der Kachel Niederlassung auf Gründen (${fmt(BRANCH.cost)} Gulden, ab ${CIVIC[BRANCH.civic][1]}). Das Kontor zuhause zählt nicht.`, tab:'stadt', sel:'#citycard'},
         {t:() => 'Heuere einen zweiten Kapitän an', p:() => [(st.captains || []).length, 2], ok:() => (st.captains || []).length >= 2,
@@ -9736,29 +9748,29 @@ em.rep.warn{background:#b5523a}
           hint:() => `Reiter Stadt in ${HN()}: Baubuch, Jetzt möglich. Ein Betrieb braucht das Kontor und liefert jeden Tag ein wenig Ware.`, tab:'stadt', sel:'#citycard'},
         {t:() => 'Baue dein Haus aus', ok:() => ((st.city || {}).house || 1) >= 2 || ((st.city || {}).jobs || []).some(j => j.kind === 'haus'),
           hint:() => `Tippe in der Stadtansicht von ${HN()} auf dein Wohnhaus. Ein größeres Haus bringt Ansehen.`, tab:'stadt', sel:'#citycard'},
-        gWealth(15000, 'Kaufmann')]},
+        gWealth(2)]},
     {n:'Ratsherr', rew:2000,
       intro:() => `Im Rat bestimmst du mit: Zölle, Aufträge und die Stimme deiner Stadt auf dem Hansetag. Doch drei Familien wollen dasselbe wie du: ${(st.rivals || []).map(r => r.name).join(', ')}. Ab jetzt zeigt der Bericht des Schreibers, wie du gegen sie stehst.`,
       done:'Du sitzt im Rat und sprichst auf dem Hansetag mit. Das höchste Amt der Stadt rückt näher.',
       goals:[
-        gRep(500, 3),
+        gRep(CIVIC[3][0], 3),
         {t:() => 'Stimme auf dem Hansetag ab', ok:() => Object.values((st.hanse || {}).votes || {}).some(v => v && v.my),
           hint:() => 'Unter Hansetag (Reiter Haus, Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'haus', sel:'#homecard [data-det="hansetag"]'},
         {t:() => 'Halte zwei Verbände auf Handelsrouten', p:() => [(st.convoys || []).length, 2], ok:() => (st.convoys || []).length >= 2,
           hint:() => 'Reiter Haus: weitere Kapitäne anheuern und neue Handelsrouten anlegen.', tab:'haus', sel:'#housecard'},
         {t:() => 'Unterschreibe einen Liefervertrag', ok:() => !!(st.contracts && (st.contracts.list.length || st.contracts.done || st.contracts.broken)),
           hint:() => 'Ab Kaufmann bieten Städte und Kaufleute Lieferverträge an: Reiter Markt, Aufträge, unten. Nimm einen, dessen Ware du nah bekommst.', tab:'markt', sel:'#frbox'},
-        gWealth(40000, 'Fernhändler')]},
+        gWealth(3)]},
     {n:'Bürgermeister', rew:3000,
       intro:() => `Am 1. Januar und am 1. Juli wählt ${HN()} den Bürgermeister. Es gewinnt, wer das meiste Ansehen hat.`,
       done:'Als Bürgermeister bist du einer der Großen der Hanse. Bleibt das höchste Amt: Ältermann der Hanse.',
       goals:[
-        gRep(1200, 4),
+        gRep(ELECT_MIN, 4),
         {t:() => 'Gewinne die Wahl zum Bürgermeister', ok:() => !!st.mayor || (st.mayorTerms || 0) > 0,
           hint:() => 'Im Rathaus (Reiter Haus) siehst du, wie du im Ansehen gegen die Konkurrenten stehst und wann gewählt wird.', tab:'haus', sel:'#homecard [data-det="council"]'},
         {t:() => 'Werde Mitglied eines Hansekontors', ok:() => hkCount() > 0,
           hint:() => 'Ab Fernhändler nehmen dich die Kontore in Brügge, London, Bergen und Nowgorod auf: dort im Reiter Markt unter Geschäfte. Mitglieder kaufen und verkaufen dort günstiger.', tab:'markt', sel:'#dealcard'},
-        gWealth(100000, 'Großkaufmann')]},
+        gWealth(4)]},
     {n:'Ältermann der Hanse', rew:0, last:true,
       intro:() => `Der Hansetag wählt am 24. Juni den Ältermann der Hanse. Wählbar ist ein Bürgermeister mit ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen. Auch ${(st.rivals || []).map(r => r.name).join(', ')} wollen das Amt; wer es zuerst bekommt, steht oben in der Bestenliste.`,
       done:'Du stehst an der Spitze der Hanse. Das Spiel geht weiter, so lange du willst.',
@@ -9819,7 +9831,7 @@ em.rep.warn{background:#b5523a}
     const q = qS(), Q = qCur(), cur = qGoal(), k = Math.min(q.ch, QUEST.length - 1);
     const left = st.mode === 'kampagne' && !st.ended ? CAMPAIGN_END - st.day : null;
     let h = `<div class="qhead"><span class="k">Dein Weg in der Hanse · Kapitel ${k + 1} von ${QUEST.length}</span><h2>${Q.n}</h2>` +
-      (left != null ? `<span class="small">Kampagne bis 24. Mai 1370 · noch ${left > 400 ? (Math.round(left / 365 * 10) / 10).toLocaleString('de-DE') + ' Jahre' : left + ' Tage'} · ${fmt(scoreParts().total)} Punkte</span>` : '') + `</div>`;
+      (left != null ? `<span class="small">Kampagne bis 24. Juni 1372 · noch ${left > 400 ? (Math.round(left / 365 * 10) / 10).toLocaleString('de-DE') + ' Jahre' : left + ' Tage'} · ${fmt(scoreParts().total)} Punkte</span>` : '') + `</div>`;
     if (q.fin) h += `<p class="qintro">${Q.done}</p>`;
     else {
       h += `<p class="qintro">${Q.intro()}</p><ol class="qgoals">${Q.goals.map(g => goalLine(g, q, g === cur)).join('')}</ol>`;
@@ -9907,7 +9919,7 @@ em.rep.warn{background:#b5523a}
     const kp = st.mode === 'kampagne';
     return `<div class="in qwel"><span class="k">${C[st.home].n}, ${fdate(st.day, true)}</span><h2 id="q-title">Willkommen, ${esc(st.player.name)}</h2>` +
       `<p>Du beginnst als kleiner Krämer mit einer alten Schnigge. <b>Dein Ziel:</b> vom Krämer zum Ältermann der Hanse aufsteigen. Handel bringt dir Vermögen und Rang, Verkäufe in ${HN()} bringen Ansehen und Ämter.</p>` +
-      `<p>${kp ? 'Du spielst die Kampagne bis zum Frieden von Stralsund am 24. Mai 1370. Dann zählen Vermögen, Ansehen, Ämter und Taten für das Ehrenbuch.' : 'Du spielst offen: Das Spiel endet nicht, du steigst auf, so weit du willst.'}</p>` +
+      `<p>${kp ? 'Du spielst die Kampagne bis zum Hansetag am 24. Juni 1372. Dann zählen Vermögen, Ansehen, Ämter und Taten für das Ehrenbuch.' : 'Du spielst offen: Das Spiel endet nicht, du steigst auf, so weit du willst.'}</p>` +
       `<p>Die Karte <b>Dein Weg in der Hanse</b> im Reiter Lage zeigt dir immer das nächste Ziel, mit einem Knopf, der dir die richtige Stelle zeigt. Das erste Kapitel führt dich durch die erste Fahrt. Alle 14 Tage legt dir dein Schreiber einen Bericht vor.</p>` +
       `<div class="ybtns qbtns"><button class="btn" type="button" data-qwel="skip"><b>Ohne Einführung</b><small>gleich frei spielen</small></button><button class="btn primary" type="button" data-qwel="go"><b>Los geht's</b><small>erste Fahrt</small></button></div></div>`;
   }
@@ -9945,7 +9957,7 @@ em.rep.warn{background:#b5523a}
     const left = st.mode === 'kampagne' && !st.ended ? CAMPAIGN_END - st.day : null;
     $('#chronlast').textContent = c0 ? `${fdate(c0.d, true)} · ${c0.t}` : left != null ? `Kampagne: noch ${left > 400 ? Math.round(left / 365 * 10) / 10 + ' Jahre' : left + ' Tage'}` : '';
     let h = '';
-    if (st.mode === 'kampagne') h += `<p class="small" style="margin:6px 0">${st.ended ? `Kampagne beendet: ${fmt(st.ended.total)} Punkte, ${st.ended.title}.` : `Kampagne bis zum Frieden von Stralsund am 24. Mai 1370. Stand heute: ${fmt(scoreParts().total)} Punkte, ${titleFor(scoreParts().total)}.`}</p>`;
+    if (st.mode === 'kampagne') h += `<p class="small" style="margin:6px 0">${st.ended ? `Kampagne beendet: ${fmt(st.ended.total)} Punkte, ${st.ended.title}.` : `Kampagne bis zum Hansetag am 24. Juni 1372. Stand heute: ${fmt(scoreParts().total)} Punkte, ${titleFor(scoreParts().total)}.`}</p>`;
     const flags = [];
     if (e.war) flags.push(e.war === 2 ? 'Krieg gegen Dänemark, die Hanse ist im Vorteil' : 'Krieg gegen Dänemark, Auslieger im Sund');
     if (e.embargo && e.embargo.until > st.day) flags.push(`Handelssperre gegen ${C[e.embargo.c].n}`);
@@ -9961,7 +9973,7 @@ em.rep.warn{background:#b5523a}
   }
   function endHTML() {
     const sc = scoreParts();
-    return `<div class="endcard"><h2>Frieden von Stralsund, 24. Mai 1370</h2><p>Deine Kampagne ist zu Ende. So urteilt die Hanse über das Handelshaus ${esc(st.player.name)}:</p>` +
+    return `<div class="endcard"><h2>Hansetag, 24. Juni 1372</h2><p>Deine Kampagne ist zu Ende. So urteilt die Hanse über das Handelshaus ${esc(st.player.name)}:</p>` +
       `<table class="score">${sc.parts.map(([k, v]) => `<tr><td>${k}</td><td class="num">${fmt(v)}</td></tr>`).join('')}<tr class="tot"><td>Zusammen</td><td class="num">${fmt(sc.total)}</td></tr></table>` +
       `<p class="etitle">${st.ended.title}</p><p class="small">Dein Ergebnis steht im Ehrenbuch unter der Chronik. Du kannst als offenes Spiel weitermachen oder ein neues Handelshaus gründen.</p></div>`;
   }
@@ -11135,6 +11147,8 @@ em.rep.warn{background:#b5523a}
     if (!s.player) s.player = {name:'Kaufmann', avatar:defAv()};
     if (!s.home) s.home = 'luebeck';
     if (s.repute == null) s.repute = 0;
+    // Ab Version 49 liegen die Ämter höher (Kampagne bis 1372). Ältere Spielstände behalten ihr Amt: Ansehen wird umgerechnet.
+    if (s.repV == null) { s.repute = repV49(s.repute); (s.rivals || []).forEach(r => { r.repute = repV49(r.repute); }); s.repV = 49; }
     if (!s.fleet) {
       s.fleet = [{id:1, type:'kogge', name:'Maria', hull:s.hull == null ? 100 : s.hull, capB:s.home === 'danzig' ? 10 : 0}];
       s.nextShip = 2; delete s.hull;
@@ -11207,7 +11221,7 @@ em.rep.warn{background:#b5523a}
       if (at('vord')) s.era.danger = 1.2;
       if ((s.day || 0) >= dayOf(1367, 11, 19) && !at('stral')) { s.era.war = at('kop') ? 2 : 1; s.era.danger = at('kop') ? 1.15 : 1.5; }
       if (at('stral')) { s.era.war = 0; s.era.danger = 0.85; }
-      const dd0 = s.day || 0; s.era.warToll = (dd0 >= dayOf(1361, 9, 8) && dd0 < dayOf(1365, 11, 22)) || (dd0 >= dayOf(1367, 11, 19) && dd0 < CAMPAIGN_END);
+      const dd0 = s.day || 0; s.era.warToll = (dd0 >= dayOf(1361, 9, 8) && dd0 < dayOf(1365, 11, 22)) || (dd0 >= dayOf(1367, 11, 19) && dd0 < PEACE_DAY);
     }
     if (!s.mayorName) s.mayorName = `${pick(NAMES.m)} ${pick(NAMES.s)}`;
     if (!s.rivals) s.rivals = makeRivals();
