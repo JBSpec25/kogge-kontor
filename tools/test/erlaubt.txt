@@ -1,0 +1,14 @@
+# Wörter, die in der englischen und spanischen Fassung so stehen dürfen (Namen, Begriffe aus dem Glossar)
+# Ein Wort je Zeile; alles nach # wird ignoriert.
+# Städte und Orte
+Lübeck
+Lüneburg
+Brügge
+Öresund
+Helsingør
+# Familiennamen der Kaufleute (NAMES.s) und Seeräuber
+Vöge
+Hövelen
+Gödeke
+Störtebeker
+Uffesøn

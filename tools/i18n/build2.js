@@ -75,4 +75,4 @@ const html = pre + newJs + post;
 fs.writeFileSync(outPath, html);
 const unusedCtx = ctxo.filter((_, i) => !ctxHit.has(i)).map(o => o.key);
 console.log(lang, 'übersetzt', used, 'fehlend', missing.length, unusedCtx.length ? 'Kontext ungenutzt ' + unusedCtx.join(',') : '', 'Größe', html.length);
-if (missing.length) console.log(missing.slice(0, 20).join('\n'));
+if (missing.length) { console.log(missing.slice(0, 20).join('\n')); console.log('Fehlende Übersetzungen in eine neue tr/cNN.json eintragen ([englisch, spanisch]).'); process.exitCode = 1; }
