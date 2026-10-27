@@ -1,6 +1,6 @@
 // Stadtbilder zum Durchsehen: jede Stadt neu, halb und voll ausgebaut, auf Wunsch im Winter.
 //
-//   node tools/test/stadtbilder.js [SPIEL.html] [--staedte luebeck,riga] [--stufen neu,halb,voll] [--winter] [--breite 1240] [--aus tools/out/stadt]
+//   node tools/test/stadtbilder.js [SPIEL.html] [--staedte luebeck,riga] [--stufen neu,halb,voll] [--jahreszeiten fruehling,sommer,herbst,winter] [--breite 1240] [--aus tools/out/stadt]
 //
 // Zeichnet mit derselben Zeichenmaschine wie das Spiel (G36.cityBase), ohne das Spiel zu starten. Die Stufen gelten für den
 // Stammsitz; jede Stadt wird als Stammsitz gezeichnet, dazu einmal als fremder Hafen mit Niederlassung („fremd“).
@@ -14,7 +14,7 @@ const OUT = path.resolve(arg('--aus', path.join(ROOT, 'tools', 'out', 'stadt')))
 const ALL = ['luebeck', 'hamburg', 'bremen', 'danzig', 'riga', 'reval', 'visby', 'stockholm', 'bruegge', 'london', 'bergen', 'nowgorod'];
 const STAEDTE = arg('--staedte', ALL.join(',')).split(',');
 const STUFEN = arg('--stufen', 'neu,halb,voll,fremd').split(',');
-const WINTER = process.argv.includes('--winter'), W = +arg('--breite', 1240), H = Math.round(W / 1.55);
+const ZEITEN = arg('--jahreszeiten', process.argv.includes('--winter') ? 'winter' : 'sommer').split(','), W = +arg('--breite', 1240), H = Math.round(W / 1.55);
 // Bauplätze je Stufe (wie cityPlots im Spiel)
 const PLOTS = {
   neu:{kontor:null, kontorLvl:1, haus:'built', hausLvl:1, hausF:0, w0:{s:'lock'}, w1:{s:'lock'}, w2:{s:'lock'}, w3:{s:'lock'}, w4:{s:'lock'}, kran:null, markt:null, kirche:null, mauer:null},
@@ -35,15 +35,15 @@ const HOUSE = {hc:arg('--farbe', '#4f7896'), mark:'M20 4V36M20 36L12 28M20 36L28
   const b = await chromium.launch(), p = await b.newPage({viewport:{width:400, height:300}});
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.goto('file://' + tmp); await p.waitForFunction(() => !!window.__kk, null, {timeout:20000});
-  for (const cid of STAEDTE) for (const stufe of STUFEN) {
-    const url = await p.evaluate(({cid, stufe, plots, W, H, winter, house}) => {
+  for (const cid of STAEDTE) for (const stufe of STUFEN) for (const season of ZEITEN) {
+    const url = await p.evaluate(({cid, stufe, plots, W, H, season, house}) => {
       const {G36} = window.__kk, home = stufe !== 'fremd';
-      const base = G36.cityBase({cid, plots:home ? plots : null, branch:!home, W, H, dpr:1, winter, house});
+      const base = G36.cityBase({cid, plots:home ? plots : null, branch:!home, W, H, dpr:1, winter:season === 'winter', season, house});
       const cv = document.createElement('canvas');
       G36.show(cv, {base, ships:[{type:'kogge'}, {type:'holk'}], still:true});
       return cv.toDataURL('image/png');
-    }, {cid, stufe, plots:PLOTS[stufe] || null, W, H, winter:WINTER, house:HOUSE});
-    const f = path.join(OUT, `${cid}_${stufe}${WINTER ? '_winter' : ''}.png`);
+    }, {cid, stufe, plots:PLOTS[stufe] || null, W, H, season, house:HOUSE});
+    const f = path.join(OUT, `${cid}_${stufe}${season === 'sommer' ? '' : '_' + season}.png`);
     fs.writeFileSync(f, Buffer.from(url.split(',')[1], 'base64'));
     process.stdout.write(path.relative(ROOT, f) + '\n');
   }
