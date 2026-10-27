@@ -11,7 +11,7 @@ Los mismos textos sirven para las dos localizaciones en español de App Store Co
 
 ## Texto promocional (170)
 
-Lübeck, 1356. Compra paño en Brujas, véndelo en Nóvgorod y llega a Decano de la Hansa antes que tres familias rivales. Los primeros 60 días son gratis.
+Lübeck, 1356. Compra paño en Brujas, véndelo en Nóvgorod y llega a Decano de la Hansa antes que tres familias rivales. Los primeros 50 días son gratis.
 
 ## Descripción (4000)
 
@@ -33,7 +33,7 @@ HISTORIA PARA JUGAR
 Los años de 1356 a 1370 con sus sucesos reales: la peste, la guerra contra Valdemar de Dinamarca, la Confederación de Colonia y la Paz de Stralsund.
 
 JUSTO
-• Los primeros 60 días de juego, gratis
+• Los primeros 50 días de juego, gratis
 • Después compras la versión completa una sola vez, sin suscripción
 • Sin anuncios, sin recogida de datos, funciona sin conexión
 • Tres partidas, traspaso mediante código
