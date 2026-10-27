@@ -967,6 +967,9 @@ em.rep.warn{background:#b5523a}
   let CAP = 60;
   const HIRE_SAILOR = 30, HIRE_ARCHER = 60, REPAIR = 8, MAX_FLEET = 3, OLD_SHIP = 600, MAX_BRAND = 30, BRAND_PRICE = 8;
   // Schiffstypen: alle von Anfang an, begrenzt durch Geld, Rang und die Werft der Stadt
+  // Ab Version 49: Schiffe und alle Gebäude kosten das Doppelte, Schiffe kosten anderthalbfachen Unterhalt.
+  // Vermögen und Prisengeld rechnen mit dem alten Preis (Anteil / ECO.ship), damit Ränge und Beute nicht mitwachsen.
+  const ECO = {ship:2, bau:2, up:1.5};
   const SHIPS = {
     schnigge:{n:'Esneca', cap:30, spd:1.2, hullK:0.6, crewMin:6, crewMax:16, archMax:0, arm:6, price:1400, upkeep:2, wend:3, rank:0, sc:0.74,
       d:'Pequeña, rápida y ágil. Buena para viajes urgentes y como escolta.'},
@@ -977,6 +980,7 @@ em.rep.warn{background:#b5523a}
     kraweel:{n:'Carabela', cap:85, spd:1.15, hullK:1.3, crewMin:14, crewMax:40, archMax:0, arm:24, price:9500, upkeep:8, wend:3, rank:3, sc:1.08,
       d:'De tablazón lisa al nuevo estilo, con un segundo mástil: rápida, ágil y espaciosa, pero cara.'}
   };
+  Object.values(SHIPS).forEach(t => { t.price *= ECO.ship; t.upkeep = Math.round(t.upkeep * ECO.up); });
   const SHIP_ORDER = ['schnigge', 'kogge', 'holk', 'kraweel'];
   const YARDS = {luebeck:['schnigge','kogge','holk','kraweel'], hamburg:['schnigge','kogge','holk'], bremen:['schnigge','kogge','holk'],
     danzig:['schnigge','kogge','holk','kraweel'], bruegge:['schnigge','kogge','holk','kraweel'], london:['schnigge','kogge'], bergen:['schnigge'],
@@ -1169,7 +1173,7 @@ em.rep.warn{background:#b5523a}
   const newaFrozen = day => !!st && st.seasons === 'spuerbar' && [11, 0, 1, 2].includes(monthOf(day));
   const iceK = (seg, day) => st && st.seasons === 'spuerbar' && [0, 1].includes(monthOf(day)) && (ICE_NODES.has(seg.a) || ICE_NODES.has(seg.b)) ? 1.3 : 1;
   // Kontor im Stammsitz
-  const KONTOR = [null, {cap:150, cost:1500, upkeep:2, civic:1}, {cap:400, cost:3000, upkeep:4, civic:2}];
+  const KONTOR = [null, {cap:150, cost:1500 * ECO.bau, upkeep:2, civic:1}, {cap:400, cost:3000 * ECO.bau, upkeep:4, civic:2}];
   const unitPrice = (s, b, cid) => b * Math.pow(2, 1 - Math.max(0, s) / (R * (DEPTH[cid] || 1) * gdB(b)));
   // Bürgerrecht im Stammsitz und Vorteile einzelner Städte
   function pf(cid, gid, side) {
@@ -1291,7 +1295,7 @@ em.rep.warn{background:#b5523a}
   const fleetSum = k => st.fleet.reduce((x, sh) => x + SHIPS[sh.type][k], 0);
   const crewMin = () => fleetSum('crewMin'), crewMax = () => fleetSum('crewMax'), archMax = () => fleetSum('archMax'), upkeep = () => fleetSum('upkeep');
   const fleetSpeed = () => st.fleet.length ? Math.min(...st.fleet.map(sh => SHIPS[sh.type].spd)) : 1;
-  const shipValue = sh => Math.round(SHIPS[sh.type].price * 0.5 * sh.hull / 100);
+  const shipValue = sh => Math.round(SHIPS[sh.type].price * 0.5 / ECO.ship * sh.hull / 100);
   const fleetValue = () => st.fleet.reduce((x, sh) => x + shipValue(sh), 0);
   const minHull = () => st.fleet.length ? Math.min(...st.fleet.map(sh => sh.hull)) : 0;
   const shipLabel = sh => `${SHIPS[sh.type].n} «${sh.name}»`;
@@ -1300,7 +1304,7 @@ em.rep.warn{background:#b5523a}
   const dockOf = () => st.reserve || (st.reserve = []);
   const buildsOf = () => st.builds || (st.builds = []);
   const dockCost = () => Math.round(dockOf().reduce((x, sh) => x + SHIPS[sh.type].upkeep * 0.5, 0));
-  const dockValue = () => dockOf().reduce((x, sh) => x + shipValue(sh), 0) + buildsOf().reduce((x, b) => x + Math.round(SHIPS[b.type].price * 0.5 * (b.hull || 100) / 100), 0);
+  const dockValue = () => dockOf().reduce((x, sh) => x + shipValue(sh), 0) + buildsOf().reduce((x, b) => x + Math.round(SHIPS[b.type].price * 0.5 / ECO.ship * (b.hull || 100) / 100), 0);
   const shipsHome = () => dockOf().length + buildsOf().length;
   const ownMax = () => Math.min(MAX_FLEET, 1 + Math.min(2, (st && st.rank) || 0));
   const newCaptainFree = (s0, id) => ({id, name:`${pick(NAMES.m)} ${pick(NAMES.s)}`, nav:2, trade:1, fight:2, wage:4, fee:100, xp:0, cv:null});
@@ -1325,6 +1329,13 @@ em.rep.warn{background:#b5523a}
   function newShipName() {
     const taken = new Set(st.fleet.map(sh => sh.name)), free = SHIPNAMES.filter(x => !taken.has(x));
     return pick(free.length ? free : SHIPNAMES);
+  }
+  // Ab Version 49: Ansehen aus Handel im Stammsitz höchstens 30 am Tag (vor dem Lübecker Vorteil)
+  const REP_TRADE = {need:0.5, other:0.2, buy:0.08, cap:30};
+  function tradeRepute(x) {
+    const d = st.repDay && st.repDay.d === st.day ? st.repDay : (st.repDay = {d:st.day, n:0});
+    const y = Math.min(x, Math.max(0, REP_TRADE.cap - d.n)); d.n += y;
+    if (y > 0) gainRepute(y);
   }
   function gainRepute(x) {
     if (!st.home || !(x > 0)) return;
@@ -1753,7 +1764,7 @@ em.rep.warn{background:#b5523a}
   }
 
   // ───────── Handelshaus: Kapitäne, Verbände, Betriebe, Niederlassungen ─────────
-  const MAX_CONVOYS = 4, MAX_CAPTAINS = 6, BRANCH = {cap:100, cost:2500, upkeep:2, civic:2, max:3};
+  const MAX_CONVOYS = 4, MAX_CAPTAINS = 6, BRANCH = {cap:100, cost:2500 * ECO.bau, upkeep:2, civic:2, max:3};
   const SKILL_N = {nav:'Náutica', trade:'Comercio', fight:'Combate'};
   const CV_KEYS = ['fleet', 'crew', 'arms', 'pulver', 'brand', 'cargo', 'loc', 'sail', 'enc'];
   const capOf = cv => cv ? (st.captains || []).find(k => k.id === cv.cap) : null;
@@ -1780,6 +1791,7 @@ em.rep.warn{background:#b5523a}
     tuch:{n:'Taller de paños', out:0.5, inp:{wolle:1.5}, mat:0.15, cost:3600, wage:6, d:'teje 2 lasts de paño con 3 lasts de lana del almacén, unos 3 o 4 lasts por semana. La lana se vende en Londres y Hamburgo'},
     fass:{n:'Tonelería', aux:true, out:0, inp:{holz:0.5}, mat:0, cost:1600, wage:3, d:'fabrica toneles con madera del almacén, unos 3 o 4 lasts de madera por semana. Cada tonelería hace que dos cervecerías, pesquerías de arenque o salinas entreguen una cuarta parte más'}
   };
+  Object.values(WORKS).forEach(w => { w.cost *= ECO.bau; });
   const worksAllowed = () => [...new Set(C[st.home].p.concat(['bier', 'tuch', 'fass']))].filter(g => WORKS[g]);
   const maxWorks = () => 3 + (typeof cityBonus === 'function' ? cityBonus('works') : 0);
   const storeAt = cid => !st || !cid ? null : cid === st.home ? st.kontor : (st.branches || {})[cid] || null;
@@ -2983,8 +2995,9 @@ em.rep.warn{background:#b5523a}
     turm:{n:'Torre de la iglesia de Santa María', cost:180000, days:240, ehre:1500, rep:2, art:'kirche',
       d:'La torre más alta de la costa, visible desde muy lejos en el mar: 1.500 de honor y 2 de reputación al día.'}
   };
+  Object.values(GV).forEach(g => { g.cost *= ECO.bau; });
   const GV_ORDER = ['hospital', 'hafen', 'flotte', 'artushof', 'turm'];
-  const STIFT = {n:'Donación', ehre:150, base:12000, k:1.3};
+  const STIFT = {n:'Donación', ehre:150, base:12000 * ECO.bau, k:1.3};
   const gvState = () => st.gv || (st.gv = {done:{}, job:null, stift:0, intro:false});
   const gvHas = k => !!(st && st.gv && st.gv.done[k]);
   const gvSum = key => !st || !st.gv ? 0 : Object.keys(st.gv.done).reduce((x, k) => x + ((GV[k] || {})[key] || 0), 0);
@@ -2992,7 +3005,7 @@ em.rep.warn{background:#b5523a}
   const standing = () => Math.round((st.repute || 0) + ehre());
   const stiftCost = () => Math.round(STIFT.base * Math.pow(STIFT.k, gvState().stift) / 100) * 100;
   // Gebäude zählen zur Hälfte ihrer Kosten zum Vermögen, Stiftungen nicht
-  const gvValue = () => !st.gv ? 0 : 0.5 * (Object.keys(st.gv.done).reduce((x, k) => x + (GV[k] ? GV[k].cost : 0), 0) + (st.gv.job ? GV[st.gv.job.k].cost : 0));
+  const gvValue = () => !st.gv ? 0 : 0.5 / ECO.bau * (Object.keys(st.gv.done).reduce((x, k) => x + (GV[k] ? GV[k].cost : 0), 0) + (st.gv.job ? GV[st.gv.job.k].cost : 0));
   const gvLeft = () => { const J = gvState().job; return J ? Math.max(0, J.d0 + GV[J.k].days - st.day) : 0; };
   function gvWhy(k) {
     const S = gvState(), V = GV[k];
@@ -3391,7 +3404,7 @@ em.rep.warn{background:#b5523a}
   }
   // KK_TARGET: 'app' (iPhone-App mit In-App-Kauf), 'web' (Browser, nur Probezeit), sonst ganzes Spiel
   const TARGET = window.KK_TARGET === 'app' || window.KK_TARGET === 'web' ? window.KK_TARGET : 'full';
-  const TRIAL_DAY = 60;   // Probezeit: die ersten 60 Spieltage, bis 31. Mai 1356
+  const TRIAL_DAY = 50;   // Probezeit: die ersten 50 Spieltage, bis 21. Mai 1356 (ab Version 49)
   const FULL_KEY = 'kogge-kontor-vollversion';
   const APP_URL = window.KK_APP_URL || '';
   const full = {on:TARGET === 'full', price:'2,99 €', busy:false, msg:''};
@@ -3404,8 +3417,8 @@ em.rep.warn{background:#b5523a}
     if (!st.trialWarn && st.day >= TRIAL_DAY - 10 && st.day < TRIAL_DAY) {
       st.trialWarn = true;
       announce(TARGET === 'app'
-        ? `Quedan ${TRIAL_DAY - st.day} días de prueba gratuita, hasta el 31 de mayo de 1356. Después tu casa comercial sigue navegando con la versión completa, por un pago único de ${full.price}.`
-        : `Quedan ${TRIAL_DAY - st.day} días de prueba en el navegador, hasta el 31 de mayo de 1356. Después la partida continúa en la app para iPhone.`, 'rank');
+        ? `Quedan ${TRIAL_DAY - st.day} días de prueba gratuita, hasta el ${fdate(TRIAL_DAY, true)}. Después tu casa comercial sigue navegando con la versión completa, por un pago único de ${full.price}.`
+        : `Quedan ${TRIAL_DAY - st.day} días de prueba en el navegador, hasta el ${fdate(TRIAL_DAY, true)}. Después la partida continúa en la app para iPhone.`, 'rank');
     }
     if (!st.trialEnd && st.day >= TRIAL_DAY) {
       st.trialEnd = true;
@@ -3450,7 +3463,7 @@ em.rep.warn{background:#b5523a}
   function trialHTML() {
     const app = TARGET === 'app';
     return `<div class="endcard trialcard"><h2>La prueba gratuita ha terminado</h2>` +
-      `<p>${app ? 'Los primeros 60 días han sido gratis.' : 'Los primeros 60 días puedes jugarlos en el navegador.'} ` +
+      `<p>${app ? `Los primeros ${TRIAL_DAY} días han sido gratis.` : `Los primeros ${TRIAL_DAY} días puedes jugarlos en el navegador.`} ` +
       `En el juego completo llegas a burgomaestre antes de 1370, levantas grandes obras, fundas factorías hanseáticas y dejas atrás a las tres familias en la carrera por el cargo de Decano.</p>` +
       (app ? `<p class="small">Un solo pago, ${esc(full.price)}. Sin anuncios ni suscripción. Tu partida se queda tal como está.</p>` +
           `<div class="ybtns"><button class="btn primary" type="button" data-act="full-buy"${full.busy ? ' disabled' : ''}><b>${full.busy ? 'Un momento…' : 'Desbloquear versión completa'}</b><small>${esc(full.price)}</small></button>` +
@@ -3469,10 +3482,10 @@ em.rep.warn{background:#b5523a}
     if (TARGET === 'full') return '';
     if (TARGET === 'app') return `</div><div class="xfer"><h3>Versión completa</h3>` + (full.on
       ? `<span class="small">Desbloqueada. ¡Gracias por comprar Kogge &amp; Kontor!</span>`
-      : `<span class="small">Los primeros 60 días de juego son gratis, hasta el 31 de mayo de 1356. Después sigues con la versión completa, por un pago único de ${esc(full.price)}.</span>` +
+      : `<span class="small">Los primeros ${TRIAL_DAY} días de juego son gratis, hasta el ${fdate(TRIAL_DAY, true)}. Después sigues con la versión completa, por un pago único de ${esc(full.price)}.</span>` +
         `<div class="row2"><button class="ybtn" type="button" data-slot="fullbuy"${full.busy ? ' disabled' : ''}>Desbloquear versión completa</button><button class="ybtn" type="button" data-slot="fullrestore"${full.busy ? ' disabled' : ''}>Restaurar compra</button></div>` +
         (full.msg ? `<span class="small" style="color:var(--bad)">${esc(full.msg)}</span>` : ''));
-    return `</div><div class="xfer"><h3>App para iPhone</h3><span class="small">En el navegador juegas los primeros 60 días de juego, hasta el 31 de mayo de 1356. El juego completo está disponible como app, por un pago único de ${esc(full.price)}. Llévate tu partida con el código de abajo.</span>` +
+    return `</div><div class="xfer"><h3>App para iPhone</h3><span class="small">En el navegador juegas los primeros ${TRIAL_DAY} días de juego, hasta el ${fdate(TRIAL_DAY, true)}. El juego completo está disponible como app, por un pago único de ${esc(full.price)}. Llévate tu partida con el código de abajo.</span>` +
       (APP_URL ? `<div class="row2">${appLink('ybtn', 'Ver en el App Store')}</div>` : `<span class="small">La app llegará pronto al App Store.</span>`);
   }
   // Impressum und Datenschutz in der App (Angaben kommen aus dem App-Bau, nicht aus dem Spiel)
@@ -3551,6 +3564,7 @@ em.rep.warn{background:#b5523a}
     bergen:{n:'Bryggen de Bergen', s:'Bryggen', nom:'El Bryggen de Bergen', acc:'el Bryggen de Bergen', dat:'en el Bryggen', fee:1600, P:['Preferencia en el bacalao seco', 'Almacenes propios en el muelle', 'Cuarteles de invierno en Bryggen']},
     nowgorod:{n:'Peterhof de Nóvgorod', s:'Peterhof', nom:'El Peterhof de Nóvgorod', acc:'el Peterhof de Nóvgorod', dat:'en el Peterhof', fee:2200, P:['Salvoconducto en el Vóljov', 'Balanza propia en el Peterhof', 'Preferencia en la compra de pieles']}
   };
+  Object.values(HK).forEach(h => { h.fee *= ECO.bau; });
   const HK_RANK = 3, HK_CAP = 60, HK_UP = 2, HK_LOBBY = 600;
   const hkState = () => st.hk || (st.hk = {mem:{}, priv:{bruegge:0, london:0, bergen:0, nowgorod:0}});
   const hkMember = cid => !!(st && st.hk && st.hk.mem[cid]);
@@ -4190,7 +4204,7 @@ em.rep.warn{background:#b5523a}
     q = Math.min(q, maxBuy(st.loc, gid));
     if (q <= 0) return;
     const cost = buyCost(st.loc, gid, q);
-    if (st.loc === st.home) gainRepute(q * 0.15);
+    if (st.loc === st.home) tradeRepute(q * REP_TRADE.buy);
     st.money -= cost; st.stock[st.loc][gid] -= q;
     const c = st.cargo[gid] || (st.cargo[gid] = {q:0, cost:0});
     c.q += q; c.cost += cost;
@@ -4205,7 +4219,7 @@ em.rep.warn{background:#b5523a}
     const c = st.cargo[gid];
     if (!c || q <= 0) return;
     q = Math.min(q, c.q);
-    if (st.loc === st.home) gainRepute(q * (C[st.home].c.includes(gid) ? 1 : 0.4) * (st.stock[st.loc][gid] < 30 ? 2 : 1));
+    if (st.loc === st.home) tradeRepute(q * (C[st.home].c.includes(gid) ? REP_TRADE.need : REP_TRADE.other) * (st.stock[st.loc][gid] < 30 ? 2 : 1));
     const gain = sellGain(st.loc, gid, q);
     const basis = c.cost * q / c.q;
     st.money += gain; st.stock[st.loc][gid] += q;
@@ -4225,7 +4239,7 @@ em.rep.warn{background:#b5523a}
     const cid = remote ? st.home : st.loc, K = storeAt(cid), c = K && K.goods[gid];
     if (!cid || st.enc || !c || q <= 0 || (remote && !hasSteward())) return;
     q = Math.min(q, c.q);
-    if (cid === st.home) gainRepute(q * (C[st.home].c.includes(gid) ? 1 : 0.4) * (st.stock[cid][gid] < 30 ? 2 : 1));
+    if (cid === st.home) tradeRepute(q * (C[st.home].c.includes(gid) ? REP_TRADE.need : REP_TRADE.other) * (st.stock[cid][gid] < 30 ? 2 : 1));
     const gain = sellGain(cid, gid, q), basis = c.cost * q / c.q;
     st.money += gain; st.stock[cid][gid] += q;
     c.q -= q; c.cost -= basis; if (c.q <= 0) delete K.goods[gid];
@@ -4248,7 +4262,7 @@ em.rep.warn{background:#b5523a}
   function intoKontor(gid, q, cost) {
     const cid = st.home, d = st.kontor.goods[gid] || (st.kontor.goods[gid] = {q:0, cost:0});
     st.money -= cost; st.stock[cid][gid] -= q; d.q += q; d.cost += cost;
-    gainRepute(q * 0.15);
+    tradeRepute(q * REP_TRADE.buy);
   }
   function stewardBuy(gid, budget) {
     if (!hasSteward() || st.enc || st.focus) return;
@@ -4315,7 +4329,7 @@ em.rep.warn{background:#b5523a}
     setTab('lage');
     const r = route(st.loc, to, st.day);
     const weather = st.wx ? st.wx.w : pickWeather(st.day);
-    st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false, shanty:r.days >= 4 && Math.random() < 0.5 ? 1 + ((st.shN = (st.shN || 0) + 1) % 2) : 0};
+    st.sail = {from:st.loc, to, segs:r.segs, days:r.days, t:0, weather, wind:WINDS[Math.floor(Math.random() * 8)], delayed:false, shanty:r.days >= 4 && Math.random() < 0.2 ? 1 + ((st.shN = (st.shN || 0) + 1) % 2) : 0};
     st.nVoy = (st.nVoy || 0) + 1; evPlan(st.sail);
     escortDepart(st.loc, to); qEv('sail');
     addLog(`Zarpas de ${C[st.loc].n} rumbo a ${C[to].n}. ${r.days} ${r.days === 1 ? 'día' : 'días'} de mar${r.overland ? ', un tramo por tierra' : ''}${r.ice ? ', el hielo a la deriva frena' : r.winter ? ', el tiempo invernal frena' : ''}.`);
@@ -5342,6 +5356,9 @@ em.rep.warn{background:#b5523a}
     st.money -= ransom; st.crew = 0; trimArms(st, [], 0); st.cargo = {}; applyHome();
     return {ship:sh, taken, ransom, last:true};
   }
+  // Ab Version 49: Beute aus dem Laderaum nach Größe des Seeräuberschiffs, zu 80 % Massenware
+  const BOOTY_Q = {schnigge:[2, 4], kogge:[3, 6], holk:[5, 9], kraweel:[5, 10]}, BOOTY_BULK = ['getreide', 'bier', 'hering', 'salz', 'holz'];
+  const bootyOf = type => { const [a, b] = BOOTY_Q[type] || BOOTY_Q.kogge; return {g:Math.random() < 0.8 ? pick(BOOTY_BULK) : pick(GOODS).id, q:a + Math.floor(Math.random() * (b - a + 1))}; };
   function winCore(kind) {
     const e = st.enc;
     st.wins = (st.wins || 0) + 1;
@@ -5353,19 +5370,19 @@ em.rep.warn{background:#b5523a}
     e.loot = loot; e.kind = kind; e.phase = 'won';
     if (kind === 'empty' || kind === 'surrender' || kind === 'board') {
       e.prize = {type:e.ptype, hull:Math.max(25, Math.round(e.phull))};
-      e.booty = e.prey ? {g:e.cargoG, q:e.cargoQ} : {g:pick(GOODS).id, q:6 + Math.floor(Math.random() * 13)};
+      e.booty = e.prey ? {g:e.cargoG, q:e.cargoQ} : bootyOf(e.ptype);
     }
     gainRepute((e.prize ? 18 : 10) + (e.dane || e.prey ? 15 : 0));
     if (e.fleet && kind !== 'fled') pfAfter('won');
     addLog(`${e.prey ? 'Mercantes daneses' : e.dane ? 'Corsarios daneses' : 'Piratas'} al mando de ${e.name} ${kind === 'fled' ? 'rechazados' : kind === 'sunk' ? 'hundidos' : kind === 'burn' ? 'vencidos al abordaje; su barco ardió' : 'vencidos, su barco apresado'}. Botín: ${fmt(loot)} florines.`, 'pirate');
     checkRank();
   }
-  const prizeValue = () => { const e = st.enc; return Math.round(SHIPS[e.prize.type].price * 0.25 * e.prize.hull / 100); };
+  const prizeValue = () => { const e = st.enc; return Math.round(SHIPS[e.prize.type].price * 0.25 / ECO.ship * e.prize.hull / 100); };
   // Prisenmannschaft: anderthalbmal die Mindestmannschaft der Prise, damit sie segelt und die Gefangenen bewacht sind
   const prizeCrew = type => Math.ceil(SHIPS[type].crewMin * 1.5);
   const prizeNeed = () => crewMin() + prizeCrew(st.enc.prize.type);
   const prizeManned = () => st.crew >= prizeNeed();
-  const stripValue = () => { const e = st.enc; return Math.round(SHIPS[e.prize.type].price * 0.08 * e.prize.hull / 100); };
+  const stripValue = () => { const e = st.enc; return Math.round(SHIPS[e.prize.type].price * 0.08 / ECO.ship * e.prize.hull / 100); };
   const keepWhy = () => st.fleet.length >= ownMax() ? 'Convoy completo' : !prizeManned() ? `Se necesitan ${prizeNeed()} marineros` : '';
 
   // Ablauf mit Bild und Ton
@@ -7006,14 +7023,14 @@ em.rep.warn{background:#b5523a}
     }
     function path(ctx, pts) { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); }
     function stroke(ctx, pts, col, w) { ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke(); }
-    // Wasser am Rumpf: Schatten, Spiegelung, Bugwelle und Kielwasser
+    // Wasser am Rumpf: Schatten, Spiegelung und Kielwasser (ab Version 49 ohne Bugwelle)
     function water(ctx, view, o, speed) {
       const T = DEF[o.type] || DEF.kogge, L = T.L, ch = Math.cos(o.heading || 0), sh = Math.sin(o.heading || 0), k = view.k;
       const at = (x, y) => view.P(o.X + ch * x - sh * y, o.Y + sh * x + ch * y, 0);
       ctx.fillStyle = 'rgba(20,35,45,.28)'; ctx.beginPath(); for (let q = 0; q <= 24; q++) { const a = q / 24 * Math.PI * 2, p = at(Math.cos(a) * L * 0.56, Math.sin(a) * T.B * 0.62); q ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); } ctx.fill();
       if (speed > 0.05) { ctx.strokeStyle = `rgba(255,255,255,${0.35 + speed * 0.35})`; ctx.lineWidth = Math.max(0.8, 0.12 * k);
         for (const s of [-1, 1]) { ctx.beginPath(); for (let q = 0; q <= 10; q++) { const f = q / 10, p = at(L * 0.5 - f * L * 1.6, s * (T.B * 0.5 + f * T.B * 0.9)); q ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); } ctx.stroke(); }
-        const b = at(L * 0.55, 0); ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.beginPath(); ctx.ellipse(b[0], b[1], 0.9 * k, 0.4 * k, 0, 0, Math.PI * 2); ctx.fill(); }
+      }
     }
     return {draw, water, DEF, isoView, sideView, viewFrom};
   })();
@@ -8724,14 +8741,9 @@ em.rep.warn{background:#b5523a}
       noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
       const d = noise.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      // Musik und Geräusche getrennt regelbar; Musik mit etwas Raumhall
+      // Musik und Geräusche getrennt regelbar; ab Version 49 wieder ohne Raumhall, wie bis Version 28
       musicBus = ctx.createGain(); musicBus.gain.value = layers.music ? 1 : 0.0001; musicBus.connect(master);
       ambBus = ctx.createGain(); ambBus.gain.value = layers.amb ? 1 : 0.0001; ambBus.connect(master);
-      try {
-        const conv = ctx.createConvolver(), wet = ctx.createGain(), len = Math.floor(ctx.sampleRate * 2.3), ir = ctx.createBuffer(2, len, ctx.sampleRate);
-        for (let c = 0; c < 2; c++) { const x = ir.getChannelData(c); for (let i = 0; i < len; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3.4) * (i < 90 ? i / 90 : 1); }
-        conv.buffer = ir; wet.gain.value = 0.2; musicBus.connect(conv); conv.connect(wet); wet.connect(master);
-      } catch (e) {}
       return true;
     }
     function env(g, t, a, peak, d, rel) {
@@ -8918,7 +8930,7 @@ em.rep.warn{background:#b5523a}
       sea: {step:60 / 52 / 3, len:48, setup:() => [],
         play(bus, i, t, sd, loop) {
           const bar = Math.floor(i / 6), k = i % 6, ch = SEA_CH[bar];
-          if (k === 0) { pad(bus, t, ch, 6 * sd, 0.028); pluck(bus, t, ch[0] - 12, 0.1); tom(bus, t, 0.07, 68); swell(bus, t, 6 * sd, 0.04); }
+          if (k === 0) { pad(bus, t, ch, 6 * sd, 0.028); pluck(bus, t, ch[0] - 12, 0.1); tom(bus, t, 0.07, 68); }
           if (k === 3) pluck(bus, t, ch[0] - 5, 0.07);
           const n = SEA_MEL[i];
           if (n && loop % 2 === 0) flute(bus, t, n[0], n[1] * sd * 0.92, 0.065);
@@ -8978,7 +8990,7 @@ em.rep.warn{background:#b5523a}
         mel:'5:6 | 4:3 3:3 | 2:6 | 1:3 r:3 | 3:3 5:3 | 6:6 | 5:3 2:3 | 1:6'}
     };
     const SEA_SET = ['sea', 'sea2', 'sea3', 'sea4'], SEA_TITLE = ['Viento del Norte', 'Canción del Báltico', 'Tonada de la Gaviota', 'Mar Gris'];
-    let seaN = Math.floor(Math.random() * SEA_SET.length), seaCur = 0;
+    let seaN = 0, seaCur = 0;
     const VOL = {flute:0.075, shawm:0.045, fiddle:0.05, brass:0.05, choir:0.22};
     function lead(type, bus, t, m, d, v) {
       if (type === 'shawm') shawm(bus, t, m, d, v);
@@ -9143,7 +9155,7 @@ em.rep.warn{background:#b5523a}
       return {rms:Math.sqrt(q / (d.length - SR * 2)), peak:pk, len:c.tr.len, mel:Object.keys(c.tr).length};
     }
     function start(name) {
-      if (name === 'sea') { seaCur = seaN % SEA_SET.length; seaN++; }
+      if (name === 'sea') { seaN++; seaCur = seaN % 3 ? 0 : 1 + Math.floor(seaN / 3) % (SEA_SET.length - 1); }   // ab Version 49: Nordwind, jede dritte Fahrt ein anderes Stück
       const tr = trackOf(name), now = ctx.currentTime, bus = ctx.createGain();
       bus.gain.setValueAtTime(0.0001, now); bus.gain.linearRampToValueAtTime(tr.gain || 1, now + 1.6); bus.connect(musicBus || master);
       return {name, tr, bus, holds:tr.setup ? tr.setup(bus) : [], i:0, loop:0, next:now + 0.08};
@@ -9161,7 +9173,7 @@ em.rep.warn{background:#b5523a}
       const ahead = ctx.currentTime + 0.2;
       if (cur.next < ctx.currentTime - 0.5) cur.next = ctx.currentTime + 0.05;
       while (cur.next < ahead) {
-        cur.tr.play(cur.bus, cur.i, cur.next + (cur.i % 2 ? (Math.random() - 0.5) * 0.012 : 0), cur.tr.step, cur.loop);
+        cur.tr.play(cur.bus, cur.i, cur.next, cur.tr.step, cur.loop);
         cur.next += cur.tr.step; cur.i++;
         if (cur.i >= cur.tr.len) { cur.i = 0; cur.loop++; }
       }
@@ -10449,6 +10461,7 @@ em.rep.warn{background:#b5523a}
     mauer:{n:'Muralla y torres', cost:10000, civic:4, d:'Murallas nuevas y atalayas en el puerto: un 15 % menos de ataques, 0,3 de reputación al día.'}
   };
   const PLOT_X = [{cost:3000, civic:2}, {cost:5000, civic:3}];
+  [HOUSE[2], HOUSE[3], ...Object.values(CIVIC_B), ...PLOT_X].forEach(b => { b.cost *= ECO.bau; });
   const BUILD_T = {work:14, plot:7, haus:[0, 0, 30, 60], kirche:40, kran:25, markt:35, mauer:60}, MAX_JOBS = 2;
   const buildOpen = () => !!(st.city && st.city.open);
   const buildLock = () => civicIdx(st.repute || 0) < 2 ? 'desde cofrade' : 'tras tu primera sucursal en otra ciudad';
@@ -11238,7 +11251,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '527e8fc8d6';
+window.KK_BUILD = '5c0a1f4032';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
