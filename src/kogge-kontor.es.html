@@ -7093,7 +7093,9 @@ em.rep.warn{background:#b5523a}
       }
       const onFace = (o, U, Z, u0, v0, u1, v1) => [[u0, v0], [u1, v0], [u1, v1], [u0, v1]].map(([u, w]) => P(o[0] + U[0] * u + Z[0] * w, o[1] + U[1] * u + Z[1] * w, o[2] + U[2] * u + Z[2] * w));
       const matCol = (mat, i) => { const set = MATS[mat] || MATS.brick; return set[((i % set.length) + set.length) % set.length]; };
-      const roofCol = i => snowy(roofSet[((i % roofSet.length) + roofSet.length) % roofSet.length]);
+      let HC = null;   // ab Version 50: Hausfarbe des Objekts, das gerade gezeichnet wird (dein Viertel)
+      const roofCol = i => { const c = roofSet[((i % roofSet.length) + roofSet.length) % roofSet.length]; return snowy(HC ? mixc(c, HC, 0.15) : c); };
+      const doorCol = () => HC ? mixc(S.door, HC, 0.4) : S.door;
 
       // ── Grundformen ──
       function boxF(x0, y0, z0, x1, y1, z1, col, top, o) {
@@ -7142,6 +7144,7 @@ em.rep.warn{background:#b5523a}
           for (let c = 0; c < cols; c++) { if (f === 0 && (c === doorC || (doorC === -1 && cols <= 2))) continue;
             if (f === 0 && opt2.shop && c !== doorC) { const u = 0.6 + sp * (c + 0.5), pts = onFace(o0, U, [0, 0, 1], u - sp * 0.36, 0.5, u + sp * 0.36, 2.1); fillPts(pts, S.glass); continue; }
             const u = 0.6 + sp * (c + 0.5), pts = onFace(o0, U, [0, 0, 1], u - hw, z, u + hw, zt);
+            if (HC && !simple) { const sc = mixc('#6a4a30', HC, 0.4); fillPts(onFace(o0, U, [0, 0, 1], u - hw - 0.42, z, u - hw - 0.06, zt), sc); fillPts(onFace(o0, U, [0, 0, 1], u + hw + 0.06, z, u + hw + 0.42, zt), sc); }
             if (AUDIT) AUDIT.push({k:'win', u0:u - hw, u1:u + hw, z0:z, z1:zt, w, h});
             const lit = winter && ((f + c * 3 + Math.round(o0[0] + o0[1])) % 4 === 0);
             fillPts(pts, lit ? '#f1c46a' : S.glass);
@@ -7150,7 +7153,7 @@ em.rep.warn{background:#b5523a}
           } }
         if (opt2.door) { const u = w / 2, dw = Math.min(1.1, w * 0.16), pts = onFace(o0, U, [0, 0, 1], u - dw, 0, u + dw, opt2.door === 'diele' ? 2.9 : 2.4);
           if (AUDIT) AUDIT.push({k:'door', u0:u - dw, u1:u + dw, z0:0, z1:opt2.door === 'diele' ? 2.9 : 2.4, w, h, vis:true});
-          fillPts(pts, S.door, S.outline, S.ow * 0.8);
+          fillPts(pts, doorCol(), S.outline, S.ow * 0.8);
           if (!simple) { const top = onFace(o0, U, [0, 0, 1], u - dw, 0, u + dw, opt2.door === 'diele' ? 2.9 : 2.4); lineP(top[3], top[2], 'rgba(255,240,220,.35)', Math.max(0.4, 0.14 * k)); } }
       }
       // Wohn- und Speicherhaus: Treppengiebel, glatter Giebel, Fachwerk, Bretter oder Blockbau
@@ -7194,7 +7197,7 @@ em.rep.warn{background:#b5523a}
           if (kind === 'fach') timber(o0, Uw, W0, h, rh);
           if (kind === 'wood' || kind === 'log') { texture(o0, Uw, W0, h, kind); if (!tiny) { const a = P3(Mm(0, d, h)), b = P3(Mm(W0 / 2, d, h + rh)), c = P3(Mm(W0, d, h)); ctx.strokeStyle = '#efe8da'; ctx.lineWidth = Math.max(0.5, 0.2 * k); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.lineTo(c[0], c[1]); ctx.stroke(); } }
           if (o.storage) { // Speicher: Ladeluken übereinander in der Mitte, kleine Fenster außen
-            if (!tiny) { const fl = Math.max(2, Math.floor(h / 3)); for (let f = 0; f < fl + 1; f++) { const z = 0.4 + f * 3, zt = z + (f === 0 ? 2.6 : 1.9); if (zt > h + rh * 0.6) break; fillPts(onFace(o0, Uw, [0, 0, 1], W0 / 2 - 0.75, z, W0 / 2 + 0.75, zt), f === 0 ? S.door : '#4a3426', S.outline, S.ow * 0.7); }
+            if (!tiny) { const fl = Math.max(2, Math.floor(h / 3)); for (let f = 0; f < fl + 1; f++) { const z = 0.4 + f * 3, zt = z + (f === 0 ? 2.6 : 1.9); if (zt > h + rh * 0.6) break; fillPts(onFace(o0, Uw, [0, 0, 1], W0 / 2 - 0.75, z, W0 / 2 + 0.75, zt), f === 0 ? doorCol() : HC ? mixc('#4a3426', HC, 0.4) : '#4a3426', S.outline, S.ow * 0.7); }
               for (let f = 1; f < fl; f++) [W0 * 0.2, W0 * 0.8].forEach(u => { const z = 0.6 + f * 3; if (z + 1 < h) fillPts(onFace(o0, Uw, [0, 0, 1], u - 0.3, z, u + 0.3, z + 1), S.glass); });
               const g0 = P3(Mm(W0 / 2, d - (d === 0 ? 0.01 : -0.01), h + rh * 0.78)), g1 = P3(Mm(W0 / 2, d + (d === 0 ? -1.6 : 1.6), h + rh * 0.78)); lineP(g0, g1, '#3e2e20', Math.max(0.6, 0.25 * k)); }
           } else windows(o0, Uw, n, W0, h, {door:isFront ? (o.diele ? 'diele' : 'door') : null, shop:isFront && o.shop});
@@ -7203,7 +7206,7 @@ em.rep.warn{background:#b5523a}
           if (o.hm && isFront) { const c = P3(Mm(W0 / 2, d, h + rh * (step ? 0.45 : 0.4))); ctx.fillStyle = '#d4a84a'; ctx.beginPath(); ctx.arc(c[0], c[1], Math.max(1, 0.75 * k), 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#6a4e1e'; ctx.lineWidth = 0.5; ctx.stroke(); }
         });
         if (o.sign) { const fx = sw ? null : o.x + D0, a0 = P(fx, o.y + W0 * 0.78, h * 0.62), a1 = P(fx + 1.6, o.y + W0 * 0.78, h * 0.62); if (fx != null && vis([1, 0, 0])) { lineP(a0, a1, '#3e2e20', Math.max(0.6, 0.2 * k)); const c = P(fx + 1.5, o.y + W0 * 0.78, h * 0.62 - 1.2); ctx.fillStyle = '#c08a2a'; ctx.fillRect(c[0] - 0.6 * k, c[1] - 0.8 * k, 1.2 * k, 1.6 * k); ctx.strokeStyle = '#3e2e20'; ctx.lineWidth = 0.5; ctx.strokeRect(c[0] - 0.6 * k, c[1] - 0.8 * k, 1.2 * k, 1.6 * k); } }
-        if (o.flag) flagsAt.push({p:P3(Mm(W0 / 2, D0 / 2, h + rh + (kind === 'step' ? rh * 0.15 : 0))), kind:o.flag});
+        if (o.flag) flagsAt.push({p:P3(Mm(W0 / 2, D0 / 2, h + rh + (kind === 'step' ? rh * 0.15 : 0))), kind:o.flag, col:o.hc, mark:o.mark});
       }
       function texture(o0, U, w, h, kind) { if (tiny) return; ctx.strokeStyle = 'rgba(40,20,10,.25)'; ctx.lineWidth = 0.5;
         if (kind === 'wood') for (let q = 1; q < w / 0.6; q++) { const a = P(o0[0] + U[0] * q * 0.6, o0[1] + U[1] * q * 0.6, 0), b = P(o0[0] + U[0] * q * 0.6, o0[1] + U[1] * q * 0.6, h); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
@@ -7253,7 +7256,7 @@ em.rep.warn{background:#b5523a}
             const lv = Math.max(1, Math.floor((th - 12) / 10)); for (let l = 0; l < lv; l++) for (let c = 0; c < 2; c++) { const u = tw * (c ? 0.62 : 0.22), z = 12 + l * 10, hh = l === lv - 1 ? 6 : 4.5;
               fillPts(onFace([o0[0], o0[1], 0], U, [0, 0, 1], u, z, u + tw * 0.16, z + hh), l === lv - 1 ? '#2b2622' : S.niche); } });
           const tip = spire(sp, tx + tw / 2, ty0 + tw / 2, tw / 2 - (sp === 'flat' ? 0 : 0.4), th, o.sh || th * 0.62, {wall, roof:sCol, gold:o.gold});
-          if (tip) flagsAt.push({p:P3(tip), kind:'cross'});
+          if (tip) flagsAt.push(o.flag === 'hm' ? {p:P3(tip), kind:'hm', col:o.hc, mark:o.mark} : {p:P3(tip), kind:'cross'});
         });
         if (tow === 2) { boxF(x + 1 + tw, ty0 + 1, 0, x + w - 1 - tw, ty0 + tw, Math.min(th * 0.5, h + 6), wall, null); }
         if (tow && vis([0, -1, 0]) && !tiny) { const px = tow === 2 ? xm : xm; fillPts([P(px - 1.8, ty0, 0), P(px + 1.8, ty0, 0), P(px + 1.8, ty0, 5), P(px, ty0, 7), P(px - 1.8, ty0, 5)], '#2b2622'); }
@@ -7274,15 +7277,20 @@ em.rep.warn{background:#b5523a}
         else [0, 1].forEach(t => { const cx = x + w * t, cy = y + 0.6; cylF(cx, cy, 0.9, h, 9, dark, 8); coneF(cx, cy, 1.15, h + 9, 4, roofC, 8); });
         if (o.tower) { const tx = x + w - 6, ty = y + d / 2 - 3; boxF(tx, ty, 0, tx + 6, ty + 6, h + o.tower * 0.45, dark, null); const tip = octSpire(tx + 3, ty + 3, 2.6, h + o.tower * 0.45, o.tower * 0.75, snowy(S.copper)); flagsAt.push({p:P3(tip), kind:'red'}); }
       }
-      function gateTower(o) { // Holstentor
-        const {x, y, w, d} = o, wall = matCol('brick', 0), roofC = snowy(S.slate);
-        boxF(x + 6, y + 1, 0, x + w - 6, y + d - 1, 20, wall, null);
-        face([[x + 6, y + 1, 20], [x + w - 6, y + 1, 20], [x + w - 6, y + d / 2, 26], [x + 6, y + d / 2, 26]], roofC, norm([0, -6, d / 2]));
-        face([[x + w - 6, y + 1, 20], [x + w - 6, y + d - 1, 20], [x + w - 6, y + d / 2, 26]], wall, [1, 0, 0]);
-        if (vis([0, -1, 0]) && !tiny) { const c = x + w / 2; fillPts([P(c - 2.6, y + 1, 0), P(c + 2.6, y + 1, 0), P(c + 2.6, y + 1, 5.5), P(c, y + 1, 8), P(c - 2.6, y + 1, 5.5)], '#2b2622');
-          for (let lv = 0; lv < 3; lv++) for (let q = 0; q < 3; q++) { const u = x + 7.6 + q * 2.7, z = 10 + lv * 3.2; fillPts([P(u, y + 1, z), P(u + 0.9, y + 1, z), P(u + 0.9, y + 1, z + 1.5), P(u, y + 1, z + 1.5)], S.glass); } }
-        [[x + 5, y + d / 2], [x + w - 5, y + d / 2]].forEach(([cx, cy]) => { cylF(cx, cy, 5.2, 0, 21, wall, 20);
-          if (!tiny) for (let q = 0; q < 3; q++) { const a = -Math.PI / 2 + (q - 1) * 0.55, wx = cx + Math.cos(a) * 5.25, wy = cy + Math.sin(a) * 5.25; [11, 16].forEach(z => fillPts([P(wx - 0.3, wy, z), P(wx + 0.3, wy, z), P(wx + 0.3, wy, z + 1.4), P(wx - 0.3, wy, z + 1.4)], S.glass)); }
+      function gateTower(o) { // Holstentor; axis 'y' (ab Version 50): quer in einer Mauer längs y, Stadtseite nach +x
+        const {x, y, w, d} = o, sw = o.axis === 'y', wall = matCol('brick', 0), roofC = snowy(S.slate);
+        const M = (u, v, z) => sw ? [x + d - v, y + u, z] : [x + u, y + v, z], N = (a, b, c) => sw ? [-b, a, c] : [a, b, c], PM = (u, v, z) => P3(M(u, v, z));
+        const b0 = M(6, 1, 0), b1 = M(w - 6, d - 1, 0);
+        boxF(Math.min(b0[0], b1[0]), Math.min(b0[1], b1[1]), 0, Math.max(b0[0], b1[0]), Math.max(b0[1], b1[1]), 20, wall, null);
+        face([M(6, 1, 20), M(w - 6, 1, 20), M(w - 6, d / 2, 26), M(6, d / 2, 26)], roofC, norm(N(0, -6, d / 2)));
+        face([M(w - 6, d - 1, 20), M(6, d - 1, 20), M(6, d / 2, 26), M(w - 6, d / 2, 26)], roofC, norm(N(0, 6, d / 2)));
+        face([M(w - 6, 1, 20), M(w - 6, d - 1, 20), M(w - 6, d / 2, 26)], wall, N(1, 0, 0));
+        face([M(6, d - 1, 20), M(6, 1, 20), M(6, d / 2, 26)], wall, N(-1, 0, 0));
+        if (vis(N(0, -1, 0)) && !tiny) { const c = w / 2; fillPts([PM(c - 2.6, 1, 0), PM(c + 2.6, 1, 0), PM(c + 2.6, 1, 5.5), PM(c, 1, 8), PM(c - 2.6, 1, 5.5)], '#2b2622');
+          for (let lv = 0; lv < 3; lv++) for (let q = 0; q < 3; q++) { const u = 7.6 + q * 2.7, z = 10 + lv * 3.2; fillPts([PM(u, 1, z), PM(u + 0.9, 1, z), PM(u + 0.9, 1, z + 1.5), PM(u, 1, z + 1.5)], S.glass); } }
+        const a0 = sw ? 0 : -Math.PI / 2;
+        [[5, d / 2], [w - 5, d / 2]].forEach(([u, v]) => { const [cx, cy] = M(u, v, 0); cylF(cx, cy, 5.2, 0, 21, wall, 20);
+          if (!tiny) for (let q = 0; q < 3; q++) { const a = a0 + (q - 1) * 0.55, wx = cx + Math.cos(a) * 5.25, wy = cy + Math.sin(a) * 5.25; [11, 16].forEach(z => fillPts([P(wx - 0.3 * Math.abs(Math.sin(a)), wy - 0.3 * Math.abs(Math.cos(a)), z), P(wx + 0.3 * Math.abs(Math.sin(a)), wy + 0.3 * Math.abs(Math.cos(a)), z), P(wx + 0.3 * Math.abs(Math.sin(a)), wy + 0.3 * Math.abs(Math.cos(a)), z + 1.4), P(wx - 0.3 * Math.abs(Math.sin(a)), wy - 0.3 * Math.abs(Math.cos(a)), z + 1.4)], S.glass)); }
           const tip = coneF(cx, cy, 5.8, 21, 11, roofC, 20); flagsAt.push({p:P3(tip), kind:'red'}); });
       }
       function tower(o) {
@@ -7364,7 +7372,7 @@ em.rep.warn{background:#b5523a}
         face([[x, y, h], [x + w, y, h], [x + w, y + d / 2, h + rh], [x, y + d / 2, h + rh]], roofC, norm([0, -rh, d / 2]));
         face([[x + w, y, h], [x + w, y + d, h], [x + w, y + d / 2, h + rh]], wall, [1, 0, 0]);
         if (o.mat === 'fach' && !tiny) timber([x, y, 0], [1, 0, 0], w, h, 0);
-        if (vis([0, -1, 0]) && !tiny) { fillPts([P(x + w / 2 - 0.9, y, 0), P(x + w / 2 + 0.9, y, 0), P(x + w / 2 + 0.9, y, Math.min(2.6, h - 0.3)), P(x + w / 2 - 0.9, y, Math.min(2.6, h - 0.3))], S.door, S.outline, S.ow * 0.7);
+        if (vis([0, -1, 0]) && !tiny) { fillPts([P(x + w / 2 - 0.9, y, 0), P(x + w / 2 + 0.9, y, 0), P(x + w / 2 + 0.9, y, Math.min(2.6, h - 0.3)), P(x + w / 2 - 0.9, y, Math.min(2.6, h - 0.3))], doorCol(), S.outline, S.ow * 0.7);
           if (w > 6) [x + w * 0.2, x + w * 0.8].forEach(u => fillPts([P(u - 0.4, y, 1.4), P(u + 0.4, y, 1.4), P(u + 0.4, y, 2.6), P(u - 0.4, y, 2.6)], S.glass)); }
         if (o.chimney) { boxF(x + w - 2, y + 1.5, h, x + w - 1, y + 2.5, h + (o.tall ? 8 : 4.5), '#5a3a2c', '#6a4a3c'); if (o.smoke !== false) smokeAt.push({p:P(x + w - 1.5, y + 2, h + (o.tall ? 8.2 : 4.7)), c:o.smokeCol}); } }
       function work(o) { // Betrieb je Ware, im selben Maßstab wie die Häuser
@@ -7429,7 +7437,19 @@ em.rep.warn{background:#b5523a}
         else [[0, 0], [1, 0.3], [0.4, 1]].forEach(([dx, dy]) => { const p = P(x + dx, y + dy, 0); ctx.fillStyle = '#cdb58a'; ctx.beginPath(); ctx.ellipse(p[0], p[1] - 0.5 * k, 0.6 * k, 0.55 * k, 0, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = S.outline; ctx.lineWidth = S.ow * 0.7; ctx.stroke(); }); }
       function stake(o) { const {x, y} = o; [[0, 0], [3.5, 0], [0, 3], [3.5, 3]].forEach(([dx, dy]) => { const a = P(x + dx, y + dy, 0), b = P(x + dx, y + dy, 1.8); lineP(a, b, '#6a4c34', Math.max(0.7, 0.25 * k));
           ctx.fillStyle = '#c9472f'; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(b[0] + 0.9 * k, b[1] + 0.3 * k); ctx.lineTo(b[0], b[1] + 0.6 * k); ctx.closePath(); ctx.fill(); }); }
-      const DRAW = {stake, house, church, rathaus, gateTower, tower, wall:wallX, wallY, gate, crane, krantor, roland, belfry, castle, ruin, sophia, halle, stalls, shed, work, woodpile, mill, slip, scaffold, hill, platform, bridgeHouses, fence, tree, cargo,
+      // Ab Version 50: senkrechtes Prisma über einem beliebigen Grundriss, Mauerstück in jeder Richtung, Schild am Bauland
+      const ccw = pts => { let a = 0; pts.forEach((p, i) => { const q = pts[(i + 1) % pts.length]; a += p[0] * q[1] - q[0] * p[1]; }); return a < 0 ? pts.slice().reverse() : pts; };
+      function prism(pts, z0, z1, col, top, o2) { pts = ccw(pts);
+        for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; face([[p[0], p[1], z0], [q[0], q[1], z0], [q[0], q[1], z1], [p[0], p[1], z1]], col, norm([q[1] - p[1], -(q[0] - p[0]), 0]), o2); }
+        if (top) face(pts.map(([x, y]) => [x, y, z1]), top, [0, 0, 1], o2); }
+      function wallS(o) { const [ax, ay] = o.a, [bx, by] = o.b, len = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / len, uy = (by - ay) / len, t = o.th || 2.2, nx = uy * t, ny = -ux * t, h = o.h, c = matCol(o.mat || 'brick', 0), top = tint(c, 0.15);
+        prism([[ax, ay], [bx, by], [bx + nx, by + ny], [ax + nx, ay + ny]], 0, h, c, top);
+        if (!tiny) for (let u = 0.6; u < len - 1.6; u += 2.4) { const x0 = ax + ux * u, y0 = ay + uy * u, x1 = x0 + ux * 1.2, y1 = y0 + uy * 1.2, mx = nx / t, my = ny / t; prism([[x0, y0], [x1, y1], [x1 + mx, y1 + my], [x0 + mx, y0 + my]], h, h + 1.2, c, top); } }
+      function sign(o) { const {x, y} = o, post = '#4a3426';
+        [0, 4].forEach(dx => lineP(P(x + dx, y, 0), P(x + dx, y, 4.6), post, Math.max(0.8, 0.3 * k)));
+        fillPts([P(x - 0.4, y, 2.4), P(x + 4.4, y, 2.4), P(x + 4.4, y, 4.9), P(x - 0.4, y, 4.9)], '#e6d6b0', S.outline, S.ow);
+        if (!tiny) { fillPts([P(x + 0.1, y, 2.8), P(x + 1.4, y, 2.8), P(x + 1.4, y, 4.5), P(x + 0.1, y, 4.5)], o.hc || '#a8342a'); for (let q = 0; q < 3; q++) lineP(P(x + 1.8, y, 3.1 + q * 0.5), P(x + 4, y, 3.1 + q * 0.5), 'rgba(60,40,20,.55)', Math.max(0.4, 0.12 * k)); } }
+      const DRAW = {wallS, sign, stake, house, church, rathaus, gateTower, tower, wall:wallX, wallY, gate, crane, krantor, roland, belfry, castle, ruin, sophia, halle, stalls, shed, work, woodpile, mill, slip, scaffold, hill, platform, bridgeHouses, fence, tree, cargo,
         ship:o => Ships36.draw(ctx, v, Object.assign({light:L}, o))};
 
       // ── Himmel ──
@@ -7508,10 +7528,11 @@ em.rep.warn{background:#b5523a}
       // ── Bauten nach Tiefe ──
       const order = (scene.objs || []).map(o => { const fp = foot(o) || [o.x || 0, o.y || 0, o.x || 0, o.y || 0]; return {o, z:v.depth([(fp[0] + fp[2]) / 2, (fp[1] + fp[3]) / 2, 0]) + (o.bias || 0)}; }).sort((p, q) => p.z - q.z);
       order.forEach(({o}) => {
-        zOff = o.z || 0;
+        zOff = o.z || 0; HC = o.hc || null;
         const fn = DRAW[o.t]; if (fn) fn(o);
+        if (o.flagAt) flagsAt.push({p:P(o.flagAt[0], o.flagAt[1], o.flagAt[2]), kind:'hm', col:o.hc, mark:o.mark});
         if (o.plot) { const fp = foot(o); if (fp) { const pts = []; [[fp[0], fp[1]], [fp[2], fp[1]], [fp[2], fp[3]], [fp[0], fp[3]]].forEach(([x, y]) => { pts.push(P(x, y, 0)); pts.push(P(x, y, fp[4])); }); hits[o.plot] = hull(pts); } }
-        zOff = 0;
+        zOff = 0; HC = null;
       });
       return {smokeAt, flagsAt, millsAt, hits, glints};
     }
@@ -7521,7 +7542,7 @@ em.rep.warn{background:#b5523a}
         case 'house': return o.ridge === 'y' ? [o.x, o.y, o.x + o.w, o.y + o.d, o.h + o.rh * 0.6] : [o.x, o.y, o.x + o.d, o.y + o.w, o.h + o.rh * 0.6];
         case 'church': return [o.x, o.y - 2, o.x + o.w, o.y + o.d, (o.th || o.h * 2.4) * 0.7];
         case 'rathaus': return [o.x, o.y, o.x + o.w, o.y + o.d, o.h + 6];
-        case 'gateTower': return [o.x, o.y, o.x + o.w, o.y + o.d, 24];
+        case 'gateTower': return o.axis === 'y' ? [o.x, o.y, o.x + o.d, o.y + o.w, 24] : [o.x, o.y, o.x + o.w, o.y + o.d, 24];
         case 'tower': return [o.x - o.r, o.y - o.r, o.x + o.r, o.y + o.r, o.h + o.r];
         case 'wall': return [o.x0, o.y, o.x1, o.y + 2.2, o.h];
         case 'wallY': return [o.x, o.y0, o.x + 2.2, o.y1, o.h];
@@ -7547,6 +7568,9 @@ em.rep.warn{background:#b5523a}
         case 'fence': return null;
         case 'tree': return [o.x - 0.5, o.y - 0.5, o.x + 0.5, o.y + 0.5, 1];
         case 'stake': return [o.x, o.y, o.x + 3.5, o.y + 3, 1.8];
+        case 'sign': return [o.x, o.y, o.x + 4, o.y + 0.3, 4.9];
+        case 'wallS': { const t = o.th || 2.2, len = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]), nx = (o.b[1] - o.a[1]) / len * t, ny = -(o.b[0] - o.a[0]) / len * t, xs = [o.a[0], o.b[0], o.a[0] + nx, o.b[0] + nx], ys = [o.a[1], o.b[1], o.a[1] + ny, o.b[1] + ny];
+          return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys), o.h]; }
         case 'cargo': return [o.x, o.y, o.x + 1.6, o.y + 1.4, 1.5];
         case 'ship': return [o.X - 10, o.Y - 3, o.X + 10, o.Y + 3, 0];
       }
@@ -7578,7 +7602,13 @@ em.rep.warn{background:#b5523a}
       (R.smokeAt || []).forEach((s, i) => { const p = s.p, col = s.c || (winter ? '235,238,240' : '222,218,210');
         for (let q = 0; q < 5; q++) { const f = ((t * 0.22 + q / 5 + i * 0.137) % 1), r = (0.7 + f * 2.8) * k, x = p[0] + f * 7 * k + Math.sin(t * 0.7 + q + i) * 0.8 * k, y = p[1] - f * 10 * k, a = 0.28 * (1 - f) * Math.min(1, f * 6);
           const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(1, `rgba(${col},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); } });
-      (R.flagsAt || []).forEach((f, i) => { if (f.kind === 'none') return; const [x, y] = f.p, w = Math.sin(t * 4 + i) * 0.5 * k; ctx.strokeStyle = '#3e2e20'; ctx.lineWidth = Math.max(0.5, 0.25 * k); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - 3 * k); ctx.stroke();
+      (R.flagsAt || []).forEach((f, i) => { if (f.kind === 'none') return; const [x, y] = f.p, w = Math.sin(t * 4 + i) * 0.5 * k;
+        if (f.kind === 'hm') { // ab Version 50: Fahne in deiner Hausfarbe mit Hausmarke
+          const fw = 4.4 * k, fh = 3 * k, y0 = y - 5 * k; ctx.strokeStyle = '#3e2e20'; ctx.lineWidth = Math.max(0.5, 0.25 * k); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y0); ctx.stroke();
+          ctx.fillStyle = f.col || '#a8342a'; ctx.beginPath(); ctx.moveTo(x, y0); ctx.quadraticCurveTo(x + fw / 2, y0 + w, x + fw, y0 + w * 0.6); ctx.lineTo(x + fw, y0 + fh + w * 0.6); ctx.quadraticCurveTo(x + fw / 2, y0 + fh + w, x, y0 + fh); ctx.closePath(); ctx.fill();
+          ctx.strokeStyle = 'rgba(40,25,15,.5)'; ctx.lineWidth = 0.5; ctx.stroke();
+          if (f.mark && typeof Path2D !== 'undefined' && k > 1.2) { const sc = fh * 0.8 / 40; ctx.save(); ctx.translate(x + fw / 2 - 20 * sc, y0 + w * 0.7 + fh * 0.1); ctx.scale(sc, sc); ctx.strokeStyle = '#2b2522'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(new Path2D(f.mark)); ctx.restore(); }
+          return; } ctx.strokeStyle = '#3e2e20'; ctx.lineWidth = Math.max(0.5, 0.25 * k); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - 3 * k); ctx.stroke();
         if (f.kind === 'cross') { ctx.fillStyle = '#c8a24a'; ctx.fillRect(x - 0.9 * k, y - 2.2 * k, 1.8 * k, Math.max(0.6, 0.25 * k)); ctx.fillRect(x - 0.12 * k, y - 3 * k, Math.max(0.6, 0.25 * k), 1.4 * k); return; }
         ctx.fillStyle = f.kind === 'blue' ? '#2f5a8a' : '#a8342a'; ctx.beginPath(); ctx.moveTo(x, y - 3 * k); ctx.quadraticCurveTo(x + 1.5 * k, y - 3 * k + w, x + 3 * k, y - 2.6 * k + w); ctx.lineTo(x, y - 1.8 * k); ctx.closePath(); ctx.fill();
         ctx.fillStyle = f.kind === 'blue' ? '#e2b85a' : '#f2ece0'; ctx.fillRect(x + 0.3 * k, y - 2.65 * k + w * 0.5, 1.6 * k, Math.max(0.5, 0.3 * k)); });
@@ -7599,7 +7629,8 @@ em.rep.warn{background:#b5523a}
     const SLOT = {kontor:[14, 16, 10, 15], haus:[103, 72, 9, 13], w0:[60, 32], w1:[73, 40], w2:[117, 32], w3:[130, 40], w4:[170, 34]};
     const CHURCH_W = {x:62, y:80, w:16, d:30, h:16, th:44, sh:34}, CHURCH_E = {x:170, y:76, w:18, d:34, h:17, th:46, sh:28}, CHURCH_M = {x:118, y:104, w:28, d:44, h:18, th:46, sh:34, aisles:true, choir:true};
     const CITY = {
-      luebeck:{mat:[['brick', 0.85], ['fach', 0.15]], roof:'tile', water:'river', walls:'brick', rat:'luebeck', front:['step', 'step', 'step', 'plain'],
+      luebeck:{plan:50, gate:'holsten', gateAt:[-40.5, 61], coast:'gerade', wallPoly:[[-40, 7], [-41, 92], [-38, 150], [-24, 167], [60, 169], [140, 169], [214, 167], [252, 138], [272, 92], [272, 7]],
+        mat:[['brick', 0.85], ['fach', 0.15]], roof:'tile', water:'river', walls:'brick', rat:'luebeck', front:['step', 'step', 'step', 'plain'],
         main:{towers:2, spire:'copper', th:48, sh:36}, west:{t:'church', towers:1, spire:'copper', th:44, sh:34}, east:{t:'church', towers:2, spire:'copper', th:46, sh:28}, south:'luebeck', crane:118},
       hamburg:{mat:[['brick', 0.55], ['fach', 0.45]], roof:'red', water:'river', walls:'brick', front:['step', 'plain', 'step'],
         main:{towers:1, spire:'needle', th:44, sh:62, tw:9}, west:{t:'church', towers:1, spire:'copper', th:40, sh:40}, east:{t:'church', towers:1, spire:'needle', th:40, sh:44, tw:8}, crane:160, bigCrane:true, south:'werft'},
@@ -7630,6 +7661,7 @@ em.rep.warn{background:#b5523a}
     // Szene einer Stadt. plots: Zustand der Bauplätze im Stammsitz (sonst null), branch: eigene Niederlassung
     function build(cid, o) {
       o = o || {};
+      if ((CITY[cid] || {}).plan === 50) return build50(cid, o, CITY[cid]);
       const cfg = CITY[cid] || CITY.luebeck, seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1, r = rngF(seed);
       const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [];
       const pick = a => a[Math.floor(r() * a.length)];
@@ -7818,7 +7850,193 @@ em.rep.warn{background:#b5523a}
       if (cfg.hills) for (let i = objs.length - 1; i >= 0; i--) { const q = objs[i]; if (q.t === 'tree' && q.x - q.y < -120) objs.splice(i, 1); }
       return {objs, ground, roof:cfg.roof, seed, berths, cfg};
     }
-    return {build, CITY, SLOT};
+    // ───── Ab Version 50: Stadtplan nach Patrizier-Art ─────
+    // Wasser bis zum unteren Bildrand, kein Gegenufer. Der Kai reicht von der Werft links bis zum Turm rechts; die Mauer ist ein
+    // geschlossener Ring (cfg.wallPoly) mit einem Turm an jeder Ecke und an beiden Enden des Kais. Rechts unten liegt dein Viertel:
+    // im Stammsitz erst Bauland, dann Kontor, Haus, Betriebe, Vorhaben und die Häuser deiner Familie; in fremden Häfen Bürgerhäuser.
+    const VQ = [212, 16, 268, 92];
+    const SLOT50 = {kontor:[214, 16, 10, 15], haus:[226, 17, 9, 13], speicher:[254, 16, 10, 15], w0:[214, 38], w1:[228, 38], w2:[242, 38], w3:[214, 49], w4:[228, 49],
+      hospital:[214, 67, 13, 21], artushof:[233, 66, 20, 14]};
+    // zwölf Plätze für die Häuser deiner Familie, in der Reihenfolge, in der sie entstehen: [x, y, Breite, Tiefe]
+    const FAM = [[236, 18, 6, 12], [242.5, 18, 6, 12], [249, 18, 5, 12], [243, 48, 6.5, 9.5], [250, 48, 6.5, 9.5], [257, 38, 7, 9], [257, 48, 7, 9],
+      [256, 66, 7, 10], [256, 77, 7, 10], [233, 82, 6.5, 9], [240, 82, 6.5, 9], [247, 82, 6.5, 9]];
+    const STREETS50 = [[-41, 10, 272, 16], [44, 16, 52, 150], [96, 16, 101, 169], [150, 16, 155, 150], [-34, 58, 268, 64], [-34, 150, 214, 158], [-33, 16, -28, 150], [205, 16, 212, 150], [212, 32, 266, 37]];
+    function build50(cid, o, cfg) {
+      const seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1, r = rngF(seed);
+      const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [], ring = cfg.wallPoly, GV = (P && P.gv) || {};
+      const hc = o.house && o.house.hc || '#8a3a2a', mark = o.house && o.house.mark || null;
+      const own = q => Object.assign(q, {hc, mark});   // Bau deines Hauses: Hausfarbe und Hausmarke
+      const pick = a => a[Math.floor(r() * a.length)];
+      const busy = (x0, y0, x1, y1) => keep.some(([a, b, c, d]) => x0 < c && x1 > a && y0 < d && y1 > b);
+      const tall = cfg.tall || 0, base = cfg.mat[0][0], hmMat = base === 'fach' || base === 'wood' || base === 'log' ? base : 'brick';
+      const fullEast = typeof cfg.east === 'string';
+      if (fullEast) keep.push([155, 64, 205, 150]);
+      const lmKeep = (spec, b0) => { if (!spec || typeof spec === 'string') return; const q = Object.assign({}, b0, spec), w = q.w || (q.r ? q.r * 2 : 10), d = q.d || (q.r ? q.r * 2 : 10), x = q.r ? q.x - q.r : q.x, y = q.r ? q.y - q.r : q.y; keep.push([x + 1, y - 2, x + w, y + d]); };
+      lmKeep(cfg.west, cfg.west && cfg.west.t === 'church' ? CHURCH_W : {}); lmKeep(cfg.east, cfg.east && cfg.east.t === 'church' ? CHURCH_E : {});
+      if (cfg.canal) keep.push([-28, 99, 44, 107]);
+      keep.push([-28, 16, -12, 32]);   // Werftplatz am linken Ende des Kais
+      [[60, 32], [117, 32], [170, 34]].forEach(([x, y]) => keep.push([x - 1, y - 1, x + 9, y + 7]));
+      function row(x0, x1, y, depth, face, front) {
+        let x = x0;
+        while (x < x1 - 4) {
+          const w = Math.min(x1 - x, 6 + Math.floor(r() * 4)), d = depth - r() * 3, h = (front ? 11 + r() * 6 : 7 + r() * 4) + (front ? tall : tall / 2), yy = face === 'S' ? y : y - d;
+          if (busy(x, yy, x + w, yy + d)) { x += w; continue; }
+          const m = pickW(r, cfg.mat), kind = kindOf(m, r, front ? cfg.front : ['plain', 'step', 'plain']);
+          objs.push({t:'house', x, y:yy, w, d, h, rh:w * (0.85 + r() * 0.25), ridge:'y', front:face, kind, mat:m, wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:r() < 0.25, shop:front && r() < 0.3});
+          x += w;
+        }
+      }
+      function rowX(y0, y1, x, depth, face) {
+        let y = y0;
+        while (y < y1 - 4) {
+          const w = Math.min(y1 - y, 6 + Math.floor(r() * 3)), d = depth - r() * 2, h = 7 + r() * 5 + tall / 2, xx = face === 'W' ? x : x - d;
+          if (busy(xx, y, xx + d, y + w)) { y += w; continue; }
+          const m = pickW(r, cfg.mat);
+          objs.push({t:'house', x:xx, y, w, d, h, rh:w * 0.9, ridge:'x', front:face, mat:m, kind:kindOf(m, r, ['plain', 'step', 'plain']), wi:Math.floor(r() * 6), ri:Math.floor(r() * 4), chimney:r() < 0.22});
+          y += w;
+        }
+      }
+      function trees(x0, y0, x1, y1, n, s0, out) { for (let q = 0; q < n; q++) { const x = lerp(x0, x1, r()), y = lerp(y0, y1, r()); if (busy(x - 2, y - 2, x + 2, y + 2) || (out && K36.inPoly([x, y], ring))) continue; objs.push({t:'tree', x, y, s:(s0 || 3) + r() * 2.5, pine:out && cfg.water === 'sea' && r() < 0.5}); } }
+      function block(x0, y0, x1, y1, front, dS, dN, tr) {
+        row(x0, x1, y0, dS, 'S', front); if (dN > 1) row(x0, x1, y1, dN, 'N', false);
+        if (y1 - dN - (y0 + dS) < 4) return;
+        rowX(y0 + dS, y1 - dN, x0, 11, 'W'); rowX(y0 + dS, y1 - dN, x1, 11, 'E');
+        ground.push({t:'garden', pts:[[x0 + 11, y0 + dS], [x1 - 11, y0 + dS], [x1 - 11, y1 - dN], [x0 + 11, y1 - dN]]});
+        if (tr) trees(x0 + 13, y0 + dS + 2, x1 - 13, y1 - dN - 2, Math.max(1, Math.round((x1 - x0) * (y1 - y0) / 480)));
+      }
+      // Boden: Wasser bis zum unteren Bildrand, Schilf am Ufer vor der Mauer
+      ground.push({t:'fill', col:'land'});
+      ground.push({t:'water', rect:[-420, -420, 640, 0], waves:220, seed:seed % 97});
+      ground.push({t:'reeds', x0:-170, x1:-47, y:0}); ground.push({t:'reeds', x0:278, x1:430, y:0});
+      STREETS50.forEach(s => ground.push({t:'street', rect:s}));
+      ground.push({t:'quay', x0:-41, x1:272});
+      // Häuserblöcke der Altstadt
+      BLOCKS.forEach(([x0, y0, x1, y1], bi) => { if (bi === 6 && fullEast) return; block(x0, y0, x1, y1, y0 === 16, y0 === 16 ? 16 : 13, 12, !(bi === 5 && cfg.west) && !(bi === 6 && cfg.east)); });
+      [[60, 32, 0], [117, 32, 2], [170, 34, 4]].forEach(([x, y, n]) => objs.push({t:'shed', x, y, w:8, d:6, h:4.4, mat:'fach', chimney:n === 2}));
+      // Markt, Rathaus, Hauptkirche
+      ground.push({t:'plaza', pts:[[MARKT[0], MARKT[1]], [MARKT[2], MARKT[1]], [MARKT[2], MARKT[3]], [MARKT[0], MARKT[3]]]});
+      ground.push({t:'plaza', pts:[[101, 88], [150, 88], [150, 150], [101, 150]]});
+      ground.push({t:'plaza', pts:[[101, 64], [116, 64], [116, 88], [101, 88]]});
+      const bm = pickW(r, cfg.mat);
+      objs.push({t:'house', x:103, y:64, w:8, d:13, h:12 + tall, rh:8, ridge:'x', front:'E', kind:kindOf(bm, r, cfg.front), mat:bm, wi:0, ri:1});
+      objs.push({t:'house', x:103, y:72.5, w:8, d:12, h:10 + tall, rh:7, ridge:'x', front:'E', kind:kindOf(bm, r, ['plain']), mat:bm, wi:2, ri:3});
+      objs.push({t:'house', x:103, y:81, w:7, d:12, h:11 + tall, rh:7, ridge:'x', front:'E', kind:kindOf(bm, r, ['plain']), mat:bm === 'brick' ? 'white' : bm, wi:1, ri:2});
+      if (cfg.belfry) objs.push({t:'belfry', x:131.5, y:92});
+      else objs.push({t:'rathaus', x:116, y:88, w:31, d:9, h:15, style:cfg.rat, mat:base === 'brickL' ? 'brickL' : base === 'brick' ? 'brick' : 'stone', tower:cfg.rtower});
+      const M = Object.assign({}, CHURCH_M, cfg.main || {}, {t:'church'});
+      if (!M.mat) M.mat = cfg.walls === 'brickL' ? 'brickL' : 'brick';
+      if (cfg.belfry) { M.y = 112; M.d = 38; }
+      if (GV.turm === 'built') { M.th = (M.th || 46) + 14; M.sh = (M.sh || 34) + 8; own(M).flag = 'hm'; M.plot = 'turm'; }
+      objs.push(M);
+      if (GV.turm === 'job') objs.push({t:'scaffold', x:M.x + 1, y:M.y - 3, w:M.w - 2, d:2, h:M.th || 46, frac:0.5, noWalls:true, plot:'turm'});
+      if (cfg.roland) objs.push({t:'roland', x:cfg.roland[0], y:cfg.roland[1]});
+      const place = (spec, b0) => { if (!spec) return; const q = Object.assign({}, b0, spec); if (q.t === 'church' && !q.mat) q.mat = M.mat; objs.push(q); };
+      if (cfg.west) place(cfg.west, cfg.west.t === 'church' ? CHURCH_W : {});
+      if (cfg.east && !fullEast) place(cfg.east, cfg.east.t === 'church' ? CHURCH_E : {});
+      // Markthalle und Kapelle bleiben an ihrem Platz und tragen deine Fahne
+      if (home && P.markt === 'built') objs.push(own({t:'halle', x:120, y:66, w:22, d:7, h:5.5, plot:'markt', flagAt:[131, 69.5, 9]}));
+      else if (home && P.markt === 'job') objs.push({t:'scaffold', x:121, y:66, w:20, d:6, h:6, frac:P.marktF || 0.3, plot:'markt', mat:'wood'});
+      else if (!cfg.belfry) objs.push({t:'stalls', x:121, y:70, n:7});
+      if (home && P.kirche === 'built') objs.push(own({t:'church', x:147, y:122, w:7, d:13, h:8, towers:0, ridgeTurret:true, mat:M.mat, plot:'kirche', flagAt:[150.5, 129, 17]}));
+      else if (home && P.kirche === 'job') objs.push({t:'scaffold', x:146, y:122, w:7, d:12, h:9, frac:P.kircheF || 0.3, plot:'kirche', mat:M.mat});
+      // Werft am linken Ende des Kais
+      ground.push({t:'yard', pts:[[-28, 16], [-12, 16], [-12, 32], [-28, 32]]});
+      objs.push({t:'slip', x:-19, y:5, type:'kogge'});
+      objs.push({t:'shed', x:-27, y:19, w:10, d:7, h:4.2, chimney:true, mat:'fach'});
+      [[-26, 28], [-19, 28.5]].forEach(([x, y], n) => objs.push({t:'woodpile', x, y, n}));
+      // Kai: Kran (im Stammsitz dein Bauplatz), Ladung
+      if (home) { if (P.kran === 'built') objs.push(own({t:'crane', x:118, y:4, plot:'kran', flagAt:[118, 4, 14]})); else if (P.kran === 'job') objs.push({t:'scaffold', x:114, y:1, w:8, d:6, h:10, frac:P.kranF || 0.3, plot:'kran', mat:'wood'}); }
+      else if (cfg.crane != null) objs.push({t:'crane', x:cfg.crane, y:4, big:!!cfg.bigCrane});
+      if (cfg.bigCrane && home && cfg.crane !== 118) objs.push({t:'crane', x:cfg.crane, y:4, big:true});
+      if (cfg.krantor) objs.push({t:'krantor', x:cfg.krantor, y:0.5});
+      [[14, 4, 's'], [32, 6, 'c'], [56, 4, 'b'], [70, 7, 'c'], [84, 3, 's'], [104, 6, 'b'], [131, 5, 'c'], [146, 4, 's'], [186, 6, 'b']].forEach(([x, y, t]) => {
+        if ((cfg.krantor && x > cfg.krantor - 3 && x < cfg.krantor + 22) || Math.abs(x - 118) < 5) return; objs.push({t:'cargo', x, y, tt:t, noShadow:true}); });
+      // Mauerring mit Türmen; Tor an der Landseite, Türme an beiden Enden des Kais
+      const wm = cfg.walls, wh = wm === 'log' ? 5 : 7, wmat = wm === 'log' ? 'log' : wm === 'none' ? 'stone' : wm, tw = cfg.wallTowers || 'mixed';
+      const mauerOwn = home && P.mauer === 'built';
+      const T = (x, y, rr, h, kind, extra) => objs.push(Object.assign({t:'tower', x, y, r:rr, h, kind, mat:wmat, roofC:tw === 'roundRed' ? '#a24a30' : null, steep:tw === 'roundRed' ? 2.2 : null}, extra || {}));
+      if (wm !== 'none') {
+        // Landtor: an der Stelle cfg.gateAt (sonst hinten am Ende der Hauptstraße), Lücke in der Mauer
+        const GA = cfg.gateAt || [98.5, 169], half = cfg.gate === 'holsten' ? 12.5 : 6;
+        let gate = null, gi = -1, gt = 0, gd = 1e9;
+        for (let i = 0; i < ring.length - 1; i++) { const [ax, ay] = ring[i], [bx, by] = ring[i + 1], L2 = (bx - ax) ** 2 + (by - ay) ** 2, t = Math.max(0, Math.min(1, ((GA[0] - ax) * (bx - ax) + (GA[1] - ay) * (by - ay)) / L2)), dd = Math.hypot(ax + (bx - ax) * t - GA[0], ay + (by - ay) * t - GA[1]); if (dd < gd) { gd = dd; gi = i; gt = t; } }
+        for (let i = 0; i < ring.length - 1; i++) {
+          const [ax, ay] = ring[i], [bx, by] = ring[i + 1], len = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.ceil(len / 9));
+          const at = t => [ax + (bx - ax) * t, ay + (by - ay) * t], seg = (t0, t1) => ({t:'wallS', a:at(t0), b:at(t1), h:wh, mat:wmat});
+          let g0 = null, g1 = null;
+          if (i === gi) { gate = at(gt).concat([Math.abs(by - ay) > Math.abs(bx - ax) ? 'y' : 'x']); g0 = gt - half / len; g1 = gt + half / len; }
+          for (let q = 0; q < n; q++) { const t0 = q / n, t1 = (q + 1) / n;
+            if (g0 != null && t1 > g0 && t0 < g1) { if (t0 < g0) objs.push(seg(t0, g0)); if (t1 > g1) objs.push(seg(g1, t1)); continue; }
+            objs.push(seg(t0, t1)); }
+          // Zwischentürme auf langen Strecken, nicht am Tor
+          const nt = Math.floor(len / 46);
+          for (let q = 1; q <= nt; q++) { const t = q / (nt + 1); if (g0 != null && t > g0 - 0.08 && t < g1 + 0.08) continue; const [x, y] = at(t); T(x, y, tw === 'square' ? 3.8 : 4.2, wm === 'log' ? 9 : tw === 'square' ? 16 : 14, tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : q % 2 ? 'square' : 'round'); }
+        }
+        ring.forEach(([x, y], i) => { const end = i === 0 || i === ring.length - 1;
+          T(x, y, end ? 5.2 : 4.8, wm === 'log' ? 10 : end ? 17 : 15, tw === 'square' ? 'square' : 'round', end ? {plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, (wm === 'log' ? 10 : 17) + 9] : null, hc, mark} : null); });
+        if (gate) { const [gx, gy, ax2] = gate, ys = ax2 === 'y';
+          // Mitte des Tors auf der Mauerachse; die Mauer liegt 2,2 m nach innen
+          const cx = ys ? gx + 1.1 : gx, cy = ys ? gy : gy - 1.1;
+          if (cfg.gate === 'holsten') objs.push(Object.assign(ys ? {t:'gateTower', axis:'y', x:cx - 4.5, y:cy - 11, w:22, d:9} : {t:'gateTower', x:cx - 11, y:cy - 4.5, w:22, d:9}, mauerOwn ? {flagAt:[cx, cy, 27], hc, mark} : {}));
+          else objs.push(Object.assign({t:'gate', x:cx, y:cy, mat:wmat}, mauerOwn ? {flagAt:[cx, cy, 30], hc, mark} : {}));
+          ground.push({t:'road', pts:ys ? [[-330, cy - 3], [cx, cy - 3], [cx, cy + 3], [-330, cy + 3]] : [[cx - 3, cy], [cx + 3, cy], [cx + 3, 330], [cx - 3, 330]]});
+        }
+      } else {
+        // ohne Mauer: zwei Wachtürme an den Enden des Kais
+        [ring[0], ring[ring.length - 1]].forEach(([x, y], i) => T(x, y, 3.6, 14, 'square', {mat:'stone', steep:2, plot:home && i ? 'mauer' : null, flagAt:mauerOwn ? [x, y, 21] : null, hc, mark}));
+      }
+      if (home && P.mauer === 'job') { const [x, y] = ring[ring.length - 1]; objs.push({t:'scaffold', x:x - 7, y:y - 5, w:12, d:12, h:18, frac:P.mauerF || 0.3, noWalls:true, plot:'mauer'}); }
+      // Dein Viertel
+      const [qx0, qy0, qx1, qy1] = VQ;
+      if (home) {
+        [[qy0, 32], [37, 58], [64, qy1]].forEach(([y0, y1]) => ground.push({t:'land', col:'meadow', pts:[[qx0, y0], [qx1, y0], [qx1, y1], [qx0, y1]]}));
+        let n = 0;
+        const [kx, ky, kw, kd] = SLOT50.kontor;
+        if (P.kontor === 'built') { n++; objs.push(own({t:'house', x:kx, y:ky, w:kw, d:kd, h:(P.kontorLvl || 1) > 1 ? 17 : 13, rh:kw * 1.2, ridge:'y', front:'S', kind:base === 'wood' || base === 'log' || base === 'fach' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:2, ri:0, storage:true, hm:true, plot:'kontor', flag:'hm'}));
+          [[226, 5, 'b'], [212, 6, 'c'], [222, 3, 's']].forEach(([x, y, t]) => objs.push({t:'cargo', x, y, tt:t, noShadow:true})); }
+        else objs.push({t:'stake', x:kx + 3, y:ky + 6});
+        const [hx, hy, hw, hd] = SLOT50.haus, lv = P.hausLvl || 1;
+        if (P.haus === 'job' && lv < 2) objs.push({t:'scaffold', x:hx, y:hy, w:hw, d:hd - 1, h:14, frac:P.hausF || 0.3, plot:'haus'});
+        else { objs.push(own({t:'house', x:hx, y:hy, w:hw, d:hd, h:lv === 1 ? 10 + tall : lv === 2 ? 14 + tall : 17 + tall, rh:lv === 1 ? 7 : 9.5, ridge:'y', front:'S', kind:lv === 1 ? kindOf(hmMat, r, ['plain']) : hmMat === 'brick' ? 'step' : hmMat, mat:lv === 3 && hmMat === 'brick' ? 'white' : hmMat, wi:4, ri:0, chimney:true, hm:true, oriel:lv === 3, plot:'haus', diele:true, flag:lv > 1 ? 'hm' : null}));
+          if (P.haus === 'job') objs.push({t:'scaffold', x:hx - 1, y:hy - 2, w:hw + 2, d:1.2, h:16, frac:P.hausF || 0.3, plot:'haus', noWalls:true}); }
+        ['w0', 'w1', 'w2', 'w3', 'w4'].forEach(k => { const [x, y] = SLOT50[k], s0 = P[k] || {};
+          if (s0.s === 'built') { n++; objs.push(own({t:'work', x, y, g:s0.g, idle:s0.idle, plot:k})); }
+          else if (s0.s === 'job') objs.push({t:'scaffold', x, y, w:9, d:6, h:5, frac:s0.f || 0.3, mat:'fach', plot:k});
+          else if (s0.s === 'free' || s0.s === 'open') { ground.push({t:'yard', pts:[[x - 0.5, y - 0.5], [x + 12.5, y - 0.5], [x + 12.5, y + 8], [x - 0.5, y + 8]]}); objs.push({t:'fence', x0:x - 0.5, y0:y - 0.5, x1:x + 12.5, y1:y + 8}); }
+          else objs.push({t:'stake', x:x + 4, y:y + 2});
+        });
+        // große Vorhaben: Speicher am Kai mit zweitem Kran, Hospital, Artushof
+        const [sx, sy, sw, sd] = SLOT50.speicher;
+        if (GV.hafen === 'built') { n++; objs.push(own({t:'house', x:sx, y:sy, w:sw, d:sd, h:15, rh:sw * 1.2, ridge:'y', front:'S', kind:'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, storage:true, hm:true, flag:'hm', plot:'hafen'}), own({t:'crane', x:246, y:4, plot:'hafen', flagAt:[246, 4, 14]})); }
+        else if (GV.hafen === 'job') objs.push({t:'scaffold', x:sx, y:sy, w:sw, d:sd - 2, h:14, frac:0.5, plot:'hafen'});
+        const [px, py, pw, pd] = SLOT50.hospital;
+        if (GV.hospital === 'built') { n++; objs.push(own({t:'church', x:px, y:py, w:pw, d:pd, h:9, towers:0, ridgeTurret:true, mat:M.mat, plot:'hospital', flagAt:[px + pw / 2, py + 2, 22]})); }
+        else if (GV.hospital === 'job') objs.push({t:'scaffold', x:px, y:py, w:pw, d:pd, h:10, frac:0.5, plot:'hospital', mat:M.mat});
+        const [ax, ay, aw, ad] = SLOT50.artushof;
+        if (GV.artushof === 'built') { n++; objs.push(own({t:'house', x:ax, y:ay, w:aw, d:ad, h:13 + tall, rh:10, ridge:'y', front:'S', kind:base === 'fach' || base === 'wood' || base === 'log' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, hm:true, flag:'hm', plot:'artushof', chimney:true}));
+          ground.push({t:'plaza', pts:[[ax - 1, 64], [ax + aw + 1, 64], [ax + aw + 1, ay], [ax - 1, ay]]}); }
+        else if (GV.artushof === 'job') objs.push({t:'scaffold', x:ax, y:ay, w:aw, d:ad, h:12, frac:0.5, plot:'artushof'});
+        // Häuser deiner Familie aus der festen Reihe
+        FAM.slice(0, Math.min(12, P.fam || 0)).forEach(([x, y, w, d], i) => { const m = pickW(r, cfg.mat);
+          objs.push(own({t:'house', x, y, w, d, h:9 + (i * 7 % 4) + tall / 2, rh:w * 0.95, ridge:'y', front:'S', kind:kindOf(m, r, cfg.front), mat:m, wi:i + 1, ri:i, chimney:i % 3 === 0})); });
+        if (n < 2) objs.push({t:'sign', x:244.5, y:31, hc});
+        if (!(P.fam > 9)) [[262, 88], [216, 90.5]].forEach(([x, y]) => objs.push({t:'tree', x, y, s:3.2}));
+      } else {
+        // fremder Hafen: Bürgerhäuser; mit Niederlassung steht dein Speicher mit deiner Fahne am Kai
+        if (o.branch) { keep.push([qx0, qy0, qx0 + 13, qy0 + 15]); objs.push(own({t:'house', x:214, y:16, w:10, d:15, h:13, rh:12, ridge:'y', front:'S', kind:base === 'wood' || base === 'log' || base === 'fach' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:2, ri:0, storage:true, hm:true, flag:'hm'})); }
+        block(qx0, qy0, qx1 - 2, 32, true, 16, 0, false);
+        block(qx0, 37, qx1 - 2, 58, false, 11, 10, true);
+        block(qx0, 64, qx1 - 2, qy1, false, 13, 12, true);
+      }
+      // vor der Mauer: Gärten, Felder, Bäume, Mühle
+      [[-98, 16, -54, 52], [-98, 70, -54, 150], [-30, 178, 40, 192], [120, 178, 200, 192], [284, 16, 322, 52]].forEach(([x0, y0, x1, y1]) => ground.push({t:'gardenOut', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}));
+      ground.push({t:'fields', rect:[-120, 198, 330, 272]});
+      trees(-112, 6, -50, 165, 16, 2.4, true); trees(-40, 174, 240, 198, 12, 2.4, true); trees(278, 6, 330, 120, 12, 2.4, true);
+      for (let q = 0; q < 30; q++) objs.push({t:'tree', x:-80 + r() * 380, y:272 + r() * 40, s:3 + r() * 3, pine:cfg.hills || cfg.rocks});
+      if (!cfg.hills) objs.push({t:'mill', x:-76, y:96});
+      return {objs, ground, roof:cfg.roof, seed, berths:[66, 96, 136, 166, 194], cfg};
+    }
+    return {build, CITY, SLOT, SLOT50};
   })();
   // ───── Anbindung ans Spiel: Stadtbild mit Leben, Antippen, Baubilder, Schiffsbilder für die Segelansicht ─────
   const G36 = (function () {
@@ -7827,7 +8045,7 @@ em.rep.warn{background:#b5523a}
     // ── Stadtbild ──
     // Grundbild wird einmal je Zustand gezeichnet, darüber laufen Schiffe, Rauch, Fahnen, Mühlen und Möwen
     function cityBase(o) {
-      const sc = Plans36.build(o.cid, {plots:o.plots, branch:o.branch, flag:o.flag});
+      const sc = Plans36.build(o.cid, {plots:o.plots, branch:o.branch, flag:o.flag, house:o.house});
       const W = o.W, H = o.H, dpr = o.dpr || 1, cv = document.createElement('canvas');
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
