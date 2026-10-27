@@ -30,7 +30,7 @@ ASCENSO Y CARRERA
 De buhonero a regidor, burgomaestre y, por fin, Decano de la Hansa. Tres familias de mercaderes también quieren el cargo. Forja alianzas, empieza contiendas, gana los votos en la Dieta y entra en tu clasificación.
 
 HISTORIA PARA JUGAR
-Los años de 1356 a 1370 con sus sucesos reales: la peste, la guerra contra Valdemar de Dinamarca, la Confederación de Colonia y la Paz de Stralsund.
+Los años de 1356 a 1372 con sus sucesos reales: la peste, la guerra contra Valdemar de Dinamarca, la Confederación de Colonia y la Paz de Stralsund.
 
 JUSTO
 • Los primeros 50 días de juego, gratis
@@ -44,4 +44,4 @@ JUSTO
 | Campo | Contenido |
 |---|---|
 | Nombre visible (30) | Versión completa |
-| Descripción (45) | Desbloquea el juego completo hasta 1370 |
+| Descripción (45) | Desbloquea el juego completo hasta 1372 |

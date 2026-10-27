@@ -12,7 +12,7 @@ Alles wird aus der deutschen Quelle `src/kogge-kontor.html` gebaut. Von Hand ge√
 | `python3 tools/build.py --app` | App-Ordner `app/www` (vorher `npm ci --prefix app`, danach `npm run native --prefix app`) |
 | `node tools/test/smoke.js` | Rauchtest aller vorhandenen Fassungen in drei Sprachen; Bericht und Bilder in `tools/out/smoke/` |
 | `python3 tools/sim/mksim.py src/kogge-kontor.html tools/out/sim.html` | Simulationsbau mit dem Spieler-Bot (`sim/bot.js`) |
-| `node tools/sim/run.js tools/out/sim.html --spiele 20 --tage 2190 --profil mensch` | Langzeitsimulation: Spieltage bis zu jedem Rang und Amt (Median); Profile `mensch` und `bot45` |
+| `node tools/sim/run.js tools/out/sim.html --spiele 24 --tage 5930 --profil mensch --stammsitz riga --json AUS.json` | Langzeitsimulation bis zum Kampagnenende 1372: Spieltage bis zu jedem Rang und Amt (Median), Verlauf und Schlusswertung im JSON; Profile `mensch` und `bot45` |
 
 ## Fassungen
 

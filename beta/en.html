@@ -1026,7 +1026,9 @@ em.rep.warn{background:#b5523a}
   ];
   const C = Object.fromEntries(CITIES.map(c => [c.id, c]));
   const G = Object.fromEntries(GOODS.map(g => [g.id, g]));
-  const RANKS = [[0,'Pedlar'],[6000,'Trader'],[15000,'Merchant'],[40000,'Long-distance trader'],[100000,'Great merchant'],[250000,'Merchant lord'],[500000,'Patrician']];
+  // Ab Version 49 auf die Kampagne bis 1372 abgestimmt. Bot „mensch“ (tools/sim), Stammsitz Riga, Median Spieltag:
+  // Kaufmann 345, Fernhändler 1169, Großkaufmann 1956, Handelsherr 3909, Patrizier 4996
+  const RANKS = [[0,'Pedlar'],[6000,'Trader'],[50000,'Merchant'],[170000,'Long-distance trader'],[450000,'Great merchant'],[800000,'Merchant lord'],[1300000,'Patrician']];
   const icon = id => `<svg class="gi" aria-hidden="true"><use href="#gi-${id}"/></svg>`;
   const GOOD_ART = {
     getreide:'<path d="M18 22c-3 8-5 18-3 28 1 5 6 8 17 8s16-3 17-8c2-10 0-20-3-28z" fill="#c9a66b" stroke="#6b4e2e" stroke-width="2"/><path d="M20 22c4-3 20-3 24 0l-3-6c-5-2-13-2-18 0z" fill="#b48c52" stroke="#6b4e2e" stroke-width="2"/><path d="M24 15c2-1 14-1 16 0" stroke="#6b4e2e" stroke-width="3" stroke-linecap="round"/><g fill="#e6c36a" stroke="#9a7a2e"><path d="M30 6c-2 3-2 6 0 9 2-3 2-6 0-9z"/><path d="M36 4c-2 3-2 6 0 9 2-3 2-6 0-9z"/><path d="M25 8c-1 3 0 6 2 8 1-3 0-6-2-8z"/></g><path d="M24 36h16M22 44h20" stroke="#8a6a3e" stroke-width="1.5" opacity=".6"/>',
@@ -1285,8 +1287,16 @@ em.rep.warn{background:#b5523a}
     visby:{t:'Gotland pilots', d:'Pirates attack 40 % less often.'},
     stockholm:{t:'Ore from the mines', d:'You start with 3,000 guilders instead of 2,000.'}
   };
-  const CIVIC = [[0,'Newcomer'],[60,'Burgher'],[200,'Guild brother'],[500,'Councillor'],[1200,'Mayor'],[3000,'Alderman of the Hansa']];
-  const UNLOCK = {1:'Kontor in your home seat, council commissions', 2:'Expand the Kontor, workshops, branches', 3:'Seat on the council: set tolls, bigger commissions', 4:'Eligible from 1,200 reputation, elections on 1 January and 1 July', 5:'Mayors are eligible from 3,000 reputation, election at the Hanseatic Diet on 24 June'};
+  // Ab Version 49 auf die Kampagne bis 1372 abgestimmt. Bot „mensch“, Riga, Median Spieltag: Gildebruder 669 (erster Betrieb 706),
+  // Ratsherr 1427, Bürgermeister 2466, Ältermann 4833. Lübeck mit 1,5fachem Ansehen ist bei den Ämtern etwa ein Drittel schneller.
+  // Bürgermeister: Mindestansehen für die Wahl (ELECT_MIN); Ältermann: Ansehen und Ehre zusammen (ALDER_STAND)
+  const CIVIC = [[0,'Newcomer'],[60,'Burgher'],[1200,'Guild brother'],[3300,'Councillor'],[7000,'Mayor'],[25000,'Alderman of the Hansa']];
+  const UNLOCK = {1:'Kontor in your home seat, council commissions', 2:'Expand the Kontor, workshops, branches', 3:'Seat on the council: set tolls, bigger commissions', 4:'Elections on 1 January and 1 July; the most reputation wins', 5:'As Mayor, with reputation and honour combined; election at the Hanseatic Diet on 24 June'};
+  // Umrechnung des Ansehens aus Spielständen vor Version 49: gleiches Amt, gleicher Anteil am Weg zum nächsten
+  const REP_OLD = [0, 60, 200, 500, 1200, 3000];
+  const repV49 = r => { r = r || 0; const N = CIVIC.map(c => c[0]), L = REP_OLD.length - 1;
+    for (let i = L; i >= 0; i--) if (r >= REP_OLD[i]) return Math.round(i === L ? N[i] + r - REP_OLD[i] : N[i] + (r - REP_OLD[i]) / (REP_OLD[i + 1] - REP_OLD[i]) * (N[i + 1] - N[i]));
+    return r; };
   const civicIdx = r => { let i = 0; CIVIC.forEach(([m], k) => { if (r >= m) i = k; }); if (i >= 5 && !(st && st.alderman)) i = 4; return i >= 4 && !(st && (st.mayor || st.alderman)) ? 3 : i; };
   const repairPrice = () => (st.home === 'bremen' ? 5 : REPAIR) * (st && st.city ? cityBonus('repair') : 1);
   const applyHome = () => { CAP = st.fleet ? st.fleet.reduce((x, sh) => x + shipCap(sh), 0) : 60; };
@@ -1359,7 +1369,7 @@ em.rep.warn{background:#b5523a}
     const stock = {};
     CITIES.forEach(c => { stock[c.id] = {}; GOODS.forEach(g => { stock[c.id][g.id] = Math.round(baseE(c, g.id) * (0.8 + Math.random() * 0.4)); }); });
     const shipName = (opts && opts.ship || '').trim() || 'Maria';
-    st = {v:1, day:0, money:START + (home === 'stockholm' ? 1000 : 0), loc:home, sail:null, cargo:{}, stock, known:{}, log:[], rank:0,
+    st = {v:1, repV:49, day:0, money:START + (home === 'stockholm' ? 1000 : 0), loc:home, sail:null, cargo:{}, stock, known:{}, log:[], rank:0,
       fleet:[{id:1, type:'schnigge', name:shipName, hull:100, capB:home === 'danzig' ? 5 : 0}], nextShip:2,
       crew:9, arms:home === 'reval' ? {armbrust:4, harnisch:2} : {armbrust:2}, pulver:0, capOwn:null, wx:{w:'clear', hold:4, next:null}, enc:null, pending:[], inbox:[], brand:0,
       seasons:(opts && opts.seasons) === 'mild' ? 'mild' : 'spuerbar', kontor:null, hist:{}, book:[], visit:null, gprof:{},
@@ -1383,7 +1393,7 @@ em.rep.warn{background:#b5523a}
     addLog(`Origin: ${ORIGINS[og].n}. ${ORIGINS[og].d}`, 'tip');
     addLog(`Captain ${st.captains[0].name} commands your snekke, a skipper with little experience, wages ${st.captains[0].wage} guilders a day. No pirates hunt a humble pedlar yet; that changes once you make a name as a trader.`, 'cap');
     addLog('Tip: Buy what a town produces and sell it where it is needed. Large quantities push the price down.', 'tip');
-    if (st.mode === 'kampagne') addLog('Your campaign runs until the Peace of Stralsund on 24 May 1370. “Course of time” on the goals card records what happens in the Hansa.', 'tip');
+    if (st.mode === 'kampagne') addLog('Your campaign runs until the Hanseatic Diet on 24 June 1372, two years after the Peace of Stralsund. “Course of time” on the goals card records what happens in the Hansa.', 'tip');
     era();
     st.q = {ch:0, ev:{}, gd:{}, pop:{k:'welcome'}, rpAuto:true, skipTut:false};
     st.rp = rpFresh();
@@ -2711,7 +2721,7 @@ em.rep.warn{background:#b5523a}
     mittel:{n:'Medium', inc:15, rep:0, d:'15 guilders a day from the poundage.'},
     hoch:{n:'High', inc:40, rep:-0.3, d:'40 guilders a day, but the merchants grumble and your reputation falls.'}
   };
-  const MAYOR_PAY = 60, ELECT_MIN = 1200;
+  const MAYOR_PAY = 60, ELECT_MIN = CIVIC[4][0];
   // Ab Version 39: Die Konkurrenten handeln im Hintergrund und treten erst im Kapitel „Ratsherr“ als Gegner auf.
   // Dann werden ihre Werte an deine angeglichen, damit der Vergleich etwas bedeutet.
   const RIV_CH = 5;
@@ -2825,11 +2835,12 @@ em.rep.warn{background:#b5523a}
     st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
   }
 
-  // ───────── Geschichte 1356–1370: Zeitleiste mit Spielraum ─────────
+  // ───────── Geschichte 1356–1372: Zeitleiste mit Spielraum ─────────
   const dayOf = (y, m, d) => Math.round((new Date(y, m - 1, d) - new Date(1356, 3, 1)) / 864e5);
   const WAR_NODES = new Set(['kattegat', 'helsingoer', 'oeresund', 'falsterbo', 'bornholm']);
-  const CAMPAIGN_END = dayOf(1370, 5, 24);
-  const ALDER_MIN = 3000, ALDER_PAY = 100;
+  // Ab Version 49: Die Kampagne endet mit dem Hansetag 1372, zwei Jahre nach dem Frieden von Stralsund
+  const PEACE_DAY = dayOf(1370, 5, 24), CAMPAIGN_END = dayOf(1372, 6, 24);
+  const ALDER_PAY = 100;
   const PEST_POOL = ['luebeck', 'hamburg', 'bremen', 'danzig', 'riga', 'reval', 'visby', 'stockholm', 'bruegge', 'london', 'bergen'];
   // fx bekommt den Spielstand; Texte mit {x} werden vom Effekt gefüllt
   const HIST = [
@@ -2982,7 +2993,7 @@ em.rep.warn{background:#b5523a}
   // ───────── Ab Version 43: Große Vorhaben, Ehre, Wettlauf um das Ältermannamt, Bestenliste, Spielzeit ─────────
   // Ab Großkaufmann bindet Geld sich in großen Vorhaben im Stammsitz. Sie bringen Ehre; Ansehen und Ehre zusammen
   // entscheiden am Hansetag, wer Ältermann der Hanse wird: du oder einer der drei Konkurrenten.
-  const GV_RANK = 4, ALDER_STAND = 3000, RIVAL_TERM = 3 * 365;
+  const GV_RANK = 4, ALDER_STAND = CIVIC[5][0], RIVAL_TERM = 3 * 365;
   const GV = {
     hospital:{n:'Hospital of the Holy Spirit', cost:30000, days:90, ehre:400, rep:1, elect:200, art:'kirche',
       d:'A hospital for the old, the sick and pilgrims: 400 honour, 1 reputation a day and 200 more votes in the council election.'},
@@ -3064,7 +3075,7 @@ em.rep.warn{background:#b5523a}
   }
   const gvMeta = () => { const S = gvState(), n = Object.keys(S.done).length; return S.job ? `${GV[S.job.k].n}: ${gvLeft()} days left` : st.rank < GV_RANK ? `from ${RANKS[GV_RANK][1]}` : `${n} of ${GV_ORDER.length} · honour ${fmt(ehre())}`; };
 
-  // Wettlauf um das Ältermannamt: Kandidaten sind Bürgermeister mit 3.000 Ansehen und Ehre zusammen
+  // Wettlauf um das Ältermannamt: Kandidaten sind Bürgermeister mit ALDER_STAND Ansehen und Ehre zusammen
   const rivStand = r => Math.round(r.repute + (r.ehre || 0));
   const rivAld = () => st.aldRival && (st.rivals || []).find(r => r.id === st.aldRival.id);
   function hansetag() {
@@ -3429,7 +3440,7 @@ em.rep.warn{background:#b5523a}
   }
   function fullOk() {
     fullSet(true); full.msg = '';
-    announce('Thank you! The full version is unlocked. Your trading house sails on until the Peace of Stralsund in 1370.', 'rank');
+    announce('Thank you! The full version is unlocked. Your trading house sails on until the Hanseatic Diet of 1372.', 'rank');
     commit();
     if (st.sail && !st.enc && !timer) schedTick();
   }
@@ -3464,7 +3475,7 @@ em.rep.warn{background:#b5523a}
     const app = TARGET === 'app';
     return `<div class="endcard trialcard"><h2>Your trial is over</h2>` +
       `<p>${app ? `The first ${TRIAL_DAY} days were free.` : `You can play the first ${TRIAL_DAY} days in the browser.`} ` +
-      `In the full game you rise to Mayor by 1370, build great projects, found Hanseatic Kontors and outrun the three families in the race for the office of Alderman.</p>` +
+      `In the full game you rise to Mayor by 1372, build great projects, found Hanseatic Kontors and outrun the three families in the race for the office of Alderman.</p>` +
       (app ? `<p class="small">Pay once, ${esc(full.price)}. No ads, no subscription. Your saved game stays just as it is.</p>` +
           `<div class="ybtns"><button class="btn primary" type="button" data-act="full-buy"${full.busy ? ' disabled' : ''}><b>${full.busy ? 'One moment …' : 'Unlock full version'}</b><small>${esc(full.price)}</small></button>` +
           `<button class="btn" type="button" data-act="full-restore"${full.busy ? ' disabled' : ''}><b>Restore purchase</b><small>already bought</small></button></div>`
@@ -3512,7 +3523,8 @@ em.rep.warn{background:#b5523a}
     ];
     return {parts, total:parts.reduce((a, p) => a + p[1], 0)};
   }
-  const TITLES = [[0, 'Petty shopkeeper'], [1500, 'Honourable merchant'], [4000, 'Respected Hanseatic merchant'], [8000, 'Great lord of the Hansa'], [14000, 'Legend of the Hansa']];
+  // Ab Version 49 für die Kampagne bis 1372: Bot „mensch“ 76.000 (Riga) bis 109.000 Punkte (Lübeck), Bot „bot45“ 52.000
+  const TITLES = [[0, 'Petty shopkeeper'], [10000, 'Honourable merchant'], [30000, 'Respected Hanseatic merchant'], [60000, 'Great lord of the Hansa'], [100000, 'Legend of the Hansa']];
   const titleFor = n => TITLES.reduce((a, t) => n >= t[0] ? t[1] : a, TITLES[0][1]);
   function honorBook() { try { return JSON.parse(localStorage.getItem(HONOR_KEY) || '[]'); } catch (e) { return []; } }
   function endCampaign() {
@@ -3526,7 +3538,7 @@ em.rep.warn{background:#b5523a}
       localStorage.setItem(HONOR_KEY, JSON.stringify(list.slice(0, 10)));
     } catch (e) {}
     blUpdate();
-    announce(`With the Peace of Stralsund your campaign ends. Final score: ${fmt(sc.total)} points, ${st.ended.title}.`, 'rank');
+    announce(`With the Hanseatic Diet of 1372 your campaign ends. Final score: ${fmt(sc.total)} points, ${st.ended.title}.`, 'rank');
     if (st.sail && !st.enc) { /* die Fahrt darf noch zu Ende gehen */ }
     setTab('lage');
   }
@@ -9345,8 +9357,8 @@ em.rep.warn{background:#b5523a}
         `<dt>Start</dt><dd>${fmt(START + (w.home === 'stockholm' ? 1000 : 0) + (w.origin === 'kaufmann' ? 500 : 0))} guilders, an old snekke of ${w.home === 'danzig' ? 35 : 30} lasts, 9 sailors, ${w.home === 'reval' ? '4 crossbows and 2 suits of armour' : '2 crossbows'}, an inexperienced captain</dd>` +
         `<dt>Saved game</dt><dd>Slot ${w.slot}${getSlot(w.slot) ? ' (will be overwritten)' : ''}</dd></dl></div>` +
         `<div class="opt"><span class="flabel">Game mode</span><div class="chipset" role="group">` +
-        [['offen', 'Open game'], ['kampagne', 'Campaign until 1370']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
-        `<span class="small">${w.mode === 'kampagne' ? 'Campaign: the game ends with the Peace of Stralsund on 24 May 1370. Then your wealth, reputation, offices and deeds are counted, and you earn your place in the Book of Honour.' : 'Open game: no end. Your aim is to rise from pedlar to Alderman of the Hansa; the goals card leads you there chapter by chapter.'}</span></div>` +
+        [['offen', 'Open game'], ['kampagne', 'Campaign until 1372']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
+        `<span class="small">${w.mode === 'kampagne' ? 'Campaign: the game ends with the Hanseatic Diet on 24 June 1372, two years after the Peace of Stralsund. Then your wealth, reputation, offices and deeds are counted, and you earn your place in the Book of Honour.' : 'Open game: no end. Your aim is to rise from pedlar to Alderman of the Hansa; the goals card leads you there chapter by chapter.'}</span></div>` +
         `<div class="opt"><span class="flabel">Seasons</span><div class="chipset" role="group">` +
         [['spuerbar', 'Noticeable'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-wseason="${v}" aria-pressed="${w.seasons === v}">${l}</button>`).join('') + `</div>` +
         `<span class="small">${w.seasons === 'mild' ? 'Mild: the seasons move prices only half as much, and no ice closes the routes.' : 'Noticeable: herring season, Lent, harvest and winter move prices clearly; the Neva freezes from December to March.'} You can change this later under “Saved games”.</span></div>` +
@@ -9690,7 +9702,7 @@ em.rep.warn{background:#b5523a}
   const W0 = () => Math.round(wealth());
   const gRep = (n, lvl) => ({t:() => lvl <= 3 ? `Become ${CIVIC[lvl][1]}: ${fmt(n)} reputation in ${HN()}` : `Gather ${fmt(n)} reputation in ${HN()}, then you are eligible`, p:() => [Math.round(st.repute || 0), n], ok:() => (st.repute || 0) >= n,
     hint:() => `Reputation comes above all from sales in ${HN()}, especially of goods the town needs (${C[st.home].c.map(g => G[g].n).join(', ')}). Also from council commissions, freight and victories.`, tab:'markt', sel:'#market'});
-  const gWealth = (n, rank) => ({t:() => `Reach ${fmt(n)} guilders of wealth (${rank})`, p:() => [Math.max(0, W0()), n], ok:() => wealth() >= n,
+  const gWealth = i => ({t:() => `Reach ${fmt(RANKS[i][0])} guilders of wealth (${RANKS[i][1]})`, p:() => [st.rank >= i ? RANKS[i][0] : Math.max(0, W0()), RANKS[i][0]], ok:() => st.rank >= i || wealth() >= RANKS[i][0],
     hint:() => 'Wealth counts money, goods aboard and in store, ships and convoys. It grows with every good deal.', tab:'lage', sel:'#status'});
   const QUEST = [
     {n:'The first voyage', tut:true, rew:150,
@@ -9713,8 +9725,8 @@ em.rep.warn{background:#b5523a}
       goals:[
         {t:() => 'Learn the prices in 5 ports', p:() => [Object.keys(st.known || {}).length, 5], ok:() => Object.keys(st.known || {}).length >= 5,
           hint:() => 'Every port you call at remembers its prices. After that, the list of destinations in the Map tab shows the best known deal for each destination.', tab:'karte', sel:'#mapinfo'},
-        gRep(60, 1),
-        gWealth(6000, 'Trader')]},
+        gRep(CIVIC[1][0], 1),
+        gWealth(1)]},
     {n:'Burgher and trader', rew:500,
       intro:() => `As a burgher of ${HN()} you may build a Kontor and take on council commissions.`,
       done:'Well armed and with a store of your own. Next the guild awaits: a branch in another town opens up trade routes and building.',
@@ -9731,7 +9743,7 @@ em.rep.warn{background:#b5523a}
       intro:() => 'A branch is a store in another town. The first one opens trade routes for your own convoys and, as a guild brother, building in your town.',
       done:'Your trading house is growing beyond its own town. Now you can build in your town: workshops, a bigger house, civic buildings.',
       goals:[
-        gRep(200, 2),
+        gRep(CIVIC[2][0], 2),
         {t:() => 'Found a branch in another town', ok:() => ownBranches() > 0,
           hint:() => `Sail to a port other than ${HN()}, open the Town tab there and tap Found on the Branch tile (${fmt(BRANCH.cost)} guilders, from ${CIVIC[BRANCH.civic][1]}). The Kontor at home does not count.`, tab:'stadt', sel:'#citycard'},
         {t:() => 'Hire a second captain', p:() => [(st.captains || []).length, 2], ok:() => (st.captains || []).length >= 2,
@@ -9746,29 +9758,29 @@ em.rep.warn{background:#b5523a}
           hint:() => `Town tab in ${HN()}: building book, Possible now. A workshop needs the Kontor and delivers a little of its goods every day.`, tab:'stadt', sel:'#citycard'},
         {t:() => 'Enlarge your house', ok:() => ((st.city || {}).house || 1) >= 2 || ((st.city || {}).jobs || []).some(j => j.kind === 'haus'),
           hint:() => `In the town view of ${HN()}, tap your house. A bigger house brings reputation.`, tab:'stadt', sel:'#citycard'},
-        gWealth(15000, 'Merchant')]},
+        gWealth(2)]},
     {n:'Councillor', rew:2000,
       intro:() => `On the council you have a say: tolls, commissions and your town's vote at the Diet. But three families want the same as you: ${(st.rivals || []).map(r => r.name).join(', ')}. From now on the clerk's report shows how you stand against them.`,
       done:'You sit on the council and have your say at the Diet. The highest office of the town is drawing near.',
       goals:[
-        gRep(500, 3),
+        gRep(CIVIC[3][0], 3),
         {t:() => 'Vote at the Hanseatic Diet', ok:() => Object.values((st.hanse || {}).votes || {}).some(v => v && v.my),
           hint:() => 'The open questions are under Hanseatic Diet (House tab, home seat). Your vote counts according to reputation and offices.', tab:'haus', sel:'#homecard [data-det="hansetag"]'},
         {t:() => 'Keep two convoys on trade routes', p:() => [(st.convoys || []).length, 2], ok:() => (st.convoys || []).length >= 2,
           hint:() => 'House tab: hire more captains and set up new trade routes.', tab:'haus', sel:'#housecard'},
         {t:() => 'Sign a supply contract', ok:() => !!(st.contracts && (st.contracts.list.length || st.contracts.done || st.contracts.broken)),
           hint:() => 'From Merchant, towns and merchants offer supply contracts: Market tab, Orders, at the bottom. Take one whose goods you can get nearby.', tab:'markt', sel:'#frbox'},
-        gWealth(40000, 'Long-distance trader')]},
+        gWealth(3)]},
     {n:'Mayor', rew:3000,
       intro:() => `On 1 January and 1 July ${HN()} elects its mayor. Whoever has the most reputation wins.`,
       done:'As Mayor you are one of the great men of the Hansa. One office remains: Alderman of the Hansa.',
       goals:[
-        gRep(1200, 4),
+        gRep(ELECT_MIN, 4),
         {t:() => 'Win the election for Mayor', ok:() => !!st.mayor || (st.mayorTerms || 0) > 0,
           hint:() => 'In the town hall (House tab) you can see how your reputation compares with your rivals\' and when the election is held.', tab:'haus', sel:'#homecard [data-det="council"]'},
         {t:() => 'Become a member of a Hanseatic Kontor', ok:() => hkCount() > 0,
           hint:() => 'From Long-distance trader, the Kontors in Bruges, London, Bergen and Novgorod accept you: there, in the Market tab under Business. Members buy and sell more cheaply there.', tab:'markt', sel:'#dealcard'},
-        gWealth(100000, 'Great merchant')]},
+        gWealth(4)]},
     {n:'Alderman of the Hansa', rew:0, last:true,
       intro:() => `On 24 June the Hanseatic Diet elects the Alderman of the Hansa. A mayor with ${fmt(ALDER_STAND)} reputation and honour combined is eligible. ${(st.rivals || []).map(r => r.name).join(', ')} want the office too; whoever gets it first tops the leaderboard.`,
       done:'You stand at the head of the Hansa. The game goes on as long as you like.',
@@ -9829,7 +9841,7 @@ em.rep.warn{background:#b5523a}
     const q = qS(), Q = qCur(), cur = qGoal(), k = Math.min(q.ch, QUEST.length - 1);
     const left = st.mode === 'kampagne' && !st.ended ? CAMPAIGN_END - st.day : null;
     let h = `<div class="qhead"><span class="k">Your path in the Hansa · Chapter ${k + 1} of ${QUEST.length}</span><h2>${Q.n}</h2>` +
-      (left != null ? `<span class="small">Campaign until 24 May 1370 · ${left > 400 ? (Math.round(left / 365 * 10) / 10).toLocaleString('en-GB') + ' years' : left + ' days'} left · ${fmt(scoreParts().total)} points</span>` : '') + `</div>`;
+      (left != null ? `<span class="small">Campaign until 24 June 1372 · ${left > 400 ? (Math.round(left / 365 * 10) / 10).toLocaleString('en-GB') + ' years' : left + ' days'} left · ${fmt(scoreParts().total)} points</span>` : '') + `</div>`;
     if (q.fin) h += `<p class="qintro">${Q.done}</p>`;
     else {
       h += `<p class="qintro">${Q.intro()}</p><ol class="qgoals">${Q.goals.map(g => goalLine(g, q, g === cur)).join('')}</ol>`;
@@ -9917,7 +9929,7 @@ em.rep.warn{background:#b5523a}
     const kp = st.mode === 'kampagne';
     return `<div class="in qwel"><span class="k">${C[st.home].n}, ${fdate(st.day, true)}</span><h2 id="q-title">Welcome, ${esc(st.player.name)}</h2>` +
       `<p>You start as a humble pedlar with an old snekke. <b>Your goal:</b> rise from pedlar to Alderman of the Hansa. Trade brings you wealth and rank; sales in ${HN()} bring reputation and offices.</p>` +
-      `<p>${kp ? 'You are playing the campaign until the Peace of Stralsund on 24 May 1370. Then wealth, reputation, offices and deeds count for the Book of Honour.' : 'You are playing an open game: it never ends, and you rise as far as you like.'}</p>` +
+      `<p>${kp ? 'You are playing the campaign until the Hanseatic Diet on 24 June 1372. Then wealth, reputation, offices and deeds count for the Book of Honour.' : 'You are playing an open game: it never ends, and you rise as far as you like.'}</p>` +
       `<p>The card <b>Your path in the Hansa</b> in the Status tab always shows your next goal, with a button that shows you the right place. The first chapter guides you through your first voyage. Every 14 days your clerk presents you with a report.</p>` +
       `<div class="ybtns qbtns"><button class="btn" type="button" data-qwel="skip"><b>No introduction</b><small>play freely right away</small></button><button class="btn primary" type="button" data-qwel="go"><b>Let's go</b><small>first voyage</small></button></div></div>`;
   }
@@ -9955,7 +9967,7 @@ em.rep.warn{background:#b5523a}
     const left = st.mode === 'kampagne' && !st.ended ? CAMPAIGN_END - st.day : null;
     $('#chronlast').textContent = c0 ? `${fdate(c0.d, true)} · ${c0.t}` : left != null ? `Campaign: ${left > 400 ? Math.round(left / 365 * 10) / 10 + ' years' : left + ' days'} left` : '';
     let h = '';
-    if (st.mode === 'kampagne') h += `<p class="small" style="margin:6px 0">${st.ended ? `Campaign over: ${fmt(st.ended.total)} points, ${st.ended.title}.` : `Campaign until the Peace of Stralsund on 24 May 1370. Standing today: ${fmt(scoreParts().total)} points, ${titleFor(scoreParts().total)}.`}</p>`;
+    if (st.mode === 'kampagne') h += `<p class="small" style="margin:6px 0">${st.ended ? `Campaign over: ${fmt(st.ended.total)} points, ${st.ended.title}.` : `Campaign until the Hanseatic Diet on 24 June 1372. Standing today: ${fmt(scoreParts().total)} points, ${titleFor(scoreParts().total)}.`}</p>`;
     const flags = [];
     if (e.war) flags.push(e.war === 2 ? 'War against Denmark, the Hansa has the upper hand' : 'War against Denmark, privateers in the Sound');
     if (e.embargo && e.embargo.until > st.day) flags.push(`Embargo against ${C[e.embargo.c].n}`);
@@ -9971,7 +9983,7 @@ em.rep.warn{background:#b5523a}
   }
   function endHTML() {
     const sc = scoreParts();
-    return `<div class="endcard"><h2>Peace of Stralsund, 24 May 1370</h2><p>Your campaign is over. This is the Hansa's verdict on the trading house ${esc(st.player.name)}:</p>` +
+    return `<div class="endcard"><h2>Hanseatic Diet, 24 June 1372</h2><p>Your campaign is over. This is the Hansa's verdict on the trading house ${esc(st.player.name)}:</p>` +
       `<table class="score">${sc.parts.map(([k, v]) => `<tr><td>${k}</td><td class="num">${fmt(v)}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td class="num">${fmt(sc.total)}</td></tr></table>` +
       `<p class="etitle">${st.ended.title}</p><p class="small">Your result is in the Book of Honour below the chronicle. You can carry on as an open game or found a new trading house.</p></div>`;
   }
@@ -11145,6 +11157,8 @@ em.rep.warn{background:#b5523a}
     if (!s.player) s.player = {name:'Merchant', avatar:defAv()};
     if (!s.home) s.home = 'luebeck';
     if (s.repute == null) s.repute = 0;
+    // Ab Version 49 liegen die Ämter höher (Kampagne bis 1372). Ältere Spielstände behalten ihr Amt: Ansehen wird umgerechnet.
+    if (s.repV == null) { s.repute = repV49(s.repute); (s.rivals || []).forEach(r => { r.repute = repV49(r.repute); }); s.repV = 49; }
     if (!s.fleet) {
       s.fleet = [{id:1, type:'kogge', name:'Maria', hull:s.hull == null ? 100 : s.hull, capB:s.home === 'danzig' ? 10 : 0}];
       s.nextShip = 2; delete s.hull;
@@ -11217,7 +11231,7 @@ em.rep.warn{background:#b5523a}
       if (at('vord')) s.era.danger = 1.2;
       if ((s.day || 0) >= dayOf(1367, 11, 19) && !at('stral')) { s.era.war = at('kop') ? 2 : 1; s.era.danger = at('kop') ? 1.15 : 1.5; }
       if (at('stral')) { s.era.war = 0; s.era.danger = 0.85; }
-      const dd0 = s.day || 0; s.era.warToll = (dd0 >= dayOf(1361, 9, 8) && dd0 < dayOf(1365, 11, 22)) || (dd0 >= dayOf(1367, 11, 19) && dd0 < CAMPAIGN_END);
+      const dd0 = s.day || 0; s.era.warToll = (dd0 >= dayOf(1361, 9, 8) && dd0 < dayOf(1365, 11, 22)) || (dd0 >= dayOf(1367, 11, 19) && dd0 < PEACE_DAY);
     }
     if (!s.mayorName) s.mayorName = `${pick(NAMES.m)} ${pick(NAMES.s)}`;
     if (!s.rivals) s.rivals = makeRivals();
@@ -11251,7 +11265,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '5c0a1f4032';
+window.KK_BUILD = '17dd5fa585';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }

@@ -30,7 +30,7 @@ RISE AND RACE
 From pedlar to councillor, mayor and finally Alderman of the Hansa. Three merchant families want the office too. Form alliances, start feuds, win the votes at the Diet and enter your name on your leaderboard.
 
 HISTORY TO PLAY
-The years 1356 to 1370 with their real events: plague, war against Valdemar of Denmark, the Confederation of Cologne and the Peace of Stralsund.
+The years 1356 to 1372 with their real events: plague, war against Valdemar of Denmark, the Confederation of Cologne and the Peace of Stralsund.
 
 FAIR
 • The first 50 game days are free
@@ -44,7 +44,7 @@ FAIR
 | Field | Content |
 |---|---|
 | Display name (30) | Full version |
-| Description (45) | Unlock the whole game up to 1370 |
+| Description (45) | Unlock the whole game up to 1372 |
 
 ## Review notes (English, for App Review)
 
