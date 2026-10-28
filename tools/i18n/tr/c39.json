@@ -1,0 +1,346 @@
+{
+"ae16ba43": [
+"Your captain",
+"Tu capitán"
+],
+"77a5fa07": [
+", hull down to −{0} %",
+", casco hasta −{0} %"
+],
+"c8a38ab7": [
+"{0} lets the crossbows speak, and {1} turns away. Loot {2} guilders; {3}.",
+"{0} hace hablar a las ballestas y {1} vira. Botín: {2} florines; {3}."
+],
+"80895dd6": [
+"{0} sets the ship of {1} on fire, and it sinks. You fish {2} guilders out of the water; {3}.",
+"{0} incendia el barco de {1} y se hunde. Sacáis del agua {2} florines; {3}."
+],
+"5d39e097": [
+"{0} boards, but {1} has his ship set alight. Loot {2} guilders; {3}.",
+"{0} aborda, pero {1} manda prender fuego a su barco. Botín: {2} florines; {3}."
+],
+"7c028e12": [
+"{0} defeats {1} and takes his ship. Loot {2} guilders; {3}.",
+"{0} vence a {1} y se queda con su barco. Botín: {2} florines; {3}."
+],
+"a0c86986": [
+"{0} leads the fight against {1} and wins. Loot {2} guilders; {3}.",
+"{0} dirige el combate contra {1} y vence. Botín: {2} florines; {3}."
+],
+"d6db12b4": [
+"{0} sees that it is not enough and turns away. You escape {1}; {2}.",
+"{0} ve que no basta y vira. Escapáis de {1}; {2}."
+],
+"02f34fd9": [
+"{0} fights a long battle with {1} until dusk separates the ships; {2}.",
+"{0} libra un largo combate con {1} hasta que el anochecer separa los barcos; {2}."
+],
+"23d84cf1": [
+"Fight with {0} under {1} without a result; {2}.",
+"Combate con {0} al mando de {1} sin resultado; {2}."
+],
+"0f61e676": [
+"{0} cannot hold the deck.",
+"{0} no logra mantener la cubierta."
+],
+"c96bab57": [
+"Their ship is more nimble: the zone wanders",
+"Su barco es más ágil: la zona se desplaza"
+],
+"2679ed23": [
+"They are in cover: deck only half",
+"Están a cubierto: cubierta solo a medias"
+],
+"4da210a3": [
+"Two ships under dark sails bear down {0}on you. {1} leads, a second follows in her wake. Together about {2} armed men stand on deck. {3} is known as {4}: {5}.",
+"Dos barcos de vela oscura se dirigen {0}hacia vosotros. {1} va delante y otro la sigue en su estela. Entre los dos hay unos {2} hombres armados en cubierta. A {3} lo tienen por {4}: {5}."
+],
+"27cc9574": [
+"Two pirate ships under {0} attack.",
+"Dos barcos piratas al mando de {0} atacan."
+],
+"c99f1eb6": [
+"“We can handle them.”",
+"«Con estos podemos.»"
+],
+"81a5826c": [
+"“This won’t be easy.”",
+"«Esto no será un paseo.»"
+],
+"e8235aef": [
+"“This will be hard.”",
+"«Esto va a ser duro.»"
+],
+"944b0327": [
+"“A whole band. This will be very hard.”",
+"«Una banda entera. Esto va a ser muy duro.»"
+],
+"1dd44635": [
+"The escort ship sends {0} men across.",
+"El barco de escolta pasa {0} hombres."
+],
+"4681ca8e": [
+"Ready!",
+"¡Tensad!"
+],
+"00c2a5c9": [
+"At random",
+"A ciegas"
+],
+"8b0b255a": [
+" Without your order, all squads shoot at random.",
+" Sin tu orden, todas las escuadras disparan a ciegas."
+],
+"536d1623": [
+" Without your order, your men shoot at random.",
+" Sin tu orden, tu gente dispara a ciegas."
+],
+"bce57ae3": [
+" {0} at random, without orders.",
+" {0} a ciegas, sin orden."
+],
+"4a8bd797": [
+"One squad shoots",
+"Una escuadra dispara"
+],
+"b29193bc": [
+"{0} squads shoot",
+"{0} escuadras disparan"
+],
+"ac782623": [
+" They were in cover; your hits on the deck only did half their effect.",
+" Estaban a cubierto; tus impactos en cubierta solo surtieron la mitad de efecto."
+],
+"5dd0e64b": [
+" They take cover behind pavises: next round, hits on the deck only do half their effect; sails and hull you hit as usual.",
+" Se cubren tras los paveses: en el próximo asalto los impactos en cubierta solo surten la mitad de efecto; velas y casco los alcanzas como siempre."
+],
+"326a0f30": [
+"They take cover!",
+"¡Se cubren!"
+],
+"5db68cfc": [
+"<span class=\"kraft\" aria-label=\"Stamina {0} of {1}\">{2}</span>",
+"<span class=\"kraft\" aria-label=\"Aguante {0} de {1}\">{2}</span>"
+],
+"eaeddaad": [
+"They are on deck. Storm beats Shoot, shooting from the castle beats Hold, Hold beats Storm. Read what their leader is planning, and save your men’s stamina. Cutting the lines separates the ships, if it works.",
+"Están en cubierta. Asaltar vence a Disparar, disparar desde el castillo vence a Resistir y Resistir vence a Asaltar. Lee lo que trama su cabecilla y ahorra el aguante de tu gente. Cortar los cabos separa los barcos, si sale bien."
+],
+"6c509888": [
+" Now the hand-to-hand fight decides, three rounds at most: Storm beats Shoot, Shoot beats Hold, Hold beats Storm.",
+" Ahora decide el cuerpo a cuerpo, tres asaltos como mucho: Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar."
+],
+"31410557": [
+"Storm",
+"Asaltar"
+],
+"f2c6b785": [
+"Shoot",
+"Disparar"
+],
+"e53bf3d7": [
+"Hold",
+"Resistir"
+],
+"b8383069": [
+"You shoot from the castle",
+"Disparáis desde el castillo"
+],
+"b2419260": [
+"You hold the line",
+"Mantenéis la línea"
+],
+"1c2ab250": [
+"they charge",
+"ellos cargan"
+],
+"ae8c2a32": [
+"they shoot from the castle",
+"ellos disparan desde el castillo"
+],
+"572bae45": [
+"they hold the line",
+"ellos mantienen la línea"
+],
+"134ff579": [
+"gathers his men at the rail: he means to storm.",
+"reúne a su gente junto a la borda: quiere asaltar."
+],
+"b6a41905": [
+"sends marksmen up into the castle: he means to shoot.",
+"manda tiradores al castillo: quiere disparar."
+],
+"a3338d24": [
+"has the line closed up behind shields: he means to hold.",
+"manda cerrar la línea tras los escudos: quiere resistir."
+],
+"ba7fa3be": [
+"A daredevil mostly shows openly what he is planning.",
+"Un temerario suele mostrar a las claras lo que trama."
+],
+"555ee74a": [
+"A tough one mostly means what he shows.",
+"Uno duro suele hacer lo que muestra."
+],
+"3622cf1d": [
+"A greedy one feints more often.",
+"Uno codicioso finge más a menudo."
+],
+"dcdea12a": [
+"A cautious one often feints.",
+"Uno prudente finge a menudo."
+],
+"69a4ecc8": [
+"Into the castle, crossbows up!",
+"¡Al castillo, ballestas arriba!"
+],
+"7dde308d": [
+", it was a feint",
+", era una finta"
+],
+"ffd748f1": [
+"The round goes to you. ",
+"El asalto es vuestro. "
+],
+"64712e8f": [
+"The round goes to them. ",
+"El asalto es suyo. "
+],
+"09806918": [
+" {0} men jump across from the escort ship.",
+" Del barco de escolta saltan {0} hombres."
+],
+"d0187f54": [
+"{0} After three rounds nobody holds the deck. Your men jump back on board, the ships come apart, and the fight goes on at a distance.",
+"{0} Tras tres asaltos nadie domina la cubierta. Tu gente vuelve de un salto a bordo, los barcos se separan y el combate sigue a distancia."
+],
+"1994f940": [
+"{0} After three rounds nobody holds the deck. They jump back onto their ship, and the ships drift apart. Their fighting spirit has suffered.",
+"{0} Tras tres asaltos nadie domina la cubierta. Vuelven de un salto a su barco y los barcos se separan. Su moral se ha resentido."
+],
+"43c7d3ec": [
+"<div class=\"ah\"><b>Boarding fight · round {0} of {1}</b>{2}</div>",
+"<div class=\"ah\"><b>Abordaje · asalto {0} de {1}</b>{2}</div>"
+],
+"641c782c": [
+"<span class=\"finte\">Feint?</span>",
+"<span class=\"finte\">¿Finta?</span>"
+],
+"d98eb9c9": [
+"<span class=\"hint\">Deck {0} %</span>",
+"<span class=\"hint\">Cubierta {0} %</span>"
+],
+"be3c438f": [
+"<div class=\"kr\"><span>Your stamina {0}</span><span>Their stamina {1}</span></div>",
+"<div class=\"kr\"><span>Tu aguante {0}</span><span>Su aguante {1}</span></div>"
+],
+"62f5e761": [
+" {0} does not trust it.",
+" {0} no se fía."
+],
+"16107996": [
+"Your helmsman",
+"Tu timonel"
+],
+"7ae77245": [
+"<span style=\"left:{0};color:{1}\">{2}<span class=\"tx\">{3} · red: {4}</span></span>",
+"<span style=\"left:{0};color:{1}\">{2}<span class=\"tx\">{3} · rojo: {4}</span></span>"
+],
+"4a18a714": [
+"tap for the sails",
+"toca para las velas"
+],
+"0f970d77": [
+"tap for the deck",
+"toca para la cubierta"
+],
+"952db981": [
+"time up",
+"se acabó el tiempo"
+],
+"2cdbfdb7": [
+"first Ready!",
+"primero ¡Tensad!"
+],
+"484e46f7": [
+"<button class=\"btn primary fire\" type=\"button\" disabled>Reloading …</button>",
+"<button class=\"btn primary fire\" type=\"button\" disabled>Recargando …</button>"
+],
+"df81664d": [
+"<button class=\"btn primary fire\" type=\"button\" data-act=\"fire\">Fire! <small>{0}{1}</small></button>",
+"<button class=\"btn primary fire\" type=\"button\" data-act=\"fire\">¡Fuego! <small>{0}{1}</small></button>"
+],
+"54d1c5dc": [
+"<button class=\"btn primary fire\" type=\"button\" data-act=\"fire\">Ready! <small>{0}</small></button>",
+"<button class=\"btn primary fire\" type=\"button\" data-act=\"fire\">¡Tensad! <small>{0}</small></button>"
+],
+"352d44c1": [
+"then tap {0} times",
+"luego toca {0} veces"
+],
+"cd39f9f8": [
+"then tap once",
+"luego toca una vez"
+],
+"e57a3df1": [
+"too little stamina",
+"poco aguante"
+],
+"8db298f0": [
+"beats Shoot<br>stamina −2",
+"vence a Disparar<br>aguante −2"
+],
+"6116fe60": [
+"beats Hold<br>stamina −1",
+"vence a Resistir<br>aguante −1"
+],
+"71a01b8a": [
+"beats Storm<br>stamina +1",
+"vence a Asaltar<br>aguante +1"
+],
+"18df346a": [
+"<button class=\"btn\" type=\"button\" data-act=\"capauto\"><b>Leave it to the captain</b><small>odds {0}</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"capauto\"><b>Que lo haga el capitán</b><small>probabilidades {0}</small></button>"
+],
+"4e118e8f": [
+" {0} squads: after “Ready!” tap {1} times before the pointer stops.",
+" {0} escuadras: tras «¡Tensad!» toca {1} veces antes de que se pare el indicador."
+],
+"0111c8a6": [
+" After “Ready!” tap once before the pointer stops.",
+" Tras «¡Tensad!» toca una vez antes de que se pare el indicador."
+],
+"271869a8": [
+"Pirates · 2 ships",
+"Piratas · 2 barcos"
+],
+"181118c9": [
+" <span>If you let him decide, the odds are {0}.</span>",
+" <span>Si le dejas decidir, las probabilidades son {0}.</span>"
+],
+"e77a1c86": [
+" · {0} on the escort ship",
+" · {0} en el barco de escolta"
+],
+"25ccb7fd": [
+"<div class=\"tug\" role=\"img\" aria-label=\"Who holds the deck: {0} of 100 for you\"><div class=\"tb\"><i style=\"width:{1}%\"></i><u style=\"left:25%\"></u><u style=\"left:75%\"></u><b style=\"left:{2}%\"></b></div><div class=\"tl\"><span>Enemy</span><span>who holds the deck</span><span>You</span></div></div>",
+"<div class=\"tug\" role=\"img\" aria-label=\"Quién domina la cubierta: {0} de 100 para ti\"><div class=\"tb\"><i style=\"width:{1}%\"></i><u style=\"left:25%\"></u><u style=\"left:75%\"></u><b style=\"left:{2}%\"></b></div><div class=\"tl\"><span>Enemigo</span><span>quién domina la cubierta</span><span>Tú</span></div></div>"
+],
+"b0626a99": [
+"<small>Storm beats Shoot, Shoot beats Hold, Hold beats Storm. Below 2 stamina your men fight at only 70 %. {0} After three rounds: from three quarters of the deck the enemy strikes his flag, below a quarter {1}, and in between the ships come apart.</small></div>",
+"<small>Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar. Con menos de 2 de aguante tu gente solo lucha al 70 %. {0} Tras tres asaltos: con tres cuartos de la cubierta el enemigo arría la bandera, con menos de un cuarto {1}, y en medio los barcos se separan.</small></div>"
+],
+"a7f55259": [
+"you have to fall back",
+"tenéis que retiraros"
+],
+"f25cf7a7": [
+"they take your ship",
+"se quedan con tu barco"
+],
+"7de2c624": [
+"<details class=\"more\" data-det=\"enchelp\"{0}><summary><span>{1}How the fight works</span><i class=\"chev\" aria-hidden=\"true\"></i></summary><p class=\"small\" style=\"margin:0 0 6px\">Each round: choose a manoeuvre, then your men shoot. Bolts and stones go at the deck, fire arrows into the sails. After “Ready!” the pointer runs one and a half sweeps; tap once for each squad while it is in the zone. Whoever does not tap shoots at random. The zone rolls with the swell and wanders with their course. The red in the zone is their castle: direct hits there strike their marksmen. After two volleys with hits on the deck they take cover for a round; then fire arrows help. Trebuchets and guns fire at the hull by themselves. Then the enemy announces his fire and you take cover. Close up, stones and boarding work best; at range, fire arrows. Windward enlarges your zone and weakens their fire. If their fighting spirit falls below the line, they want to flee or surrender. Boarding only works close up: first you throw the hooks at the right moment, then follow up to three rounds of hand-to-hand fighting. Storm beats Shoot, Shoot beats Hold, Hold beats Storm; before each round their leader shows what he is planning, but not everyone means it. Whoever defends his own deck has the advantage. If your attack fails, you withdraw and keep your ship.</p></details>",
+"<details class=\"more\" data-det=\"enchelp\"{0}><summary><span>{1}Cómo funciona el combate</span><i class=\"chev\" aria-hidden=\"true\"></i></summary><p class=\"small\" style=\"margin:0 0 6px\">En cada asalto: elige una maniobra y después disparan tus hombres. Los virotes y las piedras van a cubierta, las flechas incendiarias a las velas. Tras «¡Tensad!» el indicador recorre la barra una vez y media; toca una vez por cada escuadra mientras esté en la zona. Quien no toca dispara a ciegas. La zona se balancea con el oleaje y se desplaza con su rumbo. Lo rojo de la zona es su castillo: los impactos de lleno allí alcanzan a sus tiradores. Tras dos andanadas con impactos en cubierta se ponen a cubierto un asalto; entonces ayudan las flechas incendiarias. Trabuquetes y bombardas disparan solos contra el casco. Después el enemigo anuncia su fuego y te pones a cubierto. De cerca funcionan las piedras y el abordaje; de lejos, las flechas incendiarias. El barlovento amplía tu zona y debilita su fuego. Si su moral cae por debajo de la raya, quieren huir o se rinden. Solo se puede abordar de cerca: primero lanzas los garfios en el momento justo y luego siguen hasta tres asaltos cuerpo a cuerpo. Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar; antes de cada asalto su cabecilla muestra lo que trama, pero no todos lo dicen en serio. Quien defiende su propia cubierta tiene ventaja. Si tu ataque fracasa, te retiras y conservas tu barco.</p></details>"
+]
+}

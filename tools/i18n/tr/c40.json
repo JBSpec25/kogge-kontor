@@ -1,0 +1,74 @@
+{
+"84771853": [
+"<div class=\"mh\"><b>Boarding fight · round {0} of {1}</b><button class=\"cut\" type=\"button\" data-act=\"bd-back\"{2}>{3}</button></div>",
+"<div class=\"mh\"><b>Abordaje · asalto {0} de {1}</b><button class=\"cut\" type=\"button\" data-act=\"bd-back\"{2}>{3}</button></div>"
+],
+"1befa40d": [
+" <span class=\"finte\">Feint?</span>",
+" <span class=\"finte\">¿Finta?</span>"
+],
+"1042cd35": [
+"<div class=\"deck\" role=\"img\" aria-label=\"Who holds the deck: {0} of 100 for you\"><div class=\"dl\"><span class=\"me\">You {1} %</span><span>Deck</span><span class=\"foe\">Enemy {2} %</span></div>",
+"<div class=\"deck\" role=\"img\" aria-label=\"Quién domina la cubierta: {0} de 100 para ti\"><div class=\"dl\"><span class=\"me\">Tú {1} %</span><span>Cubierta</span><span class=\"foe\">Enemigo {2} %</span></div>"
+],
+"0e3bba83": [
+"<button class=\"btn\" type=\"button\" data-act=\"bd-{0}\"{1} aria-label=\"{2}, {3}, stamina {4}\"><b>{5}<i class=\"kc{6}\">{7}</i></b><small>{8}</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"bd-{0}\"{1} aria-label=\"{2}, {3}, aguante {4}\"><b>{5}<i class=\"kc{6}\">{7}</i></b><small>{8}</small></button>"
+],
+"bbc632a7": [
+"beats Shoot",
+"vence a Disparar"
+],
+"bcec6d3e": [
+"beats Hold",
+"vence a Resistir"
+],
+"6d0c8b12": [
+"beats Storm",
+"vence a Asaltar"
+],
+"6b1429f2": [
+"<details class=\"more bdhelp\" data-det=\"bdhelp\"{0}><summary><span>{1} · how it works</span><i class=\"chev\" aria-hidden=\"true\"></i></summary>",
+"<details class=\"more bdhelp\" data-det=\"bdhelp\"{0}><summary><span>{1} · cómo funciona</span><i class=\"chev\" aria-hidden=\"true\"></i></summary>"
+],
+"98fa8b32": [
+"Boarding fight on their deck",
+"Abordaje en su cubierta"
+],
+"eda39c93": [
+"Boarding fight on your deck",
+"Abordaje en tu cubierta"
+],
+"566a70a1": [
+"<p class=\"small\" style=\"margin:0 0 6px\">Storm beats Shoot, Shoot beats Hold, Hold beats Storm. Storm costs two stamina, Shoot one, Hold gives one back; below 2 stamina your men fight at only 70 %. {0} ",
+"<p class=\"small\" style=\"margin:0 0 6px\">Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar. Asaltar cuesta dos de aguante, Disparar uno y Resistir devuelve uno; con menos de 2 de aguante tu gente solo lucha al 70 %. {0} "
+],
+"6f098cb9": [
+"After three rounds the deck bar decides: if you hold three quarters (right mark), the enemy strikes his flag; below a quarter (left mark) {0}; in between, the ships come apart. {1}</p></details>",
+"Tras tres asaltos decide la barra de la cubierta: si dominas tres cuartos (marca derecha), el enemigo arría la bandera; con menos de un cuarto (marca izquierda) {0}; en medio, los barcos se separan. {1}</p></details>"
+],
+"7b94342c": [
+"With “Withdraw” at the top right you bring your men back aboard.",
+"Con «Retirarse», arriba a la derecha, haces volver a tu gente a bordo."
+],
+"bc9a3a4b": [
+"With “Cut the lines” at the top right you separate the ships, if it works.",
+"Con «Cortar los cabos», arriba a la derecha, separas los barcos, si sale bien."
+],
+"daa22858": [
+"{0} does not trust it.",
+"{0} no se fía."
+],
+"0f4b1681": [
+"<div class=\"side foe\"><h4>{0}</h4><div class=\"big\"><b>{1}</b><span>of {2}</span></div>{3}",
+"<div class=\"side foe\"><h4>{0}</h4><div class=\"big\"><b>{1}</b><span>de {2}</span></div>{3}"
+],
+"0564b7bf": [
+"on the escort ships",
+"en los barcos de escolta"
+],
+"70731d1c": [
+"on the escort ship",
+"en el barco de escolta"
+]
+}

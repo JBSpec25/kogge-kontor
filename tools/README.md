@@ -11,8 +11,10 @@ Alles wird aus der deutschen Quelle `src/kogge-kontor.html` gebaut. Von Hand ge�
 | `python3 tools/build.py --probe DIR --app-url URL` | Browser-Fassung mit Probezeit und Link zur App |
 | `python3 tools/build.py --app` | App-Ordner `app/www` (vorher `npm ci --prefix app`, danach `npm run native --prefix app`) |
 | `node tools/test/smoke.js` | Rauchtest aller vorhandenen Fassungen in drei Sprachen; Bericht und Bilder in `tools/out/smoke/` |
+| `node tools/test/gefecht.js [--bilder]` | Seegefecht auf dem kleinsten iPhone (375 × 667) in drei Sprachen: Spannen und Feuer je Rotte, Enterkampf, Kapitän entscheiden lassen; Knöpfe im Nahkampf mindestens 56 px hoch, nichts verdeckt; Bilder in `tools/out/gefecht/` |
 | `python3 tools/sim/mksim.py src/kogge-kontor.html tools/out/sim.html` | Simulationsbau mit dem Spieler-Bot (`sim/bot.js`) |
 | `node tools/sim/run.js tools/out/sim.html --spiele 24 --tage 5930 --profil mensch --stammsitz riga --json AUS.json` | Langzeitsimulation bis zum Kampagnenende 1372: Spieltage bis zu jedem Rang und Amt (Median), Verlauf und Schlusswertung im JSON; Profile `mensch` und `bot45` |
+| `node tools/sim/kampf.js tools/out/sim.html --tage 400,1100,1800 --staende 10 --n 30 --verbaende` | Kampfquoten je Kampfstufe und Seeräuberverband (ab Version 51): von echten Spielständen des Bots aus, mit Juliens Können („gut“) und so, wie ein Kapitän entscheidet („ordentlich“); dazu, wie oft der beste Bot im Nahkampf stürmt, schießt und hält |
 
 ## Fassungen
 
