@@ -7106,7 +7106,7 @@ em.rep.warn{background:#b5523a}
       const vis = n => dot(n, v.V) > 0.02;
       const snowy = c => winter ? S.snow : c;
       const quad = (x0, y0, x1, y1, z) => [P(x0, y0, z || 0), P(x1, y0, z || 0), P(x1, y1, z || 0), P(x0, y1, z || 0)];
-      const smokeAt = [], flagsAt = [], millsAt = [], hits = {}, glints = [];
+      const smokeAt = [], flagsAt = [], millsAt = [], hits = {}, glints = [], allHulls = [];
       const tiny = k < 0.6;   // sehr klein: Fenster, Nischen und Linien weglassen
       function face(pts3, base, n, o) {
         if (!vis(n)) return null;
@@ -7579,10 +7579,20 @@ em.rep.warn{background:#b5523a}
         zOff = o.z || 0; HC = o.hc || null;
         const fn = DRAW[o.t]; if (fn) fn(o);
         if (o.flagAt) flagsAt.push({p:P(o.flagAt[0], o.flagAt[1], o.flagAt[2]), kind:'hm', col:o.hc, mark:o.mark});
-        if (o.plot) { const fp = foot(o); if (fp) { const pts = []; [[fp[0], fp[1]], [fp[2], fp[1]], [fp[2], fp[3]], [fp[0], fp[3]]].forEach(([x, y]) => { pts.push(P(x, y, 0)); pts.push(P(x, y, fp[4])); }); hits[o.plot] = hull(pts); } }
+        if (o.plot || opt.hulls) { const fp = foot(o); if (fp) {
+          // Umriss auf dem Bild: Giebelhaus mit First, Türme als Zylinder oder gedrehtes Viereck, sonst der Quader des Grundrisses
+          const q = [], box = [[fp[0], fp[1]], [fp[2], fp[1]], [fp[2], fp[3]], [fp[0], fp[3]]];
+          if (o.t === 'house') { box.forEach(([x, y]) => { q.push(P(x, y, 0)); q.push(P(x, y, o.h)); });
+            if (o.ridge === 'y') { q.push(P((fp[0] + fp[2]) / 2, fp[1], o.h + o.rh)); q.push(P((fp[0] + fp[2]) / 2, fp[3], o.h + o.rh)); } else { q.push(P(fp[0], (fp[1] + fp[3]) / 2, o.h + o.rh)); q.push(P(fp[2], (fp[1] + fp[3]) / 2, o.h + o.rh)); } }
+          else if (o.t === 'tower') { const n = o.kind === 'round' ? 12 : 4, a0 = o.kind === 'round' ? 0 : (o.rot || 0) + Math.PI / 4, rr = o.kind === 'round' ? o.r : o.r * Math.SQRT2;
+            for (let i = 0; i < n; i++) { const a = a0 + i / n * Math.PI * 2, x = o.x + Math.cos(a) * rr, y = o.y + Math.sin(a) * rr; q.push(P(x, y, 0)); q.push(P(x, y, o.h)); } q.push(P(o.x, o.y, fp[4])); }
+          else box.forEach(([x, y]) => { q.push(P(x, y, 0)); q.push(P(x, y, fp[4])); });
+          const h = hull(q), see = o.t === 'scaffold' && !!o.noWalls;   // Gerüst ohne Wände ist durchsichtig und kein eigenes Ziel
+          if (o.plot && !see) { const prev = hits[o.plot] || []; delete hits[o.plot]; hits[o.plot] = prev.length ? hull(prev.concat(h)) : h; }   // mehrere Teile eines Baus (Speicher und Kräne) zusammen, zuletzt gezeichnet liegt oben
+          if (opt.hulls) allHulls.push({t:o.t, plot:o.plot || null, own:!!o.hc, see, hull:h}); } }
         zOff = 0; HC = null;
       });
-      return {smokeAt, flagsAt, millsAt, hits, glints};
+      return {smokeAt, flagsAt, millsAt, hits, glints, hulls:opt.hulls ? allHulls : null};
     }
     // Ecken einer Mauer (wallS) am Boden
     function wallPts(o) { const t = o.th || 2.2, len = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]), nx = (o.b[1] - o.a[1]) / len * t, ny = -(o.b[0] - o.a[0]) / len * t, sx = o.ctr ? -nx / 2 : 0, sy = o.ctr ? -ny / 2 : 0;
@@ -7730,7 +7740,7 @@ em.rep.warn{background:#b5523a}
           [257, 77, 8, 9], [229.5, 86, 6.5, 6], [236.5, 86, 6.5, 6], [243.5, 86, 6.5, 6], [250.5, 86, 6.5, 6], [257, 86.5, 8, 5.5]]},
       becken:{quay:[[212, 230], [254, 272]], streets:[[212, 34, 268, 38], [212, 58, 268, 64]], meadow:[[212, 38, 268, 58], [212, 64, 268, 92]],
         basin:[230, 0, 254, 28], kai:[[212, 0, 230, 34, [[230, 0, 230, 28]]], [230, 28, 254, 34, [[230, 28, 254, 28]]], [254, 0, 272, 34, []]],
-        kontor:[214, 12, 14, 9, 'E'], haus:[236, 39, 9, 13, 'S'], speicher:[258, 6, 10, 15, 'S'], cranes:[[227, 21], [256.5, 3.5]], hospital:[214, 66, 13, 21], artushof:[246, 38, 20, 14, 'S'],
+        kontor:[214, 12, 14, 9, 'E'], haus:[236, 39, 9, 13, 'S'], speicher:[255.5, 8, 10, 15, 'S'], cranes:[[227, 21], [256.5, 3.5]], hospital:[214, 66, 13, 21], artushof:[246, 38, 20, 14, 'S'],
         works:[[229, 66], [243, 66], [256, 66], [229, 77], [243, 77]], sign:[240, 34.4], cargo:[[226, 5, 'b'], [224, 10, 'c'], [215, 4, 's']], trees:[[262, 88], [216, 90.5]], ship:[242, 13],
         fam:[[214, 39, 7, 9], [221.5, 39, 7, 9], [228.5, 39, 7, 9], [214, 49, 7, 9], [221.5, 49, 7, 9], [228.5, 49, 7, 9], [257, 77, 8, 9], [229, 86, 6.5, 6], [243, 86, 6.5, 6], [255, 24, 7, 6], [262.5, 24, 7, 6], [257, 86.5, 8, 5.5]]}
     };
@@ -7746,11 +7756,10 @@ em.rep.warn{background:#b5523a}
         ring:[[-40, 7], [-41, 92], [-38, 150], [-24, 167], [60, 169], [140, 169], [214, 167], [252, 138], [272, 92], [272, 7]],
         streets:STREETS50, quay:[[-41, 212]],
         blocks:BLOCKS.map(([x0, y0, x1, y1], bi) => [x0, y0, x1, y1, {front:y0 === 16, tr:bi !== 5 && bi !== 6}]),
-        plazas:[MARKT, [101, 88, 150, 150], [101, 64, 116, 88]],
-        extra:[{t:'house', x:103, y:64, w:8, d:13, h:12, rh:8, ridge:'x', front:'E', kind:'step', mat:'brick', wi:0, ri:1}, {t:'house', x:103, y:72.5, w:8, d:12, h:10, rh:7, ridge:'x', front:'E', kind:'plain', mat:'brick', wi:2, ri:3},
-          {t:'house', x:103, y:81, w:7, d:12, h:11, rh:7, ridge:'x', front:'E', kind:'plain', mat:'white', wi:1, ri:2}],
+        plazas:[MARKT, [101, 88, 150, 150], [101, 64, 116, 80]],
+        extra:[{t:'house', x:103, y:81, w:7, d:12, h:11, rh:7, ridge:'x', front:'E', kind:'plain', mat:'white', wi:1, ri:2}],
         rat:{x:116, y:88}, main:{x:118, y:104}, west:{x:62, y:80}, east:{x:170, y:76},
-        sheds:[[60, 32], [117, 32], [170, 34]], halle:[120, 66], stalls:[121, 70], chapel:[147, 122], crane:118
+        sheds:[[60, 32], [117, 32], [170, 34]], halle:[119.5, 67], stalls:[121.5, 75], chapel:[104, 66], crane:118
       }),
       // Hamburg: Fleete von der Elbe in die Stadt, Häuser mit dem Giebel zum Fleet, Nikolaikirche am Hopfenmarkt, Rathaus an der Trostbrücke
       hamburg:() => ({
@@ -7762,7 +7771,7 @@ em.rep.warn{background:#b5523a}
         blocks:[[-27, 16, 24, 46, {front:true}], [42, 16, 80, 46, {front:true}], [85, 16, 134, 46, {front:true}], [152, 16, 178, 46, {front:true}], [183, 16, 205, 46, {front:true}],
           [-27, 51, 24, 118, {}], [42, 51, 80, 118, {}], [152, 62, 178, 100, {dS:10}], [183, 51, 205, 118, {}], [-27, 124, 80, 150, {}], [85, 124, 205, 150, {}]],
         plazas:[[85, 51, 134, 118]], main:{x:96, y:64, w:24, d:40}, west:{x:44, y:128, w:14, d:20}, east:{x:186, y:66, w:14, d:30},
-        rat:{x:152, y:51, w:25, d:9, h:13}, stalls:[96, 56], halle:[110, 106], chapel:[124, 70], sheds:[[0, 30], [100, 30]], crane:166
+        rat:{x:152, y:51, w:25, d:9, h:13}, stalls:[96.5, 52], halle:[110, 106], chapel:[124, 70], sheds:[[0, 30], [100, 30]], crane:166
       }),
       // Bremen: lang am Fluss; vorn die Schlachte mit Speichern, dahinter die Balge als alter Hafen, Markt mit Rathaus und Roland, Dom daneben
       bremen:() => ({
@@ -7774,7 +7783,7 @@ em.rep.warn{background:#b5523a}
         blocks:[[-21, 16, 24, 56, {front:true, storageFront:true}], [28, 16, 36, 56, {front:true, storageFront:true}], [40, 16, 100, 30, {front:true, dS:14, dN:0, storage:true}], [104, 16, 150, 56, {front:true, storageFront:true}],
           [163, 16, 205, 75, {front:true}], [-27, 70, 24, 110, {front:true, dS:12}], [110, 70, 150, 110, {front:true, dS:12}], [155, 75, 205, 110, {}], [-24, 115, 106, 128, {dN:0}], [110, 115, 205, 128, {dN:0}], [0, 133, 205, 146, {dN:0}]],
         plazas:[[40, 30, 100, 62], [28, 70, 106, 110]], rat:{x:30, y:72, w:30, d:9}, roland:[72, 44], main:{x:70, y:74, w:26, d:34}, west:{x:2, y:80, w:14, d:24},
-        stalls:[46, 34], halle:[60, 48], chapel:[120, 80], sheds:[], crane:96, yard:{slip:-10}
+        stalls:[46, 34], halle:[60, 48], chapel:[97.5, 73], sheds:[], crane:96, yard:{slip:-10}
       }),
       // Danzig: Rechtstadt im Raster, lange Gassen quer zur Mottlau, der Lange Markt vom Grünen Tor am Kai bis zum Rathaus, Marienkirche und Krantor
       danzig:() => ({
@@ -7786,7 +7795,7 @@ em.rep.warn{background:#b5523a}
           [110, 16, 132, 70, {front:true, wN:[5, 7], side:9}], [136, 16, 158, 70, {front:true, wN:[5, 7]}], [162, 16, 184, 134, {front:true, wN:[5, 7]}], [188, 16, 205, 134, {front:true, wN:[5, 7]}]],
         plazas:[[110, 74, 158, 134]], main:{x:116, y:84, w:32, d:46}, rat:{x:66, y:99, w:18, d:12, tower:44}, west:null, east:null,
         extra:[{t:'gate', x:97, y:20, mat:'brick'}, {t:'house', x:110, y:38, w:15, d:12, h:17, rh:9, ridge:'x', front:'W', kind:'step', mat:'brick', wi:2, ri:0}, {t:'well', x:97, y:96}],
-        stalls:[88, 50], halle:[18, 112], chapel:[146, 116], sheds:[], crane:60
+        stalls:[85.5, 49], halle:[85.5, 85], chapel:[149, 116], sheds:[], crane:60
       }),
       // Riga: unregelmäßige Gassen, Ordensburg am Westende des Kais, Domplatz, Rathausplatz mit dem Schwarzhäupterhaus, Petrikirche mit gestufter Spitze
       riga:() => ({
@@ -7799,7 +7808,7 @@ em.rep.warn{background:#b5523a}
           [0, 88, 60, 122, {}], [65, 88, 104, 100, {dS:6, dN:6}], [65, 104, 104, 122, {dS:9, dN:9}], [154, 88, 176, 122, {}], [180, 88, 205, 122, {}], [-20, 126, 60, 150, {}], [65, 126, 150, 160, {}], [154, 126, 196, 155, {}]],
         plazas:[[0, 48, 60, 84], [108, 48, 150, 84], [108, 88, 150, 122]], main:{x:116, y:92, w:24, d:30}, west:{x:14, y:92, w:20, d:28}, east:{x:158, y:92, w:14, d:26},
         rat:{x:110, y:76, w:28, d:8}, extra:[{t:'castle', x:-38, y:18, w:30, d:28, th:30, style:'reval', mat:'brick'}, {t:'well', x:40, y:70}, {t:'tree', x:3, y:80, s:3}, {t:'tree', x:57, y:80, s:3}, {t:'tree', x:57, y:60, s:2.8}, {t:'house', x:110, y:50, w:12, d:14, h:17, rh:10, ridge:'x', front:'E', kind:'step', mat:'brick', wi:1, ri:0}],
-        stalls:[24, 56], halle:[66, 52], chapel:[140, 128], sheds:[[20, 30]], crane:118, yard:{slip:-19, area:null}
+        stalls:[15.5, 63], halle:[35.5, 55], chapel:[141.5, 91], sheds:[[20, 30]], crane:118, yard:{slip:-19, area:null}
       }),
       // Reval: Unterstadt mit langer Gasse vom Hafentor hinauf, Rathausplatz, Olaikirche am Hafen, Dicke Margarethe am Westende, Domberg im Osten
       reval:() => ({
@@ -7810,22 +7819,22 @@ em.rep.warn{background:#b5523a}
           [155, 16, 205, 56, {front:true}], [11, 60, 32, 104, {}], [36, 60, 64, 104, {}], [124, 60, 150, 104, {}], [-26, 108, 6, 140, {}], [11, 108, 64, 140, {}], [64, 108, 150, 140, {}], [24, 144, 140, 160, {dN:0}]],
         plazas:[[64, 60, 124, 104], [-34, 60, 6, 104]], main:{x:-26, y:64, w:18, d:36}, west:{x:40, y:112, w:14, d:24}, east:null,
         rat:{x:70, y:96, w:30, d:9, tower:38}, extra:[{t:'church', x:110, y:66, w:10, d:16, h:9, th:20, sh:12, towers:1, spire:'needle', mat:'stone'}],
-        stalls:[78, 66], halle:[90, 62], chapel:[136, 114], sheds:[], crane:118
+        stalls:[77.5, 75], halle:[85.5, 67], chapel:[105.5, 89], sheds:[], crane:118
       }),
       // Visby: Stadt am Hang, lange Straßen parallel zum Ufer, steile Gassen hinauf, Ringmauer nur zur Landseite, Dom St. Marien, viele Kirchenruinen
       visby:() => ({
         ring:[[-40, 7], [-40, 60], [-36, 120], [-20, 165], [60, 172], [140, 172], [214, 166]].concat(TAIL), gateAt:[60, 172], slope:{y0:34, k:0.22, max:30},
         quay:[[-40, 212]],
         streets:[[-40, 10, 212, 16], [-34, 50, 205, 54], [-34, 90, 205, 94], [-26, 128, 205, 132]].concat(gr([-30, 20, 56, 100, 140, 176], 16, 160, 3)).concat([[205, 16, 212, 160]]),
-        blocks:[].concat(...[[16, 50, true], [54, 90, false], [94, 128, false], [132, 160, false]].map(([y0, y1, f]) => between([-27, 20, 56, 100, 140, 176, 205], y0, y1).map(([a, , b]) => [a + (a === -27 ? 0 : 3), y0, b, y1, {front:f, dS:f ? 14 : 11, dN:y1 === 160 ? 0 : 10}]))),
+        blocks:[].concat(...[[16, 50, true], [54, 90, false], [94, 128, false], [132, 160, false]].map(([y0, y1, f]) => between([-27, 20, 56, 100, 140, 176, 205], y0, y1).map(([a, , b]) => [a + (a === -27 ? 0 : 3), y0, b, y1, {front:f, dS:f ? 14 : 11, dN:y1 === 160 ? 0 : 10}]))).filter(q => !(q[0] === 59 && q[1] === 54)),
         plazas:[[59, 54, 100, 90]], main:{x:106, y:98, w:24, d:28}, west:null, east:null, rat:{x:62, y:82, w:24, d:8, h:11},
         extra:[{t:'ruin', x:-24, y:58, w:20, d:28}, {t:'ruin', x:64, y:98, w:18, d:26}, {t:'ruin', x:148, y:100, w:12, d:22}, {t:'ruin', x:146, y:136, w:14, d:20}, {t:'ruin', x:28, y:136, w:12, d:18}],
-        stalls:[70, 60], halle:[60, 56], chapel:[186, 100], sheds:[], crane:118
+        stalls:[70.5, 65], halle:[60.5, 57], chapel:[88.5, 75], sheds:[], crane:118
       }),
       // Stockholm: Insel mit Wasser auch links und hinten, Skeppsbron am Kai, schmale Gränder hinauf zur Österlånggatan, Stortorget, Storkyrkan neben Tre Kronor
       stockholm:() => ({
         ring:[[-8, 7], [-2, 56], [-6, 104], [-10, 130], [4, 170], [40, 192], [110, 198], [170, 190], [214, 170]].concat(TAIL), gateAt:[110, 198], island:true,
-        water:[[[-420, -2], [-12, -2], [-6, 40], [-10, 90], [-16, 130], [-2, 176], [30, 206], [110, 214], [200, 208], [256, 176], [420, 160], [420, 330], [-420, 330]]],
+        water:[[[-420, -2], [-16, -2], [-12, 40], [-10, 90], [-16, 130], [-2, 176], [30, 206], [110, 214], [200, 208], [256, 176], [420, 160], [420, 330], [-420, 330]]],
         quay:[[-8, 212]],
         streets:[[-8, 10, 212, 16], [-4, 30, 205, 34], [0, 64, 155, 68], [30, 68, 34, 132], [104, 68, 108, 132], [150, 68, 155, 150], [2, 132, 150, 136], [16, 166, 175, 170], [205, 16, 212, 165]]
           .concat(gr([6, 19, 32, 45, 58, 84, 97, 110, 136, 149, 175, 188], 16, 30)).concat(gr([19, 45, 84, 110, 149], 34, 64)),
@@ -7833,7 +7842,7 @@ em.rep.warn{background:#b5523a}
           .concat([[-2, 34, 19, 64, {}], [21, 34, 45, 64, {}], [47, 34, 84, 64, {}], [86, 34, 110, 64, {}], [112, 34, 149, 64, {}], [151, 34, 205, 64, {}], [4, 68, 30, 132, {}], [34, 68, 60, 132, {}], [60, 108, 104, 132, {dS:8}],
             [8, 136, 150, 166, {dN:0}], [24, 170, 168, 188, {dS:12, dN:0}]]),
         plazas:[[60, 68, 104, 108], [108, 68, 150, 132]], main:{x:116, y:80, w:22, d:36}, west:null, rat:{x:62, y:100, w:26, d:8, h:11},
-        extra:[{t:'well', x:82, y:84}], stalls:[64, 72], halle:[78, 70], chapel:[126, 120], sheds:[], crane:118, yard:{slip:10, area:null}, ridge:[236, 34, '#8f978a']
+        extra:[{t:'well', x:82, y:84}], stalls:[63.5, 87], halle:[71.5, 73], chapel:[126, 120], sheds:[], crane:118, yard:{slip:10, area:null}, ridge:[236, 34, '#8f978a']
       }),
       // Brügge: Reien durch die Stadt mit Brücken, Markt mit Belfried, Wasserhalle über dem Kanal, Burgplatz mit Stadthaus, Liebfrauenkirche, Kran am Kanal
       bruegge:() => ({
@@ -7843,35 +7852,35 @@ em.rep.warn{background:#b5523a}
         bridges:[[20, 24, 72, 80], [90, 94, 72, 80]], bridgesX:[[146, 152, 10, 16]],
         blocks:[[-34, 16, 36, 64, {front:true}], [40, 16, 100, 26, {front:true, dS:10, dN:0}], [104, 16, 146, 26, {front:true, dS:10, dN:0}], [158, 16, 205, 64, {front:true}],
           [-34, 80, 20, 150, {front:true}], [24, 80, 90, 150, {front:true}], [94, 80, 146, 150, {front:true}], [150, 80, 205, 150, {front:true}]],
-        plazas:[[40, 26, 100, 64], [104, 26, 146, 64]], belfry:{x:70, y:28}, main:{x:36, y:102, w:20, d:36}, west:{x:-24, y:102, w:14, d:30}, east:{x:162, y:102, w:14, d:28},
-        rat:{x:108, y:54, w:30, d:9, h:12}, extra:[{t:'crane', x:132, y:68, big:true}], halleFix:[104, 72.5], stalls:[46, 46], chapel:[120, 34], sheds:[], crane:118
+        plazas:[[40, 26, 100, 64], [104, 26, 146, 64]], belfry:{x:70, y:28}, main:{x:36, y:102, w:20, d:36}, west:{x:-20, y:102, w:14, d:30}, east:{x:162, y:102, w:14, d:28},
+        rat:{x:108, y:54, w:30, d:9, h:12}, extra:[{t:'crane', x:132, y:68, big:true}], halleFix:[66, 72.5], stalls:[46, 46], chapel:[119.5, 37], sheds:[], crane:118
       }),
       // London: Mauer im Halbkreis, Old St Paul's auf dem Ludgate Hill links, Tower rechts, London Bridge, Stalhof der Hanse am Fluss, Cheapside
       london:() => ({
         ring:[[-40, 7], [-52, 60], [-48, 112], [-26, 150], [20, 176], [100, 184], [170, 174], [214, 160]].concat(TAIL), gateAt:[-50, 72],
         quay:[[-40, 212]],
         streets:[[-40, 10, 212, 16], [3, 16, 13, 96], [-36, 46, 110, 52], [150, 46, 205, 52], [20, 96, 150, 106], [60, 16, 65, 46], [60, 52, 65, 150], [100, 52, 105, 96], [150, 16, 155, 150], [6, 150, 150, 154], [205, 16, 212, 160]],
-        blocks:[[-34, 16, 3, 46, {front:true}], [13, 16, 60, 46, {front:true}], [65, 16, 110, 46, {front:true}], [155, 16, 205, 46, {front:true}], [13, 52, 60, 96, {}], [65, 52, 100, 96, {}], [105, 52, 150, 96, {}],
+        blocks:[[-34, 16, 3, 46, {front:true}], [13, 16, 60, 46, {front:true}], [65, 16, 110, 46, {front:true}], [155, 16, 205, 46, {front:true}], [13, 52, 60, 96, {}], [65, 52, 100, 64, {dS:12, dN:0}], [105, 52, 150, 96, {}],
           [155, 52, 205, 64, {dS:12, dN:0}], [10, 106, 60, 150, {}], [65, 106, 150, 150, {}], [26, 154, 150, 170, {dN:0}]],
-        plazas:[[110, 46, 150, 52]], main:{x:-30, y:94, w:28, d:44, z:5}, west:null, rat:{x:66, y:84, w:26, d:9, h:13},
+        plazas:[[110, 46, 150, 52], [65, 64, 100, 96]], main:{x:-30, y:94, w:28, d:44, z:5}, west:null, rat:{x:66, y:84, w:26, d:9, h:13},
         extra:[{t:'platform', x:-42, y:84, w:46, d:62, h:5},
           // Stalhof: ummauerter Hof der Hanse am Fluss mit Gildehalle, Speichern und Garten
           {t:'wallS', a:[110, 46], b:[110, 16], h:4, mat:'stone'}, {t:'wallS', a:[150, 16], b:[150, 46], h:4, mat:'stone'}, {t:'wallS', a:[150, 46], b:[134, 46], h:4, mat:'stone'}, {t:'wallS', a:[126, 46], b:[110, 46], h:4, mat:'stone'},
           {t:'house', x:113, y:30, w:22, d:13, h:12, rh:9, ridge:'y', front:'S', kind:'step', mat:'stone', wi:0, ri:0, flag:'red'}, {t:'house', x:138, y:17, w:9, d:14, h:11, rh:9, ridge:'y', front:'S', kind:'step', mat:'brick', wi:1, ri:1, storage:true},
           {t:'house', x:113, y:17, w:8, d:11, h:9, rh:8, ridge:'y', front:'S', kind:'plain', mat:'brick', wi:2, ri:2, storage:true}, {t:'tree', x:142, y:38, s:3}, {t:'tree', x:126, y:20, s:2.6}],
-        stalls:[24, 98], halle:[70, 98], chapel:[130, 120], sheds:[], crane:118, bridgeHouses:true
+        stalls:[66.5, 65], halle:[66.5, 75], chapel:[92.5, 66], sheds:[], crane:118, bridgeHouses:true
       }),
       // Bergen: Bryggen mit langen Holzspeichern, Giebel zum Wasser, schmale Gänge dazwischen; Bergenhus am Westende, Marienkirche, Berge dicht dahinter, keine Mauer
       bergen:() => ({
         ring:[[-44, 7], [-46, 60], [-40, 110], [0, 120], [100, 124], [200, 120], [214, 120]].concat(TAIL), noWall:true, streetCol:'#9b8667',
         quay:[[-44, 212]],
         streets:[[-44, 10, 212, 16], [-4, 52, 205, 58], [60, 58, 64, 118], [120, 58, 124, 118], [205, 16, 212, 118]],
-        bryggen:[-2, 204, 16, 50],
+        bryggen:[-2, 168, 16, 50], plazas:[[170, 16, 205, 50]],
         blocks:[[-4, 58, 60, 118, {}], [64, 58, 120, 118, {}], [124, 58, 205, 118, {}]],
         main:{x:70, y:66, w:18, d:30}, west:{t:'tower', x:150, y:92, r:6, h:24, kind:'square', mat:'stone', flat:true}, rat:null,
         extra:[{t:'house', x:-40, y:20, w:13, d:26, h:12, rh:9, ridge:'y', front:'S', kind:'step', mat:'stone', wi:0, ri:0}, {t:'tower', x:-16, y:34, r:6, h:24, kind:'square', mat:'stone', flat:true},
           {t:'wallS', a:[-44, 14], b:[-44, 54], h:5, mat:'stone'}, {t:'wallS', a:[-44, 54], b:[-8, 54], h:5, mat:'stone'}],
-        stalls:[176, 62], halle:[170, 60], chapel:[100, 104], sheds:[], crane:118, yard:null
+        stalls:[179.5, 41], halle:[170, 60], chapel:[171.5, 35], sheds:[], crane:118, yard:null
       }),
       // Nowgorod: Handelsseite aus Holz, Bohlenstraßen, Jaroslawhof mit Lauben und Nikolaikathedrale, Peterhof der Hanse, Große Brücke über den Wolchow, Detinez rechts
       nowgorod:() => ({
@@ -7884,17 +7893,22 @@ em.rep.warn{background:#b5523a}
           // Peterhof: Hof der Hanse mit Palisade, steinerner Peterskirche und Blockspeichern
           {t:'fence', x0:110, y0:18, x1:148, y1:52}, {t:'church', x:122, y:26, w:12, d:18, h:9, th:22, sh:10, towers:1, spire:'tent', mat:'stone'},
           {t:'house', x:137, y:20, w:9, d:12, h:7, rh:6, ridge:'y', front:'S', kind:'log', mat:'log', wi:0, ri:0, storage:true, flag:'red'}, {t:'house', x:112, y:38, w:8, d:11, h:7, rh:6, ridge:'y', front:'S', kind:'log', mat:'log', wi:1, ri:1, storage:true}],
-        bridge:{x0:3, x1:11, y0:-110, y1:0, wood:true}, stalls:null, halle:[30, 60], chapel:[130, 100], sheds:[], crane:118
+        bridge:{x0:3, x1:11, y0:-110, y1:0, wood:true}, stalls:null, halle:[28.5, 33], chapel:[86.5, 41], sheds:[], crane:118
       })
     };
     function build50(cid, o, cfg) {
       const L = (LAYOUT[cid] || LAYOUT.luebeck)();
-      const seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1, r = rngF(seed);
+      const seed = [...cid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) % 2147483646 + 1;
+      let r = rngF(seed);   // eigener Zufall für dein Viertel (unten), damit Stadt und Umland beim Bauen gleich bleiben
       const objs = [], ground = [], P = o.plots || null, home = !!P, keep = [], ring = L.ring, GV = (P && P.gv) || {};
       const hc = o.house && o.house.hc || '#8a3a2a', mark = o.house && o.house.mark || null;
       const QV = (home && VIERTEL[o.viertel || cfg.viertel || 'becken']) || VIERTEL.kontorhof;   // fremde Häfen: Bürgerhäuser im Raster des Kontorhofs
       const own = q => Object.assign(q, {hc, mark});   // Bau deines Hauses: Hausfarbe und Hausmarke
-      const busy = (x0, y0, x1, y1) => keep.some(([a, b, c, d]) => x0 < c && x1 > a && y0 < d && y1 > b);
+      const busy0 = (x0, y0, x1, y1) => keep.some(([a, b, c, d]) => x0 < c && x1 > a && y0 < d && y1 > b);
+      // ab Version 50: Häuser stehen ganz im Mauerring, mindestens 1,8 m von der Mauerlinie (Türme und Tore halten sich über keep frei)
+      const segD = (px, py, [ax, ay], [bx, by]) => { const dx = bx - ax, dy = by - ay, t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy))); return Math.hypot(ax + dx * t - px, ay + dy * t - py); };
+      const inRing = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].every(([x, y]) => y < 0.5 || (K36.inPoly([x, y], ring) && ring.every((a, i) => i === ring.length - 1 || segD(x, y, a, ring[i + 1]) >= 1.8)));
+      const busy = (x0, y0, x1, y1) => busy0(x0, y0, x1, y1) || !inRing(x0, y0, x1, y1);
       const keepObj = q => { const f = K36.foot(q); if (f) keep.push([f[0] - 0.5, f[1] - 0.5, f[2] + 0.5, f[3] + 0.5]); return q; };
       const tall = cfg.tall || 0, base = cfg.mat[0][0], hmMat = base === 'fach' || base === 'wood' || base === 'log' ? base : 'brick';
       const fullEast = typeof cfg.east === 'string';
@@ -7926,7 +7940,7 @@ em.rep.warn{background:#b5523a}
       function trees(x0, y0, x1, y1, n, s0, out) { for (let q = 0; q < n; q++) { const x = lerp(x0, x1, r()), y = lerp(y0, y1, r()); if (busy(x - 2, y - 2, x + 2, y + 2) || (out && (K36.inPoly([x, y], ring) || !dry(x, y)))) continue; objs.push({t:'tree', x, y, s:(s0 || 3) + r() * 2.5, pine:out && cfg.water === 'sea' && r() < 0.5}); } }
       // Block: Häuser an allen Rändern mit dem Giebel zur Straße, innen Gärten mit Bäumen
       function block(x0, y0, x1, y1, op) {
-        op = op || {}; const front = !!op.front, dS = op.dS != null ? op.dS : front ? 16 : 13, dN = op.dN != null ? op.dN : 12, side = op.side || 11;
+        op = op || {}; const front = !!op.front, dS = op.dS != null ? op.dS : front ? 16 : 13, dN = op.dN != null ? op.dN : 12, side = Math.min(op.side || 11, (x1 - x0) / 2);
         row(x0, x1, y0, dS, 'S', front, op); if (dN > 1) row(x0, x1, y1, dN, 'N', false, op);
         if (y1 - dN - (y0 + dS) < 4) return;
         rowX(y0 + dS, y1 - dN, x0, side, 'W', op); if (x1 - x0 > side + 6) rowX(y0 + dS, y1 - dN, x1, side, 'E', op);
@@ -7967,7 +7981,8 @@ em.rep.warn{background:#b5523a}
       const M = Object.assign({}, CHURCH_M, cfg.main || {}, L.main || {}, {t:'church'});
       if (!M.mat) M.mat = cfg.walls === 'brickL' ? 'brickL' : 'brick';
       if (cfg.main && cfg.main.domes) { M.aisles = false; M.choir = false; }
-      if (GV.turm === 'built') { M.th = (M.th || 46) + 14; M.sh = (M.sh || 34) + 8; own(M).flag = 'hm'; M.plot = 'turm'; }
+      if (GV.turm === 'built') { M.th = (M.th || 46) + 14; M.sh = (M.sh || 34) + 8; own(M).flag = 'hm'; }
+      if (GV.turm) M.plot = 'turm';   // Antippen führt zu den großen Vorhaben
       objs.push(keepObj(M));
       if (GV.turm === 'job') objs.push({t:'scaffold', x:M.x + 1, y:M.y - 3, w:M.w - 2, d:2, h:M.th || 46, frac:0.5, noWalls:true, plot:'turm', z:M.z});
       const roland = L.roland || cfg.roland; if (roland) objs.push(keepObj({t:'roland', x:roland[0], y:roland[1]}));
@@ -8000,10 +8015,12 @@ em.rep.warn{background:#b5523a}
       if (home && P.markt === 'built') objs.push(keepObj(own({t:'halle', x:HL[0], y:HL[1], w:22, d:7, h:5.5, plot:'markt', flagAt:[HL[0] + 11, HL[1] + 3.5, 9]})));
       else if (home && P.markt === 'job') objs.push(keepObj({t:'scaffold', x:HL[0] + 1, y:HL[1], w:20, d:6, h:6, frac:P.marktF || 0.3, plot:'markt', mat:'wood'}));
       else if (L.halleFix) objs.push(keepObj({t:'halle', x:HL[0], y:HL[1], w:22, d:7, h:5.5}));
+      if (HL) keep.push([HL[0] - 0.5, HL[1] - 0.5, HL[0] + 22.5, HL[1] + 7.5]);   // Bauplatz immer frei halten, damit die Häuser beim Bauen bleiben
       if (L.stalls) objs.push(keepObj({t:'stalls', x:L.stalls[0], y:L.stalls[1], n:7}));
       const CH = L.chapel;
       if (home && P.kirche === 'built') objs.push(keepObj(own({t:'church', x:CH[0], y:CH[1], w:7, d:13, h:8, towers:0, ridgeTurret:true, mat:M.mat, plot:'kirche', flagAt:[CH[0] + 3.5, CH[1] + 7, 17]})));
       else if (home && P.kirche === 'job') objs.push(keepObj({t:'scaffold', x:CH[0] - 1, y:CH[1], w:7, d:12, h:9, frac:P.kircheF || 0.3, plot:'kirche', mat:M.mat}));
+      if (CH) keep.push([CH[0] - 1.5, CH[1] - 0.5, CH[0] + 7.5, CH[1] + 13.5]);
       (L.sheds || []).forEach(([x, y], n) => objs.push(keepObj({t:'shed', x, y, w:8, d:6, h:4.4, mat:'fach', chimney:n === 1})));
       // Werft am linken Ende des Kais (nicht in Bergen, dort steht Bergenhus)
       const Y = L.yard === undefined ? {slip:-19, area:[-28, 16, -12, 32]} : L.yard;
@@ -8042,7 +8059,7 @@ em.rep.warn{background:#b5523a}
         for (let i = 0; i < N - 1; i++) {
           const [ax, ay] = ring[i], [bx, by] = ring[i + 1], len = Math.hypot(bx - ax, by - ay), at = t => [ax + (bx - ax) * t, ay + (by - ay) * t];
           let g0 = null, g1 = null;
-          if (i === gi) { gt = Math.max(half / len + 0.02, Math.min(1 - half / len - 0.02, gt)); gate = at(gt).concat([Math.abs(by - ay) > Math.abs(bx - ax) ? 'y' : 'x']); g0 = gt - half / len; g1 = gt + half / len; }
+          if (i === gi) { const m = (half + 6.5) / len; gt = Math.max(m, Math.min(1 - m, gt)); gate = at(gt).concat([Math.abs(by - ay) > Math.abs(bx - ax) ? 'y' : 'x']); g0 = gt - half / len; g1 = gt + half / len; }
           const nt = Math.floor(len / 46);
           for (let q = 1; q <= nt; q++) { const t = q / (nt + 1); if (g0 != null && t > g0 - 0.08 && t < g1 + 0.08) continue; const [x, y] = at(t), rr = tw === 'square' ? 3.8 : 4.2;
             const kind = tw === 'square' ? 'square' : tw === 'roundRed' ? 'round' : q % 2 ? 'square' : 'round', rot = fold(ang(i));
@@ -8055,6 +8072,8 @@ em.rep.warn{background:#b5523a}
           objs.push(g); const f = K36.foot(g); obs.push({x:(f[0] + f[2]) / 2, y:(f[1] + f[3]) / 2, hx:(f[2] - f[0]) / 2, hy:(f[3] - f[1]) / 2, rot:0});
           if (!L.island) ground.push({t:'road', pts:ys ? [[-330, cy - 3], [cx, cy - 3], [cx, cy + 3], [-330, cy + 3]] : [[cx - 3, cy], [cx + 3, cy], [cx + 3, 330], [cx - 3, 330]], col:L.streetCol});
         }
+        obs.forEach(ob => { const c = Math.abs(Math.cos(ob.rot || 0)), sn = Math.abs(Math.sin(ob.rot || 0)), hx = ob.r != null ? ob.r : ob.hx * c + ob.hy * sn, hy = ob.r != null ? ob.r : ob.hx * sn + ob.hy * c;
+          keep.push([ob.x - hx - 0.5, ob.y - hy - 0.5, ob.x + hx + 0.5, ob.y + hy + 0.5]); });   // Häuser halten Abstand zu Türmen und Toren
         // Eintritt und Austritt einer Mauerkante (um s neben der Mittellinie) in ein Hindernis, als Strecke ab dem Kantenanfang
         const cross = (A, u, s, ob) => { const px = A[0] + u[1] * s - ob.x, py = A[1] - u[0] * s - ob.y;
           if (ob.r != null) { const b = px * u[0] + py * u[1], D = b * b - (px * px + py * py - ob.r * ob.r); if (D < 0) return null; const r2 = Math.sqrt(D); return [-b - r2, -b + r2]; }
@@ -8079,7 +8098,7 @@ em.rep.warn{background:#b5523a}
       if (L.bryggen) bryggen(...L.bryggen);
       if (Math.min(130, yb - 26) - 98 > 16) block(212, 98, 248, Math.min(130, yb - 26), {dS:12, dN:10});
       // Dein Viertel
-      const [qx0, qy0, qx1, qy1] = VQ;
+      const [qx0, qy0, qx1, qy1] = VQ, rCity = r; r = rngF(seed + 7919);
       if (home) {
         const hb = (s, extra) => { const [x, y, w, d, f] = s, fr = f || 'S'; return Object.assign({t:'house', x, y, w, d, ridge:fr === 'S' || fr === 'N' ? 'y' : 'x', front:fr}, extra); };
         const at = s => s[4] === 'E' || s[4] === 'W' ? [s[0], s[1], s[0] + s[3], s[1] + s[2]] : [s[0], s[1], s[0] + s[2], s[1] + s[3]];   // Grundriss eines Bauplatzes
@@ -8091,7 +8110,7 @@ em.rep.warn{background:#b5523a}
         else { const f = at(QV.kontor); objs.push({t:'stake', x:(f[0] + f[2]) / 2 - 1.7, y:(f[1] + f[3]) / 2 - 1.5}); }
         const lv = P.hausLvl || 1, hf = at(QV.haus);
         if (P.haus === 'job' && lv < 2) objs.push({t:'scaffold', x:hf[0], y:hf[1], w:hf[2] - hf[0], d:hf[3] - hf[1] - 1, h:14, frac:P.hausF || 0.3, plot:'haus'});
-        else { objs.push(own(hb(QV.haus, {h:lv === 1 ? 10 + tall : lv === 2 ? 14 + tall : 17 + tall, rh:lv === 1 ? 7 : 9.5, kind:lv === 1 ? kindOf(hmMat, r, ['plain']) : hmMat === 'brick' ? 'step' : hmMat, mat:lv === 3 && hmMat === 'brick' ? 'white' : hmMat, wi:4, ri:0, chimney:true, hm:true, oriel:lv === 3, plot:'haus', diele:true, flag:lv > 1 ? 'hm' : null})));
+        else { objs.push(own(hb(QV.haus, {h:(lv === 1 ? 10 : lv === 2 ? 14 : 17) + tall / 2, rh:lv === 1 ? 7 : 9.5, kind:lv === 1 ? kindOf(hmMat, r, ['plain']) : hmMat === 'brick' ? 'step' : hmMat, mat:lv === 3 && hmMat === 'brick' ? 'white' : hmMat, wi:4, ri:0, chimney:true, hm:true, oriel:lv === 3, plot:'haus', diele:true, flag:lv > 1 ? 'hm' : null})));
           if (P.haus === 'job') objs.push({t:'scaffold', x:hf[0] - 1, y:hf[1] - 2, w:hf[2] - hf[0] + 2, d:1.2, h:16, frac:P.hausF || 0.3, plot:'haus', noWalls:true}); }
         ['w0', 'w1', 'w2', 'w3', 'w4'].forEach((k, i) => { const [x, y] = QV.works[i], s0 = P[k] || {};
           if (s0.s === 'built') { n++; objs.push(own({t:'work', x, y, g:s0.g, idle:s0.idle, plot:k})); }
@@ -8102,12 +8121,12 @@ em.rep.warn{background:#b5523a}
         // große Vorhaben: Speicher am Kai mit Kränen, Hospital, Artushof, im Hafenbecken die Friedeflotte
         if (GV.hafen === 'built') { n++; objs.push(own(hb(QV.speicher, {h:15, rh:QV.speicher[2] * 1.2, kind:'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, storage:true, hm:true, flag:'hm', plot:'hafen'})));
           QV.cranes.forEach(([x, y]) => objs.push(own({t:'crane', x, y, plot:'hafen', flagAt:[x, y, 14]}))); }
-        else if (GV.hafen === 'job') { const f = at(QV.speicher); objs.push({t:'scaffold', x:f[0], y:f[1], w:f[2] - f[0], d:f[3] - f[1] - 2, h:14, frac:0.5, plot:'hafen'}); }
+        else if (GV.hafen === 'job') { const f = at(QV.speicher); objs.push({t:'scaffold', x:f[0], y:f[1], w:f[2] - f[0], d:f[3] - f[1] - 2, h:17, frac:0.5, plot:'hafen'}); }
         const [px, py, pw, pd] = QV.hospital;
         if (GV.hospital === 'built') { n++; objs.push(own({t:'church', x:px, y:py, w:pw, d:pd, h:9, towers:0, ridgeTurret:true, mat:M.mat, plot:'hospital', flagAt:[px + pw / 2, py + 2, 22]})); }
         else if (GV.hospital === 'job') objs.push({t:'scaffold', x:px, y:py, w:pw, d:pd, h:10, frac:0.5, plot:'hospital', mat:M.mat});
         const af = at(QV.artushof);
-        if (GV.artushof === 'built') { n++; objs.push(own(hb(QV.artushof, {h:13 + tall, rh:10, kind:base === 'fach' || base === 'wood' || base === 'log' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, hm:true, flag:'hm', plot:'artushof', chimney:true}))); }
+        if (GV.artushof === 'built') { n++; objs.push(own(hb(QV.artushof, {h:13 + tall / 2, rh:10, kind:base === 'fach' || base === 'wood' || base === 'log' ? 'plain' : 'step', mat:hmMat === 'fach' ? 'brick' : hmMat, wi:3, ri:1, hm:true, flag:'hm', plot:'artushof', chimney:true}))); }
         else if (GV.artushof === 'job') objs.push({t:'scaffold', x:af[0], y:af[1], w:af[2] - af[0], d:af[3] - af[1], h:12, frac:0.5, plot:'artushof'});
         if (QV.ship && (GV.flotte === 'built' || GV.hafen === 'built')) objs.push({t:'ship', type:GV.flotte === 'built' ? 'holk' : 'kogge', X:QV.ship[0], Y:QV.ship[1], heading:Math.PI / 2, furled:true});
         // Häuser deiner Familie aus der festen Reihe
@@ -8123,6 +8142,7 @@ em.rep.warn{background:#b5523a}
         block(qx0, 37, qx1 - 2, 58, {dS:11, dN:10});
         block(qx0, 64, qx1 - 2, qy1, {dS:13, dN:12});
       }
+      r = rCity;
       // vor der Mauer: Gärten, Felder, Bäume, Mühle (Stockholm: nur Wasser)
       if (!L.island) {
         [[-98, 16, -54, 52], [-98, 70, -54, 150], [-30, 178, 40, 192], [120, 178, 200, 192]].concat(cfg.coast === 'muendung' ? [[322, 16, 360, 52]] : [[284, 16, 322, 52]]).forEach(([x0, y0, x1, y1]) => { if (!K36.inPoly([x0, y0], ring) && !K36.inPoly([x1, y1], ring)) ground.push({t:'gardenOut', pts:[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]}); });
@@ -8156,7 +8176,7 @@ em.rep.warn{background:#b5523a}
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const v = K36.view(W, H, VIEW.center, VIEW.span, VIEW.cy);
-      const R = K36.draw(ctx, v, sc, {winter:o.winter, season:o.season, haze:sc.cfg.hills || sc.cfg.ridge ? 0.08 : 0.2});
+      const R = K36.draw(ctx, v, sc, {winter:o.winter, season:o.season, haze:sc.cfg.hills || sc.cfg.ridge ? 0.08 : 0.2, hulls:!!o.hulls});
       if (R.smokeAt.length > 16) { const n = R.smokeAt.length; R.smokeAt = Array.from({length:16}, (_, i) => R.smokeAt[Math.floor(i * n / 16)]); }
       R.gulls = [0, 1, 2].map(q => ({x:(q * 0.37 + 0.1) % 1, y:0.06 + q * 0.07, ph:q * 2.1}));
       return {cv, R, v, sc, W, H, dpr, winter:!!o.winter};
@@ -10961,7 +10981,7 @@ em.rep.warn{background:#b5523a}
     const cv = $('#citycv'), b = cityView.base;
     if (!cv || !b) return null;
     const r = cv.getBoundingClientRect(), k = G36.pick(b, (ev.clientX - r.left) * b.W / r.width, (ev.clientY - r.top) * b.H / r.height);
-    return PLOTS.some(q => q.k === k) ? k : null;
+    return PLOTS.some(q => q.k === k) || GV[k] ? k : null;   // ab Version 50 auch die großen Vorhaben im Viertel
   }
   // ───────── 2,5D-Bilder für Kacheln, Baubuch und Baublatt (passend zur Stadtansicht) ─────────
   // Ein Feld der Isometrie als Bühne: i nach rechts unten, j nach links unten, z nach oben; Licht von rechts
@@ -11073,7 +11093,8 @@ em.rep.warn{background:#b5523a}
       box.innerHTML = `<div class="chead"><h2></h2><span class="small"></span></div>` + `<div class="cityview"><canvas id="citycv" role="img" aria-label="${home ? 'Gezeichnete Ansicht deines Stammsitzes' : 'Gezeichnete Ansicht der Stadt'}"></canvas><button class="cvbig" type="button" data-act="city-big" aria-label="Stadt groß ansehen">⤢ Groß</button></div>` + `<div id="pubtiles"></div><div id="buildbook"></div>`;
       box.dataset.ready = home ? 'home' : 'port';
       box.dataset.cid = st.loc;
-      if (home) $('#citycv').addEventListener('click', ev => { const k = cityPick(ev); if (k) { const ps = plotState(PLOTS.find(q => q.k === k)); if (ps.built || ps.job) { ui.bsheet = k; renderBSheet(); } } });
+      if (home) $('#citycv').addEventListener('click', ev => { const k = cityPick(ev); if (!k) return; if (GV[k]) return goTo('gv');
+        const ps = plotState(PLOTS.find(q => q.k === k)); if (ps.built || ps.job) { ui.bsheet = k; renderBSheet(); } });
       citySig = '';
     }
     box.querySelector('.chead h2').textContent = home ? C[st.home].n : `Hafen von ${C[st.loc].n}`;
@@ -11359,13 +11380,15 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.kq) { ui.kq = t.dataset.kq === 'max' ? 'max' : +t.dataset.kq; renderBranch(); return; }
     if (t.dataset.kmove) kontorMove(t.dataset.good, t.dataset.kmove, ui.kq === 'max' ? Infinity : (ui.kq || 10));
   });
+  // Zu einem Reiter oder einem Abschnitt im Reiter Haus springen (Kacheln, Baublatt, Antippen im Stadtbild)
+  function goTo(g) { ui.bsheet = null; renderBSheet();
+    if (['markt', 'werft', 'haus'].includes(g)) return setTab(g);
+    ui.det[g] = true; setTab('haus'); render(); requestAnimationFrame(() => { const el = document.querySelector(`#homecard [data-det="${g}"]`); if (el) el.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'}); }); }
   function cityAct(t) {
     if (t.dataset.act === 'city-big') { ui.cityZoom = 1; return renderCityFull(); }
     if (t.dataset.act === 'bs-close') { ui.bsheet = null; return renderBSheet(); }
     if (t.dataset.bs) { ui.bsheet = t.dataset.bs; return renderBSheet(); }
-    if (t.dataset.go) { const g = t.dataset.go; ui.bsheet = null; renderBSheet();
-      if (['markt', 'werft', 'haus'].includes(g)) return setTab(g);
-      ui.det[g] = true; setTab('haus'); render(); requestAnimationFrame(() => { const el = document.querySelector(`#homecard [data-det="${g}"]`); if (el) el.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'}); }); return; }
+    if (t.dataset.go) return goTo(t.dataset.go);
     if (t.dataset.k === 'branch') return buildBranch();
     const done = () => { ui.bsheet = null; renderBSheet(); };
     if (t.dataset.work) { done(); return buildWork(t.dataset.work); }
@@ -11598,7 +11621,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = 'd87fd26b2c';
+window.KK_BUILD = '2095d32ec0';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }

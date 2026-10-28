@@ -1,6 +1,7 @@
 # Prüft jede Änderung, bevor sie nach main und damit auf GitHub Pages oder in die App kommt.
 # 1. Die gebauten Dateien (Englisch, Spanisch, Beta) passen zur deutschen Quelle, keine Übersetzung fehlt.
-# 2. Rauchtest im iPhone-Format: Beta, Hauptseite, Probe-Fassung und App, je Deutsch, Englisch, Spanisch.
+# 2. Prüfmodus der Stadtbilder: nichts über Wasser, Mauern an Türmen, alles auf dem Boden, Viertel, Antippen.
+# 3. Rauchtest im iPhone-Format: Beta, Hauptseite, Probe-Fassung und App, je Deutsch, Englisch, Spanisch.
 # Bildschirmfotos und Bericht liegen danach unter „Artifacts“ des Laufs (rauchtest).
 name: Prüfung
 
@@ -42,6 +43,9 @@ jobs:
       - name: Browser für den Rauchtest
         working-directory: tools
         run: npx playwright install --with-deps chromium
+
+      - name: Stadtbilder (Prüfmodus)
+        run: node tools/test/stadtpruefung.js
 
       - name: Rauchtest
         run: node tools/test/smoke.js
