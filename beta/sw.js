@@ -1,6 +1,6 @@
 // Offline-Cache für Kogge & Kontor. Version wechselt mit jedem neuen Stand des Codes.
 // Hauptseite und Beta (/beta/) haben getrennte Caches und lassen sich gegenseitig in Ruhe.
-const CACHE = 'kogge-beta-a79eb772bc';
+const CACHE = 'kogge-beta-d87fd26b2c';
 const OWN = k => k.startsWith('kogge-beta-');
 const CORE = ['./', 'index.html', 'en.html', 'es.html', 'manifest.webmanifest', '../icon-192.png', '../icon-512.png', '../apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
