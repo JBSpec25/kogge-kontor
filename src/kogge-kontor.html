@@ -33,7 +33,7 @@
   --coast:#3a5158; --rule:#27383e; --brass:#dba64b; --brass-ink:#1b1306; --good:#72c693; --bad:#e67f73;
   --scrim:rgba(0,0,0,.55); color-scheme:dark;
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;touch-action:manipulation}
 body{background:var(--paper);color:var(--ink);font:16px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
@@ -5490,6 +5490,7 @@ em.rep.warn{background:#b5523a}
   }
   function guardTap() {
     if (!guard || guard.tap || !st.enc || (st.enc.phase !== 'guard' && st.enc.phase !== 'hook')) return;
+    if (performance.now() < guard.t0) return;   // ab Version 49: ein Tipp, bevor der Zeiger läuft, zählt noch nicht
     const p = guardPos(), d = Math.abs(p - guard.c);
     guard.lock = p;
     guard.tap = d <= guard.perf / 2 ? 'perf' : d <= guard.good / 2 ? 'good' : p < guard.c ? 'early' : 'late';
@@ -10909,6 +10910,7 @@ em.rep.warn{background:#b5523a}
     if (act === 'capauto') return capAuto();
     if (act === 'fight') return startFight();
     if (act === 'let-go') return letGo();
+    if ((act === 'guard' || act === 'fire') && quickDone()) return;
     if (act === 'guard') return guardTap();
     if (act === 'fire') return fire();
     if (act === 'board') return board(false);
@@ -10943,8 +10945,18 @@ em.rep.warn{background:#b5523a}
     yard(t.dataset.yard, v == null ? 1 : /^\d+$/.test(v) ? +v : v);
   });
   $('#yard').addEventListener('input', e => { if (e.target.id === 'ship-name') ui.shipName = e.target.value; });
-  $('#aimbar').addEventListener('click', () => { if (st.enc && st.enc.phase === 'volley') fire(); else if (st.enc && st.enc.phase === 'guard') guardTap(); });
-  $('#scene').addEventListener('click', () => { if (st.enc && st.enc.phase === 'volley') fire(); else if (st.enc && st.enc.phase === 'guard') guardTap(); });
+  // Ab Version 49: Feuer, Deckung und Haken zählen schon beim Aufsetzen des Fingers. So geht ein schneller zweiter Tipp
+  // (Entern, gleich danach Werfen) nicht verloren, und das Timing misst den Moment der Berührung. Der Klick danach wird übergangen.
+  let quickAt = 0;
+  const quickDone = () => performance.now() - quickAt < 700;
+  const quickTap = ev => { if (ev.button > 0 || !st || !st.enc) return; const ph = st.enc.phase;
+    if (ph === 'volley') { quickAt = performance.now(); fire(); } else if (ph === 'guard' || ph === 'hook') { quickAt = performance.now(); guardTap(); } };
+  $('#aimbar').addEventListener('pointerdown', quickTap);
+  $('#actions').addEventListener('pointerdown', e => { const t = e.target.closest('[data-act="fire"], [data-act="guard"]'); if (t && !t.disabled) quickTap(e); });
+  // Tippen auf Zielleiste oder Bild: feuern, in Deckung gehen oder (ab Version 49 auch) die Haken werfen
+  const sceneTap = () => { if (quickDone() || !st.enc) return; const ph = st.enc.phase; if (ph === 'volley') fire(); else if (ph === 'guard' || ph === 'hook') guardTap(); };
+  $('#aimbar').addEventListener('click', sceneTap);
+  $('#scene').addEventListener('click', sceneTap);
   $('#enc').addEventListener('click', e => {
     const t = e.target.closest('[data-ammo]'); if (!t || !st.enc || st.enc.phase !== 'volley' || busy || (st.enc.shots || []).length) return;
     st.enc.ammo = t.dataset.ammo; sizeAim(false); renderEnc(); renderActions(); renderScene();
