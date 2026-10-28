@@ -5,8 +5,8 @@
 // Je Sprache: neues Spiel, Rang Kaufmann, ein schwerer Seeräuber. Durchgespielt werden Treffen (Einschätzung des Kapitäns,
 // Aussicht „Kapitän lassen“), ein Manöver, „Spannen!“ mit Feuer je Rotte, das Gegenfeuer, ein Enterkampf mit Stürmen, Schießen
 // und Halten bis zum Ende, und einmal „Kapitän lassen“. Geprüft wird: keine Fehler in der Konsole, kein Knopf ragt über den
-// Bildschirm, die Knöpfe im Nahkampf sind mindestens 56 px hoch und liegen nicht unter etwas anderem, keine deutschen Reste
-// in Englisch und Spanisch. Bilder mit --bilder in tools/out/gefecht/. Endcode 1, wenn etwas fehlschlägt.
+// Bildschirm, die drei Befehle im Nahkampf stehen in einer Reihe, sind mindestens 56 px hoch und liegen nicht unter etwas
+// anderem, „Taue kappen“ steht oben im Enterkampf unter der Szene, keine deutschen Reste in Englisch und Spanisch. Bilder mit --bilder in tools/out/gefecht/. Endcode 1, wenn etwas fehlschlägt.
 const fs = require('fs'), path = require('path');
 let chromium;
 try { ({chromium} = require('playwright')); } catch (e) { ({chromium} = require(path.join(require('child_process').execSync('npm root -g').toString().trim(), 'playwright'))); }
@@ -35,11 +35,11 @@ async function lauf(browser, lang, bericht) {
   const sieh = async name => {
     const r = await p.evaluate(() => {
       const W = innerWidth, breit = [], klein = [], verdeckt = [];
-      for (const b of document.querySelectorAll('#actions button')) {
+      for (const b of document.querySelectorAll('#actions button, #aimbar button')) {
         if (!b.getClientRects().length || b.closest('[hidden]')) continue;
         const rc = b.getBoundingClientRect();
         if (rc.right > W + 1 || rc.left < -1) breit.push(b.innerText.replace(/\s+/g, ' ').slice(0, 40));
-        if (/bd-/.test(b.dataset.act || '') && rc.height < 56) klein.push(`${b.dataset.act} ${Math.round(rc.height)} px`);
+        if (/bd-(storm|shoot|hold)/.test(b.dataset.act || '') && rc.height < 56) klein.push(`${b.dataset.act} ${Math.round(rc.height)} px`);
         const top = document.elementFromPoint(rc.left + rc.width / 2, rc.top + rc.height / 2);
         if (top && !b.contains(top)) verdeckt.push(b.dataset.act || b.innerText.slice(0, 20));
       }
@@ -97,7 +97,11 @@ async function lauf(browser, lang, bericht) {
     if (!(await warte(() => window.__kk.st.enc && window.__kk.st.enc.phase === 'melee'))) fehler.push('Entern: kein Nahkampf');
     else {
       await sieh('5-nahkampf');
-      if (!(await p.$('#aimbar .show'))) fehler.push('Entern: keine Ansage des Anführers unter dem Bild');
+      if (!(await p.$('#aimbar .intent'))) fehler.push('Entern: keine Ansage des Anführers unter dem Bild');
+      if (!(await p.$('#aimbar [data-act="bd-back"]'))) fehler.push('Entern: „Taue kappen“ fehlt im Enterkampf unter der Szene');
+      const reihe = await p.evaluate(() => [...document.querySelectorAll('#actions [data-act^="bd-"]')].map(b => { const r = b.getBoundingClientRect(); return [b.dataset.act, Math.round(r.top), Math.round(r.height)]; }));
+      if (reihe.length !== 3 || new Set(reihe.map(r => r[1])).size !== 1) fehler.push('Entern: die drei Befehle stehen nicht in einer Reihe: ' + JSON.stringify(reihe));
+      else if (reihe[0][2] > 72) fehler.push(`Entern: Befehle zu hoch (${reihe[0][2]} px)`);
       const befehle = ['bd-storm', 'bd-shoot', 'bd-hold', 'bd-hold'];
       for (let i = 0; i < 6 && (await phase()) === 'melee'; i++) {
         const act = befehle[i % befehle.length], frei = await p.evaluate(a => { const b = document.querySelector(`#actions [data-act="${a}"]`); return !!b && !b.disabled; }, act);

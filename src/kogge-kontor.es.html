@@ -40,7 +40,8 @@ button{font:inherit;color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 170px}
 
 /* Zielleiste unter der Szene */
-.aimbar{margin:8px 0 0;cursor:pointer;user-select:none;-webkit-user-select:none;padding:10px 12px 12px;border-radius:12px;background:#17232a;color:#eef2ef;border:1px solid #0d151a}
+.aimbar{margin:8px 0 0;cursor:pointer;user-select:none;-webkit-user-select:none;padding:10px 12px 12px;border-radius:14px;color:#eef2ef;border:1px solid #0b1418;
+  background:linear-gradient(180deg,#1d2e36 0%,#131f25 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 20px -14px rgba(6,14,18,.7)}
 .aimbar .ah{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:600 .78rem var(--f-sc);letter-spacing:.04em;margin-bottom:6px}
 .aimbar .ah b{font:700 .95rem var(--f-sc);letter-spacing:.03em}
 .aimbar .ah .hint{color:#b9c6c2;font-weight:500;text-align:right}
@@ -58,9 +59,9 @@ button{font:inherit;color:inherit}
 .aimbar .band i{position:absolute;top:0;bottom:0;background:#d6452f}
 .aimbar .needle{position:absolute;top:-4px;bottom:-4px;width:4px;margin-left:-2px;background:#fff;box-shadow:0 0 0 2px #0b1317,0 0 10px rgba(255,255,255,.7)}
 .aimbar .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-.aimbar .chips span{font:500 .72rem var(--f-sc);padding:2px 8px;border-radius:999px;background:#24343b;color:#dfe7e3}
-.aimbar .chips span.up{background:#1f4a32;color:#bff0cf}
-.aimbar .chips span.dn{background:#5a2522;color:#ffd0c8}
+.aimbar .chips span{font:500 .72rem var(--f-sc);padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:#dfe7e3}
+.aimbar .chips span.up{background:rgba(76,155,103,.2);color:#b5ecc6}
+.aimbar .chips span.dn{background:rgba(214,69,47,.2);color:#ffc6bb}
 .aimbar.warn{background:#5c1b17;border-color:#3a0f0c}
 .aimbar.warn .big{font:700 1.15rem var(--f-sc);letter-spacing:.03em;display:flex;align-items:center;gap:8px}
 .aimbar.warn .dots{display:flex;gap:6px;margin-top:8px}
@@ -79,15 +80,36 @@ button{font:inherit;color:inherit}
 .aimbar .rot i.on{background:#f0cc7f;border-color:#f0cc7f}
 .aimbar .rot i.done{background:#9fb0b4}.aimbar .rot i.done.hit{background:#f6e7b8}.aimbar .rot i.done.crit{background:#ffb347}.aimbar .rot i.done.miss{background:#5a6a70}
 .aimbar .gw.good{background:#4c9b67}
-.aimbar.melee .ah{margin-bottom:4px}
-.aimbar .finte{padding:1px 8px;border-radius:999px;background:#d6452f;color:#fff;font:700 .74rem var(--f-sc)}
-.aimbar .show{margin:0;font-size:.95rem;line-height:1.3}
-.aimbar .read{margin:6px 0 0;font-size:.78rem;color:#b9c6c2;line-height:1.3}
-.aimbar .kr{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:6px;font:600 .74rem var(--f-sc);white-space:nowrap}
-.aimbar .kr span{display:flex;align-items:center;gap:5px}
-.aimbar .kraft{display:inline-flex;gap:3px}
-.aimbar .kraft i{width:9px;height:9px;border-radius:50%;background:#33454c;border:1px solid #4d636b}
-.aimbar .kraft i.on{background:#f0cc7f;border-color:#f0cc7f} .aimbar .kraft i.on.lo{background:#e2775f;border-color:#e2775f}
+/* Ab Version 52: Enterkampf unter der Szene. Oben die Ansage des Anführers, darunter das Deck als Planken: dein Teil in Messing
+   von links, ihrer in Rost von rechts, Striche bei einem Viertel und drei Vierteln. Taue kappen steht oben rechts. */
+.aimbar.melee{cursor:default;padding:9px 12px 10px}
+.aimbar .mh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:-1px 0 7px}
+.aimbar .mh b{font:700 .95rem var(--f-sc);letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aimbar .cut{position:relative;flex:none;min-height:30px;padding:3px 12px;border-radius:999px;border:1px solid rgba(240,204,127,.5);background:rgba(240,204,127,.08);color:#f3d692;font:600 .8rem var(--f-sc);letter-spacing:.02em;cursor:pointer}
+.aimbar .cut::after{content:"";position:absolute;inset:-7px -4px}
+.aimbar .cut:active{background:rgba(240,204,127,.2)} .aimbar .cut:disabled{opacity:.45;cursor:default}
+.aimbar .cut:focus-visible{outline:2px solid #f3d692;outline-offset:2px}
+.aimbar .intent{display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:start;padding:6px 10px 7px 8px;border-radius:10px;background:rgba(240,138,118,.09);box-shadow:inset 3px 0 0 #e0705f}
+.aimbar .intent .ic{width:24px;height:24px;margin-top:1px;color:#f2a08f;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.aimbar .intent p{margin:0;font-size:.93rem;line-height:1.28}
+.aimbar .intent small{display:block;margin-top:2px;font-size:.77rem;line-height:1.3;color:#b4c3bf}
+.aimbar .intent.fs{background:rgba(214,69,47,.16)}
+.aimbar .finte{display:inline-block;padding:0 7px;border-radius:999px;background:#d6452f;color:#fff;font:700 .74rem/1.45 var(--f-sc);vertical-align:1px}
+.aimbar .deck{margin-top:8px}
+.aimbar .deck .dl{display:flex;justify-content:space-between;align-items:baseline;font:600 .74rem var(--f-sc);letter-spacing:.03em;color:#9fb0ad;margin-bottom:3px}
+.aimbar .deck .dl .me{color:#f0c879} .aimbar .deck .dl .foe{color:#f0927f}
+.aimbar .planks{position:relative;height:14px;border-radius:4px;overflow:visible;
+  background:repeating-linear-gradient(90deg,transparent 0 31px,rgba(0,0,0,.28) 31px 32px),linear-gradient(180deg,#b5503c,#86362a)}
+.aimbar .planks i{position:absolute;left:0;top:0;bottom:0;border-radius:4px 0 0 4px;transition:width .5s;
+  background:repeating-linear-gradient(90deg,transparent 0 31px,rgba(70,40,0,.3) 31px 32px),linear-gradient(180deg,#e7b75c,#b9862c)}
+.aimbar .planks u{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:rgba(255,248,234,.75);border-radius:1px}
+.aimbar .planks b{position:absolute;top:-5px;bottom:-5px;width:4px;margin-left:-2px;border-radius:2px;background:#fff8ea;box-shadow:0 0 0 2px #131f25;transition:left .5s}
+.aimbar .kr{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:7px;font:600 .74rem/1 var(--f-sc);color:#c9d4d0;white-space:nowrap}
+.aimbar .kr>span{display:flex;align-items:center;gap:6px}
+.aimbar .kraft{display:inline-flex;gap:2px}
+.aimbar .kraft i{width:11px;height:7px;border-radius:2px;background:#2b3c43}
+.aimbar .kraft i.on{background:#f0cc7f} .aimbar .kraft i.on.lo{background:#e2775f}
+@media (prefers-reduced-motion: reduce){.aimbar .planks i,.aimbar .planks b{transition:none}}
 .aimbar .tleft{height:4px;margin-top:5px;border-radius:2px;background:#24343b;overflow:hidden}
 .aimbar .tleft i{display:block;height:100%;width:100%;background:#f0cc7f;border-radius:2px}
 .aimbar .gw.perf{background:#7ff0a2}
@@ -99,7 +121,7 @@ button{font:inherit;color:inherit}
 .duel .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .duel .dh .k{font:600 .75rem var(--f-sc);letter-spacing:.06em;color:var(--bad)}
 .duel .dh strong{display:block;font:700 1.2rem var(--f-sc)}
-.duel .dh small{color:var(--muted)}
+.duel .dh small{display:block;margin-top:2px;line-height:1.3;color:var(--muted)}
 .duel .trait{font:600 .72rem var(--f-sc);padding:3px 8px;border-radius:999px;background:rgba(161,50,43,.1);color:var(--bad);white-space:nowrap}
 .duel .range2{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin:12px 0 6px}
 .duel .range2 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
@@ -109,8 +131,10 @@ button{font:inherit;color:inherit}
 .duel .range2 .me{color:var(--brass)} .duel .range2 .foe{color:var(--bad)}
 .duel .wind{font:500 .78rem var(--f-sc);color:var(--muted);text-align:center;margin-bottom:10px}
 .duel .wind b{color:var(--bad)}
-.duel .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* .cols gilt auch für die Spalten im Markt; hier nichts davon übernehmen, beide Seiten gleich hoch */
+.duel .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;padding:0;border:0;font:inherit;letter-spacing:normal;color:inherit}
 .duel .side{border-radius:10px;padding:9px 10px;background:var(--paper)}
+.duel .dh + .cols{margin-top:12px}
 .duel .side h4{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 6px;font:700 .8rem var(--f-sc);letter-spacing:.05em}
 .duel .side.me h4{color:var(--brass)} .duel .side.foe h4{color:var(--bad)}
 .duel .big{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
@@ -133,6 +157,7 @@ button{font:inherit;color:inherit}
 
 .duel .wind b.ok{color:var(--good)}
 .duel .side small.arms{display:block;margin-top:6px;font:500 .7rem var(--f-sc);color:var(--muted);line-height:1.25}
+.duel .side small.res{display:block;margin:-3px 0 4px;font:500 .74rem var(--f-sc);color:var(--muted);line-height:1.25}
 .duel .mor{margin-top:10px}
 .duel .mor .ml{display:flex;justify-content:space-between;font:600 .76rem var(--f-sc);margin-bottom:4px}
 .duel .mor .ml em{font:500 .78rem var(--f-mono);font-style:normal}
@@ -225,22 +250,18 @@ button.rank:hover{background:color-mix(in srgb,var(--brass) 12%,transparent)}
 .fleetcap{margin:2px 0 8px}
 
 /* Ab Version 35: Enterkampf in Runden */
-.duel .bdeck{margin:10px 0 0;padding:10px 12px 8px;border-radius:10px;background:var(--paper);border:1px solid color-mix(in srgb,var(--brass) 45%,transparent)}
-.duel .bdeck .ml{display:flex;justify-content:space-between;align-items:baseline;font:700 .8rem var(--f-sc);letter-spacing:.04em}
-.duel .bdeck .ml em{font:500 .74rem var(--f-sc);font-style:normal;color:var(--muted)}
-.duel .tug{margin:8px 0 2px}
-.duel .tug .tb{position:relative;display:flex;height:10px;border-radius:5px;background:color-mix(in srgb,var(--bad) 55%,var(--rule))}
-.duel .tug .tb i{display:block;height:100%;margin-left:auto;border-radius:0 5px 5px 0;background:var(--brass)}
-.duel .tug .tb b{position:absolute;top:-4px;width:4px;height:18px;margin-left:-2px;border-radius:2px;background:var(--ink)}
-.duel .tug .tl{display:flex;justify-content:space-between;font:500 .7rem var(--f-sc);color:var(--muted);margin-top:3px}
-.duel .tug .tl span:first-child{color:var(--bad)} .duel .tug .tl span:last-child{color:var(--brass)}
-.duel .bdeck small{display:block;margin-top:6px;font-size:.8rem;line-height:1.4;color:var(--muted)}
-.duel .tug .tb u{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:rgba(255,255,255,.55)}
 .duel .assess{margin:10px 0 0;padding:7px 10px;border-radius:8px;background:var(--paper);font-size:.92rem;line-height:1.35;border-left:4px solid var(--good)}
 .duel .assess.t1{border-left-color:var(--brass)} .duel .assess.t2,.duel .assess.t3{border-left-color:var(--bad)}
 .duel .assess span{display:block;margin-top:3px;font-size:.8rem;color:var(--muted)}
 .actions .in.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .actions .in.grid2 .btn{min-height:56px;padding:5px 6px}
+/* Nahkampf: die drei Befehle in einer Reihe, Kraftkosten als kleines Schild neben dem Namen */
+.actions .in.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.actions .in.grid3 .btn{min-height:56px;padding:6px 4px;line-height:1.2}
+.actions .in.grid3 .btn b{display:flex;justify-content:center;align-items:center;gap:5px;white-space:nowrap}
+.actions .in.grid3 .btn small{margin-top:2px;font:500 .78rem var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn .kc{font:500 .72rem/1.35 var(--f-mono);font-style:normal;padding:0 5px;border-radius:999px;background:color-mix(in srgb,var(--brass) 16%,transparent);color:var(--brass)}
+.btn .kc.up{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
 /* Kopf */
 .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px;padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:14px}
 .brand{display:flex;align-items:center;gap:10px}
@@ -5897,6 +5918,11 @@ em.rep.warn{background:#b5523a}
   const CMD_THEY = {storm:'ellos cargan', shoot:'ellos disparan desde el castillo', hold:'ellos mantienen la línea'};
   // Was der Anführer vor der Runde zeigt
   const CMD_SHOW = {storm:'reúne a su gente junto a la borda: quiere asaltar.', shoot:'manda tiradores al castillo: quiere disparar.', hold:'manda cerrar la línea tras los escudos: quiere resistir.'};
+  // Zeichen zur Ansage: gekreuzte Klingen, Armbrust, Schild
+  const CMD_ICON = {
+    storm:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l2.6.6 8.6 8.7-1.9 1.9-8.7-8.6zM21 3l-2.6.6-8.6 8.7 1.9 1.9 8.7-8.6z" fill="currentColor" stroke="none"/><path d="M10.5 16l5.5-5.5M13.5 16L8 10.5M14.6 14.6l4.2 4.2M9.4 14.6l-4.2 4.2"/><circle cx="19.6" cy="19.6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4.4" cy="19.6" r="1.4" fill="currentColor" stroke="none"/></svg>',
+    shoot:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v19M3.5 10Q12 2.5 20.5 10M3.5 10L12 14.5 20.5 10M9.5 21h5"/></svg>',
+    hold:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.9-4.3-1.7-7.5-5.3-7.5-9.9V6z"/><path d="M12 7.5v9M8.5 11h7"/></svg>'};
   const READ_N = {drauf:'Un temerario suele mostrar a las claras lo que trama.', zaeh:'Uno duro suele hacer lo que muestra.', gierig:'Uno codicioso finge más a menudo.', vorsicht:'Uno prudente finge a menudo.'};
   async function meleeRound(c) {
     const e = st.enc; if (busy || !e || e.phase !== 'melee' || !e.bd) return;
@@ -9303,14 +9329,17 @@ em.rep.warn{background:#b5523a}
         (hk ? ((guard.why || []).length ? `<div class="chips">${guard.why.map(w => `<span class="${w.d > 0 ? 'up' : 'dn'}">${esc(w.t)} ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %</span>`).join('')}</div>` : '')
           : guard.cov > 0.05 ? `<div class="chips"><span class="up">Paveses: zona +${Math.round(35 * guard.cov)} %</span></div>` : '');
     } else if (ph === 'melee') {
-      // Ab Version 52: Was der Anführer vorhat, wie viel Kraft beide Seiten haben und wer das Deck hält, gleich unter dem Bild
-      const bd = e.bd, fk = fightCap();
+      // Ab Version 52: Was der Anführer vorhat, wer das Deck hält und wie viel Kraft beide Seiten haben, gleich unter dem Bild.
+      // Taue kappen (oder beim eigenen Angriff Zurückziehen) steht oben rechts, die drei Befehle unten in einer Reihe.
+      const bd = e.bd, fk = fightCap(), c = Math.round(clamp(bd.ctl, 0, 100));
       if (!bd.an) bdPlan(e);
       cls = 'melee';
-      html = `<div class="ah"><b>Abordaje · asalto ${Math.min(bd.r + 1, BD.rounds)} de ${BD.rounds}</b>${bd.fs ? '<span class="finte">¿Finta?</span>' : `<span class="hint">Cubierta ${Math.round(bd.ctl)} %</span>`}</div>` +
-        `<p class="show"><b>${esc(e.name)}</b> ${CMD_SHOW[bd.an]}</p>` +
-        `<div class="kr"><span>Tu aguante ${kraftPips(bd.ok)}</span><span>Su aguante ${kraftPips(bd.pk)}</span></div>` +
-        `<p class="read">${READ_N[e.trait] || ''}${bd.fs ? ` ${fk ? `Capitán ${esc(fk.name)}` : 'Tu timonel'} no se fía.` : ''}</p>`;
+      html = `<div class="mh"><b>Abordaje · asalto ${Math.min(bd.r + 1, BD.rounds)} de ${BD.rounds}</b><button class="cut" type="button" data-act="bd-back"${busy ? ' disabled' : ''}>${bd.att === 'own' ? 'Retirarse' : 'Cortar los cabos'}</button></div>` +
+        `<div class="intent${bd.fs ? ' fs' : ''}">${CMD_ICON[bd.an] || ''}<div><p><b>${esc(e.name)}</b> ${CMD_SHOW[bd.an]}${bd.fs ? ' <span class="finte">¿Finta?</span>' : ''}</p>` +
+        `<small>${bd.fs ? `${fk ? `Capitán ${esc(fk.name)}` : 'Tu timonel'} no se fía.` : READ_N[e.trait] || ''}</small></div></div>` +
+        `<div class="deck" role="img" aria-label="Quién domina la cubierta: ${c} de 100 para ti"><div class="dl"><span class="me">Tú ${c} %</span><span>Cubierta</span><span class="foe">Enemigo ${100 - c} %</span></div>` +
+        `<div class="planks"><i style="width:${c}%"></i><u style="left:25%"></u><u style="left:75%"></u><b style="left:${c}%"></b></div></div>` +
+        `<div class="kr"><span>Tu aguante ${kraftPips(bd.ok)}</span><span>Su aguante ${kraftPips(bd.pk)}</span></div>`;
     } else if (aim.bands) {
       const b = aim.bands[0], T0 = TGT[b.k] || TGT.deck, R0 = aim.run || aim.done ? aim.R : rotten(), shots = e.shots || [];
       const z = `<div class="band ${b.k}" style="left:${pct(b.a)};width:${pct(b.w)}"><i style="left:${pct((b.w / 2 + (b.co || 0) - b.cw / 2) / b.w)};width:${pct(b.cw / b.w)}"></i></div>` +
@@ -9323,7 +9352,12 @@ em.rep.warn{background:#b5523a}
         (chips ? `<div class="chips">${chips}</div>` : '');
     }
     const key = cls + '|' + html;
-    if (ab.dataset.k !== key) { ab.className = 'aimbar' + (cls ? ' ' + cls : ''); ab.innerHTML = html; ab.dataset.k = key; }
+    if (ab.dataset.k !== key) {
+      ab.className = 'aimbar' + (cls ? ' ' + cls : ''); ab.innerHTML = html; ab.dataset.k = key;
+      // Im Enterkampf ist die Leiste kein Knopf, sondern trägt selbst einen (Taue kappen)
+      if (ab.dataset.al == null) ab.dataset.al = ab.getAttribute('aria-label') || '';
+      if (cls === 'melee') { ab.removeAttribute('role'); ab.removeAttribute('aria-label'); } else { ab.setAttribute('role', 'button'); ab.setAttribute('aria-label', ab.dataset.al); }
+    }
   }
   function renderScene() {
     const cap = $('#cap'), prog = $('#prog');
@@ -10711,7 +10745,7 @@ em.rep.warn{background:#b5523a}
   }
   function renderActions() {
     const a = $('#actions');
-    a.classList.remove('grid', 'grid2');
+    a.classList.remove('grid', 'grid2', 'grid3');
     if (locked() && !st.enc && !st.ev && !st.pendingFight && !halted()) { a.innerHTML = trialActs(); return; }
     if (halted()) { a.innerHTML = `<button class="btn" type="button" data-act="restart">Nueva partida</button><button class="btn primary" type="button" data-act="cont-open"><b>Seguir jugando</b><small>como partida libre</small></button>`; return; }
     if (st.enc) {
@@ -10727,11 +10761,11 @@ em.rep.warn{background:#b5523a}
       }
       if (busy || e.phase === 'flee' || e.phase === 'boarding') { a.innerHTML = `<button class="btn primary" type="button" disabled>${e.phase === 'boarding' ? 'Cuerpo a cuerpo …' : 'Todos a cubierta …'}</button>`; return; }
       if (e.phase === 'melee' && e.bd) {
-        const bd = e.bd, own = bd.att === 'own';
-        a.classList.add('grid2');
-        const b = (c, sub) => `<button class="btn${c === 'storm' ? ' primary' : ''}" type="button" data-act="bd-${c}"${kraftOk(bd.ok, c) ? '' : ' disabled'}><b>${CMD_N[c]}</b><small>${kraftOk(bd.ok, c) ? sub : 'poco aguante'}</small></button>`;
-        a.innerHTML = b('storm', 'vence a Disparar<br>aguante −2') + b('shoot', 'vence a Resistir<br>aguante −1') + b('hold', 'vence a Asaltar<br>aguante +1') +
-          `<button class="btn" type="button" data-act="bd-back"><b>${own ? 'Retirarse' : 'Cortar los cabos'}</b><small>${own ? 'de vuelta a bordo' : 'separar los barcos'}</small></button>`;
+        // Die drei Befehle in einer Reihe; Taue kappen oder Zurückziehen steht oben im Enterkampf unter der Szene
+        const bd = e.bd;
+        a.classList.add('grid3');
+        const b = (c, sub, k) => `<button class="btn" type="button" data-act="bd-${c}"${kraftOk(bd.ok, c) ? '' : ' disabled'} aria-label="${CMD_N[c]}, ${sub}, aguante ${k}"><b>${CMD_N[c]}<i class="kc${k[0] === '+' ? ' up' : ''}">${k}</i></b><small>${kraftOk(bd.ok, c) ? sub : 'poco aguante'}</small></button>`;
+        a.innerHTML = b('storm', 'vence a Disparar', '−2') + b('shoot', 'vence a Resistir', '−1') + b('hold', 'vence a Asaltar', '+1');
         return;
       }
       if (e.phase === 'meet' && e.prey) {
@@ -10837,25 +10871,29 @@ em.rep.warn{background:#b5523a}
     const foeArms = [`≈ ${ea.armbrust || 0} ballestas`].concat(ea.blide ? ['Trabuquete'] : [], ea.buechse ? ['Bombarda'] : [], (ea.armor || 0) > 0.3 ? ['mucha armadura'] : []).join(' · ');
     let h = `<div class="duel"><div class="dh"><div><span class="k">${fcv ? `${esc(cvLabel(fcv))} · ` : ''}${kind}${open && e.r ? ` · asalto ${e.r + 1}` : ''}</span><strong>${esc(e.name)}</strong><small>${SHIPS[e.ptype].n} · ${T.d}</small></div><span class="trait">${T.n}</span></div>`;
     if (e.phase === 'meet' && encSay(e)) h += `<p class="assess t${e.fleet ? 3 : e.tier == null ? 1 : e.tier}"><b>${fk ? `Capitán ${esc(fk.name)}` : 'Tu timonel'}:</b> ${encSay(e)}${capAutoOk() ? ` <span>Si le dejas decidir, las probabilidades son ${oddsWord(capSims().p)}.</span>` : ''}</p>`;
-    if (open) h += `<div class="range2" role="img" aria-label="Distancia ${DIST[e.dist]}"><span class="me">Tú</span><div class="seg">${[2, 1, 0].map(d => `<span class="${d === e.dist ? 'on' : ''}">${DIST[d]}</span>`).join('')}</div><span class="foe">Enemigo</span></div>` +
+    const handgemenge = !!e.bd && (e.phase === 'melee' || e.phase === 'boarding');
+    if (open && !handgemenge) h += `<div class="range2" role="img" aria-label="Distancia ${DIST[e.dist]}"><span class="me">Tú</span><div class="seg">${[2, 1, 0].map(d => `<span class="${d === e.dist ? 'on' : ''}">${DIST[d]}</span>`).join('')}</div><span class="foe">Enemigo</span></div>` +
       `<div class="wind">${e.luv === 'own' ? 'Viento: <b class="ok">barlovento tuyo</b> · tu zona mayor, su fuego más débil' : e.luv === 'pir' ? 'Viento: <b>barlovento del enemigo</b> · su fuego más fuerte, tu zona menor' : 'Viento: barlovento aún en disputa'}</div>`;
     if (e.phase === 'volley') h += ammoHTML(e);
     h += `<div class="cols"><div class="side me"><h4>Tú${tgt ? ` · «${esc(tgt.name)}»` : ''}${st.fleet.length > 1 ? ` +${st.fleet.length - 1}` : ''}</h4><div class="big"><b>${fighters()}</b><span>hombres</span></div>` +
       (tgt ? bar('Casco', tgt.hull, `${tgt.hull} %`) : '') + bar('Velas', 100 - e.osail, `${100 - Math.round(e.osail)} %`) +
       `<small class="arms">${fk ? `Capitán ${esc(fk.name)} · Combate ${fk.fight}` : 'sin capitán'}</small></div>` +
-      `<div class="side foe"><h4>${e.prey ? 'Mercante' : e.dane ? 'Corsario' : 'Piratas'}</h4><div class="big"><b>${e.n}</b><span>de ${e.n0}${e.fleet && e.reserve ? ` · ${e.reserve} en los barcos de escolta` : e.pair && e.reserve ? ` · ${e.reserve} en el barco de escolta` : ''}</span></div>` +
+      `<div class="side foe"><h4>${e.prey ? 'Mercante' : e.dane ? 'Corsario' : 'Piratas'}</h4><div class="big"><b>${e.n}</b><span>de ${e.n0}</span></div>${e.reserve && (e.fleet || e.pair) ? `<small class="res">+ ${e.reserve} ${e.fleet ? 'en los barcos de escolta' : 'en el barco de escolta'}</small>` : ''}` +
       bar('Casco', e.phull, `${Math.round(e.phull)} %`) + bar('Velas', 100 - e.psail, `${100 - Math.round(e.psail)} %`) + `<small class="arms">${foeArms}</small></div></div>`;
-    if (e.bd && (e.phase === 'melee' || e.phase === 'boarding')) {
-      const bd = e.bd, own = bd.att === 'own';
-      if (!bd.an && e.phase === 'melee') bdPlan(e);
-      h += `<div class="bdeck"><div class="ml"><span>Abordaje ${own ? 'en su cubierta' : 'en tu cubierta'}</span><em>Asalto ${Math.min(bd.r + 1, BD.rounds)} de ${BD.rounds}</em></div>` +
-        `<div class="tug" role="img" aria-label="Quién domina la cubierta: ${Math.round(bd.ctl)} de 100 para ti"><div class="tb"><i style="width:${bd.ctl}%"></i><u style="left:25%"></u><u style="left:75%"></u><b style="left:${100 - bd.ctl}%"></b></div><div class="tl"><span>Enemigo</span><span>quién domina la cubierta</span><span>Tú</span></div></div>` +
-        `<small>Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar. Con menos de 2 de aguante tu gente solo lucha al 70 %. ${own ? 'Defienden su propia cubierta y tienen ventaja.' : 'Defiendes tu propia cubierta y tienes ventaja.'} Tras tres asaltos: con tres cuartos de la cubierta el enemigo arría la bandera, con menos de un cuarto ${own ? 'tenéis que retiraros' : 'se quedan con tu barco'}, y en medio los barcos se separan.</small></div>`;
+    let bdHelp = '';
+    if (handgemenge) {
+      // Deck, Kraft und Ansage stehen im Enterkampf unter der Szene; hier nur noch die Regeln zum Aufklappen
+      const own = e.bd.att === 'own';
+      if (!e.bd.an && e.phase === 'melee') bdPlan(e);
+      bdHelp = `<details class="more bdhelp" data-det="bdhelp"${ui.det.bdhelp ? ' open' : ''}><summary><span>${own ? 'Abordaje en su cubierta' : 'Abordaje en tu cubierta'} · cómo funciona</span><i class="chev" aria-hidden="true"></i></summary>` +
+        `<p class="small" style="margin:0 0 6px">Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar. Asaltar cuesta dos de aguante, Disparar uno y Resistir devuelve uno; con menos de 2 de aguante tu gente solo lucha al 70 %. ${own ? 'Defienden su propia cubierta y tienen ventaja.' : 'Defiendes tu propia cubierta y tienes ventaja.'} ` +
+        `Tras tres asaltos decide la barra de la cubierta: si dominas tres cuartos (marca derecha), el enemigo arría la bandera; con menos de un cuarto (marca izquierda) ${own ? 'tenéis que retiraros' : 'se quedan con tu barco'}; en medio, los barcos se separan. ${own ? 'Con «Retirarse», arriba a la derecha, haces volver a tu gente a bordo.' : 'Con «Cortar los cabos», arriba a la derecha, separas los barcos, si sale bien.'}</p></details>`;
     }
     if (open && e.phase !== 'meet') h += `<div class="mor"><div class="ml"><span>Moral del enemigo</span><em>${Math.round(e.mor)}</em></div><div class="mb"><i style="width:${clamp(e.mor, 0, 100)}%"></i><b style="left:${T.flee}%"></b></div>` +
       `<small>${e.mor <= T.flee ? 'Por debajo del umbral de huida: quieren huir.' : `Por debajo de ${T.flee} (la raya) quieren huir. La moral desciende con las pérdidas, los impactos de lleno y el fuego.`}</small></div>`;
     const rows = [['Maniobra', e.logMan, 'm'], ['Tu andanada', e.logOwn, 'o'], ['Fuego enemigo', e.logPir, 'p']].filter(r => r[1]);
     h += open && rows.length && !['meet', 'boarding', 'flee', 'hook', 'melee'].includes(e.phase) ? `<div class="log">${rows.map(r => `<p class="${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></p>`).join('')}</div>` : `<p class="emsg">${e.msg}</p>`;
+    h += bdHelp;
     if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `Apuntan a la «${esc(tgt.name)}». ` : ''}Cómo funciona el combate</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">En cada asalto: elige una maniobra y después disparan tus hombres. Los virotes y las piedras van a cubierta, las flechas incendiarias a las velas. Tras «¡Tensad!» el indicador recorre la barra una vez y media; toca una vez por cada escuadra mientras esté en la zona. Quien no toca dispara a ciegas. La zona se balancea con el oleaje y se desplaza con su rumbo. Lo rojo de la zona es su castillo: los impactos de lleno allí alcanzan a sus tiradores. Tras dos andanadas con impactos en cubierta se ponen a cubierto un asalto; entonces ayudan las flechas incendiarias. Trabuquetes y bombardas disparan solos contra el casco. Después el enemigo anuncia su fuego y te pones a cubierto. De cerca funcionan las piedras y el abordaje; de lejos, las flechas incendiarias. El barlovento amplía tu zona y debilita su fuego. Si su moral cae por debajo de la raya, quieren huir o se rinden. Solo se puede abordar de cerca: primero lanzas los garfios en el momento justo y luego siguen hasta tres asaltos cuerpo a cuerpo. Asaltar vence a Disparar, Disparar vence a Resistir y Resistir vence a Asaltar; antes de cada asalto su cabecilla muestra lo que trama, pero no todos lo dicen en serio. Quien defiende su propia cubierta tiene ventaja. Si tu ataque fracasa, te retiras y conservas tu barco.</p></details>`;
     if (e.phase === 'meet') h += `<p class="small">${st.crew} marineros, ${armsLine()}, ${st.brand || 0} haces de flechas incendiarias${armsOf(st).buechse ? `, ${st.pulver || 0} cargas de pólvora` : ''} a bordo. Los marineros manejan las armas${fk && !st.focus ? `, el capitán ${esc(fk.name)} dirige el combate` : ''}; en el abordaje luchan todos. ` +
       `Si te abordan y pierdes la lucha en cubierta, ${st.fleet.length === 1 ? 'tu único barco se pierde con su carga y solo quedas libre pagando un rescate' : 'toman el barco al que apuntan'}. Si fracasa tu propio abordaje, te retiras.</p>`;
@@ -11603,6 +11641,7 @@ em.rep.warn{background:#b5523a}
   // Tippen auf Zielleiste oder Bild: feuern, in Deckung gehen oder (ab Version 49 auch) die Haken werfen
   const sceneTap = () => { if (quickDone() || !st.enc) return; const ph = st.enc.phase; if (ph === 'volley') fire(); else if (ph === 'guard' || ph === 'hook') guardTap(); };
   $('#aimbar').addEventListener('click', sceneTap);
+  $('#aimbar').addEventListener('click', e => { const t = e.target.closest('[data-act="bd-back"]'); if (t && !t.disabled) meleeRound('back'); });
   $('#scene').addEventListener('click', sceneTap);
   $('#enc').addEventListener('click', e => {
     const t = e.target.closest('[data-ammo]'); if (!t || !st.enc || st.enc.phase !== 'volley' || busy || aim.run || aim.done) return;
