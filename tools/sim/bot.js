@@ -242,28 +242,17 @@
         if (V.kontor && hkMember(V.kontor)) { if (!v.my && canVote()) castVote(id, 'ja'); if (st.money > capital() * 3 && (v.lobby || 0) < 0.2 - 1e-9) { delta('hansetag', () => hkLobby(id)); use('fuersprache'); } }
         else if (!v.my && canVote()) castVote(id, Math.random() < 0.6 ? 'ja' : 'nein'); });
     }
-    // Seeräuber: fliehen, kämpfen oder zahlen. P.aim: Anteil Volltreffer und Treffer beim Zielen (Mensch: fast immer)
+    // Seeräuber: fliehen, kämpfen oder zahlen. Ab Version 51 kämpft der Bot nach den Spielregeln (fightAuto) mit dem Können P.skill:
+    // „gut“ zielt wie Julien (im alten Zielspiel etwa 55 % Volltreffer), „ordentlich“ wie ein Kapitän, den man entscheiden lässt.
     function fight() {
-      const e = st.enc, aim = P.aim || {crit:0.25, hit:0.55};
-      const melee = att => { e.bd = {att, r:0, ctl:50, om:ownMor0(), f0:st.crew, init:att === 'own' && Math.random() < 0.2 ? 1 : 0}; for (let i = 0; i < 12; i++) { const o = meleeCore(e.bd.ctl >= 50 ? 'storm' : 'hold'); if (o.res !== 'go') return o.res; } return 'stall'; };
-      const pickZ = () => { const r = Math.random(); return r < aim.crit ? 'crit' : r < aim.crit + aim.hit ? 'hit' : 'miss'; };
-      const pickG = () => { const r = Math.random(); return r < 0.2 ? 'perf' : r < 0.75 ? 'good' : 'none'; };
-      e.phase = 'tactic';
-      for (let r = 0; r < 16; r++) {
-        if (e.dist === 2 || (e.dist === 1 && pirEff(e) / Math.max(1, ownEff()) < 0.75)) { if (Math.random() < contest(e)) e.dist--; }
-        if (e.dist === 0 && boardOdds('own') >= 0.6 && Math.random() < 0.72) { const m = melee('own'); if (m === 'win' || m === 'strike') { boardWin('board', ''); return 'win'; } }
-        e.ammo = e.dist === 0 ? 'steine' : 'bolzen';
-        const zs = []; for (let q = 0; q < rotten(); q++) zs.push(pickZ());
-        volleyCore(zs);
-        let o = pirTurn({defer:true}); if (o && o.res === 'fire') o = o.finish(pickG());
-        if (!o) continue;
-        if (o.res === 'board') { const m = melee('pir'); if (m === 'win' || m === 'strike') { boardWin('board', ''); return 'win'; } if (m === 'broken') { boardLost(''); return 'lost'; } e.phase = 'tactic'; continue; }
-        if (o.res === 'empty' || o.res === 'sunk' || o.res === 'surrender') { winCore(o.res); return 'win'; }
-        if (o.res === 'flee') { winCore('fled'); return 'win'; }
-        if (o.res === 'dusk') return 'draw';
-        if (!st.fleet.length || st.fleet.every(sh => sh.hull <= 10)) { boardLost(''); return 'lost'; }
-      }
-      return 'draw';
+      const e = st.enc, t = e.fleet ? 'v' : e.tier == null ? 'x' : e.tier;
+      const r = fightAuto(Object.assign({}, FIGHT_SKILL[P.skill] || FIGHT_SKILL.ordentlich, {log:A.bd}));
+      use(`stufe${t}_${r.res}`);
+      if (r.res === 'won') { if (r.kind === 'board' || r.kind === 'strike') boardWin(r.kind, ''); else winCore(r.kind); return 'win'; }
+      if (r.res === 'lost') { boardLost(''); return 'lost'; }
+      if (r.kind === 'flee') pfAfter('escaped');
+      e.phase = 'escaped';
+      return r.kind === 'flee' ? 'flucht' : 'draw';
     }
     function encounter() {
       const e = st.enc, m = st.money, i0 = inv(), foc = !!st.focus;
@@ -271,7 +260,15 @@
       else {
         use(foc ? 'seeraeuber_v' : 'seeraeuber');
         if (e.fleet) use('seeraeuber_verband');
-        if (typeof capAutoOk === 'function' && capAutoOk()) { capAuto(); use('kampf_auto'); }
+        use(`kampf_r${st.rank}`); use(`stufe_r${st.rank}_${e.fleet ? 'v' : e.tier}`);
+        if (P.capAuto !== false && capAutoClear() && capAutoOk()) { capAuto(); use('kampf_auto'); }
+        else if (e.fleet && P.verband === 'zahlen' && st.money >= e.ransom) { payTribute(); use('wegzoll_verband'); }
+        // mit nur einem Schiff geht ein vorsichtiger Spieler einem schweren Gegner aus dem Weg: fliehen oder zahlen
+        else if (P.vorsicht !== false && (e.tier === 2 || e.fleet) && st.fleet.length === 1 && !st.focus) {
+          if (fleeChance() >= 0.4 && Math.random() < fleeChance()) { e.phase = 'escaped'; use('flucht_schwer'); }
+          else if (st.money >= e.ransom) { payTribute(); use('wegzoll_schwer'); }
+          else { const r = fight(); use('kampf_' + r); }
+        }
         else if (!P.mutig && Math.random() < fleeChance()) { e.phase = 'escaped'; use('flucht'); }
         else if (P.mutig || (st.rank >= 1 && (st.crew >= e.n0 * (e.fleet ? 0.95 : 0.7) || (e.ransom > 1500 && st.crew >= e.n0 * 0.5)))) { const r = fight(); use((st.focus ? 'vkampf_' : 'kampf_') + r); }
         else { payTribute(); use('wegzoll'); }
@@ -314,7 +311,7 @@
         capFight:true, workOrder:['bier', 'fass', 'tuch', 'salz', 'hering', 'holz', 'getreide', 'eisen', 'wachs', 'pelze'], days:1460, home:'luebeck', snapEvery:30}, opt || {});
       window.__fast = true;
       newGame({name:'Bot'}, P.home, {mode:P.mode || 'offen', origin:P.origin || 'kaufmann'});
-      A = {mem:{}, rev:{}, prod:{}, cat:{}, use:{}, series:[], src:{}, age:{}, sales:0, loanIn:0, voy:0, marks:{}, trips:[], idle:0};
+      A = {mem:{}, rev:{}, prod:{}, cat:{}, use:{}, series:[], src:{}, age:{}, sales:0, loanIn:0, voy:0, marks:{}, trips:[], idle:0, bd:[]};
       const t0 = performance.now();
       let lastSnap = -99;
       while (st.day < P.days) {
@@ -335,7 +332,9 @@
         if (!P0) { simDay(); continue; }
         Object.entries(P0.buys).forEach(([g, q]) => { doBuy(g, q); });
         A.trips.push({d:st.day, from:st.loc, to:P0.B, days:P0.days, gain:Math.round(P0.gain)});
-        A.voy++;
+        A.voy++; use(`fahrt_r${st.rank}`);
+        // gewarnte Gebiete: Geleitbrief kaufen, wenn er bezahlbar ist (wie ein umsichtiger Spieler)
+        if (P.geleit !== false && typeof pfOn === 'function') pfOn(route(st.loc, P0.B, st.day).segs).forEach(a => { if (!pfPassValid(a.id) && st.money > pfPassCost(a.id) * 4) { pfBuyPass(a.id); use('geleitbrief'); } });
         setSail(P0.B);
         if (timer) { clearTimeout(timer); timer = null; }
         if (!st.sail) { simDay(); continue; }
@@ -343,8 +342,34 @@
       }
       marks(); snap();
       return {score:A.score || null, home:P.home, days:st.day, ms:Math.round(performance.now() - t0), wealth:Math.round(wealth()), money:Math.round(st.money), rank:st.rank, civic:civicIdx(st.repute || 0), repute:Math.round(st.repute || 0),
-        marks:A.marks, cat:A.cat, use:A.use, series:A.series, voy:A.voy, idle:A.idle, bankrupt:A.bankrupt || null, mayor:!!st.mayor, alder:!!st.alderman,
+        marks:A.marks, cat:A.cat, use:A.use, bd:['storm', 'shoot', 'hold'].map(c => A.bd.filter(x => x === c).length), series:A.series, voy:A.voy, idle:A.idle, bankrupt:A.bankrupt || null, mayor:!!st.mayor, alder:!!st.alderman,
         works:(st.works || []).map(w => [w.g, w.made]), convoys:(st.convoys || []).map(cv => ({route:cv.route, ships:cv.fleet.map(s => s.type), prof:Math.round(cv.prof), trips:cv.trips}))};
     }
-    return {run};
+    // Ab Version 51: Gefechte je Kampfstufe aus dem jetzigen Spielstand, jedes vom selben Stand aus.
+    // tiers: 0 leicht, 1 mittel, 2 schwer, 'v' Seeräuberverband (opt.pf: welcher). Ergebnis: Siege, Niederlagen, Ausgänge, Befehle im Nahkampf.
+    function kampf(opt) {
+      const S0 = JSON.stringify(st), W = ['clear', 'clear', 'clear', 'cloudy', 'cloudy', 'rain', 'fog'], out = {};
+      window.__fast = true;
+      for (const tier of opt.tiers || [0, 1, 2]) for (const skill of opt.skills || ['gut', 'ordentlich']) {
+        const R = out[`${tier}_${skill}`] = {n:0, won:0, lost:0, escaped:0, kinds:{}, bd:{storm:0, shoot:0, hold:0}, ratio:0, men:0, ships:{}};
+        for (let i = 0; i < opt.n; i++) {
+          st = JSON.parse(S0);
+          if (!st.fleet.length) break;
+          st.crew = Math.max(st.crew, Math.round(crewMax() * 0.9));   // nach einem Gefecht wäre die Mannschaft sonst noch nicht wieder aufgefüllt
+          st.enc = null; st.ev = null; st.pendingFight = null; st.focus = null; st.loc = null;
+          st.sail = {from:st.home, to:'danzig', t:1, days:6, weather:W[Math.floor(Math.random() * W.length)], segs:[], met:true};
+          st.encs = Math.max(2, st.encs || 0);
+          if (tier === 'v') { startEnc(2); pfMakeHard(opt.pf || pick(Object.keys(PF))); } else startEnc(tier);
+          const e = st.enc, log = [];
+          R.ratio += pirEff(e) / Math.max(1, ownEff()); R.men += e.n0; R.ships[e.ptype] = (R.ships[e.ptype] || 0) + 1;
+          const r = fightAuto(Object.assign({}, FIGHT_SKILL[skill], {log}));
+          R.n++; R[r.res]++; R.kinds[r.kind] = (R.kinds[r.kind] || 0) + 1;
+          log.forEach(c => { R.bd[c]++; });
+        }
+        R.ratio = Math.round(R.ratio / Math.max(1, R.n) * 100) / 100; R.men = Math.round(R.men / Math.max(1, R.n));
+      }
+      st = JSON.parse(S0);
+      return {day:st.day, rank:st.rank, crew:st.crew, ships:st.fleet.map(sh => sh.type), own:Math.round(ownEff()), out};
+    }
+    return {run, kampf};
   })();
