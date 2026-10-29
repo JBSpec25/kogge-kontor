@@ -31,83 +31,111 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 170px}
 
-/* Zielleiste unter der Szene */
-.aimbar{margin:8px 0 0;cursor:pointer;user-select:none;-webkit-user-select:none;padding:10px 12px 12px;border-radius:14px;color:#eef2ef;border:1px solid #0b1418;
-  background:linear-gradient(180deg,#1d2e36 0%,#131f25 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 20px -14px rgba(6,14,18,.7)}
-.aimbar .ah{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:600 .78rem var(--f-sc);letter-spacing:.04em;margin-bottom:6px}
-.aimbar .ah b{font:700 .95rem var(--f-sc);letter-spacing:.03em}
-.aimbar .ah .hint{color:#b9c6c2;font-weight:500;text-align:right}
-.aimbar .ah b{white-space:nowrap}
-.aimbar .labels{position:relative;height:18px}
-.aimbar .labels .lz{position:absolute;inset:0;will-change:transform}
-.aimbar .labels .lz>span{position:absolute;bottom:2px;transform:translateX(-50%);display:flex;align-items:center;gap:3px;font:600 .74rem var(--f-sc);white-space:nowrap}
-.aimbar .labels svg{width:14px;height:14px}
-.aimbar .track{position:relative;height:42px;border-radius:10px;background:#0b1317;border:1px solid #33454c;overflow:hidden}
-.aimbar .zones{position:absolute;inset:0;will-change:transform}
-.aimbar .band{position:absolute;top:0;bottom:0}
-.aimbar .band.sail{background:#8fb6d4}
-.aimbar .band.deck{background:#e3b75e}
-.aimbar .band.hull{background:#a8714a}
-.aimbar .band i{position:absolute;top:0;bottom:0;background:#d6452f}
-.aimbar .needle{position:absolute;top:-4px;bottom:-4px;width:4px;margin-left:-2px;background:#fff;box-shadow:0 0 0 2px #0b1317,0 0 10px rgba(255,255,255,.7)}
-.aimbar .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-.aimbar .chips span{font:500 .72rem var(--f-sc);padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:#dfe7e3}
-.aimbar .chips span.up{background:rgba(76,155,103,.2);color:#b5ecc6}
-.aimbar .chips span.dn{background:rgba(214,69,47,.2);color:#ffc6bb}
-.aimbar.warn{background:#5c1b17;border-color:#3a0f0c}
-.aimbar.warn .big{font:700 1.15rem var(--f-sc);letter-spacing:.03em;display:flex;align-items:center;gap:8px}
-.aimbar.warn .dots{display:flex;gap:6px;margin-top:8px}
-.aimbar.warn .dots i{flex:1;height:6px;border-radius:3px;background:rgba(255,180,168,.25);animation:wdot .95s steps(1) forwards}
-.aimbar.warn .dots i:nth-child(2){animation-delay:.3s}.aimbar.warn .dots i:nth-child(3){animation-delay:.6s}
-.aimbar.warn .dots i:first-child{animation-delay:0s}
-@keyframes wdot{to{background:#ffb4a8}}
-.aimbar.warn .wsub{color:#ffd9d2;font:500 .82rem var(--f-sc);margin-top:4px}
-.aimbar .ah b.g{color:#9ff2b8}
-.aimbar .labels.compact .tx{display:none}
-.aimbar .gw{position:absolute;top:0;bottom:0}
-.aimbar .shot{position:absolute;top:5px;bottom:5px;width:4px;margin-left:-2px;border-radius:2px;background:#fff7e0;box-shadow:0 0 0 1px #0b1317}
-.aimbar .shot.crit{background:#ffb347}.aimbar .shot.miss{background:#8a979b}
+/* Ab Version 54: Leiste unter dem Bild im Stil des Kontorbuchs. Fernkampf: Drittel mit Punkten, Trefferleiste, Waffen.
+   Entern: Deckleiste als Planken, drei Abschnitte, Karten. */
+.aimbar{margin:8px 0 0;cursor:pointer;user-select:none;-webkit-user-select:none;padding:10px 10px 12px;border-radius:4px;color:var(--ink);border:1.5px solid #6b4d33;
+  background:radial-gradient(120% 90% at 50% 20%,#f6ecd2 55%,#ead9b0 100%);box-shadow:0 2px 0 rgba(58,35,22,.18)}
+.aimbar .ah{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:600 .78rem var(--f-sc);letter-spacing:.03em;margin-bottom:6px}
+.aimbar .ah b{font:700 .95rem var(--f-sc);letter-spacing:.02em;white-space:nowrap}
+.aimbar .ah .hint{color:#6b5440;font:italic 500 .8rem var(--f-body);text-align:right}
 .aimbar .rot{display:inline-flex;gap:4px;margin-left:8px;vertical-align:0}
-.aimbar .rot i{width:10px;height:10px;border-radius:50%;background:#33454c;border:1px solid #4d636b}
-.aimbar .rot i.on{background:#f0cc7f;border-color:#f0cc7f}
-.aimbar .rot i.done{background:#9fb0b4}.aimbar .rot i.done.hit{background:#f6e7b8}.aimbar .rot i.done.crit{background:#ffb347}.aimbar .rot i.done.miss{background:#5a6a70}
-.aimbar .gw.good{background:#4c9b67}
-/* Ab Version 52: Enterkampf unter der Szene. Oben die Ansage des Anführers, darunter das Deck als Planken: dein Teil in Messing
-   von links, ihrer in Rost von rechts, Striche bei einem Viertel und drei Vierteln. Taue kappen steht oben rechts. */
-.aimbar.melee{cursor:default;padding:9px 12px 10px}
-.aimbar .mh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:-1px 0 7px}
-.aimbar .mh b{font:700 .95rem var(--f-sc);letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.aimbar .cut{position:relative;flex:none;min-height:30px;padding:3px 12px;border-radius:999px;border:1px solid rgba(240,204,127,.5);background:rgba(240,204,127,.08);color:#f3d692;font:600 .8rem var(--f-sc);letter-spacing:.02em;cursor:pointer}
-.aimbar .cut::after{content:"";position:absolute;inset:-7px -4px}
-.aimbar .cut:active{background:rgba(240,204,127,.2)} .aimbar .cut:disabled{opacity:.45;cursor:default}
-.aimbar .cut:focus-visible{outline:2px solid #f3d692;outline-offset:2px}
-.aimbar .intent{display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:start;padding:6px 10px 7px 8px;border-radius:10px;background:rgba(240,138,118,.09);box-shadow:inset 3px 0 0 #e0705f}
-.aimbar .intent .ic{width:24px;height:24px;margin-top:1px;color:#f2a08f;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.aimbar .intent p{margin:0;font-size:.93rem;line-height:1.28}
-.aimbar .intent small{display:block;margin-top:2px;font-size:.77rem;line-height:1.3;color:#b4c3bf}
-.aimbar .intent.fs{background:rgba(214,69,47,.16)}
-.aimbar .finte{display:inline-block;padding:0 7px;border-radius:999px;background:#d6452f;color:#fff;font:700 .74rem/1.45 var(--f-sc);vertical-align:1px}
-.aimbar .deck{margin-top:8px}
-.aimbar .deck .dl{display:flex;justify-content:space-between;align-items:baseline;font:600 .74rem var(--f-sc);letter-spacing:.03em;color:#9fb0ad;margin-bottom:3px}
-.aimbar .deck .dl .me{color:#f0c879} .aimbar .deck .dl .foe{color:#f0927f}
-.aimbar .planks{position:relative;height:14px;border-radius:4px;overflow:visible;
-  background:repeating-linear-gradient(90deg,transparent 0 31px,rgba(0,0,0,.28) 31px 32px),linear-gradient(180deg,#b5503c,#86362a)}
-.aimbar .planks i{position:absolute;left:0;top:0;bottom:0;border-radius:4px 0 0 4px;transition:width .5s;
-  background:repeating-linear-gradient(90deg,transparent 0 31px,rgba(70,40,0,.3) 31px 32px),linear-gradient(180deg,#e7b75c,#b9862c)}
-.aimbar .planks u{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:rgba(255,248,234,.75);border-radius:1px}
-.aimbar .planks b{position:absolute;top:-5px;bottom:-5px;width:4px;margin-left:-2px;border-radius:2px;background:#fff8ea;box-shadow:0 0 0 2px #131f25;transition:left .5s}
-.aimbar .kr{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:7px;font:600 .74rem/1 var(--f-sc);color:#c9d4d0;white-space:nowrap}
-.aimbar .kr>span{display:flex;align-items:center;gap:6px}
-.aimbar .kraft{display:inline-flex;gap:2px}
-.aimbar .kraft i{width:11px;height:7px;border-radius:2px;background:#2b3c43}
-.aimbar .kraft i.on{background:#f0cc7f} .aimbar .kraft i.on.lo{background:#e2775f}
-@media (prefers-reduced-motion: reduce){.aimbar .planks i,.aimbar .planks b{transition:none}}
-.aimbar .tleft{height:4px;margin-top:5px;border-radius:2px;background:#24343b;overflow:hidden}
-.aimbar .tleft i{display:block;height:100%;width:100%;background:#f0cc7f;border-radius:2px}
-.aimbar .gw.perf{background:#7ff0a2}
-/* Ruf des Gegners in der Szene */
-.shout{position:absolute;right:6%;top:30%;max-width:46%;background:#fff8ea;color:#3a1410;font:700 .9rem var(--f-sc);padding:6px 10px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.35)}
-.shout:after{content:"";position:absolute;bottom:-8px;right:28%;border:8px solid transparent;border-top-color:#fff8ea;border-bottom:0}
+.aimbar .rot i{width:10px;height:10px;border-radius:50%;border:1.3px solid #6b4d33;background:transparent}
+.aimbar .rot i.on{background:var(--seal);border-color:var(--seal)}
+.aimbar .rot i.done.hit{background:#33241a}.aimbar .rot i.done.crit{background:#c9962e;border-color:#8a5a12}.aimbar .rot i.done.miss{background:#cdbb98}
+.pips{display:inline-flex;gap:3px;vertical-align:-1px;margin-left:4px}
+.pips i{width:9px;height:9px;border-radius:50%;border:1.3px solid #33241a}.pips i.on{background:#33241a}.pips.foe i{border-color:#b5503c}.pips.foe i.on{background:#b5503c}
+.aimbar .thirds{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin:0 0 4px}
+.aimbar .thirds div{font:700 .8rem/1.1 var(--f-sc)}.aimbar .thirds div.off{opacity:.5}
+.aimbar .thirds span:last-child{display:block;font:italic 400 .74rem var(--f-body);color:#6b5440;margin-top:1px}
+.aimbar .strip{position:relative;height:40px;border:1.5px solid #33241a;background:rgba(255,248,230,.6);overflow:hidden;border-radius:2px}
+.aimbar .strip .t{position:absolute;top:0;bottom:0;width:33.333%;border-right:1px dashed #b89b70}.aimbar .strip .t:nth-child(3){border-right:0}
+.aimbar .strip .t.off{background:repeating-linear-gradient(45deg,transparent 0 5px,rgba(107,84,64,.22) 5px 6px)}
+.aimbar .strip .band{position:absolute;top:4px;bottom:4px;background:#e9cf8f;border:1.2px solid #33241a}
+.aimbar .strip .crit{position:absolute;top:0;bottom:0;background:var(--seal)}
+.aimbar .strip .shot{position:absolute;top:3px;bottom:3px;width:3px;margin-left:-1.5px;background:#33241a}.aimbar .strip .shot.miss{background:#9d8a70}.aimbar .strip .shot.crit{background:#c9962e;box-shadow:0 0 0 1px #33241a}
+.aimbar .strip .needle{position:absolute;top:0;bottom:0;width:0;pointer-events:none}
+.aimbar .strip .needle:before{content:"";position:absolute;top:0;bottom:0;left:-1.5px;width:3px;background:var(--seal);box-shadow:0 0 0 1.5px #f6ecd2}
+.aimbar .strip .needle:after{content:"";position:absolute;top:-1px;left:-6px;border:6px solid transparent;border-top:9px solid var(--seal);border-bottom:0}
+.aimbar .weapons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:9px;cursor:default}
+.aimbar .weapons button{border:1px solid #b89b70;background:rgba(255,248,230,.55);padding:5px 2px 6px;text-align:center;border-radius:2px;min-height:44px;color:inherit;font:inherit;cursor:pointer}
+.aimbar .weapons button[aria-pressed="true"]{border:2px solid var(--seal);padding:4px 1px 5px;box-shadow:inset 0 0 0 2px rgba(142,34,25,.12)}
+.aimbar .weapons button:disabled{opacity:.42;cursor:default}
+.aimbar .weapons b{display:block;font:700 .78rem var(--f-sc)}.aimbar .weapons small{display:block;font:italic .68rem/1.2 var(--f-body);color:#6b5440}
+.aimbar .wstat{display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:4px;row-gap:2px;align-items:center;margin:3px 0 2px;font:600 .6rem var(--f-sc);color:#6b5440}
+.aimbar .wstat .fw{display:inline-block;height:6px;border:1px solid #33241a;background:#e9cf8f}
+.aimbar .wstat .sp i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#33241a;margin-left:1px}.aimbar .wstat .sp i.o{background:transparent;border:1px solid #33241a}
+.aimbar .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.aimbar .chips span{font:500 .72rem var(--f-sc);padding:1px 7px;border-radius:999px;border:1px solid #b89b70;color:#4b3626;background:rgba(255,248,230,.5)}
+.aimbar .chips span.tk{border-color:var(--seal);color:var(--seal);font-weight:700}
+.aimbar .chips span.up{border-color:#4f7a4f;color:#2f5a3a}.aimbar .chips span.dn{border-color:#b5503c;color:#8e2219}
+/* Entern */
+.aimbar.melee{cursor:default;padding:9px 8px 10px}
+.aimbar .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:-1px 0 6px}
+.aimbar .mh b{font:700 .95rem var(--f-sc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aimbar .mh .kr{display:inline-flex;align-items:center;gap:4px;font:600 .74rem var(--f-sc);margin-left:auto}
+.aimbar .mh .kr i{width:13px;height:13px;border-radius:50%;border:1.3px dashed #6b5440}
+.aimbar .mh .kr i.on{background:radial-gradient(circle at 40% 35%,#d5584a,var(--seal));border:1px solid #5c130d}
+.aimbar .cut{position:relative;flex:none;min-height:30px;padding:3px 10px;border-radius:2px;border:1.5px solid #33241a;background:rgba(255,248,230,.6);color:var(--ink);font:700 .76rem var(--f-sc);cursor:pointer}
+.aimbar .cut::after{content:"";position:absolute;inset:-7px -4px}.aimbar .cut:disabled{opacity:.45;cursor:default}
+.aimbar .deck .dl{display:flex;justify-content:space-between;font:700 .78rem var(--f-sc);margin-bottom:4px}
+.aimbar .deck .dl .me{color:#8a5a12}.aimbar .deck .dl .foe{color:#b5503c}
+.aimbar .planks{position:relative;height:18px;border:1.5px solid #33241a;border-radius:3px;background:repeating-linear-gradient(90deg,transparent 0 31px,rgba(0,0,0,.25) 31px 32px),linear-gradient(#c2654e,#8f3a2c)}
+.aimbar .planks i{position:absolute;left:0;top:0;bottom:0;background:repeating-linear-gradient(90deg,transparent 0 31px,rgba(70,40,0,.3) 31px 32px),linear-gradient(#ecc067,#bf8c2f);transition:width .7s cubic-bezier(.3,1.4,.5,1)}
+.aimbar .planks u{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:#33241a}
+.aimbar .planks b{position:absolute;top:-7px;bottom:-7px;width:6px;margin-left:-3px;background:#f6ecd2;border:1.5px solid #33241a;transition:left .7s cubic-bezier(.3,1.4,.5,1)}
+.aimbar .planks s{position:absolute;top:-9px;bottom:-9px;width:0;border-left:2px dashed #33241a;opacity:.7;text-decoration:none}
+.aimbar .planks s:after{content:attr(data-d);position:absolute;top:-17px;left:-14px;width:28px;text-align:center;font:800 .74rem var(--f-body);color:#33241a}
+.aimbar .deck .why{display:flex;justify-content:space-between;font:italic .74rem var(--f-body);color:#6b5440;margin-top:4px}
+.aimbar .lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:8px}
+.aimbar .lane{border:1.5px solid #33241a;background:rgba(255,248,230,.5);padding:5px 4px 6px;display:grid;gap:4px;justify-items:stretch;text-align:center;transition:box-shadow .2s,background .2s;border-radius:2px}
+.aimbar .lane h4{margin:0;font:700 .86rem var(--f-sc)}.aimbar .lane .st{font:italic .7rem var(--f-body);color:#6b5440;margin-top:-3px}
+.aimbar .lane .st .pips i{width:7px;height:7px}
+.aimbar .lane.can{background:rgba(142,34,25,.08);box-shadow:0 0 0 2px var(--seal) inset;cursor:pointer}
+.aimbar .lane.home{box-shadow:0 0 0 3px #c9962e inset}
+.aimbar .mc{position:relative;border:1.5px solid #33241a;background:#fbf3de;border-radius:4px;padding:3px 2px 2px;min-height:54px;display:grid;justify-items:center;align-content:center;gap:1px}
+.aimbar .mc svg{width:20px;height:20px}.aimbar .mc b{font:800 1.15rem/1 var(--f-body)}.aimbar .mc span{font:700 .66rem/1.1 var(--f-sc)}
+.aimbar .mc.foe{border-color:#b5503c;color:#b5503c;background:#f6e2d6}
+.aimbar .mc.none{border-style:dashed;border-color:#b89b70;color:#6b5440;background:transparent;font:italic .78rem var(--f-body)}
+.aimbar .vs{font:italic .7rem var(--f-body);color:#6b5440;line-height:1}
+.aimbar .slot{border:1.6px dashed #b89b70;border-radius:4px;min-height:54px;display:grid;align-content:center;gap:4px;padding:3px;font:italic .74rem var(--f-body);color:#6b5440}
+.aimbar .slot .mc{min-height:46px;cursor:pointer}.aimbar .slot .mc .bon{position:absolute;top:-8px;right:-6px;font:800 .62rem var(--f-sc);background:#c9962e;color:#33241a;border:1px solid #33241a;border-radius:999px;padding:0 4px}
+.aimbar .lane .res{font:800 1rem var(--f-body);transition:transform .3s}.aimbar .lane .res.plus{color:#8a5a12}.aimbar .lane .res.minus{color:#b5503c}
+.aimbar .lane .res.bump{animation:rbump .5s ease-out}@keyframes rbump{40%{transform:scale(1.7)}}
+.aimbar .lane .prev{font:700 .72rem var(--f-sc);color:var(--seal)}
+.aimbar .flipin{animation:flipin .45s ease-out both}@keyframes flipin{0%{transform:perspective(400px) rotateY(90deg);opacity:0}100%{transform:none;opacity:1}}
+.aimbar .clashU{animation:clashU .5s ease-in-out}@keyframes clashU{50%{transform:translateY(-10px) scale(1.06)}}
+.aimbar .clashD{animation:clashD .5s ease-in-out}@keyframes clashD{50%{transform:translateY(10px) scale(1.06)}}
+.aimbar .hand{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:11px}
+.bcard{position:relative;border:1.6px solid #33241a;background:linear-gradient(#fdf6e4,#efe0bc);padding:18px 3px 5px;text-align:center;border-radius:5px;min-height:100px;color:var(--ink);font:inherit;
+  box-shadow:0 3px 0 rgba(58,42,28,.25);transition:transform .18s,box-shadow .18s;touch-action:none;display:grid;justify-items:center;align-content:start;gap:2px;cursor:pointer}
+.bcard .v{position:absolute;top:3px;left:6px;font:800 1.15rem/1 var(--f-body)}
+.bcard .cost{position:absolute;top:-8px;right:-7px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#d5584a,var(--seal));color:#f8e8d6;display:grid;place-items:center;font:800 .78rem var(--f-body);border:1px solid #5c130d}
+.bcard svg{width:30px;height:30px}.bcard b{font:700 .78rem/1.1 var(--f-sc)}
+.bcard .home{font:700 .62rem var(--f-sc);color:#8a5a12;border-top:1px solid #b89b70;padding-top:2px;margin-top:2px;width:100%}
+.bcard .use{font:italic .62rem/1.1 var(--f-body);color:var(--seal)}
+.bcard[aria-pressed="true"]{transform:translateY(-8px);border-color:var(--seal);box-shadow:0 0 0 2px var(--seal),0 8px 0 rgba(58,42,28,.25)}
+.bcard:disabled{opacity:.4;cursor:default}.bcard.gone{visibility:hidden}
+.bdrag{position:fixed;z-index:60;pointer-events:none;transform:translate(-50%,-60%) rotate(-4deg);opacity:.95;width:80px}
+.bfly{position:fixed;z-index:50;pointer-events:none;transition:transform .33s cubic-bezier(.3,.9,.4,1),opacity .33s}
+.aimbar .detail{min-height:2.6em;margin-top:8px;padding:5px 9px;border-left:3px solid #c9962e;background:rgba(255,248,230,.5);font-size:.86rem;line-height:1.35}
+.aimbar .detail b{font:700 .88rem var(--f-sc)}.aimbar .detail span{color:#6b5440}
+/* Seegefecht als Holzschnitt */
+.scene.fight canvas{visibility:hidden}
+.duel .th3{display:flex;justify-content:space-between;gap:4px;margin:4px 0 2px;font:600 .7rem var(--f-sc);color:#6b5440}
+.duel .th3 .pips{margin-left:2px}.duel .th3 .pips i{width:7px;height:7px}
+.duel .coach{margin:8px 0;padding:6px 10px;border-left:3px solid var(--seal);background:rgba(142,34,25,.06);font-size:.9rem;line-height:1.35}
+.fightink .foe .fmove{transition:transform .9s ease-in-out,opacity .9s}
+.fightink .fbob{animation:ibob 4.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 80%}
+.fightink .obob{animation:ibob 4s ease-in-out infinite reverse;transform-box:fill-box;transform-origin:50% 80%}
+.fightink .hitshake{animation:fhit .38s ease-out}
+@keyframes fhit{0%{transform:translateX(0)}25%{transform:translateX(-6px)}55%{transform:translateX(5px)}100%{transform:translateX(0)}}
+.fightink .foe.strike .flag{transition:transform 1.6s ease-in;transform:translateY(30px)}
+.pop-txt{position:absolute;z-index:3;font:800 1.02rem var(--f-sc);color:var(--ink);text-shadow:0 1px 0 #f4e8cb,0 -1px 0 #f4e8cb,1px 0 0 #f4e8cb,-1px 0 0 #f4e8cb;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);animation:poprise 1.1s ease-out forwards}
+.pop-txt.red{color:var(--seal)}.pop-txt.own{color:#8e2219}
+@keyframes poprise{0%{opacity:0;transform:translate(-50%,-30%) scale(.7)}20%{opacity:1;transform:translate(-50%,-60%) scale(1.12)}100%{opacity:0;transform:translate(-50%,-160%) scale(1)}}
+.shout{position:absolute;z-index:3;right:5%;top:12%;max-width:52%;background:#fbf3de;color:#33241a;font:700 .88rem var(--f-sc);padding:6px 10px;border-radius:10px;border:1.5px solid #33241a;box-shadow:0 2px 0 rgba(58,35,22,.25)}
+.shout:after{content:"";position:absolute;bottom:-9px;right:24%;border:8px solid transparent;border-top-color:#33241a;border-bottom:0}
+@media (prefers-reduced-motion: reduce){.aimbar *,.fightink *,.pop-txt,.bcard{animation:none!important;transition:none!important}}
 .alarmflash{position:absolute;inset:0;box-shadow:inset 0 0 0 4px #e0503f,inset 0 0 40px rgba(224,80,63,.55);border-radius:12px;pointer-events:none}
 /* Gefechtskarte im Duell-Aufbau */
 .duel .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
@@ -3532,32 +3560,39 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
 
   // ───────── Ab Version 51: Kapitän entscheiden lassen ─────────
-  // Ab Kaufmann in jeder Begegnung, auch gegen Verbände; vorher nur, wenn dein Verband klar überlegen ist.
+  // Ab Version 54 ab Händler in jeder Begegnung außer dem Übungskampf, auch gegen Verbände; vorher nur, wenn dein Verband klar überlegen ist.
   // Ausgewürfelt wird nach den Spielregeln ohne Bild: 200 Gefechte mit ordentlichem Zielen und dem Kampfwert des Kapitäns, eines davon zählt.
   // Auch der Kapitän kann verlieren: Schaden, Verluste, schlimmstenfalls das Schiff.
   const FIGHT_SKILL = {
-    gut:{aim:'gut', guard:[0.2, 0.55], hook:[0.25, 0.6], klug:1, chase:true, board:0.55, flee:1.6},
-    ordentlich:{aim:'ordentlich', guard:[0.05, 0.45], hook:[0.1, 0.55], klug:1, chase:true, board:0.58, flee:1.6}
+    gut:{aim:'gut', klug:1, chase:true, board:0.55, flee:1.6},
+    ordentlich:{aim:'ordentlich', klug:0.85, chase:true, board:0.58, flee:1.6}
   };
   const CAP_SIMS = 200;
-  const pick3 = ([a, b]) => { const r = Math.random(); return r < a ? 'perf' : r < a + b ? 'good' : 'none'; };
   // Nahkampf ohne Bild bis zum Ende; gibt 'win', 'strike', 'broken' oder 'part' zurück
-  function meleeAuto(att, init, S) {
+  function meleeAuto(att, S) {
     const e = st.enc;
-    e.bd = {att, r:0, ctl:50, ok:BD.kraft, pk:BD.kraft, f0:Math.max(1, st.crew), init:init ? 1 : 0, n0:e.n, c0:st.crew, mine:[]};
-    bdPlan(e);
+    bdStart(e, att);
     let o = {res:'part'};
     for (let i = 0; i <= BD.rounds; i++) {
       // geht es auf dem eigenen Deck schlecht, die Taue kappen
       if (att === 'pir' && e.bd.r > 0 && e.bd.ctl < 35) {
         const k = fightCap(), p = clamp(0.3 + 0.1 * (ownWend() - SHIPS[e.ptype].wend) + (k ? k.nav * 0.03 : 0), 0.15, 0.6);
         if (Math.random() < p) { e.bd = null; e.mor = Math.max(0, e.mor - 3); return 'part'; }
-        o = meleeCore('hold', true); if (o.res !== 'go') break; continue;
+        e.bd.put = {bug:[], mitte:[], kastell:[]}; o = meleeCore(); if (o.res !== 'go') break; continue;
       }
-      const c = bdChoose(S.klug); if (S.log) S.log.push(c); o = meleeCore(c); if (o.res !== 'go') break;
+      const cards = bdAuto(e, S.klug); if (S.log) S.log.push(...cards);
+      o = meleeCore(); if (o.res !== 'go') break;
     }
     e.bd = null;
     return o.res;
+  }
+  // Waffe für Kapitän und Bot: nah Steine; fliehen sie bald, Brandpfeile in die Segel; die schwere Waffe, wenn sie mehr wirft als die Rotten
+  function botWeap(e) {
+    const th = thOf(e);
+    if (e.dist === 0) return 'steine';
+    if (th.mitte > 0 && st.brand > 0 && e.mor <= TRAITS[e.trait].flee + 12) return 'brand';
+    if (weapOk('blide', e) && heavyN() * 2.2 >= rotten('bolzen') && th.kastell + th.bug + th.mitte > 1) return 'blide';
+    return 'bolzen';
   }
   // Ein ganzes Gefecht nach den Spielregeln: {res:'won'|'lost'|'escaped', kind}. Beute, Prise und Verlust bucht erst der Aufrufer.
   function fightAuto(S) {
@@ -3572,27 +3607,23 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         if (TRAITS[e.trait].close) e.dist = Math.max(0, e.dist - 1);
       } else if (e.dist === 0 && boardOdds('own') >= S.board) {
         e.tries = (e.tries || 0) + 1;
-        const q = pick3(S.hook), cut = q === 'good' && Math.random() < clamp(0.18 - (armsOf(st).haken || 0) * 0.015 + (e.trait === 'vorsicht' ? 0.1 : 0), 0.05, 0.4);
-        if (q !== 'none' && !cut) {
-          const m = meleeAuto('own', q === 'perf', S);
-          if (m === 'win' || m === 'strike') return {res:'won', kind:m === 'strike' ? 'strike' : 'board'};
-          if (m === 'broken') { loseCrew(Math.round(st.crew * rnd(0.06, 0.12))); e.mor = Math.min(100, e.mor + 10); }
-          else { e.dist = 1; e.mor = Math.max(0, e.mor - 4); }
-          continue;
-        }
+        const m = meleeAuto('own', S);
+        if (m === 'win' || m === 'strike') return {res:'won', kind:m === 'strike' ? 'strike' : 'board'};
+        if (m === 'broken') { loseCrew(Math.round(st.crew * rnd(0.06, 0.12))); e.mor = Math.min(100, e.mor + 10); }
+        else { e.dist = 1; e.mor = Math.max(0, e.mor - 4); }
+        continue;
       } else {
-        // Schwächere angehen, sonst erst Luv gewinnen; liegen sie in Deckung, Brandpfeile in die Segel
-        const want = (ratio < 0.85 || e.cover || (!TRAITS[e.trait].close && e.r >= 2)) && e.dist > 0 ? 'close' : e.luv !== 'own' && e.dist === 2 ? 'luv' : ratio > 1.2 && e.dist === 0 ? 'open' : e.dist === 2 ? 'close' : 'hold';
+        // Schwächere angehen, sonst erst Luv gewinnen
+        const want = (ratio < 0.85 || (!TRAITS[e.trait].close && e.r >= 2)) && e.dist > 0 ? 'close' : e.luv !== 'own' && e.dist === 2 ? 'luv' : ratio > 1.2 && e.dist === 0 ? 'open' : e.dist === 2 ? 'close' : 'hold';
         maneuver(want);
-        e.ammo = e.dist === 0 ? 'steine' : e.cover && st.brand > 0 ? 'brand' : 'bolzen';
+        e.ammo = botWeap(e);
         newAim();
-        volleyCore(aimShots(rotten(), AIM_SKILL[S.aim] || AIM_SKILL.ordentlich));
+        volleyCore(aimShots(aim.R, AIM_SKILL[S.aim] || AIM_SKILL.ordentlich));
       }
-      o = pirTurn({defer:true});
-      if (o.res === 'fire') o = o.finish(pick3(S.guard));
+      o = pirTurn();
       if (o.res === 'board') {
         e.ptries = (e.ptries || 0) + 1;
-        const m = meleeAuto('pir', false, S);
+        const m = meleeAuto('pir', S);
         if (m === 'win' || m === 'strike') return {res:'won', kind:m === 'strike' ? 'strike' : 'board'};
         if (m === 'broken') return {res:'lost', kind:'board'};
         e.dist = 1; e.mor = Math.max(0, e.mor - 12);
@@ -3608,11 +3639,11 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     return {res:'escaped', kind:'dusk'};
   }
   // Zustand des Gefechts sichern und zurückholen, damit sich ein Gefecht viele Male nachspielen lässt
-  const encSnap = () => ({enc:JSON.parse(JSON.stringify(st.enc)), crew:st.crew, hull:st.fleet.map(sh => sh.hull), brand:st.brand || 0, pulver:st.pulver || 0});
+  const encSnap = () => ({enc:JSON.parse(JSON.stringify(st.enc)), crew:st.crew, hull:st.fleet.map(sh => sh.hull), brand:st.brand || 0, pulver:st.pulver || 0, arms:Object.assign({}, armsOf(st))});
   function encLoad(S) {
     const E = st.enc, C0 = JSON.parse(JSON.stringify(S.enc));
     Object.keys(E).forEach(k => { delete E[k]; }); Object.assign(E, C0);
-    st.crew = S.crew; st.fleet.forEach((sh, i) => { if (S.hull[i] != null) sh.hull = S.hull[i]; }); st.brand = S.brand; st.pulver = S.pulver;
+    st.crew = S.crew; st.fleet.forEach((sh, i) => { if (S.hull[i] != null) sh.hull = S.hull[i]; }); st.brand = S.brand; st.pulver = S.pulver; if (S.arms) Object.assign(armsOf(st), S.arms);
   }
   function simFights(S, n) {
     const S0 = encSnap(), aim0 = Object.assign({}, aim), runs = [];
@@ -3621,7 +3652,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     return runs;
   }
   const capAutoClear = () => { const e = st.enc; return !!e && !e.prey && !e.fleet && ownEff() / Math.max(1, pirEff(e)) >= 1.5; };
-  const capAutoOk = () => { const e = st.enc; return !!e && e.phase === 'meet' && !!fightCap() && (st.rank >= 2 || capAutoClear()); };
+  const capAutoOk = () => { const e = st.enc; return !!e && e.phase === 'meet' && !e.prac && !!fightCap() && (st.rank >= 1 || capAutoClear()); };   // ab Version 54 ab Händler
   let capBatch = null;
   function capSims() {
     const e = st.enc;
@@ -4575,7 +4606,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const ptype = Math.random() < 0.35 ? 'holk' : 'kogge', n0 = Math.round(6 + Math.random() * 8 + (ptype === 'holk' ? 4 : 0));
     const g = pick(['hering', 'getreide', 'holz', 'salz']), q = 12 + Math.floor(Math.random() * (ptype === 'holk' ? 30 : 18));
     st.enc = {phase:'meet', prey:true, dane:true, arm:enemyArms('prey', n0, ptype), name:pick(DANES), trait:'vorsicht', ptype, n0, n:n0, f0:fighters(), mor:Math.round(rnd(45, 60)), phull:Math.round(rnd(75, 100)), psail:0, osail:0,
-      dist:2, luv:null, r:0, ammo:'bolzen', hold:false, fire:0, target:pickShip(), ransom:0, aimLock:null, prize:null, cargoG:g, cargoQ:q,
+      dist:2, luv:null, r:0, ammo:'bolzen', hold:false, fire:0, target:pickShip(), ransom:0, prize:null, cargoG:g, cargoQ:q,
       msg:`Ein dänischer Kauffahrer, ${SHIP_A[ptype].replace(/^Eine? /, 'eine ').replace(/^ein /, '')}, schwer beladen mit ${G[g].n}. An Deck nur etwa ${n0} Mann. Dein Kaperbrief erlaubt es, ihn aufzubringen.`};
     addLog(`Ein dänischer Kauffahrer kommt in Sicht.`, 'pirate');
     setTab('lage'); scene.fx.arrive();
@@ -5202,7 +5233,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const all = Math.max(14 + st.rank * 4, ownEff() * F.k / perMan(mor0, armor)) * (1 + Math.min(0.15, (mem.fled || 0) * 0.05));
     const flag = Math.min(PTYPE_MAX[e.ptype], Math.round(all * F.kf / (F.kf + F.kr * (F.ships - 1)))), res = Math.max(0, Math.round(all - flag)), n0 = flag + res;
     e.n = flag; e.n0 = n0; e.reserve = res; e.pair = 0; e.tier = 3;
-    e.fleet = {id, ships:F.ships};
+    e.fleet = {id, ships:F.ships}; e.thm = 5; e.th = {bug:5, mitte:5, kastell:5};
     e.name = F.n; e.trait = F.trait;
     const T = TRAITS[F.trait];
     e.mor = mor0; void T;
@@ -5530,45 +5561,46 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   const cargoValue = () => GOODS.reduce((x, g) => x + held(g.id) * g.b, 0);
   const sleep = ms => new Promise(r => setTimeout(r, reduce ? Math.min(ms, 160) : ms));
   let busy = false;
-  // Ab Version 51: Nach „Spannen!“ läuft der Zeiger von einem Ende aus anderthalb Bahnen weit (aim.T Sekunden), dann ist Schluss.
-  // Je Rotte ein Tipp in diesem Zeitfenster; wer nicht tippt, dessen Leute schießen auf gut Glück (etwa halbe Trefferchance, nie ein Volltreffer).
-  const aim = {c:0.5, hw:0.26, cw:0.08, co:0, speed:2.5, t0:0, run:false, dir:0, T:1.9, R:1, wa:0, wo:1.1, wp:0};
-  const AIM_LAPS = 1.5, BLIND_HIT = 0.45;
-  const aimT = () => aim.run ? (performance.now() - aim.t0) / 1000 : 0;
-  const aimAt = t => { const x = (1 - Math.cos(aim.speed * Math.max(0, Math.min(aim.T, t)))) / 2; return aim.dir ? 1 - x : x; };
-  const aimPos = () => aimAt(aimT());
-  // Seegang: das Zielfeld schwankt bei Regen leicht, bei Sturm stark. Dazu wandert es mit dem Kurs des Gegners, je nach Wendigkeit.
-  const offAt = s => (aim.sw ? aim.sw * Math.sin(s * 1.4 + (aim.ph || 0)) : 0) + (aim.wa ? aim.wa * Math.sin(s * aim.wo + aim.wp) : 0);
-  const aimOff = () => offAt(performance.now() / 1000);
-  // Ab Version 32: Jede Waffe hat ihr Ziel (Bolzen und Steine aufs Deck, Brandpfeile in die Segel); das Feld schlingert mit dem Seegang, viele Schützen schießen in Rotten
-  const TGT = {deck:{n:'Deck', sub:'Mannschaft', crit:'Kastell'}, sail:{n:'Segel', sub:'Tuch und Takelage', crit:'Rahsegel'}};
-  const WX_AIM = {clear:1, cloudy:1, rain:0.9, fog:0.85, snow:0.9, storm:0.8}, SWELL = {clear:0.02, cloudy:0.028, rain:0.042, fog:0.02, snow:0.038, storm:0.075};
-  const SAIL_B = {bolzen:5, brand:12, steine:4};
-  const GUARD_K = {none:{loss:1, dmg:1}, good:{loss:0.65, dmg:0.85}, perf:{loss:0.35, dmg:0.65}};
-  let guard = null;
-  const ammoTgt = () => (AMMO[(st.enc && st.enc.ammo) || 'bolzen'] || AMMO.bolzen).tgt;
-  function zoneAt(pos, off) {
-    const p = pos - (off != null ? off : st.enc && st.enc.offLock != null ? st.enc.offLock : aimOff()), b = (aim.bands || [])[0];
-    if (!b) return {zone:'miss', band:'deck'};
-    if (p >= b.a && p <= b.a + b.w) return {zone:Math.abs(p - (b.a + b.w / 2 + (b.co || 0))) <= b.cw / 2 ? 'crit' : 'hit', band:b.k};
-    return {zone:'miss', band:b.k};
-  }
-  function layoutAim(fresh) {
-    const lo = Math.min(0.5, aim.hw / 2 + (aim.sw || 0) + (aim.wa || 0) + 0.03), room = Math.max(0, aim.hw - aim.cw) / 2;
-    if (fresh || aim.c == null) aim.c = lo + Math.random() * Math.max(0, 1 - 2 * lo);
-    aim.c = clamp(aim.c, lo, 1 - lo);
-    // ab Version 51 liegt der Volltreffer nicht mehr immer in der Mitte des Felds
-    if (fresh || aim.co == null) aim.co = (Math.random() * 2 - 1) * room * 0.8;
-    aim.co = clamp(aim.co, -room, room);
-    aim.bands = [{k:ammoTgt(), a:aim.c - aim.hw / 2, w:aim.hw, cw:aim.cw, co:aim.co}];
-  }
-  // Rotten: wie viele Schüsse eine Salve hat, je nach Zahl der Schützen
-  function rotten() {
+  // ───────── Ab Version 54: Fernkampf in Dritteln ─────────
+  // Ihr Schiff hat drei Drittel mit je drei Punkten (e.th): Bug mit den Enterern, Mitte mit dem Segel, Kastell mit den Schützen.
+  // Die Trefferleiste unter dem Bild hat je Drittel ein Feld der gewählten Waffe und darin eine rote verwundbare Stelle (Volltreffer).
+  // Kein „Spannen“ und keine Frist mehr: Der Zeiger läuft hin und her, je Rotte ein Tipp. Die Schwierigkeit kommt aus dem Tempo:
+  // Gegner (leicht 0,85 / mittel 1 / schwer 1,25), Wind (Luv bei dir 0,9 / offen 1 / Luv beim Gegner 1,15), Abstand (nah 0,9 /
+  // mittel 1 / fern 1,15), Wetter und das Grundtempo der Waffe; die Kampferfahrung des Kapitäns bremst ihn (4 % je Punkt).
+  // Schwere Gegner lassen das Feld zusätzlich stärker wandern und schießen einmal mehr zurück.
+  // Wirkung der Drittel: ihr Kastell bestimmt ihr Gegenfeuer, ihr Bug, ob und wie hart sie entern, ihre Mitte, ob sie fliehen können;
+  // mit zerschossenen Segeln streichen sie beim Entern schon ab 65 % des Decks die Flagge. Ist alles zerschossen, ergeben sie sich.
+  // Dein eigenes Schiff hat dieselben Drittel (e.me): Treffer im Kastell schwächen deine Salven, im Bug deinen Sturm, in der Mitte die Flucht.
+  const T3 = ['bug', 'mitte', 'kastell'], T3N = {bug:'Bug', mitte:'Mitte', kastell:'Kastell'}, T3R = {bug:'Enterer', mitte:'Segel', kastell:'Schützen'};
+  const TH_MAX = 3, CRIT_W = 0.1;
+  // Größere Gegner haben mehr Punkte je Drittel (thm): Übung 2, leicht 3, mittel 4, schwer und Verbände 5. thF rechnet auf drei um.
+  const thMax = e => e.thm || TH_MAX;
+  const thOf = e => e.th || (e.th = {bug:thMax(e), mitte:thMax(e), kastell:thMax(e)});
+  const thF = (e, k) => thOf(e)[k] / thMax(e) * TH_MAX;
+  const meOf = e => e.me || (e.me = {bug:TH_MAX, mitte:TH_MAX, kastell:TH_MAX});
+  // Waffen: Feld (Breite je Drittel), Grundtempo des Zeigers, Schaden je Treffer und Volltreffer, welche Drittel sie erreichen
+  const WEAP = {
+    bolzen:{n:'Armbrust', on:['bug', 'kastell'], band:0.34, speed:0.55, dmg:1, crit:2, eff:'Leute an Bug und Kastell'},
+    steine:{n:'Steine', on:['bug', 'mitte', 'kastell'], band:0.62, speed:0.4, dmg:1, crit:2, eff:'alles, nur nah'},
+    brand:{n:'Brandpfeile', on:['mitte'], band:0.6, speed:0.45, dmg:1, crit:2, eff:'Segel, legt Feuer'},
+    blide:{n:'Blide', on:['bug', 'mitte', 'kastell'], band:0.8, speed:0.26, dmg:2, crit:3, eff:'ein schwerer Wurf'}
+  };
+  const WEAP_ORDER = ['bolzen', 'steine', 'brand', 'blide'];
+  const TGT_ORDER = {bolzen:['kastell', 'bug'], steine:['kastell', 'bug', 'mitte'], brand:['mitte'], blide:['kastell', 'bug', 'mitte']};
+  const WX_AIM = {storm:1.12, rain:1.05, snow:1.05}, SWELL = {clear:0.0, cloudy:0.005, rain:0.015, fog:0.0, snow:0.012, storm:0.035};
+  const SAIL_B = {bolzen:5, brand:12, steine:4, blide:8};
+  // Rotten: wie viele Tipps eine Salve hat, je nach Zahl der Schützen; die schwere Waffe wirft einmal je Blide oder Büchse
+  function rotten(k) {
     const e = st.enc, M = manned();
-    if (!e) return 1;
-    const n = e.ammo === 'steine' ? Math.max(0, st.crew - Math.ceil(crewMin() * 0.5)) : e.ammo === 'brand' ? Math.min(M.armbrust, 12) : M.armbrust;
-    return n >= (e.ammo === 'steine' ? 24 : 14) ? 3 : n >= (e.ammo === 'steine' ? 12 : 6) ? 2 : 1;
+    k = k || (e && e.ammo) || 'bolzen';
+    if (k === 'blide') return Math.max(1, Math.min(3, heavyN()));
+    const n = k === 'steine' ? Math.max(0, st.crew - Math.ceil(crewMin() * 0.5)) : k === 'brand' ? Math.min(M.armbrust, 12) : M.armbrust;
+    return n >= (k === 'steine' ? 24 : 14) ? 3 : n >= (k === 'steine' ? 12 : 6) ? 2 : 1;
   }
+  const heavyN = () => { const M = manned(); return M.blide + (M.buechse && (st.pulver || 0) > 0 ? M.buechse : 0); };
+  const weapName = k => k === 'blide' ? (manned().blide ? 'Blide' : 'Büchse') : WEAP[k].n;
+  const weapOk = (k, e) => !!AMMO[k] && AMMO[k].range.includes(e.dist) && (k !== 'brand' || st.brand > 0) && (k !== 'blide' || heavyN() > 0);
+  const weapDefault = e => e.dist === 0 ? 'steine' : 'bolzen';
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
   const rnd = (a, b) => a + Math.random() * (b - a);
 
@@ -5581,78 +5613,79 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     gierig:  {n:'Gierig',      mor:[60, 80], flee:32, board:1, close:true, d:'hat es auf das Schiff mit der meisten Ladung abgesehen'}
   };
   const AMMO = {
-    bolzen:{n:'Bolzen', crew:1, hull:0, mor:1, range:[0, 1, 2], tgt:'deck', d:'Armbrustbolzen aufs Deck, auf jede Entfernung'},
+    bolzen:{n:'Bolzen', crew:1, hull:0, mor:1, range:[0, 1, 2], tgt:'deck', d:'Armbrustbolzen auf Bug und Kastell, auf jede Entfernung'},
     brand: {n:'Brandpfeile', crew:0.5, hull:14, mor:1.8, range:[1, 2], tgt:'sail', d:'in die Segel: setzen Tuch und Rumpf in Brand und brechen den Kampfgeist; nicht auf kurze Distanz'},
-    steine:{n:'Steine', crew:1.6, hull:3, mor:1.2, range:[0], tgt:'deck', d:'von Mars und Kastell aufs Deck geworfen, nur auf kurze Distanz, verheerend für die Mannschaft'}
+    steine:{n:'Steine', crew:1.6, hull:3, mor:1.2, range:[0], tgt:'deck', d:'von Mars und Kastell aufs ganze Schiff geworfen, nur auf kurze Distanz'},
+    blide: {n:'Blide', crew:0.6, hull:9, mor:1.4, range:[1, 2], tgt:'hull', d:'ein schwerer Wurf auf mittlere und weite Entfernung'}
   };
   const ENC_K = 0.6, DMG_K = 0.7, DUSK_R = 14;   // ab Version 20: seltener, länger
-  // Ab Version 51 mit den Kampfstufen abgestimmt: Gegenfeuer der Seeräuber trifft härter (Verluste fire, Schaden dmg), deine Salven weniger (own).
-  // So entscheidet bei gleicher Kampfkraft nicht mehr allein die Salve, und gutes Zielen bleibt der Unterschied.
+  // Ab Version 51 mit den Kampfstufen abgestimmt; ab Version 54 neu abgestimmt (tools/sim/kampf.js)
   let FIGHT_K = {fire:1.6, dmg:1, own:0.6};
   const DIST = ['nah', 'mittel', 'fern'], DIST_MOD = [1.2, 1, 0.5], DIST_X = [0.6, 0.76, 0.9];
   const SHIP_A = {schnigge:'Eine Schnigge', kogge:'Eine Kogge', holk:'Ein Holk', kraweel:'Ein Kraweel'};
-  const ENC_OPEN = ['meet', 'tactic', 'volley', 'warn', 'guard', 'flee', 'boarding', 'fleeing', 'hook', 'melee'];
+  const ENC_OPEN = ['meet', 'tactic', 'volley', 'flee', 'boarding', 'fleeing', 'melee'];
   const ownWend = () => st.fleet.length ? st.fleet.reduce((x, sh) => x + SHIPS[sh.type].wend, 0) / st.fleet.length : 2;
   const ownEff = () => { const k = fightCap(); return st.crew * 1.1 * (1 + 0.35 * armorFrac()) * (1 + (k ? k.fight * 0.03 : 0)); };
   const pirEff = e => e.n * (0.55 + 0.45 * e.mor / 100) * 1.2 * (1 + 0.4 * ((e.arm && e.arm.armor) || 0));
   const oddsWord = p => p >= 0.7 ? 'gut' : p >= 0.5 ? 'ausgeglichen' : p >= 0.35 ? 'schlecht' : 'sehr schlecht';
-  // Größe des Zielfelds aus sichtbaren Gründen statt Schrumpfen von Runde zu Runde
-  function newAim() {
-    const e = st.enc, fk = fightCap(), wx = (st.sail && st.sail.weather) || 'clear', why = [];
-    const f = (v, label) => { if (Math.abs(v - 1) >= 0.005) why.push({t:label, d:Math.round((v - 1) * 100)}); return v; };
-    let k = 1;
-    k *= f([1.2, 1, 0.8][e.dist], ['nah', 'mittel', 'fern'][e.dist]);
+  // Tempo des Zeigers aus sichtbaren Gründen; why sammelt sie für die Leiste (d > 0: schneller)
+  const TIER_F = [0.85, 1, 1.25], DIST_F = [0.9, 1, 1.15];
+  function aimTempo(e) {
+    const fk = fightCap(), wx = (st.sail && st.sail.weather) || 'clear', why = [];
+    const f = (v, t) => { if (Math.abs(v - 1) >= 0.005) why.push({t, d:Math.round((v - 1) * 100)}); return v; };
+    let k = f(e.fleet ? 1.35 : e.prey ? 0.8 : TIER_F[e.tier == null ? 1 : e.tier], e.fleet ? 'Verband' : e.prey ? 'Kauffahrer' : ['leichter Gegner', 'Gegner', 'schwerer Gegner'][e.tier == null ? 1 : e.tier]);
+    k *= f(e.luv === 'own' ? 0.9 : e.luv === 'pir' ? 1.15 : 1, e.luv === 'own' ? 'Luv bei dir' : 'Luv beim Gegner');
+    k *= f(DIST_F[e.dist], DIST[e.dist]);
     k *= f(WX_AIM[wx] || 1, WX_NAME[wx] || 'Wetter');
-    if (e.luv === 'own') k *= f(1.2, 'Luv'); else if (e.luv === 'pir') k *= f(0.9, 'Gegner in Luv');
-    if (e.hold) k *= f(1.15, 'Kurs gehalten');
-    if (fk) k *= f(1 + 0.04 * fk.fight, `Kapitän ${fk.name}`);
-    if (st.sail && st.sail.ready) k *= f(1.15, 'Gewarnt und klar zum Gefecht');
-    aim.bh = 0.17 * k; aim.bc = 0.05 * k; aim.why0 = why;
-    aim.sw = SWELL[wx] || 0; aim.ph = Math.random() * 6.28;
-    aim.speed = 2.5 + (wx === 'storm' ? 0.6 : wx === 'rain' || wx === 'snow' ? 0.2 : 0);
-    // Zeitfenster: anderthalb Bahnen ab „Spannen!“, von einem zufälligen Ende aus
-    aim.T = AIM_LAPS * Math.PI / aim.speed; aim.dir = Math.random() < 0.5 ? 0 : 1; aim.run = false; aim.done = false; aim.t0 = 0;
-    // Das Feld wandert mit dem Kurs des Gegners: je wendiger sein Schiff gegenüber deinem, desto weiter
-    aim.wa = clamp(0.035 + 0.025 * (SHIPS[e.ptype].wend - ownWend()), 0.015, 0.1); aim.wo = 0.9 + Math.random() * 0.5; aim.wp = Math.random() * 6.28;
-    aim.c = null; aim.co = null;
-    sizeAim(true);
+    if (e.hold) k *= f(0.9, 'Kurs gehalten');
+    if (st.sail && st.sail.ready) k *= f(0.92, 'Gewarnt und klar zum Gefecht');
+    if (fk && fk.fight) k *= f(1 - 0.04 * fk.fight, `Kapitän ${fk.name}`);
+    if (e.prac) k *= f(0.8, 'Übung');
+    return {k, why};
   }
-  // Ab Version 51: ein nachgebildeter Schütze für Kapitän und Bot, mit demselben Zeiger wie im Spiel.
-  // sig: Streuung des Tipps in Sekunden, lapse: Anteil verpatzter Tipps, gap: Abstand zweier Tipps, react: frühester Tipp nach „Spannen!“.
-  // Abgestimmt am alten Zielspiel ohne Frist: „gut“ ergibt dort etwa 55 % Volltreffer und 40 % Treffer (wie Julien), „ordentlich“ etwa 24 % und 59 %.
-  const AIM_SKILL = {gut:{sig:0.032, lapse:0.05, gap:0.12, react:0.25}, ordentlich:{sig:0.08, lapse:0.03, gap:0.16, react:0.32}};
+  // Der Zeiger: Position auf der Leiste (0 bis 1) aus der Zeit seit Beginn der Salve; das Feld wandert mit dem Kurs des Gegners
+  const aim = {t0:0, run:false, done:false, R:1, k:1, why:[], speed:0.55, amp:0.06, wo:0.9, ph:0, co:0, band:0.34, w:'bolzen'};
+  const aimNow = () => (performance.now() - aim.t0) / 1000;
+  const aimX = t => { const p = (t * aim.speed) % 2; return p < 1 ? p : 2 - p; };
+  const aimC = t => clamp(0.5 + Math.sin(t * aim.wo + aim.ph) * aim.amp, aim.band / 2, 1 - aim.band / 2);
+  function newAim() {
+    const e = st.enc; if (!e) return;
+    if (!weapOk(e.ammo, e)) e.ammo = weapDefault(e);
+    const T = aimTempo(e), W = WEAP[e.ammo], wx = (st.sail && st.sail.weather) || 'clear';
+    aim.w = e.ammo; aim.k = T.k; aim.why = T.why;
+    aim.speed = W.speed * T.k;
+    aim.amp = 0.06 * (e.tier === 2 || e.fleet ? 1.4 : 1) + (SWELL[wx] || 0);
+    aim.wo = 0.8 + Math.random() * 0.4; aim.ph = Math.random() * 6.28;
+    aim.band = Math.min(0.9, W.band * (e.ammo === 'bolzen' ? 1 + Math.min(0.15, manned().armbrust * 0.006) : 1));
+    const room = Math.max(0, (aim.band - CRIT_W) / 2);
+    aim.co = (Math.random() * 2 - 1) * room * 0.8;
+    aim.R = rotten(e.ammo); aim.run = true; aim.done = false; aim.last = null;
+    aim.t0 = performance.now() - Math.random() * 1000 / Math.max(0.1, aim.speed);
+    e.shots = [];
+  }
+  // Wo landet ein Tipp bei x? Drittel, und ob Feld, rote Stelle oder daneben
+  function aimJudge(x, t) {
+    const W = WEAP[aim.w], i = Math.min(2, Math.floor(x * 3)), k = T3[i], loc = x * 3 - i, c = aimC(t);
+    if (!W.on.includes(k)) return {k, z:'miss'};
+    if (Math.abs(loc - (c + aim.co)) <= CRIT_W / 2) return {k, z:'crit'};
+    return {k, z:Math.abs(loc - c) <= aim.band / 2 ? 'hit' : 'miss'};
+  }
+  // Ein nachgebildeter Schütze für Kapitän und Bot: zielt auf die rote Stelle im besten Drittel; sig ist die Streuung des Tipps
+  // in Sekunden (bei schnellerem Zeiger wird daraus ein größerer Fehler auf der Leiste), lapse der Anteil verpatzter Tipps.
+  const AIM_SKILL = {gut:{sig:0.06, lapse:0.05}, ordentlich:{sig:0.085, lapse:0.04}};
   const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
-  function aimShots(R, S) {
-    const b = aim.bands && aim.bands[0]; if (!b) return Array(R).fill('miss');
-    const s0 = Math.random() * 100, T = aim.T, dt = 0.004, xc = b.a + b.w / 2 + (b.co || 0);
-    const d = t => aimAt(t) - offAt(s0 + t) - xc;
-    const cr = []; let prev = d(S.react);
-    for (let t = S.react + dt; t <= T; t += dt) { const v = d(t); if ((v > 0) !== (prev > 0)) cr.push(t); prev = v; }
-    if (!cr.length) { let bt = S.react, bv = 9; for (let t = S.react; t <= T; t += dt) { const v = Math.abs(d(t)); if (v < bv) { bv = v; bt = t; } } cr.push(bt); }
-    const per = cr.map(() => 0), plan = [];
-    for (let i = 0; i < R; i++) per[i % cr.length]++;
-    cr.forEach((tc, j) => { for (let q = 0; q < per[j]; q++) plan.push(tc + (q - (per[j] - 1) / 2) * S.gap); });
-    return plan.map(t => {
-      if (Math.random() < S.lapse) t = S.react + Math.random() * (T - S.react);
-      t += gauss() * S.sig;
-      if (t > T) return Math.random() < BLIND_HIT ? 'hit' : 'miss';
-      return zoneAt(aimAt(t), offAt(s0 + t)).zone;
-    });
+  function aimTarget(e, w) {
+    const th = thOf(e), l = TGT_ORDER[w || aim.w] || ['kastell'];
+    return l.find(k => th[k] > 0) || l[0];
   }
-  // Felder je Waffe: Steine breit, Brandpfeile schmal, viele Armbrüste streuen breiter; mit Blide oder Büchse wird der Volltreffer kleiner, trifft aber härter
-  function sizeAim(fresh) {
-    const e = st.enc; if (!e || aim.bh == null) return;
-    const M = manned(), heavy = e.dist >= 1 && (M.blide || M.buechse), why = (aim.why0 || []).slice();
-    const f = e.ammo === 'steine' ? [1.3, 1.25] : e.ammo === 'brand' ? [0.85, 0.75] : [1 + Math.min(0.25, M.armbrust * 0.012), 1];
-    if (Math.abs(f[0] - 1) >= 0.005) why.push({t:e.ammo === 'steine' ? 'Steine' : e.ammo === 'brand' ? 'Brandpfeile' : `${M.armbrust} Armbrüste`, d:Math.round((f[0] - 1) * 100)});
-    if (heavy) why.push({t:`${M.buechse ? 'Büchse' : 'Blide'} schießt auf den Rumpf`, d:0});
-    if ((aim.sw || 0) >= 0.035) why.push({t:'Seegang: ihr Deck schlingert stark', d:0});
-    if ((aim.wa || 0) >= 0.06) why.push({t:'Ihr Schiff ist wendiger: das Feld wandert', d:0});
-    if (e.cover && (e.ammo || 'bolzen') !== 'brand') why.push({t:'Sie liegen in Deckung: Deck nur halb', d:0});
-    aim.whyL = why;
-    aim.why = why.map(w => w.d ? `${w.t} ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %` : w.t);
-    aim.hw = Math.min(0.42, aim.bh * f[0] * 1.2); aim.cw = aim.bc * f[1];
-    layoutAim(fresh);
+  function aimShots(R, S) {
+    const e = st.enc, k = aimTarget(e), v = aim.speed * 3, out = [];
+    for (let i = 0; i < R; i++) {
+      if (Math.random() < S.lapse) { out.push(aimJudge(Math.random(), Math.random() * 10)); continue; }
+      const err = gauss() * S.sig * v, loc = 0.5 + aim.co + err;
+      out.push({k, z:Math.abs(err) <= CRIT_W / 2 ? 'crit' : loc >= 0 && loc <= 1 && Math.abs(loc - 0.5) <= aim.band / 2 ? 'hit' : 'miss'});
+    }
+    return out;
   }
   function maybePirates() {
     const s = st.sail;
@@ -5688,7 +5721,9 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // weil deine Salven mehr ausrichten als ihr Gegenfeuer und wer sein Deck verteidigt, mit Vorteil kämpft.
   // Schwere Gegner haben zähe oder draufgängerische Anführer und bessere Waffen; ab Kaufmann kommt jeder zweite mit zwei Schiffen.
   // Schwere Siege bringen mehr Beute und Ansehen (TIER_LOOT, TIER_REP), damit die Zielzeiten trotz echter Verluste halten.
-  let TIER_K = [[0.6, 0.85], [1.15, 1.45], [2, 2.5]];
+  // Ab Version 54 mit Dritteln und Karten neu abgestimmt (tools/sim/kampf.js, 6 Spielstände je Tag 400, 1100, 1800, je 25 Gefechte):
+  // gut leicht 100 %, mittel 85 bis 88 %, schwer 51 bis 66 %; ordentlich (Kapitän) mittel 74 bis 75 %, schwer 32 bis 43 %.
+  let TIER_K = [[0.6, 0.85], [1.65, 2], [2, 2.5]];
   let TIER_LOOT = [1, 1.4, 2.2], TIER_REP = [2, 8, 20];
   const TIER_P = [[0.6, 0.25, 0.15], [0.4, 0.3, 0.3]], TIER_TRAITS = [['vorsicht', 'gierig'], ['vorsicht', 'gierig', 'drauf', 'zaeh'], ['zaeh', 'drauf']];
   const PTYPE_MAX = {schnigge:22, kogge:48, holk:90, kraweel:130};   // so viele Bewaffnete drängen sich höchstens auf ein Seeräuberschiff
@@ -5701,15 +5736,17 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // Kampfkraft eines Seeräubers wie in pirEff, damit leicht, mittel und schwer so stark sind wie gewollt
   const perMan = (mor, armor) => (0.55 + 0.45 * mor / 100) * 1.2 * (1 + 0.4 * armor);
   function startEnc(force) {
-    const tier = force != null ? force : rollTier();
+    // Ab Version 54: Der erste Seeräuber ist ein Übungskampf, leicht und geführt
+    const prac = !st.encs && !st.focus && force == null;
+    const tier = prac ? 0 : force != null ? force : rollTier(), thm = prac ? 2 : [3, 4, 5][tier];
     st.encs = (st.encs || 0) + 1;
     const dane = !!(st.sail && st.era && st.era.war === 1 && warK(st.sail.segs) > 1 && Math.random() < 0.6);
     const tk = pick(TIER_TRAITS[tier]), T = TRAITS[tk], name = dane ? `Hauptmann ${pick(DANES)}` : pick(PIRATES), luv = Math.random() < 0.5 ? 'pir' : null;
     const mor = Math.round(rnd(T.mor[0], T.mor[1]));
     const armor = clamp((dane ? 0.5 + Math.min(0.2, st.rank * 0.04) : 0.15 + st.rank * 0.04) + [-0.05, 0, 0.1][tier], 0, 0.75);
-    const S = ownEff() * rnd(TIER_K[tier][0], TIER_K[tier][1]), all = Math.max(5, Math.round(S / perMan(mor, armor)));
+    const S = ownEff() * rnd(TIER_K[tier][0], TIER_K[tier][1]) * (prac ? 0.8 : 1), all = Math.max(5, Math.round(S / perMan(mor, armor)));
     // zwei Schiffe: jeder zweite schwere Gegner ab Kaufmann, und jeder, für den ein Schiff nicht reicht
-    const pair = !dane && ((tier === 2 && st.rank >= 2 && Math.random() < 0.5) || all > PTYPE_MAX.kraweel);
+    const pair = !prac && !dane && ((tier === 2 && st.rank >= 2 && Math.random() < 0.5) || all > PTYPE_MAX.kraweel);
     let n0 = pair ? Math.round(all * PAIR_FLAG) : all;
     const ptype = Object.keys(PTYPE_MAX).find(k => PTYPE_MAX[k] >= n0) || 'kraweel';
     n0 = Math.min(n0, PTYPE_MAX[ptype]);
@@ -5720,7 +5757,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const ransom = Math.round(Math.max(120, cargoValue() * 0.2 + Math.min(Math.max(0, st.money) * 0.08, 300 + 400 * st.rank)) / 10) * 10;   // ab Version 42 Anteil der Truhe gedeckelt
     const big = st.fleet.reduce((b, sh, i) => shipCap(sh) > shipCap(st.fleet[b]) ? i : b, 0);
     st.enc = {phase:'meet', tier, name, trait:tk, ptype, n0:n0 + reserve, n:n0, reserve, pair:pair ? 2 : 0, f0:fighters(), mor, phull:Math.round(rnd(60, 95)), psail:0, osail:0,
-      dist:2, luv, r:0, ammo:'bolzen', hold:false, fire:0, target:tk === 'gierig' ? big : pickShip(), ransom, aimLock:null, prize:null,
+      dist:2, luv, r:0, ammo:'bolzen', hold:false, fire:0, target:tk === 'gierig' ? big : pickShip(), ransom, prize:null,
+      thm, th:{bug:thm, mitte:thm, kastell:thm}, me:{bug:TH_MAX, mitte:TH_MAX, kastell:TH_MAX}, prac, coach:prac && !(st.q && st.q.skipTut),
       dane, arm, msg:dane ? `${SHIP_A[ptype]} unter dem Danebrog, ein Auslieger König Waldemars, hält ${luv ? 'aus Luv ' : ''}auf euch zu. An Deck stehen etwa ${n0} Kriegsknechte. ${name} gilt als ${T.n.toLowerCase()}: ${T.d}.`
         : pair ? `Zwei Schiffe unter dunklem Segel halten ${luv ? 'aus Luv ' : ''}auf euch zu. ${SHIP_A[ptype]} führt, ein zweites folgt im Kielwasser. Zusammen stehen dort etwa ${n0 + reserve} Bewaffnete an Deck. ${name} gilt als ${T.n.toLowerCase()}: ${T.d}.`
         : `${SHIP_A[ptype]} unter dunklem Segel hält ${luv ? 'aus Luv ' : ''}auf euch zu. An Deck stehen etwa ${n0} Bewaffnete. ${name} gilt als ${T.n.toLowerCase()}: ${T.d}.`};
@@ -5803,84 +5841,95 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!AMMO[e.ammo].range.includes(e.dist) || (e.ammo === 'brand' && !(st.brand > 0))) e.ammo = e.dist === 0 ? 'steine' : 'bolzen';
     return parts.join(' ');
   }
-  function volleyCore(zs, band) {
-    if (!Array.isArray(zs)) zs = [zs];
-    const e = st.enc, A = AMMO[e.ammo], T = TRAITS[e.trait], tgt = A.tgt || band || 'deck', n = Math.max(1, zs.length);
-    const M = manned(), power = e.ammo === 'steine' ? 2 + st.crew * 0.15 + M.armbrust * 0.2 : 2 + Math.pow(M.armbrust, 0.92) * 0.85 + M.free / 12;
-    const nc = zs.filter(z => z === 'crit').length, nh = zs.filter(z => z !== 'miss').length;
-    const CR = e.fleet ? PF_CRIT : 1, mult = zs.reduce((x, z) => x + (z === 'crit' ? CR : z === 'hit' ? 0.55 : 0.1), 0) / n;
-    const q = zs.reduce((x, z) => x + (z === 'crit' ? 1.6 : z === 'hit' ? 1 : 0.2), 0) / n, bk = tgt === 'deck' ? 1 : 0.35, HB = 1.15;
-    const covered = tgt === 'deck' && !!e.cover, cov = covered ? 0.5 : 1;   // ab Version 51: in Deckung wirken Decktreffer nur halb
-    const kills = Math.min(e.n, Math.round((Math.round(power * mult * rnd(0.55, 0.95) * DIST_MOD[e.dist] * A.crew * DMG_K * FIGHT_K.own * bk) + (tgt === 'deck' ? Math.round(nc * 0.6 * CR) : 0)) * cov));
-    // Volltreffer im Kastell: Dort stehen ihre Armbrustschützen
+  // Eine Salve, ohne Bild und Ton. shots: je Tipp {k:Drittel, z:'crit'|'hit'|'miss'}.
+  // Treffer an Bug und Kastell treffen Leute, Treffer in der Mitte Segel und Takelage; jeder Treffer kostet das Drittel Punkte.
+  let volleyShotsHook = null, meleeHook = null, PIP_MOR = 1, WRECK_MOR = 25;   // Hook nur für die Simulation; Kampfgeist je verlorenem Punkt
+  function volleyCore(shots) {
+    if (volleyShotsHook) volleyShotsHook(shots);
+    const e = st.enc, k0 = AMMO[e.ammo] ? e.ammo : 'bolzen', A = AMMO[k0], W = WEAP[k0], T = TRAITS[e.trait], n = Math.max(1, shots.length), M = manned();
+    const th = thOf(e), me = meOf(e), CR = e.fleet ? PF_CRIT : 1;
+    let power = k0 === 'steine' ? 2 + st.crew * 0.15 + M.armbrust * 0.2 : k0 === 'blide' ? 2 + heavyN() * 3 + M.free / 20 : 2 + Math.pow(M.armbrust, 0.92) * 0.85 + M.free / 12;
+    if (k0 !== 'steine') power *= 0.55 + 0.15 * me.kastell;   // dein Kastell zerschossen: schwächere Salven
+    const people = shots.filter(s => s.k !== 'mitte'), mid = shots.filter(s => s.k === 'mitte' && s.z !== 'miss').length;
+    const nc = shots.filter(s => s.z === 'crit').length, nh = shots.filter(s => s.z !== 'miss').length;
+    const mult = people.reduce((x, s) => x + (s.z === 'crit' ? CR : s.z === 'hit' ? 0.55 : 0.1), 0) / n;
+    const q = shots.reduce((x, s) => x + (s.z === 'crit' ? 1.6 : s.z === 'hit' ? 1 : 0.2), 0) / n;
+    const kills = Math.min(e.n, Math.round(power * mult * rnd(0.55, 0.95) * DIST_MOD[e.dist] * A.crew * DMG_K * FIGHT_K.own + people.filter(s => s.z === 'crit').length * 0.6 * CR));
+    // Punkte der Drittel
+    const lost = {bug:0, mitte:0, kastell:0};
+    shots.forEach(s => { if (s.z === 'miss') return; const d = Math.min(th[s.k], s.z === 'crit' ? W.crit : W.dmg); th[s.k] -= d; lost[s.k] += d; });
+    // Im Kastell stehen ihre Armbrustschützen
     let archers = 0;
-    if (tgt === 'deck' && nc && kills && e.arm && e.arm.armbrust > 0) { archers = Math.min(e.arm.armbrust, Math.max(1, Math.round(kills * 0.45 * nc / n))); e.arm.armbrust -= archers; }
+    const kh = shots.filter(s => s.k === 'kastell' && s.z !== 'miss').length;
+    if (kh && kills && e.arm && e.arm.armbrust > 0) { archers = Math.min(e.arm.armbrust, Math.max(1, Math.round(kills * 0.5 * kh / Math.max(1, people.length)) + lost.kastell)); e.arm.armbrust -= archers; }
     let hullD = Math.round(A.hull * q * rnd(0.7, 1.3) * DMG_K / SHIPS[e.ptype].hullK);
-    let sailD = tgt === 'sail' && nh ? Math.round(SAIL_B[e.ammo] * q * rnd(0.7, 1.3)) : 0;
-    e.n -= kills; e.phull = Math.max(0, e.phull - hullD); e.psail = Math.min(100, e.psail + sailD);
-    const hullA = hullD;
-    // schwere Waffen schießen von selbst auf Rumpf und Takelage, wenn der Gegner nicht zu nah ist; gute Salven geben ihnen Deckung
+    let sailD = Math.round((mid ? SAIL_B[k0] * mid * 3 / n : 0) * rnd(0.7, 1.3)) + lost.mitte * 8;
     const heavy = [];
-    if (e.dist >= 1 && (M.blide || (armsOf(st).buechse || 0))) {
-      const hm = nc * 2 >= n ? 1.6 : nh * 2 >= n ? 1 : 0.5;
-      if (M.blide) { const d = Math.round(M.blide * 5 * hm * HB * DIST_MOD[e.dist] * rnd(0.7, 1.3) / SHIPS[e.ptype].hullK), sd = Math.round(M.blide * 4); e.phull = Math.max(0, e.phull - d); hullD += d; e.psail = Math.min(100, e.psail + sd); sailD += sd; heavy.push(`${M.blide === 1 ? 'Die Blide trifft' : 'Die Bliden treffen'}, Rumpf −${d} %`); }
-      if (M.buechse) {
-        let fired = 0, tried = 0;
-        for (let i = 0; i < M.buechse; i++) if ((st.pulver || 0) > 0) { st.pulver--; tried++; if (Math.random() < 0.85) fired++; }
-        if (fired) { const d = Math.round(fired * 9 * hm * HB * rnd(0.7, 1.3) / SHIPS[e.ptype].hullK); e.phull = Math.max(0, e.phull - d); hullD += d; e.mor = Math.max(0, e.mor - 5 * fired); heavy.push(`${fired === 1 ? 'Die Büchse donnert' : 'Die Büchsen donnern'}, Rumpf −${d} %`); }
-        else heavy.push(tried ? 'Die Büchse versagt' : 'Für die Büchse fehlt Pulver');
-      } else if (armsOf(st).buechse) heavy.push('Für die Büchse fehlen Leute');
+    if (k0 === 'blide' && M.buechse) {
+      let fired = 0, tried = 0;
+      for (let i = 0; i < M.buechse; i++) if ((st.pulver || 0) > 0) { st.pulver--; tried++; if (Math.random() < 0.85) fired++; }
+      if (fired) { const d = Math.round(fired * 6 * (nc ? 1.4 : nh ? 1 : 0.4) * rnd(0.7, 1.3) / SHIPS[e.ptype].hullK); hullD += d; e.mor = Math.max(0, e.mor - 5 * fired); heavy.push(`${fired === 1 ? 'Die Büchse donnert' : 'Die Büchsen donnern'}, Rumpf −${d} %`); }
+      else if (tried) heavy.push('Die Büchse versagt');
     }
+    e.n -= kills; e.phull = Math.max(0, e.phull - hullD); e.psail = Math.min(100, e.psail + sailD);
     let lit = false;
-    if (e.ammo === 'brand') {
+    if (k0 === 'brand') {
       st.brand = Math.max(0, (st.brand || 0) - 1);
-      if (nc || (nh && Math.random() < 1 - Math.pow(0.4, nh))) { lit = !e.fire; e.fire = 3; }
+      if (nc || (mid && Math.random() < 1 - Math.pow(0.4, mid))) { lit = !e.fire; e.fire = 3; }
     }
-    const drop = kills / e.n0 * 75 * (e.fleet ? PF_MOR : (T.moraleK || 1)) * A.mor + Math.min(8, nc * 3 * CR) * cov + (e.ammo === 'brand' && nh ? 4 : 0) + (archers ? 2 : 0);
+    const pips = lost.bug + lost.mitte + lost.kastell;
+    const drop = kills / e.n0 * 75 * (e.fleet ? PF_MOR : (T.moraleK || 1)) * A.mor + Math.min(8, nc * 3 * CR) + (k0 === 'brand' && nh ? 4 : 0) + (archers ? 2 : 0) + pips * PIP_MOR;
     e.mor = Math.max(0, e.mor - drop);
-    // Nach zwei Salven mit Treffern aufs Deck in Folge gehen sie eine Runde hinter Pavesen in Deckung
-    let cover = false;
-    if (e.cover) { e.cover = false; e.dk = 0; }
-    else if (tgt === 'deck' && nh) { e.dk = (e.dk || 0) + 1; if (e.dk >= 2 && !e.prey) { e.cover = true; e.dk = 0; cover = true; } }
-    else e.dk = 0;
-    return {kills, hullD, hullA, sailD, lit, drop, archers, nc, nh, n, cover, covered, heavy:heavy.join('. ')};
+    return {kills, hullD, hullA:hullD, sailD, lit, drop, archers, nc, nh, n, lost, heavy:heavy.join('. ')};
   }
-  function pirTurn(opts) {
-    const e = st.enc, T = TRAITS[e.trait], parts = [];
+  const wrecked = e => T3.every(k => thOf(e)[k] <= 0);
+  const strikeAt = e => thOf(e).mitte <= 0 ? BD.strikeSail : BD.strike;
+  // Zug des Gegners: Verstärkung, Feuer an Bord, Flucht, Entern oder Gegenfeuer aus dem Kastell auf deine Drittel
+  function pirTurn() {
+    const e = st.enc, T = TRAITS[e.trait], parts = [], th = thOf(e), me = meOf(e);
     if ((e.fleet || e.pair) && e.reserve > 0 && e.n > 0) { const m = Math.min(e.reserve, PF_REIN + Math.round(e.reserve * 0.18)); e.reserve -= m; e.n += m; e.mor = Math.min(100, e.mor + 2); if (m >= 4) parts.push(e.fleet ? `Die Begleitschiffe setzen ${m} Mann über.` : `Das Begleitschiff setzt ${m} Mann über.`); }
     if (e.fire > 0) {
       e.fire--;
       e.phull = Math.max(0, e.phull - Math.round(rnd(3, 7) / SHIPS[e.ptype].hullK)); e.mor = Math.max(0, e.mor - 3);
+      if (th.mitte > 0 && Math.random() < 0.35) th.mitte--;
       parts.push('An Bord des Gegners brennt es.');
     }
     if (e.n <= 0) return {res:'empty', text:parts.join(' ')};
     if (e.phull <= 0) return {res:'sunk', text:parts.join(' ')};
+    if (wrecked(e) && !e.wreck) { e.wreck = true; e.mor = Math.max(0, e.mor - WRECK_MOR); parts.push('Ihr Schiff ist ein Wrack, ihr Kampfgeist bricht ein.'); }
     if (e.mor <= (e.fleet ? PF_FLEE : T.flee)) {
-      const pf = clamp(0.35 + (SHIPS[e.ptype].spd - fleetSpeed()) * 1.2 + (e.luv === 'pir' ? 0.15 : e.luv === 'own' ? -0.1 : 0) + e.dist * 0.12 - e.psail / 200 - (e.dist === 0 ? Math.min(0.15, (armsOf(st).haken || 0) * 0.015) : 0), 0.05, 0.9);
+      let pf = clamp(0.35 + (SHIPS[e.ptype].spd - fleetSpeed()) * 1.2 + (e.luv === 'pir' ? 0.15 : e.luv === 'own' ? -0.1 : 0) + e.dist * 0.12 - e.psail / 200 - (e.dist === 0 ? Math.min(0.15, (armsOf(st).haken || 0) * 0.015) : 0), 0.05, 0.9);
+      if (th.mitte <= 0) pf *= 0.3;   // mit zerschossenen Segeln kommen sie nicht weit
       if (Math.random() < pf) return {res:'flee', text:parts.join(' ')};
       e.mor = Math.max(0, e.mor - 8);
       if (e.mor < 12 && e.dist < 2 && pirEff(e) / Math.max(1, ownEff()) < 0.55) return {res:'surrender', text:parts.join(' ')};
       parts.push('Sie wollen fliehen, kommen aber nicht los.');
-    } else if (e.dist === 0 && pirEff(e) / Math.max(1, ownEff()) >= (e.fleet ? Math.max(T.board, PF_BOARD) : T.board)) return {res:'board', text:parts.join(' ')};
+    } else if (e.dist === 0 && th.bug > 0 && pirEff(e) / Math.max(1, ownEff()) >= (e.fleet ? Math.max(T.board, PF_BOARD) : T.board) * (th.bug < thMax(e) ? 1.15 : 1)) return {res:'board', text:parts.join(' ')};
     const ea = e.arm || {armbrust:Math.round(e.n0 * 0.35), armor:0.15};
-    const pw = (e.n * 0.25 + Math.min(ea.armbrust || 0, e.n) * 0.35 + (e.fleet || e.pair ? (e.reserve || 0) * PF_CFIRE : 0)) * (1 + st.rank * 0.06) * DIST_MOD[e.dist] * (e.luv === 'own' ? 0.75 : e.luv === 'pir' ? 1.15 : 1) * rnd(0.7, 1.3);
-    const apply = gq => {
-      const gk = GUARD_K[gq] || GUARD_K.none;
-      const loss = Math.round(pw * 0.2 * DMG_K * FIGHT_K.fire * (1 - paveseProt()) * (1 - 0.15 * armorFrac()) * gk.loss);
-      let dmg = Math.round((2 + pw * 0.3 * rnd(0.6, 1.2)) * DMG_K * FIGHT_K.dmg);
-      if (e.dist >= 1 && ea.blide) dmg += Math.round(rnd(3, 6));
-      if (e.dist >= 1 && ea.buechse && Math.random() < 0.8) dmg += Math.round(rnd(6, 10));
-      dmg = Math.round(dmg * gk.dmg);
-      loseCrew(loss);
-      const hit = hurtShip(dmg, e.target < st.fleet.length ? e.target : 0);
-      e.osail = Math.min(100, e.osail + Math.round(rnd(1, 5) * DIST_MOD[e.dist]));
-      e.mor = Math.min(100, e.mor + loss / Math.max(1, e.f0) * 30);
-      parts.push(`${gq === 'perf' ? 'Perfekte Deckung! ' : gq === 'good' ? 'Gut gedeckt. ' : ''}Gegenfeuer: ${loss ? `${loss} ${loss === 1 ? 'Mann' : 'Leute'} verwundet, ` : ''}${hit ? `Rumpf der „${hit.name}“ ${hit.hull} %` : 'kein Schaden'}.`);
-      e.r++;
-      return {res:e.r >= DUSK_R ? 'dusk' : 'go', text:parts.join(' '), loss, dmg};
-    };
-    if (opts && opts.defer) return {res:'fire', text:parts.join(' '), finish:apply};
-    return apply(null);
+    const kf = 0.35 + 0.65 * th.kastell / thMax(e);   // ihr Kastell zerschossen: schwaches Gegenfeuer
+    const pw = (e.n * 0.25 + Math.min(ea.armbrust || 0, e.n) * 0.35 + (e.fleet || e.pair ? (e.reserve || 0) * PF_CFIRE : 0)) * (1 + st.rank * 0.06) * DIST_MOD[e.dist] * (e.luv === 'own' ? 0.75 : e.luv === 'pir' ? 1.15 : 1) * kf * rnd(0.7, 1.3);
+    const loss = Math.round(pw * 0.2 * DMG_K * FIGHT_K.fire * (1 - paveseProt()) * (1 - 0.15 * armorFrac()));
+    let dmg = Math.round((2 + pw * 0.3 * rnd(0.6, 1.2)) * DMG_K * FIGHT_K.dmg);
+    if (e.dist >= 1 && ea.blide) dmg += Math.round(rnd(3, 6));
+    if (e.dist >= 1 && ea.buechse && Math.random() < 0.8) dmg += Math.round(rnd(6, 10));
+    // Schüsse aus ihrem Kastell auf deine Drittel, einer mehr mit besetztem Bug und bei schweren Gegnern; Pavesen halten manchen ab
+    const cov = Math.min(1, (armsOf(st).pavese || 0) / Math.max(1, armSlots()));
+    const ns = Math.round(thF(e, 'kastell')) + (th.bug > 0 ? 1 : 0) + (e.tier >= 2 || e.fleet ? 1 : 0), land = [0.85, 0.7, 0.5][e.dist] * (e.luv === 'own' ? 0.8 : 1);
+    let held = 0; const hitK = [];
+    for (let i = 0; i < ns; i++) {
+      if (Math.random() >= land) continue;
+      if (Math.random() < 0.12 + 0.3 * cov) { held++; continue; }
+      const k = T3[Math.floor(Math.random() * 3)];
+      if (me[k] > 0) { me[k]--; hitK.push(k); }
+    }
+    loseCrew(loss);
+    const hit = hurtShip(dmg, e.target < st.fleet.length ? e.target : 0);
+    e.osail = Math.min(100, e.osail + Math.round(rnd(1, 5) * DIST_MOD[e.dist]) + hitK.filter(k => k === 'mitte').length * 6);
+    e.mor = Math.min(100, e.mor + loss / Math.max(1, e.f0) * 30);
+    const where = [...new Set(hitK)].map(k => T3N[k]).join(', ');
+    parts.push(`Gegenfeuer: ${loss ? `${loss} ${loss === 1 ? 'Mann' : 'Leute'} verwundet, ` : ''}${hit ? `Rumpf der „${hit.name}“ ${hit.hull} %` : 'kein Schaden'}${where ? `, Treffer an ${where}` : ''}${held ? `; ${held === 1 ? 'eine Pavese hält' : `${held}-mal halten die Pavesen`}` : ''}.`);
+    e.r++;
+    return {res:e.r >= DUSK_R ? 'dusk' : 'go', text:parts.join(' '), loss, dmg, held, hitK, ns};
   }
   function loseShip() {
     const e = st.enc, i = e.target < st.fleet.length ? e.target : 0, sh = st.fleet[i];
@@ -5947,6 +5996,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     busy = false;
     e.phase = 'volley'; e.shots = []; newAim();
     commit();
+    requestAnimationFrame(() => { const ab = $('#aimbar'), r = ab && ab.getBoundingClientRect(); if (r && !ab.hidden && r.bottom > innerHeight - 150) $('#scene').scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'}); });
   }
   async function flee() {
     const e = st.enc; if (busy || !e || !(e.phase === 'meet' || e.phase === 'tactic')) return;
@@ -5968,288 +6018,278 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     e.logMan = 'Die Flucht misslingt, sie holen auf.'; e.logOwn = ''; e.logPir = '';
     return pirateResponse('Die Flucht misslingt, sie holen auf. ');
   }
-  // Ab Version 51: „Spannen!“ startet den Zeiger. Dann tippst du je Rotte einmal, bis die anderthalb Bahnen um sind;
-  // wer bis dahin nicht getippt hat, schießt auf gut Glück.
-  let aimTimer = null;
-  function spannen() {
-    const e = st.enc; if (busy || !e || e.phase !== 'volley' || aim.run || aim.done || !aim.bands) return;
-    if (!AMMO[e.ammo].range.includes(e.dist) || (e.ammo === 'brand' && !(st.brand > 0))) { e.ammo = e.dist === 0 ? 'steine' : 'bolzen'; sizeAim(false); }
-    e.shots = []; e.aimLock = null; e.offLock = null;
-    aim.R = rotten(); aim.run = true; aim.t0 = performance.now();
-    clearTimeout(aimTimer); aimTimer = setTimeout(volleyDone, aim.T * 1000 + 40);
-    scene.fx.text('Spannen!', 'own', '#f0cc7f');
-    renderActions(); renderAim(e); renderEnc();
+  // Ab Version 54: Der Zeiger läuft, sobald deine Salve dran ist. Je Rotte ein Tipp, ohne Frist; vor dem ersten Tipp lässt sich die Waffe wechseln.
+  function setWeap(k) {
+    const e = st.enc; if (!e || e.phase !== 'volley' || busy || (e.shots || []).length || !weapOk(k, e) || e.ammo === k) return;
+    e.ammo = k; newAim();
+    renderEnc(); renderActions(); renderAim(e);
   }
   function fire() {
-    const e = st.enc; if (!e || e.phase !== 'volley') return;
-    if (!aim.run) return aim.done ? undefined : spannen();
-    const R0 = aim.R, shots = e.shots || (e.shots = []), tgt = ammoTgt();
-    if (shots.length >= R0 || aimT() > aim.T) return;
-    const pos = aimPos(), off = aimOff(), zone = zoneAt(pos, off).zone;
-    shots.push({p:pos - off, z:zone});
-    scene.fx.volley('own', Math.round(clamp((2 + manned().armbrust * 0.6) / R0, 2, 14)), zone, e.ammo === 'brand');
-    scene.fx.text(zone === 'miss' ? 'Daneben' : zone === 'crit' ? `Volltreffer · ${TGT[tgt].crit}` : `Treffer · ${TGT[tgt].n}`, 'pir', zone === 'crit' ? '#ffb347' : zone === 'hit' ? '#f6e7b8' : '#dfe7ea');
-    if (shots.length >= R0) return volleyDone();
+    const e = st.enc; if (!e || e.phase !== 'volley' || busy || !aim.run) return;
+    const shots = e.shots || (e.shots = []);
+    if (shots.length >= aim.R) return;
+    const t = aimNow(), x = aimX(t), r = aimJudge(x, t);
+    shots.push({x, k:r.k, z:r.z});
+    inkFx.shot(x, r, e.ammo);
+    if (shots.length >= aim.R) return volleyDone();
     renderActions(); renderAim(e);
   }
+  const ZERO_SAY = {kastell:' Ihr Kastell schweigt: Ihr Gegenfeuer wird schwach.', bug:' Ihre Enterer liegen am Boden: Entern können sie nicht mehr.', mitte:' Ihr Segel hängt in Fetzen: Fliehen können sie kaum, beim Entern streichen sie früher die Flagge.'};
   async function volleyDone() {
-    clearTimeout(aimTimer); aimTimer = null;
-    if (!aim.run) return;
-    const e = st.enc, pos = aimPos(), off = aimOff();
-    aim.run = false; aim.done = true;
-    if (!e || e.phase !== 'volley') return;
-    busy = true;
-    const R0 = aim.R, shots = e.shots || (e.shots = []), tgt = ammoTgt(), blind = Math.max(0, R0 - shots.length);
-    for (let i = 0; i < blind; i++) shots.push({p:null, z:Math.random() < BLIND_HIT ? 'hit' : 'miss', blind:true});
-    e.aimLock = pos; e.offLock = off;
-    if (blind) { scene.fx.volley('own', Math.round(clamp((2 + manned().armbrust * 0.6) * blind / R0, 2, 14)), 'hit', e.ammo === 'brand'); scene.fx.text('Auf gut Glück', 'pir', '#dfe7ea'); }
-    renderActions(); renderAim(e); renderEnc();
-    await sleep(1000);
+    const e = st.enc; if (!e || e.phase !== 'volley') return;
+    aim.run = false; aim.done = true; busy = true;
+    renderActions(); renderAim(e);
+    await sleep(850);
     if (!st.enc) { busy = false; return; }
-    const zs = shots.map(x => x.z); e.shots = [];
-    const v = volleyCore(zs);
+    const shots = (e.shots || []).slice(), R0 = shots.length, th0 = Object.assign({}, thOf(e));
+    e.shots = []; aim.last = shots;
+    const v = volleyCore(shots), th = thOf(e);
     if (e.fire) scene.fx.fire(true);
-    const what = e.ammo === 'steine' ? 'Die Steine' : e.ammo === 'brand' ? 'Die Brandpfeile' : R0 > 1 ? 'Alle Rotten' : 'Die Salve', many = R0 > 1 || e.ammo === 'steine';
+    const what = e.ammo === 'steine' ? 'Die Steine' : e.ammo === 'brand' ? 'Die Brandpfeile' : e.ammo === 'blide' ? `Der Wurf der ${weapName('blide')}` : R0 > 1 ? 'Alle Rotten' : 'Die Salve';
+    const hitL = T3.filter(k => v.lost[k]).map(k => `${T3N[k]} −${v.lost[k]}`);
     const fell = v.kills ? ` ${v.kills} ${v.kills === 1 ? (e.prey ? 'Mann fällt' : 'Seeräuber fällt') : (e.prey ? 'Leute fallen' : 'Seeräuber fallen')}.` : '';
-    let msg;
-    if (!v.nh && !v.kills) msg = `${what} ${many ? 'gehen' : 'geht'} ins Wasser.`;
-    else if (tgt === 'sail') msg = `${v.nc ? 'Volltreffer im Rahsegel! ' : v.nh ? 'Treffer in den Segeln. ' : 'Kaum getroffen. '}${v.sailD ? `Ihre Segel −${v.sailD} %, sie werden langsamer.` : ''}${fell}`;
-    else msg = `${!v.nh ? (R0 > 1 ? 'Die Rotten schießen meist daneben.' : 'Kaum getroffen.') : R0 > 1 ? `${v.nh} von ${R0} Rotten treffen${v.nc ? `, ${v.nc === 1 ? 'eine' : v.nc} mitten ins Kastell` : ''}.` : v.nc ? 'Volltreffer im Kastell!' : 'Treffer an Deck.'}${fell}`;
-    if (v.archers) msg += ` ${v.archers} ${v.archers === 1 ? 'ihrer Armbrustschützen' : 'ihrer Armbrustschützen'} ${v.archers === 1 ? 'fällt' : 'fallen'}, ihr Gegenfeuer wird schwächer.`;
+    let msg = v.nh ? `${v.nc ? (v.nc === 1 ? 'Ein Volltreffer' : `${v.nc} Volltreffer`) + (v.nh > v.nc ? ` und ${v.nh - v.nc} Treffer` : '') : `${v.nh} Treffer`}${R0 > 1 ? ` aus ${R0} ${e.ammo === 'blide' ? 'Würfen' : 'Rotten'}` : ''}.${hitL.length ? ` Ihr Schiff: ${hitL.join(', ')}.` : ''}${fell}`
+      : `${what} ${R0 > 1 && e.ammo !== 'blide' || e.ammo === 'steine' ? 'gehen' : 'geht'} ins Wasser.${fell}`;
+    if (v.archers) msg += ` ${v.archers} ${v.archers === 1 ? 'ihrer Armbrustschützen fällt' : 'ihrer Armbrustschützen fallen'}.`;
     if (v.lit) msg += ' Das Segel fängt Feuer!';
     if (v.heavy) msg += ` ${v.heavy}.`;
     if (v.hullA >= 4) msg += ` Ihr Rumpf −${v.hullA} %.`;
+    T3.forEach(k => { if (th0[k] > 0 && th[k] <= 0) msg += ZERO_SAY[k]; });
     if (v.drop >= 12) msg += ' Ihr Kampfgeist wankt.';
-    if (blind) msg += blind === R0 ? (R0 > 1 ? ' Ohne deinen Befehl schießen alle Rotten auf gut Glück.' : ' Ohne deinen Befehl schießen deine Leute auf gut Glück.') : ` ${blind === 1 ? 'Eine Rotte schießt' : `${blind} Rotten schießen`} ohne Befehl auf gut Glück.`;
-    if (v.covered) msg += ' Sie lagen in Deckung, deine Treffer aufs Deck wirkten nur halb.';
-    if (v.cover) { msg += ' Sie gehen hinter Pavesen in Deckung: In der nächsten Runde wirken Treffer aufs Deck nur halb, Segel und Rumpf triffst du wie sonst.'; setTimeout(() => { if (st.enc) scene.fx.text('In Deckung!', 'pir', '#cfe3ff'); }, 300); }
     e.msg = msg; e.logOwn = msg;
     render();
     await sleep(450);
     return pirateResponse(msg + ' ');
   }
-  // Deckung: Der Zeiger läuft einmal; wer im grünen Feld tippt, verliert weniger Leute
-  const guardPos = () => guard ? clamp((performance.now() - guard.t0) / guard.dur, 0, 1) : 0;
+  // Ruf des Anführers vor dem Gegenfeuer
   function shoutLine(e) {
     const ea = e.arm || {};
     if (e.prey) return pick(['„Wehrt euch, Männer!“', '„Spannt, was ihr habt!“']);
     if (e.dane) return pick(['„Für König Waldemar! Schießt!“', '„Armbrüste hoch – Feuer!“', ea.buechse && e.dist >= 1 ? '„Lunte an die Büchse!“' : '„Gebt den Hansen Bolzen zu schmecken!“']);
     return pick([ea.blide && e.dist >= 1 ? '„Blide spannen – los!“' : '„Spannt die Armbrüste! Feuer!“', '„Gebt’s ihnen!“', '„Holt sie euch, Jungs!“', '„Feuer frei!“']);
   }
-  async function guardRound() {
-    const e = st.enc;
-    e.shout = shoutLine(e); e.phase = 'warn';
-    render();
-    if (music.drum) music.drum();
-    await sleep(950);
-    if (!st.enc) return 'none';
-    const cov = Math.min(1, (armsOf(st).pavese || 0) / Math.max(1, armSlots()));
-    guard = {t0:performance.now() + 250, dur:st.sail && st.sail.weather === 'storm' ? 950 : 1150, c:0.88, good:0.15 * (1 + 0.35 * cov), perf:0.05 * (1 + 0.35 * cov), cov, tap:null, lock:null};
-    e.phase = 'guard';
-    render();
-    const n = Math.round(clamp(e.n / 2, 2, 12));
-    setTimeout(() => { if (st.enc) scene.fx.volley('pir', n, 'hit'); }, Math.max(0, 250 + guard.dur * guard.c - 760));
-    return new Promise(res => { guard.res = res; guard.timer = setTimeout(finishGuard, 250 + guard.dur + 180); });
-  }
-  function guardTap() {
-    if (!guard || guard.tap || !st.enc || (st.enc.phase !== 'guard' && st.enc.phase !== 'hook')) return;
-    if (performance.now() < guard.t0) return;   // ab Version 49: ein Tipp, bevor der Zeiger läuft, zählt noch nicht
-    const p = guardPos(), d = Math.abs(p - guard.c);
-    guard.lock = p;
-    guard.tap = d <= guard.perf / 2 ? 'perf' : d <= guard.good / 2 ? 'good' : p < guard.c ? 'early' : 'late';
-    scene.fx.text(guard.tap === 'perf' ? 'Perfekte Deckung!' : guard.tap === 'good' ? 'Deckung!' : guard.tap === 'early' ? 'Zu früh' : 'Zu spät', 'own', guard.tap === 'perf' || guard.tap === 'good' ? '#bff0c8' : '#dfe7ea');
-    renderActions();
-  }
-  function finishGuard() {
-    const g = guard; if (!g) return;
-    clearTimeout(g.timer); guard = null;
-    g.res(g.tap === 'perf' || g.tap === 'good' ? g.tap : 'none');
-  }
   async function pirateResponse(prefix) {
     const e = st.enc;
     busy = true;
-    let out = pirTurn({defer:true}), guarded = false;
-    if (out.res === 'fire') { out = out.finish(await guardRound()); guarded = true; }
+    const out = pirTurn();
     if (out.res === 'go' || out.res === 'dusk') {
-      if (!guarded) { scene.fx.volley('pir', Math.round(clamp(e.n / 2, 2, 12)), out.dmg > 4 ? 'hit' : 'miss'); await sleep(1100); }
-      else await sleep(120);
+      if (thOf(e).kastell > 0 || out.ns) { inkFx.shout(shoutLine(e)); await sleep(650); }
+      if (!st.enc) { busy = false; return; }
+      inkFx.counter(out);
+      await sleep(1000);
       e.logPir = out.text;
       scene.fx.shake();
-      if (out.loss || out.dmg) scene.fx.text(out.loss ? `−${out.loss} Mann` : `Rumpf −${out.dmg} %`, 'own', '#ffb3a3');
+      if (out.loss || out.dmg) inkFx.pop(out.loss ? `−${out.loss} Mann` : `Rumpf −${out.dmg} %`, 'own');
     }
     busy = false;
-    e.aimLock = null; e.offLock = null;
     const pre = prefix + (out.text && out.res !== 'go' && out.res !== 'dusk' ? out.text + ' ' : '');
     if (out.res === 'board') return board(true, pre);
     if (out.res === 'empty') { winCore('empty'); e.msg = `${pre}Auf dem Seeräuberschiff steht keiner mehr aufrecht. Ihr übernehmt es kampflos. Beute: ${fmt(e.loot)} Gulden.`; }
     else if (out.res === 'sunk') { scene.fx.sink(); winCore('sunk'); e.msg = `${pre}Das Seeräuberschiff brennt nieder und sinkt. Aus dem Wasser fischt ihr ${fmt(e.loot)} Gulden.`; }
-    else if (out.res === 'surrender') { scene.fx.fire(false); winCore('surrender'); e.msg = `${pre}${e.name} streicht die Segel und ergibt sich! Beute: ${fmt(e.loot)} Gulden.`; }
+    else if (out.res === 'surrender') { scene.fx.fire(false); inkFx.strike(); winCore('surrender'); e.msg = `${pre}${e.name} streicht die Flagge und ergibt sich! Beute: ${fmt(e.loot)} Gulden.`; }
     else if (out.res === 'flee') { e.phase = 'fleeing'; scene.fx.leaving(); e.msg = `${pre}${e.name} dreht ab und flieht!`; }
     else if (out.res === 'dusk') { e.phase = 'escaped'; scene.fx.leave(); e.msg = `${prefix}${out.text} Die Dämmerung bricht herein und trennt die Schiffe.`; addLog(`Gefecht mit ${e.name} ohne Ausgang.`, 'pirate'); }
     else { e.phase = 'tactic'; e.msg = prefix + out.text; }
     if (e.phase === 'won' && e.prize) e.msg += prizeManned() ? ' Ihr Schiff gehört jetzt euch.' : ` Ihr Schiff gehört euch, doch für eine Prisenmannschaft fehlen Leute: nötig sind ${prizeNeed()} Matrosen.`;
     commit();
   }
-  // ───────── Ab Version 52: Enterkampf mit Gegenspiel ─────────
-  // Erst Haken werfen (Zeitspiel), dann höchstens drei Runden. Stürmen schlägt Schießen, Schießen aus dem Kastell schlägt Halten, Halten schlägt Stürmen.
-  // Wer die Runde gewinnt, kämpft mit dem 1,4-Fachen, wer verliert, mit dem 0,7-Fachen; gleiche Befehle heben sich auf.
-  // Vor jeder Runde zeigt der Anführer, was er vorhat. Wie verlässlich das ist, hängt von seinem Ruf ab; dein Kapitän durchschaut manche Finte.
-  // Kraft: Stürmen kostet 2, Schießen 1, Halten bringt 1 zurück; unter 2 Kraft kämpft man nur noch mit 70 %.
-  // Nach drei Runden: ab 75 % des Decks streicht der Gegner die Flagge, unter 25 % zieht sich der Angreifer zurück
-  // (haben sie dich geentert, nehmen sie dein Schiff), dazwischen lösen sich die Schiffe und das Gefecht geht auf Abstand weiter.
-  // Dort ließe sich später das Fechtduell anschließen (bdPart).
-  let BD = {rounds:3, def:1.35, win:1.4, lose:0.7, cost:{storm:2, shoot:1, hold:-1}, kraft:4, kraftMax:6, tired:0.7, kill:{storm:1.2, shoot:1, hold:0.75}, base:0.05, swing:70,
-    strike:75, retreat:25, luck:[0.8, 1.2], mfloor:50, rein:1, hook:0.13, retry:0.15, read:{drauf:0.85, zaeh:0.75, gierig:0.6, vorsicht:0.5}, spot:0.1, spotK:0.03, habit:4,
-    like:{drauf:{storm:5, shoot:2.5, hold:2.5}, zaeh:{storm:3, shoot:3.5, hold:3.5}, gierig:{storm:3.5, shoot:3.5, hold:3}, vorsicht:{storm:2, shoot:4.5, hold:3.5}}};
-  const BEATS = {storm:'shoot', shoot:'hold', hold:'storm'}, BEATEN = {shoot:'storm', hold:'shoot', storm:'hold'}, BD_CMDS = ['storm', 'shoot', 'hold'];
-  const BURN = {drauf:0.25, zaeh:0.3, gierig:0.15, vorsicht:0.1};
-  const kraftOk = (k, c) => (k == null ? BD.kraft : k) >= Math.max(0, BD.cost[c]);
-  const bdTired = k => (k == null ? BD.kraft : k) < 2 ? BD.tired : 1;
-  const bdRes = (c, p) => c === p ? 0 : BEATS[c] === p ? 1 : -1;
-  const kraftPips = k => `<span class="kraft" aria-label="Kraft ${k} von ${BD.kraftMax}">${Array.from({length:BD.kraftMax}, (_, i) => `<i class="${i < k ? 'on' : ''}${i < 2 ? ' lo' : ''}"></i>`).join('')}</span>`;
-  const wpick = W => { const t = Object.values(W).reduce((x, y) => x + y, 0); let r = Math.random() * t; for (const k in W) { r -= W[k]; if (r < 0) return k; } return Object.keys(W).find(k => W[k] > 0) || 'hold'; };
-  // Grobe Aussicht ohne Glück: Stärke gegen Stärke, der Verteidiger mit Vorteil; im Kampf zählt, wer das Deck hält
+  // ───────── Ab Version 54: Entern mit Karten ─────────
+  // Die Deckleiste bleibt: Start bei 50 %, nach drei Runden streichen sie ab 75 % die Flagge (mit zerschossenen Segeln ab 65 %),
+  // unter 25 % weicht der Angreifer (haben sie dich geentert, nehmen sie dein Schiff), dazwischen lösen sich die Schiffe.
+  // Je Runde ziehst du vier Karten aus Mannschaft und Ausrüstung und legst Karten für bis zu zwei Kraft in die Abschnitte Bug, Mitte
+  // und Kastell. Dort liegen offen zwei Züge des Gegners: Sturm über den Bug, Salve aus dem Kastell oder Schildwall. Angriffskarten
+  // wirken in ihrem Heimatabschnitt 1,5-fach, Abwehrkarten nur gegen den Zug im eigenen Abschnitt. Was jeder Abschnitt ergibt, schiebt
+  // die Deckleiste. Enterhaken und Brandtöpfe werden verbraucht, Harnische und Pavesen können zerbeulen oder zersplittern.
+  // Die Stärke ihrer Züge folgt dem Kräfteverhältnis (pirEff zu ownEff, der Verteidiger des eigenen Decks mit Vorteil) und ihren Dritteln.
+  let BD = {rounds:3, kraft:2, hand:4, home:1.5, fs:6, fv:3, strike:75, strikeSail:65, retreat:25, def:1.2, kexp:0.85, mfloor:50, kill:0.05, ref:20, wear:0.2, rein:1};
+  const CARD = {
+    sturm:{n:'Sturm', k:1, home:'bug', val:e => 5 + meOf(e).bug, say:'Deine Leute drängen über die Reling.', from:'deinen Matrosen'},
+    haken:{n:'Enterhaken', k:1, home:'bug', val:() => 7, say:'Haken fliegen, die Planke liegt: hinüber!', from:'den Enterhaken', use:'haken'},
+    schild:{n:'Schildwall', k:1, block:'sturm', val:() => 8, say:'Fängt im selben Abschnitt ihren Sturm ab.', from:'den Harnischen', wear:'harnisch'},
+    salve:{n:'Salve', k:1, home:'kastell', cut:4, val:e => 3 + meOf(e).kastell, say:'Armbrüste aus dem Kastell; im selben Abschnitt ihr Sturm −4.', from:'den Armbrüsten'},
+    pavese:{n:'Pavesen', k:1, block:'salve', val:() => 0, say:'Halbiert im selben Abschnitt ihre Salve.', from:'den Pavesen', wear:'pavese'},
+    brand:{n:'Brandtopf', k:2, home:'mitte', val:() => 6, say:'Feuer auf ihr Deck; ihr nächster Zug ist nur halb so stark.', from:'den Brandpfeilen', use:'brand'},
+    ruf:{n:'Kapitänsruf', k:2, val:() => 4 + 2 * (fightCap() ? fightCap().fight : 0), say:'Dein Kapitän springt voran. Einmal je Kampf.', from:'deinem Kapitän'}
+  };
+  const FOE_MOVE = {sturm:'Sturm', salve:'Salve', wall:'Schildwall'};
+  const cardHave = k => k === 'haken' ? (armsOf(st).haken || 0) > 0 : k === 'brand' ? (st.brand || 0) > 0 : k === 'schild' ? (armsOf(st).harnisch || 0) > 0 : k === 'pavese' ? (armsOf(st).pavese || 0) > 0 : k === 'ruf' ? !!fightCap() : true;
+  function bdDeck(e) {
+    const a = armsOf(st), M = manned(), d = ['sturm', 'sturm', 'sturm', 'sturm'];
+    for (let i = 0; i < Math.min(2, a.haken || 0); i++) d.push('haken');
+    for (let i = 0; i < ((a.harnisch || 0) >= st.crew * 0.25 ? 2 : a.harnisch ? 1 : 0); i++) d.push('schild');
+    for (let i = 0; i < (M.armbrust >= 6 ? 2 : M.armbrust ? 1 : 0); i++) d.push('salve');
+    if (a.pavese) d.push('pavese');
+    if (st.brand > 0) d.push('brand');
+    if (fightCap() && !e.bd.ruf) d.push('ruf');
+    for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
+    return d;
+  }
+  // Stärke ihrer Züge: Kräfteverhältnis, wer sein Deck verteidigt, kämpft mit Vorteil
+  function bdM(e) {
+    const att = e.bd.att, o = ownEff() * (att === 'pir' ? BD.def : 1);
+    const p = pirEff(att === 'own' ? Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)}) : e) * (att === 'own' ? BD.def : 1);
+    return clamp(Math.pow(p / Math.max(1, o), BD.kexp), 0.3, 3);
+  }
+  const foeVal = (e, k) => { const v = k === 'sturm' ? (BD.fs + 3 * thF(e, 'bug')) * e.bd.M : k === 'salve' ? (BD.fv + 3 * thF(e, 'kastell')) * e.bd.M : 0; return Math.round(e.bd.weak ? v / 2 : v); };
+  function bdDraw(e) {
+    const bd = e.bd, th = thOf(e), T = e.trait;
+    bd.hand = [];
+    for (let i = 0; i < BD.hand; i++) {
+      if (!bd.pile || !bd.pile.length) bd.pile = bdDeck(e);
+      let k = bd.pile.pop();
+      if ((k === 'ruf' && bd.ruf) || !cardHave(k)) k = 'sturm';
+      bd.hand.push(k);
+    }
+    bd.put = {bug:[], mitte:[], kastell:[]};
+    bd.M = bdM(e);
+    // Zwei offene Züge: Sturm kommt über den Bug (ohne Enterer über die Mitte), die Salve aus dem Kastell, der Schildwall dort, wo Platz ist
+    const W = {sturm:(th.bug > 0 ? 3 : 1) + (T === 'drauf' ? 1 : 0) + (bd.ctl >= 65 ? 1.5 : 0), salve:th.kastell > 0 ? 1 + thF(e, 'kastell') * 0.7 + (T === 'vorsicht' ? 0.5 : 0) : 0, wall:1 + (T === 'zaeh' || T === 'vorsicht' ? 0.5 : 0) + (bd.ctl <= 35 ? 1 : 0)};
+    const wp = () => { const tot = W.sturm + W.salve + W.wall; let r = Math.random() * tot; for (const k of ['sturm', 'salve', 'wall']) { if ((r -= W[k]) < 0) return k; } return 'sturm'; };
+    let a1 = wp(), a2 = wp();
+    if (a2 === a1 && a1 !== 'wall') a2 = a1 === 'salve' ? (th.bug > 0 ? 'sturm' : 'wall') : (th.kastell > 0 ? 'salve' : 'wall');
+    if (a1 === 'wall') [a1, a2] = [a2, a1];   // erst Sturm und Salve an ihren Platz, der Schildwall dorthin, wo noch frei ist
+    const plan = {bug:null, mitte:null, kastell:null};
+    [a1, a2].forEach(k => {
+      const free = T3.filter(t => !plan[t]);
+      let l = k === 'sturm' ? (th.bug > 0 ? 'bug' : 'mitte') : k === 'salve' ? 'kastell' : free[Math.floor(Math.random() * free.length)];
+      if (plan[l]) l = T3.find(t => !plan[t]);
+      plan[l] = k;
+    });
+    bd.plan = plan;
+  }
+  function bdStart(e, att) {
+    e.bd = {att, r:0, ctl:50, pile:[], ruf:false, weak:false, used:[], log:[], c0:st.crew, n0:e.n};
+    bdDraw(e);
+  }
+  const bdPlaced = bd => T3.flatMap(l => bd.put[l]);
+  const bdUsedK = bd => bdPlaced(bd).reduce((a, i) => a + CARD[bd.hand[i]].k, 0);
+  function laneRes(e, l, extra) {
+    const bd = e.bd, plan = bd.plan[l], idx = bd.put[l].concat(extra != null ? [extra] : []);
+    let mine = 0, theirs = plan ? foeVal(e, plan) : 0, cut = 0;
+    idx.forEach(i => {
+      const k = bd.hand[i], c = CARD[k], v = c.val(e);
+      if (c.block) { if (c.block === plan) theirs = c.block === 'sturm' ? Math.max(0, theirs - v) : Math.round(theirs / 2); }
+      else mine += Math.round(v * (c.home === l ? BD.home : 1));
+      if (c.cut && plan === 'sturm') cut += c.cut;
+    });
+    if (plan === 'sturm') theirs = Math.max(0, theirs - cut);
+    if (plan === 'wall') mine = Math.round(mine / 2);
+    return {mine, theirs, d:mine - theirs};
+  }
+  const bdTotal = e => T3.reduce((a, l) => a + laneRes(e, l).d, 0);
+  // Verbrauch und Verschleiß der gespielten Karten
+  function bdWear(played) {
+    const a = armsOf(st), out = [];
+    played.forEach(k => {
+      const c = CARD[k];
+      if (c.use === 'haken' && a.haken > 0) { a.haken--; out.push('haken'); }
+      if (c.use === 'brand' && st.brand > 0) { st.brand--; out.push('brand'); }
+      if (c.wear && (a[c.wear] || 0) > 0 && Math.random() < BD.wear) { a[c.wear]--; out.push(c.wear); }
+    });
+    return out;
+  }
+  // Eine Runde Nahkampf mit den gelegten Karten, ohne Bild und Ton
+  function meleeCore() {
+    const e = st.enc, bd = e.bd;
+    let rein = 0;
+    if ((e.fleet || e.pair) && e.reserve > 0) { rein = Math.min(e.reserve, Math.round((PF_REIN + e.reserve * 0.18) * BD.rein)); e.reserve -= rein; e.n += rein; }
+    const played = bdPlaced(bd).map(i => bd.hand[i]), lanes = {}, plan = Object.assign({}, bd.plan);
+    let tot = 0, dO = 0, dP = 0;
+    T3.forEach(l => { const r = laneRes(e, l); lanes[l] = r; tot += r.d; dO += r.mine; dP += r.theirs; });
+    bd.ctl = clamp(bd.ctl + tot, 0, 100);
+    const kP = Math.min(e.n, Math.round(dO / BD.ref * BD.kill * ownEff() * rnd(0.8, 1.2)));
+    const c0 = st.crew; loseCrew(Math.round(dP / BD.ref * BD.kill * pirEff(e) * rnd(0.8, 1.2) * (1 - 0.3 * armorFrac()))); const kO = c0 - st.crew;
+    e.n -= kP;
+    e.mor = Math.max(0, e.mor - (kP / Math.max(1, e.n0) * 80 + Math.max(0, tot) * 0.6) * (TRAITS[e.trait].moraleK || 1));
+    bd.weak = played.includes('brand');
+    if (played.includes('ruf')) bd.ruf = true;
+    const used = bdWear(played);
+    bd.used = bd.used.concat(used); bd.log = bd.log.concat(played);
+    bd.r++;
+    const res = e.n <= 0 || bd.ctl >= 100 ? 'win' : bd.ctl <= 0 ? 'broken' : e.mor <= 10 && bd.ctl > 50 ? 'strike'
+      : bd.r >= BD.rounds ? (bd.ctl >= strikeAt(e) ? 'strike' : bd.ctl < BD.retreat ? 'broken' : 'part') : 'go';
+    if (meleeHook) meleeHook({r:bd.r, att:bd.att, ctl:Math.round(bd.ctl), tot, M:+bd.M.toFixed(2), mor:Math.round(e.mor), n:e.n, crew:st.crew, played:played.join(','), res});
+    if (res === 'go') bdDraw(e);
+    return {lanes, plan, tot, kP, kO, res, rein, used, played};
+  }
+  // Karten legen für Kapitän und Bot: mit Wahrscheinlichkeit klug die beste Verteilung, sonst irgendeine gültige
+  function bdAuto(e, klug) {
+    const bd = e.bd, H = bd.hand, opts = [[]];
+    H.forEach((k, i) => T3.forEach(l => { if (CARD[k].k <= BD.kraft) opts.push([[i, l]]); }));
+    for (let i = 0; i < H.length; i++) for (let j = i + 1; j < H.length; j++) if (CARD[H[i]].k + CARD[H[j]].k <= BD.kraft) T3.forEach(a => T3.forEach(b => opts.push([[i, a], [j, b]])));
+    const score = o => { bd.put = {bug:[], mitte:[], kastell:[]}; o.forEach(([i, l]) => bd.put[l].push(i)); return bdTotal(e) - o.reduce((x, [i]) => x + (CARD[H[i]].use ? 1.5 : 0) + (CARD[H[i]].k === 2 && bd.r < BD.rounds - 1 && H[i] === 'ruf' ? 2 : 0), 0); };
+    let best = opts[opts.length - 1];
+    if (Math.random() < (klug === true ? 1 : +klug || 0)) { let bv = -1e9; opts.forEach(o => { const v = score(o); if (v > bv) { bv = v; best = o; } }); }
+    else best = opts[1 + Math.floor(Math.random() * (opts.length - 1))] || [];
+    bd.put = {bug:[], mitte:[], kastell:[]}; best.forEach(([i, l]) => bd.put[l].push(i));
+    return best.map(([i]) => H[i]);
+  }
+  // Aussicht beim Entern ohne Glück: erwartete Deckleiste nach drei Runden gegen die Schwelle der Flagge
   function boardOdds(att) {
     const e = st.enc; if (!e) return 0;
     att = att || (e.bd && e.bd.att) || 'own';
-    const bd = e.bd, tr = bd ? Math.max(0, (e.tries || 1) - 1) : (e.tries || 0);
-    const o = ownEff() * (att === 'pir' ? BD.def * (1 + BD.retry * Math.max(0, (e.ptries || 1) - 1)) : 1) * (bd ? bdTired(bd.ok) : 1);
-    const p = pirEff(att === 'pir' ? e : Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)})) * (att === 'pir' ? 1 : BD.def * (1 + BD.retry * tr)) * (bd ? bdTired(bd.pk) : 1);
-    return clamp(o / (o + p) + (bd ? (bd.ctl - 50) / 120 : 0) + (e.luv === 'own' ? 0.03 : 0), 0.03, 0.97);
+    const th = thOf(e), o = ownEff() * (att === 'pir' ? BD.def : 1);
+    const p = pirEff(att === 'own' ? Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)}) : e) * (att === 'own' ? BD.def : 1);
+    const M = clamp(Math.pow(p / Math.max(1, o), BD.kexp), 0.3, 3);
+    const mine = 19 + meOf(e).bug + meOf(e).kastell - 6, theirs = ((BD.fs + 3 * thF(e, 'bug')) + (BD.fv + 3 * thF(e, 'kastell'))) * M * 0.75;
+    const end = (e.bd ? e.bd.ctl : 50) + (BD.rounds - (e.bd ? e.bd.r : 0)) * (mine - theirs);
+    return clamp(1 / (1 + Math.exp(-(end - strikeAt(e)) / 9)), 0.03, 0.97);
   }
-  const boardWord = p => p >= 0.58 ? 'gut' : p >= 0.53 ? 'ausgeglichen' : p >= 0.48 ? 'schlecht' : 'sehr schlecht';
-  // Plan des Gegners für die nächste Runde: was er wirklich tut, was er zeigt, und ob dein Kapitän die Finte durchschaut
-  function bdPlan(e) {
-    const bd = e.bd, W = Object.assign({}, BD.like[e.trait] || BD.like.gierig), mine = bd.mine || [], k = mine.length;
-    if (bd.ok == null) { bd.ok = BD.kraft; bd.pk = BD.kraft; }
-    // Wer immer dasselbe befiehlt, wird gelesen
-    if (k >= 2 && mine[k - 1] === mine[k - 2]) W[BEATEN[mine[k - 1]]] += BD.habit;
-    // Wer das Deck fast verloren hat, wirft alles nach vorn; wer es fast hat, hält es
-    if (bd.ctl >= 65) W.storm += 2; else if (bd.ctl <= 35) W.hold += 2;
-    BD_CMDS.forEach(c => { if (!kraftOk(bd.pk, c)) W[c] = 0; });
-    const p = wpick(W), feint = Math.random() >= (BD.read[e.trait] || 0.6) && kraftOk(bd.pk, BEATEN[p]), fk = fightCap();
-    bd.p = p; bd.an = feint ? BEATEN[p] : p;
-    bd.fs = feint && Math.random() < BD.spot + BD.spotK * (fk ? fk.fight : 0);
-  }
-  // Eine Runde Nahkampf, ohne Bild und Ton
-  function meleeCore(c, weak) {
-    const e = st.enc, bd = e.bd;
-    if (!bd.p) bdPlan(e);
-    if (!kraftOk(bd.ok, c)) c = 'hold';
-    // Begleitschiffe schicken auch im Nahkampf Leute nach
-    let rein = 0;
-    if ((e.fleet || e.pair) && e.reserve > 0) { rein = Math.min(e.reserve, Math.round((PF_REIN + e.reserve * 0.18) * BD.rein)); e.reserve -= rein; e.n += rein; }
-    const p = bd.p, an = bd.an, rc = bdRes(c, p), fc = rc > 0 ? BD.win : rc < 0 ? BD.lose : 1, fp = rc < 0 ? BD.win : rc > 0 ? BD.lose : 1;
-    const O = ownEff() * (bd.att === 'pir' ? BD.def * (1 + BD.retry * Math.max(0, (e.ptries || 1) - 1)) : 1) * (bd.r === 0 && bd.init ? 1.2 : 1) * bdTired(bd.ok) * fc * (weak ? 0.5 : 1);
-    const P = pirEff(bd.att === 'own' ? Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)}) : e) * (bd.att === 'own' ? BD.def * (1 + BD.retry * Math.max(0, (e.tries || 1) - 1)) : 1) * bdTired(bd.pk) * fp;
-    const dO = O * rnd(BD.luck[0], BD.luck[1]), dP = P * rnd(BD.luck[0], BD.luck[1]);
-    const kP = Math.min(e.n, Math.round(dO / 1.2 * BD.base * BD.kill[c])), kO = Math.round(dP / 1.1 * BD.base * BD.kill[p] * (1 - 0.3 * armorFrac()));
-    const c0 = st.crew; loseCrew(kO); const lost = c0 - st.crew;
-    const share = dO / (dO + dP);
-    e.n -= kP;
-    bd.ctl = clamp(bd.ctl + (share - 0.5) * BD.swing, 0, 100);
-    e.mor = Math.max(0, e.mor - (kP / Math.max(1, e.n0) * 80 + Math.max(0, share - 0.5) * 30) * (TRAITS[e.trait].moraleK || 1));
-    bd.ok = clamp(bd.ok - BD.cost[c], 0, BD.kraftMax); bd.pk = clamp(bd.pk - BD.cost[p], 0, BD.kraftMax);
-    (bd.mine || (bd.mine = [])).push(c);
-    bd.r++;
-    const res = e.n <= 0 || bd.ctl >= 100 ? 'win' : e.mor <= 10 && share >= 0.5 ? 'strike' : bd.ctl <= 0 ? 'broken'
-      : bd.r >= BD.rounds ? (bd.ctl >= BD.strike ? 'strike' : bd.ctl < BD.retreat ? 'broken' : 'part') : 'go';
-    bd.p = null; bd.an = null; bd.fs = false;
-    if (res === 'go') bdPlan(e);
-    return {c, p, an, rc, kP, kO:lost, share, res, rein};
-  }
-  // Wahl im Nahkampf für Kapitän und Bot: mit der Wahrscheinlichkeit klug Ruf des Anführers, Finte und Kraft abwägen, sonst nach Gefühl
-  function bdChoose(klug) {
-    const e = st.enc, bd = e.bd, ok = BD_CMDS.filter(c => kraftOk(bd.ok, c));
-    if (!bd.an) bdPlan(e);
-    if (Math.random() >= (klug === true ? 1 : +klug || 0)) return pick(ok);
-    const r = BD.read[e.trait] || 0.6, fk = fightCap(), sp = BD.spot + BD.spotK * (fk ? fk.fight : 0);
-    const ph = bd.fs ? 0 : r / (r + (1 - r) * (1 - sp));   // Wahrscheinlichkeit, dass er meint, was er zeigt
-    const val = c => ph * bdRes(c, bd.an) + (1 - ph) * bdRes(c, BEATS[bd.an]) - (bd.ok - BD.cost[c] < 2 && bd.r < BD.rounds - 1 ? 0.2 : 0);
-    return ok.reduce((b, c) => val(c) > val(b) ? c : b, ok[0]);
-  }
-  function hookStart() {
-    const e = st.enc, wx = (st.sail && st.sail.weather) || 'clear', fk = fightCap(), hk = armsOf(st).haken || 0;
-    const why = [];
-    let g = BD.hook;
-    const f = (v, t) => { if (Math.abs(v - 1) >= 0.005) why.push({t, d:Math.round((v - 1) * 100)}); g *= v; };
-    if (hk) f(1 + Math.min(0.5, hk * 0.04), `${hk} Enterhaken`);
-    f({storm:0.65, rain:0.85, snow:0.85, fog:0.95}[wx] || 1, WX_NAME[wx] || 'Wetter');
-    if (e.luv === 'own') f(1.1, 'Luv'); else if (e.luv === 'pir') f(0.9, 'Gegner in Luv');
-    if (fk && fk.nav) f(1 + fk.nav * 0.03, `Kapitän ${fk.name}`);
-    guard = {t0:performance.now() + 300, dur:wx === 'storm' ? 1000 : 1250, c:0.5 + Math.random() * 0.36, good:g, perf:g * 0.33, cov:0, tap:null, lock:null, hook:true, why};
-    e.phase = 'hook';
-    e.msg = 'Klar zum Entern! Wirf die Haken, wenn der Zeiger im Feld über der Reling steht.';
-    render();
-    return new Promise(res => { guard.res = res; guard.timer = setTimeout(finishGuard, 300 + guard.dur + 180); });
-  }
+  const boardWord = p => p >= 0.6 ? 'gut' : p >= 0.45 ? 'ausgeglichen' : p >= 0.3 ? 'schlecht' : 'sehr schlecht';
   async function board(forced, prefix) {
     const e = st.enc; if (!e) return;
     if (!forced && (busy || e.phase !== 'tactic' || e.dist !== 0)) return;
     if (!forced) e.tries = (e.tries || 0) + 1; else e.ptries = (e.ptries || 0) + 1;
-    e.bd = {att:forced ? 'pir' : 'own', r:0, ctl:50, ok:BD.kraft, pk:BD.kraft, f0:Math.max(1, st.crew), init:0, n0:e.n, c0:st.crew, mine:[]};
-    bdPlan(e);
+    bdStart(e, forced ? 'pir' : 'own');
+    ui.bdSel = null;
     e.logMan = ''; e.logOwn = ''; e.logPir = '';
-    busy = true;
-    if (forced) {
-      e.phase = 'boarding';
-      e.msg = (prefix || '') + 'Sie werfen die Enterhaken und springen herüber! Verteidigt das Deck.';
-      render(); scene.fx.board(); await sleep(1600); busy = false;
-      if (!st.enc) return;
-      e.phase = 'melee';
-      e.msg = 'Sie sind an Deck. Stürmen schlägt Schießen, Schießen aus dem Kastell schlägt Halten, Halten schlägt Stürmen. Lies, was ihr Anführer vorhat, und spar die Kraft deiner Leute. Taue kappen bringt die Schiffe auseinander, wenn es gelingt.';
-      return commit();
-    }
-    const q = await hookStart();
-    busy = false;
-    if (!st.enc) return;
-    const cut = q === 'good' && Math.random() < clamp(0.18 - (armsOf(st).haken || 0) * 0.015 + (e.trait === 'vorsicht' ? 0.1 : 0), 0.05, 0.4);
-    if (q === 'none' || cut) {
-      e.bd = null; e.phase = 'tactic';
-      const t = cut ? 'Die Haken sitzen, doch sie kappen die Taue mit Äxten.' : 'Die Haken fliegen daneben und klatschen ins Wasser.';
-      scene.fx.text(cut ? 'Taue gekappt' : 'Daneben', 'pir', '#dfe7ea');
-      e.logMan = t;
-      return pirateResponse(t + ' ');
-    }
-    e.bd.init = q === 'perf' ? 1 : 0;
     busy = true; e.phase = 'boarding';
-    e.msg = q === 'perf' ? 'Perfekter Wurf! Ihr seid drüben, bevor sie sich formieren.' : 'Die Haken sitzen. Die Mannschaft springt hinüber.';
-    render(); scene.fx.board(); await sleep(1500); busy = false;
+    e.msg = forced ? (prefix || '') + 'Sie werfen die Enterhaken und springen herüber! Verteidigt das Deck.' : 'Haken fliegen, die Planken liegen: Deine Leute springen hinüber!';
+    render(); scene.fx.board(); await sleep(1300); busy = false;
     if (!st.enc) return;
     e.phase = 'melee';
-    e.msg += ' Jetzt entscheidet der Nahkampf, höchstens drei Runden: Stürmen schlägt Schießen, Schießen schlägt Halten, Halten schlägt Stürmen.';
+    e.msg = `${forced ? 'Sie sind an Deck.' : 'Ihr seid drüben.'} Lege deine Karten gegen ihre Züge. Drei Runden, dann zählt die Deckleiste.`;
     commit();
+    requestAnimationFrame(() => { const ab = $('#aimbar'); if (ab && !ab.hidden) ab.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'}); });
   }
-  const CMD_N = {storm:'Stürmen', shoot:'Schießen', hold:'Halten'};
-  const CMD_YOU = {storm:'Ihr stürmt', shoot:'Ihr schießt aus dem Kastell', hold:'Ihr haltet die Reihe'};
-  const CMD_THEY = {storm:'sie stürmen', shoot:'sie schießen aus dem Kastell', hold:'sie halten die Reihe'};
-  // Was der Anführer vor der Runde zeigt
-  const CMD_SHOW = {storm:'sammelt seine Leute an der Reling: Er will stürmen.', shoot:'schickt Schützen ins Kastell: Er will schießen.', hold:'lässt die Reihe hinter Schilden schließen: Er will halten.'};
-  // Zeichen zur Ansage: gekreuzte Klingen, Armbrust, Schild
-  const CMD_ICON = {
-    storm:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l2.6.6 8.6 8.7-1.9 1.9-8.7-8.6zM21 3l-2.6.6-8.6 8.7 1.9 1.9 8.7-8.6z" fill="currentColor" stroke="none"/><path d="M10.5 16l5.5-5.5M13.5 16L8 10.5M14.6 14.6l4.2 4.2M9.4 14.6l-4.2 4.2"/><circle cx="19.6" cy="19.6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4.4" cy="19.6" r="1.4" fill="currentColor" stroke="none"/></svg>',
-    shoot:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v19M3.5 10Q12 2.5 20.5 10M3.5 10L12 14.5 20.5 10M9.5 21h5"/></svg>',
-    hold:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.9-4.3-1.7-7.5-5.3-7.5-9.9V6z"/><path d="M12 7.5v9M8.5 11h7"/></svg>'};
-  const READ_N = {drauf:'Ein Draufgänger zeigt meist offen, was er vorhat.', zaeh:'Ein Zäher meint meist, was er zeigt.', gierig:'Ein Gieriger täuscht öfter.', vorsicht:'Ein Vorsichtiger täuscht oft.'};
-  async function meleeRound(c) {
+  // Karte wählen, legen, zurücknehmen
+  function bdSel(i) {
     const e = st.enc; if (busy || !e || e.phase !== 'melee' || !e.bd) return;
-    const bd = e.bd;
-    if (c === 'back') return bd.att === 'own' ? retreat(false) : cutLoose();
-    if (!BD_CMDS.includes(c) || !kraftOk(bd.ok, c)) return;
-    busy = true; e.phase = 'boarding';
-    e.msg = c === 'storm' ? 'Vorwärts! Deine Leute stürmen.' : c === 'shoot' ? 'Ins Kastell, Armbrüste hoch!' : 'Haltet die Reihe!';
-    render(); scene.fx.clash(); await sleep(1250); busy = false;
-    if (!st.enc) return;
-    meleeEnd(meleeCore(c));
+    const bd = e.bd; if (bdPlaced(bd).includes(i)) return;
+    ui.bdSel = ui.bdSel === i ? null : i;
+    renderAim(e);
   }
+  async function bdPlace(i, l) {
+    const e = st.enc; if (busy || !e || e.phase !== 'melee' || !e.bd || i == null || !T3.includes(l)) return;
+    const bd = e.bd; if (bdPlaced(bd).includes(i) || BD.kraft - bdUsedK(bd) < CARD[bd.hand[i]].k) return;
+    ui.bdSel = null;
+    await inkFx.cardFly(i, l);
+    bd.put[l].push(i);
+    save(); renderAim(e); renderActions();
+  }
+  function bdBack(i) {
+    const e = st.enc; if (busy || !e || !e.bd) return;
+    T3.forEach(l => { e.bd.put[l] = e.bd.put[l].filter(x => x !== i); });
+    ui.bdSel = null; save(); renderAim(e); renderActions();
+  }
+  async function meleeGo() {
+    const e = st.enc; if (busy || !e || e.phase !== 'melee' || !e.bd) return;
+    busy = true; ui.bdSel = null; renderActions();
+    await inkFx.clash(e);
+    if (!st.enc || !st.enc.bd) { busy = false; return; }
+    const o = meleeCore();
+    busy = false;
+    meleeEnd(o);
+  }
+  const USED_N = {haken:['Enterhaken', 'Enterhaken'], brand:['Brandtopf', 'Brandtöpfe'], harnisch:['Harnisch zerbeult', 'Harnische zerbeult'], pavese:['Pavese zersplittert', 'Pavesen zersplittert']};
+  const usedLine = l => { const m = {}; l.forEach(x => { m[x] = (m[x] || 0) + 1; }); return Object.entries(m).map(([k, n]) => `${n} ${USED_N[k][n > 1 ? 1 : 0]}`).join(', '); };
   function meleeEnd(o, pre) {
     const e = st.enc, bd = e.bd;
-    const line = `${pre || ''}${CMD_YOU[o.c]}, ${o.p === o.c ? 'sie auch' : CMD_THEY[o.p]}${o.an && o.an !== o.p ? ', es war eine Finte' : ''}. ${o.rc > 0 ? 'Die Runde geht an euch. ' : o.rc < 0 ? 'Die Runde geht an sie. ' : ''}` +
+    const line = `${pre || ''}${o.tot > 0 ? `Ihr gewinnt Boden, +${o.tot} auf dem Deck.` : o.tot < 0 ? `Sie drängen euch zurück, −${-o.tot} auf dem Deck.` : 'Keiner weicht.'} ` +
       `${o.kP ? `${o.kP} von ihnen ${o.kP === 1 ? 'fällt' : 'fallen'}` : 'Keiner von ihnen fällt'}, ${o.kO ? `${o.kO} ${o.kO === 1 ? 'Mann' : 'Leute'} von dir` : 'von dir keiner'}.` +
-      (o.share >= 0.6 ? ' Ihr drängt sie zurück.' : o.share <= 0.4 ? ' Sie drängen euch zurück.' : ' Das Gedränge wogt hin und her.') +
-      (o.rein >= 3 ? ` Vom Begleitschiff springen ${o.rein} Mann herüber.` : '');
-    if (o.kO) scene.fx.text(`−${o.kO} Mann`, 'own', '#ffb3a3');
-    if (o.kP) setTimeout(() => { if (st.enc) scene.fx.text(`−${o.kP}`, 'pir', '#f6e7b8'); }, 250);
+      (o.used.length ? ` Verbraucht oder beschädigt: ${usedLine(o.used)}.` : '') + (o.rein >= 3 ? ` Vom Begleitschiff springen ${o.rein} Mann herüber.` : '');
+    if (o.kO) inkFx.pop(`−${o.kO} Mann`, 'own');
+    if (o.kP) setTimeout(() => { if (st.enc) inkFx.pop(`−${o.kP}`, 'pir'); }, 250);
     if (o.res === 'win' || o.res === 'strike') return boardWin(o.res, line);
     if (o.res === 'broken') return bd.att === 'own' ? retreat(true, line) : boardLost(line);
     if (o.res === 'part') return bdPart(line);
@@ -6257,7 +6297,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     commit();
   }
   // Nach drei Runden hält keiner das Deck klar: Die Schiffe lösen sich, das Gefecht geht auf Abstand weiter.
-  // (Hier schließt später das Fechtduell an.)
   function bdPart(line) {
     const e = st.enc, own = e.bd.att === 'own';
     e.bd = null; e.phase = 'tactic'; e.dist = 1; scene.fx.dist(1);
@@ -6287,16 +6326,19 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       e.msg = 'Ihr kappt die Taue, die Schiffe treiben auseinander. Wer an Bord geblieben ist, wird über die Reling getrieben.'; e.logMan = e.msg;
       return commit();
     }
-    meleeEnd(meleeCore('hold', true), 'Die Taue halten. ');
+    e.bd.put = {bug:[], mitte:[], kastell:[]};
+    meleeEnd(meleeCore(), 'Die Taue halten, und während ihr hackt, greifen sie an. ');
   }
+  function meleeBack() { const e = st.enc; if (busy || !e || e.phase !== 'melee' || !e.bd) return; return e.bd.att === 'own' ? retreat(false) : cutLoose(); }
+  const BURN = {drauf:0.25, zaeh:0.3, gierig:0.15, vorsicht:0.1};
   function boardWin(kind, pre) {
     const e = st.enc, burn = kind !== 'strike' && !e.prey && Math.random() < (BURN[e.trait] || 0.15);
     e.bd = null;
     winCore(burn ? 'burn' : 'board');
     scene.fx.fire(!!burn);
     if (burn) { scene.fx.sink(); e.msg = `${pre} ${e.name} gibt sich geschlagen, doch zuvor legen seine Leute Feuer im Laderaum. Ihr rettet euch mit ${fmt(e.loot)} Gulden Beute zurück an Bord, ihr Schiff brennt nieder.`; }
-    else e.msg = `${pre} Sieg im Enterkampf! ${kind === 'strike' ? `${e.name} streicht die Flagge.` : 'Ihr habt ihr Deck.'} Beute: ${fmt(e.loot)} Gulden.` +
-      (prizeManned() ? ' Ihr Schiff gehört jetzt euch.' : ` Ihr Schiff gehört euch, doch für eine Prisenmannschaft fehlen Leute: nötig sind ${prizeNeed()} Matrosen.`);
+    else { inkFx.strike(); e.msg = `${pre} Sieg im Enterkampf! ${kind === 'strike' ? `${e.name} streicht die Flagge.` : 'Ihr habt ihr Deck.'} Beute: ${fmt(e.loot)} Gulden.` +
+      (prizeManned() ? ' Ihr Schiff gehört jetzt euch.' : ` Ihr Schiff gehört euch, doch für eine Prisenmannschaft fehlen Leute: nötig sind ${prizeNeed()} Matrosen.`); }
     commit();
   }
   function boardLost(pre) {
@@ -9609,63 +9651,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     scene.start = () => { scene.fx.init(st); resize(); running = false; wake(); };
   })();
 
-  const BAND_ICON = {
-    sail:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v13M8 2l5 8H8M8 3L3 10h5" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><path d="M2 14h12" stroke="currentColor" stroke-width="1.5"/></svg>',
-    deck:'<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="5" cy="5" r="2.2" fill="currentColor"/><circle cx="11" cy="5" r="2.2" fill="currentColor"/><path d="M1.5 14c0-3 1.6-5 3.5-5s3.5 2 3.5 5M7.5 14c0-3 1.6-5 3.5-5s3.5 2 3.5 5" fill="currentColor"/></svg>'};
-  const BAND_COL = {sail:'#a9cbe4', deck:'#f0cc7f'};
-  function renderAim(e) {
-    const ab = $('#aimbar'), ph = e && e.phase, show = !!e && (ph === 'volley' || ph === 'warn' || ((ph === 'guard' || ph === 'hook') && guard) || (ph === 'melee' && !!e.bd));
-    ab.hidden = !show;
-    const sc = $('#scene');
-    if (ph === 'warn') {
-      if (!sc.querySelector('.shout')) sc.insertAdjacentHTML('beforeend', '<div class="shout"></div><div class="alarmflash"></div>');
-      sc.querySelector('.shout').textContent = e.shout || '„Feuer!“';
-    } else sc.querySelectorAll('.shout,.alarmflash').forEach(x => x.remove());
-    if (!show) { ab.dataset.k = ''; return; }
-    const pct = x => `${(x * 100).toFixed(2)}%`;
-    let cls = '', html = '';
-    if (ph === 'warn') {
-      cls = 'warn';
-      html = `<div class="big"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l10 18H2z" fill="#ffb4a8"/><path d="M12 9v5M12 16.5v.5" stroke="#5c1b17" stroke-width="2.4" stroke-linecap="round"/></svg>Gegenfeuer kommt!</div>` +
-        `<div class="wsub">${esc(e.name)}: ${esc(e.shout || '„Feuer!“')} · gleich „Deckung!“ tippen</div><div class="dots"><i></i><i></i><i></i></div>`;
-    } else if (ph === 'guard' || ph === 'hook') {
-      const hk = ph === 'hook';
-      html = `<div class="ah"><b class="g">${hk ? 'Haken werfen!' : 'Deckung!'}</b><span class="hint">im grünen Feld tippen · hell = perfekt</span></div>` +
-        `<div class="labels"><div class="lz"><span style="left:${pct(guard.c)};color:#9ff2b8">${hk ? 'Reling' : 'Einschlag'}</span></div></div>` +
-        `<div class="track"><div class="zones"><div class="gw good" style="left:${pct(guard.c - guard.good / 2)};width:${pct(guard.good)}"></div><div class="gw perf" style="left:${pct(guard.c - guard.perf / 2)};width:${pct(guard.perf)}"></div></div><i class="needle"></i></div>` +
-        (hk ? ((guard.why || []).length ? `<div class="chips">${guard.why.map(w => `<span class="${w.d > 0 ? 'up' : 'dn'}">${esc(w.t)} ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %</span>`).join('')}</div>` : '')
-          : guard.cov > 0.05 ? `<div class="chips"><span class="up">Pavesen: Feld +${Math.round(35 * guard.cov)} %</span></div>` : '');
-    } else if (ph === 'melee') {
-      // Ab Version 52: Was der Anführer vorhat, wer das Deck hält und wie viel Kraft beide Seiten haben, gleich unter dem Bild.
-      // Taue kappen (oder beim eigenen Angriff Zurückziehen) steht oben rechts, die drei Befehle unten in einer Reihe.
-      const bd = e.bd, fk = fightCap(), c = Math.round(clamp(bd.ctl, 0, 100));
-      if (!bd.an) bdPlan(e);
-      cls = 'melee';
-      html = `<div class="mh"><b>Enterkampf · Runde ${Math.min(bd.r + 1, BD.rounds)} von ${BD.rounds}</b><button class="cut" type="button" data-act="bd-back"${busy ? ' disabled' : ''}>${bd.att === 'own' ? 'Zurückziehen' : 'Taue kappen'}</button></div>` +
-        `<div class="intent${bd.fs ? ' fs' : ''}">${CMD_ICON[bd.an] || ''}<div><p><b>${esc(e.name)}</b> ${CMD_SHOW[bd.an]}${bd.fs ? ' <span class="finte">Finte?</span>' : ''}</p>` +
-        `<small>${bd.fs ? `${fk ? `Kapitän ${esc(fk.name)}` : 'Dein Steuermann'} traut der Sache nicht.` : READ_N[e.trait] || ''}</small></div></div>` +
-        `<div class="deck" role="img" aria-label="Wer das Deck hält: ${c} von 100 für dich"><div class="dl"><span class="me">Du ${c} %</span><span>Deck</span><span class="foe">Gegner ${100 - c} %</span></div>` +
-        `<div class="planks"><i style="width:${c}%"></i><u style="left:25%"></u><u style="left:75%"></u><b style="left:${c}%"></b></div></div>` +
-        `<div class="kr"><span>Deine Kraft ${kraftPips(bd.ok)}</span><span>Ihre Kraft ${kraftPips(bd.pk)}</span></div>`;
-    } else if (aim.bands) {
-      const b = aim.bands[0], T0 = TGT[b.k] || TGT.deck, R0 = aim.run || aim.done ? aim.R : rotten(), shots = e.shots || [];
-      const z = `<div class="band ${b.k}" style="left:${pct(b.a)};width:${pct(b.w)}"><i style="left:${pct((b.w / 2 + (b.co || 0) - b.cw / 2) / b.w)};width:${pct(b.cw / b.w)}"></i></div>` +
-        shots.filter(x => x.p != null).map(x => `<b class="shot ${x.z}" style="left:${pct(x.p)}"></b>`).join('');
-      const lab = `<span style="left:${pct(b.a + b.w / 2)};color:${BAND_COL[b.k]}">${BAND_ICON[b.k]}<span class="tx">${T0.n} · Rot: ${T0.crit}</span></span>`;
-      const chips = (aim.whyL || []).map(w => `<span class="${w.d > 0 ? 'up' : w.d < 0 ? 'dn' : ''}">${esc(w.t)}${w.d ? ` ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %` : ''}</span>`).join('');
-      const dots = R0 > 1 ? `<span class="rot" aria-label="Rotte ${Math.min(R0, shots.length + 1)} von ${R0}">${Array.from({length:R0}, (_, k) => `<i class="${k < shots.length ? 'done ' + shots[k].z : k === shots.length ? 'on' : ''}"></i>`).join('')}</span>` : '';
-      html = `<div class="ah"><b>${AMMO[e.ammo].n} · ${R0 > 1 ? `Rotte ${Math.min(R0, shots.length + 1)} von ${R0}` : 'Salve'}${dots}</b><span class="hint">${aim.run ? (b.k === 'sail' ? 'in die Segel tippen' : 'aufs Deck tippen') : aim.done ? 'Zeit um' : 'erst Spannen!'}</span></div>` +
-        `<div class="labels"><div class="lz">${lab}</div></div><div class="track"><div class="zones">${z}</div><i class="needle"></i></div><div class="tleft" aria-hidden="true"><i></i></div>` +
-        (chips ? `<div class="chips">${chips}</div>` : '');
-    }
-    const key = cls + '|' + html;
-    if (ab.dataset.k !== key) {
-      ab.className = 'aimbar' + (cls ? ' ' + cls : ''); ab.innerHTML = html; ab.dataset.k = key;
-      // Im Enterkampf ist die Leiste kein Knopf, sondern trägt selbst einen (Taue kappen)
-      if (ab.dataset.al == null) ab.dataset.al = ab.getAttribute('aria-label') || '';
-      if (cls === 'melee') { ab.removeAttribute('role'); ab.removeAttribute('aria-label'); } else { ab.setAttribute('role', 'button'); ab.setAttribute('aria-label', ab.dataset.al); }
-    }
-  }
   // ───── Ab Version 53: Schiffe als Holzschnitt (Kogge nach der Bremer Kogge, Holk) für die Segelansicht, später auch das Seegefecht ─────
   const SHIP_INK = (() => {
   const INK = '#33241a', WOOD = '#e2c99a', WOOD2 = '#d6b780', SAILC = '#f2e6c8';
@@ -9863,6 +9848,318 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
     return {kogge, holk, waves, crew};
   })();
+  // ───────── Ab Version 54: Seegefecht als Holzschnitt ─────────
+  // Ihr Holk rechts (je näher, desto größer), deine Kogge links unten in der Hausfarbe. Schäden bleiben im Bild: Löcher im Segel,
+  // abgeschlagene Zinnen, steckende Bolzen, Flammen. Bolzen fliegen in einer Bahn, Treffer als Tintenspritzer mit Ruck,
+  // Fehlschüsse als Ringe im Wasser; Schrift steigt auf. Beim Entern fliegen Karten in die Abschnitte und prallen aufeinander.
+  // Alles ohne Bewegung bei „Bewegung reduzieren“.
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const IHOLK = {AIMY:{bug:[60, 92], mitte:[200, 98], kastell:[338, 80]}, flagX:370, flagY:20};
+  const IKOG = {pts:{kastell:[90, 100], mitte:[214, 110], bug:[344, 136]}, launch:[300, 96]};
+  const inkFight = {key:'', box:null};
+  const foeGeo = d => { const s = [1, 0.8, 0.64][d == null ? 2 : d], w = 380 * s, h = w * 262 / 400, wl = [304, 280, 262][d == null ? 2 : d]; return {s:w / 400, x:664 - w, y:wl - h * 228 / 262, w, h}; };
+  const OWN_G = {s:250 / 400, x:8, y:322 - 164 * 228 / 262};
+  const foePt = (e, hx, hy, d) => { const g = foeGeo(d != null ? d : e.dist); return [g.x + hx * g.s, g.y + hy * g.s]; };
+  const ownPt = (hx, hy) => [OWN_G.x + hx * OWN_G.s, OWN_G.y + hy * OWN_G.s];
+  // Schäden ins Bild des Holks (Koordinaten des Holks, 400 × 262)
+  function foeDamage(e) {
+    const f = {bug:Math.round(thF(e, 'bug')), mitte:Math.round(thF(e, 'mitte')), kastell:Math.round(thF(e, 'kastell'))}, out = [];
+    const holes = [[150, 86], [232, 70], [176, 114], [214, 100], [252, 110], [136, 66]], lostM = TH_MAX - f.mitte;
+    for (let i = 0; i < Math.min(holes.length, lostM * 2); i++) { const [x, y] = holes[i]; out.push(`<path d="M${x} ${y} l5 -4 l3 6 l6 1 l-4 5 l2 6 l-7 -2 l-5 3 l0 -6 l-5 -3z" fill="#2b2118" opacity=".9"/><path d="M${x + 2} ${y - 6} l-3 -6 M${x + 12} ${y + 10} l5 5" stroke="#33241a" stroke-width=".8"/>`); }
+    const bolts = (x0, y0, n) => Array.from({length:n}, (_, i) => `<path d="M${x0 + i * 13} ${y0 + (i % 2) * 6} l-9 -7" stroke="#33241a" stroke-width="1.6" stroke-linecap="round"/><path d="M${x0 - 9 + i * 13} ${y0 - 7 + (i % 2) * 6} l-2 2 m2 -2 l2 -1" stroke="#33241a" stroke-width="1"/>`).join('');
+    const gap = (x, y) => `<rect x="${x}" y="${y}" width="12" height="13" fill="#efe1c0"/><path d="M${x} ${y + 13} l4 -5 l3 3 l5 -6" stroke="#33241a" stroke-width="1" fill="none"/>`;
+    for (let i = 0; i < TH_MAX - f.bug; i++) out.push(gap(28 + i * 26, 52), bolts(34 + i * 22, 84, 2));
+    for (let i = 0; i < TH_MAX - f.kastell; i++) out.push(gap(306 + i * 26, 40), bolts(312 + i * 20, 74, 2));
+    if (e.fire) out.push(`<g class="flames">${[[160, 126], [204, 120], [236, 128], [182, 132]].slice(0, Math.max(2, 4 - f.mitte)).map(([x, y], i) => `<path d="M${x} ${y} q-8 -12 0 -26 q2 10 8 12 q3 -8 1 -14 q12 12 2 28z" fill="#e0902a" stroke="#33241a" stroke-width=".9"><animateTransform attributeName="transform" type="scale" values="1 1;1 1.12;1 .94;1 1" dur="${0.7 + i * 0.15}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}` +
+      `<g class="smoke">${[0, 1, 2].map(i => `<circle cx="${190 + i * 18}" cy="${70 - i * 14}" r="${10 + i * 4}" fill="#6b5a4a" opacity=".25"/>`).join('')}</g></g>`);
+    return out.join('');
+  }
+  // Schäden an deiner Kogge (Koordinaten der Kogge): Bolzen im Kastell und am Bug, Löcher im Segel
+  function ownDamage(e) {
+    const m = meOf(e), out = [];
+    const bolts = (x0, y0, n) => Array.from({length:n}, (_, i) => `<path d="M${x0 + i * 12} ${y0 + (i % 2) * 5} l9 -7" stroke="#33241a" stroke-width="1.6" stroke-linecap="round"/>`).join('');
+    for (let i = 0; i < TH_MAX - m.kastell; i++) out.push(bolts(52 + i * 24, 118, 2));
+    for (let i = 0; i < TH_MAX - m.bug; i++) out.push(bolts(326 + i * 14, 146, 1));
+    [[170, 90], [250, 104], [206, 126]].slice(0, TH_MAX - m.mitte).forEach(([x, y]) => out.push(`<path d="M${x} ${y} l5 -4 l3 6 l6 1 l-4 5 l2 6 l-7 -2 l-5 3 l0 -6 l-5 -3z" fill="#2b2118" opacity=".85"/>`));
+    return out.join('');
+  }
+  function inkFightRender() {
+    const sc = $('#scene'), e = st.enc;
+    let box = $('#fightink');
+    sc.classList.toggle('fight', !!e);
+    if (!e) { if (box) { box.remove(); inkFight.key = ''; } return; }
+    if (!box) { box = document.createElement('div'); box.className = 'inkscene fightink'; box.id = 'fightink'; sc.insertBefore(box, sc.querySelector('.cap')); }
+    sc.classList.add('ink');
+    const wx = (st.sail && st.sail.weather) || 'clear', dark = wx === 'storm', col = houseCol(), type = (st.fleet[0] || {type:'kogge'}).type;
+    const k0 = [e.name, e.ptype, wx, col, type].join('|');
+    if (inkFight.key !== k0) {
+      inkFight.key = k0;
+      const W = 680, H = 400, ink = '#33241a', sea = dark ? '#dccaa0' : '#ecdcb6', seed = hashStr(e.name) % 97 + 3;
+      const strip = s => s.replace(/<g class="sea">[\s\S]*<\/g><\/svg>\s*$/, '</svg>');
+      const own = strip((type === 'holk' ? SHIP_INK.holk : SHIP_INK.kogge)({stripe:col, flag:col, sea, seed:seed + 7, cls:'oship'}));
+      const ownSvg = type === 'holk' ? own.replace('<svg ', '<svg width="400" height="262" ').replace(/^<svg([^>]*)>/, '<svg$1><g transform="translate(400 0) scale(-1 1)">').replace(/<\/svg>\s*$/, '</g></svg>') : own.replace('<svg ', '<svg width="400" height="262" ');
+      box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? '#d6c294' : '#f4e8cb'}"/><stop offset="1" stop-color="${dark ? '#e2d0a6' : '#efe0bb'}"/></linearGradient></defs>` +
+        `<rect width="${W}" height="${H}" fill="url(#fsky)"/>` +
+        `<g class="wrow w0" opacity=".6">${SHIP_INK.waves(232, W + 60, {seed:seed + 1, rows:1, sea})}</g>` +
+        `<g class="foe"><g class="fmove"><g class="fbob"><g class="fshake"></g></g></g></g>` +
+        `<g class="wrow w1" opacity=".85">${SHIP_INK.waves(300, W + 60, {seed:seed + 2, rows:2, sea})}</g>` +
+        `<g class="own" transform="translate(${OWN_G.x} ${OWN_G.y}) scale(${OWN_G.s})"><g class="obob"><g class="oshake">${ownSvg}<g class="odmg"></g></g></g></g>` +
+        `<g class="wrow w3">${SHIP_INK.waves(352, W + 60, {seed:seed + 5, rows:2, sea})}</g>` +
+        (wx === 'rain' || wx === 'storm' ? `<g class="rain">${Array.from({length:dark ? 60 : 34}, (_, i) => { const x = (i * 97 + seed * 13) % W, y = (i * 53) % 300; return `<path d="M${x} ${y} l-7 16" stroke="${ink}" stroke-width=".9" opacity=".45"/>`; }).join('')}</g>` : '') +
+        (wx === 'fog' ? `<rect width="${W}" height="${H}" fill="#f4ead6" opacity=".45"/>` : '') +
+        `<g class="fxl"></g></svg>`;
+      inkFight.fx = box.querySelector('.fxl'); inkFight.dk = ''; inkFight.gone = false;
+      // Ankunft: von rechts herein
+      const g = foeGeo(e.phase === 'meet' ? 2 : e.dist), mv = box.querySelector('.fmove');
+      mv.style.transform = `translate(${g.x + (e.phase === 'meet' && !reduce ? 240 : 0)}px, ${g.y}px) scale(${g.s})`;
+      if (e.phase === 'meet' && !reduce) requestAnimationFrame(() => requestAnimationFrame(() => { mv.style.transform = `translate(${g.x}px, ${g.y}px) scale(${g.s})`; }));
+    }
+    // Lage, Schäden und Ausgang bei jedem Zeichnen
+    const mv = box.querySelector('.fmove'), out = ['won', 'escaped', 'paid', 'captured', 'lost'].includes(e.phase), g = foeGeo(e.phase === 'melee' || e.phase === 'boarding' ? 0 : e.dist);
+    if (!out && !inkFight.gone) mv.style.transform = `translate(${g.x}px, ${g.y}px) scale(${g.s})`;
+    const dk = JSON.stringify([thOf(e), e.fire]);
+    if (inkFight.dk !== dk) {   // Leute an Bord und Schäden nach den Dritteln
+      inkFight.dk = dk;
+      const sea = wx === 'storm' ? '#dccaa0' : '#ecdcb6';
+      box.querySelector('.fshake').innerHTML = SHIP_INK.holk({stripe:'#3a302a', flag:'#2b2522', sea, seed:hashStr(e.name) % 97 + 6, cls:'fship', dmg:{bug:Math.ceil(thF(e, 'bug')), mitte:Math.ceil(thF(e, 'mitte')), kastell:Math.ceil(thF(e, 'kastell'))}})
+        .replace(/<g class="sea">[\s\S]*<\/g><\/svg>\s*$/, `<g class="fdmg">${foeDamage(e)}</g></svg>`).replace('<svg ', '<svg width="400" height="262" ');
+    }
+    box.querySelector('.odmg').innerHTML = ownDamage(e);
+    box.querySelector('.foe').classList.toggle('strike', e.phase === 'won' && ['surrender', 'board', 'empty'].includes(e.kind));
+  }
+  const inkFx = {
+    gone() { inkFight.gone = true; },
+    move(tf, ms) { const mv = $('#fightink .fmove'); if (!mv) return; mv.style.transition = reduce ? 'none' : `transform ${ms || 900}ms ease-in-out, opacity ${ms || 900}ms`; mv.style.transform = tf; },
+    // Schuss mit Flugbahn von deiner Kogge zum Ziel auf ihrem Schiff; Treffer: Tintenspritzer und Ruck, daneben: Ringe im Wasser
+    shot(x, r, ammo) {
+      const e = st.enc, fx = inkFight.fx; if (!e || !fx) return;
+      const [hx0, hy0] = IHOLK.AIMY[r.k], hx = 14 + x * 372, hy = hy0 + (Math.random() - 0.5) * 20;
+      const [tx, ty0] = foePt(e, hx, hy), g = foeGeo(e.dist), ty = r.z === 'miss' ? g.y + g.h * 0.95 + Math.random() * 12 : ty0;
+      const [x0, y0] = ownPt(...IKOG.launch);
+      const big = ammo === 'blide' || ammo === 'steine';
+      const proj = document.createElementNS(SVGNS, 'g');
+      proj.innerHTML = big ? `<circle r="${ammo === 'blide' ? 6 : 3.6}" fill="#6b5a48" stroke="#33241a" stroke-width="1.2"/>` : `<path d="M-10 0 h18" stroke="${ammo === 'brand' ? '#c2541f' : '#33241a'}" stroke-width="2.2" stroke-linecap="round"/><path d="M8 0 l-5 -3 v6z" fill="${ammo === 'brand' ? '#e0902a' : '#33241a'}"/><path d="M-10 0 l-4 -3 M-10 0 l-4 3" stroke="#33241a" stroke-width="1.2"/>`;
+      fx.appendChild(proj);
+      const cx = (x0 + tx) / 2, cy = Math.min(y0, ty) - (ammo === 'blide' ? 150 : 90), T = reduce ? 1 : ammo === 'blide' ? 700 : 420, t0 = performance.now();
+      const step = () => {
+        const u = Math.min(1, (performance.now() - t0) / T), a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u;
+        const px = a * x0 + b * cx + c * tx, py = a * y0 + b * cy + c * ty, dx = 2 * (1 - u) * (cx - x0) + 2 * u * (tx - cx), dy = 2 * (1 - u) * (cy - y0) + 2 * u * (ty - cy);
+        proj.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)}) rotate(${(Math.atan2(dy, dx) * 180 / Math.PI).toFixed(1)})`);
+        if (u < 1) requestAnimationFrame(step); else { proj.remove(); inkFx.impact(tx, ty, r.z, 'foe'); }
+      };
+      requestAnimationFrame(step);
+      setTimeout(() => inkFx.pop(r.z === 'miss' ? 'Daneben' : r.z === 'crit' ? `Volltreffer ${T3N[r.k]}!` : `Treffer ${T3N[r.k]}`, 'pir', r.z === 'crit'), reduce ? 0 : T);
+    },
+    impact(tx, ty, z, side) {
+      const fx = inkFight.fx; if (!fx) return;
+      const g = document.createElementNS(SVGNS, 'g');
+      if (z === 'miss') g.innerHTML = [0, 1, 2].map(i => `<ellipse cx="${tx}" cy="${ty}" rx="4" ry="1.6" fill="none" stroke="#33241a" stroke-width="1"><animate attributeName="rx" from="3" to="${22 + i * 8}" dur=".8s" begin="${i * 0.12}s" fill="freeze"/><animate attributeName="ry" from="1.2" to="${5 + i * 2}" dur=".8s" begin="${i * 0.12}s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" dur=".8s" begin="${i * 0.12}s" fill="freeze"/></ellipse>`).join('') +
+        `<path d="M${tx - 6} ${ty} q3 -16 6 -22 q3 6 6 22" fill="#efe1c0" stroke="#33241a" stroke-width=".9"><animate attributeName="opacity" from="1" to="0" dur=".7s" fill="freeze"/></path>`;
+      else if (z === 'held') g.innerHTML = `<path d="M${tx - 7} ${ty - 9} h14 v10 q-7 8 -14 0z" fill="#e2c99a" stroke="#33241a" stroke-width="1.2"><animate attributeName="opacity" from="1" to="0" dur=".9s" begin=".2s" fill="freeze"/></path>`;
+      else {
+        const big = z === 'crit';
+        g.innerHTML = Array.from({length:big ? 12 : 8}, (_, i) => { const a = i / (big ? 12 : 8) * Math.PI * 2, L = big ? 26 : 16; return `<path d="M${(tx + Math.cos(a) * 4).toFixed(1)} ${(ty + Math.sin(a) * 4).toFixed(1)} L${(tx + Math.cos(a) * L).toFixed(1)} ${(ty + Math.sin(a) * L).toFixed(1)}" stroke="${big ? '#8e2219' : '#33241a'}" stroke-width="${big ? 2.2 : 1.6}" stroke-linecap="round"><animate attributeName="opacity" from="1" to="0" dur=".6s" begin=".15s" fill="freeze"/></path>`; }).join('') +
+          `<circle cx="${tx}" cy="${ty}" r="${big ? 9 : 5}" fill="${big ? '#8e2219' : '#33241a'}"><animate attributeName="r" from="2" to="${big ? 14 : 8}" dur=".25s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" dur=".5s" begin=".1s" fill="freeze"/></circle>`;
+        inkFx.jolt(side);
+      }
+      fx.appendChild(g); setTimeout(() => g.remove(), 1100);
+    },
+    jolt(side) { const el = $(side === 'own' ? '#fightink .oshake' : '#fightink .fshake'); if (!el || reduce) return; el.classList.remove('hitshake'); void el.getBoundingClientRect(); el.classList.add('hitshake'); },
+    // Gegenfeuer: Bolzen aus ihrem Kastell auf deine Drittel; Pavesen halten manchen ab
+    counter(out) {
+      const e = st.enc, fx = inkFight.fx; if (!e || !fx) return;
+      const n = Math.max(2, Math.min(9, (out.ns || 2) + 2)), hits = (out.hitK || []).slice(), [x0, y0] = foePt(e, 336, 40);
+      for (let i = 0; i < n; i++) setTimeout(() => {
+        if (!inkFight.fx) return;
+        const k = hits.length ? hits.shift() : null, held = !k && i < (out.held || 0), [hx, hy] = IKOG.pts[k || T3[i % 3]];
+        const [tx, ty0] = ownPt(hx + (Math.random() - 0.5) * 30, hy + (Math.random() - 0.5) * 14), ty = k || held ? ty0 : OWN_G.y + 164 * 0.92 + Math.random() * 10;
+        const proj = document.createElementNS(SVGNS, 'g');
+        proj.innerHTML = `<path d="M-9 0 h16" stroke="#33241a" stroke-width="2" stroke-linecap="round"/><path d="M7 0 l-4 -2.6 v5.2z" fill="#33241a"/>`;
+        fx.appendChild(proj);
+        const cx = (x0 + tx) / 2, cy = Math.min(y0, ty) - 70, T = reduce ? 1 : 460, t0 = performance.now();
+        const step = () => { const u = Math.min(1, (performance.now() - t0) / T), a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u;
+          const px = a * x0 + b * cx + c * tx, py = a * y0 + b * cy + c * ty, dx = 2 * (1 - u) * (cx - x0) + 2 * u * (tx - cx), dy = 2 * (1 - u) * (cy - y0) + 2 * u * (ty - cy);
+          proj.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)}) rotate(${(Math.atan2(dy, dx) * 180 / Math.PI).toFixed(1)})`);
+          if (u < 1) requestAnimationFrame(step); else { proj.remove(); inkFx.impact(tx, ty, k ? 'hit' : held ? 'held' : 'miss', 'own'); } };
+        requestAnimationFrame(step);
+      }, reduce ? 0 : i * 90);
+    },
+    shout(t) {
+      const sc = $('#scene'); sc.querySelectorAll('.shout').forEach(x => x.remove());
+      sc.insertAdjacentHTML('beforeend', `<div class="shout">${esc(t)}</div>`);
+      setTimeout(() => sc.querySelectorAll('.shout').forEach(x => x.remove()), reduce ? 900 : 1500);
+    },
+    // Schrift steigt auf: über ihrem Schiff (pir) oder über deinem (own)
+    pop(t, side, red) {
+      const sc = $('#scene'), e = st.enc; if (!sc || !e) return;
+      const el = document.createElement('div'); el.className = 'pop-txt' + (red ? ' red' : side === 'own' ? ' own' : '');
+      el.textContent = t;
+      const [px, py] = side === 'own' ? ownPt(200, 40) : foePt(e, 200, 30);
+      el.style.left = `${Math.min(86, Math.max(14, px / 680 * 100))}%`; el.style.top = `${Math.min(70, Math.max(18, py / 400 * 100))}%`;
+      sc.appendChild(el); setTimeout(() => el.remove(), 1100);
+    },
+    strike() { const f = $('#fightink .foe'); if (f) f.classList.add('strike'); inkFx.pop('Sie streichen die Flagge!', 'pir', true); },
+    // Im Enterkampf: Karte fliegt aus der Hand in den Abschnitt
+    async cardFly(i, l) {
+      const from = document.querySelector(`#aimbar .bcard[data-i="${i}"]`), to = document.querySelector(`#aimbar [data-slot="${l}"]`);
+      if (reduce || !from || !to) return;
+      const a = from.getBoundingClientRect(), b = to.getBoundingClientRect(), cl = from.cloneNode(true);
+      cl.classList.add('bfly'); Object.assign(cl.style, {left:a.left + 'px', top:a.top + 'px', width:a.width + 'px', height:a.height + 'px', margin:'0'});
+      document.body.appendChild(cl); from.classList.add('gone');
+      await new Promise(r => requestAnimationFrame(r));
+      cl.style.transform = `translate(${b.left + b.width / 2 - a.left - a.width / 2}px, ${b.top + b.height / 2 - a.top - a.height / 2}px) scale(.7)`; cl.style.opacity = '.4';
+      await sleep(330); cl.remove();
+    },
+    // Abschnitt für Abschnitt prallen die Karten aufeinander, die Deckleiste wandert mit
+    async clash(e) {
+      const ab = $('#aimbar'); let c = e.bd.ctl;
+      for (const l of T3) {
+        const r = laneRes(e, l), lane = ab.querySelector(`[data-l="${l}"]`);
+        if (!lane || (!e.bd.plan[l] && !e.bd.put[l].length)) continue;
+        const foe = lane.querySelector('.mc.foe'), mine = lane.querySelector('.slot .mc');
+        if (foe) { foe.classList.remove('clashD'); void foe.offsetWidth; foe.classList.add('clashD'); }
+        if (mine) { mine.classList.remove('clashU'); void mine.offsetWidth; mine.classList.add('clashU'); }
+        await sleep(260);
+        c = clamp(c + r.d, 0, 100);
+        const bar = ab.querySelector('.planks');
+        if (bar) { bar.querySelector('i').style.width = c + '%'; bar.querySelector('b').style.left = c + '%'; const sd = bar.querySelector('s'); if (sd) sd.remove(); }
+        const res = lane.querySelector('.res'); if (res) { res.classList.remove('bump'); void res.offsetWidth; res.classList.add('bump'); }
+        if (r.d) inkFx.jolt(r.d > 0 ? 'foe' : 'own');
+        await sleep(380);
+      }
+    }
+  };
+  // Die alten Wirkungen der Szene laufen auch im Holzschnitt: Ankunft, Abstand, Flucht, Untergang, Entern
+  ['dist', 'leaving', 'leave', 'vanish', 'flee', 'fire', 'sink', 'board', 'clash', 'shake', 'arrive', 'reset'].forEach(k => {
+    const f = scene.fx[k];
+    scene.fx[k] = function (...a) {
+      const r = f.apply(this, a), e = st && st.enc;
+      if (!e || !$('#fightink')) return r;
+      const g = d => foeGeo(d), tf = d => `translate(${g(d).x}px, ${g(d).y}px) scale(${g(d).s})`;
+      if (k === 'dist') { inkFight.gone = false; inkFx.move(tf(a[0]), 800); }
+      else if (k === 'leaving') inkFx.move(`translate(${g(e.dist).x + 90}px, ${g(e.dist).y - 6}px) scale(${g(e.dist).s * 0.94})`, 1400);
+      else if (k === 'leave' || k === 'vanish') { inkFight.gone = true; inkFx.move(`translate(${g(e.dist).x + 320}px, ${g(e.dist).y - 20}px) scale(${g(e.dist).s * 0.8})`, 2200); }
+      else if (k === 'flee') { if (!a[0]) inkFx.move(tf(Math.max(0, e.dist)), 900); }
+      else if (k === 'sink') { inkFight.gone = true; const mv = $('#fightink .fmove'); if (mv) { mv.style.transition = reduce ? 'none' : 'transform 2.6s ease-in, opacity 2.6s ease-in'; mv.style.transform = `translate(${g(e.dist).x + 20}px, ${g(e.dist).y + 90}px) scale(${g(e.dist).s}) rotate(9deg)`; mv.style.opacity = '.15'; } }
+      else if (k === 'board' || k === 'clash') { inkFx.move(tf(0), 700); if (k === 'board') inkFx.pop('Entern!', 'pir', true); }
+      else if (k === 'shake') inkFx.jolt('own');
+      else if (k === 'fire') { inkFight.dk = ''; }
+      return r;
+    };
+  });
+  // ───────── Ab Version 54: Leiste unter dem Bild ─────────
+  // Fernkampf: je Drittel Name, Punkte und Aufgabe, darunter die Trefferleiste mit Feld und roter Stelle; die Waffen darunter.
+  // Entern: Deckleiste, drei Abschnitte mit ihrem Zug gegen deine Karten, darunter deine Hand.
+  const pipsHTML = (n, foe, max) => `<span class="pips${foe ? ' foe' : ''}" aria-label="${n} von ${max || TH_MAX}">${Array.from({length:max || TH_MAX}, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}</span>`;
+  const BICON = {
+    sturm:'<path d="M5 5l10 10M12.5 17l5-5M15 15l4.5 4.5M19 5L9 15M6.5 12l5 5M9 15l-4.5 4.5"/>',
+    haken:'<path d="M12 3v10M12 13c0 4-6 4-6 0M12 13c0 4 6 4 6 0M6 13l-1.5-2M18 13l1.5-2M9 3h6"/>',
+    schild:'<path d="M12 3l7 3v5.5c0 4.3-3 7.7-7 9.5-4-1.8-7-5.2-7-9.5V6z"/><path d="M12 7v10M8.5 11h7"/>',
+    salve:'<path d="M12 3v18M3.5 10Q12 3 20.5 10M3.5 10L12 14.5 20.5 10M9.5 20h5"/>',
+    pavese:'<path d="M6 3h12v12c0 3-3 5-6 6-3-1-6-3-6-6z"/><path d="M6 8h12M12 3v18"/>',
+    brand:'<path d="M12 21c-4 0-6-2.5-6-6 0-3 2-5 3-7 1 2 2 2.5 3 2.5C12 7 13 5 15 3c1 3 3 5.5 3 9.5 0 5-2.5 8.5-6 8.5z"/>',
+    ruf:'<path d="M4 10v4l9 4V6zM13 9.5c2 .5 2 4.5 0 5M16 7.5c3.5 1.5 3.5 7.5 0 9M7 14v5h3v-4"/>',
+    wall:'<path d="M4 6h16v12H4zM4 10h16M4 14h16M9 6v4M15 6v4M12 10v4M7 14v4M17 14v4"/>'
+  };
+  const bicon = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${BICON[k]}</svg>`;
+  const signed = n => `${n > 0 ? '+' : n < 0 ? '−' : '±'}${Math.abs(n)}`;
+  const fmtK = x => x.toFixed(2).replace('.', ',');
+  function volleyHTML(e) {
+    const W = WEAP[aim.w], th = thOf(e), shots = aim.done && !(e.shots || []).length ? aim.last || [] : e.shots || [], R0 = aim.R, n = shots.length, lock = n > 0 || aim.done || busy;
+    const dots = `<span class="rot" aria-label="Rotte ${Math.min(R0, n + 1)} von ${R0}">${Array.from({length:R0}, (_, k) => `<i class="${k < n ? 'done ' + shots[k].z : k === n && !aim.done ? 'on' : ''}"></i>`).join('')}</span>`;
+    let h = `<div class="ah"><b>${weapName(aim.w)}${R0 > 1 ? ` · ${aim.w === 'blide' ? 'Wurf' : 'Rotte'} ${Math.min(R0, n + 1)} von ${R0}` : ''}${dots}</b><span class="hint">${aim.done ? 'Nachladen …' : 'tippen, wenn der Zeiger im Feld steht'}</span></div>`;
+    h += `<div class="thirds">${T3.map(k => `<div class="${W.on.includes(k) ? '' : 'off'}"><b>${T3N[k]}</b>${pipsHTML(th[k], true, thMax(e))}<span>${T3R[k]}</span></div>`).join('')}</div>`;
+    h += `<div class="strip" role="presentation">${T3.map((k, i) => `<div class="t${W.on.includes(k) ? '' : ' off'}" style="left:${i * 33.333}%">${W.on.includes(k) ? `<div class="band" style="width:${(aim.band * 100).toFixed(1)}%"></div><div class="crit" style="width:${(CRIT_W * 100).toFixed(1)}%"></div>` : ''}</div>`).join('')}` +
+      shots.map(s => `<b class="shot ${s.z}" style="left:${(s.x * 100).toFixed(2)}%"></b>`).join('') + `<i class="needle"></i></div>`;
+    h += `<div class="weapons" role="group" aria-label="Waffe">${WEAP_ORDER.map(k => { const w = WEAP[k], ok = weapOk(k, e), stock = k === 'brand' ? `${st.brand || 0} Bündel` : k === 'blide' ? (heavyN() ? `${heavyN()} schwer` : 'keine') : k === 'steine' ? 'nur nah' : `${rotten('bolzen')} ${rotten('bolzen') === 1 ? 'Rotte' : 'Rotten'}`;
+      return `<button type="button" data-weap="${k}" aria-pressed="${e.ammo === k}"${ok && !lock ? '' : ' disabled'}><b>${k === 'blide' ? weapName('blide') : w.n}</b><span class="wstat"><span>Feld</span><span class="fw" style="width:${Math.round(w.band * 30)}px"></span><span>Tempo</span><span class="sp">${[0, 1, 2].map(i => `<i class="${i < Math.round(w.speed / 0.2) ? '' : 'o'}"></i>`).join('')}</span></span><small>${w.eff}</small><small>${stock}</small></button>`; }).join('')}</div>`;
+    h += `<div class="chips"><span class="tk">Zeiger ×${fmtK(aim.k * W.speed / 0.55)}</span>${aim.why.map(w => `<span class="${w.d < 0 ? 'up' : 'dn'}">${esc(w.t)} ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %</span>`).join('')}</div>`;
+    return h;
+  }
+  function meleeHTML(e) {
+    const bd = e.bd, left = BD.kraft - bdUsedK(bd), sel = ui.bdSel != null && !bdPlaced(bd).includes(ui.bdSel) ? CARD[bd.hand[ui.bdSel]] : null, th = thOf(e);
+    const c = Math.round(bd.ctl), after = clamp(c + bdTotal(e), 0, 100), wa = strikeAt(e);
+    let h = `<div class="mh"><b>Runde ${Math.min(bd.r + 1, BD.rounds)} von ${BD.rounds}</b><span class="kr">Kraft ${Array.from({length:BD.kraft}, (_, i) => `<i class="${i < left ? 'on' : ''}"></i>`).join('')}</span><button class="cut" type="button" data-act="bd-back"${busy ? ' disabled' : ''}>${bd.att === 'own' ? 'Zurückziehen' : 'Taue kappen'}</button></div>`;
+    h += `<div class="deck"><div class="dl"><span class="me">Du ${c} %</span><span>Deck</span><span class="foe">Gegner ${100 - c} %</span></div>` +
+      `<div class="planks" role="img" aria-label="Du hältst ${c} von 100 des Decks"><i style="width:${c}%"></i><u style="left:${BD.retreat}%"></u><u style="left:${wa}%"></u><b style="left:${c}%"></b>${bdPlaced(bd).length ? `<s style="left:${after}%" data-d="${signed(after - c)}"></s>` : ''}</div>` +
+      `<div class="why"><span>unter ${BD.retreat} %: ${bd.att === 'own' ? 'Rückzug' : 'Schiff verloren'}</span><span>ab ${wa} %: Flagge${th.mitte <= 0 ? ' (Segel zerschossen)' : ''}</span></div></div>`;
+    h += `<div class="lanes">${T3.map(l => { const p = bd.plan[l], r = laneRes(e, l), can = sel && left >= sel.k, pv = can ? laneRes(e, l, ui.bdSel).d - r.d : null, fv = p ? foeVal(e, p) : 0;
+      return `<div class="lane${can ? ' can' : ''}${can && sel.home === l ? ' home' : ''}" data-l="${l}" role="button" tabindex="0" aria-label="${T3N[l]}"><h4>${T3N[l]}</h4><div class="st">ihr ${T3R[l]} ${pipsHTML(th[l], true, thMax(e))}</div>` +
+        (p ? `<div class="mc foe flipin">${bicon(p === 'wall' ? 'wall' : p)}<b>${fv ? '−' + fv : '½'}</b><span>${FOE_MOVE[p]}</span></div>` : '<div class="mc none">ruhig</div>') +
+        `<div class="vs">gegen</div><div class="slot" data-slot="${l}">${bd.put[l].map(i => { const k = bd.hand[i], cc = CARD[k], home = cc.home === l, v = cc.block ? (cc.block !== p ? '0' : cc.block === 'sturm' ? `−${cc.val(e)}` : '½') : `+${Math.round(cc.val(e) * (home ? BD.home : 1) * (p === 'wall' ? 0.5 : 1))}`;
+          return `<div class="mc" data-back="${i}" role="button" tabindex="0" aria-label="${cc.n} zurücknehmen">${home ? '<span class="bon">×1,5</span>' : ''}${bicon(k)}<b>${v}</b><span>${cc.n}</span></div>`; }).join('') || (can ? '' : 'leer')}${can ? `<div class="prev">${signed(pv)} hier</div>` : ''}</div>` +
+        `<div class="res ${r.d > 0 ? 'plus' : r.d < 0 ? 'minus' : ''}">${signed(r.d)}</div></div>`; }).join('')}</div>`;
+    const inL = new Set(bdPlaced(bd));
+    h += `<div class="hand">${bd.hand.map((k, i) => { const cc = CARD[k], v = cc.val(e);
+      return `<button type="button" class="bcard${inL.has(i) ? ' gone' : ''}" data-i="${i}" aria-pressed="${ui.bdSel === i}"${!inL.has(i) && cc.k > left ? ' disabled' : ''}>` +
+        `<span class="v">${cc.block ? (cc.block === 'sturm' ? '−' + v : '½') : '+' + v}</span><span class="cost" aria-label="Kraft ${cc.k}">${cc.k}</span>${bicon(k)}<b>${cc.n}</b>` +
+        `${cc.use ? '<span class="use">wird verbraucht</span>' : ''}<span class="home">${cc.home ? `${T3N[cc.home]} ×1,5` : cc.block ? `gegen ${cc.block === 'sturm' ? 'Sturm' : 'Salve'}` : 'überall'}</span></button>`; }).join('')}</div>`;
+    h += `<div class="detail">${sel ? `<b>${sel.n}</b> · Kraft ${sel.k}. ${sel.say} <span>Aus ${sel.from}${sel.use ? ', wird verbraucht' : ''}${sel.wear ? ', kann dabei kaputtgehen' : ''}. Tippe einen Abschnitt.</span>`
+      : `Ihr Plan: ${T3.filter(l => bd.plan[l]).map(l => `${FOE_MOVE[bd.plan[l]]} am ${T3N[l]}`).join(', ')}. Tippe eine Karte, dann einen Abschnitt, oder zieh sie hinein.`}</div>`;
+    return h;
+  }
+  function renderAim(e) {
+    const ab = $('#aimbar'), ph = e && e.phase;
+    if (ph === 'volley' && !aim.run && !aim.done && !busy) newAim();
+    const show = !!e && ((ph === 'volley' && aim.w) || (ph === 'melee' && !!e.bd));
+    ab.hidden = !show;
+    if (!show) { ab.dataset.k = ''; return; }
+    const melee = ph === 'melee', html = melee ? meleeHTML(e) : volleyHTML(e), cls = melee ? 'melee' : 'volley';
+    const key = cls + '|' + html;
+    if (ab.dataset.k === key) return;
+    ab.className = 'aimbar ' + cls; ab.innerHTML = html; ab.dataset.k = key;
+    if (melee) { ab.removeAttribute('role'); ab.removeAttribute('aria-label'); } else { ab.setAttribute('role', 'button'); ab.setAttribute('aria-label', 'Trefferleiste: tippen zum Feuern'); }
+  }
+  // Zeiger und wanderndes Feld je Bild
+  function aimFrame() {
+    const ab = $('#aimbar'); if (ab.hidden || !st.enc || st.enc.phase !== 'volley') return;
+    const e = st.enc, t = aimNow(), sh = e.shots || [];
+    const L = sh.length ? sh : aim.last || [], x = aim.run ? aimX(t) : L.length ? L[L.length - 1].x : aimX(t), c = aimC(t);
+    const nd = ab.querySelector('.needle'); if (nd) nd.style.left = `${(x * 100).toFixed(2)}%`;
+    ab.querySelectorAll('.strip .t:not(.off)').forEach(T => {
+      const b = T.querySelector('.band'), r = T.querySelector('.crit');
+      if (b) b.style.left = `${((c - aim.band / 2) * 100).toFixed(2)}%`;
+      if (r) r.style.left = `${((c + aim.co - CRIT_W / 2) * 100).toFixed(2)}%`;
+    });
+  }
+  // Ziehen einer Karte mit dem Finger in einen Abschnitt
+  let bdDrag = null, bdDragMoved = false;
+  function bdPointerDown(ev) {
+    const b = ev.target.closest('.bcard'); if (!b || b.disabled || busy) return;
+    bdDrag = {i:+b.dataset.i, el:b, x:ev.clientX, y:ev.clientY, ghost:null}; bdDragMoved = false;
+  }
+  addEventListener('pointermove', ev => {
+    if (!bdDrag) return;
+    if (!bdDrag.ghost && Math.hypot(ev.clientX - bdDrag.x, ev.clientY - bdDrag.y) > 10) {
+      bdDrag.ghost = bdDrag.el.cloneNode(true); bdDrag.ghost.classList.add('bdrag'); document.body.appendChild(bdDrag.ghost);
+      bdDrag.el.classList.add('gone'); bdDragMoved = true; ui.bdSel = bdDrag.i;
+      document.querySelectorAll('#aimbar .lane').forEach(l => l.classList.add('can'));
+    }
+    if (bdDrag.ghost) { bdDrag.ghost.style.left = ev.clientX + 'px'; bdDrag.ghost.style.top = ev.clientY + 'px'; }
+  });
+  addEventListener('pointerup', ev => {
+    if (!bdDrag) return;
+    const d = bdDrag; bdDrag = null;
+    if (!d.ghost) return;
+    d.ghost.remove();
+    const el = document.elementFromPoint(ev.clientX, ev.clientY), lane = el && el.closest('#aimbar [data-l]');
+    const e = st.enc;
+    if (lane && e && e.bd && BD.kraft - bdUsedK(e.bd) >= CARD[e.bd.hand[d.i]].k) { e.bd.put[lane.dataset.l].push(d.i); save(); }
+    ui.bdSel = null; $('#aimbar').dataset.k = ''; renderAim(e); renderActions();
+    setTimeout(() => { bdDragMoved = false; }, 0);
+  });
+  function aimbarClick(ev) {
+    const e = st.enc; if (!e) return;
+    const t = ev.target;
+    if (e.phase === 'melee') {
+      if (t.closest('[data-act="bd-back"]')) return meleeBack();
+      const card = t.closest('.bcard'); if (card) { if (!card.disabled && !bdDragMoved) bdSel(+card.dataset.i); return; }
+      const back = t.closest('[data-back]'); if (back && ui.bdSel == null) return bdBack(+back.dataset.back);
+      const lane = t.closest('[data-l]'); if (lane && ui.bdSel != null) return bdPlace(ui.bdSel, lane.dataset.l);
+      return;
+    }
+    if (e.phase === 'volley') { const w = t.closest('[data-weap]'); if (w) { if (!w.disabled) setWeap(w.dataset.weap); return; } }
+  }
   // Segelansicht im Stil der Seekarte: Pergament, Holzschnitt-Wellen, dein Schiff mit Segel in der Hausfarbe
   let inkKey = '';
   function inkSail() {
@@ -9924,6 +10221,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       prog.hidden = true;
     }
     inkSail();
+    inkFightRender();
     if (reduce) scene.draw(0);
   }
 
@@ -12437,22 +12735,17 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (halted()) { a.innerHTML = `<button class="btn" type="button" data-act="restart">Neues Spiel</button><button class="btn primary" type="button" data-act="cont-open"><b>Weiterspielen</b><small>als offenes Spiel</small></button>`; return; }
     if (st.enc) {
       const e = st.enc, pc = x => `${Math.round(x * 100)} %`;
-      if (e.phase === 'warn') { a.innerHTML = `<button class="btn primary fire" type="button" disabled>Achtung, Gegenfeuer …</button>`; return; }
-      if (e.phase === 'guard' || e.phase === 'hook') { const hk = e.phase === 'hook'; a.innerHTML = `<button class="btn primary fire" type="button" data-act="guard"${guard && guard.tap ? ' disabled' : ''}>${guard && guard.tap ? (hk ? 'Haken fliegen …' : 'In Deckung …') : hk ? 'Werfen!' : 'Deckung!'}</button>`; return; }
       if (e.phase === 'volley') {
-        const R0 = aim.run ? aim.R : rotten(), k = (e.shots || []).length;
+        const R0 = aim.R, k = (e.shots || []).length;
         a.innerHTML = busy || aim.done ? `<button class="btn primary fire" type="button" disabled>Nachladen …</button>`
-          : aim.run ? `<button class="btn primary fire" type="button" data-act="fire">Feuer! <small>${AMMO[e.ammo].n}${R0 > 1 ? ` · Rotte ${Math.min(R0, k + 1)} von ${R0}` : ''}</small></button>`
-          : `<button class="btn primary fire" type="button" data-act="fire">Spannen! <small>${R0 > 1 ? `dann ${R0}-mal tippen` : 'dann einmal tippen'}</small></button>`;
+          : `<button class="btn primary fire" type="button" data-act="fire">Feuer! <small>${weapName(e.ammo)}${R0 > 1 ? ` · ${e.ammo === 'blide' ? 'Wurf' : 'Rotte'} ${Math.min(R0, k + 1)} von ${R0}` : ''}</small></button>`;
         return;
       }
-      if (busy || e.phase === 'flee' || e.phase === 'boarding') { a.innerHTML = `<button class="btn primary" type="button" disabled>${e.phase === 'boarding' ? 'Handgemenge …' : 'Alle Mann an Deck …'}</button>`; return; }
+      if (busy || e.phase === 'flee' || e.phase === 'boarding') { a.innerHTML = `<button class="btn primary" type="button" disabled>${e.phase === 'boarding' || e.phase === 'melee' ? 'Handgemenge …' : 'Alle Mann an Deck …'}</button>`; return; }
       if (e.phase === 'melee' && e.bd) {
-        // Die drei Befehle in einer Reihe; Taue kappen oder Zurückziehen steht oben im Enterkampf unter der Szene
-        const bd = e.bd;
-        a.classList.add('grid3');
-        const b = (c, sub, k) => `<button class="btn" type="button" data-act="bd-${c}"${kraftOk(bd.ok, c) ? '' : ' disabled'} aria-label="${CMD_N[c]}, ${sub}, Kraft ${k}"><b>${CMD_N[c]}<i class="kc${k[0] === '+' ? ' up' : ''}">${k}</i></b><small>${kraftOk(bd.ok, c) ? sub : 'zu wenig Kraft'}</small></button>`;
-        a.innerHTML = b('storm', 'schlägt Schießen', '−2') + b('shoot', 'schlägt Halten', '−1') + b('hold', 'schlägt Stürmen', '+1');
+        // Karten legen unter dem Bild, hier nur die Runde ausfechten
+        const u = bdUsedK(e.bd);
+        a.innerHTML = `<button class="btn primary" type="button" data-act="bd-go"${busy ? ' disabled' : ''}><b>Runde ausfechten</b><small>${u ? `${u} von ${BD.kraft} Kraft gelegt` : 'noch keine Karte gelegt'}</small></button>`;
         return;
       }
       if (e.phase === 'meet' && e.prey) {
@@ -12460,6 +12753,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
           `<button class="btn primary" type="button" data-act="fight"><b>Kapern</b><small>Klar zum Gefecht</small></button>`;
       } else if (e.phase === 'meet') {
         const canPay = st.money >= e.ransom, cap = capAutoOk();
+        if (e.prac) { a.innerHTML = `<button class="btn" type="button" data-act="flee"><b>Fliehen</b><small>${pc(fleeChance())}</small></button><button class="btn primary" type="button" data-act="fight"><b>Kämpfen</b><small>Übungskampf</small></button>`; return; }
         if (cap) a.classList.add('grid2');
         a.innerHTML = `<button class="btn" type="button" data-act="flee"><b>Fliehen</b><small>${pc(fleeChance())}</small></button>` +
           `<button class="btn" type="button" data-act="pay"><b>${canPay ? 'Zahlen' : 'Abgeben'}</b><small>${canPay ? fmt(e.ransom) + ' G' : '⅓ Ladung'}</small></button>` +
@@ -12469,7 +12763,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         a.classList.add('grid');
         const b = (act, label, sub, dis, pri) => `<button class="btn${pri ? ' primary' : ''}" type="button" data-act="m-${act}"${dis ? ' disabled' : ''}><b>${label}</b><small>${sub}</small></button>`;
         a.innerHTML = b('close', 'Annähern', e.dist === 0 ? 'schon nah' : `${DIST[e.dist - 1]} · ${pc(contest(e))}`, e.dist === 0) +
-          b('hold', 'Kurs halten', 'Feld +15 %') +
+          b('hold', 'Kurs halten', 'Zeiger ruhiger') +
           b('open', 'Abstand', e.dist === 2 ? 'schon fern' : `${DIST[e.dist + 1]} · ${pc(contest(e))}`, e.dist === 2) +
           b('luv', 'Luv gewinnen', e.luv === 'own' ? 'hast du' : pc(contest(e)), e.luv === 'own') +
           b('board', 'Entern!', e.dist === 0 ? `Aussicht ${boardWord(boardOdds('own'))}` : 'erst nah', e.dist !== 0, e.dist === 0) +
@@ -12529,15 +12823,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     });
     sh.innerHTML = h + `</div>`;
   }
-  const AMMO_S = {bolzen:'aufs Deck', brand:'in die Segel', steine:'nur nah, aufs Deck'};
-  const AMMO_TIP = {bolzen:'Aufs Deck; die Mitte ist ihr Kastell mit den Schützen.', brand:'In die Segel: Feuer frisst Rumpf und Kampfgeist.', steine:'Aufs Deck, nur nah: breit und verheerend.'};
-  function ammoHTML(e) {
-    const R0 = rotten(), lock = aim.run || aim.done, M = manned();
-    return `<div class="ammo2" role="group" aria-label="Waffe">` + Object.entries(AMMO).map(([k, A]) => {
-        const ok = A.range.includes(e.dist) && (k !== 'brand' || st.brand > 0) && !lock;
-        return `<button type="button" data-ammo="${k}" aria-pressed="${e.ammo === k}"${ok ? '' : ' disabled'}><b>${k === 'brand' ? `Brand · ${st.brand || 0}` : A.n}</b><small>${AMMO_S[k]}</small></button>`;
-      }).join('') + `</div><p class="small hint1">${AMMO_TIP[e.ammo]}${R0 > 1 ? ` ${R0} Rotten: nach „Spannen!“ ${R0}-mal tippen, bevor der Zeiger stehen bleibt.` : ' Nach „Spannen!“ einmal tippen, bevor der Zeiger stehen bleibt.'}${M.blide || M.buechse ? ` ${M.blide && M.buechse ? 'Blide und Büchse' : M.blide ? 'Blide' : 'Büchse'} trifft den Rumpf.` : ''}</p>`;
-  }
   function renderEv() {
     const box = $('#evc'), v = st.ev, e = v && EV[v.id], res = !v && st.evRes && st.evRes.d === st.day ? st.evRes : null;
     box.hidden = !(e || res) || !!st.enc;
@@ -12547,6 +12832,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       box.innerHTML = `<span class="k">${esc(where)}</span><h2>${esc(e.n)}</h2><p>${esc(e.d)}</p><p class="small">Wie entscheidest du? Was daraus wird, zeigt sich erst danach.</p>`;
     } else box.innerHTML = `<span class="k">Ereignis</span><h2>${esc(res.n)}</h2><p><b>${esc(res.l)}.</b> ${esc(res.r)}</p>`;
   }
+  // Ab Version 54: Hinweise im Übungskampf, je nach Lage
+  const COACH = {
+    meet:'Dein erster Seeräuber, ein leichter Gegner. Tippe „Kämpfen“, dann führt dich dein Kapitän durch das Gefecht.',
+    tactic:'Wähle ein Manöver. Fern und mittel schießen deine Armbrüste, nah fliegen Steine und du kannst entern. Für den Anfang: Annähern.',
+    volley:'Unter dem Bild läuft der Zeiger über ihr Schiff. Tippe auf die Leiste oder „Feuer!“, wenn er im hellen Feld steht; das Rote ist ein Volltreffer. Je Rotte ein Tipp.',
+    volley2:'Gut so. Jeder Treffer kostet ein Drittel ihres Schiffs einen Punkt: Das Kastell trägt ihr Gegenfeuer, der Bug ihre Enterer, die Mitte ihr Segel.',
+    melee:'Tippe eine Karte, dann einen Abschnitt; gold umrandet ist ihr Heimatabschnitt. Leg Karten für zwei Kraft, dann tippe „Runde ausfechten“.',
+    fleeing:'Sie fliehen. Verfolgen bringt mehr Beute, ziehen lassen ist sicher.',
+    won:'Geschafft! Von jetzt an kommen Seeräuber nach Zufall, leichte wie schwere. Rüste dich in der Werft mit Armbrüsten, Harnischen und Enterhaken.'
+  };
   function renderEnc() {
     const box = $('#enc'), e = st.enc;
     box.hidden = !e;
@@ -12561,27 +12856,27 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const handgemenge = !!e.bd && (e.phase === 'melee' || e.phase === 'boarding');
     if (open && !handgemenge) h += `<div class="range2" role="img" aria-label="Abstand ${DIST[e.dist]}"><span class="me">Du</span><div class="seg">${[2, 1, 0].map(d => `<span class="${d === e.dist ? 'on' : ''}">${DIST[d]}</span>`).join('')}</div><span class="foe">Gegner</span></div>` +
       `<div class="wind">${e.luv === 'own' ? 'Wind: <b class="ok">Luv bei dir</b> · dein Feld größer, ihr Feuer schwächer' : e.luv === 'pir' ? 'Wind: <b>Luv beim Gegner</b> · ihr Feuer stärker, dein Feld kleiner' : 'Wind: Luv noch offen'}</div>`;
-    if (e.phase === 'volley') h += ammoHTML(e);
+    if (e.coach) { const ct = COACH[e.phase === 'volley' && (e.shots || []).length ? 'volley2' : e.phase]; if (ct) h += `<p class="coach"><b>Übung:</b> ${ct}</p>`; }
     h += `<div class="cols"><div class="side me"><h4>Du${tgt ? ` · „${esc(tgt.name)}“` : ''}${st.fleet.length > 1 ? ` +${st.fleet.length - 1}` : ''}</h4><div class="big"><b>${fighters()}</b><span>Leute</span></div>` +
+      `<div class="th3">${T3.map(k => `<span>${T3N[k]}${pipsHTML(meOf(e)[k], false)}</span>`).join('')}</div>` +
       (tgt ? bar('Rumpf', tgt.hull, `${tgt.hull} %`) : '') + bar('Segel', 100 - e.osail, `${100 - Math.round(e.osail)} %`) +
       `<small class="arms">${fk ? `Kapitän ${esc(fk.name)} · Kampf ${fk.fight}` : 'ohne Kapitän'}</small></div>` +
       `<div class="side foe"><h4>${e.prey ? 'Kauffahrer' : e.dane ? 'Auslieger' : 'Seeräuber'}</h4><div class="big"><b>${e.n}</b><span>von ${e.n0}</span></div>${e.reserve && (e.fleet || e.pair) ? `<small class="res">+ ${e.reserve} ${e.fleet ? 'auf den Begleitschiffen' : 'auf dem Begleitschiff'}</small>` : ''}` +
+      `<div class="th3">${T3.map(k => `<span>${T3N[k]}${pipsHTML(thOf(e)[k], true, thMax(e))}</span>`).join('')}</div>` +
       bar('Rumpf', e.phull, `${Math.round(e.phull)} %`) + bar('Segel', 100 - e.psail, `${100 - Math.round(e.psail)} %`) + `<small class="arms">${foeArms}</small></div></div>`;
     let bdHelp = '';
     if (handgemenge) {
-      // Deck, Kraft und Ansage stehen im Enterkampf unter der Szene; hier nur noch die Regeln zum Aufklappen
       const own = e.bd.att === 'own';
-      if (!e.bd.an && e.phase === 'melee') bdPlan(e);
       bdHelp = `<details class="more bdhelp" data-det="bdhelp"${ui.det.bdhelp ? ' open' : ''}><summary><span>${own ? 'Enterkampf auf ihrem Deck' : 'Enterkampf auf deinem Deck'} · so geht es</span><i class="chev" aria-hidden="true"></i></summary>` +
-        `<p class="small" style="margin:0 0 6px">Stürmen schlägt Schießen, Schießen schlägt Halten, Halten schlägt Stürmen. Stürmen kostet zwei Kraft, Schießen eine, Halten gibt eine zurück; unter 2 Kraft kämpfen die Leute nur noch mit 70 %. ${own ? 'Sie verteidigen ihr eigenes Deck und haben Vorteil.' : 'Du verteidigst dein eigenes Deck und hast Vorteil.'} ` +
-        `Nach drei Runden zählt die Deckleiste: Hältst du drei Viertel (rechter Strich), streicht der Gegner die Flagge; unter einem Viertel (linker Strich) ${own ? 'müsst ihr zurück' : 'nehmen sie dein Schiff'}; dazwischen lösen sich die Schiffe. ${own ? 'Mit „Zurückziehen“ oben rechts holst du deine Leute zurück an Bord.' : 'Mit „Taue kappen“ oben rechts trennst du die Schiffe, wenn es gelingt.'}</p></details>`;
+        `<p class="small" style="margin:0 0 6px">Jede Runde ziehst du vier Karten aus Mannschaft und Ausrüstung und legst Karten für bis zu zwei Kraft in die Abschnitte Bug, Mitte und Kastell. Dort liegen offen ihre Züge. Angriffskarten wirken in ihrem Heimatabschnitt (gold umrandet) anderthalbfach; Schildwall und Pavesen wirken nur gegen den Zug im eigenen Abschnitt. ` +
+        `Was ein Abschnitt ergibt, schiebt die Deckleiste. ${own ? 'Sie verteidigen ihr eigenes Deck und haben Vorteil.' : 'Du verteidigst dein eigenes Deck und hast Vorteil.'} Nach drei Runden zählt die Deckleiste: ab dem rechten Strich streichen sie die Flagge, unter dem linken ${own ? 'müsst ihr zurück' : 'nehmen sie dein Schiff'}, dazwischen lösen sich die Schiffe. Enterhaken und Brandtöpfe werden verbraucht, Harnische und Pavesen können kaputtgehen.</p></details>`;
     }
     if (open && e.phase !== 'meet') h += `<div class="mor"><div class="ml"><span>Kampfgeist des Gegners</span><em>${Math.round(e.mor)}</em></div><div class="mb"><i style="width:${clamp(e.mor, 0, 100)}%"></i><b style="left:${T.flee}%"></b></div>` +
       `<small>${e.mor <= T.flee ? 'Unter der Fluchtschwelle: Sie wollen fliehen.' : `Unter ${T.flee} (Strich) wollen sie fliehen. Er sinkt durch Verluste, Volltreffer und Feuer.`}</small></div>`;
     const rows = [['Manöver', e.logMan, 'm'], ['Deine Salve', e.logOwn, 'o'], ['Gegenfeuer', e.logPir, 'p']].filter(r => r[1]);
     h += open && rows.length && !['meet', 'boarding', 'flee', 'hook', 'melee'].includes(e.phase) ? `<div class="log">${rows.map(r => `<p class="${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></p>`).join('')}</div>` : `<p class="emsg">${e.msg}</p>`;
     h += bdHelp;
-    if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `Sie zielen auf die „${esc(tgt.name)}“. ` : ''}So funktioniert das Gefecht</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">Jede Runde: Manöver wählen, dann schießen deine Leute. Bolzen und Steine gehen aufs Deck, Brandpfeile in die Segel. Nach „Spannen!“ läuft der Zeiger anderthalb Bahnen weit; tippe für jede Rotte einmal, wenn er auf dem Feld steht. Wer nicht tippt, schießt auf gut Glück. Das Feld schlingert mit dem Seegang und wandert mit ihrem Kurs. Das Rote im Feld ist ihr Kastell: Volltreffer dort treffen ihre Schützen. Nach zwei Salven mit Treffern aufs Deck gehen sie eine Runde in Deckung; dann helfen Brandpfeile. Bliden und Büchsen schießen von selbst auf den Rumpf. Danach kündigt der Gegner sein Feuer an und du gehst in Deckung. Nah wirken Steine und Entern, fern Brandpfeile. Luv vergrößert dein Feld und schwächt ihr Feuer. Fällt ihr Kampfgeist unter den Strich, wollen sie fliehen oder ergeben sich. Entern geht nur nah: Erst wirfst du die Haken im richtigen Moment, dann folgen bis zu drei Runden Nahkampf. Stürmen schlägt Schießen, Schießen schlägt Halten, Halten schlägt Stürmen; vor jeder Runde zeigt ihr Anführer, was er vorhat, doch nicht jeder meint es ehrlich. Wer sein eigenes Deck verteidigt, hat Vorteil. Misslingt dein Angriff, ziehst du dich zurück und behältst dein Schiff.</p></details>`;
+    if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `Sie zielen auf die „${esc(tgt.name)}“. ` : ''}So funktioniert das Gefecht</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">Jede Runde: Manöver wählen, dann schießen deine Leute. Ihr Schiff hat drei Drittel: Bug mit den Enterern, Mitte mit dem Segel, Kastell mit den Schützen. Unter dem Bild läuft ein Zeiger über die Trefferleiste; tippe für jede Rotte einmal, wenn er im Feld steht. Das Rote ist eine verwundbare Stelle (Volltreffer). Jede Waffe hat ihr Feld und Tempo: die Armbrust trifft Bug und Kastell, Steine alles, aber nur nah, Brandpfeile die Mitte, die Blide wirft einmal und schwer. Je schwerer der Gegner, je weiter weg und wer die Luvseite hat, desto schneller läuft der Zeiger; Kurs halten und ein erfahrener Kapitän bremsen ihn. Ist ihr Kastell zerschossen, wird ihr Gegenfeuer schwach; ohne Enterer können sie nicht entern; mit zerfetztem Segel kaum fliehen. Fällt ihr Kampfgeist unter den Strich, wollen sie fliehen oder ergeben sich. Entern geht nur nah, mit Karten in drei Abschnitten.</p></details>`;
     if (e.phase === 'meet') h += `<p class="small">${st.crew} Matrosen, ${armsLine()}, ${st.brand || 0} Bündel Brandpfeile${armsOf(st).buechse ? `, ${st.pulver || 0} Ladungen Pulver` : ''} an Bord. Die Matrosen bemannen die Waffen${fk && !st.focus ? `, Kapitän ${esc(fk.name)} führt das Gefecht` : ''}; beim Entern kämpfen alle. ` +
       `Entern sie dich und verlierst du den Kampf an Deck, ${st.fleet.length === 1 ? 'ist dein einziges Schiff samt Ladung verloren, und du kommst nur gegen Lösegeld frei' : 'nehmen sie das Schiff, auf das sie zielen'}. Misslingt dein eigener Enterangriff, ziehst du dich zurück.</p>`;
     h += `</div>`;
@@ -13264,11 +13559,11 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (act === 'capauto') return capAuto();
     if (act === 'fight') return startFight();
     if (act === 'let-go') return letGo();
-    if ((act === 'guard' || act === 'fire') && quickDone()) return;
-    if (act === 'guard') return guardTap();
+    if (act === 'fire' && quickDone()) return;
     if (act === 'fire') return fire();
     if (act === 'board') return board(false);
-    if (act === 'bd-storm' || act === 'bd-shoot' || act === 'bd-hold' || act === 'bd-back') return meleeRound(act.slice(3));
+    if (act === 'bd-go') return meleeGo();
+    if (act === 'bd-back') return meleeBack();
     if (act && act.startsWith('m-')) return doManeuver(act.slice(2));
     if (act === 'chase-go' || act === 'chase-no') return chase(act === 'chase-go');
     if (act === 'prize-home') return prizeAct('home');
@@ -13304,19 +13599,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // (Entern, gleich danach Werfen) nicht verloren, und das Timing misst den Moment der Berührung. Der Klick danach wird übergangen.
   let quickAt = 0;
   const quickDone = () => performance.now() - quickAt < 700;
-  const quickTap = ev => { if (ev.button > 0 || !st || !st.enc) return; const ph = st.enc.phase;
-    if (ph === 'volley') { quickAt = performance.now(); fire(); } else if (ph === 'guard' || ph === 'hook') { quickAt = performance.now(); guardTap(); } };
-  $('#aimbar').addEventListener('pointerdown', quickTap);
-  $('#actions').addEventListener('pointerdown', e => { const t = e.target.closest('[data-act="fire"], [data-act="guard"]'); if (t && !t.disabled) quickTap(e); });
+  const quickTap = ev => { if (ev.button > 0 || !st || !st.enc || ev.target.closest('[data-weap]')) return; const ph = st.enc.phase;
+    if (ph === 'volley') { quickAt = performance.now(); fire(); } };
+  $('#aimbar').addEventListener('pointerdown', ev => { if (st && st.enc && st.enc.phase === 'melee') return bdPointerDown(ev); quickTap(ev); });
+  $('#actions').addEventListener('pointerdown', e => { const t = e.target.closest('[data-act="fire"]'); if (t && !t.disabled) quickTap(e); });
   // Tippen auf Zielleiste oder Bild: feuern, in Deckung gehen oder (ab Version 49 auch) die Haken werfen
-  const sceneTap = () => { if (quickDone() || !st.enc) return; const ph = st.enc.phase; if (ph === 'volley') fire(); else if (ph === 'guard' || ph === 'hook') guardTap(); };
-  $('#aimbar').addEventListener('click', sceneTap);
-  $('#aimbar').addEventListener('click', e => { const t = e.target.closest('[data-act="bd-back"]'); if (t && !t.disabled) meleeRound('back'); });
+  const sceneTap = ev => { if (quickDone() || !st.enc || (ev && ev.target.closest && ev.target.closest('[data-weap]'))) return; if (st.enc.phase === 'volley') fire(); };
+  $('#aimbar').addEventListener('click', ev => { aimbarClick(ev); sceneTap(ev); });
   $('#scene').addEventListener('click', sceneTap);
-  $('#enc').addEventListener('click', e => {
-    const t = e.target.closest('[data-ammo]'); if (!t || !st.enc || st.enc.phase !== 'volley' || busy || aim.run || aim.done) return;
-    st.enc.ammo = t.dataset.ammo; sizeAim(false); renderEnc(); renderActions(); renderScene();
-  });
   function homeClick(e) {
     const t = e.target.closest('button'); if (!t) return;
     if (t.dataset.hsOpen) return hsOpen(t.dataset.hsOpen, +t.dataset.id);
@@ -13507,15 +13797,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (st.sail && !st.enc) schedTick();
     initRemote();
     (function gaugeLoop() {
-      const ab = $('#aimbar');
-      if (!ab.hidden && st.enc) {
-        const ph = st.enc.phase, nd = ab.querySelector('.needle');
-        if (nd) nd.style.left = `${(ph === 'guard' || ph === 'hook' ? (guard && guard.lock != null ? guard.lock : guardPos()) : (st.enc.aimLock ?? aimPos())) * 100}%`;
-        if (ph === 'volley') {
-          const tf = `translateX(${((st.enc.offLock ?? aimOff()) * 100).toFixed(2)}%)`; ab.querySelectorAll('.zones,.lz').forEach(x => { x.style.transform = tf; });
-          const tl = ab.querySelector('.tleft i'); if (tl) tl.style.width = `${((aim.run ? Math.max(0, 1 - aimT() / aim.T) : aim.done ? 0 : 1) * 100).toFixed(1)}%`;
-        }
-      }
+      if (st && st.enc) aimFrame();
       requestAnimationFrame(gaugeLoop);
     })();
   }
@@ -13638,12 +13920,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const kfix = K => { if (!K) return; Object.values(K).forEach(k => { if (k && k.b && k.b.wolle == null) { k.b.wolle = Math.round(G.wolle.b * 1.06); k.s.wolle = Math.round(G.wolle.b * 0.94); } }); };
     kfix(s.known); (s.convoys || []).forEach(cv => kfix(cv.known));
     if (s.enc) {
-      const e = s.enc; e.aimLock = null;
+      const e = s.enc;
       if (!e.trait) Object.assign(e, {trait:'drauf', ptype:'kogge', mor:70, phull:100, psail:0, osail:0, dist:1, luv:null, ammo:'bolzen', hold:false, fire:0, target:0, prize:null, r:0});
-      if (e.bd && (e.phase === 'melee' || e.phase === 'boarding')) { e.phase = 'melee'; if (e.bd.ok == null) { e.bd.ok = 4; e.bd.pk = 4; e.bd.mine = []; } }
+      // ab Version 54: Drittel; ein Enterkampf alter Art geht als Gefecht auf Abstand weiter
+      if (!e.th) e.th = {bug:3, mitte:3, kastell:3}; if (!e.me) e.me = {bug:3, mitte:3, kastell:3};
+      if (e.bd && e.bd.hand && (e.phase === 'melee' || e.phase === 'boarding')) e.phase = 'melee';
       else { e.bd = null; if (['flee', 'boarding', 'decide', 'guard', 'warn', 'hook', 'melee'].includes(e.phase)) e.phase = e.r > 0 || e.phase !== 'flee' ? 'tactic' : 'meet'; }
+      if (!AMMO[e.ammo]) e.ammo = 'bolzen';
       e.shots = [];
-      if (e.phase === 'volley') newAim();
     }
   }
   if (window.claude && window.claude.hot && window.claude.hot.snapshot) {

@@ -342,7 +342,7 @@
       }
       marks(); snap();
       return {score:A.score || null, home:P.home, days:st.day, ms:Math.round(performance.now() - t0), wealth:Math.round(wealth()), money:Math.round(st.money), rank:st.rank, civic:civicIdx(st.repute || 0), repute:Math.round(st.repute || 0),
-        marks:A.marks, cat:A.cat, use:A.use, bd:['storm', 'shoot', 'hold'].map(c => A.bd.filter(x => x === c).length), series:A.series, voy:A.voy, idle:A.idle, bankrupt:A.bankrupt || null, mayor:!!st.mayor, alder:!!st.alderman,
+        marks:A.marks, cat:A.cat, use:A.use, bd:Object.fromEntries(Object.keys(CARD).map(c => [c, A.bd.filter(x => x === c).length])), series:A.series, voy:A.voy, idle:A.idle, bankrupt:A.bankrupt || null, mayor:!!st.mayor, alder:!!st.alderman,
         works:(st.works || []).map(w => [w.g, w.made]), convoys:(st.convoys || []).map(cv => ({route:cv.route, ships:cv.fleet.map(s => s.type), prof:Math.round(cv.prof), trips:cv.trips}))};
     }
     // Ab Version 51: Gefechte je Kampfstufe aus dem jetzigen Spielstand, jedes vom selben Stand aus.
@@ -351,7 +351,7 @@
       const S0 = JSON.stringify(st), W = ['clear', 'clear', 'clear', 'cloudy', 'cloudy', 'rain', 'fog'], out = {};
       window.__fast = true;
       for (const tier of opt.tiers || [0, 1, 2]) for (const skill of opt.skills || ['gut', 'ordentlich']) {
-        const R = out[`${tier}_${skill}`] = {n:0, won:0, lost:0, escaped:0, kinds:{}, bd:{storm:0, shoot:0, hold:0}, ratio:0, men:0, ships:{}};
+        const R = out[`${tier}_${skill}`] = {n:0, won:0, lost:0, escaped:0, kinds:{}, bd:{}, ratio:0, men:0, ships:{}};
         for (let i = 0; i < opt.n; i++) {
           st = JSON.parse(S0);
           if (!st.fleet.length) break;
@@ -364,12 +364,38 @@
           R.ratio += pirEff(e) / Math.max(1, ownEff()); R.men += e.n0; R.ships[e.ptype] = (R.ships[e.ptype] || 0) + 1;
           const r = fightAuto(Object.assign({}, FIGHT_SKILL[skill], {log}));
           R.n++; R[r.res]++; R.kinds[r.kind] = (R.kinds[r.kind] || 0) + 1;
-          log.forEach(c => { R.bd[c]++; });
+          log.forEach(c => { R.bd[c] = (R.bd[c] || 0) + 1; });
         }
         R.ratio = Math.round(R.ratio / Math.max(1, R.n) * 100) / 100; R.men = Math.round(R.men / Math.max(1, R.n));
       }
       st = JSON.parse(S0);
       return {day:st.day, rank:st.rank, crew:st.crew, ships:st.fleet.map(sh => sh.type), own:Math.round(ownEff()), out};
     }
-    return {run, kampf};
+    // Zum Abstimmen: Werte der Kampfregeln setzen, z. B. {FIGHT_K:{own:0.5}, TIER_K:[[...],[...],[...]], BD:{kexp:1}, AIM:{gut:{sig:0.04}}}
+    function tune(o) {
+      if (o.FIGHT_K) Object.assign(FIGHT_K, o.FIGHT_K);
+      if (o.TIER_K) TIER_K = o.TIER_K;
+      if (o.BD) Object.assign(BD, o.BD);
+      if (o.AIM) for (const k in o.AIM) Object.assign(AIM_SKILL[k], o.AIM[k]);
+      if (o.PIP_MOR != null) PIP_MOR = o.PIP_MOR;
+      if (o.WRECK_MOR != null) WRECK_MOR = o.WRECK_MOR;
+      return {FIGHT_K, TIER_K, BD, AIM_SKILL};
+    }
+    // Zum Abstimmen: Treffer je Salve und Verlauf vieler Gefechte einer Stufe
+    function probe(o) {
+      const S0 = JSON.stringify(st), Z = {crit:0, hit:0, miss:0}, out = {n:0, rounds:0, melee:0, kinds:{}, z:Z, lostPips:0, ratio:0, crew0:0, crew1:0};
+      window.__fast = true;
+      const vc = volleyShotsHook; volleyShotsHook = shots => shots.forEach(x => { Z[x.z]++; }); out.trace = []; meleeHook = o.trace ? x => { if (out.trace.length < o.trace) out.trace.push(x); } : null;
+      for (let i = 0; i < o.n; i++) {
+        st = JSON.parse(S0); st.crew = Math.max(st.crew, Math.round(crewMax() * 0.9)); st.enc = null; st.ev = null; st.focus = null; st.loc = null;
+        st.sail = {from:st.home, to:'danzig', t:1, days:6, weather:'clear', segs:[], met:true}; st.encs = 5;
+        startEnc(o.tier); const e = st.enc; out.ratio += pirEff(e) / ownEff(); out.crew0 += st.crew;
+        const log = [], r = fightAuto(Object.assign({}, FIGHT_SKILL[o.skill], {log}));
+        out.n++; out.rounds += e.r; out.melee += log.length ? 1 : 0; out.kinds[r.res + ':' + r.kind] = (out.kinds[r.res + ':' + r.kind] || 0) + 1; out.crew1 += st.crew;
+      }
+      volleyShotsHook = vc; meleeHook = null; st = JSON.parse(S0);
+      out.ratio = +(out.ratio / out.n).toFixed(2); out.rounds = +(out.rounds / out.n).toFixed(1); out.crew0 = Math.round(out.crew0 / out.n); out.crew1 = Math.round(out.crew1 / out.n);
+      return out;
+    }
+    return {run, kampf, tune, probe};
   })();
