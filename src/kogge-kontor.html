@@ -35,9 +35,9 @@ button{font:inherit;color:inherit}
    Entern: Deckleiste als Planken, drei Abschnitte, Karten. */
 .aimbar{margin:8px 0 0;cursor:pointer;user-select:none;-webkit-user-select:none;padding:10px 10px 12px;border-radius:4px;color:var(--ink);border:1.5px solid #6b4d33;
   background:radial-gradient(120% 90% at 50% 20%,#f6ecd2 55%,#ead9b0 100%);box-shadow:0 2px 0 rgba(58,35,22,.18)}
-.aimbar .ah{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:600 .78rem var(--f-sc);letter-spacing:.03em;margin-bottom:6px}
+.aimbar .ah{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 8px;font:600 .78rem var(--f-sc);letter-spacing:.03em;margin-bottom:6px}
 .aimbar .ah b{font:700 .95rem var(--f-sc);letter-spacing:.02em;white-space:nowrap}
-.aimbar .ah .hint{color:#6b5440;font:italic 500 .8rem var(--f-body);text-align:right}
+.aimbar .ah .hint{flex:1 1 9em;color:#6b5440;font:italic 500 .8rem var(--f-body);text-align:right}
 .aimbar .rot{display:inline-flex;gap:4px;margin-left:8px;vertical-align:0}
 .aimbar .rot i{width:10px;height:10px;border-radius:50%;border:1.3px solid #6b4d33;background:transparent}
 .aimbar .rot i.on{background:var(--seal);border-color:var(--seal)}
@@ -93,7 +93,7 @@ button{font:inherit;color:inherit}
 .aimbar .lane.can{background:rgba(142,34,25,.08);box-shadow:0 0 0 2px var(--seal) inset;cursor:pointer}
 .aimbar .lane.home{box-shadow:0 0 0 3px #c9962e inset}
 .aimbar .mc{position:relative;border:1.5px solid #33241a;background:#fbf3de;border-radius:4px;padding:3px 2px 2px;min-height:54px;display:grid;justify-items:center;align-content:center;gap:1px}
-.aimbar .mc svg{width:20px;height:20px}.aimbar .mc b{font:800 1.15rem/1 var(--f-body)}.aimbar .mc span{font:700 .66rem/1.1 var(--f-sc)}
+.aimbar .mc svg{width:20px;height:20px}.aimbar .mc span{overflow-wrap:anywhere;hyphens:auto}.aimbar .mc b{font:800 1.15rem/1 var(--f-body)}.aimbar .mc span{font:700 .66rem/1.1 var(--f-sc)}
 .aimbar .mc.foe{border-color:#b5503c;color:#b5503c;background:#f6e2d6}
 .aimbar .mc.none{border-style:dashed;border-color:#b89b70;color:#6b5440;background:transparent;font:italic .78rem var(--f-body)}
 .aimbar .vs{font:italic .7rem var(--f-body);color:#6b5440;line-height:1}
@@ -10074,7 +10074,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     h += `<div class="thirds">${T3.map(k => `<div class="${W.on.includes(k) ? '' : 'off'}"><b>${T3N[k]}</b>${pipsHTML(th[k], true, thMax(e))}<span>${T3R[k]}</span></div>`).join('')}</div>`;
     h += `<div class="strip" role="presentation">${T3.map((k, i) => `<div class="t${W.on.includes(k) ? '' : ' off'}" style="left:${i * 33.333}%">${W.on.includes(k) ? `<div class="band" style="width:${(aim.band * 100).toFixed(1)}%"></div><div class="crit" style="width:${(CRIT_W * 100).toFixed(1)}%"></div>` : ''}</div>`).join('')}` +
       shots.map(s => `<b class="shot ${s.z}" style="left:${(s.x * 100).toFixed(2)}%"></b>`).join('') + `<i class="needle"></i></div>`;
-    h += `<div class="weapons" role="group" aria-label="Waffe">${WEAP_ORDER.map(k => { const w = WEAP[k], ok = weapOk(k, e), stock = k === 'brand' ? `${st.brand || 0} Bündel` : k === 'blide' ? (heavyN() ? `${heavyN()} schwer` : 'keine') : k === 'steine' ? 'nur nah' : `${rotten('bolzen')} ${rotten('bolzen') === 1 ? 'Rotte' : 'Rotten'}`;
+    h += `<div class="weapons" role="group" aria-label="Waffe">${WEAP_ORDER.map(k => { const w = WEAP[k], ok = weapOk(k, e), stock = k === 'brand' ? `${st.brand || 0} Bündel` : k === 'blide' ? (heavyN() ? `${heavyN()} schwer` : 'keine') : `${rotten(k === 'steine' ? 'steine' : 'bolzen')} ${rotten(k === 'steine' ? 'steine' : 'bolzen') === 1 ? 'Rotte' : 'Rotten'}`;
       return `<button type="button" data-weap="${k}" aria-pressed="${e.ammo === k}"${ok && !lock ? '' : ' disabled'}><b>${k === 'blide' ? weapName('blide') : w.n}</b><span class="wstat"><span>Feld</span><span class="fw" style="width:${Math.round(w.band * 30)}px"></span><span>Tempo</span><span class="sp">${[0, 1, 2].map(i => `<i class="${i < Math.round(w.speed / 0.2) ? '' : 'o'}"></i>`).join('')}</span></span><small>${w.eff}</small><small>${stock}</small></button>`; }).join('')}</div>`;
     h += `<div class="chips"><span class="tk">Zeiger ×${fmtK(aim.k * W.speed / 0.55)}</span>${aim.why.map(w => `<span class="${w.d < 0 ? 'up' : 'dn'}">${esc(w.t)} ${w.d > 0 ? '+' : '−'}${Math.abs(w.d)} %</span>`).join('')}</div>`;
     return h;
@@ -10090,7 +10090,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       return `<div class="lane${can ? ' can' : ''}${can && sel.home === l ? ' home' : ''}" data-l="${l}" role="button" tabindex="0" aria-label="${T3N[l]}"><h4>${T3N[l]}</h4><div class="st">ihr ${T3R[l]} ${pipsHTML(th[l], true, thMax(e))}</div>` +
         (p ? `<div class="mc foe flipin">${bicon(p === 'wall' ? 'wall' : p)}<b>${fv ? '−' + fv : '½'}</b><span>${FOE_MOVE[p]}</span></div>` : '<div class="mc none">ruhig</div>') +
         `<div class="vs">gegen</div><div class="slot" data-slot="${l}">${bd.put[l].map(i => { const k = bd.hand[i], cc = CARD[k], home = cc.home === l, v = cc.block ? (cc.block !== p ? '0' : cc.block === 'sturm' ? `−${cc.val(e)}` : '½') : `+${Math.round(cc.val(e) * (home ? BD.home : 1) * (p === 'wall' ? 0.5 : 1))}`;
-          return `<div class="mc" data-back="${i}" role="button" tabindex="0" aria-label="${cc.n} zurücknehmen">${home ? '<span class="bon">×1,5</span>' : ''}${bicon(k)}<b>${v}</b><span>${cc.n}</span></div>`; }).join('') || (can ? '' : 'leer')}${can ? `<div class="prev">${signed(pv)} hier</div>` : ''}</div>` +
+          return `<div class="mc" data-back="${i}" role="button" tabindex="0" aria-label="${cc.n} zurücknehmen">${home ? '<span class="bon">×1,5</span>' : ''}${bicon(k)}<b>${v}</b><span>${cc.n}</span></div>`; }).join('') || (can ? '' : '–')}${can ? `<div class="prev">${signed(pv)} hier</div>` : ''}</div>` +
         `<div class="res ${r.d > 0 ? 'plus' : r.d < 0 ? 'minus' : ''}">${signed(r.d)}</div></div>`; }).join('')}</div>`;
     const inL = new Set(bdPlaced(bd));
     h += `<div class="hand">${bd.hand.map((k, i) => { const cc = CARD[k], v = cc.val(e);
@@ -10098,7 +10098,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         `<span class="v">${cc.block ? (cc.block === 'sturm' ? '−' + v : '½') : '+' + v}</span><span class="cost" aria-label="Kraft ${cc.k}">${cc.k}</span>${bicon(k)}<b>${cc.n}</b>` +
         `${cc.use ? '<span class="use">wird verbraucht</span>' : ''}<span class="home">${cc.home ? `${T3N[cc.home]} ×1,5` : cc.block ? `gegen ${cc.block === 'sturm' ? 'Sturm' : 'Salve'}` : 'überall'}</span></button>`; }).join('')}</div>`;
     h += `<div class="detail">${sel ? `<b>${sel.n}</b> · Kraft ${sel.k}. ${sel.say} <span>Aus ${sel.from}${sel.use ? ', wird verbraucht' : ''}${sel.wear ? ', kann dabei kaputtgehen' : ''}. Tippe einen Abschnitt.</span>`
-      : `Ihr Plan: ${T3.filter(l => bd.plan[l]).map(l => `${FOE_MOVE[bd.plan[l]]} am ${T3N[l]}`).join(', ')}. Tippe eine Karte, dann einen Abschnitt, oder zieh sie hinein.`}</div>`;
+      : `Ihr Plan: ${T3.filter(l => bd.plan[l]).map(l => `${FOE_MOVE[bd.plan[l]]} (${T3N[l]})`).join(', ')}. Tippe eine Karte, dann einen Abschnitt, oder zieh sie hinein.`}</div>`;
     return h;
   }
   function renderAim(e) {
@@ -12150,14 +12150,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       return s;
     }
     function monTurm(x, ID, sn, hcol) { // Kirchturm: hoher Backsteinturm mit Uhr, Laterne und sehr hohem Helm, oben ein goldenes Kreuz
-      const tb = WALL + 2, tt = 74, tw = 26, cx = x + tw / 2;
+      const tb = WALL + 2, tt = 84, tw = 26, cx = x + tw / 2;
       let s = F(`M${x} ${tb} V${tt} H${x + tw} V${tb} Z`, BRICK[0], 1) + `<path d="M${x} ${tb} V${tt} H${x + tw} V${tb} Z" fill="url(#br${ID})" opacity=".55"/><path d="M${x} ${tb} V${tt} H${x + 7} V${tb} Z" fill="${INK}" opacity=".12"/>`;
       s += Ln(`M${x} ${tt + 4} H${x + tw} M${x} ${tt + 26} H${x + tw}`, .7, shade(BRICK[0], .4)) + win(x + 4, tt + 30, 6, 14) + win(x + tw - 10, tt + 30, 6, 14);
       s += `<circle cx="${cx}" cy="${tt + 15}" r="6.4" fill="${PLASTER}" stroke="${INK}" stroke-width=".8"/><circle cx="${cx}" cy="${tt + 15}" r="5" fill="none" stroke="${GOLD}" stroke-width=".9"/>` + Ln(`M${cx} ${tt + 15} V${tt + 11} M${cx} ${tt + 15} L${cx + 3} ${tt + 16.4}`, .8);
       s += F(`M${x - 1} ${tt} L${cx} ${tt - 10} L${x + tw + 1} ${tt} Z`, VERD, .9) + F(`M${cx - 5} ${tt - 6} V${tt - 16} H${cx + 5} V${tt - 6} Z`, VERD, .8) + win(cx - 1.8, tt - 13.6, 3.6, 5);
       s += F(`M${cx - 4.4} ${tt - 16} L${cx} ${tt - 58} L${cx + 4.4} ${tt - 16} Z`, VERD, .9) + `<path d="M${cx} ${tt - 58} L${cx + 4.4} ${tt - 16} H${cx} Z" fill="${VERD_L}" opacity=".7"/>`;
       if (sn) s += Ln(`M${x} ${tt - .6} L${cx} ${tt - 9.4} L${x + tw} ${tt - .6}`, 1.6, '#ffffff');
-      s += Ln(`M${cx} ${tt - 58} V${tt - 64.4} M${cx - 2.4} ${tt - 62} H${cx + 2.4}`, 1.4, GOLD) + pennant(x + tw - 1, tt, hcol);
+      s += Ln(`M${cx} ${tt - 58} V${tt - 68} M${cx - 3.4} ${tt - 64.6} H${cx + 3.4}`, 2.6, INK) + Ln(`M${cx} ${tt - 58} V${tt - 68} M${cx - 3.4} ${tt - 64.6} H${cx + 3.4}`, 1.5, GOLD) + pennant(x + tw - 1, tt, hcol);
       return s;
     }
     const MONUMENT = {tor:[monTor, 252], gilde:[monGilde, 248], turm:[monTurm, 270]};
@@ -12203,7 +12203,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       s += F(`M${x + 64.8} ${hullTop} V76 H${x + 67.2} V${hullTop} Z`, '#7a5032', .7) + `<circle cx="${x + 66}" cy="75.4" r="1.6" fill="#8a5a36" stroke="${INK}" stroke-width=".6"/>` + F(`M${x + 59} 86 H${x + 73} L${x + 71} 94 H${x + 61} Z`, '#8a5a36', .7) + Ln(`M${x + 62} 87 V93 M${x + 66} 87 V93 M${x + 70} 87 V93`, .5, '#5a3a22');
       s += F(`M${x + 66} 79 c6 -2 12 2 20 0 c-3 2 -3 4 0 6 c-8 2 -14 -2 -20 0 z`, house, .6);
       s += Ln(`M${x + 38} 107 Q${x + 66} 102 ${x + 94} 107`, 2.4, '#5a3a22');
-      s += F(sail, WHITE, .9) + `<g clip-path="url(#${id}s)">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${x + 41 + i * 9.6}" y="100" width="4.8" height="70" fill="${house}"/>`).join('')}<path d="M${x + 37} 150 H${x + 96}" stroke="${INK}" stroke-width=".6"/><rect x="${x + 37}" y="100" width="12" height="70" fill="${INK}" opacity=".1"/></g>` + F(sail, 'none', .9);
+      s += F(sail, WHITE, .9) + `<g clip-path="url(#${id}s)">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${x + 41 + i * 9.6}" y="100" width="4.8" height="70" fill="${house}"/>`).join('')}<path d="M${x + 37} 155 H${x + 96}" stroke="${INK}" stroke-width=".6"/><rect x="${x + 37}" y="100" width="12" height="70" fill="${INK}" opacity=".1"/></g>` + F(sail, 'none', .9);
       // Kastelle
       s += F(`M${x + 2} ${hullTop - 18} H${x + 30} V${hullTop} H${x + 4} Z`, '#8a5a36', .9) + Array.from({length:5}, (_, k) => F(`M${x + 3 + k * 5.6} ${hullTop - 18} v-4 h3.4 v4`, '#8a5a36', .6)).join('');
       s += F(`M${x + 104} ${hullTop - 16} H${x + 128} L${x + 124} ${hullTop - 2} H${x + 104} Z`, '#8a5a36', .9) + Array.from({length:4}, (_, k) => F(`M${x + 105 + k * 5.8} ${hullTop - 16} v-4 h3.4 v4`, '#8a5a36', .6)).join('');
@@ -12454,7 +12454,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const U = st.unl || (st.unl = {}), fresh = [];
     UNLOCKS.forEach(u => { if (!U[u.k] && u.ok()) { U[u.k] = {d:st.day, seen:!!quiet}; fresh.push(u); } });
     if (!fresh.length || quiet) return fresh;
-    addLog(`Neu für dein Handelshaus: ${fresh.map(u => u.n).join(', ')}. Du findest ${fresh.length === 1 ? 'es' : 'sie'} im Reiter Haus.`, 'rank');
+    addLog(`Neu für dein Handelshaus: ${fresh.map(u => u.n).join(', ')}. Zu finden im Reiter Haus.`, 'rank');
     // Das Erzählbild zum Aufstieg vom selben Tag zählt die neuen Dinge auf
     const q = qS(), l = [q.pop].concat(q.queue || []).filter(p => p && p.k === 'story' && (p.kind === 'rank' || p.kind === 'civic') && p.d === st.day);
     fresh.forEach(u => { const p = l.filter(x => x.kind === u.by).pop() || l[l.length - 1]; if (p) p.neu = (p.neu || []).concat(u.k); });
