@@ -193,7 +193,7 @@ button{font:inherit;color:inherit}
 .goals .chron summary h2{font-size:.95rem}
 .qflash{animation:qflash 2.4s ease-out}
 @keyframes qflash{0%,40%{box-shadow:0 0 0 3px var(--brass),0 0 18px color-mix(in srgb,var(--brass) 60%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
-@media (prefers-reduced-motion: reduce){.qflash{animation:none;outline:3px solid var(--brass)}}
+@media (prefers-reduced-motion: reduce){.qflash{animation:none;outline:3px solid var(--brass)}.htile .hneu{animation:none}}
 #qsheet{z-index:36}
 #qscrim{z-index:35}
 .qsheet .k{font:500 .72rem var(--f-sc);letter-spacing:.08em;color:var(--brass)}
@@ -992,6 +992,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 .htile b{display:block;font:700 .92rem/1.15 var(--f-sc)}.htile span span{display:block;font:italic .8rem/1.25 var(--f-body);color:#6b5440}
 .htile.lock{opacity:.55}.htile:active{background:rgba(201,150,46,.12)}
 .htile .hdot{position:absolute;right:6px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--seal);box-shadow:0 0 0 2px #f4e8cb}
+.htile .hneu{position:absolute;right:4px;top:5px;padding:1px 6px 0;border:1.5px solid var(--seal);border-radius:3px;font:700 .68rem/1.3 var(--f-sc);letter-spacing:.06em;color:var(--seal);font-style:normal;transform:rotate(-6deg);background:#f7ecd2;animation:hneu 1.6s ease-out 1}
+@keyframes hneu{0%{transform:rotate(-6deg) scale(2.2);opacity:0}35%{transform:rotate(-6deg) scale(.92);opacity:1}50%{transform:rotate(-6deg) scale(1.05)}100%{transform:rotate(-6deg) scale(1)}}
+.htile.neu{background:rgba(201,150,46,.10)}
+.ytour{margin:10px 0 12px;padding:10px 12px;border:1.5px solid var(--seal);border-radius:4px;background:#f7ecd2;box-shadow:0 2px 0 rgba(58,35,22,.15)}
+.ytour b{display:block;font:700 1rem/1.2 var(--f-sc);margin:2px 0 4px}.ytour p{margin:0 0 8px;font-size:.92rem;line-height:1.4}
+.ytour .ybtns{display:flex;justify-content:space-between;align-items:center}
+.tourhl{outline:2.5px solid var(--seal);outline-offset:3px;border-radius:3px}
+.unext{margin:10px 2px 0;color:#6b5440}.unext span{display:block}.unext b{font-family:var(--f-sc)}
+.sneu{margin:6px 0 12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}.sneu .k{width:100%}
+.sneu em{font:700 .8rem/1.2 var(--f-sc);font-style:normal;padding:3px 8px 2px;border:1.5px solid var(--seal);border-radius:3px;color:var(--seal);background:#f7ecd2}
 .fentry{display:grid;grid-template-columns:118px minmax(0,1fr);gap:8px;width:100%;padding:8px 0 12px;border:0;border-bottom:1px solid #a88b63;background:repeating-linear-gradient(180deg,transparent 0 25px,rgba(120,90,60,.12) 25px 26px);text-align:left;font:inherit;color:inherit;cursor:pointer}
 .fentry .ship-ink{width:118px;height:auto;margin-top:4px}
 .fe{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -1076,6 +1086,25 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 .btn.primary:disabled{opacity:1;background:#9a6a5e;border-color:#7a4a40;color:#fff6e2;box-shadow:none}
 .cityview .cvbig{font-family:var(--f-body);font-weight:700}
 .hsheet .hsback{min-height:44px;padding:0 14px 0 0;font-size:.95rem}
+
+/* Ab Version 54: Erzählbilder, Buch der Stadt, Monumente, Siegerbild */
+.qsheet .story h2{margin-bottom:6px}
+.sbild{margin:4px -6px 10px;line-height:0;box-shadow:0 6px 16px -8px rgba(58,36,22,.6)}
+.sbild svg{width:100%;height:auto;display:block}
+.story p{font-size:1rem;line-height:1.45}
+.story.sieg .siegtxt{display:grid;grid-template-columns:auto minmax(0,1fr) 84px;gap:4px 10px;align-items:start;margin:4px 0 12px}
+.siegtxt .init{font:400 3.4rem/.86 var(--f-title);color:var(--seal)}.siegtxt p{margin:2px 0 0;font-size:.95rem;text-align:justify;hyphens:auto}
+.siegtxt .hseal{width:84px;height:84px;filter:drop-shadow(0 3px 4px rgba(60,20,10,.35))}
+.famlist{list-style:none;margin:8px 0 6px;padding:0;display:flex;flex-direction:column}
+.famlist li{display:grid;grid-template-columns:22px 52px minmax(0,1fr);gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #b89b70}
+.famlist li.me{background:rgba(201,150,46,.12)}
+.famlist .n{font:800 1.2rem var(--f-body);color:var(--seal);text-align:center}.famlist .hseal{width:52px;height:52px}
+.famlist b{display:block;font:700 1rem var(--f-sc)}.famlist small{display:block;font:italic .86rem var(--f-body);color:#5d4632}
+.monlist{display:grid;gap:10px;margin:10px 0}
+.moncard{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:10px;text-align:left;padding:8px;border:1.5px solid #4a3324;border-radius:3px;background:rgba(255,250,236,.55);font:inherit;color:inherit;cursor:pointer}
+.moncard .gvart{grid-row:1/4;line-height:0}.moncard .gvart svg,.moncard .gvart img{width:96px;height:auto}
+.moncard b{font:700 1.02rem var(--f-sc)}
+.buchst .ybtns{margin-top:10px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1505,15 +1534,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   };
   // Ab Version 49 auf die Kampagne bis 1372 abgestimmt. Bot „mensch“, Riga, Median Spieltag: Gildebruder 669 (erster Betrieb 706),
   // Ratsherr 1427, Bürgermeister 2466, Ältermann 4833. Lübeck mit 1,5fachem Ansehen ist bei den Ämtern etwa ein Drittel schneller.
-  // Bürgermeister: Mindestansehen für die Wahl (ELECT_MIN); Ältermann: Ansehen und Ehre zusammen (ALDER_STAND)
-  const CIVIC = [[0,'Neubürger'],[60,'Bürger'],[1200,'Gildebruder'],[3300,'Ratsherr'],[7000,'Bürgermeister'],[25000,'Ältermann der Hanse']];
-  const UNLOCK = {1:'Kontor im Stammsitz, Aufträge des Rats', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wahl am 1. Januar und 1. Juli, es gewinnt das meiste Ansehen', 5:'Als Bürgermeister, mit Ansehen und Ehre zusammen; Wahl auf dem Hansetag am 24. Juni'};
+  // Bürgermeister: Mindestansehen für die Wahl (ELECT_MIN). Ab Version 54 ist Bürgermeister das höchste Amt und das Ziel des Spiels;
+  // das Ältermannamt der Hanse entfällt. Danach folgen das große Fest, das Buch der Stadt und auf Wunsch ein Monument.
+  const CIVIC = [[0,'Neubürger'],[60,'Bürger'],[1200,'Gildebruder'],[3300,'Ratsherr'],[7000,'Bürgermeister']];
+  const UNLOCK = {1:'Kontor im Stammsitz, Aufträge des Rats', 2:'Kontor erweitern, Betriebe, Niederlassungen', 3:'Sitz im Rat: Zölle festlegen, größere Aufträge', 4:'Wahl am 1. Januar und 1. Juli, es gewinnt das meiste Ansehen; danach das große Fest'};
   // Umrechnung des Ansehens aus Spielständen vor Version 49: gleiches Amt, gleicher Anteil am Weg zum nächsten
   const REP_OLD = [0, 60, 200, 500, 1200, 3000];
-  const repV49 = r => { r = r || 0; const N = CIVIC.map(c => c[0]), L = REP_OLD.length - 1;
+  const repV49 = r => { r = r || 0; const N = CIVIC.map(c => c[0]).concat([25000]), L = REP_OLD.length - 1;
     for (let i = L; i >= 0; i--) if (r >= REP_OLD[i]) return Math.round(i === L ? N[i] + r - REP_OLD[i] : N[i] + (r - REP_OLD[i]) / (REP_OLD[i + 1] - REP_OLD[i]) * (N[i + 1] - N[i]));
     return r; };
-  const civicIdx = r => { let i = 0; CIVIC.forEach(([m], k) => { if (r >= m) i = k; }); if (i >= 5 && !(st && st.alderman)) i = 4; return i >= 4 && !(st && (st.mayor || st.alderman)) ? 3 : i; };
+  const civicIdx = r => { let i = 0; CIVIC.forEach(([m], k) => { if (r >= m) i = k; }); return i >= 4 && !(st && st.mayor) ? 3 : i; };
   const repairPrice = () => (st.home === 'bremen' ? 5 : REPAIR) * (st && st.city ? cityBonus('repair') : 1);
   const applyHome = () => { CAP = st.fleet ? st.fleet.reduce((x, sh) => x + shipCap(sh), 0) : 60; };
   // Verband: gemeinsamer Laderaum, gemeinsame Mannschaft, Tempo des langsamsten Schiffs
@@ -1570,6 +1600,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const after = civicIdx(st.repute);
     if (after > before) {
       const t = `Der Rat von ${C[st.home].n} nimmt dich als ${CIVIC[after][1]} auf.`;
+      if (after <= 3) storyPush('civic', {i:after});
       addLog(t, 'rank');
       st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     }
@@ -1592,7 +1623,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       orders:{offer:[], active:[], d:0, done:0}, nextOrder:1, toll:null, mayor:null, mayorName:`${pick(NAMES.m)} ${pick(NAMES.s)}`,
       freight:{offers:{}, gen:{}, active:[], next:1, done:0}, city:{house:1, extra:0, jobs:[], open:false}, captains:[], convoys:[], reserve:[], builds:[], nextCap:1, nextConvoy:1, nextWork:1, tavern:null, branches:{}, works:[], pendingFight:null, focus:null, parked:null, waiting:null,
       player:{name:(player && player.name) || 'Kaufmann', avatar:(player && player.avatar) || defAv()}, home, repute:0,
-      mode:(opts && opts.mode) === 'kampagne' ? 'kampagne' : 'offen', alderman:null, gd45:true, mayorTerms:0, wins:0, ended:null, n32:true};
+      mode:(opts && opts.mode) === 'kampagne' ? 'kampagne' : 'offen', alderman:null, gd45:true, v54:true, unl:{}, mayorTerms:0, wins:0, ended:null, n32:true};
     st.rivals = makeRivals();
     { const k0 = Object.assign(newCaptainFree(st, st.nextCap++), {nav:1, trade:1, fight:1, wage:3, fee:75}); st.captains.push(k0); st.capOwn = k0.id; }
     const og = ORIGINS[opts && opts.origin] ? opts.origin : 'kaufmann';
@@ -1746,6 +1777,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     trialDay();
     finDay();
     gvDay();
+    endeDay();
     if (dateOf(st.day).getDate() === 1 && dateOf(st.day).getMonth() === 0) blUpdate();
     cityJobsDay();
     convoysDay();
@@ -1787,6 +1819,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const r = rankIdx(wealth());
     if (r > st.rank) {
       const old = st.rank; st.rank = r; addLog(`Dein Ansehen wächst. Man nennt dich nun ${RANKS[r][1]}.`, 'rank');
+      storyPush('rank', {r});
       const news = [];
       if (old < 1 && r >= 1) news.push('Als Händler fällst du auf: Ab jetzt lauern Seeräuber auf deinen Wegen. Dein Verband darf jetzt zwei Schiffe haben, und die Werft baut dir eine Kogge.');
       if (old < 2 && r >= 2) news.push('Als Kaufmann darf dein Verband drei Schiffe haben; die großen Werften bauen dir nun auch einen Holk. Kraweele gibt es ab Fernhändler.');
@@ -2090,6 +2123,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     st.fleet = restShips; st.crew -= crew; st.pulver = (st.pulver || 0) - pulver; st.brand = (st.brand || 0) - brand; k.cv = cv.id;
     if (st.capOwn === k.id) st.capOwn = null;
     st.money += trimArms(cv, cv.fleet, sum(cv.fleet, 'crewMax'));
+    if (!st.convoys.length) storyPush('convoy');
     st.convoys.push(cv); applyHome();
     const out = trimCrew();
     cvSee(cv, st.loc);
@@ -2924,6 +2958,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const B0 = (st.branches || {})[cid];
     if (!cid || cid === st.home || (B0 && (B0.own || !B0.hk)) || civicIdx(st.repute || 0) < BRANCH.civic || ownBranches() >= BRANCH.max || st.money < BRANCH.cost) return;
     st.money -= BRANCH.cost;
+    if (!ownBranches()) storyPush('branch', {c:cid});
     if (B0) { B0.own = true; B0.cap += BRANCH.cap; } else st.branches[cid] = {lvl:1, cap:BRANCH.cap, goods:{}, own:true};
     addLog(`Deine Niederlassung in ${C[cid].n} ist eingerichtet: ein Lager für ${BRANCH.cap} Last.`, 'gain');
     buildUnlockCheck();
@@ -3039,6 +3074,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     return st.day;
   }
   function election() {
+    if (st.ende) { st.mayorTerms = (st.mayorTerms || 0) + 1; if (!st.mayor) st.mayor = {since:st.ende.may}; return; }
     const cands = [{name:st.player.name, me:true, repute:(st.repute || 0) + cityBonus('elect')}].concat((st.rivals || []).filter(r => rvRel(r) !== 'bund').map(r => ({name:r.name, repute:r.repute * (st.rivShown ? 0.85 : 1)})))
       .filter(c => c.repute >= ELECT_MIN).sort((a, b) => b.repute - a.repute);
     const was = !!st.mayor, home = C[st.home].n;
@@ -3047,6 +3083,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     else if (cands[0].me) {
       st.mayor = {since:was ? st.mayor.since : st.day}; st.mayorName = st.player.name; st.mayorTerms = (st.mayorTerms || 0) + 1;
       t = was ? `Ratswahl in ${home}: Du bleibst Bürgermeister.` : `Ratswahl in ${home}: Der Rat wählt dich zum Bürgermeister! Bürgerrecht 10 %, ${MAYOR_PAY} Gulden am Tag, Friedeschiffe schützen deine Verbände.`;
+      if (!st.ende) endeStart();
     } else {
       st.mayor = null; st.mayorName = cands[0].name;
       t = `Ratswahl in ${home}: ${cands[0].name} wird Bürgermeister${was ? ', du verlierst das Amt' : ''}.`;
@@ -3213,7 +3250,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // ───────── Ab Version 43: Große Vorhaben, Ehre, Wettlauf um das Ältermannamt, Bestenliste, Spielzeit ─────────
   // Ab Großkaufmann bindet Geld sich in großen Vorhaben im Stammsitz. Sie bringen Ehre; Ansehen und Ehre zusammen
   // entscheiden am Hansetag, wer Ältermann der Hanse wird: du oder einer der drei Konkurrenten.
-  const GV_RANK = 4, ALDER_STAND = CIVIC[5][0], RIVAL_TERM = 3 * 365;
+  const GV_RANK = 4, RIVAL_TERM = 3 * 365;
   const GV = {
     hospital:{n:'Hospital zum Heiligen Geist', cost:30000, days:90, ehre:400, rep:1, elect:200, art:'kirche',
       d:'Ein Hospital für Alte, Kranke und Pilger: 400 Ehre, täglich 1 Ansehen und 200 Stimmen mehr bei der Ratswahl.'},
@@ -3266,7 +3303,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const S = gvState();
     if (!S.intro && st.rank >= GV_RANK) {
       S.intro = true;
-      const t = `Als Großkaufmann kannst du in ${C[st.home].n} große Vorhaben bauen: Hospital, Hafen, Friedeflotte, Artushof, Kirchturm, dazu Stiftungen. Sie bringen Ehre, und Ansehen und Ehre zusammen entscheiden, wer Ältermann der Hanse wird. Unter Haus: Große Vorhaben.`;
+      const t = `Als Großkaufmann kannst du in ${C[st.home].n} große Vorhaben bauen: Hospital, Hafen, Friedeflotte, Artushof, Kirchturm, dazu Stiftungen. Sie bringen Ehre und Ansehen und stehen im Buch der Stadt. Unter Haus: Große Vorhaben.`;
       addLog(t, 'rank'); st.inbox = (st.inbox || []).concat([{d:st.day, text:t, k:'rat'}]).slice(-4);
     }
     if (S.job && st.day >= S.job.d0 + GV[S.job.k].days) {
@@ -3281,7 +3318,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
   function gvHTML() {
     const S = gvState(), home = st.loc === st.home;
-    let h = `<div class="kontor"><h3>Große Vorhaben</h3><p class="small">Vorhaben binden viel Geld und bringen Ehre; Gebäude zählen zur Hälfte ihrer Kosten zu deinem Vermögen. Ansehen und Ehre zusammen (${fmt(standing())}) entscheiden am Hansetag, wer Ältermann der Hanse wird.${st.rank < GV_RANK ? ` Bauen kannst du ab ${RANKS[GV_RANK][1]}.` : ''}</p>`;
+    let h = `<div class="kontor"><h3>Große Vorhaben</h3><p class="small">Vorhaben binden viel Geld und bringen Ehre; Gebäude zählen zur Hälfte ihrer Kosten zu deinem Vermögen. Ehre bisher: ${fmt(ehre())}; sie zählt im Buch der Stadt.${st.rank < GV_RANK ? ` Bauen kannst du ab ${RANKS[GV_RANK][1]}.` : ''}</p>`;
     if (S.job) { const V = GV[S.job.k], f = 1 - gvLeft() / V.days; h += `<div class="krow"><span class="gname">⚒ ${V.n}</span><span class="num small" style="grid-column:auto;margin:0">noch ${gvLeft()} Tage</span><span class="bar"><i style="width:${Math.round(f * 100)}%"></i></span></div>`; }
     GV_ORDER.forEach(k => {
       const V = GV[k], why = gvWhy(k), done = S.done[k];
@@ -3298,53 +3335,27 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // Wettlauf um das Ältermannamt: Kandidaten sind Bürgermeister mit ALDER_STAND Ansehen und Ehre zusammen
   const rivStand = r => Math.round(r.repute + (r.ehre || 0));
   const rivAld = () => st.aldRival && (st.rivals || []).find(r => r.id === st.aldRival.id);
+  // Ab Version 54 ohne Wahl des Ältermanns: Der Hansetag berät, die Abstimmungen laufen wie bisher unter Haus, Hansetag.
   function hansetag() {
-    const y = dateOf(st.day).getFullYear(), R0 = st.race || (st.race = {});
-    if (st.alderman) { announce(`Hansetag ${y} in Lübeck. Als Ältermann der Hanse führst du den Vorsitz. Die Städte zahlen dir ${ALDER_PAY} Gulden am Tag.`); return; }
-    const inc = rivAld();
-    if (inc && st.day < st.aldRival.until) { announce(`Hansetag ${y} in Lübeck. ${inc.name} führt als Ältermann den Vorsitz, gewählt bis ${dateOf(st.aldRival.until).getFullYear()}. Dann wird neu gewählt.`); return; }
-    const meOk = !!st.mayor && standing() >= ALDER_STAND;
-    const cands = (st.rivShown ? st.rivals || [] : []).filter(r => r.repute >= ELECT_MIN && rivStand(r) >= ALDER_STAND && !(r.rel === 'bund' && r.relUntil > st.day))
-      .map(r => ({r, s:rivStand(r) * (inc && inc.id === r.id ? 1.1 : 1)}));
-    const allies = (st.rivals || []).filter(r => r.rel === 'bund' && r.relUntil > st.day).reduce((x, r) => x + r.repute * 0.05, 0);
-    if (meOk) cands.push({me:true, s:standing() + allies});
-    cands.sort((a, b) => b.s - a.s);
-    const best = cands[0];
-    if (best && best.me) {
-      st.alderman = {since:st.day}; st.aldRival = null;
-      if (!R0.rivalFirst) R0.first = true;
-      R0.day = st.day;
-      announce(`Hansetag ${y} in Lübeck: Die Ratssendeboten wählen dich zum Ältermann der Hanse!${R0.rivalFirst ? '' : ' Du bist der Erste deiner Generation, vor allen Konkurrenten.'} ${ALDER_PAY} Gulden am Tag, deine Verbände werden noch seltener angegriffen.`, 'rank');
-      chronicle(`${st.player.name} wird Ältermann der Hanse`);
-      blUpdate('ald');
-      if (st.mode !== 'kampagne') announce('Du hast das höchste Amt der Hanse erreicht. Das Spiel geht weiter, so lange du willst; deine Bestenliste führt dich unter Spielstände.', 'rank');
-    } else if (best) {
-      const r = best.r, again = inc && inc.id === r.id;
-      st.aldRival = {id:r.id, since:st.day, until:st.day + RIVAL_TERM};
-      if (!R0.rivalFirst) R0.rivalFirst = {id:r.id, name:r.name, d:st.day};
-      announce(`Hansetag ${y} in Lübeck: ${again ? `${r.name} bleibt Ältermann der Hanse` : `Die Ratssendeboten wählen ${r.name} zum Ältermann der Hanse`}, für drei Jahre.${meOk ? ' Du hattest weniger Ansehen und Ehre.' : ''} ${R0.first ? '' : 'Der Wettlauf ist nicht verloren: Nach seiner Amtszeit wird neu gewählt.'}`, 'rank');
-      chronicle(`${r.name} wird Ältermann der Hanse`);
-    } else {
-      const why = !st.mayor ? 'Wählbar ist nur, wer Bürgermeister seiner Stadt ist.' : `Wählbar ist erst, wer ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen hat (du: ${fmt(standing())}).`;
-      announce(`Hansetag ${y} in Lübeck. Die Ratssendeboten beraten über Zölle und Privilegien. Zum Ältermann ist niemand gewählt. ${why}`);
-    }
+    const y = dateOf(st.day).getFullYear();
+    announce(`Hansetag ${y} in Lübeck. Die Ratssendeboten beraten über Zölle, Privilegien und den Frieden auf See.`);
   }
+  // Wettlauf ums Bürgermeisteramt: wer am 1. Januar oder 1. Juli das meiste Ansehen hat (mindestens ELECT_MIN), wird gewählt.
+  // Bist du einmal Bürgermeister, treten die Familien nicht mehr gegen dich an; ihre Werte stehen dann nur noch zur Auskunft da.
   function raceHTML() {
-    let h = `<div class="kontor"><h3>Wettlauf um das Ältermannamt</h3>`;
-    if (!rivShown()) return h + `<p class="small">Am Hansetag am 24. Juni wird der Ältermann der Hanse gewählt. Wählbar ist ein Bürgermeister mit ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen. Wer dir den Platz streitig macht, zeigt sich, wenn du im Rat sitzt.</p></div>`;
-    const inc = rivAld(), R0 = st.race || {};
-    const L = [{me:true, name:'Du', rep:st.repute || 0, e:ehre(), mayor:!!st.mayor}].concat((st.rivals || []).map(r => ({r, name:r.name, rep:r.repute, e:r.ehre || 0, mayor:r.repute >= ELECT_MIN})))
-      .map(x => Object.assign(x, {s:x.rep + x.e})).sort((a, b) => b.s - a.s), mx = Math.max(ALDER_STAND, ...L.map(x => x.s));
-    h += `<p class="small">${st.alderman ? `Du bist Ältermann seit ${fdate(st.alderman.since, true)}${R0.first ? ', als Erster vor allen Konkurrenten' : ''}.` : inc ? `${esc(inc.name)} ist Ältermann bis ${fdate(st.aldRival.until, true)}. Danach wird am Hansetag neu gewählt.` : `Nächste Wahl am Hansetag, ${fdate(nextHansetag(), true)}. Es gewinnt, wer als Bürgermeister die meisten Punkte aus Ansehen und Ehre hat, mindestens ${fmt(ALDER_STAND)}.`}</p>`;
-    h += `<div class="race">` + L.map(x => `<div class="rrow${x.me ? ' me' : ''}"><span class="rn">${x.me ? '<b>Du</b>' : `${x.r.av ? avatarSVG(x.r.av, 'rvf sm') : ''}${esc(x.name)}`}${inc && x.r && x.r.id === inc.id ? ' <span class="pill">Ältermann</span>' : ''}${x.me && st.alderman ? ' <span class="pill">Ältermann</span>' : ''}</span>` +
-      `<span class="rb"><i class="rr" style="width:${Math.round(x.rep / mx * 100)}%"></i><i class="re" style="width:${Math.round(x.e / mx * 100)}%"></i><em style="left:${Math.round(ALDER_STAND / mx * 100)}%"></em></span>` +
-      `<span class="rv small">${fmt(x.s)}${x.mayor ? '' : ' · noch kein Bürgermeister'}</span></div>`).join('') + `</div>` +
-      `<p class="small"><i class="sw rr"></i> Ansehen <i class="sw re"></i> Ehre · Strich: ${fmt(ALDER_STAND)} Punkte</p>`;
-    if (typeof rvActHTML === 'function') h += rvActHTML();
+    let h = `<div class="kontor"><h3>Wettlauf ums Bürgermeisteramt</h3>`;
+    if (!rivShown()) return h + `<p class="small">Am 1. Januar und am 1. Juli wählt der Rat von ${C[st.home].n} den Bürgermeister. Wählbar ist, wer ${fmt(ELECT_MIN)} Ansehen hat; es gewinnt, wer das meiste hat. Wer dir das Amt streitig macht, zeigt sich, wenn du im Rat sitzt.</p></div>`;
+    const L = [{me:true, name:'Du', rep:st.repute || 0}].concat((st.rivals || []).map(r => ({r, name:r.name, rep:r.repute * 0.85}))).sort((a, b) => b.rep - a.rep), mx = Math.max(ELECT_MIN, ...L.map(x => x.rep));
+    h += `<p class="small">${st.ende ? `Du bist Bürgermeister seit ${fdate(st.ende.may, true)}. Die Familien stehen hier nur noch zur Auskunft.` : `Nächste Wahl am ${fdate(nextElection(), true)}. Es gewinnt, wer das meiste Ansehen hat, mindestens ${fmt(ELECT_MIN)}.`}</p>`;
+    h += `<div class="race">` + L.map(x => `<div class="rrow${x.me ? ' me' : ''}"><span class="rn">${x.me ? '<b>Du</b>' : `${x.r.av ? avatarSVG(x.r.av, 'rvf sm') : ''}${esc(x.name)}`}${x.me && st.mayor ? ' <span class="pill">Bürgermeister</span>' : ''}</span>` +
+      `<span class="rb"><i class="rr" style="width:${Math.round(x.rep / mx * 100)}%"></i><em style="left:${Math.round(ELECT_MIN / mx * 100)}%"></em></span>` +
+      `<span class="rv small">${fmt(Math.round(x.rep))}${x.rep >= ELECT_MIN ? ' · wählbar' : ''}</span></div>`).join('') + `</div>` +
+      `<p class="small"><i class="sw rr"></i> Ansehen bei der Wahl · Strich: ${fmt(ELECT_MIN)}</p>`;
+    if (!st.ende && typeof rvActHTML === 'function') h += rvActHTML();
     return h + `</div>`;
   }
   const nextHansetag = () => { const y = dateOf(st.day).getFullYear(); let d = dayOf(y, 6, 24); if (d <= st.day) d = dayOf(y + 1, 6, 24); return d; };
-  const raceMeta = () => st.alderman ? 'Du bist Ältermann' : rivAld() ? `${rivAld().name} ist Ältermann` : rivShown() ? `du ${fmt(standing())} von ${fmt(ALDER_STAND)}` : 'ab Ratsherr';
+  const raceMeta = () => st.ende ? 'Du bist Bürgermeister' : rivShown() ? `Wahl am ${fdate(nextElection())}` : 'ab Ratsherr';
 
   // Bestenliste: jedes Spiel ein Eintrag, im Browser und im Claude-Konto
   const BL_KEY = 'kogge-kontor-bestenliste';
@@ -3361,15 +3372,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (saves.remote) saves.remote.bestenliste = {list:L};
     if (saves.db && saves.ok) saves.db.doc(`data/users/${saves.uid}/bestenliste`).set({list:L}).catch(() => {});
   }
-  const blSortAld = (a, b) => (b.first ? 1 : 0) - (a.first ? 1 : 0) || (a.ald == null) - (b.ald == null) || (a.ald || 0) - (b.ald || 0) || b.w - a.w;
+  const blSortAld = (a, b) => (a.may == null) - (b.may == null) || (a.may || 0) - (b.may || 0) || (b.fest || 0) - (a.fest || 0) || b.w - a.w;
   const blSortW = (a, b) => b.w - a.w;
   function blEntry() {
     if (!st || st._temp || !st.player) return null;
     if (!st.gid) st.gid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     const R0 = st.race || {}, prev = (blRead().find(x => x.id === st.gid) || {});
-    return {id:st.gid, n:st.player.name, h:st.home, mode:st.mode, ald:st.alderman ? st.alderman.since : prev.ald != null ? prev.ald : null, first:!!R0.first, by:R0.rivalFirst ? R0.rivalFirst.name : null,
+    const E0 = st.ende || {};
+    return {id:st.gid, n:st.player.name, h:st.home, mode:st.mode, may:E0.may != null ? E0.may : null, fest:E0.fest ? E0.fest.n : 0, mon:E0.stage === 'fertig' && E0.mon ? E0.mon.k : null,
       w:Math.max(Math.round(wealth()), prev.w || 0), wNow:Math.round(wealth()), ehre:ehre(), rank:st.rank, day:st.day, ms:(st.play || {}).ms || 0, at:Date.now(),
-      riv:(st.rivals || []).map(r => ({n:r.name, w:Math.round(r.wealth), s:rivStand(r)}))};
+      riv:(st.rivals || []).map(r => ({n:r.name, w:Math.round(r.wealth), s:Math.round(r.repute)}))};
   }
   function blUpdate() {
     const E = blEntry(); if (!E) return;
@@ -3378,7 +3390,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   function blHTML(sortW) {
     const cur = blEntry(), L = blRead().filter(x => !cur || x.id !== cur.id).concat(cur ? [cur] : []).sort(sortW ? blSortW : blSortAld).slice(0, 10);
     if (!L.length) return '<p class="small">Noch keine Einträge.</p>';
-    return `<ol class="blist">` + L.map((x, i) => `<li class="${cur && x.id === cur.id ? 'cur' : ''}"><span class="bp">${i + 1}.</span><span class="bn"><b>${esc(x.n)}</b><span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.ald != null ? `Ältermann ${dateOf(x.ald).getFullYear()}${x.first ? ', als Erster' : x.by ? `, nach ${esc(x.by)}` : ''}` : x.by ? `${esc(x.by)} wurde zuerst Ältermann` : RANKS[x.rank || 0][1]} · ${playTime(x.ms)}${cur && x.id === cur.id ? ' · dieses Spiel' : ''}</span></span><span class="num">${fmt(x.w)} G</span></li>`).join('') + `</ol>`;
+    return `<ol class="blist">` + L.map((x, i) => `<li class="${cur && x.id === cur.id ? 'cur' : ''}"><span class="bp">${i + 1}.</span><span class="bn"><b>${esc(x.n)}</b><span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.may != null ? `Bürgermeister ${dateOf(x.may).getFullYear()}${x.fest ? `, Fest mit ${fmt(x.fest)} Last` : ''}${x.mon ? `, ${MON[x.mon] ? MON[x.mon].n : 'Monument'}` : ''}` : RANKS[x.rank || 0][1]} · ${playTime(x.ms)}${cur && x.id === cur.id ? ' · dieses Spiel' : ''}</span></span><span class="num">${fmt(x.w)} G</span></li>`).join('') + `</ol>`;
   }
 
   // Spielzeit: zählt nur, solange das Spiel sichtbar ist und du in den letzten zwei Minuten etwas getan hast
@@ -3426,12 +3438,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         addLog(`${r.name} stiftet ${pick(['ein Fenster in der Marienkirche', 'eine Armenspeisung', 'einen Altar', 'ein Haus für Pilger', 'eine Glocke'])} und gewinnt ${e} Ehre.`, 'rumor');
       }
       // vor dem Hansetag legen knappe Gegner noch einmal nach
-      const ht = nextHansetag() - st.day;
-      if (ht === 45 && !st.alderman && rivStand(r) >= standing() * 0.85 && rivStand(r) >= ALDER_STAND * 0.8 && Math.random() < 0.5) {
-        const e = Math.round(rivStand(r) * rnd(0.03, 0.07)); r.ehre += e;
-        addLog(`${r.name} will Ältermann werden und lässt vor dem Hansetag ${pick(['eine Kapelle', 'ein Gildehaus', 'einen Brunnen am Markt', 'ein Spital'])} bauen: ${e} Ehre.`, 'rumor');
-      }
-      if (rvRel(r) === 'bund') return;
+      if (rvRel(r) === 'bund' || st.ende) return;
       if (st.day >= r.nextMove) { r.nextMove = st.day + Math.round((60 + Math.random() * 70) * (rvRel(r) === 'fehde' ? 0.5 : 1)); rvMove(r); }
     });
     const P = st.rvPend; if (P && st.day > P.until) st.rvPend = null;
@@ -3443,7 +3450,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       const loss = Math.min(120, Math.max(20, Math.round((st.repute || 0) * 0.03)));
       st.repute = Math.max(0, (st.repute || 0) - loss);
       st.rvPend = {k, r:r.id, loss, until:st.day + 20};
-      announce(`${r.name} streut im Rat von ${C[st.home].n} Gerüchte über deine Geschäfte: ${loss} Ansehen verloren. Unter Haus, Wettlauf um das Ältermannamt, kannst du binnen 20 Tagen eine Gegendarstellung geben.`);
+      announce(`${r.name} streut im Rat von ${C[st.home].n} Gerüchte über deine Geschäfte: ${loss} Ansehen verloren. Unter Haus, Wettlauf, kannst du binnen 20 Tagen eine Gegendarstellung geben.`);
     } else if (k === 'preis') {
       const c = pick(CITIES.filter(x => x.c.includes(top))) || pick(CITIES);
       addMod(c.id, top, 1.6, st.day + 45);
@@ -3474,7 +3481,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // deine Züge
   function rvBund(id) {
     const r = (st.rivals || []).find(x => x.id === id), c = rvBundCost();
-    if (!r || !st.rivShown || rvRel(r) === 'bund' || st.money < c || rivStand(r) > standing()) return;
+    if (!r || !st.rivShown || rvRel(r) === 'bund' || st.money < c || r.repute > (st.repute || 0)) return;
     st.money -= c; r.rel = 'bund'; r.relUntil = st.day + RV_BUND;
     addLog(`Bündnis mit ${r.name} für ein Jahr, besiegelt mit ${fmt(c)} Gulden: Die Familie tritt nicht gegen dich an, stimmt für dich und lässt dich in Ruhe.`, 'rank');
     commit();
@@ -3507,10 +3514,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (P && P.k === 'geruecht') h += `<div class="krow"><span class="gname">Gerüchte von ${esc(rivById(P.r).name)}</span><span class="ybtns"><button class="ybtn" type="button" data-rv="reply"${st.money >= RV_REPLY ? '' : ' disabled'}>Gegendarstellung · ${fmt(RV_REPLY)} G</button></span><span class="small">Bis ${fdate(P.until)}: Du holst ${P.loss} Ansehen zurück, er verliert fast so viel.</span></div>`;
     h += `<span class="flabel">Die Familien</span>`;
     (st.rivals || []).forEach(r => {
-      const rel = rvRel(r), c = rvBundCost(), strong = rivStand(r) > standing(), cd = RV_GEGEN_CD - (st.day - (r.gegen || -999));
+      const rel = rvRel(r), c = rvBundCost(), strong = r.repute > (st.repute || 0), cd = RV_GEGEN_CD - (st.day - (r.gegen || -999));
       h += `<div class="krow"><span class="gname">${r.av ? avatarSVG(r.av, 'rvf sm') : ''}${esc(r.name)}</span><span class="num small" style="grid-column:auto;margin:0">${rel === 'bund' ? 'Bündnis' : rel === 'fehde' ? 'Fehde' : 'neutral'}</span>` +
         `<span class="small">aus ${C[r.home].n} · Vermögen ${fmt(Math.round(r.wealth))} G · Ansehen ${fmt(Math.round(r.repute))} · Ehre ${fmt(Math.round(r.ehre || 0))}${rel === 'bund' ? ` · Bündnis bis ${fdate(r.relUntil)}` : ''}</span><span class="ybtns wrapb">` +
-        (rel === 'neutral' ? `<button class="ybtn" type="button" data-rv="bund" data-id="${r.id}"${st.money >= c && !strong ? '' : ' disabled'}>${strong ? 'will selbst Ältermann werden' : `Bündnis · ${fmt(c)} G`}</button><button class="ybtn" type="button" data-rv="fehde" data-id="${r.id}">Fehde erklären</button>` : '') +
+        (rel === 'neutral' ? `<button class="ybtn" type="button" data-rv="bund" data-id="${r.id}"${st.money >= c && !strong ? '' : ' disabled'}>${strong ? 'will selbst Bürgermeister werden' : `Bündnis · ${fmt(c)} G`}</button><button class="ybtn" type="button" data-rv="fehde" data-id="${r.id}">Fehde erklären</button>` : '') +
         (rel === 'fehde' ? `<button class="ybtn" type="button" data-rv="gegen" data-id="${r.id}"${st.money >= RV_GEGEN && cd <= 0 ? '' : ' disabled'}>${cd > 0 ? `Gegenzug in ${cd} Tagen` : `Gegenzug · ${fmt(RV_GEGEN)} G`}</button><button class="ybtn" type="button" data-rv="fehde" data-id="${r.id}"${st.money >= 3000 ? '' : ' disabled'}>Fehde beilegen · 3.000 G</button>` : '') +
         `</span></div>`;
     });
@@ -3843,6 +3850,116 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       `<h3>Datenschutz</h3><span class="small">Kogge &amp; Kontor speichert deine Spielstände nur ${HERE_TXT}. Das Spiel sammelt keine Daten, zeigt keine Werbung und braucht kein Internet. Käufe wickelt Apple ab; wir erfahren dabei nichts über dich.${A.privacy ? ` Ausführlich: ${esc(A.privacy)}` : ''}</span>` +
       `<h3>Über das Spiel</h3><span class="small">Version ${esc(A.version || '1.0')}. ${A.ki ? 'Entwickelt mit Unterstützung von KI. ' : ''}Schriften Alegreya Sans, Alegreya Sans SC, IBM Plex Mono und UnifrakturMaguntia unter der SIL Open Font License 1.1.</span></div>`;
   }
+
+  // ───────── Ab Version 54: Abschluss nach der Bürgermeisterwahl ─────────
+  // Gewählt → Erzählbild, das große Fest wird für 30 Tage später angekündigt. Am Festtag wird aufgetischt, was an Bier, Wein,
+  // Hering und Getreide im Kontor liegt (Mindestmengen FEST_MIN; mehr bringt einen höheren Platz in der Bestenliste).
+  // Danach das Buch der Stadt und die Frage „Weiterspielen?“. Wer weiterspielt, kann ein Monument stiften (drei Arten, benannt
+  // nach dem echten Bau im Stammsitz); steht es, folgt das Siegerbild. Ohne Monument geht das Spiel frei und ohne Ende weiter.
+  const FEST_MIN = {bier:60, wein:30, hering:40, getreide:80}, FEST_DAYS = 30;
+  const MON = {
+    tor:{n:'Stadttor', cost:150000, days:150, ehre:2000, art:'mauer', d:'Ein Tor aus Backstein mit zwei Türmen, über dem Durchgang dein Haussiegel.'},
+    gilde:{n:'Gildehaus', cost:250000, days:200, ehre:3200, art:'rat', d:'Ein Haus für die Gilde der Kaufleute, mit Saal, Wappen und deinem Namen über der Tür.'},
+    turm:{n:'Kirchturm', cost:400000, days:300, ehre:5000, art:'kirche', d:'Ein Turm, den die Schiffer schon von See aus sehen. Die Glocke trägt deinen Namen.'}
+  };
+  Object.values(MON).forEach(m => { m.cost *= ECO.bau; });
+  const MON_ORDER = ['tor', 'gilde', 'turm'];
+  const MON_N = {
+    luebeck:{tor:'Holstentor', gilde:'Haus der Schiffergesellschaft', turm:'Türme von St. Marien'},
+    hamburg:{tor:'Millerntor', gilde:'Haus der Englandfahrer', turm:'Turm von St. Petri'},
+    bremen:{tor:'Ostertor', gilde:'Schütting', turm:'Türme des Doms'},
+    danzig:{tor:'Krantor', gilde:'Artushof', turm:'Turm der Marienkirche'},
+    riga:{tor:'Sandtor', gilde:'Schwarzhäupterhaus', turm:'Turm von St. Petri'},
+    reval:{tor:'Große Strandpforte', gilde:'Haus der Großen Gilde', turm:'Turm von St. Olai'},
+    visby:{tor:'Österport', gilde:'Gildehaus der Kaufleute', turm:'Türme von St. Marien'},
+    stockholm:{tor:'Norrport', gilde:'Gildehaus der Deutschen', turm:'Turm von St. Nikolai'}
+  };
+  const monName = k => (MON_N[st.home] || {})[k] || MON[k].n;
+  const festHave = () => { const K = st.kontor; return Object.fromEntries(Object.keys(FEST_MIN).map(g => [g, K && K.goods[g] ? Math.floor(K.goods[g].q) : 0])); };
+  const festOk = h => Object.keys(FEST_MIN).every(g => (h || festHave())[g] >= FEST_MIN[g]);
+  const festWord = n => n >= 600 ? 'ein Fest, von dem man noch lange spricht' : n >= 400 ? 'ein prächtiges Fest' : n >= 210 ? 'ein schönes Fest' : 'ein bescheidenes Fest';
+  function popPush(p) { const q = qS(); if (!q.pop) q.pop = p; else (q.queue || (q.queue = [])).push(p); }
+  function endeStart() {
+    st.ende = {may:st.day, stage:'fest', due:st.day + FEST_DAYS, fest:null, mon:null};
+    chronicle(`${st.player.name} wird Bürgermeister von ${C[st.home].n}`);
+    storyPush('mayor');
+    announce(`Der Rat von ${C[st.home].n} wählt dich zum Bürgermeister. Zur Feier richtest du am ${fdate(st.ende.due)} das große Fest aus: Leg dafür mindestens ${Object.entries(FEST_MIN).map(([g, n]) => `${n} Last ${G[g].n}`).join(', ')} ins Kontor. Was mehr dort liegt, wird auch aufgetischt und bringt dir einen besseren Platz im Buch der Stadt.`, 'rank');
+    blUpdate();
+  }
+  function endeDay() {
+    const E0 = st.ende; if (!E0) return;
+    if (E0.stage === 'fest' && st.day >= E0.due) holdFest();
+    if (E0.stage === 'bau' && E0.mon && st.day >= E0.mon.d0 + MON[E0.mon.k].days) monDone();
+  }
+  function holdFest() {
+    const E0 = st.ende, h = festHave(), ok = festOk(h), n = Object.values(h).reduce((a, b) => a + b, 0);
+    if (st.kontor) Object.keys(FEST_MIN).forEach(g => { delete st.kontor.goods[g]; });
+    E0.fest = {d:st.day, q:h, n, ok}; E0.stage = 'buch';
+    gainRepute(ok ? Math.round(n * 1.5) : 0);
+    if (!ok) st.repute = Math.max(0, (st.repute || 0) - 150);
+    chronicle(`Das große Fest des Bürgermeisters ${st.player.name}`);
+    const t = ok ? `Das große Fest in ${C[st.home].n}: ${Object.entries(h).map(([g, q]) => `${q} Last ${G[g].n}`).join(', ')}. Die Stadt feiert dich, ${festWord(n)}.`
+      : `Das große Fest in ${C[st.home].n} fällt mager aus: ${Object.entries(h).map(([g, q]) => `${q} Last ${G[g].n}`).join(', ')}. Die Leute murren, du verlierst Ansehen.`;
+    addLog(t, 'rank');
+    storyPush('fest');
+    popPush({k:'buch'});
+    blUpdate();
+  }
+  function endeAct(a, k) {
+    const E0 = st.ende; if (!E0) return;
+    if (a === 'weiter') { E0.stage = 'frage'; qS().pop = {k:'mon'}; renderQPop(); return save(); }
+    if (a === 'end') { st.ended = {d:st.day, total:0, title:`Bürgermeister von ${C[st.home].n}`, ende:true}; qS().pop = null; return commit(); }
+    if (a === 'frei') { E0.stage = 'frei'; qS().pop = null; addLog('Du führst dein Handelshaus frei weiter, ohne Monument und ohne Ende.', 'tip'); return commit(); }
+    if (a === 'mon' && MON[k]) { E0.mon = {k, d0:null}; E0.stage = 'monument'; qS().pop = null; addLog(`Du willst ${C[st.home].n} ein Monument stiften: ${monName(k)}. Den Bau gibst du im Reiter Haus in Auftrag.`, 'rank'); return commit(); }
+    if (a === 'monbau') {
+      const M = E0.mon && MON[E0.mon.k]; if (!M || E0.stage !== 'monument' || st.loc !== st.home || st.money < M.cost || st.enc) return;
+      st.money -= M.cost; E0.mon.d0 = st.day; E0.stage = 'bau';
+      addLog(`In ${C[st.home].n} beginnt der Bau: ${monName(E0.mon.k)}. Fertig in ${M.days} Tagen.`, 'rank');
+      chronicle(`${st.player.name} lässt bauen: ${monName(E0.mon.k)}`);
+      return commit();
+    }
+    if (a === 'wahl') { E0.mon = null; E0.stage = 'frage'; qS().pop = {k:'mon'}; renderQPop(); return save(); }
+  }
+  function monDone() {
+    const E0 = st.ende, M = MON[E0.mon.k];
+    E0.stage = 'fertig'; E0.mon.d1 = st.day; st.ehre = (st.ehre || 0) + M.ehre;
+    announce(`${monName(E0.mon.k)} in ${C[st.home].n} ist vollendet. ${M.ehre} Ehre für das Handelshaus ${st.player.name}; dein Name steht für immer im Buch der Stadt.`, 'rank');
+    chronicle(`${monName(E0.mon.k)} vollendet`);
+    storyPush('sieg');
+    blUpdate();
+  }
+  const monLeft = () => { const E0 = st.ende; return E0 && E0.mon && E0.mon.d0 != null ? Math.max(0, E0.mon.d0 + MON[E0.mon.k].days - st.day) : 0; };
+  function monHTML() {
+    const E0 = st.ende || {}, home = st.loc === st.home;
+    let h = `<div class="kontor"><h3>Monument</h3>`;
+    if (!E0.mon) return h + `<p class="small">Nach dem großen Fest kannst du ${C[st.home].n} ein Monument stiften.</p></div>`;
+    const k = E0.mon.k, M = MON[k];
+    h += `<div class="gvrow${E0.stage === 'fertig' ? ' done' : ''}"><span class="gvart">${isoArt(M.art, {w:72})}</span><span class="gvtxt"><b>${monName(k)}</b><span class="small">${M.n}. ${M.d} ${fmt(M.ehre)} Ehre, Bauzeit ${M.days} Tage.</span></span>`;
+    if (E0.stage === 'monument') h += `<span class="ybtns"><button class="ybtn on" type="button" data-ende="monbau"${home && st.money >= M.cost && !st.enc ? '' : ' disabled'}>${!home ? `nur in ${C[st.home].n}` : `Bau beginnen · ${fmt(M.cost)} G`}</button><button class="ybtn" type="button" data-ende="wahl">Anders wählen</button></span>`;
+    else if (E0.stage === 'bau') h += `<span class="bar"><i style="width:${Math.round((1 - monLeft() / M.days) * 100)}%"></i></span><span class="small">noch ${monLeft()} Tage</span>`;
+    else h += `<span class="small">vollendet am ${fdate(E0.mon.d1, true)}</span>`;
+    return h + `</div></div>`;
+  }
+  const monMeta = () => { const E0 = st.ende; return !E0 || !E0.mon ? '' : E0.stage === 'bau' ? `noch ${monLeft()} Tage` : E0.stage === 'fertig' ? 'vollendet' : 'bereit zum Bau'; };
+  // Buch der Stadt: die Familien nach Amt, Fest und Vermögen; dein Haus mit Siegel
+  function buchHTML() {
+    const E0 = st.ende || {}, F0 = E0.fest || {n:0, q:{}};
+    const fam = [{me:true, name:st.player.name, av:st.player.avatar, t:`Bürgermeister seit ${fdate(E0.may, true)}${F0.n ? ` · Fest mit ${fmt(F0.n)} Last` : ''}`, w:wealth()}]
+      .concat((st.rivals || []).map(r => ({name:r.name, av:r.av, t:`aus ${C[r.home].n} · Ansehen ${fmt(Math.round(r.repute))}`, w:r.wealth})))
+      .sort((a, b) => (b.me ? 1 : 0) - (a.me ? 1 : 0) || b.w - a.w);
+    return `<div class="in buchst"><span class="k">${C[st.home].n}, ${fdate(st.day, true)}</span><h2 id="q-title">Buch der Stadt</h2>` +
+      `<p>${F0.ok ? `Das große Fest war ${festWord(F0.n)}.` : 'Das große Fest fiel mager aus.'} ${Object.entries(F0.q || {}).map(([g, q]) => `${q} Last ${G[g].n}`).join(', ')}.</p>` +
+      `<ol class="famlist">${fam.map((f, i) => `<li class="${f.me ? 'me' : ''}"><span class="n">${i + 1}</span>${sealImg(f.av, {small:true})}<span><b>${esc(f.name)}</b><small>${f.t} · ${fmt(Math.round(f.w))} G</small></span></li>`).join('')}</ol>` +
+      `<h3 class="rph">Bestenliste</h3>${blHTML(false)}` +
+      `<p>Möchtest du weiterspielen? Wer weiterspielt, kann der Stadt ein Monument stiften und kommt damit für immer ins Buch der Stadt.</p>` +
+      `<div class="ybtns qbtns"><button class="btn" type="button" data-ende="end"><b>Hier enden</b><small>später fortsetzbar</small></button><button class="btn primary" type="button" data-ende="weiter"><b>Weiterspielen</b><small>Monument wählen</small></button></div></div>`;
+  }
+  function monAskHTML() {
+    return `<div class="in qwel"><span class="k">Ein Monument für ${C[st.home].n}</span><h2 id="q-title">Was soll von dir bleiben?</h2>` +
+      `<p>Ein Monument kostet viel Geld und Zeit. Steht es, ist dein Name unsterblich, und das Buch der Hanse schließt mit deinem Bild.</p>` +
+      `<div class="monlist">${MON_ORDER.map(k => { const M = MON[k]; return `<button class="moncard" type="button" data-ende="mon" data-k="${k}"><span class="gvart">${isoArt(M.art, {w:96})}</span><b>${monName(k)}</b><span class="small">${M.n} · ${fmt(M.cost)} G · ${M.days} Tage · ${fmt(M.ehre)} Ehre</span><span class="small">${M.d}</span></button>`; }).join('')}</div>` +
+      `<button class="btn wide" type="button" data-ende="frei"><b>Ohne Monument frei weiterspielen</b><small>das Spiel geht ohne Ende weiter</small></button></div>`;
+  }
   // Schlusswertung der Kampagne
   const HONOR_KEY = 'kogge-kontor-ehrenbuch';
   function scoreParts() {
@@ -3851,7 +3968,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       ['Vermögen', Math.round(w / 100)],
       ['Ansehen', rep],
       ['Amtszeiten als Bürgermeister', (st.mayorTerms || 0) * 400],
-      ['Ältermann der Hanse', st.alderman ? 2500 + ((st.race || {}).first ? 1500 : 0) : 0],
       ['Ehre aus Vorhaben und Stiftungen', ehre()],
       ['Ratsaufträge', (st.orders && st.orders.done || 0) * 60],
       ['Siege über Seeräuber', (st.wins || 0) * 40]
@@ -4228,8 +4344,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // Bauen mit Darlehen, wenn nur das Geld fehlt
   const loanBuildAmt = tp => { const T = SHIPS[tp], Lr = LENDER(st.loc); if (!T || !Lr || st.rank < TAKE_RANK || st.money >= T.price) return 0;
     const amt = Math.ceil((T.price - Math.max(0, st.money) + 300) / 100) * 100, lim = Math.min(loanRoom(), Math.round(LOAN_CAP() * Lr.k / 100) * 100); return amt <= lim ? amt : 0; };
-  const loanBuildBtn = (tp, why) => { const amt = why === `${fmt(SHIPS[tp].price)} G` ? loanBuildAmt(tp) : 0, Lr = LENDER(st.loc);
-    return amt ? `<button class="ybtn" type="button" data-yard="loanbuild" data-n="${tp}">Mit Darlehen · ${fmt(amt)} G zu ${fmt1(Lr.r * 100)} %</button>` : ''; };
+  const loanBuildBtn = () => '';   // ab Version 54 keine Kredite mehr
   const bizShown = () => !!st.loc && !st.focus && !st.sail && (st.rank >= TAKE_RANK || !!HK[st.loc]);
   function dealHTML() {
     const cid = st.loc, F = finState(), O = finOffers(cid), Lr = LENDER(cid);
@@ -4259,7 +4374,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       h += `</div>`;
     }
     // Wechsler
-    if ((Lr && st.rank >= TAKE_RANK) || O.req.length) {
+    if (false && ((Lr && st.rank >= TAKE_RANK) || O.req.length)) {   // ab Version 54 keine Kredite mehr
       h += `<div class="kontor"><h3>Wechsler und Darlehen</h3>`;
       if (Lr && st.rank >= TAKE_RANK) {
         const room = Math.min(loanRoom(), Math.round(LOAN_CAP() * Lr.k / 100) * 100), steps = [...new Set([0.25, 0.5, 1].map(f => Math.round(room * f / 100) * 100))].filter(a => a >= 100);
@@ -4292,7 +4407,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (tk.length) { any = true; h += `<span class="flabel">Deine Schulden</span>` + tk.map(L => { const o = loanOwed(L); return `<div class="krow"><span class="gname">${esc(L.who.replace(/^\w/, m => m.toUpperCase()))}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(o)} G</span><span class="small">geliehen ${fmt(L.amt)} G zu ${fmt1(L.r * 100)} % im Monat, fällig ${fdate(L.due)}${L.ext ? ', schon verlängert' : ''}</span><span class="ybtns"><button class="ybtn" type="button" data-fin="repay" data-id="${L.id}"${st.money >= o ? '' : ' disabled'}>Tilgen · ${fmt(o)} G</button></span></div>`; }).join(''); }
     if (gv.length) { any = true; h += `<span class="flabel">Verliehenes Geld</span>` + gv.map(L => `<div class="krow"><span class="gname">${esc(L.who)}</span><span class="num small" style="grid-column:auto;margin:0">${fmt(L.amt)} G</span><span class="small">in ${C[L.cid].n}, ${fmt1(L.r * 100)} % im Monat, fällig ${fdate(L.due)}, Sicherheit ${GRADE[L.gr].n}</span></div>`).join(''); }
     if (F.crops.length) { any = true; h += `<span class="flabel">Vorkäufe</span>` + F.crops.map(c => `<div class="krow"><span class="gname">${icon(c.g)}${G[c.g].n}</span><span class="num small" style="grid-column:auto;margin:0">${c.ready ? `${c.q - c.got} Last` : `≈ ${c.q0} Last`}</span><span class="small">${c.n} von ${esc(byDat(c.by))} in ${C[c.cid].n} · ${c.ready ? `liegt bereit bis ${fdate(c.d1 + 45)}${c.paid ? '' : `, Restzahlung ${fmt(c.price * c.q0 - c.dep)} G offen`}` : `Lieferung am ${fdate(c.del)}, Rest ${fmt(c.price * c.q0 - c.dep)} G`}</span></div>`).join(''); }
-    if (!any) h += `<p class="small">${st.rank < CT_RANK ? `Ab dem Rang ${RANKS[CT_RANK][1]} bieten dir Städte und Kaufleute Lieferverträge an, die Hansekontore nehmen dich auf, und Wechsler leihen dir größere Summen. ` : 'Noch läuft nichts. '}Angebote findest du in den Häfen im Reiter Markt unter Aufträge und Geschäfte.${st.rank >= TAKE_RANK ? ` Geld leihen dir der Rat von ${C[st.home].n} (1,25 % im Monat)${st.home === 'luebeck' ? '' : ', die Kämmerei in Lübeck (1,5 %)'} und die Lombarden in Brügge (2 %); dein Rahmen liegt bei ${fmt(Math.round(LOAN_CAP() * 1.5))} Gulden.` : ''}</p>`;
+    if (!any) h += `<p class="small">${st.rank < CT_RANK ? `Ab dem Rang ${RANKS[CT_RANK][1]} bieten dir Städte und Kaufleute Lieferverträge an, die Hansekontore nehmen dich auf. ` : 'Noch läuft nichts. '}Angebote findest du in den Häfen im Reiter Markt unter Aufträge und Geschäfte.</p>`;
     return h + `</div>`;
   }
   const bizMeta = () => { const F = st.fin || {parts:[], loans:[], crops:[]}, n = ((st.contracts || {}).list || []).length, d = debt();
@@ -4713,7 +4828,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     commit();
     if (st.sail && !st.pendingFight) schedTick();
   }
-  function commit() { questCheck(); save(); render(); }
+  function commit() { if (st && st.home) unlockCheck(!st.unl); questCheck(); save(); render(); }
   function schedTick() { scene.tickDur = tickMs(); timer = setTimeout(tick, scene.tickDur); }
   function setTempo(v) {
     if (!TEMPI.includes(v) || v === tempo) return;
@@ -5788,6 +5903,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   function winCore(kind) {
     const e = st.enc;
     st.wins = (st.wins || 0) + 1;
+    if (st.wins === 1 && !st.focus) storyPush('win', {foe:e.name});
     let loot = kind === 'sunk' ? e.n0 * rnd(5, 9) : kind === 'fled' ? e.n0 * rnd(3, 6) : kind === 'burn' ? e.n0 * rnd(6, 11) : e.n0 * rnd(12, 24);
     if (e.prey) loot *= 0.3;
     loot *= TIER_LOOT[e.tier] || 1;   // ab Version 51: schwere Gegner lohnen mehr
@@ -10843,7 +10959,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       <circle cx="70" cy="70" r="66" fill="url(#gl${id})" opacity="0"/></svg>`;
     return s;
   }
-    return {rund, seal, illum, illumR, figure, woodcut};
+    return {rund, seal, illum, illumR, figure, woodcut, AV, dark, light, mix};
   })();
   function avatarSVG(a, cls) {
     a = a || defAv();
@@ -10902,9 +11018,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         `<dt>Stammsitz</dt><dd>${hm.n}</dd><dt>Vorteil</dt><dd>${PERKS[w.home].t}: ${PERKS[w.home].d}</dd>` +
         `<dt>Start</dt><dd>${fmt(START + (w.home === 'stockholm' ? 1000 : 0) + (w.origin === 'kaufmann' ? 500 : 0))} Gulden, alte Schnigge mit ${w.home === 'danzig' ? 35 : 30} Last, 9 Matrosen, ${w.home === 'reval' ? '4 Armbrüste und 2 Harnische' : '2 Armbrüste'}, ein unerfahrener Kapitän</dd>` +
         `<dt>Spielstand</dt><dd>Platz ${w.slot}${getSlot(w.slot) ? ' (wird überschrieben)' : ''}</dd></dl></div>` +
-        `<div class="opt"><span class="flabel">Spielart</span><div class="chipset" role="group">` +
-        [['offen', 'Offenes Spiel'], ['kampagne', 'Kampagne bis 1372']].map(([v, l]) => `<button type="button" data-wmode="${v}" aria-pressed="${w.mode === v}">${l}</button>`).join('') + `</div>` +
-        `<span class="small">${w.mode === 'kampagne' ? 'Kampagne: Das Spiel endet mit dem Hansetag am 24. Juni 1372, zwei Jahre nach dem Frieden von Stralsund. Dann zählen Vermögen, Ansehen, Ämter und Taten, und du bekommst deinen Platz im Ehrenbuch.' : 'Offenes Spiel: kein Ende. Dein Ziel ist der Aufstieg vom Krämer zum Ältermann der Hanse; die Ziele-Karte führt dich Kapitel für Kapitel dorthin.'}</span></div>` +
+        `<p class="small">Dein Ziel: vom Krämer zum Bürgermeister von ${hm.n} aufsteigen und das große Fest ausrichten. Die Karte „Dein Weg in der Hanse“ führt dich Kapitel für Kapitel dorthin. Ein festes Ende gibt es nicht.</p>` +
         `<div class="opt"><span class="flabel">Jahreszeiten</span><div class="chipset" role="group">` +
         [['spuerbar', 'Spürbar'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-wseason="${v}" aria-pressed="${w.seasons === v}">${l}</button>`).join('') + `</div>` +
         `<span class="small">${w.seasons === 'mild' ? 'Mild: Die Jahreszeiten bewegen die Preise nur halb so stark, keine Sperren durch Eis.' : 'Spürbar: Heringszeit, Fastenzeit, Ernte und Winter bewegen die Preise deutlich; die Newa friert von Dezember bis März zu.'} Du kannst das später unter „Spielstände“ ändern.</span></div>` +
@@ -10960,8 +11074,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         (cur ? '' : `<button class="ybtn" type="button" data-slot="del" data-n="${n}">${ui.delAsk === n ? 'Wirklich löschen?' : 'Löschen'}</button>`) + `</div></div>`;
     });
     h += langHTML();
-    h += `</div><div class="xfer"><h3>Bestenliste</h3><div class="chipset" role="group">` + [['a', 'Wer zuerst Ältermann wurde'], ['w', 'Nach Vermögen']].map(([v, l]) => `<button type="button" data-slot="blsort" data-v="${v}" aria-pressed="${!!ui.blW === (v === 'w')}">${l}</button>`).join('') +
-      `</div>${blHTML(!!ui.blW)}<span class="small">Jedes Spiel steht einmal in der Liste, mit dem höchsten Vermögen und dem Jahr, in dem du Ältermann wurdest.${saves.cloud && saves.ok ? ' Gesichert in deinem Claude-Konto.' : ''}</span>`;
+    h += `</div><div class="xfer"><h3>Bestenliste</h3><div class="chipset" role="group">` + [['a', 'Wer zuerst Bürgermeister wurde'], ['w', 'Nach Vermögen']].map(([v, l]) => `<button type="button" data-slot="blsort" data-v="${v}" aria-pressed="${!!ui.blW === (v === 'w')}">${l}</button>`).join('') +
+      `</div>${blHTML(!!ui.blW)}<span class="small">Jedes Spiel steht einmal in der Liste: wann du Bürgermeister wurdest, wie groß dein Fest war und dein höchstes Vermögen.${saves.cloud && saves.ok ? ' Gesichert in deinem Claude-Konto.' : ''}</span>`;
     if (!st._temp) h += `</div><div class="xfer"><h3>Jahreszeiten in diesem Spiel</h3><div class="chipset" role="group">` +
       [['spuerbar', 'Spürbar'], ['mild', 'Mild']].map(([v, l]) => `<button type="button" data-slot="seasons" data-v="${v}" aria-pressed="${st.seasons === v}">${l}</button>`).join('') +
       `</div><span class="small">${st.seasons === 'mild' ? 'Preise schwanken mit der Jahreszeit nur halb so stark, kein Eis.' : 'Deutliche Saisonpreise, Newa von Dezember bis März zugefroren, Treibeis im Januar und Februar.'}</span>`;
@@ -11304,7 +11418,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       done:'Gut gerüstet und mit eigenem Lager. Als Nächstes wartet die Gilde: Mit einer Niederlassung in einer anderen Stadt öffnen sich Handelsrouten und das Bauen.',
       goals:[
         {t:() => `Baue das Kontor in ${HN()}`, ok:() => !!st.kontor,
-          hint:() => `Reiter Haus, Stammsitz ${HN()}: das Kontor. Es ist dein Lager im Stammsitz (150 Last): billig einlagern, teuer verkaufen. Bauen kannst du es, wenn du in ${HN()} liegst. Eine Niederlassung ist es nicht, die liegt in einer anderen Stadt.`, tab:'haus', sel:'#homecard [data-det="kontor"]'},
+          hint:() => `Reiter Haus, Stammsitz ${HN()}: das Kontor. Es ist dein Lager im Stammsitz (150 Last): billig einlagern, teuer verkaufen. Bauen kannst du es, wenn du in ${HN()} liegst. Eine Niederlassung ist es nicht, die liegt in einer anderen Stadt.`, tab:'haus', sel:'#homecard [data-hs-open="kontor"]'},
         {t:() => `Erfülle einen Auftrag des Rats von ${HN()}`, ok:() => !!(st.orders && st.orders.done > 0),
           hint:() => `Liegst du in ${HN()}, steht unter Aufträge im Reiter Markt ein Auftrag des Rats: Ware besorgen, wo sie günstig ist, und in ${HN()} abliefern. Er bringt Lohn und Ansehen.`, tab:'markt', sel:'#frbox'},
         {t:() => 'Gib ein zweites Schiff in Auftrag', p:() => [nShips(), 2], ok:() => nShips() >= 2,
@@ -11337,32 +11451,26 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       goals:[
         gRep(CIVIC[3][0], 3),
         {t:() => 'Stimme auf dem Hansetag ab', ok:() => Object.values((st.hanse || {}).votes || {}).some(v => v && v.my),
-          hint:() => 'Unter Hansetag (Reiter Haus, Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'haus', sel:'#homecard [data-det="hansetag"]'},
+          hint:() => 'Unter Hansetag (Reiter Haus, Stammsitz) stehen die offenen Fragen. Deine Stimme zählt nach Ansehen und Ämtern.', tab:'haus', sel:'#homecard [data-hs-open="hansetag"]'},
         {t:() => 'Halte zwei Verbände auf Handelsrouten', p:() => [(st.convoys || []).length, 2], ok:() => (st.convoys || []).length >= 2,
           hint:() => 'Reiter Haus: weitere Kapitäne anheuern und neue Handelsrouten anlegen.', tab:'haus', sel:'#housecard'},
         {t:() => 'Unterschreibe einen Liefervertrag', ok:() => !!(st.contracts && (st.contracts.list.length || st.contracts.done || st.contracts.broken)),
           hint:() => 'Ab Kaufmann bieten Städte und Kaufleute Lieferverträge an: Reiter Markt, Aufträge, unten. Nimm einen, dessen Ware du nah bekommst.', tab:'markt', sel:'#frbox'},
         gWealth(3)]},
     {n:'Bürgermeister', rew:3000,
-      intro:() => `Am 1. Januar und am 1. Juli wählt ${HN()} den Bürgermeister. Es gewinnt, wer das meiste Ansehen hat.`,
-      done:'Als Bürgermeister bist du einer der Großen der Hanse. Bleibt das höchste Amt: Ältermann der Hanse.',
+      intro:() => `Am 1. Januar und am 1. Juli wählt ${HN()} den Bürgermeister. Es gewinnt, wer das meiste Ansehen hat. ${(st.rivals || []).map(r => r.name).join(', ')} wollen das Amt auch.`,
+      done:'Du bist Bürgermeister. Jetzt richtest du das große Fest aus.',
       goals:[
         gRep(ELECT_MIN, 4),
-        {t:() => 'Gewinne die Wahl zum Bürgermeister', ok:() => !!st.mayor || (st.mayorTerms || 0) > 0,
-          hint:() => 'Im Rathaus (Reiter Haus) siehst du, wie du im Ansehen gegen die Konkurrenten stehst und wann gewählt wird.', tab:'haus', sel:'#homecard [data-det="council"]'},
-        {t:() => 'Werde Mitglied eines Hansekontors', ok:() => hkCount() > 0,
-          hint:() => 'Ab Fernhändler nehmen dich die Kontore in Brügge, London, Bergen und Nowgorod auf: dort im Reiter Markt unter Geschäfte. Mitglieder kaufen und verkaufen dort günstiger.', tab:'markt', sel:'#dealcard'},
-        gWealth(4)]},
-    {n:'Ältermann der Hanse', rew:0, last:true,
-      intro:() => `Der Hansetag wählt am 24. Juni den Ältermann der Hanse. Wählbar ist ein Bürgermeister mit ${fmt(ALDER_STAND)} Ansehen und Ehre zusammen. Auch ${(st.rivals || []).map(r => r.name).join(', ')} wollen das Amt; wer es zuerst bekommt, steht oben in der Bestenliste.`,
-      done:'Du stehst an der Spitze der Hanse. Das Spiel geht weiter, so lange du willst.',
-      goals:[
-        {t:() => 'Beginne ein großes Vorhaben', ok:() => !!(st.gv && (st.gv.job || Object.keys(st.gv.done).length)),
-          hint:() => `Reiter Haus, Große Vorhaben: ein Hospital, ein neuer Hafen oder eine Friedeflotte in ${HN()}. Sie bringen Ehre.`, tab:'haus', sel:'#homecard [data-det="gv"]'},
-        {t:() => `Sammle ${fmt(ALDER_STAND)} Ansehen und Ehre`, p:() => [standing(), ALDER_STAND], ok:() => standing() >= ALDER_STAND,
-          hint:() => 'Ansehen bringen Verkäufe im Stammsitz, Aufträge des Rats, Bauten und Siege; Ehre bringen große Vorhaben und Stiftungen.', tab:'haus', sel:'#homecard [data-det="gv"]'},
-        {t:() => 'Werde Ältermann der Hanse', ok:() => !!st.alderman,
-          hint:() => 'Gewählt wird auf dem Hansetag am 24. Juni. Unter Haus, Wettlauf um das Ältermannamt, siehst du, wie du gegen die Konkurrenten stehst.', tab:'haus', sel:'#homecard [data-det="race"]'}]}
+        {t:() => 'Gewinne die Wahl zum Bürgermeister', ok:() => !!st.ende || !!st.mayor,
+          hint:() => 'Unter Haus, Wettlauf, siehst du, wie du im Ansehen gegen die Familien stehst und wann gewählt wird.', tab:'haus', sel:'#homecard [data-hs-open="race"]'}]},
+    {n:'Das große Fest', rew:0, last:true,
+      intro:() => `Als Bürgermeister lädst du ${HN()} zum großen Fest${st.ende && st.ende.stage === 'fest' ? ` am ${fdate(st.ende.due)}` : ''}. Aufgetischt wird, was im Kontor liegt: mindestens ${Object.entries(FEST_MIN).map(([g, n]) => `${n} Last ${G[g].n}`).join(', ')}. Mehr bringt einen besseren Platz in der Bestenliste.`,
+      done:'Die Stadt hat gefeiert, dein Name steht im Buch der Stadt. Wenn du weiterspielst, kannst du ein Monument stiften.',
+      goals:Object.keys(FEST_MIN).map(g => ({t:() => `Lege ${FEST_MIN[g]} Last ${G[g].n} ins Kontor`, p:() => [Math.min(FEST_MIN[g], festHave()[g]), FEST_MIN[g]], ok:() => !!(st.ende && st.ende.fest) || festHave()[g] >= FEST_MIN[g],
+        hint:() => `Kaufe ${G[g].n}, wo es günstig ist, und lagere es in ${HN()} ein (Reiter Haus, Kontor). Am Festtag wird alles aufgetischt.`, tab:'haus', sel:'#homecard [data-hs-open="kontor"]'})).concat([
+        {t:() => 'Richte das große Fest aus', ok:() => !!(st.ende && st.ende.fest),
+          hint:() => st.ende ? `Am ${fdate(st.ende.due)} wird gefeiert, auch wenn du nicht in ${HN()} bist.` : 'Erst wird gewählt, dann gefeiert.', tab:'haus', sel:'#homecard'}])}
   ];
   const qCur = () => { const q = qS(); return QUEST[Math.min(q.ch, QUEST.length - 1)]; };
   const qGoal = () => { const q = qS(), Q = qCur(); return Q.goals.find(g => !g.ok(q)) || null; };
@@ -11399,7 +11507,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       setTimeout(() => tgt.classList.remove('qflash'), 2600);
     });
   }
-  function q0Pop(p) { const q = qS(); q.pop = p; if (st.rpt && p == null) st.rpt.seen = true; renderQPop(); save(); renderNews(); }
+  function q0Pop(p) { const q = qS(); q.pop = p == null && q.queue && q.queue.length ? q.queue.shift() : p; if (st.rpt && p == null) st.rpt.seen = true; renderQPop(); save(); renderNews(); }
   const goalLine = (g, q, cur) => {
     const ok = g.ok(q), pr = g.p ? g.p() : null;
     return `<li class="${ok ? 'ok' : cur ? 'cur' : ''}"><i class="qmk" aria-hidden="true">${ok ? '✓' : ''}</i><span><b>${g.t()}</b>` +
@@ -11498,10 +11606,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     return h;
   }
   function welcomeHTML() {
-    const kp = st.mode === 'kampagne';
     return `<div class="in qwel"><span class="k">${C[st.home].n}, ${fdate(st.day, true)}</span><h2 id="q-title">Willkommen, ${esc(st.player.name)}</h2>` +
-      `<p>Du beginnst als kleiner Krämer mit einer alten Schnigge. <b>Dein Ziel:</b> vom Krämer zum Ältermann der Hanse aufsteigen. Handel bringt dir Vermögen und Rang, Verkäufe in ${HN()} bringen Ansehen und Ämter.</p>` +
-      `<p>${kp ? 'Du spielst die Kampagne bis zum Hansetag am 24. Juni 1372. Dann zählen Vermögen, Ansehen, Ämter und Taten für das Ehrenbuch.' : 'Du spielst offen: Das Spiel endet nicht, du steigst auf, so weit du willst.'}</p>` +
+      `<p>Du beginnst als kleiner Krämer mit einer alten Schnigge. <b>Dein Ziel:</b> vom Krämer zum Bürgermeister von ${HN()} aufsteigen und das große Fest ausrichten. Handel bringt dir Vermögen und Rang, Verkäufe in ${HN()} bringen Ansehen und Ämter.</p>` +
       `<p>Die Karte <b>Dein Weg in der Hanse</b> im Reiter Lage zeigt dir immer das nächste Ziel, mit einem Knopf, der dir die richtige Stelle zeigt. Das erste Kapitel führt dich durch die erste Fahrt. Alle 14 Tage legt dir dein Schreiber einen Bericht vor.</p>` +
       `<div class="ybtns qbtns"><button class="btn" type="button" data-qwel="skip"><b>Ohne Einführung</b><small>gleich frei spielen</small></button><button class="btn primary" type="button" data-qwel="go"><b>Los geht's</b><small>erste Fahrt</small></button></div></div>`;
   }
@@ -11511,7 +11617,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       (N ? `<h3 class="rph">Kapitel ${ch + 2}: ${N.n}</h3><p class="small">${N.intro()}</p>` : '') +
       `<button class="btn primary wide" type="button" data-qclose="1">Weiter</button></div>`;
   }
-  const qPopOk = () => !!(st && st.loc && !st.enc && !st.waiting && !st.pendingFight && !st.sail && !ui.wiz && !ui.sheet);
+  const qPopOk = () => !!(st && !st.enc && !st.waiting && !st.pendingFight && !ui.wiz && !ui.sheet && (st.loc && !st.sail || (st.q && st.q.pop && ['buch', 'mon', 'story'].includes(st.q.pop.k))));
   function renderQPop() {
     const sh = $('#qsheet'), sc = $('#qscrim'); if (!sh) return;
     const q = st ? qS() : null, p = q && q.pop;
@@ -11521,7 +11627,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const key = p.k + (p.ch || '') + (p.k === 'rp' ? st.rpt.d1 + ':' + st.day : '');
     if (sh.dataset.k === key) return;
     sh.dataset.k = key;
-    sh.innerHTML = p.k === 'welcome' ? welcomeHTML() : p.k === 'ch' ? chapterHTML(p.ch) : rpHTML();
+    sh.innerHTML = p.k === 'welcome' ? welcomeHTML() : p.k === 'ch' ? chapterHTML(p.ch) : p.k === 'buch' ? buchHTML() : p.k === 'mon' ? monAskHTML() : p.k === 'story' ? storyHTML(p) : rpHTML();
     sh.scrollTop = 0;
   }
   const qBlocksNews = () => !!(st && st.q && st.q.pop && qPopOk());
@@ -11531,6 +11637,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (t.dataset.qskip) { const q = qS(); if (q.ch === 0) { q.skipTut = true; addLog('Du überspringst die Einführung. Die Ziele-Karte zeigt dir weiter den Weg.', 'tip'); questCheck(); } return commit(); }
     if (t.dataset.qrep) { qS().pop = {k:'rp'}; return renderQPop(); }
     if (t.dataset.qclose) return q0Pop(null);
+    if (t.dataset.ende) return endeAct(t.dataset.ende, t.dataset.k);
     if (t.dataset.qauto) { qS().rpAuto = t.checked; return save(); }
     if (t.dataset.qwel) { const q = qS(); if (t.dataset.qwel === 'skip') { q.skipTut = true; questCheck(); } q.pop = null; commit(); renderQPop(); if (t.dataset.qwel === 'go') { const g = qGoal(); if (g) questShow(g.sel, g.tab); } }
   }
@@ -11548,7 +11655,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (e.warToll) flags.push('Pfundzoll für den Krieg');
     if (flags.length) h += `<div class="chips" style="margin:6px 0">${flags.map(x => `<span class="chip">${x}</span>`).join('')}</div>`;
     h += `<ol class="chronlist">${e.chron.slice(0, 30).map(x => `<li><time>${fdate(x.d, true)}</time><span>${x.t}</span></li>`).join('') || '<li><span>Noch ist nichts geschehen.</span></li>'}</ol>`;
-    h += `<h3 class="ehead">Bestenliste</h3>${blHTML(false)}<p class="small">Wer zuerst Ältermann wird, steht oben, dann zählt das Vermögen. Ganz unter Spielstände.</p>`;
+    h += `<h3 class="ehead">Bestenliste</h3>${blHTML(false)}<p class="small">Wer am frühesten Bürgermeister wird, steht oben, dann zählen das Fest und das Vermögen. Ganz unter Spielstände.</p>`;
     const hb = honorBook();
     if (hb.length) h += `<h3 class="ehead">Ehrenbuch</h3><ol class="honor">${hb.slice(0, 5).map(x => `<li><b>${esc(x.n)}</b> <span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.t}</span><span class="num">${fmt(x.s)}</span></li>`).join('')}</ol>`;
     $('#chronbody').innerHTML = h;
@@ -11565,6 +11672,375 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     $('#loglast').textContent = l0 ? `${fdate(l0.d)} · ${l0.text}` : '';
     $('#loglist').innerHTML = st.log.slice(0, 40).map(l =>
       `<li><time>${fdate(l.d)}</time><span>${label[l.kind] ? `<span class="tag">${label[l.kind]}</span>` : ''}${l.text}</span></li>`).join('');
+  }
+  // ───── Ab Version 54: Erzählbilder als Buchmalerei ─────
+  // Dieselben Gesichter wie die Bildnisse; veränderlich sind Stammsitz mit Wahrzeichen, Jahreszeit, Hausfarbe (Rahmen, Segel),
+  // Kleidung nach Rang, Begleiter, Fracht am Kai und das Spruchband. Ebenen von hinten nach vorn: Goldgrund, Stadt, Mauer, Kai, Leute, Wasser, Kogge.
+  const STORY = (() => {
+    const P = PT;
+    const person = (() => {
+    const INK = '#3a2316', WHITE = '#f6f1e4', RED = '#c2412f';
+    let uid = 0;
+    const F = (d, fill, w = 1.1, extra = '') => `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"${extra}/>`;
+    const Ln = (d, w = .8, c = INK, extra = '') => `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${extra}/>`;
+      function person(a, o) {
+        const id = 'p' + (++uid), {R, C} = P.illumR(Object.assign({}, a, {_soft:true}), id, false);
+        const a2 = Object.assign({}, a, {_soft:true, _noBody:true}), rank = o.rank || 0, f = a.g === 'f';
+        const cl = C.cloth, clD = P.dark(cl, .35), mantle = P.AV.cloth[((a.cloth || 0) + 3) % 7], mantleC = P.light(mantle, .05);
+        const long = f || rank >= 2, hem = 292;
+        let s = '';
+        // Mantel hinter dem Körper (ab Kaufmann), mit Pelzbesatz ab Großkaufmann
+        if (rank >= 2) s += F(`M40 100 C22 112 14 170 12 ${hem} L114 ${hem} C112 170 104 112 86 100 Z`, mantleC, 1.1) + Ln(`M22 140 C18 200 16 250 16 ${hem - 4}`, .8, P.dark(mantleC, .35)) + Ln(`M104 140 C108 200 110 250 110 ${hem - 4}`, .8, P.dark(mantleC, .35));
+        // Gewand
+        const tunic = long ? `M48 99 C39 102 34 112 32 128 L24 ${hem - 4} C42 ${hem + 4} 84 ${hem + 4} 102 ${hem - 4} L94 128 C92 112 87 102 78 99 C70 103 56 103 48 99 Z`
+          : 'M48 99 C39 102 34 112 32 128 L28 206 C44 212 82 212 98 206 L94 128 C92 112 87 102 78 99 C70 103 56 103 48 99 Z';
+        if (!long) s += F(`M42 204 L40 ${hem - 6} L52 ${hem - 6} L56 206 Z`, P.dark(cl, .55)) + F(`M70 206 L74 ${hem - 6} L86 ${hem - 6} L84 204 Z`, P.dark(cl, .55));
+        s += F(tunic, cl, 1.2);
+        const folds = long ? [`M50 160 C47 200 44 240 40 ${hem - 6}`, `M63 162 V${hem - 2}`, `M76 160 C79 200 82 240 86 ${hem - 6}`] : ['M50 160 C48 180 46 196 44 206', 'M63 162 V210', 'M76 160 C78 180 80 196 82 206'];
+        s += folds.map(d => Ln(d, .8, clD)).join('') + Ln('M40 140 C38 170 36 200 34 230', 1.2, '#ffffff', ' opacity=".18"');
+        // Gürtel mit Tasche
+        s += F('M33.4 150 C50 154 76 154 92.8 150 L93 156 C76 160 50 160 33.2 156 Z', rank >= 2 ? '#e2b94e' : '#6b4a2a', .9) + F('M38 157 C36 166 38 172 44 173 C50 172 51 166 48 157 Z', '#8a5a2a', .9);
+        // Schuhe
+        s += F(`M${long ? 30 : 38} ${hem - 4} C${long ? 22 : 30} ${hem + 2} 14 ${hem + 4} 8 ${hem + 4} C16 ${hem + 9} 34 ${hem + 9} 44 ${hem + 4} Z`, INK, .6) + F(`M${long ? 84 : 80} ${hem - 4} C92 ${hem + 2} 102 ${hem + 4} 110 ${hem + 4} C102 ${hem + 9} 86 ${hem + 9} 78 ${hem + 4} Z`, INK, .6);
+        // Arme: links hängend, rechts zeigend oder mit Brief
+        const skin = C.skin;
+        s += F('M40 104 C32 116 29 132 29 150 L39 152 C39 138 41 124 46 112 Z', cl, 1.1) + `<circle cx="34" cy="156" r="5.4" fill="${skin}" stroke="${INK}" stroke-width=".9"/>`;
+        if (o.pose === 'ruhig') s += F('M86 104 C94 116 97 132 97 150 L87 152 C87 138 85 124 80 112 Z', cl, 1.1) + `<circle cx="92" cy="156" r="5.4" fill="${skin}" stroke="${INK}" stroke-width=".9"/>`;
+        // Brief: gerollte Urkunde mit Siegel an der Schnur, die Hand liegt sichtbar darüber und hält sie in der Mitte
+        else if (o.pose === 'brief') s += F('M84 106 C94 116 100 128 101 142 L90 146 C88 132 84 122 78 114 Z', cl, 1.1) +
+          `<g transform="translate(98 145) rotate(-22)">${F('M-17 -3.4 H17 V3.4 H-17 Z', WHITE, .8)}${Ln('M-12 0 H12', .5, '#b8a27a')}<ellipse cx="-17" cy="0" rx="1.8" ry="3.8" fill="#e9dfc8" stroke="${INK}" stroke-width=".7"/><ellipse cx="17" cy="0" rx="1.8" ry="3.8" fill="#e9dfc8" stroke="${INK}" stroke-width=".7"/></g>` +
+          Ln('M108.5 144.2 Q110 149 109.4 154', .8, '#8e2219') + `<circle cx="109.4" cy="157" r="3.4" fill="${P.AV.colStrong[a.col] || RED}" stroke="${INK}" stroke-width=".6"/>` +
+          // Faust um die Rolle: Fingerglieder quer, Daumen oben
+          `<ellipse cx="94.4" cy="147.2" rx="5.2" ry="6.6" fill="${skin}" stroke="${INK}" stroke-width=".9"/>` +
+          [143.2, 147.4, 151.4].map(y => `<ellipse cx="99.2" cy="${y}" rx="3.2" ry="2.2" fill="${skin}" stroke="${INK}" stroke-width=".7"/>`).join('') +
+          `<ellipse cx="96" cy="140.6" rx="4.2" ry="1.9" transform="rotate(-18 96 140.6)" fill="${skin}" stroke="${INK}" stroke-width=".7"/>`;
+        else s += F('M84 106 C94 112 102 124 106 138 L118 116 C120 112 124 113 124 117 L112 146 C108 152 100 152 96 147 C92 134 88 122 80 114 Z', cl, 1.1) + F('M115.6 118.4 C114.4 113.6 117.4 109.8 121.4 109.8 L127.2 102.6 C128.6 101 131 102.4 130 104.4 L125.8 110.6 C127.8 112.4 127.8 116.4 125.6 119 C122.8 122 117 121.6 115.6 118.4 Z', skin, .9) + Ln('M117.6 114.4 C116.6 112.6 117.4 110.8 119.2 110.4', .6) + Ln('M120.6 119.2 C122.6 119.4 124.4 118.4 125.2 116.8', .5);
+        // Pelzkragen und Kette ab Großkaufmann
+        // als geschlossener Hermelinkragen über beiden Schultern, mit Umriss und schwarzen Schwänzchen
+        if (rank >= 4) s += F('M28 128 C28 112 36 101 48 98 C56 103 70 103 78 98 C90 101 98 112 98 128 C92 121 86 115 77 113 C69 117 57 117 49 113 C40 115 34 121 28 128 Z', '#f6f1e6', 1) +
+          [[34, 115], [41, 107], [56, 108], [70, 108], [85, 107], [92, 115]].map(([x, y]) => `<path d="M${x - 1.4} ${y} h2.8 l-1.4 3.4 z" fill="${INK}"/>`).join('') +
+          Array.from({length:13}, (_, i) => { const t = i / 12, x = 48 + t * 30, y = 104 + Math.sin(t * Math.PI) * 14; return `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="1.9" ry="1.3" fill="#e9c25a" stroke="${INK}" stroke-width=".5"/>`; }).join('');
+        s += P.figure(a2, R);
+        return `<g transform="translate(${o.x} ${o.y}) scale(${o.s})">${s}</g>`;
+      }
+
+      return person;
+    })();
+    const INK = '#3a2316', GOLD = '#d9ac45', WHITE = '#f6f1e4', RED = '#c2412f', GREEN = '#3f7a3f', BLUE = '#2d4f9e';
+    const BRICK = ['#b4583e', '#c46a48', '#a24c36', '#bd6444'], PLASTER = '#efe6d2', SLATE = '#4f6278', SLATE_L = '#6a7f96', VERD = '#5f9a86', VERD_L = '#86bba6', TIMBER = '#5a3a22';
+    const X0 = 12, X1 = 348, Y0 = 12, Y1 = 222, WALL = 124, QUAY = 150, QFRONT = 170, WATER = 178;
+    let uid = 0;
+    const n1 = v => +v.toFixed(1);
+    const F = (d, fill, w = 1, extra = '') => `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"${extra}/>`;
+    const Ln = (d, w = .8, c = INK, extra = '') => `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${extra}/>`;
+    const rnd = s => { let x = s; return () => (x = (x * 9301 + 49297) % 233280) / 233280; };
+    const shade = (c, t) => P.dark(c, t), lite = (c, t) => P.light(c, t);
+
+    // Spitzbogenfenster mit Mittelpfosten
+    const win = (x, y, w, h, frame = PLASTER) => F(`M${x} ${y + h} V${y + w * .5} Q${x} ${y} ${x + w / 2} ${y - w * .25} Q${x + w} ${y} ${x + w} ${y + w * .5} V${y + h} Z`, '#2a2838', .55) + Ln(`M${x + w / 2} ${y - w * .1} V${y + h}`, .5, frame);
+
+    // ───────── Bürgerhaus mit Treppengiebel (nur der Teil über der Mauer ist zu sehen) ─────────
+    function house(x, w, top, col, ID, o = {}) {
+      const steps = o.steps || 3, gh = w * .62, sw = w / (steps * 2 + 1), sh = gh / steps, body = top + gh;
+      let d = `M${x} ${WALL + 2} V${body}`; for (let i = 0; i < steps; i++) d += ` h${n1(sw)} v${n1(-sh)}`; d += ` h${n1(sw)}`; for (let i = 0; i < steps; i++) d += ` v${n1(sh)} h${n1(sw)}`; d += ` V${WALL + 2} Z`;
+      const plaster = col === PLASTER;
+      let s = F(d, col, .9) + (plaster ? '' : `<path d="${d}" fill="url(#br${ID})" opacity=".55"/>`);
+      // Schatten auf der linken Seite (Licht von rechts oben)
+      s += `<path d="M${x} ${WALL + 2} V${body} h${n1(sw)} V${WALL + 2} Z" fill="${INK}" opacity=".12"/>`;
+      // Blendnischen im Giebel
+      for (let i = 1; i < steps * 2; i += 2) { const nx = x + i * sw + sw * .2, lvl = Math.min(i, steps * 2 - i), ny = body - lvl * sh * .5 - sh * .3; s += F(`M${n1(nx)} ${n1(body - 2)} V${n1(ny + 2)} Q${n1(nx + sw * .3)} ${n1(ny - 2)} ${n1(nx + sw * .6)} ${n1(ny + 2)} V${n1(body - 2)} Z`, plaster ? '#d9cdb4' : shade(col, .25), .4); }
+      // Fialen auf den Stufen
+      for (let i = 0; i <= steps * 2; i++) { const lvl = i <= steps ? i : steps * 2 - i, fx = x + i * sw + sw / 2, fy = body - Math.min(lvl, steps) * sh; if (i === steps) continue; s += F(`M${n1(fx - 1.2)} ${n1(fy)} L${n1(fx)} ${n1(fy - 4)} L${n1(fx + 1.2)} ${n1(fy)} Z`, col, .5); }
+      // Fensterreihen
+      const rows = Math.max(1, Math.floor((WALL - body - 4) / 15));
+      for (let r = 0; r < rows; r++) { const wy = body + 4 + r * 15; const cols = w > 26 ? 3 : 2; for (let c = 0; c < cols; c++) s += win(x + (c + .5) * w / cols - 2.4, wy, 4.8, 9, plaster ? '#cfc2a8' : PLASTER); }
+      s += win(x + w / 2 - 2.4, body - sh * .7, 4.8, 7);
+      if (o.snow) { const caps = []; for (let i = 0; i <= steps * 2; i++) { const lvl = i <= steps ? i : steps * 2 - i; caps.push([x + i * sw, body - lvl * sh]); }
+        s += caps.map(([cx, cy]) => `<path d="M${n1(cx + .2)} ${n1(cy + .3)} Q${n1(cx + sw / 2)} ${n1(cy - 2.4)} ${n1(cx + sw - .2)} ${n1(cy + .3)} Z" fill="#ffffff" stroke="${INK}" stroke-width=".35"/>`).join(''); }
+      return s;
+    }
+    // Fachwerkhaus mit Satteldach (Traufseite schräg)
+    function timberHouse(x, w, top, ID, o = {}) {
+      const roofH = w * .7, eave = top + roofH;
+      let s = F(`M${x - 2} ${eave} L${x + w / 2} ${top} L${x + w + 2} ${eave} Z`, '#8a4a32', .9) + `<path d="M${x - 2} ${eave} L${x + w / 2} ${top} L${x + w + 2} ${eave} Z" fill="url(#ti${ID})" opacity=".5"/>`;
+      s += F(`M${x} ${WALL + 2} V${eave} H${x + w} V${WALL + 2} Z`, PLASTER, .9);
+      s += Ln(`M${x} ${eave + 1} H${x + w} M${x} ${eave + 12} H${x + w} M${x + w / 2} ${eave} V${WALL} M${x + 2} ${eave + 1} L${x + w / 2 - 2} ${eave + 12} M${x + w - 2} ${eave + 1} L${x + w / 2 + 2} ${eave + 12}`, 1.6, TIMBER);
+      s += win(x + w * .2, eave + 15, 4.4, 7) + win(x + w * .65, eave + 15, 4.4, 7) + win(x + w / 2 - 2, top + roofH * .5, 4, 6);
+      if (o.snow) s += Ln(`M${x - 2} ${eave - .6} L${x + w / 2} ${top - .6} L${x + w + 2} ${eave - .6}`, 2.6, INK) + Ln(`M${x - 2} ${eave - .6} L${x + w / 2} ${top - .6} L${x + w + 2} ${eave - .6}`, 1.8, '#ffffff');
+      return s;
+    }
+
+    // ───────── Wahrzeichen ─────────
+    function petri(x, ID, sn) { // Riga, St. Petri: Backsteinturm mit hohem grünem Helm, Wetterhahn
+      const tw = 30, tb = WALL + 2, tt = 86, cx = x + tw / 2;
+      // Langhaus links am Turm: Backsteinwand mit hohen Fenstern, darauf ein vollständiges Walmdach (Traufe, First, Walm links)
+      const ne = tt + 24, nr = tt + 9, nl = x - 40;
+      let s = F(`M${nl} ${tb} V${ne} H${x + 2} V${tb} Z`, BRICK[2], .9) + `<path d="M${nl} ${tb} V${ne} H${x + 2} V${tb} Z" fill="url(#br${ID})" opacity=".5"/><path d="M${nl} ${tb} V${ne} H${nl + 6} V${tb} Z" fill="${INK}" opacity=".12"/>`;
+      for (let k = 0; k < 3; k++) s += win(nl + 9 + k * 10.5, ne + 5, 5, 20);
+      s += F(`M${nl - 3} ${ne} L${nl + 12} ${nr} H${x + 2} V${ne} Z`, SLATE, .9) + Ln(`M${nl + 3} ${ne - 6} H${x + 1} M${nl + 8.6} ${nr + 5} H${x + 1}`, .5, SLATE_L) + `<path d="M${nl - 3} ${ne} L${nl + 12} ${nr} V${ne} Z" fill="${INK}" opacity=".16"/>`;
+      if (sn) s += Ln(`M${nl - 2.4} ${ne - .8} L${nl + 12} ${nr - .6} H${x + 1}`, 2.6, INK) + Ln(`M${nl - 2.4} ${ne - .8} L${nl + 12} ${nr - .6} H${x + 1}`, 1.7, '#ffffff');
+      s += F(`M${x} ${tb} V${tt} H${x + tw} V${tb} Z`, BRICK[0], 1) + `<path d="M${x} ${tb} V${tt} H${x + tw} V${tb} Z" fill="url(#br${ID})" opacity=".55"/><path d="M${x} ${tb} V${tt} H${x + 8} V${tb} Z" fill="${INK}" opacity=".12"/>`;
+      for (let k = 0; k < 3; k++) s += win(x + 5, tt + 6 + k * 18, 6, 11) + win(x + tw - 11, tt + 6 + k * 18, 6, 11);
+      s += Ln(`M${x} ${tt + 3} H${x + tw} M${x} ${tt + 22} H${x + tw} M${x} ${tt + 40} H${x + tw}`, .7, shade(BRICK[0], .4));
+      // gestufter Helm von unten nach oben, jede Stufe mit eigener heller Seite: Haube, Laterne, Zwischendach, hohe Spitze
+      s += F(`M${x - 1} ${tt} L${cx} ${tt - 14} L${x + tw + 1} ${tt} Z`, VERD, .9) + `<path d="M${cx} ${tt - 14} L${x + tw + 1} ${tt} H${cx} Z" fill="${VERD_L}" opacity=".6"/>`;
+      s += F(`M${cx - 6} ${tt - 8} V${tt - 20} H${cx + 6} V${tt - 8} Z`, VERD, .8) + `<rect x="${cx}" y="${tt - 20}" width="5.6" height="11.6" fill="${VERD_L}" opacity=".55"/>` + win(cx - 2, tt - 16, 4, 6);
+      s += F(`M${cx - 7.4} ${tt - 20} L${cx} ${tt - 26} L${cx + 7.4} ${tt - 20} Z`, VERD, .8) + `<path d="M${cx} ${tt - 26} L${cx + 7.4} ${tt - 20} H${cx} Z" fill="${VERD_L}" opacity=".6"/>`;
+      s += F(`M${cx - 4} ${tt - 24} L${cx} ${tt - 56} L${cx + 4} ${tt - 24} Z`, VERD, .9) + `<path d="M${cx} ${tt - 56} L${cx + 4} ${tt - 24} L${cx} ${tt - 24} Z" fill="${VERD_L}" opacity=".7"/>`;
+      s += Ln(`M${cx} ${tt - 56} V${tt - 66.6}`, .9) + `<circle cx="${cx}" cy="${tt - 58}" r="1.6" fill="${GOLD}" stroke="${INK}" stroke-width=".5"/>` + F(`M${cx} ${tt - 66} h7 l-2 2.4 l2 2.4 h-7 z`, GOLD, .5);
+      return s;
+    }
+    function marien(x, ID, sn) { // Lübeck, St. Marien: zwei Türme mit grünen Helmen, Langhaus mit Strebepfeilern
+      const tb = WALL + 2, tt = 72, tw = 18;
+      let s = F(`M${x + 6} ${tb} V${tt + 46} H${x + 50} V${tb} Z`, BRICK[2], .9) + F(`M${x + 2} ${tt + 46} L${x + 28} ${tt + 28} L${x + 54} ${tt + 46} Z`, SLATE, .8) + `<path d="M${x + 28} ${tt + 28} L${x + 54} ${tt + 46} H${x + 28} Z" fill="${SLATE_L}" opacity=".6"/>`;
+      if (sn) s += Ln(`M${x + 4} ${tt + 45} L${x + 28} ${tt + 28.6} L${x + 52} ${tt + 45}`, 1.8, '#ffffff');
+      for (let k = 0; k < 3; k++) s += win(x + 12 + k * 13, tt + 54, 6, 14);
+      for (const tx of [x - 14, x + 52]) {
+        s += F(`M${tx} ${tb} V${tt} H${tx + tw} V${tb} Z`, BRICK[0], 1) + `<path d="M${tx} ${tb} V${tt} H${tx + tw} V${tb} Z" fill="url(#br${ID})" opacity=".55"/><path d="M${tx} ${tb} V${tt} H${tx + 5} V${tb} Z" fill="${INK}" opacity=".12"/>`;
+        for (let k = 0; k < 3; k++) s += win(tx + tw / 2 - 3, tt + 6 + k * 18, 6, 11);
+        s += F(`M${tx - 1} ${tt} L${tx + tw / 2} ${tt - 46} L${tx + tw + 1} ${tt} Z`, VERD, .9) + `<path d="M${tx + tw / 2} ${tt - 46} L${tx + tw + 1} ${tt} H${tx + tw / 2} Z" fill="${VERD_L}" opacity=".6"/>` + Ln(`M${tx + tw / 2} ${tt - 46} V${tt - 52}`, .9) + `<circle cx="${tx + tw / 2}" cy="${tt - 52}" r="1.5" fill="${GOLD}" stroke="${INK}" stroke-width=".5"/>`;
+      }
+      return s;
+    }
+    function krantor(x, ID, sn) { // Danzig, Krantor: zwei Backsteintürme, dazwischen das hölzerne Krangehäuse mit Haken
+      const tb = WALL + 2, tt = 84;
+      let s = '';
+      for (const tx of [x, x + 44]) s += F(`M${tx} ${tb} V${tt} H${tx + 16} V${tb} Z`, BRICK[0], 1) + `<path d="M${tx} ${tb} V${tt} H${tx + 16} V${tb} Z" fill="url(#br${ID})" opacity=".55"/>` + win(tx + 5, tt + 10, 6, 10) + win(tx + 5, tt + 28, 6, 8) + F(`M${tx - 1} ${tt} H${tx + 17} V${tt - 4} H${tx - 1} Z`, BRICK[2], .8);
+      s += F(`M${x + 15} ${tb} V${tt + 10} H${x + 45} V${tb} Z`, BRICK[2], .9) + `<path d="M${x + 15} ${tb} V${tt + 10} H${x + 45} V${tb} Z" fill="url(#br${ID})" opacity=".55"/>` + F(`M${x + 22} ${tb} V${tt + 26} Q${x + 30} ${tt + 16} ${x + 38} ${tt + 26} V${tb} Z`, '#2a2230', .7);
+      s += F(`M${x + 14} ${tt + 12} V${tt - 30} H${x + 46} V${tt + 12} Z`, '#7a5032', 1) + Array.from({length:7}, (_, k) => Ln(`M${x + 18 + k * 4.4} ${tt - 28} V${tt + 10}`, .5, '#4a2c18')).join('') + Ln(`M${x + 14} ${tt - 10} H${x + 46}`, .8, '#4a2c18');
+      s += F(`M${x + 10} ${tt - 30} L${x + 30} ${tt - 62} L${x + 50} ${tt - 30} Z`, '#6b4226', 1) + `<path d="M${x + 30} ${tt - 62} L${x + 50} ${tt - 30} H${x + 30} Z" fill="#8a5a36" opacity=".7"/>`;
+      // Ladeluke vorn im Krangehäuse: Balken, Seil, Haken und ein gehobener Ballen, alles vor dem Gehäuse
+      s += F(`M${x + 24} ${tt - 24} H${x + 36} V${tt - 12} H${x + 24} Z`, '#2a2230', .7) + F(`M${x + 27.6} ${tt - 31} h4.8 v4.4 h-4.8 z`, '#4a2c18', .6);
+      s += F(`M${x + 23} ${tt + 5} V${tt - 1.4} Q${x + 30} ${tt - 4.6} ${x + 37} ${tt - 1.4} V${tt + 5} Q${x + 30} ${tt + 7} ${x + 23} ${tt + 5} Z`, '#d8c08a', .8) + Ln(`M${x + 27} ${tt - 2.6} V${tt + 6} M${x + 33} ${tt - 2.6} V${tt + 6}`, .6, '#8a6238');
+      s += Ln(`M${x + 30} ${tt - 26.6} V${tt - 7}`, .8) + Ln(`M${x + 30} ${tt - 7} q-2.6 0 -2.6 2.2 q0 2 2.6 2.4 V${tt - 2.6}`, .8);
+      // Gesims aus Backstein, auf dem das Krangehäuse zwischen den Türmen aufsitzt
+      s += F(`M${x + 11} ${tt + 10.6} H${x + 49} V${tt + 14.6} H${x + 11} Z`, BRICK[2], .8) + Ln(`M${x + 12} ${tt + 12.6} H${x + 48}`, .4, '#6b2a1c');
+      return s;
+    }
+    const LANDMARK = {riga:petri, luebeck:marien, danzig:krantor, hamburg:petri, reval:petri, stockholm:petri, bremen:marien, visby:marien};
+
+    // ───────── Monumente für das Siegerbild: Stadttor, Gildehaus, Kirchturm, jeweils mit Wimpel und Schild in der Hausfarbe ─────────
+    const shield = (cx, cy, k, hcol) => F(`M${cx - 5 * k} ${cy - 5 * k} H${cx + 5 * k} V${cy + 1 * k} Q${cx + 5 * k} ${cy + 6 * k} ${cx} ${cy + 8 * k} Q${cx - 5 * k} ${cy + 6 * k} ${cx - 5 * k} ${cy + 1 * k} Z`, hcol, .7) + Ln(`M${cx} ${cy - 3.6 * k} V${cy + 5 * k} M${cx - 3 * k} ${cy - .4 * k} H${cx + 3 * k}`, .9 * k, GOLD);
+    const pennant = (x, y, hcol) => Ln(`M${x} ${y} V${y - 12}`, .8) + F(`M${x} ${y - 12} L${x + 11} ${y - 9.6} L${x + 7} ${y - 8} L${x + 11} ${y - 6.4} L${x} ${y - 5} Z`, hcol, .5);
+    function monTor(x, ID, sn, hcol) { // Tor: zwei Rundtürme mit Kegeldach, dazwischen der Torbau mit Treppengiebel und Durchgang
+      const tb = WALL + 2, tt = 78, gt = 92, w = 22;
+      let s = '';
+      s += F(`M${x + 16} ${tb} V${gt} H${x + 52} V${tb} Z`, BRICK[1], 1) + `<path d="M${x + 16} ${tb} V${gt} H${x + 52} V${tb} Z" fill="url(#br${ID})" opacity=".55"/>`;
+      // Treppengiebel über dem Torbau
+      s += F(`M${x + 18} ${gt} V${gt - 6} h5 v-6 h5 v-6 h8 v6 h5 v6 h5 V${gt} Z`, BRICK[1], .9) + `<path d="M${x + 18} ${gt} V${gt - 6} h5 v-6 h5 v-6 h8 v6 h5 v6 h5 V${gt} Z" fill="url(#br${ID})" opacity=".55"/>`;
+      s += F(`M${x + 26} ${tb} V${gt + 18} Q${x + 34} ${gt + 8} ${x + 42} ${gt + 18} V${tb} Z`, '#2a2230', .8) + Ln(`M${x + 28} ${gt + 16} V${tb} M${x + 32} ${gt + 12} V${tb} M${x + 36} ${gt + 12} V${tb} M${x + 40} ${gt + 16} V${tb}`, .5, '#5a4a3a');
+      s += shield(x + 34, gt + 2, .9, hcol) + Ln(`M${x + 16} ${gt + 10} H${x + 52}`, .6, shade(BRICK[1], .4));
+      for (const tx of [x, x + 46]) {
+        s += F(`M${tx} ${tb} V${tt} H${tx + w} V${tb} Z`, BRICK[0], 1) + `<path d="M${tx} ${tb} V${tt} H${tx + w} V${tb} Z" fill="url(#br${ID})" opacity=".55"/><path d="M${tx} ${tb} V${tt} H${tx + 6} V${tb} Z" fill="${INK}" opacity=".14"/>`;
+        s += Ln(`M${tx} ${tt + 14} H${tx + w} M${tx} ${tt + 30} H${tx + w}`, .6, shade(BRICK[0], .4)) + win(tx + w / 2 - 2.6, tt + 18, 5.2, 9) + win(tx + w / 2 - 2.6, tt + 34, 5.2, 9);
+        s += F(`M${tx - 2} ${tt} L${tx + w / 2} ${tt - 26} L${tx + w + 2} ${tt} Z`, SLATE, .9) + `<path d="M${tx + w / 2} ${tt - 26} L${tx + w + 2} ${tt} H${tx + w / 2} Z" fill="${SLATE_L}" opacity=".6"/>`;
+        if (sn) s += Ln(`M${tx - 1} ${tt - .6} L${tx + w / 2} ${tt - 25.4} L${tx + w + 1} ${tt - .6}`, 1.6, '#ffffff');
+        s += pennant(tx + w / 2, tt - 26, hcol);
+      }
+      return s;
+    }
+    function monGilde(x, ID, sn, hcol) { // Gildehaus: breiter Treppengiebel aus Backstein, hohe Fenster, großes Tor mit Schild
+      const tb = WALL + 2, w = 64, top = 70;
+      let s = house(x, w, top, BRICK[2], ID, {steps:4, snow:sn});
+      s += F(`M${x + w / 2 - 7} ${tb} V${tb - 14} Q${x + w / 2} ${tb - 21} ${x + w / 2 + 7} ${tb - 14} V${tb} Z`, '#3a2a20', .8);
+      s += shield(x + w / 2, top + 42, 1.25, hcol) + pennant(x + w / 2, top - 4, hcol);
+      // goldenes Band unter dem Giebel
+      s += F(`M${x + 2} ${top + 56} H${x + w - 2} V${top + 59.4} H${x + 2} Z`, GOLD, .5);
+      return s;
+    }
+    function monTurm(x, ID, sn, hcol) { // Kirchturm: hoher Backsteinturm mit Uhr, Laterne und sehr hohem Helm, oben ein goldenes Kreuz
+      const tb = WALL + 2, tt = 74, tw = 26, cx = x + tw / 2;
+      let s = F(`M${x} ${tb} V${tt} H${x + tw} V${tb} Z`, BRICK[0], 1) + `<path d="M${x} ${tb} V${tt} H${x + tw} V${tb} Z" fill="url(#br${ID})" opacity=".55"/><path d="M${x} ${tb} V${tt} H${x + 7} V${tb} Z" fill="${INK}" opacity=".12"/>`;
+      s += Ln(`M${x} ${tt + 4} H${x + tw} M${x} ${tt + 26} H${x + tw}`, .7, shade(BRICK[0], .4)) + win(x + 4, tt + 30, 6, 14) + win(x + tw - 10, tt + 30, 6, 14);
+      s += `<circle cx="${cx}" cy="${tt + 15}" r="6.4" fill="${PLASTER}" stroke="${INK}" stroke-width=".8"/><circle cx="${cx}" cy="${tt + 15}" r="5" fill="none" stroke="${GOLD}" stroke-width=".9"/>` + Ln(`M${cx} ${tt + 15} V${tt + 11} M${cx} ${tt + 15} L${cx + 3} ${tt + 16.4}`, .8);
+      s += F(`M${x - 1} ${tt} L${cx} ${tt - 10} L${x + tw + 1} ${tt} Z`, VERD, .9) + F(`M${cx - 5} ${tt - 6} V${tt - 16} H${cx + 5} V${tt - 6} Z`, VERD, .8) + win(cx - 1.8, tt - 13.6, 3.6, 5);
+      s += F(`M${cx - 4.4} ${tt - 16} L${cx} ${tt - 58} L${cx + 4.4} ${tt - 16} Z`, VERD, .9) + `<path d="M${cx} ${tt - 58} L${cx + 4.4} ${tt - 16} H${cx} Z" fill="${VERD_L}" opacity=".7"/>`;
+      if (sn) s += Ln(`M${x} ${tt - .6} L${cx} ${tt - 9.4} L${x + tw} ${tt - .6}`, 1.6, '#ffffff');
+      s += Ln(`M${cx} ${tt - 58} V${tt - 64.4} M${cx - 2.4} ${tt - 62} H${cx + 2.4}`, 1.4, GOLD) + pennant(x + tw - 1, tt, hcol);
+      return s;
+    }
+    const MONUMENT = {tor:[monTor, 252], gilde:[monGilde, 248], turm:[monTurm, 270]};
+
+    // Stadtmauer mit Zinnen und zwei Rundtürmen
+    function wall(ID, sn) {
+      let s = F(`M${X0 - 2} ${QUAY} V${WALL} H${X1 + 2} V${QUAY} Z`, '#c4a77a', .9) + `<path d="M${X0} ${QUAY} V${WALL} H${X1} V${QUAY} Z" fill="url(#st${ID})" opacity=".6"/>`;
+      for (let x = X0 + 2; x < X1 - 4; x += 9) s += F(`M${x} ${WALL} V${WALL - 5} H${x + 5} V${WALL} Z`, '#c4a77a', .7);
+      for (const tx of [40]) s += F(`M${tx - 9} ${QUAY} V${WALL - 12} H${tx + 9} V${QUAY} Z`, '#bb9d6e', .9) + F(`M${tx - 11} ${WALL - 12} L${tx} ${WALL - 30} L${tx + 11} ${WALL - 12} Z`, RED, .9) + `<path d="M${tx} ${WALL - 30} L${tx + 11} ${WALL - 12} H${tx} Z" fill="#e06a52" opacity=".6"/>` + F(`M${tx - 2} ${WALL - 2} v-6 a2 2 0 0 1 4 0 v6 z`, '#2a2838', .5) ;
+      // Stadttor zwischen Schiff und Leuten
+      s += F(`M118 ${QUAY} V${WALL - 14} H146 V${QUAY} Z`, '#bb9d6e', .9) + `<path d="M118 ${QUAY} V${WALL - 14} H146 V${QUAY} Z" fill="url(#st${ID})" opacity=".5"/>` + Array.from({length:4}, (_, k) => F(`M${118 + k * 7.6} ${WALL - 14} v-4 h4.4 v4`, '#bb9d6e', .6)).join('') +
+        F(`M125 ${QUAY} V${QUAY - 12} Q132 ${QUAY - 20} 139 ${QUAY - 12} V${QUAY} Z`, '#2a2230', .7) + Ln(`M127 ${QUAY - 13} V${QUAY} M130 ${QUAY - 16} V${QUAY} M134 ${QUAY - 16} V${QUAY} M137 ${QUAY - 13} V${QUAY} M125 ${QUAY - 6} H139`, .5, '#8a7350') +
+        F(`M127.6 ${WALL - 6} h9 v4.6 q0 4.4 -4.5 6.4 q-4.5 -2 -4.5 -6.4 z`, PLASTER, .6) + Ln(`M132.1 ${WALL - 5.4} v10 M128.2 ${WALL - 2.4} h7.8`, 1.1, RED);
+      if (sn) for (let x = X0 + 2; x < X1 - 4; x += 9) if (x + 6 < 118 || x > 146) s += F(`M${x - .4} ${WALL - 5} q${2.9} -2.2 ${5.8} 0 z`, '#ffffff', .4);
+      if (sn) for (let k = 0; k < 4; k++) s += F(`M${117.7 + k * 7.6} ${WALL - 18} q2.5 -2 5 0 z`, '#ffffff', .4);
+      return s;
+    }
+    // Kai: Pflaster, Kante aus Quadern, Poller
+    function quay(ID, sn) {
+      let s = F(`M${X0 - 2} ${QFRONT} V${QUAY} H${X1 + 2} V${QFRONT} Z`, sn ? '#e9edf0' : '#d6c194', .9);
+      if (!sn) s += `<path d="M${X0} ${QFRONT} V${QUAY} H${X1} V${QFRONT} Z" fill="url(#pf${ID})" opacity=".5"/>`;
+      s += F(`M${X0 - 2} ${WATER} V${QFRONT} H${X1 + 2} V${WATER} Z`, '#a98c5c', .9);
+      for (let x = X0; x < X1; x += 16) s += Ln(`M${x} ${QFRONT} V${WATER}`, .5, '#6b5434');
+      for (const bx of [156]) s += F(`M${bx - 2.6} ${QFRONT - 3} V${QFRONT - 10} H${bx + 2.6} V${QFRONT - 3} Z`, '#4a3a2c', .7) + F(`M${bx - 3.6} ${QFRONT - 10} H${bx + 3.6} V${QFRONT - 12.4} H${bx - 3.6} Z`, '#6b5a48', .6) + `<ellipse cx="${bx}" cy="${QFRONT - 2.6}" rx="4.4" ry="1.2" fill="${INK}" opacity=".25"/>`;
+      return s;
+    }
+    // Wasser: Wellenschuppen wie in der Buchmalerei, dunkler Streifen an der Kaimauer
+    function water(sn, r) {
+      let s = `<rect x="${X0}" y="${WATER}" width="${X1 - X0}" height="${Y1 - WATER}" fill="${BLUE}"/><rect x="${X0}" y="${WATER}" width="${X1 - X0}" height="5" fill="#1f3a78"/>`;
+      for (let row = 0; row < 4; row++) { const y = WATER + 11 + row * 10, off = (row % 2) * 9; let d = ''; for (let x = X0 - 9 + off; x < X1; x += 18) d += `M${x} ${y} q4.5 -5 9 0 q4.5 -5 9 0 `; s += Ln(d, .9, '#c9dcf4', ' opacity=".9"'); }
+      if (sn) s += [[186, 196, 30], [262, 210, 24], [312, 190, 22]].map(([x, y, w]) => F(`M${x} ${y} l${w * .18} -4 l${w * .5} -1 l${w * .32} 4 v2.4 l-${w * .3} 2.6 l-${w * .52} .4 l-${w * .18} -3 z`, '#b8cde0', .7) + F(`M${x} ${y} l${w * .18} -4 l${w * .5} -1 l${w * .32} 4 l-${w * .3} 2.4 l-${w * .52} .3 z`, '#f4f8fc', .6) + Ln(`M${x - 4} ${y + 6} q4 -2 8 0 M${x + w - 2} ${y + 7} q4 -2 8 0`, .6, '#c9dcf4')).join('');
+      return s;
+    }
+    // Kogge in Buchmalerei, Bug rechts, am Kai festgemacht
+    function cog(x, house, ID) {
+      const id = 'k' + ID, by = 204, hullTop = 186;
+      // Rumpf mit schräg gestelltem Achtersteven (von x+3 oben nach x+16 unten), daran hängt das Ruder
+      const hull = `M${x + 3} ${hullTop} H${x + 118} L${x + 132} ${hullTop - 10} L${x + 124} ${by - 2} Q${x + 70} ${by + 8} ${x + 16} ${by - 2} Z`;
+      const sail = `M${x + 40} 108 Q${x + 66} 104 ${x + 92} 108 L${x + 95} 162 Q${x + 66} 167 ${x + 37} 162 Z`;
+      let s = `<defs><clipPath id="${id}s"><path d="${sail}"/></clipPath><clipPath id="${id}h"><path d="${hull}"/></clipPath></defs>`;
+      // Takelage
+      s += Ln(`M${x + 66} 96 L${x + 20} ${hullTop - 18} M${x + 66} 96 L${x + 30} ${hullTop - 2} M${x + 66} 96 L${x + 104} ${hullTop - 2} M${x + 66} 96 L${x + 120} ${hullTop - 18} M${x + 66} 86 L${x + 131} ${hullTop - 12}`, .55, INK, ' opacity=".9"');
+      s += F(`M${x + 64.8} ${hullTop} V76 H${x + 67.2} V${hullTop} Z`, '#7a5032', .7) + `<circle cx="${x + 66}" cy="75.4" r="1.6" fill="#8a5a36" stroke="${INK}" stroke-width=".6"/>` + F(`M${x + 59} 86 H${x + 73} L${x + 71} 94 H${x + 61} Z`, '#8a5a36', .7) + Ln(`M${x + 62} 87 V93 M${x + 66} 87 V93 M${x + 70} 87 V93`, .5, '#5a3a22');
+      s += F(`M${x + 66} 79 c6 -2 12 2 20 0 c-3 2 -3 4 0 6 c-8 2 -14 -2 -20 0 z`, house, .6);
+      s += Ln(`M${x + 38} 107 Q${x + 66} 102 ${x + 94} 107`, 2.4, '#5a3a22');
+      s += F(sail, WHITE, .9) + `<g clip-path="url(#${id}s)">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${x + 41 + i * 9.6}" y="100" width="4.8" height="70" fill="${house}"/>`).join('')}<path d="M${x + 37} 150 H${x + 96}" stroke="${INK}" stroke-width=".6"/><rect x="${x + 37}" y="100" width="12" height="70" fill="${INK}" opacity=".1"/></g>` + F(sail, 'none', .9);
+      // Kastelle
+      s += F(`M${x + 2} ${hullTop - 18} H${x + 30} V${hullTop} H${x + 4} Z`, '#8a5a36', .9) + Array.from({length:5}, (_, k) => F(`M${x + 3 + k * 5.6} ${hullTop - 18} v-4 h3.4 v4`, '#8a5a36', .6)).join('');
+      s += F(`M${x + 104} ${hullTop - 16} H${x + 128} L${x + 124} ${hullTop - 2} H${x + 104} Z`, '#8a5a36', .9) + Array.from({length:4}, (_, k) => F(`M${x + 105 + k * 5.8} ${hullTop - 16} v-4 h3.4 v4`, '#8a5a36', .6)).join('');
+      // Rumpf mit Klinkerplanken
+      s += F(hull, '#7a4a28', 1.1) + `<g clip-path="url(#${id}h)">${[0, 1, 2, 3].map(k => Ln(`M${x} ${hullTop + 3 + k * 4.4} Q${x + 70} ${hullTop + 8 + k * 4.4} ${x + 132} ${hullTop - 4 + k * 4.4}`, .7, '#c99a5e')).join('')}<rect x="${x}" y="${hullTop}" width="22" height="30" fill="${INK}" opacity=".15"/></g>`;
+      // Heckruder hinter dem Achtersteven: Schaft bis über den Rumpf, Pinne ins Achterkastell, Blatt nach unten breiter, zwei Beschläge
+      const st = t => [n1(x - 2 + 15 * t), n1(hullTop - 10 + 32 * t)], [a1, a2] = st(.42), [b1, b2] = st(1);
+      s += F(`M${a1} ${a2} L${b1} ${b2} L${x + 1} ${by + 5} L${x - 6} ${hullTop + 12} Z`, '#6b4226', .9) + Ln(`M${x - 3.6} ${hullTop + 14} L${x + 7} ${hullTop + 13.4}`, .6, '#9a6a40');
+      s += Ln(`M${x - 2} ${hullTop - 10} L${b1} ${b2}`, 2.2, '#4a2c18') + F(`M${x + 4.6} ${hullTop - 11.4} h3.6 v4 h-3.6 z`, '#2a2230', .5) + Ln(`M${x - 3.4} ${hullTop - 9.4} L${x + 6.4} ${hullTop - 9.4}`, 1.6, '#4a2c18');
+      // Tau zum Poller
+      s += Ln(`M${x + 124} ${hullTop - 13} Q${x + 130} ${QFRONT - 1} 153.6 ${QFRONT - 7.4}`, .9, '#7a5a36') + Ln(`M153.4 ${QFRONT - 8.6} q2.6 1.6 5.2 0 M153.4 ${QFRONT - 6.6} q2.6 1.6 5.2 0`, .8, '#7a5a36');
+      return s;
+    }
+    // Fracht auf dem Kai, je Stadt
+    function cargo(kind, x) {
+      const fl = QUAY + 18;
+      const barrel = (cx) => F(`M${cx - 6} ${fl} V${fl - 13} Q${cx} ${fl - 15} ${cx + 6} ${fl - 13} V${fl} Q${cx} ${fl + 2} ${cx - 6} ${fl} Z`, '#9a6232', .8) + Ln(`M${cx - 6} ${fl - 4} Q${cx} ${fl - 2} ${cx + 6} ${fl - 4} M${cx - 6} ${fl - 10} Q${cx} ${fl - 8} ${cx + 6} ${fl - 10}`, .7, '#4a2c18');
+      const crate = (cx, h = 11) => F(`M${cx - 7} ${fl} V${fl - h} H${cx + 7} V${fl} Z`, '#b07a42', .8) + Ln(`M${cx - 7} ${fl - h} L${cx + 7} ${fl} M${cx + 7} ${fl - h} L${cx - 7} ${fl}`, .5, '#6b4a2a');
+      const sack = (cx, col) => F(`M${cx - 6} ${fl} C${cx - 8} ${fl - 7} ${cx - 5} ${fl - 12} ${cx - 2} ${fl - 13} L${cx - 3} ${fl - 16} L${cx + 3} ${fl - 16} L${cx + 2} ${fl - 13} C${cx + 5} ${fl - 12} ${cx + 8} ${fl - 7} ${cx + 6} ${fl} Z`, col, .8) + Ln(`M${cx - 2.4} ${fl - 13.4} h4.8`, 1.1, '#8a6238') + Ln(`M${cx - 3} ${fl - 6} q3 1.4 6 0`, .5, shade(col, .4));
+      const bale = (cx, col) => F(`M${cx - 8} ${fl} V${fl - 10} Q${cx} ${fl - 13} ${cx + 8} ${fl - 10} V${fl} Z`, col, .8) + Ln(`M${cx - 3} ${fl - 11} V${fl} M${cx + 3} ${fl - 11} V${fl}`, .6, INK);
+      if (kind === 'riga') return bale(x, '#6b4a32') + bale(x + 17, '#e9d8a0') + barrel(x + 33) + crate(x + 48);
+      if (kind === 'luebeck') return barrel(x) + barrel(x + 14) + sack(x + 30, '#e8dcbf') + sack(x + 45, '#e8dcbf') + crate(x + 62);
+      if (kind === 'danzig') return sack(x, '#d8c08a') + sack(x + 15, '#d8c08a') + [0, 1, 2].map(k => F(`M${x + 26 + k * 1.5} ${fl - k * 4} h${28 - k * 3} v-3.6 h-${28 - k * 3} z`, '#a8743e', .6)).join('') + barrel(x + 66);
+      return barrel(x) + crate(x + 15) + sack(x + 30, '#e9e0c6');
+    }
+    // Bäume hinter der Mauer, je Jahreszeit
+    // x liegt mitten auf einer Zinne: der Stamm verschwindet hinter ihr, die Krone sitzt direkt über der Mauer
+    function tree(x, season, r) {
+      if (season === 'winter') { // verschneite Tanne, eine geschlossene Form statt dünner Äste
+        const T = [[WALL + 1, 9.6, 16], [WALL - 12, 7.8, 13], [WALL - 20, 5.8, 12]];
+        let s = F(`M${x - 1.4} ${WALL} V${WALL - 6} H${x + 1.4} V${WALL} Z`, '#5a3a22', .5);
+        for (const [y, w, h] of T) s += F(`M${x - w} ${y} L${x} ${y - h} L${x + w} ${y} Q${x} ${y - 2.4} ${x - w} ${y} Z`, '#2f5a3a', .8) + F(`M${x - w * .55} ${y - h * .45} L${x} ${y - h} L${x + w * .55} ${y - h * .45} Q${x} ${y - h * .62} ${x - w * .55} ${y - h * .45} Z`, '#ffffff', .4);
+        return s;
+      }
+      const c = season === 'herbst' ? '#d9843a' : season === 'sommer' ? '#3f7a3f' : '#5f9a4a', cy = WALL - 19;
+      let s = F(`M${x - 1.4} ${WALL} V${cy} H${x + 1.4} V${WALL} Z`, '#5a3a22', .6) + `<circle cx="${x}" cy="${cy}" r="9" fill="${c}" stroke="${INK}" stroke-width=".9"/><circle cx="${x + 3.6}" cy="${cy - 3}" r="4.6" fill="${lite(c, .25)}" opacity=".7"/>`;
+      const dots = (n, rad, f) => Array.from({length:n}, () => { const t = r() * Math.PI * 2, d = Math.sqrt(r()) * 6.2; return f(n1(x + Math.cos(t) * d), n1(cy + Math.sin(t) * d)); }).join('');
+      if (season === 'fruehling') s += dots(9, 7, (px, py) => `<circle cx="${px}" cy="${py}" r="1.5" fill="#f6d6dc" stroke="${INK}" stroke-width=".3"/>`);
+      if (season === 'herbst') s += dots(6, 7, (px, py) => `<circle cx="${px}" cy="${py}" r="1.3" fill="#b8402a"/>`);
+      return s;
+    }
+
+    function scene(o) {
+      const ID = 'z' + (++uid), W = 360, H = 262, r = rnd(o.seed || 7), sn = o.season === 'winter';
+      const hcol = P.AV.colStrong[o.player.a.col] || RED;
+      let s = `<svg viewBox="0 0 ${W} ${H}" class="scene" aria-hidden="true"><defs>
+        <linearGradient id="g${ID}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d27a"/><stop offset=".5" stop-color="#d9ac45"/><stop offset="1" stop-color="#b8862c"/></linearGradient>
+        <pattern id="d${ID}" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0H14V14" fill="none" stroke="#9a6c1e" stroke-width=".7"/><circle cx="7" cy="7" r="1.3" fill="#9a6c1e"/></pattern>
+        <pattern id="br${ID}" width="8" height="5" patternUnits="userSpaceOnUse"><path d="M0 0.25H8M0 2.75H8M2 0V2.5M6 2.5V5" stroke="#6b2a1c" stroke-width=".35"/></pattern>
+        <pattern id="st${ID}" width="12" height="7" patternUnits="userSpaceOnUse"><path d="M0 0.3H12M0 3.8H12M3 0V3.5M9 3.5V7" stroke="#6b5434" stroke-width=".45"/></pattern>
+        <pattern id="pf${ID}" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3H6M3 0V3M0 6V3" stroke="#8a7350" stroke-width=".35"/></pattern>
+        <pattern id="ti${ID}" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 1.5H3" stroke="#4a2414" stroke-width=".5"/></pattern>
+        <clipPath id="c${ID}"><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}"/></clipPath></defs>`;
+      // Rahmen in der Hausfarbe mit Perlenreihe, unten breiter für das Titelschild
+      s += `<rect width="${W}" height="${H}" fill="${hcol}"/><rect x="3" y="3" width="${W - 6}" height="${H - 6}" fill="none" stroke="${lite(hcol, .35)}" stroke-width=".8"/>`;
+      s += `<g clip-path="url(#c${ID})"><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="url(#g${ID})"/><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="url(#d${ID})" opacity=".55"/>`;
+      // Himmel
+      if (o.season === 'sommer') s += `<circle cx="44" cy="40" r="12" fill="#f6c84a" stroke="${INK}" stroke-width=".9"/>` + Array.from({length:16}, (_, i) => { const t = i / 16 * Math.PI * 2, L = i % 2 ? 19 : 23; return Ln(`M${n1(44 + Math.cos(t) * 15)} ${n1(40 + Math.sin(t) * 15)} L${n1(44 + Math.cos(t) * L)} ${n1(40 + Math.sin(t) * L)}`, 1.1, '#b8862c'); }).join('');
+      if (o.season === 'fruehling' || o.season === 'sommer') s += [[96, 34], [110, 28], [122, 38]].map(([x, y]) => Ln(`M${x - 5} ${y} q2.5 -3 5 0 q2.5 -3 5 0`, 1)).join('');
+      // Herbst: Wolke links oben, frei von Schiff und Leuten; Zugvögel daneben
+      if (o.season === 'herbst') s += [[118, 30], [128, 36], [138, 42], [128, 24]].map(([x, y]) => Ln(`M${x - 4} ${y} q2 -2.4 4 0 q2 -2.4 4 0`, .9)).join('') + `<path d="M40 38 c2 -8 12 -10 18 -5 c4 -8 18 -8 22 0 c6 -5 16 -2 16 5 c4 1 4 6 0 7 h-52 c-6 0 -8 -6 -4 -7 z" fill="#f4ecd8" stroke="${INK}" stroke-width=".8"/>` ;
+      const AVOID = ({luebeck:[[232, 258], [298, 324]], riga:[[289, 313]], danzig:[[258, 306]]}[o.city] || []).concat([[206, 250]]);
+      const flake = () => { for (let t = 0; t < 30; t++) { const x = X0 + 4 + r() * (X1 - X0 - 8); if (!AVOID.some(([a, b]) => x > a && x < b)) return x; } return X0 + 20; };
+      if (sn) s += Array.from({length:46}, () => { const x = flake(), y = Y0 + 4 + r() * 50, k = 1 + r() * 1.4; return `<g transform="translate(${n1(x)} ${n1(y)})">${Ln(`M${-k} 0 H${k} M0 ${-k} V${k} M${-k * .7} ${-k * .7} L${k * .7} ${k * .7} M${-k * .7} ${k * .7} L${k * .7} ${-k * .7}`, .5, '#ffffff')}</g>`; }).join('');
+      // Stadt hinter der Mauer: Häuser links und rechts vom Wahrzeichen, Bäume dazwischen
+      const lm = LANDMARK[o.city];
+      const lmX = lm === marien ? 250 : lm === krantor ? 252 : 286;
+      const left = [[18, 26, 78, BRICK[0], 3], [44, 24, 86, PLASTER, 3], [86, 22, 92, BRICK[3], 2], [108, 28, 80, BRICK[1], 3], [136, 24, 88, PLASTER, 3], [160, 26, 82, BRICK[0], 3], [186, 24, 90, BRICK[2], 2], [212, 26, 84, BRICK[1], 3]];
+      s += left.map(([x, w, top, col, st]) => house(x, w, top, col, ID, {steps:st, snow:sn})).join('');
+      s += timberHouse(64, 22, 92, ID, {snow:sn});
+      s += tree(160.5, o.season, r);
+      if (o.mon && MONUMENT[o.mon]) s += MONUMENT[o.mon][0](MONUMENT[o.mon][1], ID, sn, hcol);
+      else s += lm ? lm(lmX, ID, sn) : '';
+      s += house(318, 24, 86, BRICK[3], ID, {steps:3, snow:sn});
+      s += wall(ID, sn) + quay(ID, sn);
+      // Fracht rechts auf dem Kai
+      s += cargo(o.city, 262);
+      // Leute: Begleiter klein, Spieler groß
+      if (o.mate) s += person(o.mate.a, {x:171, y:QUAY + 16 - 301 * .3, s:.3, rank:0, pose:'ruhig'});
+      s += person(o.player.a, {x:201, y:QUAY + 17 - 301 * .43, s:.43, rank:o.rank, pose:o.pose || 'zeigen'});
+      // Wasser und Kogge
+      s += water(sn, r) + cog(22, hcol, ID);
+      s += `</g><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="none" stroke="${INK}" stroke-width="1.4"/><rect x="${X0 + 2.4}" y="${Y0 + 2.4}" width="${X1 - X0 - 4.8}" height="${Y1 - Y0 - 4.8}" fill="none" stroke="#f3dc8e" stroke-width=".9"/>`;
+      // Perlen im Rahmen
+      for (let x = 8; x <= W - 8; x += 9) s += `<circle cx="${x}" cy="6.5" r="1.1" fill="${WHITE}"/>`;
+      for (let y = 16; y <= Y1; y += 9) s += `<circle cx="6.5" cy="${y}" r="1.1" fill="${WHITE}"/><circle cx="${W - 6.5}" cy="${y}" r="1.1" fill="${WHITE}"/>`;
+      // Titelschild im unteren Rahmen
+      const txt = o.band, bw = Math.min(300, 60 + txt.length * 5.8), bx = (W - bw) / 2, by = Y1 + 8;
+      s += F(`M${bx + 6} ${by} H${bx + bw - 6} Q${bx + bw} ${by} ${bx + bw} ${by + 6} V${by + 18} Q${bx + bw} ${by + 24} ${bx + bw - 6} ${by + 24} H${bx + 6} Q${bx} ${by + 24} ${bx} ${by + 18} V${by + 6} Q${bx} ${by} ${bx + 6} ${by} Z`, '#f6eedb', 1) +
+        [bx + 6, bx + bw - 6].map(x => `<circle cx="${x}" cy="${by + 12}" r="1.6" fill="${GOLD}" stroke="${INK}" stroke-width=".5"/>`).join('') +
+        [bx - 18, bx + bw + 18].map(cx => `<g transform="translate(${cx} ${by + 12})">${[0, 90, 180, 270].map(rt => `<circle cx="0" cy="-4" r="3.4" fill="${GOLD}" stroke="${INK}" stroke-width=".6" transform="rotate(${rt})"/>`).join('')}<circle r="2.4" fill="#8e2219" stroke="${INK}" stroke-width=".5"/></g>`).join('') +
+        `<text x="${W / 2}" y="${by + 16.4}" text-anchor="middle" font-family="Alegreya, serif" font-weight="700" font-size="12" letter-spacing=".3" fill="#8e2219">${txt}</text></svg>`;
+      return s;
+    }
+
+    return {scene};
+  })();
+
+  // Anlässe für Erzählbilder: Aufstieg, erste Erfolge der Kampagne, Wahl, Fest und das fertige Monument (Siegerbild)
+  const SEASON_OF = m => m >= 2 && m <= 4 ? 'fruehling' : m >= 5 && m <= 7 ? 'sommer' : m >= 8 && m <= 9 ? 'herbst' : 'winter';
+  function storyPush(kind, x) {
+    if (!st || !st.player || st._temp || window.__fast) return;
+    popPush(Object.assign({k:'story', kind, d:st.day, r:st.rank}, x || {}));
+  }
+  function storyText(p) {
+    const nm = st.player.name, home = C[st.home].n, f = (st.player.avatar || {}).g === 'f';
+    const RT = {1:'Die Leute am Kai kennen deinen Namen. Dein Verband darf jetzt zwei Schiffe führen, und die Werft baut dir eine Kogge. Im Schifferhaus warten Kapitäne.',
+      2:'Als Kaufmann führst du drei Schiffe; die großen Werften bauen dir einen Holk, und Städte bieten dir Lieferverträge an.',
+      3:'Deine Schiffe sind auf allen Meeren zwischen Brügge und Nowgorod zu sehen. Die Hansekontore öffnen dir ihre Türen.',
+      4:'Ein Großkaufmann ist einer der Reichen der Stadt. Große Vorhaben und Stiftungen bringen dir Ehre.',
+      5:'Dein Handelshaus gehört zu den ersten der Hanse.', 6:'Man zählt dein Haus zu den Patriziern der Hanse.'};
+    const CT = {1:`Der Rat nimmt dich als Bürger auf. Du darfst in ${home} ein Kontor bauen und Aufträge des Rats übernehmen.`,
+      2:`Die Gilde nimmt dich auf. Mit einer Niederlassung in einer anderen Stadt öffnen sich eigene Verbände auf Handelsrouten, und du darfst bauen.`,
+      3:`Du sitzt im Rat von ${home}. Du bestimmst die Zölle mit, und die Familien, die dir das Bürgermeisteramt streitig machen, zeigen sich.`};
+    switch (p.kind) {
+      case 'rank': return {band:`${nm} wird ${RANKS[p.r][1]}${f && !/frau$/.test(RANKS[p.r][1]) ? '' : ''}`, t:RT[p.r] || ''};
+      case 'civic': return {band:`${nm} wird ${CIVIC[p.i][1]}`, t:CT[p.i] || ''};
+      case 'win': return {band:'Erster Sieg auf See', t:`${p.foe || 'Die Seeräuber'} streichen die Segel. In den Häfen erzählt man sich davon.`, pose:'zeigen'};
+      case 'branch': return {band:`Niederlassung in ${C[p.c] ? C[p.c].n : ''}`, t:'Dein erstes Lager in einer fremden Stadt. Jetzt kannst du eigene Verbände auf Handelsrouten schicken.', pose:'brief'};
+      case 'convoy': return {band:'Der erste eigene Verband', t:'Ein Kapitän führt deine Schiffe auf fester Route und handelt dort selbst. Im Haus siehst du, wo er gerade liegt.'};
+      case 'work': return {band:'Der erste Betrieb arbeitet', t:`Er liefert jeden Tag ein wenig Ware in dein Kontor in ${home}.`};
+      case 'mayor': return {band:`${nm} wird Bürgermeister`, t:`Du hast es geschafft: Der Rat von ${home} wählt dich zum Bürgermeister. In ${FEST_DAYS} Tagen lädst du die ganze Stadt zum großen Fest.`, pose:'brief'};
+      case 'fest': { const F0 = (st.ende || {}).fest || {n:0}; return {band:`Das große Fest in ${home}`, t:F0.ok ? `${home} feiert dich, ${festWord(F0.n)}.` : 'Das Fest fällt mager aus, doch du bleibst Bürgermeister.'}; }
+      case 'sieg': { const E0 = st.ende || {}; return {band:E0.mon ? monName(E0.mon.k) : 'Ein Denkmal', t:`Das Monument steht. Das Buch der Hanse schließt mit dem Namen ${nm}.`}; }
+    }
+    return {band:nm, t:''};
+  }
+  const storyCache = {};
+  function storyHTML(p) {
+    const T = storyText(p), key = [p.kind, p.d, p.r, p.i, p.c].join('|');
+    if (!storyCache[key]) {
+      const cap = (st.captains || [])[0], mate = p.kind === 'win' && fightCap() ? capAv(fightCap()) : cap ? capAv(cap) : seedAv('begleit' + (st.gid || ''), 'm');
+      storyCache[key] = STORY.scene({city:st.home, season:SEASON_OF(dateOf(p.d).getMonth()), rank:Math.min(6, p.r || 0), player:{a:st.player.avatar || defAv()}, mate:{a:mate}, band:esc(T.band), seed:(p.d % 97) + 3, pose:T.pose, mon:p.kind === 'sieg' && st.ende && st.ende.mon ? st.ende.mon.k : null});
+    }
+    const sieg = p.kind === 'sieg';
+    return `<div class="in story${sieg ? ' sieg' : ''}"><span class="k">${sieg ? 'Buch der Hanse' : C[st.home].n}, ${fdate(p.d, true)}</span><h2 id="q-title">${esc(T.band)}</h2>` +
+      `<div class="sbild">${storyCache[key]}</div>` + (sieg ? `<div class="siegtxt"><span class="init">${esc(st.player.name[0])}</span><p>${esc(st.player.name.slice(1))}, Bürger und Bürgermeister von ${C[st.home].n}, Handelshaus mit ${fmt(Math.round(wealth()))} Gulden Vermögen und ${fmt(ehre())} Ehre. ${T.t}</p>${sealImg(st.player.avatar, {name:st.player.name, place:C[st.home].n})}</div>` : `<p>${T.t}</p>`) + (p.neu && p.neu.length ? `<div class="sneu"><span class="k">Neu im Reiter Haus</span>${p.neu.map(k => `<em>${(UNLOCKS.find(u => u.k === k) || {n:k}).n}</em>`).join('')}</div>` : '') +
+      `<button class="btn primary wide" type="button" data-qclose="1">Weiter</button></div>`;
   }
   // ───────── Ab Version 53: Haus als Kontorbuch ─────────
   // Oben dein Bildnis mit dem Weg der Ämter und den Privilegien, darunter die Flotte als Einträge mit Schiff, Kapitän und Route.
@@ -11589,6 +12065,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     biz:'<ellipse cx="9" cy="7" rx="5" ry="2.2"/><path d="M4 7v4c0 1.2 2.2 2.2 5 2.2s5-1 5-2.2V7"/><ellipse cx="15.5" cy="14" rx="5" ry="2.2"/><path d="M10.5 14v3.5c0 1.2 2.2 2.2 5 2.2s5-1 5-2.2V14"/>',
     dock:'<circle cx="12" cy="5" r="2"/><path d="M12 7v13M7 11h10M5 15c1 3 3.5 5 7 5s6-2 7-5"/>',
     caps:'<path d="M5 11c0-3.5 3-6 7-6s7 2.5 7 6"/><path d="M3 11h18l-2 3H5z"/><circle cx="12" cy="17" r="3"/>',
+    mon:'<path d="M4 21h16M6 21V9l6-6 6 6v12M10 21v-5a2 2 0 0 1 4 0v5M9 11h6"/>',
     tavern:'<path d="M6 7h10v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M16 9h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M6 7c0-2 2-3 5-3s5 1 5 3"/>',
   };
   const hic = k => `<svg class="hic" viewBox="0 0 24 24" aria-hidden="true">${HICON[k] || HICON.kontor}</svg>`;
@@ -11643,7 +12120,37 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     h += `</div><div class="stations" style="--n:${n}">${S.map((c, k) => `<span class="${k + 1 === i ? 'cur' : k + 1 === 4 ? 'g' : ''}" style="left:${X[k]}%">${c[1].replace(' der Hanse', '')}</span>`).join('')}</div>`;
     return h;
   }
-  const HTITLE = {kontor:'Kontor', works:'Betriebe', council:'Rathaus', hansetag:'Hansetag', race:'Wettlauf', gv:'Große Vorhaben', biz:'Verträge und Geld'};
+  const HTITLE = {kontor:'Kontor', works:'Betriebe', council:'Rathaus', hansetag:'Hansetag', race:'Wettlauf', gv:'Große Vorhaben', biz:'Verträge und Geld', mon:'Monument'};
+  // ───────── Ab Version 54: Freischalten entlang der Kampagne ─────────
+  // Was noch nicht offen ist, steht nicht als gesperrte Kachel im Haus; es erscheint mit Rang oder Amt, trägt bis zum ersten
+  // Öffnen den Stempel „Neu“, und das Erzählbild zum Aufstieg zählt auf, was neu dazukommt. Unten im Stammsitz steht, was das
+  // nächste Amt öffnet. Alte Spielstände bekommen alles, was schon offen ist, ohne Stempel.
+  const UNLOCKS = [
+    {k:'tavern', n:'Schifferhaus und Kapitäne', ok:() => st.rank >= 1 || (st.captains || []).length > 1, by:'rank', at:() => RANKS[1][1]},
+    {k:'kontor', n:'Kontor', ok:() => civicIdx(st.repute || 0) >= 1 || !!st.kontor, by:'civic', at:() => CIVIC[1][1]},
+    {k:'council', n:'Aufträge des Rats', ok:() => civicIdx(st.repute || 0) >= 1, by:'civic', at:() => CIVIC[1][1]},
+    {k:'works', n:'Betriebe und Bauen', ok:() => civicIdx(st.repute || 0) >= 2 || (st.works || []).length > 0, by:'civic', at:() => CIVIC[2][1]},
+    {k:'routes', n:'Niederlassungen und Handelsrouten', ok:() => civicIdx(st.repute || 0) >= BRANCH.civic || routesOpen(), by:'civic', at:() => CIVIC[BRANCH.civic][1]},
+    {k:'biz', n:'Lieferverträge und Hansekontore', ok:() => st.rank >= CT_RANK || debt() > 0, by:'rank', at:() => RANKS[CT_RANK][1]},
+    {k:'hansetag', n:'Hansetag und Zölle', ok:() => civicIdx(st.repute || 0) >= 3 || openItems().length > 0, by:'civic', at:() => CIVIC[3][1]},
+    {k:'race', n:'Wettlauf um das Bürgermeisteramt', ok:() => civicIdx(st.repute || 0) >= 3 || rivShown() || !!st.ende, by:'civic', at:() => CIVIC[3][1]},
+    {k:'gv', n:'Große Vorhaben', ok:() => st.rank >= GV_RANK || !!(st.gv && (st.gv.job || Object.keys(st.gv.done || {}).length)), by:'rank', at:() => RANKS[GV_RANK][1]}
+  ];
+  const unl = k => !!(st.unl && st.unl[k]);
+  const unlNew = k => !!(st.unl && st.unl[k] && !st.unl[k].seen);
+  function unlockCheck(quiet) {
+    if (!st || !st.home) return [];
+    const U = st.unl || (st.unl = {}), fresh = [];
+    UNLOCKS.forEach(u => { if (!U[u.k] && u.ok()) { U[u.k] = {d:st.day, seen:!!quiet}; fresh.push(u); } });
+    if (!fresh.length || quiet) return fresh;
+    addLog(`Neu für dein Handelshaus: ${fresh.map(u => u.n).join(', ')}. Du findest ${fresh.length === 1 ? 'es' : 'sie'} im Reiter Haus.`, 'rank');
+    // Das Erzählbild zum Aufstieg vom selben Tag zählt die neuen Dinge auf
+    const q = qS(), l = [q.pop].concat(q.queue || []).filter(p => p && p.k === 'story' && (p.kind === 'rank' || p.kind === 'civic') && p.d === st.day);
+    fresh.forEach(u => { const p = l.filter(x => x.kind === u.by).pop() || l[l.length - 1]; if (p) p.neu = (p.neu || []).concat(u.k); });
+    return fresh;
+  }
+  const unlSeen = k => { if (st.unl && st.unl[k] && !st.unl[k].seen) { st.unl[k].seen = true; save(); } };
+  const unlNext = () => UNLOCKS.filter(u => !unl(u.k));
   function homeTiles(i) {
     const n = openItems().length, ord = st.orders.active;
     return [
@@ -11654,9 +12161,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       {k:'race', html:raceHTML(), meta:raceMeta()},
       {k:'gv', html:gvHTML(), meta:gvMeta(), hot:!!(st.gv && st.gv.job)},
       {k:'biz', html:bizHTML(), meta:bizMeta()},
-    ].map(t => { const m = t.html.match(/^<div class="kontor"><h3>([\s\S]*?)<\/h3>([\s\S]*)<\/div>$/); return Object.assign(t, {title:HTITLE[t.k], head:m ? m[1] : HTITLE[t.k], body:m ? m[2] : (t.html || `<p class="small">Dafür brauchst du zuerst ein Kontor im Stammsitz.</p>`)}); });
+      ...(st.ende && st.ende.mon ? [{k:'mon', html:monHTML(), meta:monMeta(), hot:st.ende.stage === 'monument' && st.loc === st.home}] : []),
+    ].filter(t => t.k === 'mon' || unl(t.k)).map(t => { if (unlNew(t.k)) t.neu = true; const m = t.html.match(/^<div class="kontor"><h3>([\s\S]*?)<\/h3>([\s\S]*)<\/div>$/); return Object.assign(t, {title:HTITLE[t.k], head:m ? m[1] : HTITLE[t.k], body:m ? m[2] : (t.html || `<p class="small">Dafür brauchst du zuerst ein Kontor im Stammsitz.</p>`)}); });
   }
-  const tileHTML = t => `<button class="htile${t.lock ? ' lock' : ''}${t.hot ? ' hot' : ''}" type="button" data-hs-open="${t.k}"${t.id != null ? ` data-id="${t.id}"` : ''}>${hic(t.ic || t.k)}<span><b>${t.title}</b><span>${t.meta || ''}</span></span>${t.hot ? '<i class="hdot" aria-label="fällig"></i>' : ''}</button>`;
+  const tileHTML = t => `<button class="htile${t.lock ? ' lock' : ''}${t.hot ? ' hot' : ''}${t.neu ? ' neu' : ''}" type="button" data-hs-open="${t.k}"${t.id != null ? ` data-id="${t.id}"` : ''}>${hic(t.ic || t.k)}<span><b>${t.title}</b><span>${t.meta || ''}</span></span>${t.neu ? '<em class="hneu">Neu</em>' : t.hot ? '<i class="hdot" aria-label="fällig"></i>' : ''}</button>`;
+  // Was das nächste Amt oder der nächste Rang öffnet, als kurze Zeile unter den Kacheln
+  function unlNextHTML() {
+    const l = unlNext(); if (!l.length) return '';
+    const by = {}; l.forEach(u => { const a = u.at(); (by[a] || (by[a] = [])).push(u.n); });
+    return `<p class="small unext">${Object.entries(by).slice(0, 2).map(([a, ns]) => `<span><b>Als ${a}</b> öffnet sich: ${ns.join(', ')}.</span>`).join(' ')}</p>`;
+  }
   function renderHome() {
     const box = $('#homecard');
     if (!st.home) { box.hidden = true; return; }
@@ -11668,7 +12182,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       `<p class="note">${next ? `Nächstes Amt: <b>${next[1]}</b> ab <b>${fmt(next[0])}</b> Ansehen, du hast <b>${fmt(r)}</b>.` : `Du hast das höchste Amt erreicht, mit <b>${fmt(r)}</b> Ansehen.`} <span>Ansehen bringen Verkäufe hier, besonders von Waren, die die Stadt braucht, dazu Ratsaufträge, Betriebe, Bauten und Siege über Seeräuber.</span></p>` +
       `<div class="priv"><div><i></i><b>Bürgerrecht</b>in ${C[st.home].n} 5 % günstiger kaufen, 5 % teurer verkaufen</div><div><i></i><b>${PERKS[st.home].t}</b>${PERKS[st.home].d}</div></div>` +
       (st.loc !== st.home ? `<p class="small awayline">${st.loc ? `Du liegst in ${C[st.loc].n}.` : 'Du bist auf See.'} Was du nur vor Ort tun kannst, etwa einlagern oder Aufträge annehmen, geht in ${C[st.home].n}.${hasSteward() ? ' Dein Verwalter handelt für dich aus der Ferne.' : ''}</p>` : '') +
-      `<h2 class="fh">Dein Stammsitz</h2><div class="hindex">${homeTiles(i).map(tileHTML).join('')}</div>`;
+      `<h2 class="fh">Dein Stammsitz</h2><div class="hindex">${homeTiles(i).map(tileHTML).join('')}</div>` + unlNextHTML();
     renderHSheet();
   }
 
@@ -11703,13 +12217,13 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const idle = caps.filter(k => !k.cv && k.id !== st.capOwn);
     let h = `<h2 class="fh">Deine Flotte <small>${cvs.length ? `${cvs.length} ${cvs.length === 1 ? 'Verband' : 'Verbände'} unter Kapitänen · ` : ''}${fmt(capWages() + cvs.reduce((x, c) => x + cvCost(c), 0))} G am Tag</small></h2>`;
     h += ownEntry() + cvs.map(fleetEntry).join('');
-    if (!routesOpen()) h += `<p class="small fnote">Eigene Verbände auf Handelsrouten öffnen sich mit deiner ersten Niederlassung (ab ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} Gulden, im Reiter Stadt eines anderen Hafens). Kapitäne führen sie und handeln dort selbst.</p>`;
+    if (!routesOpen() && unl('routes')) h += `<p class="small fnote">Eigene Verbände auf Handelsrouten öffnen sich mit deiner ersten Niederlassung (ab ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} Gulden, im Reiter Stadt eines anderen Hafens). Kapitäne führen sie und handeln dort selbst.</p>`;
     else if (st.loc && !st.focus && (st.fleet.length || (st.loc === st.home && dockOf().length)) && cvs.length < MAX_CONVOYS)
       h += `<button class="stamp" type="button" data-h="rnew"${idle.length ? '' : ' disabled'}>Neuen Verband aufstellen</button>${idle.length ? '' : `<span class="small fnote">Dafür brauchst du einen freien Kapitän aus dem Schifferhaus${home ? '' : ` in ${C[st.home].n}`}.</span>`}`;
     const tiles = [];
     if (dockOf().length || buildsOf().length) tiles.push({k:'dock', title:`Liegeplatz`, meta:`${dockOf().length} ${dockOf().length === 1 ? 'Schiff' : 'Schiffe'}${buildsOf().length ? ` · ${buildsOf().length} im Bau` : ''}`});
     tiles.push({k:'caps', title:'Kapitäne', meta:caps.length ? `${caps.length} von ${MAX_CAPTAINS}${idle.length ? ` · ${idle.length} frei` : ''}` : 'noch keine'});
-    tiles.push({k:'tavern', title:'Schifferhaus', meta:home ? '3 Bewerber' : `in ${C[st.home].n}`, lock:!home});
+    if (unl('tavern')) tiles.push({k:'tavern', title:'Schifferhaus', meta:home ? '3 Bewerber' : `in ${C[st.home].n}`, lock:!home, neu:unlNew('tavern')});
     h += `<div class="hindex">${tiles.map(tileHTML).join('')}</div>`;
     box.innerHTML = h;
     renderHSheet();
@@ -11814,7 +12328,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
 
   // Das Blatt: eingelegt über dem Haus, mit Lesebändchen; Zurück führt ins Haus
-  const HS_HOME = ['kontor', 'works', 'council', 'hansetag', 'race', 'gv', 'biz'];
+  const HS_HOME = ['kontor', 'works', 'council', 'hansetag', 'race', 'gv', 'biz', 'mon'];
   function hsContent() {
     const s = ui.hs; if (!s) return null;
     if (HS_HOME.includes(s.k)) { const t = homeTiles(civicIdx(st.repute || 0)).find(x => x.k === s.k); return t && {title:t.head, sub:t.meta, body:t.body}; }
@@ -11838,7 +12352,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   function hsOpen(k, id) {
     if (k === 'own') { ui.hs = null; renderHSheet(); return setTab('werft'); }
     ui.hs = {k, id}; ui.rl = null; ui.rla = null;
-    if (k === 'cv') { const cv = cvById(id); if (cv && cv.report && !cv.report.seen) {} }
+    unlSeen(k);
     renderHSheet(); $('#hsheet').scrollTop = 0;
   }
   function hsClose() { ui.hs = null; ui.rl = null; ui.rla = null; if (ui.rw) ui.rw = null; renderHouse(); renderHome(); }
@@ -12091,6 +12605,27 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     h += `<p class="small" style="margin:8px 0 0">Im Gefecht bemannt: ${M.armbrust} von ${a.armbrust || 0} Armbrüsten${a.blide ? `, ${M.blide} von ${a.blide} Bliden` : ''}${a.buechse ? `, ${M.buechse} von ${a.buechse} Büchsen` : ''}. ${capOwnK() ? `Kapitän ${esc(capOwnK().name)} führt deinen Verband (Kampf ${capOwnK().fight} von 5).` : 'Dein Verband hat keinen Kapitän; bestimme einen im Reiter Haus.'}</p>`;
     return h;
   }
+  // ───────── Ab Version 54: Führung durch die Werft beim ersten Besuch ─────────
+  // Vier kurze Schritte; die besprochene Stelle wird markiert. Gemerkt in st.q.gd.yt (Schritt) und st.q.gd.ytDone.
+  const YTOUR = [
+    {k:'ship', t:'Deine Schiffe', d:'Hier stehen die Schiffe deines Verbands mit dem Rumpf. Nach Sturm oder Gefecht bessert die Werft ihn aus; unter 40 % wird jede Fahrt gefährlich.'},
+    {k:'crew', t:'Mannschaft', d:'Ohne genug Matrosen legst du nicht ab. Jeder Matrose kostet Heuer, kämpft aber mit, wenn es zum Entern kommt.'},
+    {k:'arms', t:'Waffenkammer', d:'Um den Tag 30 lauert dir der erste Seeräuber auf. Das erste Gefecht ist eine Übung, danach wird es ernst: Armbrüste schießen, Harnische und Pavesen schützen beim Entern, Haken halten den Gegner fest. Jede Waffe braucht einen Platz.'},
+    {k:'build', t:'Bauaufträge', d:'Neue Schiffe gibt die Werft in Auftrag; fertig segeln sie an den Liegeplatz in deinem Stammsitz. Ab Händler baut sie dir eine Kogge, ab Kaufmann einen Holk.'}
+  ];
+  const ytStep = () => { const g = (st.q || {}).gd || {}; return g.ytDone || (st.q || {}).skipTut || !st.fleet.length || (st.q && st.q.pop) ? -1 : g.yt || 0; };
+  function ytourHTML(i) {
+    const T = YTOUR[i];
+    return `<div class="ytour" role="note"><span class="k">Die Werft · ${i + 1} von ${YTOUR.length}</span><b>${T.t}</b><p>${T.d}</p>` +
+      `<div class="ybtns"><button class="linkbtn" type="button" data-ytour="skip">Führung beenden</button><button class="ybtn on" type="button" data-ytour="next">${i + 1 < YTOUR.length ? 'Weiter' : 'Verstanden'}</button></div></div>`;
+  }
+  function ytourClick(a) {
+    const g = qS().gd || (qS().gd = {});
+    if (a === 'skip' || (g.yt || 0) + 1 >= YTOUR.length) { g.ytDone = true; g.yt = 0; }
+    else g.yt = (g.yt || 0) + 1;
+    save(); renderYard();
+    const el = $('#yard .ytour'); if (el) el.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'});
+  }
   function renderYard() {
     const y = $('#yard');
     y.hidden = !st.loc;
@@ -12109,7 +12644,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     st.fleet.forEach((sh, i) => {
       const T = SHIPS[sh.type], per = repairPrice() * T.hullK, miss = 100 - sh.hull, pct = Math.min(miss, Math.floor(Math.max(0, st.money) / per));
       if (miss) { damaged++; allCost += Math.round(miss * per); }
-      h += `<div class="yrow yship">${shipInk(sh.type, houseCol())}<span class="yl"><b>${i === 0 ? '⚑ ' : ''}${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} Last · Rumpf ${sh.hull} %</span>` +
+      h += `<div class="yrow yship"${i === 0 ? ' data-tour="ship"' : ''}>${shipInk(sh.type, houseCol())}<span class="yl"><b>${i === 0 ? '⚑ ' : ''}${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} Last · Rumpf ${sh.hull} %</span>` +
         `<span class="hbar${sh.hull < 40 ? ' low' : ''}"><i style="width:${sh.hull}%"></i></span></span><span class="ybtns">` +
         (miss ? `<button class="ybtn" type="button" data-yard="repair" data-n="${i}"${pct ? '' : ' disabled'}>${pct >= miss ? 'Ausbessern' : `+${pct} %`} · ${fmt(Math.round(pct * per))} G</button>` : '') +
         (st.fleet.length > 1 && st.loc === st.home ? `<button class="ybtn" type="button" data-yard="todock" data-n="${i}"${canSellShip(i) && shipsHome() < MAX_DOCK ? '' : ' disabled'}>Liegeplatz</button>` : '') +
@@ -12117,7 +12652,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     });
     if (damaged > 1) h += `<div class="yrow"><span class="yl"><b>Ganzer Verband</b><span class="small">${repairPrice()} Gulden je Prozent, große Schiffe kosten mehr</span></span><span class="ybtns"><button class="ybtn" type="button" data-yard="repairall"${st.money >= 1 ? '' : ' disabled'}>Alle ausbessern · ${fmt(Math.min(allCost, Math.max(0, st.money)))} G</button></span></div>`;
     if (st.fleet.length) h += `<div class="ysub">Mannschaft</div>` +
-      `<div class="yrow"><span class="yl"><b>${st.crew} von ${crewMax()} Matrosen</b><span class="small">mindestens ${crewMin()} zum Ablegen; segeln und kämpfen beim Entern</span></span><span class="ybtns">${hire('sailor', 1, HIRE_SAILOR, crewMax() - st.crew)}${hire('sailor', 5, HIRE_SAILOR, crewMax() - st.crew)}</span></div>` +
+      `<div class="yrow" data-tour="crew"><span class="yl"><b>${st.crew} von ${crewMax()} Matrosen</b><span class="small">mindestens ${crewMin()} zum Ablegen; segeln und kämpfen beim Entern</span></span><span class="ybtns">${hire('sailor', 1, HIRE_SAILOR, crewMax() - st.crew)}${hire('sailor', 5, HIRE_SAILOR, crewMax() - st.crew)}</span></div>` +
 
       `<div class="yrow"><span class="yl"><b>${st.brand || 0} von ${MAX_BRAND} Bündeln Brandpfeile</b><span class="small">für Salven auf mittlere und weite Entfernung</span></span><span class="ybtns">${hire('brand', 5, BRAND_PRICE, MAX_BRAND - (st.brand || 0))}</span></div>` +
       `<p class="small" style="margin:8px 0 0">Heuer ${Math.round(st.crew * 0.3)}, Waffen ${Math.round(armsUp(st.arms))} und Unterhalt ${upkeep()} Gulden am Tag.</p>` +
@@ -12136,7 +12671,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       h += det('newships', `Bauaufträge`, ns, types.map(tp => SHIPS[tp].n).join(', '), false);
     } else h += `<p class="small" style="margin-top:10px">In ${C[st.loc].n} baut keine Werft neue Schiffe.</p>`;
     if (!canSail() && st.fleet.length) h += `<p class="warnline">${unready()}</p>`;
+    const ts = ytStep();
+    if (ts >= 0) { if (YTOUR[ts].k === 'arms') ui.det.arms = true; if (YTOUR[ts].k === 'build') ui.det.newships = true; }
     y.innerHTML = h;
+    if (ts >= 0) { // die Karte der Führung steht direkt über der besprochenen Stelle
+      const k = YTOUR[ts].k, el = k === 'arms' ? y.querySelector('[data-det="arms"]') : k === 'build' ? y.querySelector('[data-det="newships"]') : y.querySelector(`[data-tour="${k}"]`);
+      if (el) { el.classList.add('tourhl'); if (el.tagName === 'DETAILS') el.open = true; el.insertAdjacentHTML('beforebegin', ytourHTML(ts)); }
+      else y.querySelector('h2').insertAdjacentHTML('afterend', ytourHTML(ts));
+    }
   }
   function posOf(loc, sail) {
     if (loc) { const p = NODES[loc]; return [p[0], p[1] - 9]; }
@@ -12294,7 +12836,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     st.city.jobs = st.city.jobs.filter(j => !done.includes(j));
     done.sort((a, b) => (a.d0 + a.days) - (b.d0 + b.days)).forEach(j => {
       let t;
-      if (j.kind === 'work') { const W = WORKS[j.g]; st.works.push({id:st.nextWork++, g:j.g, d0:st.day, made:0}); t = `Deine ${W.n} in ${C[st.home].n} ist fertig und nimmt die Arbeit auf. Sie liefert ins Kontor.`; }
+      if (j.kind === 'work') { const W = WORKS[j.g]; if (!st.works.length) storyPush('work'); st.works.push({id:st.nextWork++, g:j.g, d0:st.day, made:0}); t = `Deine ${W.n} in ${C[st.home].n} ist fertig und nimmt die Arbeit auf. Sie liefert ins Kontor.`; }
       else if (j.kind === 'haus') { st.city.house = (st.city.house || 1) + 1; const H = HOUSE[st.city.house]; t = `Dein neues ${H.n} in ${C[st.home].n} ist bezogen. ${H.d}`; }
       else if (j.kind === 'plot') { st.city.extra = (st.city.extra || 0) + 1; t = `Ein weiterer Bauplatz für einen Betrieb in ${C[st.home].n} ist erschlossen.`; }
       else { const B = CIVIC_B[j.k]; st.city[j.k] = true; t = `${(B.s || B.n)} in ${C[st.home].n} vollendet. ${B.d}`; }
@@ -12632,7 +13174,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const canGive = false;
     const htOpen = st.home && openItems().some(x => x.kind === 'gift' || (canVote() && !x.v.my));
     const reps = (st.convoys || []).filter(c => c.report && !c.report.seen);
-    const dots = {markt:freightHere() ? 'b' : '', haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length || canGive || htOpen ? 'b' : '', stadt:'', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
+    const dots = {markt:freightHere() ? 'b' : '', haus:st.pendingFight && !st.focus ? 'r' : reps.some(c => c.report.warn) ? 'r' : reps.length || canGive || htOpen || UNLOCKS.some(u => unlNew(u.k)) ? 'b' : '', stadt:'', werft:st.loc && st.fleet.length && !canSail() ? 'r' : ''};
     $('#tabs').innerHTML = TABS.map(([k, label, ic]) => `<button class="tab" type="button" role="tab" data-tab-btn="${k}" aria-selected="${ui.tab === k}">` +
       `<svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${label}</span>${dots[k] ? `<i class="dot${dots[k] === 'b' ? ' b' : ''}"></i>` : ''}</button>`).join('');
   }
@@ -12752,6 +13294,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (e.target.closest('[data-act="ship-dice"]')) { ui.shipName = newShipName(); renderYard(); return; }
     { const cy = e.target.closest('[data-cvy]'); if (cy) return cvYardClick(cy); }
     { const hh = e.target.closest('[data-h]'); if (hh) { const id = +hh.dataset.id, cv = cvById(id); if (hh.dataset.h === 'hold' && cv) { cv.hold = !cv.hold; cv.stuck = false; commit(); } else if (hh.dataset.h === 'repfix') cvFixNow(id); else if (hh.dataset.h === 'rephire') cvHireNow(id); return; } }
+    { const yt = e.target.closest('[data-ytour]'); if (yt) return ytourClick(yt.dataset.ytour); }
     const t = e.target.closest('[data-yard]'); if (!t) return;
     const v = t.dataset.n;
     yard(t.dataset.yard, v == null ? 1 : /^\d+$/.test(v) ? +v : v);
@@ -12791,6 +13334,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (t.dataset.fin) return finClick(t);
     if (t.dataset.rv) return rvClick(t);
     if (t.dataset.gv) return t.dataset.gv === 'stift' ? gvStift() : gvStart(t.dataset.gv);
+    if (t.dataset.ende) return endeAct(t.dataset.ende, t.dataset.k);
     if (t.dataset.hkl) return hkLobby(t.dataset.hkl);
     if (t.dataset.wauto && st.kontor) { st.kontor.auto = !st.kontor.auto; return commit(); }
     if (t.dataset.vwg || t.dataset.vwb || t.dataset.vwl) { const v = ui.vw; if (t.dataset.vwg) v.g = t.dataset.vwg; if (t.dataset.vwb) v.b = +t.dataset.vwb; if (t.dataset.vwl) v.k = +t.dataset.vwl; renderHome(); return; }
@@ -13059,6 +13603,12 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       if (s.era) { s.era.kopWin = (s.day || 0) >= dayOf(1368, 5, 2); s.era.helsbWin = false; }
     }
     if (s.alderman === undefined) s.alderman = null;
+    // ab Version 54: kein Enddatum, kein Ältermann; wer schon Bürgermeister ist, richtet das Fest aus
+    if (s.mode === 'kampagne') { s.mode = 'offen'; if (s.ended && !s.ended.cont) s.ended.cont = true; }
+    if (s.mayor && !s.ende) s.ende = {may:s.mayor.since != null ? s.mayor.since : s.day || 0, stage:'fest', due:(s.day || 0) + FEST_DAYS, fest:null, mon:null};
+    s.alderman = null; s.aldRival = null;
+    // Ab Version 54: Wer schon spielt, bekommt keine Werft-Führung und keine Stempel „Neu“ für längst Offenes
+    if (!s.v54) { if ((s.day || 0) > 0 && s.q) { s.q.gd = s.q.gd || {}; s.q.gd.ytDone = true; } s.unl = null; s.v54 = true; }
     if (s.trialV === undefined) { if (TARGET === 'web' && (s.day || 0) >= TRIAL_DAY) s.grand = true; s.trialV = 1; }
     if (s.stock && !s.gd45) { Object.values(s.stock).forEach(S0 => Object.keys(S0).forEach(g => { S0[g] *= GDEP[g] || 1; })); s.gd45 = true; }
     if (!s.gid) s.gid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);

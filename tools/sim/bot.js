@@ -307,7 +307,7 @@
       set('aeltermann_gegner', !!st.aldRival);
     }
     function run(opt) {
-      P = Object.assign({contracts:true, loans:true, kontore:true, parts:true, lend:true, crops:true, works:true, convoys:true, maxConvoys:4, branches:3, branchCities:['danzig', 'bergen', 'riga', 'stockholm', 'bruegge', 'london', 'visby', 'reval', 'hamburg'],
+      P = Object.assign({contracts:true, loans:false, kontore:true, parts:true, lend:false, crops:true, works:true, convoys:true, maxConvoys:4, branches:3, branchCities:['danzig', 'bergen', 'riga', 'stockholm', 'bruegge', 'london', 'visby', 'reval', 'hamburg'],
         capFight:true, workOrder:['bier', 'fass', 'tuch', 'salz', 'hering', 'holz', 'getreide', 'eisen', 'wachs', 'pelze'], days:1460, home:'luebeck', snapEvery:30}, opt || {});
       window.__fast = true;
       newGame({name:'Bot'}, P.home, {mode:P.mode || 'offen', origin:P.origin || 'kaufmann'});
