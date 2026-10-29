@@ -22,29 +22,21 @@
 <style>
 /* Layout: phone column — Kopf, gemalte Szene (Hafen/See), Status, Seekarte, Markt, Logbuch; ab 900px zwei Spalten. Feste Aktionsleiste unten. */
 :root{
-  --purse:#f4ead3; --purse-rule:#d9c08a;
-  --paper:#e5eae4; --card:#f3f6f2; --ink:#1b2830; --muted:#566870; --sea:#cbdcd9; --land:#dde1d3;
-  --coast:#93a5a2; --rule:#c2ccc7; --brass:#8a5f12; --brass-ink:#fff8ea; --good:#2a7044; --bad:#a1322b;
-  --scrim:rgba(14,22,27,.45);
+  /* Ab Version 53: Kontorbuch. Pergament, Eisengallustinte, Siegelrot, Blattgold; nur noch ein helles Schema. */
+  --purse:#f3e4bd; --purse-rule:#a8741a;
+  --paper:#ead8b0; --card:#f5e9cc; --ink:#33241a; --muted:#6b5440; --sea:#e3d3aa; --land:#f1e4c2;
+  --coast:#6b4d33; --rule:#bfa274; --brass:#8a5a14; --brass-ink:#fff6e2; --good:#2f6a3a; --bad:#8e2219;
+  --seal:#8e2219; --seal-d:#5c130d; --gold:#c9962e; --wood:#3a2416;
+  --scrim:rgba(30,18,10,.55); color-scheme:light;
   --f-title:"UnifrakturMaguntia","Old English Text MT",serif;
-  --f-body:"Alegreya Sans","Gill Sans","Segoe UI",sans-serif;
-  --f-sc:"Alegreya Sans SC","Alegreya Sans","Gill Sans",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --purse:#2a2416; --purse-rule:#6b5523; --paper:#0e161a; --card:#152027; --ink:#e1e7e2; --muted:#8f9fa1; --sea:#12262e; --land:#1c2a2c;
-    --coast:#3a5158; --rule:#27383e; --brass:#dba64b; --brass-ink:#1b1306; --good:#72c693; --bad:#e67f73;
-    --scrim:rgba(0,0,0,.55); color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --purse:#2a2416; --purse-rule:#6b5523; --paper:#0e161a; --card:#152027; --ink:#e1e7e2; --muted:#8f9fa1; --sea:#12262e; --land:#1c2a2c;
-  --coast:#3a5158; --rule:#27383e; --brass:#dba64b; --brass-ink:#1b1306; --good:#72c693; --bad:#e67f73;
-  --scrim:rgba(0,0,0,.55); color-scheme:dark;
+  --f-body:"Alegreya",Georgia,"Times New Roman",serif;
+  --f-sc:"Alegreya SC","Alegreya",Georgia,serif;
+  --f-mono:"Alegreya",Georgia,serif;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .33 0 0 0 0 .22 0 0 0 0 .1 .16 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --fibre:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .09' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .27 0 0 0 0 .12 .14 0 0 0 -.02'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
 }
 *{box-sizing:border-box;touch-action:manipulation}
-body{background:var(--paper);color:var(--ink);font:16px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
+body{background:var(--fibre),var(--grain),radial-gradient(130% 90% at 50% 30%,#f2e4c3 50%,#e2cc9c 100%) fixed;background-color:#ead8b0;color:var(--ink);font:16px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 170px}
@@ -792,7 +784,7 @@ em.rep.warn{background:#b5523a}
 .who{display:inline-flex;align-items:center;gap:8px;font:600 .95rem var(--f-sc);min-width:0}
 .who svg{width:36px;height:36px;flex:none}
 .who span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.av{border-radius:50%;border:1.5px solid var(--brass)}
+.av{display:block;border-radius:50%}
 .home h2{margin:0;font:700 1.05rem var(--f-sc);letter-spacing:.04em}
 .home .sub2{font-size:.88rem;color:var(--muted)}
 .perks{display:flex;flex-direction:column;gap:6px;margin:10px 0}
@@ -837,6 +829,8 @@ em.rep.warn{background:#b5523a}
 .homecard span{font-size:.86rem;color:var(--muted)}
 .origins{display:grid;grid-template-columns:1fr;gap:8px;margin:6px 0 4px}
 .hmset{display:flex;flex-wrap:wrap;gap:8px}
+.wseal{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center}.wseal .hseal{width:96px;height:96px;filter:drop-shadow(0 3px 4px rgba(60,20,10,.35))}
+.hseal.inl{width:44px;height:44px;vertical-align:middle}
 .hmset button{width:52px;height:52px;padding:4px;border-radius:10px;border:2px solid transparent;background:none;cursor:pointer}
 .hmset button[aria-pressed="true"]{border-color:var(--brass)}
 .hm{display:block;width:100%;height:100%}
@@ -902,6 +896,196 @@ em.rep.warn{background:#b5523a}
 .tempo svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tempo.fast{color:#ffd27a}
 @media (prefers-reduced-motion: reduce){.news .in{animation:none}.log .chev{transition:none}}
+
+/* ═════ Ab Version 53: Kontorbuch ═════
+   Blätter aus Pergament mit Tintenlinien, Überschriften in Fraktur, Knöpfe als Tintenrahmen, der wichtigste als Siegel.
+   Unten ein Brett aus dunklem Holz mit den Reitern. Zahlen in Mediävalziffern, in Tabellen gleich breit. */
+.card,.log{background:var(--fibre),var(--grain),linear-gradient(#f7ecd2,#f1e2bf);border:1px solid #9c7c52;border-radius:4px 7px 7px 4px;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 6px 16px -10px rgba(58,36,22,.55),-3px 0 0 #dcc597,-4px 0 0 #b39a6c}
+.num,.v,.purse .pv,.ddays,.ctable td,.dlist .dd,.frp,.rpgrid b,.bfacts b,.book .tot b,.duel .big b{font-variant-numeric:tabular-nums lining-nums}
+.btn{border:1.6px solid #4a3324;border-radius:4px;background:rgba(255,250,236,.55);color:var(--ink);font-family:var(--f-body)}
+.btn.primary{background:var(--seal);border-color:var(--seal-d);color:#f8e8d6;box-shadow:inset 0 0 0 2px rgba(255,220,200,.22)}
+.btn small{font:italic 400 .8rem var(--f-body);opacity:1;color:inherit}
+.btn.primary small{color:#f1cdbb}
+.ybtn{border:1.5px solid #4a3324;border-radius:4px;background:rgba(255,250,236,.5);font:700 .84rem var(--f-sc);letter-spacing:.02em;color:var(--ink)}
+.ybtn.on,.qgoals .ybtn{background:var(--seal);border-color:var(--seal-d);color:#f8e8d6}
+.linkbtn{border:1.5px solid #8a6a48;border-radius:4px;background:rgba(255,250,236,.4);font-family:var(--f-sc)}
+.chipset button{border:1.3px solid #8a6a48;border-radius:4px;background:rgba(255,250,236,.55)}
+.chipset button[aria-pressed="true"],.qty button[aria-pressed="true"],.kq button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#f6ead0}
+.qty button,.kq button{border:1.3px solid #8a6a48;border-radius:4px;background:rgba(255,250,236,.55);font-family:var(--f-body);font-weight:700}
+.tbtn{border:1.6px solid #4a3324;border-radius:4px;font-family:var(--f-body)}
+.tbtn.buy{background:var(--seal);border-color:var(--seal-d);color:#f8e8d6}
+.close{border:1.3px solid #8a6a48;border-radius:4px;background:rgba(255,250,236,.5);font-family:var(--f-sc)}
+.actions{background:var(--grain),linear-gradient(#efdfb8,#e6d2a6);border-top:3px double #6b4d33;padding-bottom:0}
+.sheet{background:var(--fibre),var(--grain),radial-gradient(120% 80% at 50% 40%,#f6ead0 55%,#e8d6ad 100%);border:0;border-radius:8px 8px 0 0;box-shadow:0 -10px 30px rgba(30,18,10,.45)}
+.sheet::before{content:"";position:absolute;right:26px;top:0;width:15px;height:46px;background:var(--seal);clip-path:polygon(0 0,100% 0,100% 100%,50% 80%,0 100%);pointer-events:none}
+.shead h2,.qsheet h2,.bsheet h2,.news h2{font:400 1.5rem/1.05 var(--f-title)}
+.mhead h2,.goals .qhead h2,.yard h2,.home h2,.log h2,.chead h2,.mapinfo h2,.endcard h2,.ehead strong,.duel .dh strong{font:400 1.45rem/1.05 var(--f-title);letter-spacing:0}
+details.sec > summary h3,.kontor h3,.bh,.frh,.rph,.ysub,.xfer h3{font:700 1rem var(--f-sc);letter-spacing:.03em;color:var(--ink)}
+details.sec{border-top:1px solid #a88a5e}
+.scene,.cityview,.chart{border:1px solid #4a3324;border-radius:3px;box-shadow:0 0 0 3px #f1e2bf,0 0 0 4px #8a6a48}
+.scene{margin:4px}
+.news .in{background:var(--fibre),var(--grain),linear-gradient(#f7ecd2,#f0e0bc);border:1px solid #6b4d33;border-radius:4px;box-shadow:0 0 0 3px #f3e6c6,0 0 0 4px #8a6a48,0 14px 32px rgba(30,18,10,.4)}
+.wizard{background:var(--fibre),var(--grain),radial-gradient(130% 90% at 50% 30%,#f2e4c3 50%,#e2cc9c 100%)}
+.chip,.shipchip,.rivhere,.cv,.plotinfo,.vwbuy,.awayline,.qgoals .qhint{background:rgba(255,250,236,.45);border-color:#b89b70}
+.bar,.hbar,.qbar{background:rgba(255,248,230,.6);border-color:#8a6a48}
+.bar i,.hbar i,.qbar i{background:linear-gradient(180deg,#f3d27a,#c9962e 55%,#a8741a)}
+.row:hover,.good.open .row{background:rgba(201,150,46,.12)}
+.frtag{background:var(--seal);color:#f8e8d6}
+@media (max-width:899px){
+  .tabs{background:linear-gradient(#4a2f1d,#3a2416);margin:8px calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;max-width:none;border-top:1px solid #2a180e;padding:4px max(10px,env(safe-area-inset-left,0px)) calc(4px + env(safe-area-inset-bottom,0px))}
+  .tab{color:#c9a96a;font:600 .74rem var(--f-sc);letter-spacing:.04em}
+  .tab svg{stroke-width:1.5}
+  .tab[aria-selected="true"]{color:#f3d895}
+  .tab[aria-selected="true"] svg{filter:drop-shadow(0 0 4px rgba(243,216,149,.5))}
+  .tab[aria-selected="true"]::before{background:#f3d895;top:-4px}
+  .tab .dot{border-color:#3a2416}
+  .actions{padding-bottom:0}
+}
+
+/* Kopf: Truhe und Rang */
+.top{display:block;border-bottom:0;padding-bottom:0;margin-bottom:10px}
+.top .brand{display:none}
+#stats{display:block}
+.hd{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px}
+.hdate b{display:block;font:italic 500 1.08rem/1.15 var(--f-body)}
+.hdate small{display:block;font:500 .78rem var(--f-sc);letter-spacing:.05em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hpurse{display:flex;align-items:center;gap:7px}
+.hpurse .coins{width:44px;height:40px;flex:none;filter:drop-shadow(0 1px 0 rgba(255,255,255,.5))}
+.hpurse b{display:block;font:800 1.7rem/1 var(--f-body);font-variant-numeric:oldstyle-nums;letter-spacing:.01em;
+  background:linear-gradient(180deg,#7a4e12 0%,#a8741a 45%,#6a420e 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hpurse b.neg{background:none;-webkit-text-fill-color:var(--bad);color:var(--bad)}
+.hpurse small{display:block;font:600 .72rem var(--f-sc);letter-spacing:.05em;color:var(--muted);margin-top:2px;white-space:nowrap}
+.top .mbtn{position:static;min-height:34px;min-width:34px;padding:3px 7px;justify-content:center;border-radius:4px;background:rgba(255,250,236,.45);border-color:#8a6a48}
+.top .mbtn span{display:none}
+.wline{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:9px;align-items:center;margin-top:8px;padding:7px 0 9px;
+  border:0;border-top:1px solid #8a6a48;border-bottom:3px double #6b4d33;background:none;text-align:left;cursor:pointer;font:inherit;color:inherit}
+.wline .hseal{grid-row:1/3;width:44px;height:44px;filter:drop-shadow(0 2px 2px rgba(60,20,10,.35))}
+.wl{display:flex;justify-content:space-between;gap:8px;font:500 .8rem var(--f-sc);letter-spacing:.03em;color:#6b5440;align-self:end}
+.wl em{font-style:normal;color:var(--seal);font-weight:700}.wl i{font-style:normal}
+@media (max-width:420px){.wl i{display:none}.wl em::after{content:" ·";color:#6b5440}}
+.wl b{color:var(--ink);font:700 .9rem var(--f-body);letter-spacing:0;font-variant-numeric:oldstyle-nums}
+.wl>span:first-child{white-space:nowrap}.wl>span:last-child{min-width:0;text-align:right;line-height:1.15}
+.gold{position:relative;display:block;height:9px;margin-top:4px;border:1px solid #6b4d33;border-radius:5px;background:rgba(255,248,230,.5);overflow:hidden;align-self:start}
+.gold i{position:absolute;inset:0 auto 0 0;background:linear-gradient(180deg,#f3d27a,#c9962e 55%,#a8741a);box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.gold i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 9px,rgba(90,58,18,.35) 9px 10px)}
+@media (min-width:900px){.top .brand{display:flex;margin-bottom:8px}}
+
+/* Haus: Bildnis, Weg der Ämter, Privilegien, Flotte und Kacheln */
+.hhead{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;align-items:center}
+.hhead .port svg{width:92px;height:92px;filter:drop-shadow(0 3px 5px rgba(58,36,22,.3))}
+.hhead h2{margin:0;font:400 1.6rem/1.05 var(--f-title)}
+.hhead .sub2{display:block;margin-top:3px;font:italic 400 .98rem var(--f-body);color:#5d4632}
+.road{position:relative;height:24px;margin:16px 4px 0}
+.road svg.rd{position:absolute;inset:0;width:100%;height:24px;overflow:visible}
+.road i{position:absolute;top:12px;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#f4e8cb;border:2px solid #3a2a1c}
+.road i.done{background:#3a2a1c}
+.road i.goal{width:22px;height:22px;margin:-11px 0 0 -11px;border:0;background:radial-gradient(circle at 40% 35%,#c9473a,#8e2219);box-shadow:0 1px 0 #5c130d}
+.road b.now{position:absolute;top:12px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--seal);box-shadow:0 0 0 2px #f4e8cb}
+.stations{position:relative;height:30px;margin:2px 4px 0}
+.stations span{position:absolute;transform:translateX(-50%);font:500 .72rem/1.1 var(--f-sc);letter-spacing:.01em;color:#6b5440;text-align:center;white-space:nowrap}
+.stations span{width:calc(100% / var(--n,4));white-space:normal}
+.stations .cur{font-weight:700;color:var(--ink)}.stations .g{color:var(--seal)}
+.note{margin:8px 0 0;font:italic .92rem/1.4 var(--f-body);color:#5d4632}.note b{font:700 .98rem var(--f-body);font-style:normal;color:var(--ink);font-variant-numeric:oldstyle-nums}
+.note span{display:block;margin-top:4px;font-size:.84rem;color:var(--muted)}
+.priv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.priv div{position:relative;padding:8px 10px 9px 36px;border:1px solid #9d8059;background:rgba(255,248,230,.45);font-size:.84rem;line-height:1.25}
+.priv div b{display:block;font:700 .88rem var(--f-sc);letter-spacing:.02em}
+.priv i{position:absolute;left:8px;top:9px;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#c9473a,#8e2219);box-shadow:0 1px 0 #5c130d}
+h2.fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:20px 0 6px;font:400 1.4rem/1.05 var(--f-title)}
+h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right}
+#housecard h2.fh{margin-top:0}
+.hindex{display:grid;grid-template-columns:1fr 1fr;margin-top:10px;border-top:1px solid #8a6a48}
+.htile{position:relative;display:flex;gap:9px;align-items:center;min-height:58px;padding:10px 4px;border:0;border-bottom:1px solid #b89b70;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.htile:nth-child(odd){border-right:1px solid #b89b70;padding-right:8px}.htile:nth-child(even){padding-left:10px}
+.htile .hic{width:26px;height:26px;flex:none;fill:none;stroke:#6b4d33;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.htile b{display:block;font:700 .92rem/1.15 var(--f-sc)}.htile span span{display:block;font:italic .8rem/1.25 var(--f-body);color:#6b5440}
+.htile.lock{opacity:.55}.htile:active{background:rgba(201,150,46,.12)}
+.htile .hdot{position:absolute;right:6px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--seal);box-shadow:0 0 0 2px #f4e8cb}
+.fentry{display:grid;grid-template-columns:118px minmax(0,1fr);gap:8px;width:100%;padding:8px 0 12px;border:0;border-bottom:1px solid #a88b63;background:repeating-linear-gradient(180deg,transparent 0 25px,rgba(120,90,60,.12) 25px 26px);text-align:left;font:inherit;color:inherit;cursor:pointer}
+.fentry .ship-ink{width:118px;height:auto;margin-top:4px}
+.fe{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fe>b{font:700 1rem var(--f-sc);letter-spacing:.02em}.fe>b small{font:italic 400 .84rem var(--f-body);letter-spacing:0;color:#6b5440}
+.fcap{display:flex;align-items:center;gap:7px;font-size:.9rem}.fcap svg{width:26px;height:26px;flex:none}
+.fcap.big{flex-wrap:wrap;margin:2px 0 8px}.fcap.big svg{width:34px;height:34px}.fcap.big .tally{margin-left:auto}
+.tally{font:500 .78rem var(--f-sc);color:#6b5440;letter-spacing:.03em}.tally s{text-decoration:none;color:var(--ink);letter-spacing:.06em;font:700 .86rem var(--f-body)}
+.rt{font-size:.9rem;line-height:1.3}.rt u{text-decoration:underline 2px var(--seal);text-underline-offset:3px}.rt i{display:block;color:#6b5440;font-size:.85rem}.rt i.alarm{color:var(--bad);font-style:normal;font-weight:700}
+.fe em.rep{align-self:flex-start;margin:3px 0 0}
+.stamp{display:block;margin:14px auto 4px;padding:9px 16px;border:2px solid var(--seal);color:var(--seal);font:700 .95rem var(--f-sc);letter-spacing:.04em;background:transparent;transform:rotate(-1deg);cursor:pointer}
+.stamp:disabled{opacity:.45;cursor:default}
+.fnote{display:block;margin:8px 0 0}
+.yrow.kap{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:start}.yrow.kap>svg{width:40px;height:40px}.yrow.kap .ybtns{grid-column:2}
+/* Blatt über dem Haus */
+#hscrim{z-index:37}
+.hsheet{z-index:38;top:max(70px,env(safe-area-inset-top,0px));max-height:none;padding-top:16px}
+.hsheet .hsback{display:inline-block;min-height:34px;padding:0;border:0;background:none;font:600 .82rem var(--f-sc);letter-spacing:.05em;color:#7a6047;cursor:pointer}
+.hsheet h2{margin:2px 0 0;padding-right:40px;font:400 1.65rem/1.05 var(--f-title)}
+.hsheet .hsub{font:italic 400 .98rem var(--f-body);color:#5d4632;margin:3px 0 10px}
+.hsbody>.small:first-child{margin-top:0}
+.rframe{margin:6px 0 10px;border:1px solid #6b4d33;box-shadow:0 0 0 3px #f2e5c6,0 0 0 4px #8a6a48;background:var(--sea);line-height:0}
+.rchart{display:block;width:100%;height:auto}
+.rchart .land{fill:var(--land);stroke:var(--coast);stroke-width:.7}
+.rroute{fill:none;stroke:var(--seal);stroke-width:2;stroke-dasharray:5 3.5;stroke-linecap:round;stroke-linejoin:round}
+.rport{fill:var(--seal);stroke:#f4e8cb;stroke-width:1.4}.rnum{font:700 8px var(--f-body);fill:#fff6e2;text-anchor:middle}
+.rdot{fill:#f4e8cb;stroke:var(--coast);stroke-width:1}
+.rlab{font:600 8.5px var(--f-sc);fill:#6b5440;paint-order:stroke;stroke:var(--land);stroke-width:2.6px}.rlab.b{font-size:10px;fill:var(--ink)}
+.rph{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 2px;padding-bottom:3px;border-bottom:1px solid #8a6a48;font:700 1rem var(--f-sc)}
+.rph small{font:italic 400 .82rem var(--f-body);color:#6b5440;letter-spacing:0}
+.rrow{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;min-height:44px;padding:6px 0;border:0;border-bottom:1px solid #c8ad80;background:none;text-align:left;font:inherit;font-size:.92rem;color:inherit;cursor:pointer}
+.rrow .gi{width:22px;height:22px;color:#4a3324}.rrow.on{background:rgba(201,150,46,.12)}
+.ra{font:700 .8rem var(--f-sc);font-style:normal;letter-spacing:.03em}.ra-buy{color:var(--seal)}.ra-sell{color:var(--good)}.ra-put{color:#3d5a80}.ra-take{color:#6b4c7a}
+.rp{font:700 .86rem var(--f-body);text-align:right;white-space:nowrap}
+.radd{margin-top:8px}.ybtn.radd{min-height:34px}
+.cvacts{margin-top:14px}
+
+/* Stadt: Baubuch */
+.blater{border:0;border-top:1px solid #8a6a48;border-radius:0;background:none}
+.blater li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:10px;padding:6px 0;border-top:0;border-bottom:1px solid #b89b70}
+.blater .lart{line-height:0;filter:sepia(.55) saturate(.7) opacity(.7)}.blater .lart svg,.blater .lart img{width:64px;height:auto}
+.blater b{font:700 .92rem var(--f-sc);letter-spacing:.02em;color:#5d4632}.blater .small{font-style:italic;text-align:right}
+.bslot{border:1px solid #9d8059;border-radius:3px;background:rgba(255,248,230,.45)}.bslot.free{border-style:dashed}
+.bc,.ptile,.bc.bco{border:1px solid #9d8059;border-radius:3px;background:rgba(255,248,230,.5)}
+.bart,.ptile .pfac{background:linear-gradient(#ead9b4,#f1e4c4)}
+.chead h2{font-size:1.7rem}
+.cityview .cvbig{background:rgba(250,240,215,.92);color:var(--ink);border-radius:3px;font-family:var(--f-sc)}
+
+/* Markt */
+.mslots{margin:4px 0 8px}.mslots .ml{display:block;font:500 .8rem var(--f-sc);letter-spacing:.03em;color:#6b5440;margin-bottom:4px}.mslots .ml b{font:700 .9rem var(--f-body);color:var(--ink)}
+.mslots .sl{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:3px}
+.mslots .sl i{height:16px;border:1px solid #6b4d33;background:repeating-linear-gradient(45deg,transparent 0 3px,rgba(107,77,51,.35) 3px 4px),#e9d4a6}
+.mslots .sl i.e{background:transparent;border-style:dashed;border-color:#b89b70}
+.mslots .sl i.h{background:linear-gradient(90deg,#e9d4a6 50%,transparent 50%);border-color:#8a6a48}
+#market .gname{font:700 .92rem var(--f-sc);letter-spacing:.02em;display:flex;align-items:center;gap:6px}
+#market .gname .gi{width:22px;height:22px;color:#4a3324}
+.num.deal::before{content:"☞ ";color:var(--seal);font-weight:400}
+.cols{font:600 .72rem var(--f-sc);color:#6b5440;border-bottom:1px solid #6b4d33}
+.good{border-bottom:1px solid #c8ad80}
+
+/* Segelansicht als Holzschnitt, passend zur Seekarte */
+.inkscene{position:absolute;inset:0;background:#f1e4c2;overflow:hidden}
+.inkscene>svg{display:block;width:100%;height:100%}
+.inkscene .ibob{transform-box:fill-box;transform-origin:50% 80%;animation:ibob 4.2s ease-in-out infinite}
+.inkscene .wrow{animation:idrift 7s ease-in-out infinite alternate}.inkscene .w1{animation-duration:5.5s}.inkscene .w3{animation-duration:3.8s}.inkscene .w2{animation-duration:4.4s;animation-direction:alternate-reverse}
+.inkscene .clouds{animation:idrift 26s linear infinite alternate}
+.inkscene .rain{animation:irain .5s linear infinite}
+@keyframes ibob{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(5px) rotate(1.4deg)}}
+@keyframes idrift{from{transform:translateX(0)}to{transform:translateX(-36px)}}
+@keyframes irain{from{transform:translate(0,0)}to{transform:translate(-7px,16px)}}
+@media (prefers-reduced-motion: reduce){.inkscene *{animation:none!important}}
+.scene.ink .cap{background:linear-gradient(rgba(244,232,203,.7),rgba(244,232,203,0) 75%);color:var(--ink);text-shadow:0 0 6px #f4e8cb,0 0 2px #f4e8cb}
+.scene.ink .tempo{background:rgba(58,36,22,.75)}
+.scene.ink .prog{background:rgba(58,36,22,.2)}.scene.ink .prog i{background:var(--seal)}
+.cap .ttl{font-family:var(--f-title)}
+
+.yrow.yship{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:start;column-gap:10px}
+.yrow.yship>.ship-ink{width:96px;height:auto;margin-top:2px}.yrow.yship .ybtns{grid-column:2;flex-wrap:wrap}
+.scene:not(.ink) canvas{filter:sepia(.18) saturate(.9)}
+.yard h2{font:400 1.45rem/1.05 var(--f-title)}
+.ysub{color:var(--ink)}
+
+.btn.primary:disabled{opacity:1;background:#9a6a5e;border-color:#7a4a40;color:#fff6e2;box-shadow:none}
+.cityview .cvbig{font-family:var(--f-body);font-weight:700}
+.hsheet .hsback{min-height:44px;padding:0 14px 0 0;font-size:.95rem}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -943,6 +1127,7 @@ em.rep.warn{background:#b5523a}
     <section class="col">
       <div class="scene" id="scene" data-tab="lage" role="img" aria-label="Painted scene: harbour or cog at sea">
         <canvas></canvas>
+        <div class="inkscene" id="inkscene" hidden></div>
         <div class="cap" id="cap"></div>
         <div class="prog" id="prog" hidden><i></i></div>
         <button class="tempo" id="tempo" type="button"></button>
@@ -990,6 +1175,8 @@ em.rep.warn{background:#b5523a}
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden></div>
 <div class="scrim" id="qscrim" hidden></div>
 <div class="sheet qsheet" id="qsheet" role="dialog" aria-modal="true" aria-labelledby="q-title" hidden></div>
+<div class="scrim" id="hscrim" hidden></div>
+<div class="sheet hsheet" id="hsheet" role="dialog" aria-modal="true" aria-labelledby="hs-title" hidden></div>
 <div class="scrim" id="bscrim" hidden></div>
 <div class="sheet bsheet" id="bsheet" role="dialog" aria-modal="true" aria-labelledby="bs-title" hidden></div>
 <div class="cityfull" id="cityfull" role="dialog" aria-label="Large town view" hidden></div>
@@ -2127,38 +2314,41 @@ em.rep.warn{background:#b5523a}
   function cvRuleTrade(cv, cid) {
     const k = capOf(cv) || {trade:1, name:'–'}, m = 0.3 - 0.04 * k.trade, R0 = (cv.rules || {})[cid] || {}, K = storeAt(cid);
     let sold = 0, prof = 0, spent = 0; const bq = {}, moved = [];
-    Object.entries(R0).forEach(([gid, a]) => {
-      if (a !== 'put' || !K) return; const c = cv.cargo[gid]; if (!c) return;
-      const q = Math.min(c.q, K.cap - kontorUsed(cid)); if (q <= 0) { moved.push(`Warehouse full, ${G[gid].n} stays on board`); return; }
+    // ab Version 53: jede Regel kann eine Menge (q, Last je Besuch) und eine Preisgrenze (p) tragen
+    Object.entries(R0).forEach(([gid, a0]) => {
+      const r = rl(a0); if (!G[gid] || r.a !== 'put' || !K) return; const c = cv.cargo[gid]; if (!c) return;
+      const q = Math.min(c.q, K.cap - kontorUsed(cid), r.q || Infinity); if (q <= 0) { moved.push(`Warehouse full, ${G[gid].n} stays on board`); return; }
       const basis = c.cost * q / c.q, d = K.goods[gid] || (K.goods[gid] = {q:0, cost:0});
       d.q += q; d.cost += basis; c.q -= q; c.cost -= basis; if (c.q <= 0) delete cv.cargo[gid];
       moved.push(`${q} ${G[gid].n} put into store`);
     });
-    Object.entries(R0).forEach(([gid, a]) => {
-      if (a !== 'sell') return; const c = cv.cargo[gid]; if (!c) return;
+    Object.entries(R0).forEach(([gid, a0]) => {
+      const r = rl(a0); if (!G[gid] || r.a !== 'sell') return; const c = cv.cargo[gid]; if (!c) return;
       const avg = c.cost / c.q, g = G[gid]; let q = 0, sk = st.stock[cid][gid];
       c.vs = (c.vs || 0) + 1;
-      const floor = c.vs >= 3 ? 0 : avg * 0.8;
-      while (q < c.q) { const p = unitPrice(sk + 1, g.b, cid) * 0.94 * pf(cid, gid, 'sell'); if (p < floor) break; q++; sk++; }
-      if (!q) { moved.push(`${g.n} held back, price too low`); return; }
-      if (c.vs >= 3 && q === c.q) moved.push(`${g.n} sold off below cost`);
+      const floor = r.p ? r.p : c.vs >= 3 ? 0 : avg * 0.8, lim = Math.min(c.q, r.q || Infinity);
+      while (q < lim) { const p = unitPrice(sk + 1, g.b, cid) * 0.94 * pf(cid, gid, 'sell'); if (p < floor) break; q++; sk++; }
+      if (!q) { moved.push(r.p ? `${g.n} held back, below ${fmt(r.p)} G` : `${g.n} held back, price too low`); return; }
+      if (!r.p && c.vs >= 3 && q === c.q) moved.push(`${g.n} sold off below cost`);
       const gain = sellGain(cid, gid, q), basis = c.cost * q / c.q;
       st.money += gain; st.stock[cid][gid] += q; c.q -= q; c.cost -= basis; if (c.q <= 0) delete cv.cargo[gid];
       sold += gain; prof += gain - basis; st.gprof[gid] = (st.gprof[gid] || 0) + gain - basis;
     });
-    Object.entries(R0).forEach(([gid, a]) => {
-      if (a !== 'take' || !K || !K.goods[gid]) return; const d = K.goods[gid];
-      const q = Math.min(d.q, cvCap(cv) - cvUsed(cv)); if (q <= 0) return;
+    Object.entries(R0).forEach(([gid, a0]) => {
+      const r = rl(a0); if (!G[gid] || r.a !== 'take' || !K || !K.goods[gid]) return; const d = K.goods[gid];
+      const q = Math.min(d.q, cvCap(cv) - cvUsed(cv), r.q || Infinity); if (q <= 0) return;
       const basis = d.cost * q / d.q, c = cv.cargo[gid] || (cv.cargo[gid] = {q:0, cost:0});
       c.q += q; c.cost += basis; d.q -= q; d.cost -= basis; if (d.q <= 0) delete K.goods[gid]; c.v = 0; c.vs = 0;
       moved.push(`${q} ${G[gid].n} taken aboard`);
     });
-    const buys = Object.entries(R0).filter(([, a]) => a === 'buy').map(([gid]) => gid);
+    const buys = Object.entries(R0).filter(([gid, a]) => G[gid] && rl(a).a === 'buy').map(([gid]) => gid), bLim = {}, bMax = {};
+    buys.forEach(gid => { const r = rl(R0[gid]); bLim[gid] = r.q || 0; bMax[gid] = r.p || 0; });
     if (buys.length) {
       const est = {}, dest = {};
       buys.forEach(gid => {
-        const t = cv.route.filter(c => c !== cid && ((cv.rules || {})[c] || {})[gid] === 'sell');
-        const put = cv.route.some(c => c !== cid && ((cv.rules || {})[c] || {})[gid] === 'put');
+        const ra = c => (rl(((cv.rules || {})[c] || {})[gid]) || {}).a;
+        const t = cv.route.filter(c => c !== cid && ra(c) === 'sell');
+        const put = cv.route.some(c => c !== cid && ra(c) === 'put');
         if (t.length) { const b = t.map(c => ({c, p:estSell(cv, gid, c)})).sort((x, y) => y.p - x.p)[0]; est[gid] = b.p; dest[gid] = b.c; }
         else { est[gid] = put ? G[gid].b * 1.2 : G[gid].b * 1.1; dest[gid] = null; }
       });
@@ -2167,16 +2357,17 @@ em.rep.warn{background:#b5523a}
       while (free > 0 && guard++ < 600) {
         let best = null, bestR = m * 0.6;
         buys.forEach(gid => {
-          if (st.stock[cid][gid] < 1) return;
+          if (st.stock[cid][gid] < 1 || (bLim[gid] && (bq[gid] || 0) >= bLim[gid])) return;
           const p = unitPrice(st.stock[cid][gid], G[gid].b, cid) * 1.06 * pf(cid, gid, 'buy');
-          const e = dest[gid] ? estAfter(est[gid], bq[gid] || 0, dest[gid], gid) : est[gid], r = e / p - 1;
+          if (bMax[gid] && p > bMax[gid]) return;
+          const e = dest[gid] ? estAfter(est[gid], bq[gid] || 0, dest[gid], gid) : est[gid], r = bMax[gid] ? 10 - p / bMax[gid] : e / p - 1;
           if (r > bestR && spent + p <= budget) { bestR = r; best = {gid, p}; }
         });
         if (!best) break;
         st.stock[cid][best.gid] -= 1; spent += best.p; free--; bq[best.gid] = (bq[best.gid] || 0) + 1;
         const c = cv.cargo[best.gid] || (cv.cargo[best.gid] = {q:0, cost:0}); c.q += 1; c.cost += best.p; c.v = 0; c.vs = 0;
       }
-      const skip = buys.filter(gid => !bq[gid]).map(gid => G[gid].n);
+      const skip = buys.filter(gid => !bq[gid]).map(gid => bMax[gid] ? `${G[gid].n} above ${fmt(bMax[gid])} G` : G[gid].n);
       if (skip.length && free > 0) moved.push(`${skip.join(', ')} not bought, not worth it right now`);
     }
     spent = Math.round(spent); st.money -= spent;
@@ -2316,7 +2507,7 @@ em.rep.warn{background:#b5523a}
       : {id:null, step:1, ships:[], cap:null, tpl:'rund', pro:false, route:[st.loc], rules:{}, hin:[], back:[], skip:[]};
     if (cv && cv.tpl === 'pendel' && cv.route.length === 2) {
       const [A, B] = cv.route, ra = (cv.rules || {})[A] || {};
-      ui.rw.hin = Object.keys(ra).filter(g => ra[g] === 'buy'); ui.rw.back = Object.keys(ra).filter(g => ra[g] === 'sell');
+      ui.rw.hin = Object.keys(ra).filter(g => (rl(ra[g]) || {}).a === 'buy'); ui.rw.back = Object.keys(ra).filter(g => (rl(ra[g]) || {}).a === 'sell');
     }
     ui.oEdit = null; renderHouse();
   }
@@ -2339,9 +2530,9 @@ em.rep.warn{background:#b5523a}
   function rwRules() {
     const w = ui.rw;
     if (w.tpl === 'pendel') {
-      const [A, B] = w.route, r = {[A]:{}, [B]:{}};
-      w.hin.forEach(g => { r[A][g] = 'buy'; r[B][g] = 'sell'; });
-      w.back.forEach(g => { r[B][g] = 'buy'; r[A][g] = 'sell'; });
+      const [A, B] = w.route, r = {[A]:{}, [B]:{}}, keep = (c, g, a) => { const o = rl((w.rules[c] || {})[g]); return o && o.a === a ? w.rules[c][g] : a; };
+      w.hin.forEach(g => { r[A][g] = keep(A, g, 'buy'); r[B][g] = keep(B, g, 'sell'); });
+      w.back.forEach(g => { r[B][g] = keep(B, g, 'buy'); r[A][g] = keep(A, g, 'sell'); });
       return {mode:'regeln', rules:r};
     }
     if (w.pro) { const r = {}; w.route.forEach(c => { r[c] = Object.assign({}, w.rules[c] || {}); }); return {mode:'regeln', rules:r}; }
@@ -2394,7 +2585,7 @@ em.rep.warn{background:#b5523a}
       } else if (w.tpl === 'rund' && w.pro) {
         h += w.route.map(c => {
           const rr = w.rules[c] || {}, hasK = !!storeAt(c);
-          return `<span class="flabel">${C[c].n}${hasK ? ' ⌂' : ''}</span><div class="chipset rules">` + GOODS.map(g => { const a = rr[g.id]; return `<button type="button" data-rw="rule" data-c="${c}" data-v="${g.id}" class="${a ? 'r-' + a : ''}" aria-pressed="${!!a}">${icon(g.id)}${g.n}${a ? ` · ${RULE_N[a]}` : ''}</button>`; }).join('') + `</div>`;
+          return `<span class="flabel">${C[c].n}${hasK ? ' ⌂' : ''}</span><div class="chipset rules">` + GOODS.map(g => { const a = (rl(rr[g.id]) || {}).a; return `<button type="button" data-rw="rule" data-c="${c}" data-v="${g.id}" class="${a ? 'r-' + a : ''}" aria-pressed="${!!a}">${icon(g.id)}${g.n}${a ? ` · ${RULE_N[a]}` : ''}</button>`; }).join('') + `</div>`;
         }).join('') + `<span class="small">Tap a good several times: buy, sell${w.route.some(c => storeAt(c)) ? ', store, withdraw (only with warehouse ⌂)' : ''}, nothing. The captain buys as long as it pays against the next selling port; he never sells below 80 % of the purchase price.</span>`;
       } else if (w.tpl === 'rund') {
         h += `<span class="flabel">Goods the captain should not buy</span><div class="chipset">${GOODS.map(g => `<button type="button" data-rw="skip" data-v="${g.id}" aria-pressed="${!w.skip.includes(g.id)}">${icon(g.id)}${g.n}</button>`).join('')}</div>`;
@@ -2417,7 +2608,7 @@ em.rep.warn{background:#b5523a}
     else if (a === 'back') tog(w.back, v);
     else if (a === 'skip') tog(w.skip, v);
     else if (a === 'rule') { const c = t.dataset.c, rr = w.rules[c] || (w.rules[c] = {}), cyc = storeAt(c) ? [undefined, 'buy', 'sell', 'put', 'take'] : [undefined, 'buy', 'sell'];
-      const nx = cyc[(cyc.indexOf(rr[v]) + 1) % cyc.length]; if (nx) rr[v] = nx; else delete rr[v]; }
+      const o = rl(rr[v]), nx = cyc[(cyc.indexOf(o ? o.a : undefined) + 1) % cyc.length]; if (nx) rr[v] = o && o.a !== nx && typeof rr[v] === 'object' ? Object.assign({}, o, {a:nx, p:0}) : nx; else delete rr[v]; }
     else if (a === 'next') { if (!rwWhy()) w.step++; }
     else if (a === 'prev') w.step--;
     else if (a === 'go') return rwFinish();
@@ -9369,6 +9560,237 @@ em.rep.warn{background:#b5523a}
       if (cls === 'melee') { ab.removeAttribute('role'); ab.removeAttribute('aria-label'); } else { ab.setAttribute('role', 'button'); ab.setAttribute('aria-label', ab.dataset.al); }
     }
   }
+  // ───── Ab Version 53: Schiffe als Holzschnitt (Kogge nach der Bremer Kogge, Holk) für die Segelansicht, später auch das Seegefecht ─────
+  const SHIP_INK = (() => {
+  const INK = '#33241a', WOOD = '#e2c99a', WOOD2 = '#d6b780', SAILC = '#f2e6c8';
+  const P = (x, y) => `${x.toFixed(1)} ${y.toFixed(1)}`;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const qpt = (p0, p1, p2, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * p1[0] + t * t * p2[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * p1[1] + t * t * p2[1]];
+  let uid = 0;
+
+  // Holzschnitt-Wellen: Reihen kleiner Kämme mit eingerollter Gischt, darunter waagrechte Schraffur
+  function waves(y, w, opt = {}) {
+    let sd = opt.seed || 3; const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+    const rows = opt.rows || 3, out = [], sea = opt.sea || '#f2e5c7';
+    for (let r = 0; r < rows; r++) {
+      const yy = y + r * 12; let x = -14 + rnd() * 10, d = `M${x.toFixed(1)} ${yy}`, top = d;
+      const curls = [];
+      while (x < w + 20) { const st = 20 + rnd() * 14 - r * 2, a = 4 + rnd() * 3 - r; d += ` q${(st * 0.28).toFixed(1)} ${(-a).toFixed(1)} ${(st * 0.55).toFixed(1)} 0 q${(st * 0.2).toFixed(1)} ${(a * 0.45).toFixed(1)} ${(st * 0.45).toFixed(1)} 0`;
+        if (r === 0 && rnd() < 0.35) curls.push(`<path d="M${(x + st * 0.3).toFixed(1)} ${(yy - a + 1.2).toFixed(1)} q3 -3.2 5.6 -.4 q-1.6 2 -3.6 .8" fill="none" stroke="#33241a" stroke-width=".85" stroke-linecap="round"/>`);
+        x += st; }
+      if (r === 0) out.push(`<path d="${d} V${y + 80} H-14 Z" fill="${sea}"/>`);
+      out.push(`<path d="${d}" fill="none" stroke="#33241a" stroke-width="${(1.4 - r * 0.3).toFixed(2)}" stroke-linecap="round"/>`, curls.join(''));
+      for (let k = 1; k <= 2; k++) { let xx = -10 + rnd() * 20; const segs = []; while (xx < w) { const L = 8 + rnd() * 18; segs.push(`M${xx.toFixed(1)} ${(yy + 3.5 + k * 2.4).toFixed(1)} h${L.toFixed(1)}`); xx += L + 5 + rnd() * 10 + k * 3; }
+        out.push(`<path d="${segs.join(' ')}" stroke="#33241a" stroke-width=".5" opacity=".6"/>`); }
+    }
+    return out.join('');
+  }
+
+  // Rahsegel: Bahnen (senkrechte Nähte), jede zweite in Farbe, Bauch durch gekrümmte Kanten, Bonnet unten angeschnürt
+  function sail(x0, x1, yTop, yBot, belly, stripe, id, flip) {
+    const mid = (x0 + x1) / 2, bl = belly;
+    const edge = `M${P(x0, yTop)} Q${P(mid, yTop - 3)} ${P(x1, yTop)} Q${P(x1 + bl * (flip ? -0.6 : 1), (yTop + yBot) / 2)} ${P(x1 + 2 * (flip ? -1 : 1), yBot)} Q${P(mid, yBot + 6)} ${P(x0 - 2 * (flip ? -1 : 1), yBot)} Q${P(x0 - bl * (flip ? -1 : 0.6), (yTop + yBot) / 2)} ${P(x0, yTop)}Z`;
+    const n = 9, cloths = [], seams = [];
+    for (let i = 0; i < n; i++) {
+      const a = lerp(x0, x1, i / n), b = lerp(x0, x1, (i + 1) / n), bulge = Math.sin((i + 0.5) / n * Math.PI) * bl * 0.35 * (flip ? -1 : 1);
+      if (i % 2 === 1) cloths.push(`<path d="M${P(a, yTop - 2)} L${P(b, yTop - 2)} Q${P(b + bulge, (yTop + yBot) / 2)} ${P(b + (b - mid) * 0.05, yBot + 8)} L${P(a + (a - mid) * 0.05, yBot + 8)} Q${P(a + bulge, (yTop + yBot) / 2)} ${P(a, yTop - 2)}Z" fill="${stripe}"/>`);
+      if (i) seams.push(`<path d="M${P(a, yTop)} Q${P(a + bulge, (yTop + yBot) / 2)} ${P(a + (a - mid) * 0.05, yBot + 4)}" fill="none" stroke="${INK}" stroke-width=".55" opacity=".7"/>`);
+    }
+    // Schatten auf der vom Licht abgewandten Seite: gebogene Schraffur
+    const sh = []; for (let k = 0; k < 7; k++) { const xx = flip ? lerp(x0, mid, k / 14) : lerp(x1, mid, k / 14); sh.push(`<path d="M${P(xx, yTop + 6)} Q${P(xx + (flip ? -1 : 1) * bl * 0.3, (yTop + yBot) / 2)} ${P(xx, yBot - 4)}" fill="none" stroke="${INK}" stroke-width=".45" opacity=".55"/>`); }
+    const bonnet = yBot - (yBot - yTop) * 0.18;
+    const lace = []; for (let i = 0; i <= 16; i++) { const x = lerp(x0 + 3, x1 - 3, i / 16); lace.push(`<path d="M${P(x, bonnet - 2)} l1.5 4" stroke="${INK}" stroke-width=".6"/>`); }
+    return `<defs><clipPath id="sc${id}"><path d="${edge}"/></clipPath></defs>
+      <path d="${edge}" fill="${SAILC}"/><g clip-path="url(#sc${id})">${cloths.join('')}${seams.join('')}${sh.join('')}<path d="M${x0 - 10} ${bonnet} Q${mid} ${bonnet + 5} ${x1 + 10} ${bonnet}" fill="none" stroke="${INK}" stroke-width=".9"/>${lace.join('')}</g>
+      <path d="${edge}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  }
+
+  // Zinnenkranz: Brüstung mit Zinnen und Schießscharten
+  function crenel(x0, x1, y, h, n, fill) {
+    const w = (x1 - x0) / (n * 2 - 1); let d = `M${P(x0, y + h)} V${y}`;
+    for (let i = 0; i < n; i++) { d += ` h${w}`; if (i < n - 1) d += ` v${h * 0.45} h${w} v${-h * 0.45}`; }
+    d += ` V${y + h} Z`;
+    return `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/>`;
+  }
+  // kleine Gestalten: Kopf mit Kappe, Schultern, wahlweise Spieß
+  function men(xs, y, opt = {}) {
+    return xs.map((x, i) => `<path d="M${x - 4.5} ${y + 9} q4.5 -6 9 0" fill="${i % 3 === 0 ? '#7a3b2c' : i % 3 === 1 ? '#40566a' : '#6b5a3a'}" stroke="${INK}" stroke-width=".8"/>` +
+      `<circle cx="${x}" cy="${y}" r="3.1" fill="#ecd6bb" stroke="${INK}" stroke-width=".8"/><path d="M${x - 3.4} ${y - 1} q3.4 -4.4 6.8 0z" fill="${INK}"/>` +
+      (opt.pike ? `<path d="M${x + 3} ${y + 8} L${x + 6 + (i % 2)} ${y - 16}" stroke="${INK}" stroke-width=".9"/><path d="M${x + 6 + (i % 2)} ${y - 16} l-1.6 3.4 h3.2z" fill="${INK}"/>` : '')).join('');
+  }
+
+  // Leute an Bord als kleine Holzschnittfiguren. Kopf bei (x, y), Blick nach rechts (dir 1) oder links (dir -1).
+  // kind: matrose (Gugel), schuetze (Eisenhut und Armbrust), spiess (Eisenhut und Spieß), kapitaen (Kappe, zeigt voraus)
+  const CLOTH = ['#8a4a36', '#4a6378', '#77663f', '#5e7050', '#6a4a5e'];
+  function crew(list, o = {}) {
+    const dir = o.dir || 1, sc = o.s || 1;
+    return list.map((p, i) => {
+      const [x, y, kind] = p, k = kind || o.kind || 'matrose', cl = mixc(CLOTH[(i + (o.seed || 0)) % CLOTH.length], '#efe1c0', .2), sk = '#efd2b4';
+      const g = [];
+      // Rumpf und Schultern
+      g.push(`<path d="M-4.6 14 C-4.8 7 -4.2 3.6 -2.4 2.6 L2.6 2.6 C4.4 3.6 5 7 4.8 14 Z" fill="${cl}" stroke="${INK}" stroke-width=".85"/>`, `<path d="M-.2 3 V14" stroke="${INK}" stroke-width=".4" opacity=".6"/>`);
+      if (k === 'matrose') {
+        g.push(`<path d="M-4.4 5.6 C-5.6 0 -4.4 -6.2 .2 -6.6 C3.8 -6.8 5.2 -4 4.6 -1 C4.2 1.2 3.6 2.6 2.6 4 C1 5.4 -2.6 6.4 -4.4 5.6 Z" fill="${mixc(CLOTH[(i + 2) % 5], '#efe1c0', .15)}" stroke="${INK}" stroke-width=".85"/>`,
+          `<path d="M-3.8 -3.6 C-6.4 -2.6 -7.6 0 -8 3.4" fill="none" stroke="${INK}" stroke-width="1.3" stroke-linecap="round"/>`,
+          `<path d="M.8 -3.6 C2.4 -4.4 3.8 -3.8 4.2 -2.2 L5.2 -.8 L4.2 -.4 C4 1 3 2 1.6 1.8 C.4 1.6 -.2 .2 0 -1.4 Z" fill="${sk}" stroke="${INK}" stroke-width=".7"/>`);
+        g.push(`<path d="M2.6 4.4 L6.4 8.4" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>`);
+      } else {
+        g.push(`<path d="M-2.4 -2 C-2.6 -4.8 -.6 -6.2 1.4 -6 C3.4 -5.8 4.4 -4.2 4.2 -2.4 L5.2 -.8 L4.2 -.4 C4.2 1.2 3 2.4 1.4 2.2 C-.6 2 -2.4 .6 -2.4 -2 Z" fill="${sk}" stroke="${INK}" stroke-width=".8"/>`);
+        if (k === 'kapitaen') g.push(`<path d="M-3 -3.6 C-3.4 -6.8 4.8 -7.6 5.6 -4.6 C3.6 -3.6 -1 -3.2 -3 -3.6 Z" fill="${mixc('#2a2a2e', '#efe1c0', .2)}" stroke="${INK}" stroke-width=".8"/>`, `<path d="M2.6 4.2 L9.6 1.6" stroke="${INK}" stroke-width="1.2" stroke-linecap="round"/>`, `<path d="M-1.6 3 C-2 6 -2 9 -1.4 12" stroke="${INK}" stroke-width=".5" opacity=".6"/>`);
+        else {
+          // Eisenhut mit Krempe
+          g.push(`<path d="M-2.6 -3.6 C-2.8 -7.8 4.6 -8.4 4.8 -3.8 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".8"/><path d="M-4.8 -3.4 Q1 -5.6 7 -3.4 Q1 -2.2 -4.8 -3.4 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".8"/><path d="M1 -7.6 V-4" stroke="${INK}" stroke-width=".4"/>`);
+          if (k === 'schuetze') g.push(`<path d="M1 3.6 L12.6 1" stroke="#6b4a2a" stroke-width="1.5" stroke-linecap="round"/><path d="M11.4 -4.6 Q14.2 1.4 11.6 7.4" fill="none" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/><path d="M11.4 -4.4 L4.4 2.4 L11.6 7.2" fill="none" stroke="${INK}" stroke-width=".4"/><path d="M2.4 4.6 L5.4 2.6" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>`);
+          if (k === 'spiess') g.push(`<path d="M4.6 16 L7.6 -15" stroke="#6b4a2a" stroke-width="1.2" stroke-linecap="round"/><path d="M7.6 -15 L6.6 -20.6 L9.4 -15.6 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".7"/><path d="M2.6 4.6 L5.4 5.6" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.6" cy="5.4" r="1.1" fill="${sk}" stroke="${INK}" stroke-width=".5"/>`);
+        }
+      }
+      return `<g transform="translate(${x} ${y}) scale(${dir * sc} ${sc})">${g.join('')}</g>`;
+    }).join('');
+  }
+  const mixc = (a, b, t) => { const A = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), B = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16)); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+
+  function pennant(x, y, len, col, flip) {
+    const s = flip ? -1 : 1;
+    return `<path d="M${x} ${y} C${x - s * len * 0.35} ${y - 4}, ${x - s * len * 0.7} ${y + 6}, ${x - s * len} ${y + 2} L${x - s * len * 0.82} ${y + 6} L${x - s * len} ${y + 9} C${x - s * len * 0.7} ${y + 13}, ${x - s * len * 0.35} ${y + 5}, ${x} ${y + 8}Z" fill="${col}" stroke="${INK}" stroke-width=".9" stroke-linejoin="round"/>`;
+  }
+
+  // ───────── Kogge, Bug rechts ─────────
+  function kogge(o = {}) {
+    const id = 'k' + (++uid), stripe = o.stripe || '#9c3326', flag = o.flag || stripe, W = 400, H = 300, WL = 228;
+    // Rumpfkanten
+    const stemTop = [374, 150], stemFoot = [324, 246], sternTop = [52, 140], sternFoot = [86, 248];
+    const sheerC = [212, 172], keelC = [205, 262];
+    const hull = `M${P(...sternTop)} Q${P(...sheerC)} ${P(...stemTop)} L${P(...stemFoot)} Q${P(...keelC)} ${P(...sternFoot)} Z`;
+    // Klinkerplanken: Kurven zwischen Schergang und Kiel, laufen an den Steven aus
+    const strakes = [];
+    for (let i = 1; i <= 7; i++) {
+      const t = i / 8, a = [lerp(sternTop[0], sternFoot[0], t), lerp(sternTop[1], sternFoot[1], t)], b = [lerp(stemTop[0], stemFoot[0], t), lerp(stemTop[1], stemFoot[1], t)], c = [lerp(sheerC[0], keelC[0], t), lerp(sheerC[1], keelC[1], t)];
+      strakes.push(`<path d="M${P(...a)} Q${P(...c)} ${P(...b)}" fill="none" stroke="${INK}" stroke-width="${i === 1 ? 2.4 : 1}"/>`);
+      strakes.push(`<path d="M${P(a[0] + 1, a[1] + 2.2)} Q${P(c[0], c[1] + 2.2)} ${P(b[0] - 1, b[1] + 2.2)}" fill="none" stroke="${INK}" stroke-width=".5" opacity=".55"/>`);
+      if (i >= 4) for (let k = 0; k < (i - 3) * 2; k++) { const tt = (k + 0.5) / ((i - 3) * 2); const p = qpt(a, c, b, tt); strakes.push(`<path d="M${P(p[0] - 9, p[1] + 4)} h18" stroke="${INK}" stroke-width=".45" opacity=".5"/>`); }
+    }
+    // durchgesteckte Querbalken unter dem Schergang
+    const beams = [0.25, 0.38, 0.51, 0.64, 0.77].map(t => { const p = qpt([sternTop[0], sternTop[1] + 9], [sheerC[0], sheerC[1] + 9], [stemTop[0] - 6, stemTop[1] + 12], t); return `<rect x="${(p[0] - 2.6).toFixed(1)}" y="${(p[1] - 2.6).toFixed(1)}" width="5.2" height="5.2" fill="${WOOD2}" stroke="${INK}" stroke-width=".9"/>`; }).join('');
+    // Achterkastell (burgartig) mit Stützen, Schatten unter dem Überhang
+    const ak = `<path d="M44 96 H136 V146 Q100 150 52 148 Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/>
+      ${[56, 68, 80, 92, 104, 116, 128].map(x => `<path d="M${x} 104 V146" stroke="${INK}" stroke-width=".55" opacity=".7"/>`).join('')}
+      <path d="M44 104 H136" stroke="${INK}" stroke-width="1"/><path d="M84 146 v-18 a8 8 0 0 1 16 0 v18" fill="#3b2a1d" stroke="${INK}" stroke-width="1"/>
+      ${crenel(42, 138, 84, 13, 6, WOOD)}
+      ${[0, 1, 2, 3, 4, 5].map(k => `<path d="M${118 + k * 3} 106 l-3 38" stroke="${INK}" stroke-width=".45" opacity=".6"/>`).join('')}
+      <path d="M136 146 L140 152 M120 148 l3 6" stroke="${INK}" stroke-width=".8"/>`;
+    // Vorderkastell klein auf dem Vorsteven
+    const vk = `<path d="M320 132 H372 L366 152 Q340 160 322 160 Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>${crenel(318, 374, 122, 11, 4, WOOD)}
+      ${[330, 342, 354].map(x => `<path d="M${x} 136 v18" stroke="${INK}" stroke-width=".5" opacity=".7"/>`).join('')}`;
+    // Heckruder am Achtersteven mit Fingerlingen, Pinne ins Kastell
+    const rud = `<path d="M54 146 L48 150 L60 246 Q70 252 82 246 L84 238 Z" fill="${WOOD2}" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>
+      ${[176, 198, 220].map(y => `<path d="M${52 + (y - 150) * 0.12} ${y} h${12}" stroke="${INK}" stroke-width="1.6"/>`).join('')}
+      ${[0, 1, 2, 3, 4].map(k => `<path d="M${62 + k * 4} 205 l2 36" stroke="${INK}" stroke-width=".45" opacity=".6"/>`).join('')}`;
+    // Mast, Mastkorb, Rah, Segel, Takelage
+    const mx = 214;
+    const rig = `<path d="M${P(mx, 40)} L176 160 M${P(mx, 40)} L188 162 M${P(mx, 40)} L200 164 M${P(mx, 40)} L236 166 M${P(mx, 40)} L250 165 M${P(mx, 40)} L264 164" stroke="${INK}" stroke-width=".7" opacity=".85"/>
+      ${[176, 188, 200, 236, 250, 264].map(x => `<ellipse cx="${x}" cy="${x < mx ? 164 - (x - 176) * 0.15 : 166 - (x - 236) * 0.1}" rx="2.6" ry="2" fill="${WOOD2}" stroke="${INK}" stroke-width=".7"/>`).join('')}
+      <path d="M${mx} 34 L392 128" stroke="${INK}" stroke-width=".8"/><path d="M128 64 Q100 70 92 92 M300 64 Q330 90 362 124" stroke="${INK}" stroke-width=".6" opacity=".8"/>
+      ${[0.25, 0.4, 0.55, 0.7].map(t => { const a = [lerp(mx, 176, t), lerp(40, 160, t)], b = [lerp(mx, 200, t), lerp(40, 164, t)]; return `<path d="M${P(...a)} L${P(...b)}" stroke="${INK}" stroke-width=".45" opacity=".7"/>`; }).join('')}`;
+    const mast = `<path d="M${mx - 3.5} 168 L${mx - 2} 18 L${mx + 2} 18 L${mx + 3.5} 168Z" fill="${WOOD2}" stroke="${INK}" stroke-width="1.1"/>
+      <path d="M${mx + 1} 30 v130" stroke="${INK}" stroke-width=".5" opacity=".6"/>
+      <path d="M${mx - 13} 30 L${mx + 13} 30 L${mx + 9} 46 L${mx - 9} 46Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.1"/>${[-9, -4.5, 0, 4.5, 9].map(d => `<path d="M${mx + d} 31 l${d * -0.25} 14" stroke="${INK}" stroke-width=".6"/>`).join('')}
+      <path d="M${mx - 13} 30 h26" stroke="${INK}" stroke-width="1.6"/>`;
+    const yard = `<path d="M126 60 Q${mx} 54 302 60" fill="none" stroke="${INK}" stroke-width="3.2" stroke-linecap="round"/><path d="M126 60 Q${mx} 54 302 60" fill="none" stroke="${WOOD2}" stroke-width="1.4" stroke-linecap="round"/>`;
+    const sl = sail(130, 298, 62, 150, 16, stripe, id, false);
+    const sheets = `<path d="M128 150 Q110 152 96 146 M300 150 Q330 150 344 134" stroke="${INK}" stroke-width=".7" fill="none"/>`;
+    const bowsprit = `<path d="M352 140 L398 120" stroke="${INK}" stroke-width="3.6" stroke-linecap="round"/><path d="M352 140 L398 120" stroke="${WOOD2}" stroke-width="1.6" stroke-linecap="round"/>`;
+    const anchor = `<g transform="translate(338 172) rotate(-14)"><path d="M0 0 v22 M-6 4 h12 M-9 16 q9 12 18 0" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round"/><circle cx="0" cy="-2" r="2.2" fill="none" stroke="${INK}" stroke-width="1.1"/></g><path d="M346 158 q-6 6 -8 12" stroke="${INK}" stroke-width=".9" fill="none"/>`;
+    const crewSet = crew([[60, 76, 'kapitaen'], [82, 76, 'schuetze'], [104, 76, 'matrose'], [124, 76, 'schuetze']], {dir:1, s:1.7}) + crew([[336, 114, 'matrose'], [356, 114, 'schuetze']], {dir:1, s:1.6, seed:2});
+    const stern = `<path d="M50 84 V54" stroke="${INK}" stroke-width="1.4"/><path d="M50 55 h20 v12 h-20z" fill="${flag}" stroke="${INK}" stroke-width=".9"/><path d="M50 61 h20" stroke="#f2e6c8" stroke-width="2.4"/>`;
+    // Schatten unter dem Schergang und am Wasser
+    const shade = `<g clip-path="url(#hc${id})">${Array.from({length:44}, (_, k) => `<path d="M${40 + k * 8} 258 l10 -22" stroke="${INK}" stroke-width=".6" opacity=".55"/>`).join('')}
+      ${Array.from({length:30}, (_, k) => `<path d="M${120 + k * 7} 160 l6 10" stroke="${INK}" stroke-width=".4" opacity=".35"/>`).join('')}</g>`;
+    return `<svg class="${o.cls || 'ship'}" viewBox="0 0 ${W} 262" aria-hidden="true"><defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>
+      <g class="rig" fill="none">${rig}</g>${mast}${yard}<g class="sail">${sl}</g>${sheets}${bowsprit}
+      ${pennant(mx, 18, 64, flag, true)}
+      <g class="hull"><path d="${hull}" fill="${WOOD}" stroke="${INK}" stroke-width="1.7" stroke-linejoin="round"/>${shade}${strakes.join('')}${beams}${anchor}</g>
+      <g class="crew">${crewSet}</g><g class="ak">${ak}${stern}</g><g class="vk">${vk}</g>${rud}
+      <g class="sea">${waves(WL + 2, W, {seed:o.seed || 5, sea:o.sea})}</g></svg>`;
+  }
+
+  // ───────── Holk, Bug links, bauchig, Kastelle aus der Beplankung ─────────
+  function holk(o = {}) {
+    const id = 'h' + (++uid), stripe = o.stripe || '#3a302a', flag = o.flag || '#2b2522', W = 400, H = 300, WL = 228, f = o.dmg || {bug:3, mitte:3, kastell:3};
+    // Rumpf: Banane, die Enden gerundet und hochgezogen; Planken laufen an Bug und Heck nach oben aus
+    const SH = [[16, 84], [200, 190], [384, 74]], KE = [[74, 220], [200, 242], [332, 220]], BOW = [[16, 84], [2, 168], [74, 220]], STN = [[384, 74], [400, 164], [332, 220]];
+    const hull = `M16 84 Q200 190 384 74 Q400 164 332 220 Q200 242 74 220 Q2 168 16 84Z`;
+    const strakes = [];
+    for (let i = 1; i <= 8; i++) {
+      const t = i / 9, L = qpt(...BOW, t), R = qpt(...STN, t), C = [200, lerp(190, 242, t)];
+      strakes.push(`<path d="M${P(...L)} Q${P(...C)} ${P(...R)}" fill="none" stroke="${INK}" stroke-width="${i === 1 ? 2.2 : .95}"/>`);
+      strakes.push(`<path d="M${P(L[0] + 1, L[1] + 2.3)} Q${P(C[0], C[1] + 2.3)} ${P(R[0] - 1, R[1] + 2.3)}" fill="none" stroke="${INK}" stroke-width=".5" opacity=".55"/>`);
+      if (i >= 5) for (let k = 0; k < (i - 4) * 3; k++) { const pp = qpt(L, C, R, (k + 0.5) / ((i - 4) * 3)); strakes.push(`<path d="M${P(pp[0] - 8, pp[1] + 4)} h16" stroke="${INK}" stroke-width=".45" opacity=".45"/>`); }
+    }
+    const sy = x => { let lo = 0, hi = 1; for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; if (qpt(...SH, m)[0] < x) lo = m; else hi = m; } return qpt(...SH, lo)[1]; };
+    // Kastelle als fortgeführte Beplankung: waagrechte Planken, unten dem Schergang folgend, oben Zinnen
+    const castle = (x0, x1, yTop, cid) => { let d = `M${x0} ${yTop} H${x1}`; for (let x = x1; x >= x0; x -= 4) d += ` L${x} ${sy(x).toFixed(1)}`; d += ' Z';
+      const planks = Array.from({length:7}, (_, k) => `<path d="M${x0 - 2} ${yTop + 8 + k * 7} H${x1 + 2}" stroke="${INK}" stroke-width="${k ? .7 : 1}" opacity="${k ? .75 : 1}"/>`).join('');
+      return `<defs><clipPath id="${cid}"><path d="${d}"/></clipPath></defs><path d="${d}" fill="${WOOD}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><g clip-path="url(#${cid})">${planks}</g>` + crenel(x0 - 2, x1 + 2, yTop - 12, 12, 6, WOOD); };
+    const vk = castle(18, 104, 64, 'v' + id);
+    const ak = castle(296, 382, 52, 'a' + id) + [0, 1, 2].map(k => `<path d="M${306 + k * 22} ${96 - k * 3} v-11 a5 5 0 0 1 10 0 v11z" fill="#2b2118" stroke="${INK}" stroke-width=".8"/>`).join('') +
+      [0, 1, 2, 3, 4, 5].map(k => `<path d="M${352 + k * 4} 64 l-4 ${34 - k * 3}" stroke="${INK}" stroke-width=".45" opacity=".55"/>`).join('');
+    const mx = 200;
+    const rig = `<path d="M${mx} 30 L142 136 M${mx} 30 L156 138 M${mx} 30 L170 140 M${mx} 30 L230 140 M${mx} 30 L244 138 M${mx} 30 L258 136" stroke="${INK}" stroke-width=".7" opacity=".85"/>
+      ${[142, 156, 170, 230, 244, 258].map(x => `<ellipse cx="${x}" cy="${x < mx ? 136 + (x - 142) * 0.15 : 140 - (x - 230) * 0.15}" rx="2.6" ry="2" fill="${WOOD2}" stroke="${INK}" stroke-width=".7"/>`).join('')}
+      <path d="M${mx} 26 L40 62" stroke="${INK}" stroke-width=".8"/><path d="M${mx} 26 L330 46" stroke="${INK}" stroke-width=".7"/>`;
+    const mast = `<path d="M${mx - 4} 150 L${mx - 2.4} 10 L${mx + 2.4} 10 L${mx + 4} 156Z" fill="${WOOD2}" stroke="${INK}" stroke-width="1.1"/>
+      <path d="M${mx - 16} 18 L${mx + 16} 18 L${mx + 11} 38 L${mx - 11} 38Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.2"/>${[-11, -5.5, 0, 5.5, 11].map(d => `<path d="M${mx + d} 19 l${d * -0.3} 18" stroke="${INK}" stroke-width=".6"/>`).join('')}
+      <path d="M${mx - 16} 18 h32" stroke="${INK}" stroke-width="1.8"/>${f.mitte > 0 ? crew([[mx - 1, 13, 'matrose']], {dir:-1, s:1.3, seed:3}) : ''}`;
+    const yard = `<path d="M112 52 Q${mx} 46 288 52" fill="none" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/><path d="M112 52 Q${mx} 46 288 52" fill="none" stroke="${WOOD2}" stroke-width="1.5" stroke-linecap="round"/>`;
+    const sl = sail(116, 284, 54, 138, 15, stripe, id, true);
+    const shade = `<g clip-path="url(#hc${id})">${Array.from({length:46}, (_, k) => `<path d="M${10 + k * 8} 240 l9 -22" stroke="${INK}" stroke-width=".55" opacity=".5"/>`).join('')}
+      </g>`;
+    const crewB = f.bug > 0 ? crew([[34, 42, 'spiess'], [56, 42, 'spiess'], [78, 42, 'matrose'], [98, 42, 'spiess']].slice(0, Math.min(4, f.bug + 1 + (f.bug > 1 ? 1 : 0))), {dir:-1, s:1.7, seed:1}) : '';
+    const crewK = f.kastell > 0 ? crew([[306, 30, 'schuetze'], [326, 30, 'schuetze'], [346, 30, 'schuetze'], [366, 30, 'kapitaen']].slice(0, Math.min(4, f.kastell + 1 + (f.kastell > 1 ? 1 : 0))), {dir:-1, s:1.7, seed:4}) : '';
+    const flagK = `<path d="M382 44 V10" stroke="${INK}" stroke-width="1.4"/><path d="M382 11 h-24 v14 h24z" fill="${flag}" stroke="${INK}" stroke-width=".9"/><path d="M364 15 l6 6 M370 15 l-6 6" stroke="#e9d6aa" stroke-width="1.4"/>`;
+    return `<svg class="${o.cls || 'ship'}" viewBox="0 0 ${W} 262" aria-hidden="true"><defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>
+      <g class="rig" fill="none">${rig}</g>${mast}${yard}<g class="sail">${sl}</g>
+      ${pennant(mx, 10, 70, flag, false)}
+      <g class="hull"><path d="${hull}" fill="${WOOD}" stroke="${INK}" stroke-width="1.7" stroke-linejoin="round"/>${shade}${strakes.join('')}</g>
+      ${crewB}<g class="vk">${vk}</g>${crewK}<g class="ak">${ak}<g class="flag">${flagK}</g></g>
+      <g class="sea">${waves(WL + 2, W, {seed:o.seed || 9, sea:o.sea})}</g></svg>`;
+  }
+    return {kogge, holk, waves, crew};
+  })();
+  // Segelansicht im Stil der Seekarte: Pergament, Holzschnitt-Wellen, dein Schiff mit Segel in der Hausfarbe
+  let inkKey = '';
+  function inkSail() {
+    const box = $('#inkscene'), s = st.sail, show = !!s && !st.enc;
+    $('#scene').classList.toggle('ink', show);
+    box.hidden = !show;
+    if (!show) { inkKey = ''; return; }
+    const wx = s.weather || 'clear', type = (st.fleet[0] || {type:'kogge'}).type, col = houseCol();
+    const key = [wx, type, col, s.from, s.to].join('|');
+    if (key === inkKey) return;
+    inkKey = key;
+    const W = 680, H = 400, ink = '#33241a', dark = wx === 'storm', sea = dark ? '#dccaa0' : '#ecdcb6';
+    const seed = hashStr(s.from + s.to) % 97 + 3;
+    const cloud = (x, y, w, k) => `<g transform="translate(${x} ${y}) scale(${w / 100})"><path d="M0 30 C2 14 22 10 30 18 C34 4 60 2 66 16 C76 8 96 12 96 26 C104 28 104 38 96 40 H6 C-4 40 -6 32 0 30 Z" fill="${dark ? '#cdb98d' : '#f6ecd4'}" stroke="${ink}" stroke-width="${1.4 * 100 / w}"/>` +
+      (k ? Array.from({length:9}, (_, i) => `<path d="M${14 + i * 9} 39 l6 -9" stroke="${ink}" stroke-width="${.7 * 100 / w}" opacity=".55"/>`).join('') : '') + `</g>`;
+    let sky = '';
+    if (wx === 'clear' || wx === 'cloudy') sky += `<g class="sun"><circle cx="604" cy="146" r="30" fill="#f3d27a" stroke="${ink}" stroke-width="1.4"/>${Array.from({length:16}, (_, i) => { const t = i / 16 * Math.PI * 2, r1 = 38, r2 = i % 2 ? 50 : 58; return `<path d="M${(604 + Math.cos(t) * r1).toFixed(1)} ${(146 + Math.sin(t) * r1).toFixed(1)} L${(604 + Math.cos(t) * r2).toFixed(1)} ${(146 + Math.sin(t) * r2).toFixed(1)}" stroke="${ink}" stroke-width="1.2" stroke-linecap="round"/>`; }).join('')}</g>`;
+    sky += `<g class="clouds">${cloud(428, 22, 104, dark)}${wx !== 'clear' ? cloud(16, 166, 124, dark) : ''}</g>`;
+    if (dark) sky += `<rect width="${W}" height="${H}" fill="url(#ihat)" opacity=".35"/>`;
+    // ferne Küste mit Türmen am Horizont
+    const coast = `<path d="M0 214 C60 206 120 210 160 204 C200 198 230 206 270 205 L270 214 Z" fill="#e4d2a8" stroke="${ink}" stroke-width="1.1"/>` +
+      `<path d="M190 203 v-14 h6 v14 M193 189 l3 -8 l3 8 M214 205 v-9 h10 v9 M219 196 l0 -6" fill="#e4d2a8" stroke="${ink}" stroke-width="1"/>`;
+    const rows = [[222, 1, .6], [262, 2, .8], [310, 3, 1]].map(([y, sd, op], i) => `<g class="wrow w${i}" opacity="${op}">${SHIP_INK.waves(y, W + 60, {seed:seed + sd, rows:i ? 2 : 1, sea})}</g>`).join('');
+    const ship = (type === 'holk' ? SHIP_INK.holk : SHIP_INK.kogge)({stripe:col, flag:col, sea, seed:seed + 7, cls:'iship', dmg:{bug:2, mitte:2, kastell:2}});
+    let fx = '';
+    if (wx === 'rain' || wx === 'storm') fx += `<g class="rain">${Array.from({length:dark ? 60 : 34}, (_, i) => { const x = (i * 97 + seed * 13) % W, y = (i * 53) % 300; return `<path d="M${x} ${y} l-7 16" stroke="${ink}" stroke-width=".9" opacity=".45"/>`; }).join('')}</g>`;
+    if (wx === 'snow') fx += `<g class="snowf">${Array.from({length:50}, (_, i) => `<circle cx="${(i * 89 + seed * 7) % W}" cy="${(i * 47) % 300}" r="2" fill="#fffaf0" stroke="${ink}" stroke-width=".5"/>`).join('')}</g>`;
+    if (wx === 'fog') fx += `<rect width="${W}" height="${H}" fill="#f4ead6" opacity=".55"/>` + [120, 200, 280].map(y => `<path d="M0 ${y} H${W}" stroke="#fff8ea" stroke-width="18" opacity=".6"/>`).join('');
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="ihat" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)"><path d="M0 0 V5" stroke="${ink}" stroke-width=".7"/></pattern>
+      <linearGradient id="isky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? '#d6c294' : '#f4e8cb'}"/><stop offset="1" stop-color="${dark ? '#e2d0a6' : '#efe0bb'}"/></linearGradient></defs>
+      <rect width="${W}" height="${H}" fill="url(#isky)"/>${sky}${coast}${rows}
+      <g class="ishipw"><g class="ibob">${ship.replace(/<g class="sea">[\s\S]*<\/g><\/svg>\s*$/, '</svg>').replace('<svg ', '<svg x="270" y="118" width="370" height="242" ')}</g></g>` +
+      `<g class="wrow w3">${SHIP_INK.waves(330, W + 60, {seed:seed + 5, rows:2, sea})}</g>${fx}</svg>`;
+  }
   function renderScene() {
     const cap = $('#cap'), prog = $('#prog');
     const e = st.enc;
@@ -9395,6 +9817,7 @@ em.rep.warn{background:#b5523a}
       cap.innerHTML = `<span class="eb">In port · ${fdate(st.day)}</span><span class="ttl">${c.n}</span><span class="ln">${c.d}</span>`;
       prog.hidden = true;
     }
+    inkSail();
     if (reduce) scene.draw(0);
   }
 
@@ -9923,53 +10346,521 @@ em.rep.warn{background:#b5523a}
   };
   const shade = (hex, k) => { const n = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16)); return '#' + n.map(v => Math.max(0, Math.min(255, Math.round(k < 0 ? v * (1 + k) : v + (255 - v) * k))).toString(16).padStart(2, '0')).join(''); };
   let avId = 0;
+  // ───── Ab Version 53: Bildnisse „A rund“ für alle Leute, Haussiegel (Stil C) für das eigene Haus ─────
+  // Dreiviertelansicht, Tinte und kolorierte Flächen; dieselben Merkmale wie bisher (AV). Das Siegel wird einmal als Bild berechnet.
+  const PT = (() => {
+  const AV = {
+    skin:['#f1d3b8', '#d8a47c', '#9f6c48', '#f7e3d1', '#e3b48c', '#6f4630'],
+    hair:['#5b3a22', '#c7a05a', '#221c18', '#9b9993', '#8e3b1f', '#7a4a2a', '#e8e2d6'],
+    cloth:['#2f4f7a', '#8a2f2a', '#3e6a46', '#6b4a2f', '#2a2a2e', '#5a3a6b', '#a07a2a'],
+    col:['#d9cfb6', '#b9c8cf', '#d8b4a6', '#bfcbb0', '#d9c48f'],
+    colStrong:['#8f6f3a', '#45627a', '#9a3f2c', '#4f6b3c', '#a7801f'],
+  };
+  const hx = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const toHex = a => '#' + a.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+  const mix = (a, b, t) => { const A = hx(a), B = hx(b); return toHex(A.map((v, i) => v + (B[i] - v) * t)); };
+  const dark = (a, t) => mix(a, '#000000', t), light = (a, t) => mix(a, '#ffffff', t);
+  let uid = 0;
+  const COVER = ['gugel', 'haube', 'schleier', 'gebende', 'kessel'];
+
+  // ───────── Formen ─────────
+  function geo(a) {
+    const f = a.g === 'f', age = a.age || 'jung', old = age === 'alt', mid = age === 'reif';
+    const G = {f};
+    const nk = ((a.skin || 0) * 3 + (a.hair || 0) * 5 + (a.cloth || 0) * 7 + (a.col || 0)) % 3;   // 0 gerade, 1 Höcker, 2 kurz
+    // Kopf: Scheitel, Hinterkopf, Nacken, Kiefer, Kinn, Lippen, Nase, Stirn (die rechte Kontur ist das Profil)
+    G.head = f
+      ? 'M62 28.4 C47.6 28.4 37.6 38 38 53 C38.4 61 41 67 45 72 C49 78.6 54 84.4 60 87.4 C64.4 89.4 68.8 90 72.6 89 C75.6 88.2 77.4 86.2 77.6 83.8 C77.8 82 77.2 80.6 76.6 79.8 C77.4 79 77.6 78 77.4 77.2 L77 76.6 C77.6 75.8 78 74.8 77.8 73.8 C78 72.8 77.4 72.2 77 71.8 C78.6 71.4 80.4 70.4 80.9 69.2 C81.4 67.8 80.6 65.6 79.6 62.8 C78.6 60 78.2 57.4 78.4 55.2 C78.6 53.8 79 52.8 79.4 51.6 C80.4 44.4 78.4 36.4 73.2 32 C70 29.6 66.2 28.4 62 28.4 Z'
+      : `M62 28 C47 28 37 38 37.6 53 C38 61 40.6 67 44.6 72 C48.6 79 53.6 85.4 59.6 88.6 C64 90.8 69 ${old ? 91.2 : 91.6} 73.4 90.6 C76.6 89.8 78.4 87.6 78.6 85 C78.8 83 78.2 81.6 77.6 80.6 C78.2 79.8 78.4 78.8 78.2 78 L77.8 77.2 C78.4 76.4 78.8 75.4 78.6 74.4 C78.8 73.4 78.2 72.8 77.8 72.4 C79.6 72 ${nk === 2 ? '80.8 71.2 81.4 70' : '81.6 71 82.2 69.6'} C82.8 68.2 ${nk === 1 ? '82.6 64 81.6 60.6 C81 58 79.4 56.4 79.2 55' : nk === 2 ? '81.4 66.6 80.4 64 C79.4 61.4 79 57.6 79.2 55' : '82 66 80.8 63 C79.6 60 79 57.4 79.2 55'} C79.4 53.6 79.8 52.6 80.2 51.4 C81.4 44 79 36 73.6 31.6 C70.4 29.2 66.4 28 62 28 Z`;
+    G.jaw = f ? 'M45.6 72.8 C49.4 78.8 54.2 84.4 60 87.4' : `M45.2 72.8 C49 79.2 ${old ? '53 86 59.4 89' : '53.8 85.4 59.6 88.6'}`;
+    G.ear = 'M50.4 54.6 C45 52.8 43.2 59.6 44.4 64.4 C45.4 68.4 48.2 70.6 51.2 69.8 C52 64.8 51.8 59.6 50.4 54.6 Z';
+    G.earIn = 'M49.4 57.4 C47 57.6 46.4 61.6 47.6 64.4 M48 61 C49.2 61 49.6 62.6 49 63.8';
+    G.neck = f ? 'M46.6 73 C48.6 82 49 91 47 99 C45.6 103 43 105.6 39.6 107 L80.6 107 C78 104 76.4 100 75.8 95.6 C75.6 92.6 75.8 90.2 76.4 88.6 C69.6 91.4 62 90 56.6 86.4 C52.2 83.4 49 78.6 46.6 73 Z'
+      : 'M46 73 C48 82 48.6 92 46.6 100 C45 104 42 106.4 38 108 L82 108 C79 105 77 101 76.4 96 C76 93 76.4 90.6 77 89.6 C70 92.6 62 91 56 87 C51.6 84 48.4 79 46 73 Z';
+    G.throat = f ? 'M75.8 92 C75.6 97 77 101.6 79.6 105.4' : 'M76.4 92.4 C76 97.4 77.4 102 80.4 106';
+    const ey = f ? 55.4 : 56;
+    G.eyeN = {d:`M53.6 ${ey + .4} C56.2 ${ey - 3.4} 62.4 ${ey - 4} 66.6 ${ey - 1} C63.4 ${ey + 2.6} 57.2 ${ey + 3.2} 53.6 ${ey + .4} Z`, lid:`M53.2 ${ey + .2} C56 ${ey - 4} 62.6 ${ey - 4.6} 67 ${ey - 1.2}`, fold:`M54.2 ${ey - 2.8} C57.2 ${ey - 5.6} 62.4 ${ey - 5.8} 66 ${ey - 3.4}`, c:[60.6, ey - .4], r:2.3};
+    G.eyeF = {d:`M72.2 ${ey - .4} C73.8 ${ey - 2.4} 76.2 ${ey - 2.8} 78 ${ey - 1.6} C76.8 ${ey + .4} 74.4 ${ey + 1} 72.2 ${ey - .4} Z`, lid:`M72 ${ey - .6} C73.8 ${ey - 3} 76.4 ${ey - 3.4} 78.2 ${ey - 1.8}`, fold:`M72.6 ${ey - 3} C74.6 ${ey - 4.6} 76.6 ${ey - 4.6} 78 ${ey - 3.6}`, c:[75.6, ey - .8], r:1.5};
+    G.browN = f ? `M52.8 ${ey - 6.6} C56.2 ${ey - 9.4} 61.6 ${ey - 9.8} 66.4 ${ey - 7.6}` : `M52.2 ${ey - 6.4} C55.8 ${ey - 9.8} 61.8 ${ey - 10.4} 67.2 ${ey - 7.8}`;
+    G.browF = f ? `M71.6 ${ey - 7.4} C74 ${ey - 8.6} 76.4 ${ey - 8.6} 78.4 ${ey - 7.4}` : `M71.2 ${ey - 7.8} C73.8 ${ey - 9.2} 76.8 ${ey - 9.2} 79.2 ${ey - 7.8}`;
+    G.nose = `M68.2 ${ey - 3} C69.2 ${ey + 3} 70.8 ${ey + 7.6} 73.2 ${ey + 12}`;
+    G.nostril = f ? `M73 ${ey + 12} C72.2 ${ey + 14.4} 73.8 ${ey + 16} 76 ${ey + 15.6} C77.2 ${ey + 15.4} 78.2 ${ey + 15.8} 78.8 ${ey + 15.6}` : `M73 ${ey + 12.6} C72.2 ${ey + 15} 74 ${ey + 16.6} 76.4 ${ey + 16} C77.6 ${ey + 15.8} 78.6 ${ey + 16.2} 79.6 ${ey + 15.8}`;
+    const smile = ((a.skin || 0) + (a.hair || 0) * 2 + (a.cloth || 0) + (a.col || 0) * 3) % 2 === 0 && age !== 'alt';
+    G.mouth = smile ? (f ? 'M69 76.6 C71.6 78.8 74.4 78.8 76.4 76.4' : 'M68.6 77 C71.6 79.2 74.6 79 77 76.6') : f ? 'M69 77.2 C71.6 78.2 74.2 78.2 76.2 76.8' : 'M68.6 77.6 C71.6 78.6 74.4 78.4 76.8 77.2';
+    G.smile = smile ? 'M67.4 75.4 C66.8 76.6 67.2 77.6 68.2 78.2' : '';
+    G.lips = f ? 'M69.4 77 C71.6 75.2 74.6 75.4 77.4 76.4 C77.8 78.2 77.4 80 76.4 80.4 C74 81.4 71.4 80.6 69.4 77 Z' : 'M70 77.4 C72.4 76.4 75 76.4 77.4 77 C77.6 78.6 77.2 79.8 76.2 80.2 C74 80.8 71.8 80.2 70 77.4 Z';
+    G.lipU = f ? 'M70.2 76.4 C72 74.8 73.8 75.2 74.8 75.8 C75.8 75 77 75.2 77.8 76.2' : '';
+    G.lipLow = f ? 'M70.6 80 C73 81.2 75.2 81 76.6 79.8' : 'M70.6 80.6 C73 81.4 75.4 81.2 77 80.2';
+    G.chin = f ? 'M68 85.4 C70.4 86.6 73 86.4 75 85' : 'M68 86.4 C70.6 87.6 73.4 87.4 75.4 86';
+    G.cheekC = [63.6, ey + 9.6];
+    G.lines = [];
+    if (mid || old) G.lines.push('M75 70.6 C72.6 72.6 71.4 75.2 71.8 78.2', 'M62 38 C67 36.6 72 36.8 77.4 38.6');
+    if (old) G.lines.push('M60.4 41.6 C65.6 40.4 71 40.6 76 42.2', `M55.4 ${ey + 4.4} C58.6 ${ey + 6.4} 63 ${ey + 6.4} 66 ${ey + 4.2}`, `M52.6 ${ey + .6} l-3.4 -.8 M52.8 ${ey + 2.2} l-3 1.2`, 'M52 71 C54 77 57 81 60.6 83.4', `M65 ${ey - 6.2} C64.2 ${ey - 4.8} 63.6 ${ey - 4.2} 62.4 ${ey - 3.6}`);
+    // Schatten (Licht von rechts oben): Hinterkopf und nahe Wange, Augenhöhle, unter der Nase, Hals unter dem Kinn
+    G.shadeHead = 'M37.6 53 C38 61 40.6 67 44.6 72 C48.6 79 53.6 85.4 59.6 88.6 C61.6 89.6 63.6 90.4 65.4 90.8 C60 85 57 78 56 71 C55.2 65 55.6 59.6 54.8 54.6 C54 50.4 51.8 47.4 49.4 45.8 C45.4 43.6 40.4 46 37.6 53 Z';
+    G.shadeEye = `M53.6 ${ey - 3.4} C56.6 ${ey - 6.6} 62.6 ${ey - 7} 66.6 ${ey - 4} C63 ${ey - 2.6} 57.6 ${ey - 2.4} 53.6 ${ey - 3.4} Z`;
+    G.shadeNose = f ? `M73 ${ey + 12} C74 ${ey + 15.6} 78 ${ey + 16.4} 80.4 ${ey + 14} C78.2 ${ey + 15.2} 75.6 ${ey + 15} 73 ${ey + 12} Z` : `M73 ${ey + 12.6} C74 ${ey + 16.2} 78.4 ${ey + 17} 81.4 ${ey + 14.6} C79 ${ey + 15.8} 75.8 ${ey + 15.6} 73 ${ey + 12.6} Z`;
+    G.shadeNeck = f ? 'M46.6 73 C48.6 82 49 91 47 99 C45.6 103 43 105.6 39.6 107 L57 107 C56 100 55.8 93 56.6 86.4 C52.2 83.4 49 78.6 46.6 73 Z M56.6 86.4 C62 90 69.6 91.4 76.4 88.6 C75.8 90.6 75.6 93 75.8 95.6 C68 96.4 61.6 93.6 56.6 89.4 Z'
+      : 'M46 73 C48 82 48.6 92 46.6 100 C45 104 42 106.4 38 108 L56.6 108 C55.6 101 55.4 94 56 87 C51.6 84 48.4 79 46 73 Z M56 87 C62 91 70 92.6 77 89.6 C76.4 90.6 76 93 76.4 96 C68 97 61 94.6 56 90 Z';
+    // Rumpf (nahe Schulter breiter)
+    G.body = f ? 'M5 140 C7 125 19 114.6 35 111 C41 109.6 45 108 47.4 106 C56 112.6 70.4 113 79.6 106 C87 107.6 96 111.4 102.4 116.6 C108 122 111 130 112 140 Z'
+      : 'M1 140 C3 124 17 113 33.6 109.6 C39.4 108.4 43.6 107 46.4 105 C55.6 111.6 70.4 112 80.4 105 C88 107 97.4 110.6 104 116 C110 121.6 113 131 114 140 Z';
+    G.neckline = f ? 'M47.4 106 C56 112.6 70.4 113 79.6 106' : 'M46.4 105 C55.6 111.6 70.4 112 80.4 105';
+    G.folds = f ? ['M27 118 C30.6 126 32.6 133 32.2 140', 'M90 117 C88 125 88.4 133 90 140', 'M62 120 C63 127 63 134 62.4 140'] : ['M25 117 C29 125 30.6 133 30.2 140', 'M93 116 C90.6 124 90.6 132 92.6 140', 'M63.6 113 V140', 'M40 113 C43 121 44 130 43.6 140'];
+    G.shadeBody = f ? 'M5 140 C7 125 19 114.6 35 111 C29 120 26.6 130 27 140 Z' : 'M1 140 C3 124 17 113 33.6 109.6 C27.6 119 24.6 129 25 140 Z';
+    if (a._soft) Object.assign(G, softGeo(a, f, old, mid, nk));
+    return G;
+  }
+  // Runde Fassung (nach dem bisherigen Spielstil): fast von vorn, leicht nach rechts gedreht, runder Kopf, kurze Nase, runde Augen
+  function softGeo(a, f, old, mid, nk) {
+    const R = {};
+    R.head = f ? 'M60.4 27.6 C46 27.6 38.6 38.4 39 52 C39.2 60 40.6 67.6 44 74 C48.4 82.4 55 87.6 62.6 88.2 C70.2 88.6 76.4 83.6 79.4 75.8 C81.4 70.2 82 63 81.8 56 C81.6 42.4 75.6 27.6 60.4 27.6 Z'
+      : 'M60.4 27 C45.4 27 37.6 38 38 52 C38.2 60 39.6 68 43 74.6 C47.6 83.4 54.6 89 62.6 89.6 C70.6 90 77 84.6 80 76.4 C82 70.6 82.6 63 82.4 56 C82.2 42 76.2 27 60.4 27 Z';
+    R.jaw = '';
+    R.ear = 'M40.4 52.6 C35.2 51 33.4 57.4 34.6 62 C35.6 65.8 38.6 67.8 41.4 67 C41.8 62 41.6 57.2 40.4 52.6 Z';
+    R.earIn = 'M39.2 55.6 C37 55.8 36.6 59.6 37.6 62.2';
+    R.earF = 'M81.8 54.6 C84.4 53.8 85.4 58 84.6 61 C84 63.2 82.6 64.4 81.6 64 Z';
+    const ey = 55, k = f ? .95 : 1;
+    const eye = (cx, w, r) => ({d:`M${cx - w} ${ey + .4} C${cx - w * .6} ${ey - 3.6 * k} ${cx + w * .6} ${ey - 3.8 * k} ${cx + w} ${ey - .2} C${cx + w * .5} ${ey + 2.8} ${cx - w * .5} ${ey + 3.2} ${cx - w} ${ey + .4} Z`, lid:`M${cx - w - .3} ${ey + .2} C${cx - w * .6} ${ey - 4 * k} ${cx + w * .6} ${ey - 4.2 * k} ${cx + w + .3} ${ey - .4}`, fold:'', c:[cx + .5, ey - .3], r});
+    R.eyeN = eye(51.8, 5.4, 2.7); R.eyeF = eye(70.2, 4.6, 2.4);
+    R.browN = f ? 'M46.4 48.6 C49.4 46.2 54.2 46 57.6 47.6' : 'M45.8 48.2 C49 45.2 54.4 45 58.2 47';
+    R.browF = f ? 'M65.6 47.4 C68.6 45.8 72.6 46 75.2 47.8' : 'M65.2 47 C68.4 45 73 45.2 76 47.4';
+    R.nose = nk === 1 ? 'M62.6 54.8 C63.6 59 65.8 62.6 67.6 65.8 C68.6 67.8 67.6 69.4 65.6 69.4' : nk === 2 ? 'M62.6 56 C63.2 60 64.6 63.4 66.6 65.8 C67.6 67.4 66.8 68.6 65 68.6' : 'M62.8 55 C63.4 59.6 65 63.4 67 66.2 C68 68 67 69.6 65.2 69.4';
+    R.nostril = nk === 2 ? 'M60.4 67.8 C61.4 68.8 62.8 69 64 68.6' : 'M60.4 68.4 C61.6 69.6 63.2 69.8 64.4 69.4';
+    R.mouth = f ? 'M57.6 76.2 C60.4 78.2 64.6 78.4 67.8 76.2' : 'M57 76.6 C60.4 78.8 65 79 68.8 76.4';
+    R.smile = 'M56 75.2 C55.4 76.2 55.6 77.2 56.4 77.8';
+    R.lipU = '';
+    R.lips = f ? 'M57.8 76.4 C60 74.8 62.4 75.2 63 75.6 C63.8 75 66.4 74.8 67.8 76.4 C67 79.2 64.8 80.4 62.6 80.4 C60.4 80.4 58.6 79.2 57.8 76.4 Z' : 'M58 76.8 C60.6 75.8 65 75.8 68 76.6 C67.2 79.2 65 80.6 62.8 80.6 C60.6 80.6 58.8 79.4 58 76.8 Z';
+    R.lipLow = f ? 'M60 80 C61.8 80.8 64 80.8 65.6 79.8' : 'M59.8 80.6 C61.8 81.4 64.2 81.4 66 80.4';
+    R.chin = f ? 'M58.8 84.6 C61.2 85.8 64.2 85.8 66.4 84.4' : 'M58.4 85.8 C61 87.2 64.6 87.2 67.2 85.6';
+    R.cheekC = [48.6, 65.6]; R.cheekF = [73.6, 65.2];
+    R.lines = [];
+    if (mid || old) R.lines.push('M57.6 70.2 C55.6 72.4 54.8 74.6 55.2 76.6', 'M68.4 70 C69.8 72 70.4 74 70 76', 'M53 39.4 C58 38 64 38 69 39.4');
+    if (old) R.lines.push('M51.6 42.6 C57.4 41.2 64.4 41.2 70.6 42.6', `M47.6 ${ey + 4.6} C50.6 ${ey + 6.4} 54.6 ${ey + 6.4} 57 ${ey + 4.6}`, `M66.4 ${ey + 4.4} C68.8 ${ey + 6} 72 ${ey + 6} 74.4 ${ey + 4.4}`, `M45.4 ${ey + .4} l-3 -.8 M45.6 ${ey + 2} l-2.8 1`);
+    R.shadeHead = 'M38 52 C38.2 60 39.6 68 43 74.6 C47.6 83.4 54.6 89 62.6 89.6 C56 85.4 50.4 78 47.8 70 C45.8 63.4 45.4 56.4 44.6 50.4 C43 46.6 40 48 38 52 Z';
+    R.shadeEye = '';
+    R.shadeNose = 'M65.4 56 C66.2 60 67.6 63.4 69.2 66 C70.2 67.6 69.6 69.4 67.6 70 C69 66 67.6 61 65.4 56 Z';
+    R.neck = 'M49.6 82 C50.8 89 50.8 95.6 49 101.6 L76.4 101.6 C74.6 95.6 74.4 89 75.6 82 C69 87 57 87 49.6 82 Z';
+    R.throat = '';
+    R.shadeNeck = 'M49.6 82 C57 88 69 88 75.6 82 L75 89.6 C67 94 58 94 50.4 89.6 Z';
+    R.body = 'M4 140 C6 118 22 105 42 101 C48 100 52.4 99.4 55.4 98.8 C59 102.6 66.4 102.8 70.4 98.8 C73.6 99.4 78 100 83.6 101 C103.6 105 113 118.6 115 140 Z';
+    R.neckline = 'M50.6 100 C55.4 106.6 68.6 107 74.8 100';
+    R.folds = ['M27 114 C30.6 122 32 131 31.6 140', 'M95 112 C92 121 91.6 131 93 140', 'M62.6 106 V140'];
+    R.shadeBody = 'M4 140 C6 118 22 105 42 101 C33 112 28.6 126 29 140 Z';
+    R.front = true;
+    return R;
+  }
+  function softHair(a) {
+    const f = a.g === 'f', hs = a.hs || (f ? 'offen' : 'kurz'), H = {strands:[], curls:[]};
+    const capM = 'M37.2 58 C35 39 46 26.4 60.6 26.2 C75 26 84.4 37 83.4 54 C81.6 48.4 79.4 44 76.4 41.4 C70.4 37.2 60.6 36.4 52.6 38.8 C47.6 40.6 43.6 44.6 42 50 C41.2 53 41.2 56 41.4 59 C39.8 58.8 38.4 58.6 37.2 58 Z';
+    if (!f) {
+      if (hs === 'kurz' || hs === 'locken') {
+        H.cap = capM; H.strands = ['M46 33 C52 29.6 60 28.6 67 29.8', 'M42.4 41 C46 35.6 52.6 32.4 59.6 31.6', 'M70 30.4 C75.6 32 79.6 36 81.6 41.4', 'M39.6 51 C39.8 45.6 41.4 41 44 37.6'];
+        if (hs === 'locken') H.curls = [[39.4, 57, 3.2], [38.8, 50.6, 3.4], [40.6, 44, 3.6], [44.6, 37.8, 3.8], [50.6, 32.8, 3.8], [57.4, 29.6, 3.8], [64.4, 29, 3.8], [71.2, 30.6, 3.6], [76.8, 34.4, 3.4], [80.6, 39.6, 3.2], [82.4, 46, 3], [52.4, 38.4, 3.2], [60, 36.6, 3]];
+      } else if (hs === 'lang') {
+        H.cap = capM; H.strands = ['M46 33 C52 29.6 60 28.6 67 29.8', 'M42.4 41 C46 35.6 52.6 32.4 59.6 31.6', 'M70 30.4 C75.6 32 79.6 36 81.6 41.4'];
+        H.back = 'M37.4 52 C35 64 35.6 77 39.4 86.6 C41.6 90.4 45.6 90 46.4 86.6 C44 77 43 66 42.8 56 Z M83.4 50 C86 62 85.6 74 82 84 C80.4 87.4 77 86.8 77 83.6 C79 74.4 79.6 63 79.2 54 Z';
+        H.strands.push('M39.6 62 C39 70 40 78 42.6 85', 'M81.6 60 C82 68 81.2 76 79.4 82');
+      } else {
+        H.cap = 'M37.2 58 C35.2 51 36.4 45 39.8 40.4 C41.2 46 41.8 52 41.6 59 C40 58.8 38.4 58.6 37.2 58 Z M83.4 54 C83.8 48.6 82.6 44 80.4 40.6 C79.2 45 79.2 50 79.6 55.4 Z';
+        H.bald = ['M52 33.6 C57 31.6 64 31.6 69.6 33.6', 'M54.6 36.4 C58.6 35.2 63.4 35.2 67.4 36.4'];
+      }
+    } else {
+      H.cap = 'M37.6 59 C35 39 46 26.4 60.6 26.2 C75.4 26 84.6 37.6 83.6 56 C82.2 50 80.4 45.6 77.6 42 C73.4 37 67.2 34.6 62.4 32.2 C57.6 35 52 37.8 47.6 41.8 C43.8 45.4 41.6 51 41.6 59.4 C40.2 59.4 38.8 59.2 37.6 59 Z';
+      H.strands = ['M62.4 32.2 C56 34 49.6 38.2 45.4 44.6', 'M62.6 32 C69 33.6 75.4 37.8 79.4 44.4', 'M58 28.4 C52 30 46.6 34.6 43.4 40.4', 'M67 28.6 C72.6 30.2 77.4 34 80.4 39'];
+      if (hs === 'offen') { H.back = 'M37.4 52 C33.6 70 32.4 92 34.4 112 L46.4 112 C44.6 98 43.4 82 42.4 66 Z M83.6 52 C86.6 70 87.6 90 86.4 110 L75.6 110 C77.4 96 78.8 80 79.6 64 Z';
+        H.strands.push('M38.6 66 C37.4 82 37.6 96 39.6 108', 'M83.2 66 C84.2 82 84 96 82.4 106'); }
+      else if (hs === 'zopf') H.braid = true;
+      else H.bun = [60.4, 22.6, 8.6];
+    }
+    return H;
+  }
+  function softHat(a) {
+    const h = a.hat || 'ohne', T = {kind:h, lines:[]};
+    if (h === 'barett') {
+      T.top = 'M35.6 45 C31.6 33 43 21.6 59.6 20.4 C76.4 19.4 90.6 25.6 92 35 C92.6 39.4 89.4 42.4 84.6 42.6 C76 40.2 66 39.6 56.6 41 C48.4 42.2 41.4 43.6 35.6 45 Z';
+      T.band = 'M37 45.2 C46 41.6 57 40 67 40.2 C73.6 40.4 79.6 41.4 84.6 43 L84 46.2 C78.6 44.6 72.6 43.8 66.6 43.6 C57 43.6 46.6 45.4 38.4 48.4 Z';
+      T.lines = ['M47 26 C54 23.6 63 23.2 71.6 24.6', 'M41.6 32 C50 28.8 61 27.6 72 28.8'];
+      T.shade = 'M35.6 45 C31.6 33 43 21.6 56 20.6 C47 27 44 34 44.6 42.4 Z';
+    } else if (h === 'filzhut') {
+      T.top = 'M39.4 38.8 C38.4 25 47 15 60.6 14.4 C74.6 13.8 83.6 23 83 35.8 C76 33.6 66 33 56.4 34 C49.6 35 43.6 36.6 39.4 38.8 Z';
+      T.brim = 'M20.4 44 C30 35.4 50 31 68 31.4 C84 31.6 98 35 101.6 40 C98 43.6 87 43 76 41.2 C63 39.6 48 40.6 36 44.4 C30 46.4 24 46.8 20.4 44 Z';
+      T.band = 'M40.2 35.6 C48.6 32.4 61 31.2 71.6 31.8 C76 32 80 32.6 82.8 33.6 L82.6 37 C78 36 74 35.4 70 35.2 C59.6 35 49.4 36.4 41 39.2 Z';
+      T.lines = ['M48.6 20 C55 17.8 63.6 17.6 72 19.2']; T.shade = 'M39.4 38.8 C38.4 25 47 15 54 14.8 C47.6 21.6 45.6 30 46.6 37.2 Z';
+      T.shadeBrim = 'M20.4 44 C30 35.4 50 31 68 31.4 C54 34 42 37.6 34 42.6 C29 44.8 24 45.6 20.4 44 Z';
+    } else if (h === 'kessel') {
+      T.top = 'M39.6 40.6 C39 25.4 48.6 16.4 61 16.2 C73.6 16 83.2 25 82.8 40 C74.6 37.4 65 37 56 38 C50 38.6 44.4 39.4 39.6 40.6 Z';
+      T.brim = 'M21.6 43.6 C33 36.8 53 34.4 70 35 C85 35.4 97 39 100 44 C96 47.6 85 46.8 72.6 45.2 C60 43.8 45 44.8 34.6 47.8 C29 49.4 24 48 21.6 43.6 Z';
+      T.lines = ['M61.2 16.4 V37.6', 'M40 40.4 C50.4 38.4 61 37.8 71.6 38'];
+      T.rivets = [[45.4, 39.8], [54.6, 38.4], [67.6, 38], [77.6, 38.8]];
+      T.shade = 'M39.6 40.6 C39 25.4 48.6 16.4 61 16.2 V37.8 C53.6 38 46.4 39.2 39.6 40.6 Z'; T.metal = true;
+    } else if (h === 'gugel') {
+      T.back = 'M27.6 72 C23.6 42 39.6 15 61 14 C83 13 97.4 31 96.4 52 C96 62 93.6 71 89.4 77.6 L83 87 C74 97 50 97.4 40 88.6 L32.4 82 C29.8 78.6 28.2 75.4 27.6 72 Z';
+      T.rim = 'M80.8 44.6 C78.4 34 70.2 28.4 60.6 28.4 C49.6 28.4 41.6 35 39.8 46 C38.2 56 39.6 70 44.2 79 C48.8 87.6 55.6 91.6 62.6 91.6 C70.2 91.6 76.6 86.4 80.2 78.2 C83.2 71 83.8 60 83.2 52 C82.8 49 82 46.6 80.8 44.6 Z';
+      T.cape = 'M10 122 C14 110 27 101 41 97.4 C48 95.6 53 94.4 56.4 93.6 C60 96 66 96.6 70.4 94 C74.4 94.6 80.4 96 86 98 C99.6 103 107.6 112 110.4 122.6 L106 124.6 L101.6 120.6 L97 125.6 L92.6 120.8 L88 126 L83.6 121 L79 126.4 L74.6 121.2 L70 126.4 L65.6 121.2 L61 126.4 L56.6 121 L52 126 L47.6 120.8 L43 125.4 L38.6 120.2 L34 124.4 L29.6 119 L25 122.8 L20.6 117.6 L16.6 121.2 L13 117.4 Z';
+      T.lines = ['M33 52 C31.6 62 32.4 72 35.6 80', 'M61 17 C72 17.4 83.6 23 89.6 32.6'];
+      T.capeLines = ['M26 114 C36 106.6 46 102 55 100', 'M70 100.4 C80 102.6 90 106.6 97.6 112.4'];
+      T.shade = 'M27.6 72 C23.6 42 39.6 15 58 14.2 C45 21 37.6 34 36 48 C34.6 62 36.6 76 40.6 88.6 L32.4 82 C29.8 78.6 28.2 75.4 27.6 72 Z';
+      T.shadeCape = 'M10 122 C14 110 27 101 41 97.4 C35 106 32 114 31.6 121 L29.6 119 L25 122.8 L20.6 117.6 L16.6 121.2 L13 117.4 Z';
+    } else if (h === 'haube') {
+      T.back = 'M30 74 C28 42 42 18 61 17 C80 16 94.4 33 93.6 54 C93.2 66 90.6 78 86.6 88 L80 95 C70 99 52 99 42 95 L34.6 87 C31.8 83 30.4 78.4 30 74 Z';
+      T.frill = [[80.6, 80], [82.6, 72], [83.6, 63.6], [83.4, 55], [81.4, 46.6], [77.4, 39], [71, 33.4], [63, 30.6], [55, 31], [48, 34.4], [42.6, 40.4], [39.6, 48.4], [38.6, 57], [39.2, 65.6], [41, 74], [44, 81.6]];
+      T.lines = ['M34.6 54 C33.6 66 34.4 78 37 88', 'M60 20.6 C71 20.4 82 25 88 33'];
+      T.shade = 'M30 74 C28 42 42 18 59 17.2 C47 24 39.6 36 37.6 50 C36 64 37.6 80 41.6 94.4 L34.6 87 C31.8 83 30.4 78.4 30 74 Z';
+    } else if (h === 'schleier') {
+      T.back = 'M33 50 C30 26 46 14.6 61 14.6 C76 14.6 92 26 91 50 C90.6 64 90 80 92 96 C96 110 104 124 110 140 L10 140 C16 124 24 110 28 96 C30.6 80 32.4 64 33 50 Z';
+      T.lines = ['M38 52 C36 72 36 86 32 100 C26 114 20 126 16 138', 'M86 52 C88 72 88 86 92 100 C98 114 104 126 106 138', 'M61 18 C72 18 83 23 88 31'];
+      T.edge = 'M40.6 52 C40.4 38 49.6 29.6 61 29.6 C72.4 29.6 81.6 38 81.4 52';
+      T.shade = 'M33 50 C30 26 46 14.6 58 14.8 C46 22 40.4 34 39.6 48 C39 66 38.6 84 34 98 C28 114 20 128 14 140 L10 140 C16 124 24 110 28 96 C30.6 80 32.4 64 33 50 Z';
+    } else if (h === 'gebende') {
+      T.wrap = 'M39.6 56 C39 74 48 89.6 62.6 91.4 C77 92.6 83.4 80 83.8 62 L80.6 62 C80.2 77 74 87.8 62.8 88 C51 87.4 43.2 73 42.8 56 Z';
+      T.top = 'M39.4 43 L40.4 26.6 C51.6 21 70 21 81.2 26.6 L82 43 C72 38.6 49.6 38.6 39.4 43 Z';
+      T.lines = ['M45.6 24 L45.6 40.4', 'M52.6 22.4 L52.6 38.8', 'M60.6 21.8 L60.6 38.2', 'M68.6 22.2 L68.6 38.4', 'M75.6 23.6 L75.6 39.4'];
+      T.net = 'M37.4 58 C34.6 46 36.6 37 41.4 31.6 L40.6 44 C39.8 49 39.8 54 40.4 60 Z M83.8 58 C86.2 46 84.4 37 79.8 31.4 L81 44 C81.6 49 81.6 54 81.2 60 Z';
+      T.shade = 'M39.4 43 L40.4 26.6 C43 25.4 45.6 24.4 48.6 23.6 L48 39.6 C45 40.4 42 41.6 39.4 43 Z';
+    } else if (h === 'kranz') T.wreath = true;
+    return T;
+  }
+  function softBeard(a) {
+    if (a.g === 'f') return null;
+    const b = a.beard || 'ohne', B = {kind:b};
+    B.must = 'M56 75.6 C58.4 72.4 61.6 72 63 73.4 C64.4 72 67.8 72.4 70.2 75.4 C68 75.2 65.6 74.8 63 74.8 C60.6 74.8 58.2 75.2 56 75.6 Z';
+    if (b === 'voll') { B.main = 'M39.8 60 C39.6 75 45.4 88 55.4 94.4 C59.4 97 66.4 97.2 70.4 94.6 C79.4 88.6 83.2 76 82.8 60.4 L80.2 64.6 C78.8 73 75.6 79 70.8 82.4 C68.6 80.4 65.4 79.6 63 80.4 C60.6 79.6 57.4 80.4 55.2 82.4 C50.4 79.6 46.4 73.6 43.8 65.4 Z';
+      B.strands = ['M45 72 C47.6 80 51.6 86.4 56.6 90.4', 'M52 82 C54.6 87.6 58 91.6 62 94', 'M64 83.6 C64.6 88.6 65 92 64.6 95', 'M71.6 82 C70.4 87.6 68.4 91.6 66 94', 'M78.6 70 C77 78.6 73.6 85.6 69.4 89.6'];
+      B.shade = 'M39.8 60 C39.6 75 45.4 88 55.4 94.4 C50 86 46.6 77 45.6 66.6 L43.8 65.4 Z'; }
+    else if (b === 'kinn') { B.main = 'M56.6 84 C57.2 90.4 60.2 96 63.2 98.4 C66.6 96 69.4 90.4 69.8 84 C66 85.8 60.4 85.8 56.6 84 Z'; B.strands = ['M60 87.6 C60.6 91.6 61.8 94.6 63.2 96.4', 'M66.6 87.6 C66 91.6 64.8 94.6 63.6 96.4']; }
+    else if (b === 'schnurr') { }
+    else if (b === 'stoppel') { B.must = null; B.stubble = true; }
+    else return null;
+    return B;
+  }
+  // Haare: back (hinter Kopf und Hals), cap (auf dem Schädel), strands, curls, braid, bun
+  function hairGeo(a) {
+    if (a._soft) return softHair(a);
+    const f = a.g === 'f', hs = a.hs || (f ? 'offen' : 'kurz'), H = {strands:[], curls:[]};
+    const capM = 'M37.6 58 C34.4 40 45 26 62.4 25.6 C73.4 25.4 81.4 31 83.4 40.6 C79.6 35.6 73 33.2 66.4 34 C60.4 34.8 56 37.6 53.8 41.4 C52 44.6 51.8 48.6 52.6 53.4 C50.6 52.4 48.4 52.6 47 54 C44.4 57.6 42.8 63.4 42.6 70 C40.2 66.4 38.4 62.4 37.6 58 Z';
+    if (!f) {
+      if (hs === 'kurz' || hs === 'locken') {
+        H.cap = capM;
+        H.strands = ['M47 33.6 C53.6 29.6 61 28.6 68 29.8', 'M44 40.6 C48.4 35.4 55 32.2 62 31.6', 'M70.6 28.8 C75.6 30 79.6 33 81.6 37', 'M40 52 C40.4 46 42.4 41 45.6 37.6', 'M43.6 56 C43.2 51 44.2 46.6 47 43'];
+        if (hs === 'locken') H.curls = [[39.4, 60, 3.2], [38.4, 53.4, 3.4], [39.6, 46.4, 3.6], [43.4, 39.6, 3.8], [49, 33.6, 3.8], [55.8, 29.4, 3.8], [63, 27.4, 3.8], [70.4, 28, 3.6], [76.6, 30.8, 3.4], [81, 35.6, 3], [51, 39.4, 3.2], [52.4, 46, 3]];
+      } else if (hs === 'lang') {
+        H.cap = 'M37.4 56 C34.6 39 45 26 62.4 25.6 C73.4 25.4 81.4 31 83.4 40.6 C79.6 35.6 73 33.2 66.4 34 C60.4 34.8 56 37.6 53.8 41.4 C51.4 46 51.2 52 52.4 58 C53.6 66 53 75 50.6 83.4 C48 89.6 42.6 92 38.8 88.6 C35.6 80.6 35.6 67 37.4 56 Z';
+        H.roll = 'M36.8 86 C38 92.6 46 94.6 51 89 C48.6 90.6 44 91 41 89 C39.4 88 38 87 36.8 86 Z';
+        H.strands = ['M47 33.6 C53.6 29.6 61 28.6 68 29.8', 'M44 40.6 C48.4 35.4 55 32.2 62 31.6', 'M70.6 28.8 C75.6 30 79.6 33 81.6 37', 'M41 52 C40 64 40.6 76 43 86', 'M45 50 C44.6 62 45.4 74 47.4 85', 'M49.4 48 C49 60 49.8 72 50 80'];
+      } else { // licht: Kranz am Hinterkopf, Stirnglatze
+        H.cap = 'M37.6 58 C35.6 50 36.6 43 40 38 C42.6 43 45 48 47 54 C44.4 57.6 42.8 63.4 42.6 70 C40.2 66.4 38.4 62.4 37.6 58 Z';
+        H.strands = ['M39 50 C39.6 46 40.4 43 41.6 41', 'M41.4 58 C41.6 54 42.6 51 44 48.6'];
+        H.bald = ['M57 30 C64 28.6 71 29.6 76.4 33', 'M60 33.4 C64.6 32.6 69 33.4 72.6 35.4'];
+      }
+    } else {
+      H.cap = 'M37.6 58 C34.4 40 45 26 62.4 25.6 C73.4 25.4 81.6 31 82.6 40.4 C79 35.4 74.6 33 69.6 32.6 C67.6 30.8 65 30.2 62.6 30.8 C58.6 32 55 35.6 53.2 40.4 C51.6 45 51.6 50.4 52.4 56.6 C49.8 55.4 47.6 55.6 46.4 57.4 C44 61 43 66 42.8 70.4 C40.2 66.6 38.4 62.4 37.6 58 Z';
+      H.strands = ['M62.6 30.8 C57 32 51.4 36.6 48.4 43', 'M62.8 30.6 C68.6 30.4 76 33 80.6 37.4', 'M59 27 C53 28.6 47.4 33 44.6 38.6', 'M41.4 50 C41.6 45.6 43 41.6 45.6 38.4'];
+      if (hs === 'offen') { H.back = 'M37.6 56 C33.6 74 31.4 96 31.6 118 C31.8 126 36 132 42 132.6 C46.6 124 48 112 47.6 100 C47 88 47.4 76 47.6 64 Z';
+        H.strands.push('M37 70 C35.4 88 35.4 106 37.6 124', 'M42 72 C40.6 90 41 108 43 126'); }
+      else if (hs === 'zopf') { H.braid = true; }
+      else { H.bun = [38.4, 55.6, 8.4]; }
+    }
+    return H;
+  }
+  function hatGeo(a) {
+    if (a._soft) return softHat(a);
+    const h = a.hat || 'ohne', T = {kind:h, lines:[]};
+    if (h === 'barett') {
+      T.top = 'M39 43 C34.6 32.6 42.4 22.4 57 19.8 C72 17.2 87.6 21.4 91 30 C92.4 34 89.6 37.2 85 37.4 C76.4 35 66 34.6 56.6 36.4 C49.4 37.8 43.4 40.4 39 43 Z';
+      T.band = 'M40.6 43.4 C47.6 38.6 58.4 36 68.4 36 C74.6 36 80.4 36.8 85.6 38.6 L85 41.6 C79.6 39.8 73.4 39 67.4 39 C58 39.2 48.4 41.8 42 45.8 Z';
+      T.lines = ['M49.6 24.6 C56 22.8 64.4 22.6 72.6 24.2', 'M44.6 30.2 C52 27.4 62 26.6 72.6 27.8', 'M80 24 C84.6 26 88 28.6 89.6 31.6'];
+      T.shade = 'M39 43 C34.6 32.6 42.4 22.4 57 19.8 C49 26 46.4 33 47 39.6 Z';
+    } else if (h === 'filzhut') {
+      T.top = 'M41.6 37.8 C40.6 24.8 48.6 15 62 14.4 C75.4 13.8 84 22.4 83.6 34 C77 32 66.8 31.4 57.4 32.6 C50.6 33.6 45.4 35.4 41.6 37.8 Z';
+      T.brim = 'M26.4 42.6 C36 34.6 54.4 30 70.6 30.4 C84.8 30.6 97 33.8 100.4 38.4 C97 41.6 86.8 41 76.6 39.4 C64.4 37.8 50.2 39 40 42.8 C34.6 44.8 29.4 45.2 26.4 42.6 Z';
+      T.band = 'M42.4 34.6 C50.6 31.6 62.6 30.4 72.6 31 C76.6 31.2 80.6 31.8 83.2 32.6 L83 36 C78.6 35 74.6 34.4 70.6 34.2 C60.6 34 50.6 35.4 43 38.2 Z';
+      T.lines = ['M50.4 19.6 C56.6 17.6 64.6 17.4 72.6 19'];
+      T.shade = 'M41.6 37.8 C40.6 24.8 48.6 15 54.6 14.8 C48.6 21 46.6 29 47.6 36 Z';
+      T.shadeBrim = 'M26.4 42.6 C36 34.6 54.4 30 70.6 30.4 C56 33 44 36 36 41 C32 43 29 43.4 26.4 42.6 Z';
+    } else if (h === 'kessel') {
+      T.top = 'M42 39.6 C41.4 25 50.4 16.4 62.4 16.2 C75 16 84 24.6 83.6 38.6 C75.6 36.2 66.4 35.8 57.4 36.8 C51.4 37.6 46.4 38.4 42 39.6 Z';
+      T.brim = 'M26.6 42 C37.6 35.8 56 33.4 72.4 34 C86.4 34.4 97.4 37.8 100.4 42.4 C96.4 45.8 86.4 45 74.4 43.4 C62.4 42 48.4 43 38.4 45.8 C33.4 47.2 28.6 46 26.6 42 Z';
+      T.lines = ['M62.8 16.4 V36.4', 'M42.4 39.4 C52.4 37.4 62.4 36.8 72.4 37'];
+      T.rivets = [[47.4, 38.8], [56.4, 37.4], [68.4, 37], [78.4, 38]];
+      T.shade = 'M42 39.6 C41.4 25 50.4 16.4 62.4 16.2 V36.6 C55 37 48 38.2 42 39.6 Z';
+      T.metal = true;
+    } else if (h === 'gugel') {
+      T.back = 'M29.6 72 C25.6 41 41.6 15 63 14 C81 13.2 93.4 25 93 42.6 C92.8 53 90 62 85.6 69 C84.4 76 82.6 83 80.6 89 C72 97 60 97.4 52 93 C44 97 37.6 97 33 93.6 C30.6 87 29.4 80 29.6 72 Z';
+      T.rim = 'M81.6 35.6 C76 29.6 66.4 27.4 58 30.4 C49.4 33.6 44.4 42 44.4 54 C44.6 67 47.8 78.6 54.6 87.4 C59.6 93 66.4 95.2 72.6 94.4 C75.8 94 78.4 92.6 80 90.6';
+      T.cape = 'M12 120 C16 109 28 101 41 97 C48 94.6 52.6 92.6 55.6 90.4 C60 95.6 66 98 74 97.4 C79 98.2 85 100.4 91 104.2 C101 110.4 107 116.4 109 122.6 L104.4 124.6 L100.4 120.6 L96 125.6 L91.6 120.8 L87 126 L82.6 121 L78 126.4 L73.6 121.2 L69 126.4 L64.6 121.2 L60 126.4 L55.6 121 L51 126 L46.6 120.8 L42 125.4 L37.6 120.2 L33 124.4 L28.6 119 L24 122.8 L19.6 117.6 L15.6 121.2 Z';
+      T.lines = ['M37.6 50 C36 62 36.6 76 40 88', 'M62.4 16.6 C72.4 16.8 82.4 22 87.2 30.4'];
+      T.capeLines = ['M28 114 C37 107 46 102.6 55 100.6', 'M73 101 C81 103 89 107 95.6 112.4'];
+      T.shade = 'M29.6 72 C25.6 41 41.6 15 60 14.2 C46.6 21 40.6 33 39.6 47 C38.6 61 40.6 77 44.6 91 C40.6 94 36.6 95 33 93.6 C30.6 87 29.4 80 29.6 72 Z';
+      T.shadeCape = 'M12 120 C16 109 28 101 41 97 C36 105 33 113 33 124.4 L28.6 119 L24 122.8 L19.6 117.6 L15.6 121.2 Z';
+    } else if (h === 'haube') { // Kruseler: gekräuselter Leinenschleier
+      T.back = 'M33.6 64 C30 38 44 18 62 17 C78 16.4 90 25.6 90.4 40 C90.6 48 88 56 84.4 62 C83.4 50 81.4 41 77 35.6 C70.6 29 57 29 50.4 35.6 C46 40.4 45 47.6 45.6 54.6 C45.4 68 47.6 81 53.4 92 C47 96 41 97 36.6 94 C33.6 85 32.6 74 33.6 64 Z';
+      T.frill = [[81.4, 35], [77, 31], [71, 28.8], [64.4, 28.2], [58, 29.4], [52.6, 32.4], [48.4, 37.2], [45.8, 43.4], [44.6, 50.4], [44.6, 57.6], [45.2, 64.8], [46.6, 72], [48.6, 79], [51.4, 85.6], [54.6, 91.4]];
+      T.lines = ['M39.6 52 C38.6 66 39.4 80 42.6 90', 'M60 20.6 C70 20.4 80 24.6 85.4 31.4'];
+      T.shade = 'M33.6 64 C30 38 44 18 60 17.2 C48 24 41.6 36 40.6 50 C40 64 41.6 80 45 94.6 C41.6 95.6 38.6 95.4 36.6 94 C33.6 85 32.6 74 33.6 64 Z';
+    } else if (h === 'schleier') {
+      T.back = 'M35 44 C31 26 46 14.6 62 14.6 C78 14.6 90.6 22.6 91.6 36.6 C92.6 48 90.6 58 88.4 64.6 C86.4 54 83.4 42 78.4 35.4 C71.4 28.4 56.6 29 50.6 35.4 C46.6 40.4 45.6 47.4 46 54 C46 74 49.4 92 56.4 104 C46.4 114.6 36.4 124.6 30.4 140 L5 140 C13 120 23 104 31 92 C29.6 76 31.6 58 35 44 Z';
+      T.lines = ['M40 50 C38 70 38 86 34 100 C28 112 22 124 18 138', 'M45.4 98 C38.4 108 32.4 120 28.4 136', 'M62.4 18 C72.4 18 82.4 22 87.4 30'];
+      T.edge = 'M44.8 54 C44.4 40 49.4 31 58.4 28 C66.4 26 75.4 27.4 81.2 33.6';
+      T.shade = 'M35 44 C31 26 46 14.6 58 14.8 C46 22 41.6 34 41 48 C40.4 66 41.4 82 38 96 C34 108 26 122 20 140 L5 140 C13 120 23 104 31 92 C29.6 76 31.6 58 35 44 Z';
+    } else if (h === 'gebende') { // Kinnband und Schapel, Haar im Netz
+      T.wrap = 'M46 53 C45.8 70 52.8 86 66.8 91.6 C73.2 94 78.2 92.2 80.6 88.4 L78.2 86.8 C76.2 89.8 72.6 91 68 89.6 C56.6 85.6 49.6 70.6 49.4 53 Z';
+      T.top = 'M42.6 42 L43.4 26 C53 19.6 70.4 18.4 84.4 24.2 L84.8 38 C76.4 34 59 34 42.6 42 Z';
+      T.lines = ['M48.4 23.4 L48.4 39.4', 'M54.8 21.2 L54.8 36.8', 'M61.4 20.2 L61.4 35.4', 'M68 20 L68 34.8', 'M74.6 20.8 L74.6 34.8', 'M80.6 22.2 L80.6 36.2'];
+      T.net = 'M37.8 58 C35 41 44 31 52 28.6 L46 40.6 C45.4 44 45.6 48 46.6 53 C44 55.6 42.8 60 42.8 66 C42.8 68 43 70 43.4 71.6 C40.6 67.6 38.6 63 37.8 58 Z';
+      T.shade = 'M42.6 42 L43.4 26 C46 24.4 48.6 23.4 51.6 22.4 L50.6 38.6 C47.6 39.4 45 40.6 42.6 42 Z';
+    } else if (h === 'kranz') T.wreath = true;
+    return T;
+  }
+  function beardGeo(a) {
+    if (a._soft) return softBeard(a);
+    if (a.g === 'f') return null;
+    const b = a.beard || 'ohne', B = {kind:b};
+    B.must = 'M67.6 77.4 C70.2 74.6 75.4 74 78.8 75.6 C78.2 77.6 75.8 77.8 73.6 77.6 C71.4 77.8 69.4 78.4 67.6 77.4 Z';
+    if (b === 'voll') { B.main = 'M44.8 70 C46 83 52 95 63.6 101.4 C69.6 104.6 76.4 103.6 80.2 98.6 C82.6 94.6 82.8 89 81 84 L78.4 81 C75.8 82.8 72.6 83.2 70 82.2 C64 84 58 82 54 77.4 C50.8 73.8 49 69.6 48.8 64.4 Z';
+      B.strands = ['M50 78 C53.6 87 58 94 64 99', 'M57 84 C60.4 91 64.6 96.4 70 100', 'M65.6 86.4 C67.6 92 70.6 96.4 74.6 99.6', 'M74 86.4 C75.6 90.6 77 94.4 79 97.4', 'M47.6 70.4 C48.6 76 50.6 81 53.4 85'];
+      B.shade = 'M44.8 70 C46 83 52 95 63.6 101.4 C58 94 54 86 52.6 78 C50.6 74 49.4 70 48.8 64.4 Z'; }
+    else if (b === 'kinn') { B.main = 'M66.4 84.6 C67.4 93 71.4 99.6 76 102.4 C79.6 98 81 92 79.8 85.4 C76 87.6 70.6 87.8 66.4 84.6 Z'; B.strands = ['M70 88.6 C71.4 93.6 73.4 97.6 76 100.6', 'M75 88.6 C76 92.6 77 95.6 78 98.6']; }
+    else if (b === 'schnurr') { }
+    else if (b === 'stoppel') { B.must = null; B.stubble = true; }
+    else return null;
+    return B;
+  }
+
+
+  // Rüsche des Kruselers aus Punkten: glatte Mittellinie, Zickzack der Falten, Bogenrand außen
+  function frillGeo(P) {
+    const n = P.map((p, i) => { const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)], tx = b[0] - a[0], ty = b[1] - a[1], L = Math.hypot(tx, ty) || 1; return [-ty / L, tx / L]; });
+    const smooth = Q => `M${Q[0][0].toFixed(1)} ${Q[0][1].toFixed(1)}` + Q.slice(1).map((p, i) => { const m = [(Q[i][0] + p[0]) / 2, (Q[i][1] + p[1]) / 2]; return ` Q${Q[i][0].toFixed(1)} ${Q[i][1].toFixed(1)} ${m[0].toFixed(1)} ${m[1].toFixed(1)}`; }).join('') + ` L${Q[Q.length - 1][0].toFixed(1)} ${Q[Q.length - 1][1].toFixed(1)}`;
+    const off = k => P.map((p, i) => [p[0] + n[i][0] * k, p[1] + n[i][1] * k]);
+    const zig = []; P.forEach((p, i) => { if (i === P.length - 1) return; const q = P[i + 1], m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2], nn = n[i];
+      zig.push([p[0] + nn[0] * 2.8, p[1] + nn[1] * 2.8], [m[0] - nn[0] * 2.8, m[1] - nn[1] * 2.8]); });
+    const O = off(4.2), sc = O.slice(1).map((p, i) => { const a = O[i], mx = (a[0] + p[0]) / 2 + n[i][0] * 2.4, my = (a[1] + p[1]) / 2 + n[i][1] * 2.4; return `Q${mx.toFixed(1)} ${my.toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`; }).join(' ');
+    const O2 = off(1.2), sc2 = O2.slice(1).map((p, i) => { const a = O2[i], mx = (a[0] + p[0]) / 2 + n[i][0] * 2, my = (a[1] + p[1]) / 2 + n[i][1] * 2; return `Q${mx.toFixed(1)} ${my.toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`; }).join(' ');
+    const O3 = off(-1.8), sc3 = O3.slice(1).map((p, i) => { const a = O3[i], mx = (a[0] + p[0]) / 2 + n[i][0] * 1.8, my = (a[1] + p[1]) / 2 + n[i][1] * 1.8; return `Q${mx.toFixed(1)} ${my.toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`; }).join(' ');
+    return {mid:smooth(P), zig:`M${O2[0][0].toFixed(1)} ${O2[0][1].toFixed(1)} ${sc2} M${O3[0][0].toFixed(1)} ${O3[0][1].toFixed(1)} ${sc3}`, outer:`M${O[0][0].toFixed(1)} ${O[0][1].toFixed(1)} ${sc}`, inner:smooth(off(-3.6))};
+  }
+
+  // ───────── Bausteine für alle Stile ─────────
+  const HEADT = 'translate(80 0) scale(1.17 1) translate(-80 0)';
+  function figure(a, R) {
+    // R: Renderer mit fill(d, part), line(d, w, part), hatch(d, k, op), eye(E), dots(...)
+    const G = geo(a), H = hairGeo(a), T = hatGeo(a), B = beardGeo(a), cover = COVER.includes(a.hat);
+    const HT = a._soft ? '' : HEADT;
+    let s = `<g transform="${HT}">`;
+    if (T.tail) s += R.fill(T.tail, 'hat') + R.hatch(T.tail, 1, .5);
+    if (!cover && H.back) s += R.fill(H.back, 'hair') + H.strands.slice(-2).map(d => R.line(d, .6, 'hairL')).join('');
+    if (!cover && H.bun) s += R.circle(H.bun, 'hair') + R.line(`M${H.bun[0] - 6} ${H.bun[1] - 2} C${H.bun[0] - 2} ${H.bun[1] - 7} ${H.bun[0] + 4} ${H.bun[1] - 5} ${H.bun[0] + 6} ${H.bun[1]}`, .6, 'hairL') + R.line(`M${H.bun[0] - 5} ${H.bun[1] + 3} C${H.bun[0] - 1} ${H.bun[1] - 2} ${H.bun[0] + 4} ${H.bun[1]} ${H.bun[0] + 5} ${H.bun[1] + 4}`, .6, 'hairL');
+    if (T.back) s += R.fill(T.back, 'hat') + (T.shade ? R.hatch(T.shade, 1, .7) : '') + T.lines.map(d => R.line(d, .7, 'hatL')).join('');
+    s += R.fill(G.neck, 'skin') + R.hatch(G.shadeNeck, 1, .55) + R.line(G.throat, .7);
+    s += '</g>';
+    // Kleid
+    if (!a._noBody) s += R.fill(G.body, 'cloth') + R.hatch(G.shadeBody, 1, .8) + G.folds.map(d => R.line(d, .9, 'clothL')).join('') + R.line(G.neckline, 1.2);
+    if (a.acc === 'pelz' && !a._noBody) { const d = 'M22 112.6 C35 103 46 101.6 51.4 102.6 C58 109.6 69.6 110.2 79 102.6 C87.4 103.6 95.6 107.6 103.4 113.6 C95 124.6 80 120.6 66 124.6 C52 120.6 35 124.6 22 112.6 Z';
+      s += R.fill(d, 'fur') + R.fur(d); }
+    if (T.cape) s += R.fill(T.cape, 'hat') + R.hatch(T.shadeCape, 1, .75) + T.capeLines.map(d => R.line(d, .8, 'hatL')).join('');
+    s += `<g transform="${HT}">`;
+    if (!cover && H.braid) s += Array.from({length:7}, (_, i) => R.ellipse([45.4 - i * .7, 70 + i * 7.2, 4.6, 4.3], 'hair') + R.line(`M${42.4 - i * .7} ${68 + i * 7.2} C${44.4 - i * .7} ${72 + i * 7.2} ${47.4 - i * .7} ${72 + i * 7.2} ${49.4 - i * .7} ${70 + i * 7.2}`, .55, 'hairL')).join('') + R.line('M41.6 120 l3 4.4 l3 -4.4', 1);
+    // Kopf
+    s += R.fill(G.head, 'skin') + R.hatch(G.shadeHead, 1, .7) + R.hatch(G.shadeEye, 1, .45) + R.hatch(G.shadeNose, 1, .8) + R.line(G.jaw, .9);
+    if (!cover) s += R.fill(G.ear, 'skin') + R.line(G.earIn, .8) + R.hatch(G.ear, 1, .4) + (G.earF ? R.fill(G.earF, 'skin', 1.2) : '');
+    s += R.eye(G.eyeN) + R.eye(G.eyeF) + R.line(G.browN, a.g === 'f' ? 1.1 : 1.6, 'brow') + R.line(G.browF, a.g === 'f' ? 1 : 1.3, 'brow') + R.line(G.nose, .8) + R.line(G.nostril, 1.1) +
+      R.lips(G.lips, a.g === 'f') + (G.lipU ? R.line(G.lipU, .7, 'lip') : '') + R.line(G.mouth, 1.3) + (G.smile ? R.line(G.smile, .6) : '') + R.line(G.lipLow, .6) + (B && B.main ? '' : R.line(G.chin, .55)) + G.lines.map(d => R.line(d, .55)).join('') + R.cheek(G.cheekC, a.g === 'f') + (G.cheekF ? R.cheek(G.cheekF, a.g === 'f') : '');
+    if (a.scar) { const dx = a._soft ? -11 : 0; s += R.line(`M${57 + dx} 58 L${65.4 + dx} 71`, 1.3) + [0, 1, 2].map(i => R.line(`M${58.4 + dx + i * 2.6} ${61.4 + i * 3.8} l2.4 -1.6`, .7)).join(''); }
+    if (B) {
+      if (B.main) s += R.fill(B.main, 'hair') + (B.shade ? R.hatch(B.shade, 1, .5) : '') + B.strands.map(d => R.line(d, .6, 'hairL')).join('');
+      if (B.must) s += R.fill(B.must, 'hair') + R.line(a._soft ? 'M58.6 74.2 C60.2 73.4 61.8 73.4 63 74 C64.4 73.4 66.2 73.4 67.8 74.2' : 'M70 76.6 C72.4 75.8 75 75.6 77.6 76', .5, 'hairL');
+      if (B.stubble) s += R.stubble();
+      s += R.line(geo(a).mouth, 1.2);
+    }
+    if (!cover && H.cap) s += R.fill(H.cap, 'hair') + R.hatch('M37.6 58 C34.4 40 45 26 56 25.8 C48 30 43 38 42.6 48 C42.4 56 42.4 64 42.6 70 C40.2 66.4 38.4 62.4 37.6 58 Z', 1, .55) + H.strands.map(d => R.line(d, .6, 'hairL')).join('') +
+      (H.roll ? R.fill(H.roll, 'hair') : '') + (H.curls || []).map(c => R.circle(c, 'hair') + R.line(`M${c[0] - c[2] * .5} ${c[1]} a${c[2] * .5} ${c[2] * .5} 0 1 1 ${c[2] * .5} ${c[2] * .5}`, .55, 'hairL')).join('') + (H.bald || []).map(d => R.line(d, .5)).join('');
+    if (a.hat === 'gebende') s += R.fill(T.net, 'hair') + R.net(T.net);
+    if (T.rim) s += R.band(T.rim);
+    if (T.frill) s += R.frill(frillGeo(T.frill));
+    if (T.edge) s += R.line(T.edge, 1.3);
+    if (T.wrap) s += R.fill(T.wrap, 'linen') + R.line('M47.6 60 C48 76 55 89 66.6 92', .5);
+    if (T.brim && T.metal) s += R.fill(T.top, 'metal') + R.hatch(T.shade, 1, .6) + R.fill(T.brim, 'metal') + R.hatch(T.brim, 2, .45) + T.lines.map(d => R.line(d, .7)).join('') + T.rivets.map(([x, y]) => R.dot(x, y, .9)).join('');
+    else if (T.brim) s += R.fill(T.top, 'hat') + R.hatch(T.shade, 1, .7) + R.fill(T.band, 'band') + R.fill(T.brim, 'hat') + R.hatch(T.shadeBrim, 1, .6) + T.lines.map(d => R.line(d, .6, 'hatL')).join('');
+    else if (T.top) s += R.fill(T.top, a.hat === 'gebende' ? 'linen' : 'hat') + (T.shade ? R.hatch(T.shade, 1, .7) : '') + (T.band ? R.fill(T.band, 'band') : '') + (a.hat === 'gebende' ? T.lines.map(d => R.line(d, .6)).join('') : T.lines.map(d => R.line(d, .6, 'hatL')).join(''));
+    if (T.wreath) s += R.wreath();
+    s += '</g>';
+    if (a.acc === 'kette' && !a._noBody) { const [x0, x1, y0, dip, py] = a._soft ? [46, 80, 101, 11, 113.6] : [44, 84, 107.6, 18, 129.6];
+      s += Array.from({length:17}, (_, i) => { const t = i / 16, x = x0 + t * (x1 - x0), y = y0 + Math.sin(t * Math.PI) * dip; return R.ellipse([x, y, 1.9, 1.3], 'gold', .6); }).join('') + R.circle([(x0 + x1) / 2, py, 4.2], 'gold') + R.line(`M${(x0 + x1) / 2 - 2.2} ${py} a2.2 2.2 0 1 0 4.4 0 a2.2 2.2 0 1 0 -4.4 0`, .6); }
+    return s;
+  }
+
+  // ───────── Stil A: Holzschnitt, von Hand koloriert ─────────
+  function woodcut(a, o = {}) {
+    const id = 'w' + (++uid), INK = '#2a1c12', PAPER = '#f2e4c4', small = o.small;
+    const wash = (c, t) => mix(c, PAPER, t);
+    const C = {skin:wash(AV.skin[a.skin] || AV.skin[0], .3), hair:wash(AV.hair[a.hair] || AV.hair[0], .2), cloth:wash(AV.cloth[a.cloth] || AV.cloth[0], .3),
+      hat:a.hat === 'gugel' ? wash(AV.cloth[((a.cloth || 0) + 1) % 7], .3) : ['haube', 'schleier'].includes(a.hat) ? '#f4ecd8' : wash(dark(AV.cloth[a.cloth] || AV.cloth[0], .3), .3),
+      linen:'#f6efdd', metal:'#bdb6a6', band:wash(dark(AV.cloth[a.cloth] || AV.cloth[0], .55), .2), fur:'#dcc7a2', gold:'#e2b94e'};
+    const R = {
+      fill:(d, p, w = 1.5) => `<path d="${d}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`,
+      line:(d, w = 1.1) => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${small ? Math.max(w, 1) * 1.3 : w}" stroke-linecap="round" stroke-linejoin="round"/>`,
+      hatch:(d, k = 1, op = .8) => small ? '' : `<path d="${d}" fill="url(#h${k}${id})" opacity="${op}"/>`,
+      circle:([x, y, r], p) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${C[p] || p}" stroke="${INK}" stroke-width="1.1"/>`,
+      ellipse:([x, y, rx, ry], p, w = 1.1) => `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx}" ry="${ry}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${w}"/>`,
+      dot:(x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${INK}"/>`,
+      eye:E => `<defs><clipPath id="e${id}${E.r * 10}"><path d="${E.d}"/></clipPath></defs><path d="${E.d}" fill="#fbf6e8"/><g clip-path="url(#e${id}${E.r * 10})"><circle cx="${E.c[0]}" cy="${E.c[1] - .5}" r="${E.r}" fill="#6b4c32"/><circle cx="${E.c[0]}" cy="${E.c[1] - .5}" r="${E.r * .5}" fill="${INK}"/></g><path d="${E.d}" fill="none" stroke="${INK}" stroke-width=".5"/>` +
+        `<path d="${E.lid}" fill="none" stroke="${INK}" stroke-width="${small ? 1.6 : 1.3}" stroke-linecap="round"/>` + (small ? '' : `<path d="${E.fold}" fill="none" stroke="${INK}" stroke-width=".45" stroke-linecap="round"/>`),
+      cheek:(c, f) => f ? `<ellipse cx="${c[0]}" cy="${c[1]}" rx="5" ry="3.2" fill="#c9604a" opacity=".16"/>` : '',
+      lips:(d, f) => `<path d="${d}" fill="#b8584a" opacity="${f ? .3 : .14}"/>`,
+      net:d => small ? '' : `<path d="${d}" fill="url(#h3${id})" opacity=".8"/>`,
+      fur:d => small ? '' : Array.from({length:24}, (_, i) => { const x = 25 + i * 3.3, y = 113 + Math.sin(i * 1.7) * 1.4 + (Math.abs(i - 12) < 4 ? 4 : 0); return `<path d="M${x.toFixed(1)} ${y.toFixed(1)} l1.3 -3 l1.2 3" fill="none" stroke="${INK}" stroke-width=".55"/>`; }).join(''),
+      stubble:() => small ? '' : Array.from({length:70}, (_, i) => { const t = i * 2.39996, r = Math.sqrt(i / 70); const x = 63 + Math.cos(t) * 15 * r, y = 84 + Math.sin(t) * 9 * r; return y > 77 || x < 55 ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r=".42" fill="${INK}" opacity=".75"/>` : ''; }).join(''),
+      frill:F => `<path d="${F.mid}" fill="none" stroke="${INK}" stroke-width="10.4" stroke-linecap="round" stroke-linejoin="round"/><path d="${F.mid}" fill="none" stroke="#f7f1e2" stroke-width="8.4" stroke-linecap="round" stroke-linejoin="round"/>` +
+        `<path d="${F.outer}" fill="none" stroke="${INK}" stroke-width=".8"/><path d="${F.zig}" fill="none" stroke="${INK}" stroke-width=".6" stroke-linejoin="round"/><path d="${F.inner}" fill="none" stroke="${INK}" stroke-width=".7"/>`,
+      band:d => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="5" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${mix(C.hat, '#f4ecd8', .3)}" stroke-width="3" stroke-linecap="round"/>`,
+      wreath:() => [[45, 44], [47, 37], [51.6, 31], [57.6, 27.4], [64.4, 26], [71, 26.8], [77, 29.6], [81.6, 34]].map(([x, y], i) => `<path d="M${x - 3.4} ${y + 1} C${x - 2} ${y - 3.4} ${x + 2} ${y - 3.4} ${x + 3.4} ${y + 1} C${x + 1} ${y + 2.6} ${x - 1} ${y + 2.6} ${x - 3.4} ${y + 1} Z" fill="${wash('#5f7a3a', .3)}" stroke="${INK}" stroke-width=".8" transform="rotate(${-30 + i * 9} ${x} ${y})"/>` + (i % 2 ? `<circle cx="${x}" cy="${y - 2.6}" r="1.8" fill="${wash('#c9604a', .2)}" stroke="${INK}" stroke-width=".6"/>` : '')).join(''),
+    };
+    const bg = AV.col[a.col] || AV.col[0];
+    let s = `<svg class="pt ${o.cls || ''}" viewBox="0 0 120 140" aria-hidden="true"><defs>
+      <pattern id="h1${id}" width="2.5" height="2.5" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="2.5" stroke="${INK}" stroke-width=".6"/></pattern>
+      <pattern id="h2${id}" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0V2.4M0 1.2H2.4" stroke="${INK}" stroke-width=".5"/></pattern>
+      <pattern id="h3${id}" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V2.4M0 0H2.4" stroke="${INK}" stroke-width=".45"/></pattern>
+      <clipPath id="c${id}"><ellipse cx="60" cy="72" rx="56" ry="66"/></clipPath></defs>`;
+    s += `<ellipse cx="60" cy="72" rx="56" ry="66" fill="${mix(bg, PAPER, .2)}"/>`;
+    if (!small) s += `<g clip-path="url(#c${id})" opacity=".3">${Array.from({length:40}, (_, i) => { const t = i / 40 * Math.PI * 2; return `<line x1="${(62 + Math.cos(t) * 30).toFixed(1)}" y1="${(56 + Math.sin(t) * 30).toFixed(1)}" x2="${(62 + Math.cos(t) * 90).toFixed(1)}" y2="${(56 + Math.sin(t) * 90).toFixed(1)}" stroke="${INK}" stroke-width=".45"/>`; }).join('')}</g>`;
+    s += `<g clip-path="url(#c${id})">${figure(a, R)}</g><ellipse cx="60" cy="72" rx="56" ry="66" fill="none" stroke="${INK}" stroke-width="2.2"/>` + (small ? '' : `<ellipse cx="60" cy="72" rx="52.6" ry="62.6" fill="none" stroke="${INK}" stroke-width=".7"/>`) + `</svg>`;
+    return s;
+  }
+
+  // ───────── Stil A rund: Holzschnitt, an den bisherigen Spielstil angeglichen ─────────
+  // Runder Rahmen mit hellem Hof hinter dem Kopf (wie bisher), runde Kopfform, weichere und etwas dünnere Linien,
+  // Schraffur nur leicht und weit, Wangen für alle, runde Augen mit Glanzpunkt.
+  function rund(a, o = {}) {
+    const id = 'r' + (++uid), INK = '#33231a', PAPER = '#f4e8cc', small = o.small;
+    a = Object.assign({}, a, {_soft:true});
+    const wash = (c, t) => mix(c, PAPER, t);
+    const C = {skin:wash(AV.skin[a.skin] || AV.skin[0], .18), hair:wash(AV.hair[a.hair] || AV.hair[0], .12), cloth:wash(AV.cloth[a.cloth] || AV.cloth[0], .18),
+      hat:a.hat === 'gugel' ? wash(AV.cloth[((a.cloth || 0) + 1) % 7], .18) : ['haube', 'schleier'].includes(a.hat) ? '#f7f0de' : wash(dark(AV.cloth[a.cloth] || AV.cloth[0], .3), .15),
+      linen:'#f8f2e2', metal:'#c2bcae', band:wash(dark(AV.cloth[a.cloth] || AV.cloth[0], .55), .1), fur:'#e2cfab', gold:'#e6bd52'};
+    const sw = w => small ? Math.max(w, 1) * 1.25 : w;
+    const R = {
+      fill:(d, p, w = 1.5) => `<path d="${d}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${sw(w * .85)}" stroke-linejoin="round" stroke-linecap="round"/>`,
+      line:(d, w = 1.1) => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${sw(w * .9)}" stroke-linecap="round" stroke-linejoin="round"/>`,
+      hatch:(d, k = 1, op = .8) => small || !d ? '' : `<path d="${d}" fill="url(#h1${id})" opacity="${(op * .5).toFixed(2)}"/><path d="${d}" fill="${INK}" opacity="${(op * .06).toFixed(2)}"/>`,
+      circle:([x, y, r], p) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${sw(.95)}"/>`,
+      ellipse:([x, y, rx, ry], p, w = 1.1) => `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx}" ry="${ry}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${sw(w * .9)}"/>`,
+      dot:(x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${INK}"/>`,
+      eye:E => `<defs><clipPath id="e${id}${E.r * 10}"><path d="${E.d}"/></clipPath></defs><path d="${E.d}" fill="#fdf8ec"/><g clip-path="url(#e${id}${E.r * 10})"><circle cx="${E.c[0]}" cy="${E.c[1]}" r="${E.r}" fill="#5c4030"/><circle cx="${E.c[0]}" cy="${E.c[1]}" r="${E.r * .52}" fill="${INK}"/><circle cx="${E.c[0] + E.r * .35}" cy="${E.c[1] - E.r * .4}" r="${E.r * .26}" fill="#fff"/></g>` +
+        `<path d="${E.lid}" fill="none" stroke="${INK}" stroke-width="${small ? 1.7 : 1.35}" stroke-linecap="round"/>`,
+      cheek:(c, f) => `<ellipse cx="${c[0]}" cy="${c[1]}" rx="5.4" ry="3.6" fill="#d06a52" opacity="${f ? .28 : .18}"/>`,
+      lips:(d, f) => `<path d="${d}" fill="#c0584a" opacity="${f ? .38 : .16}"/>`,
+      net:d => small ? '' : `<path d="${d}" fill="url(#h3${id})" opacity=".55"/>`,
+      fur:d => small ? '' : Array.from({length:18}, (_, i) => { const x = 27 + i * 4.2, y = 112.6 + Math.sin(i * 1.7) * 1.2 + (Math.abs(i - 9) < 3 ? 3.6 : 0); return `<path d="M${x.toFixed(1)} ${y.toFixed(1)} q1.4 -2.6 2.8 0" fill="none" stroke="${INK}" stroke-width=".55"/>`; }).join(''),
+      stubble:() => small ? '' : `<path d="M50 74 C53 82 59 88 66 89.6 C71 90.4 75.6 89.4 78 86.6 C77.4 83.4 74 82 70.6 82.4 C63.6 83.6 56 80.6 50 74 Z" fill="${INK}" opacity=".12"/>`,
+      frill:F => `<path d="${F.mid}" fill="none" stroke="${INK}" stroke-width="9.6" stroke-linecap="round" stroke-linejoin="round"/><path d="${F.mid}" fill="none" stroke="#f8f2e2" stroke-width="7.8" stroke-linecap="round" stroke-linejoin="round"/><path d="${F.zig}" fill="none" stroke="${INK}" stroke-width=".5" opacity=".7"/>`,
+      band:d => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="4.6" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${mix(C.hat, '#f4ecd8', .35)}" stroke-width="2.8" stroke-linecap="round"/>`,
+      wreath:() => [[45, 44], [47, 37], [51.6, 31], [57.6, 27.4], [64.4, 26], [71, 26.8], [77, 29.6], [81.6, 34]].map(([x, y], i) => `<path d="M${x - 3.4} ${y + 1} C${x - 2} ${y - 3.4} ${x + 2} ${y - 3.4} ${x + 3.4} ${y + 1} C${x + 1} ${y + 2.6} ${x - 1} ${y + 2.6} ${x - 3.4} ${y + 1} Z" fill="${wash('#6f8a42', .15)}" stroke="${INK}" stroke-width=".8" transform="rotate(${-30 + i * 9} ${x} ${y})"/>` + (i % 2 ? `<circle cx="${x}" cy="${y - 2.6}" r="1.9" fill="${wash('#d0584a', .1)}" stroke="${INK}" stroke-width=".6"/>` : '')).join(''),
+    };
+    const bg = AV.col[a.col] || AV.col[0];
+    // quadratischer Ausschnitt, runder Rahmen; Kopf im oberen Teil wie bisher
+    let s = `<svg class="pt round ${o.cls || ''}" viewBox="2 6 116 116" aria-hidden="true"><defs>
+      <pattern id="h1${id}" width="3.2" height="3.2" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="3.2" stroke="${INK}" stroke-width=".55"/></pattern>
+      <pattern id="h3${id}" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V2.6M0 0H2.6" stroke="${INK}" stroke-width=".45"/></pattern>
+      <clipPath id="c${id}"><circle cx="60" cy="64" r="57"/></clipPath></defs>
+      <circle cx="60" cy="64" r="57" fill="${bg}"/><circle cx="62" cy="50" r="44" fill="${mix(bg, '#ffffff', .35)}"/>`;
+    s += `<g clip-path="url(#c${id})">${figure(a, R)}</g><circle cx="60" cy="64" r="57" fill="none" stroke="${INK}" stroke-width="${small ? 3.2 : 2}"/>` + (small ? '' : `<circle cx="60" cy="64" r="54" fill="none" stroke="${INK}" stroke-width=".55" opacity=".7"/>`) + `</svg>`;
+    return s;
+  }
+
+  // ───────── Stil B: Buchmalerei (nach dem Codex Manesse), Blattgold mit Rautenmuster ─────────
+  // Renderer der Buchmalerei, auch für Szenen (Erzählbilder)
+  function illumR(a, id, small) {
+    const INK = '#3a2316';
+    const cl = AV.cloth[a.cloth] || AV.cloth[0];
+    const C = {skin:mix(AV.skin[a.skin] || AV.skin[0], '#fff6ec', .12), hair:AV.hair[a.hair] || AV.hair[0], cloth:light(cl, .08),
+      hat:a.hat === 'gugel' ? light(AV.cloth[((a.cloth || 0) + 1) % 7], .06) : ['haube', 'schleier'].includes(a.hat) ? '#fbf8f0' : dark(cl, .2),
+      linen:'#fbf8f0', metal:'#a9aeb4', band:dark(cl, .5), fur:'#f0e8d8', gold:'#e9c25a'};
+    const lineCol = p => p === 'hairL' ? dark(C.hair, .35) : p === 'clothL' ? dark(C.cloth, .4) : p === 'hatL' ? dark(C.hat, .35) : INK;
+    const R = {
+      fill:(d, p, w = 1.1) => `<path d="${d}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`,
+      line:(d, w = 1, p) => `<path d="${d}" fill="none" stroke="${lineCol(p)}" stroke-width="${small ? Math.max(w, 1) * 1.2 : w * .95}" stroke-linecap="round" stroke-linejoin="round"/>`,
+      // keine Schraffur: Schatten als dunklere Fläche, Glanz als helle Linie
+      hatch:(d, k = 1, op = .8) => k === 3 ? '' : `<path d="${d}" fill="#3a1e10" opacity="${(op * .16).toFixed(2)}"/>`,
+      circle:([x, y, r], p) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${C[p] || p}" stroke="${INK}" stroke-width=".9"/>`,
+      ellipse:([x, y, rx, ry], p, w = .9) => `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx}" ry="${ry}" fill="${C[p] || p}" stroke="${INK}" stroke-width="${w}"/>`,
+      dot:(x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${INK}"/>`,
+      eye:E => `<path d="${E.d}" fill="#fffaf0" stroke="${INK}" stroke-width=".7"/><circle cx="${E.c[0] + .3}" cy="${E.c[1]}" r="${E.r * .62}" fill="${INK}"/><path d="${E.lid}" fill="none" stroke="${INK}" stroke-width="1" stroke-linecap="round"/>`,
+      lips:(d, f) => `<path d="${d}" fill="#c23f36" opacity="${f ? .7 : .35}"/>`,
+      net:d => `<path d="${d}" fill="url(#n${id})"/>`,
+      cheek:(c, f) => `<circle cx="${c[0]}" cy="${c[1]}" r="${f ? 4.4 : 3.8}" fill="#d9584a" opacity="${f ? .42 : .3}"/><circle cx="${c[0] + 14}" cy="${c[1] - .6}" r="2" fill="#d9584a" opacity=".25"/>`,
+      fur:d => small ? '' : Array.from({length:14}, (_, i) => { const x = 28 + i * 5.6, y = 113 + (Math.abs(i - 7) < 3 ? 4 : 0) + Math.sin(i) * 1.4; return `<path d="M${x.toFixed(1)} ${y.toFixed(1)} l1.6 1.4 l1.6 -1.4 l-1.6 3z" fill="#2a2420"/>`; }).join(''),
+      stubble:() => `<path d="M53 76 C56 84 62 89 69 90 C73 90 76 88.6 78 86 C77 83 73 81.6 70 82 C64 83.6 58 81 53 76 Z" fill="${INK}" opacity=".1"/>`,
+      frill:F => `<path d="${F.mid}" fill="none" stroke="${INK}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="${F.mid}" fill="none" stroke="#fbf8f0" stroke-width="8.2" stroke-linecap="round" stroke-linejoin="round"/><path d="${F.zig}" fill="none" stroke="#b9ae9a" stroke-width=".8"/><path d="${F.outer}" fill="none" stroke="${INK}" stroke-width=".7"/>`,
+      band:d => `<path d="${d}" fill="none" stroke="${INK}" stroke-width="6" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${mix(C.hat, '#fbf3dc', .6)}" stroke-width="4" stroke-linecap="round"/>`,
+      wreath:() => [[45, 44], [47, 37], [51.6, 31], [57.6, 27.4], [64.4, 26], [71, 26.8], [77, 29.6], [81.6, 34]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="2.8" fill="${['#c8433a', '#f4f0e4', '#3b6aa8'][i % 3]}" stroke="${INK}" stroke-width=".7"/><circle cx="${x}" cy="${y}" r=".9" fill="#e9c25a"/>`).join(''),
+    };
+    return {R, C, INK};
+  }
+  function illum(a, o = {}) {
+    const id = 'b' + (++uid), INK = '#3a2316', small = o.small;
+    const {R, C} = illumR(a, id, small);
+    const frame = AV.colStrong[a.col] || AV.colStrong[0];
+    // Bogenfeld: Rundbogen, Blattgold mit Rautenmuster, Rahmen in der Hausfarbe
+    const arch = 'M8 140 V44 C8 18 32 4 60 4 C88 4 112 18 112 44 V140 Z';
+    let s = `<svg class="pt ${o.cls || ''}" viewBox="0 0 120 140" aria-hidden="true"><defs>
+      <linearGradient id="g${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d27a"/><stop offset=".5" stop-color="#d9ac45"/><stop offset="1" stop-color="#b8862c"/></linearGradient>
+      <pattern id="n${id}" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0H3V3" fill="none" stroke="#e9c25a" stroke-width=".6"/></pattern>
+      <pattern id="d${id}" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45 60 70)"><rect width="12" height="12" fill="none"/><path d="M0 0H12V12" fill="none" stroke="#9a6c1e" stroke-width=".7"/><circle cx="6" cy="6" r="1.1" fill="#9a6c1e"/></pattern>
+      <clipPath id="c${id}"><path d="${arch}"/></clipPath></defs>
+      <path d="${arch}" fill="url(#g${id})"/>${small ? '' : `<path d="${arch}" fill="url(#d${id})" opacity=".8"/>`}
+      <g clip-path="url(#c${id})">${figure(a, R)}</g>
+      <path d="${arch}" fill="none" stroke="${frame}" stroke-width="${small ? 7 : 5}"/><path d="M5.6 140 V44 C5.6 16 31 1.6 60 1.6 C89 1.6 114.4 16 114.4 44 V140" fill="none" stroke="${INK}" stroke-width="1"/>
+      <path d="M10.6 140 V44 C10.6 20 33 6.6 60 6.6 C87 6.6 109.4 20 109.4 44 V140" fill="none" stroke="#fbf3dc" stroke-width="${small ? 0 : .9}"/></svg>`;
+    return s;
+  }
+
+  // ───────── Stil C: Siegel in Wachs, Relief mit Umschrift ─────────
+  function seal(a, o = {}) {
+    const id = 's' + (++uid), small = o.small, wax = AV.colStrong[a.col] || AV.colStrong[0];
+    // Höhenbild: hell = erhaben. Linien als Kerben.
+    const H = {skin:'#d0d0d0', hair:'#a8a8a8', cloth:'#9a9a9a', hat:'#b4b4b4', linen:'#c8c8c8', metal:'#bcbcbc', band:'#8a8a8a', fur:'#b0b0b0', gold:'#c4c4c4'};
+    const R = {
+      fill:(d, p) => `<path d="${d}" fill="${H[p] || '#a0a0a0'}" stroke="#5a5a5a" stroke-width="1.1" stroke-linejoin="round"/>`,
+      line:(d, w = 1) => `<path d="${d}" fill="none" stroke="#505050" stroke-width="${Math.max(.8, w)}" stroke-linecap="round" stroke-linejoin="round"/>`,
+      hatch:() => '', circle:([x, y, r], p) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${H[p] || '#a0a0a0'}" stroke="#5a5a5a" stroke-width="1"/>`,
+      ellipse:([x, y, rx, ry], p) => `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx}" ry="${ry}" fill="${H[p] || '#a0a0a0'}" stroke="#5a5a5a" stroke-width=".8"/>`,
+      dot:(x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#ffffff"/>`,
+      eye:E => `<path d="${E.d}" fill="#bcbcbc" stroke="#4a4a4a" stroke-width=".9"/><circle cx="${E.c[0]}" cy="${E.c[1]}" r="${E.r * .5}" fill="#6a6a6a"/>`,
+      lips:() => '', net:() => '', cheek:() => '', fur:() => Array.from({length:12}, (_, i) => `<circle cx="${28 + i * 6.4}" cy="${114 + (Math.abs(i - 6) < 3 ? 4 : 0)}" r="2.2" fill="#c8c8c8"/>`).join(''),
+      stubble:() => '', frill:F => `<path d="${F.mid}" fill="none" stroke="#5a5a5a" stroke-width="10" stroke-linecap="round"/><path d="${F.mid}" fill="none" stroke="#d6d6d6" stroke-width="8" stroke-linecap="round"/><path d="${F.zig}" fill="none" stroke="#8a8a8a" stroke-width=".9"/>`,
+      band:d => `<path d="${d}" fill="none" stroke="#5a5a5a" stroke-width="6" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#c8c8c8" stroke-width="4" stroke-linecap="round"/>`,
+      wreath:() => [[45, 44], [47, 37], [51.6, 31], [57.6, 27.4], [64.4, 26], [71, 26.8], [77, 29.6], [81.6, 34]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.8" fill="#d8d8d8" stroke="#5a5a5a" stroke-width=".7"/>`).join(''),
+    };
+    const name = (o.name || '').toUpperCase(), place = (o.place || '').toUpperCase();
+    const text = `✠ ${name}${place ? ' · ' + place : ''}`;
+    // Wachsfladen mit unregelmäßigem Rand
+    const blob = Array.from({length:28}, (_, i) => { const t = i / 28 * Math.PI * 2, r = 66 + Math.sin(i * 2.3) * 2.4 + Math.cos(i * 3.7) * 1.8; return `${(70 + Math.cos(t) * r).toFixed(1)} ${(70 + Math.sin(t) * r).toFixed(1)}`; });
+    let s = `<svg class="pt seal ${o.cls || ''}" viewBox="0 0 140 140" aria-hidden="true"><defs>
+      <filter id="f${id}" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+        <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="h"/>
+        <feGaussianBlur in="h" stdDeviation="${small ? .6 : .9}" result="hb"/>
+        <feDiffuseLighting in="hb" surfaceScale="${small ? 2.4 : 3.6}" diffuseConstant="1.15" lighting-color="#ffffff" result="lit"><feDistantLight azimuth="235" elevation="48"/></feDiffuseLighting>
+        <feFlood flood-color="${wax}" result="wax"/><feBlend in="lit" in2="wax" mode="multiply" result="m"/>
+        <feComposite in="m" in2="SourceAlpha" operator="in"/></filter>
+      <path id="t${id}" d="M70 70 m-52 0 a52 52 0 1 1 104 0 a52 52 0 1 1 -104 0"/>
+      <clipPath id="c${id}"><circle cx="70" cy="70" r="44"/></clipPath></defs>
+      <path d="M${blob.join(' L')} Z" fill="${dark(wax, .25)}"/>
+      <g filter="url(#f${id})"><path d="M${blob.join(' L')} Z" fill="#6c6c6c"/>
+        <circle cx="70" cy="70" r="61" fill="#8a8a8a"/><circle cx="70" cy="70" r="58.4" fill="#5c5c5c"/><circle cx="70" cy="70" r="45.6" fill="#8a8a8a"/><circle cx="70" cy="70" r="44" fill="#565656"/>
+        ${small ? '' : `<text font-family="Alegreya SC, Alegreya, serif" font-weight="700" font-size="10.4" letter-spacing="1.3" fill="#d2d2d2"><textPath href="#t${id}" startOffset="25%" text-anchor="middle">${text}</textPath></text>`}
+        <g clip-path="url(#c${id})"><g transform="translate(10 6) scale(1)">${figure(a, R)}</g></g></g>
+      <circle cx="70" cy="70" r="66" fill="url(#gl${id})" opacity="0"/></svg>`;
+    return s;
+  }
+    return {rund, seal, illum, illumR, figure, woodcut};
+  })();
   function avatarSVG(a, cls) {
     a = a || defAv();
-    const id = 'avc' + (++avId), sk = AV.skin[a.skin] || AV.skin[0], hr = AV.hair[a.hair] || AV.hair[0], cl = AV.cloth[a.cloth] || AV.cloth[0];
-    const f = a.g === 'f', hat = a.hat, dark = shade(cl, -0.35), linen = '#f1ece1', hs = a.hs || (f ? 'offen' : 'kurz'), bg = AV.col[a.col] || AV.col[0];
-    let back = '', front = '', top = '';
-    if (!f && hs === 'lang' && hat !== 'gugel') back += `<path d="M38 52C36 72 38 84 44 88L48 70ZM82 52C84 72 82 84 76 88L72 70Z" fill="${hr}"/>`;
-    if (f && (hat === 'ohne' || hat === 'kranz') && hs === 'zopf') back += `<path d="M38 58C34 32 86 32 82 58L80 70C74 50 46 50 40 70Z" fill="${hr}"/>` + [0, 1, 2, 3, 4].map(k => `<ellipse cx="${80 + k * 1.5}" cy="${70 + k * 9}" rx="5" ry="5.6" fill="${shade(hr, k % 2 ? -0.12 : 0)}"/>`).join('');
-    if (f && (hat === 'ohne' || hat === 'kranz') && hs === 'knoten') back += `<path d="M38 60C34 32 86 32 82 60L80 66C74 48 46 48 40 66Z" fill="${hr}"/><circle cx="60" cy="27" r="9" fill="${hr}"/><path d="M53 27Q60 22 67 27" fill="none" stroke="${shade(hr, -0.2)}" stroke-width="1.2"/>`;
-    if (!f && hat === 'gugel') back += `<path d="M28 74C24 30 96 30 92 74C90 88 78 95 60 95C42 95 30 88 28 74Z" fill="${dark}"/>`;
-    if (f && hat === 'haube') back += `<path d="M33 68C29 33 91 33 87 68L88 88C80 98 40 98 32 88Z" fill="${linen}"/>`;
-    if (f && hat === 'schleier') back += `<path d="M31 64C29 30 91 30 89 64L96 112L24 112Z" fill="#e6dfcf"/>`;
-    if (f && (hat === 'ohne' || hat === 'kranz') && hs === 'offen') back += `<path d="M37 60C33 28 87 28 83 60L86 96C80 100 74 96 74 88L73 66C68 48 52 48 47 66L46 88C46 96 40 100 34 96Z" fill="${hr}"/>`;
-    if (f && hat === 'gebende') back += `<path d="M36 64C34 34 86 34 84 64L84 80C78 92 42 92 36 80Z" fill="${linen}"/>`;
-    // Schultern und Gewand
-    let body = `<path d="M12 120C16 94 36 86 60 86C84 86 104 94 108 120Z" fill="${cl}"/>`;
-    body += f ? `<path d="M44 88C50 98 70 98 76 88" fill="none" stroke="${linen}" stroke-width="3"/>`
-      : `<path d="M34 92C44 102 76 102 86 92C84 104 36 104 34 92Z" fill="#7a5a3c"/><path d="M38 94C46 101 74 101 82 94" fill="none" stroke="#a07a54" stroke-width="1.5"/>`;
-    if (a.acc === 'pelz') body += `<path d="M18 108C22 92 40 86 60 88C80 86 98 92 102 108C92 100 78 97 60 98C42 97 28 100 18 108Z" fill="#b89470"/>` + [24, 34, 44, 54, 64, 74, 84, 94].map(x => `<circle cx="${x}" cy="${97 + Math.abs(x - 59) * 0.12}" r="5" fill="#c9a782"/>`).join('');
-    if (a.acc === 'kette') body += `<path d="M40 92Q60 118 80 92" fill="none" stroke="#c9a24a" stroke-width="2.2" stroke-dasharray="3 1.5"/><circle cx="60" cy="106" r="4.2" fill="#d8b45a" stroke="#8a6a20" stroke-width="1"/>`;
-    // Hals und Kopf
-    let head = `<rect x="52" y="74" width="16" height="16" fill="${shade(sk, -0.12)}"/><ellipse cx="60" cy="58" rx="20" ry="24" fill="${sk}"/>`;
-    if (!f && hat !== 'gugel' && hs !== 'licht') head += `<path d="M40 58C39 34 81 34 80 58C77 47 68 42 60 42C52 42 43 47 40 58Z" fill="${hr}"/>` + (hs === 'locken' ? [42, 49, 56, 63, 70, 77].map((x, k) => `<circle cx="${x + 1}" cy="${44 - Math.sin(k / 5 * Math.PI) * 6}" r="5" fill="${hr}"/>`).join('') : '');
-    if (!f && hs === 'licht' && hat !== 'gugel') head += `<path d="M40 60C39 50 42 44 46 42L45 58ZM80 60C81 50 78 44 74 42L75 58Z" fill="${hr}"/>`;
-    head += `<ellipse cx="52" cy="58" rx="1.9" ry="2.2" fill="#2a211b"/><ellipse cx="68" cy="58" rx="1.9" ry="2.2" fill="#2a211b"/>` +
-      `<path d="M48 52Q52 50 56 52M64 52Q68 50 72 52" fill="none" stroke="${shade(hr, -0.1)}" stroke-width="1.6" stroke-linecap="round"/>` +
-      `<path d="M60 60L58 67L61.5 67" fill="none" stroke="${shade(sk, -0.3)}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>` +
-      `<ellipse cx="49" cy="66" rx="3.5" ry="2" fill="#d77b6a" opacity=".25"/><ellipse cx="71" cy="66" rx="3.5" ry="2" fill="#d77b6a" opacity=".25"/>`;
-    if (a.age === 'reif' || a.age === 'alt') front += `<path d="M50 70Q48 74 50 77M70 70Q72 74 70 77" fill="none" stroke="${shade(sk, -0.25)}" stroke-width="0.9" stroke-linecap="round"/>`;
-    if (a.age === 'alt') front += `<path d="M50 44Q60 41 70 44M52 48Q60 46 68 48M44 57L41 55M76 57L79 55M44 60L41 60M76 60L79 60" fill="none" stroke="${shade(sk, -0.22)}" stroke-width="0.9" stroke-linecap="round"/>`;
-    if (!f && a.beard === 'stoppel') front += `<path d="M42 64C43 84 52 91 60 91C68 91 77 84 78 64C74 74 68 78 60 78C52 78 46 74 42 64Z" fill="${hr}" opacity=".28"/>`;
-    if (!f && a.beard === 'kinn') front += `<path d="M53 78C54 88 58 92 60 92C62 92 66 88 67 78C64 80 56 80 53 78Z" fill="${hr}"/>`;
-    if (!f && a.beard === 'voll') front += `<path d="M41 62C41 86 52 93 60 93C68 93 79 86 79 62C75 73 68 78 60 78C52 78 45 73 41 62Z" fill="${hr}"/><path d="M53 73Q60 76 67 73" fill="none" stroke="#7a3b30" stroke-width="1.5" stroke-linecap="round"/>`;
-    else {
-      front += `<path d="M54 74Q60 77.5 66 74" fill="none" stroke="#8a4034" stroke-width="1.6" stroke-linecap="round"/>`;
-      if (!f && a.beard === 'schnurr') front += `<path d="M50 71C54 67.5 58 68.5 60 70.5C62 68.5 66 67.5 70 71C66 73 62 72 60 72C58 72 54 73 50 71Z" fill="${hr}"/>`;
-    }
-    if (f && hat === 'haube') front += `<path d="M41 68C44 88 76 88 79 68L80 78C76 94 44 94 40 78Z" fill="${linen}"/>`;
-    if (f && hat === 'gebende') front += `<path d="M42 66C44 90 76 90 78 66L79 74C76 96 44 96 41 74Z" fill="${linen}"/>`;
-    if (!f && hat === 'barett') top += `<path d="M33 45C33 30 87 30 87 45C87 49 33 49 33 45Z" fill="#2b2522"/><rect x="38" y="42" width="44" height="5" rx="2" fill="${dark}"/>`;
-    if (!f && hat === 'filzhut') top += `<ellipse cx="60" cy="44" rx="32" ry="6" fill="#4a3a2c"/><path d="M42 44C42 28 78 28 78 44Z" fill="#5b4836"/><rect x="42" y="38" width="36" height="4" fill="${dark}"/>`;
-    if (f && hat === 'gebende') top += `<path d="M40 46C40 34 80 34 80 46L80 50C70 46 50 46 40 50Z" fill="${linen}" stroke="#d6cdb8" stroke-width="1"/>`;
-    if (f && hat === 'kranz') top += [38, 45, 52, 60, 68, 75, 82].map((x, k) => `<circle cx="${x}" cy="${42 - Math.sin(k / 6 * Math.PI) * 7}" r="4.2" fill="${['#c9554a', '#f0d36a', '#e9e2f2', '#7aa0c9'][k % 4]}"/><circle cx="${x}" cy="${42 - Math.sin(k / 6 * Math.PI) * 7}" r="1.3" fill="#f6e7a8"/>`).join('') + `<path d="M36 44Q60 30 84 44" fill="none" stroke="#56704a" stroke-width="2"/>`;
-    if (!f && hat === 'gugel') top += `<path d="M37 54C39 31 81 31 83 54C77 41 43 41 37 54Z" fill="${dark}"/><path d="M80 40C97 35 106 52 101 70C99 58 92 49 82 49Z" fill="${dark}"/>`;
-    if (f && (hat === 'haube' || hat === 'schleier')) top += `<path d="M37 52C39 31 81 31 83 52C75 42 45 42 37 52Z" fill="${hat === 'haube' ? linen : '#e6dfcf'}"/>` + (hat === 'schleier' ? `<rect x="38" y="40" width="44" height="4" rx="2" fill="${cl}"/>` : '');
-    return `<svg class="av ${cls || ''}" viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="${id}"><circle cx="60" cy="60" r="60"/></clipPath></defs>` +
-      `<g clip-path="url(#${id})"><rect width="120" height="120" fill="${bg}"/><circle cx="60" cy="40" r="46" fill="${shade(bg, 0.35)}"/>${back}${body}${head}${front}${top}</g></svg>`;
+    const small = /\b(rvf|sm|t)\b/.test(cls || '');
+    return PT.rund(a, {cls:'av ' + (cls || ''), small});
   }
+
 
   // ───────── Neues Spiel: Kaufmann und Stammsitz ─────────
   const NAMES = {m:['Hinrik','Gerd','Tidemann','Bertram','Johan','Marquard','Hermen','Albert','Claus','Detmar'],
@@ -10005,10 +10896,11 @@ em.rep.warn{background:#b5523a}
         `<div class="opt"><span class="flabel">Finery</span>${chips('acc', AV.acc, a.acc || 'ohne')}</div>` +
         `</div></div>`;
     } else if (w.step === 2) {
-      h += `<h1 id="wiz-title">Origin and house mark</h1><p>Where do you come from, and with which sign do you mark your barrels and bales?</p>` +
+      // Ab Version 53 ohne Hausmarke: Hausfarbe und Bildnis ergeben das Haussiegel auf Urkunden, Segeln und Fahnen
+      h += `<h1 id="wiz-title">Origin and house colour</h1><p>Where do you come from, and in which colour do you bear your seal, sails and flags?</p>` +
         `<div class="origins">` + Object.entries(ORIGINS).map(([k, o]) => `<button class="homecard" type="button" data-origin="${k}" aria-pressed="${w.origin === k}"><b>${o.n}</b><span>${o.d}</span></button>`).join('') + `</div>` +
-        `<div class="opt"><span class="flabel">House mark</span><div class="hmset" role="group">` + AV.marks.map((_, i) => `<button type="button" data-av="mark" data-v="${i}" aria-pressed="${(a.mark || 0) === i}" aria-label="House mark ${i + 1}">${hausmarke(i, a.col || 0)}</button>`).join('') + `</div></div>` +
-        `<div class="opt"><span class="flabel">House colour</span>${chips('col', AV.col.map((c, i) => [i, AV.colN[i], c]), a.col || 0)}</div>`;
+        `<div class="opt"><span class="flabel">House colour</span>${chips('col', AV.col.map((c, i) => [i, AV.colN[i], HM_CITY[i]]), a.col || 0)}</div>` +
+        `<div class="wseal">${sealImg(a, {name:(w.name || '').trim() || 'Trading house', place:'', alt:'Your house seal'})}<span class="small">Your house seal: your portrait in wax of your house colour. It stands on your charters and in the Book of the Town.</span></div>`;
     } else if (w.step === 3) {
       h += `<h1 id="wiz-title">Your home seat</h1><p>Here you hold citizenship: buy 5 % cheaper, sell 5 % dearer. With reputation in your home seat you rise, from newcomer to mayor.</p><div class="homes">` +
         HOMES.map(cid => `<button class="homecard" type="button" data-home="${cid}" aria-pressed="${w.home === cid}"><b>${C[cid].n}</b><span>${C[cid].d}</span>` +
@@ -10016,7 +10908,7 @@ em.rep.warn{background:#b5523a}
     } else {
       const nm = (w.name || '').trim() || 'Merchant', hm = C[w.home];
       h += `<h1 id="wiz-title">Trading house ${nm}</h1><div class="summary">${avatarSVG(a, 'big')}<dl>` +
-        `<dt>House mark</dt><dd>${hausmarke(a.mark || 0, a.col || 0, 'inl')}</dd><dt>Origin</dt><dd>${ORIGINS[w.origin].n}: ${ORIGINS[w.origin].d}</dd>` +
+        `<dt>House seal</dt><dd>${sealImg(a, {small:true, cls:'inl'})}</dd><dt>Origin</dt><dd>${ORIGINS[w.origin].n}: ${ORIGINS[w.origin].d}</dd>` +
         `<dt>Home seat</dt><dd>${hm.n}</dd><dt>Advantage</dt><dd>${PERKS[w.home].t}: ${PERKS[w.home].d}</dd>` +
         `<dt>Start</dt><dd>${fmt(START + (w.home === 'stockholm' ? 1000 : 0) + (w.origin === 'kaufmann' ? 500 : 0))} guilders, an old snekke of ${w.home === 'danzig' ? 35 : 30} lasts, 9 sailors, ${w.home === 'reval' ? '4 crossbows and 2 suits of armour' : '2 crossbows'}, an inexperienced captain</dd>` +
         `<dt>Saved game</dt><dd>Slot ${w.slot}${getSlot(w.slot) ? ' (will be overwritten)' : ''}</dd></dl></div>` +
@@ -10230,19 +11122,40 @@ em.rep.warn{background:#b5523a}
   }
 
   // ───────── Ansichten ─────────
+  // Ab Version 53: Kopf wie im Kontorbuch. Oben Tag und Ort, rechts die Truhe mit Münzstapel; darunter das Haussiegel,
+  // der Rang mit dem Vermögen und als Goldleiste der Weg zum nächsten Rang. Antippen der Leiste zeigt dein Ziel.
+  const COINS = `<svg class="coins" viewBox="0 0 46 42" aria-hidden="true"><defs><linearGradient id="coin-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6db8c"/><stop offset=".55" stop-color="#d4a23c"/><stop offset="1" stop-color="#a8741a"/></linearGradient></defs>
+    <g stroke="#5a3a12" stroke-width="1.1" fill="url(#coin-g)"><path d="M4 33v4c0 1.7 4.5 3 10 3s10-1.3 10-3v-4"/><ellipse cx="14" cy="33" rx="10" ry="3"/><path d="M4 28v4c0 1.7 4.5 3 10 3s10-1.3 10-3v-4"/><ellipse cx="14" cy="28" rx="10" ry="3"/>
+    <path d="M20 31v4c0 1.7 4.5 3 10 3s10-1.3 10-3v-4"/><ellipse cx="30" cy="31" rx="10" ry="3"/><path d="M20 26v4c0 1.7 4.5 3 10 3s10-1.3 10-3v-4"/><ellipse cx="30" cy="26" rx="10" ry="3"/>
+    <path d="M20 21v4c0 1.7 4.5 3 10 3s10-1.3 10-3v-4"/><ellipse cx="30" cy="21" rx="10" ry="3"/><circle cx="20" cy="12" r="9"/><circle cx="20" cy="12" r="6.2" fill="none" stroke-width=".8"/></g>
+    <path d="M17 9.5l3-2 3 2v4.5h-6z M18.6 14v-2.2h2.8V14" fill="none" stroke="#5a3a12" stroke-width=".9" stroke-linejoin="round"/><path d="M8 27.4h3M24 20.4h3M24 25.4h3" stroke="#fff6d6" stroke-width=".9" stroke-linecap="round" opacity=".8"/></svg>`;
+  // Haussiegel (Stil C): Wachs in der Hausfarbe, das Bildnis erhaben. Der Lichtfilter ist teuer, darum einmal als Bild.
+  const sealCache = {};
+  function sealImg(a, o = {}) {
+    a = a || defAv();
+    const key = JSON.stringify([a, o.name || '', o.place || '', !!o.small]);
+    if (!sealCache[key]) {
+      const svg = PT.seal(a, {name:o.name, place:o.place, small:o.small}).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="140" height="140" ');
+      sealCache[key] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+    return `<img class="hseal ${o.cls || ''}" src="${sealCache[key]}" alt="${o.alt || ''}"${o.alt ? '' : ' aria-hidden="true"'}>`;
+  }
   function renderStats() {
-    const r = RANKS[st.rank][1];
+    const r = RANKS[st.rank][1], nx = RANKS[st.rank + 1], w = wealth(), lo = RANKS[st.rank][0];
+    const d = fdate(st.day, true), i = d.lastIndexOf(' ');
+    const where = st.loc ? C[st.loc].n : st.sail ? 'at sea' : '';
+    const pct = nx ? Math.max(0, Math.min(100, (w - lo) / (nx[0] - lo) * 100)) : 100;
     $('#stats').innerHTML =
-      `<span class="who">${avatarSVG(st.player && st.player.avatar)}<span>${st.player ? st.player.name : ''}</span></span>` +
-      (() => { const d = fdate(st.day, true), i = d.lastIndexOf(' '); return `<div class="stat date" aria-label="Date ${d}"><span class="d1">${d.slice(0, i)}</span><span class="d2">${d.slice(i + 1)}</span></div>`; })() +
-      `<div class="purse" aria-label="Chest ${fmt(st.money)} guilders, wealth ${fmt(wealth())} guilders">` +
-      `<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16" rx="8" ry="3.4"/><path d="M4 16v-3.4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4V16"/><ellipse cx="12" cy="9" rx="8" ry="3.4"/><path d="M4 9v3.6M20 9v3.6"/></svg>` +
-      `<span class="pin"><span class="pv${st.money < 0 ? ' neg' : ''}">${fmt(st.money)} <small>guilders</small></span><span class="pw">Wealth ${fmt(wealth())}</span></span></div>` +
-      `<button class="rank" type="button" data-act="rank" aria-label="${r}: show your next goal">${r}</button>` +
+      `<div class="hd"><div class="hdate" aria-label="Date ${d}"><b>${d.slice(0, i)}</b><small>Anno ${d.slice(i + 1)}${where ? ' · ' + where : ''}</small></div>` +
+      `<div class="hpurse" aria-label="Chest ${fmt(st.money)} guilders">${COINS}<div><b class="${st.money < 0 ? 'neg' : ''}">${fmt(st.money)}</b><small>guilders in the chest</small></div></div>` +
       `<button class="mbtn" type="button" data-act="music" aria-pressed="${music.isOn()}" aria-label="${music.isOn() ? 'Turn music off' : 'Turn music on'}">` +
       (music.isOn() ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>`
         : `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></svg>`) +
-      `<span>${music.isOn() ? trackLabel() : music.armed() ? 'Tap for music' : 'Music'}</span></button>`;
+      `<span>${music.isOn() ? trackLabel() : music.armed() ? 'Tap for music' : 'Music'}</span></button></div>` +
+      `<button class="wline" type="button" data-act="rank" aria-label="${r}, wealth ${fmt(w)} guilders${nx ? `, ${nx[1]} from ${fmt(nx[0])}` : ''}: show your next goal">` +
+      sealImg(st.player && st.player.avatar, {small:true}) +
+      `<span class="wl"><span><em>${r}</em><i> · Wealth</i> <b>${fmt(w)}</b></span><span>${nx ? `${nx[1]} from <b>${fmt(nx[0])}</b>` : 'highest rank'}</span></span>` +
+      `<span class="gold"><i style="width:${pct.toFixed(1)}%"></i></span></button>`;
   }
   function renderTempo() {
     const box = $('#tempo');
@@ -10272,6 +11185,12 @@ em.rep.warn{background:#b5523a}
     if (bankrupt()) h += `<div class="over"><strong>Bankrupt.</strong><span>${st.money < 0 && wealth() < 0 ? 'Your debts exceed your wealth. The creditors take over the trading house.' : 'The chest is empty and so is the hold. The crew goes ashore.'}</span><button class="btn primary" type="button" data-act="restart">New game</button></div>`;
     $('#status').innerHTML = h;
   }
+  // Laderaum als Felder wie im Kontorbuch: jedes Feld ein Teil des Laderaums, halb gefüllte schraffiert
+  function holdSlots() {
+    const n = Math.max(10, Math.min(18, Math.round(CAP / 10))), per = CAP / n, u = used();
+    const cells = Array.from({length:n}, (_, i) => { const f = (u - i * per) / per; return `<i class="${f >= 1 ? '' : f > 0 ? 'h' : 'e'}"></i>`; }).join('');
+    return `<div class="mslots" role="img" aria-label="Hold ${u} of ${CAP} lasts"><span class="ml">Hold <b>${u}</b> of <b>${CAP}</b> lasts${freightQ() ? ` <small>(${freightQ()} freight)</small>` : ''}</span><span class="sl" style="--n:${n}">${cells}</span></div>`;
+  }
   function renderMarket() {
     const box = $('#market');
     if (!st.loc) {
@@ -10282,8 +11201,7 @@ em.rep.warn{background:#b5523a}
       return;
     }
     const c = C[st.loc];
-    let h = `<div class="mhead"><h2>Market in ${c.n}</h2>` +
-      `<div class="mhold"><span>${used()} / ${CAP} lasts${freightQ() ? ` <small>(${freightQ()} freight)</small>` : ''}</span><div class="bar"><i style="width:${CAP ? used() / CAP * 100 : 0}%"></i></div><span>${fmt(st.money)} G</span></div>` +
+    let h = `<div class="mhead"><h2>Market of ${c.n}</h2>` + holdSlots() +
       `<span class="profile">Produces <b>${c.p.map(g => G[g].n).join(', ')}</b> · needs <b>${c.c.map(g => G[g].n).join(', ')}</b></span>` +
       (embargoAt(c.id) ? `<p class="warnline">Hanseatic embargo until ${fdate(embargoAt(c.id).until)}. Every last traded costs 1.5 reputation.</p>` : '') +
       (isPest(c.id) ? `<p class="warnline">Plague is going round in ${c.n}. The town needs less, and sailors fall ill when you put in.</p>` : '') +
@@ -10658,27 +11576,282 @@ em.rep.warn{background:#b5523a}
     $('#loglist').innerHTML = st.log.slice(0, 40).map(l =>
       `<li><time>${fdate(l.d)}</time><span>${label[l.kind] ? `<span class="tag">${label[l.kind]}</span>` : ''}${l.text}</span></li>`).join('');
   }
+  // ───────── Ab Version 53: Haus als Kontorbuch ─────────
+  // Oben dein Bildnis mit dem Weg der Ämter und den Privilegien, darunter die Flotte als Einträge mit Schiff, Kapitän und Route.
+  // Alles Weitere liegt hinter Kacheln; jede öffnet ein eigenes Blatt (#hsheet) im Stil der Einzelheiten.
+  const hashStr = s => { let h = 2166136261; for (const ch of String(s)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
+  function seedAv(seed, g) {
+    let a = hashStr(seed) || 7;
+    const rng = () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    const r = l => l[Math.floor(rng() * l.length)], f = g === 'f';
+    return {g, skin:r(AV.skinOrder), hair:r([0, 1, 2, 3, 4, 5, 0, 1, 2]), cloth:Math.floor(rng() * AV.cloth.length), hat:r(f ? AV.hatF : AV.hatM)[0], beard:f ? 'ohne' : r(AV.beard)[0],
+      hs:r(f ? AV.hsF : AV.hsM)[0], acc:'ohne', age:r(['jung', 'reif', 'reif', 'alt']), col:Math.floor(rng() * AV.col.length)};
+  }
+  const capAv = k => k.av || seedAv('kap' + k.id + k.name, 'm');
+  const tally = n => `<s>${'I'.repeat(Math.max(1, n || 1))}</s>`;   // Strichliste wie im Kontorbuch
+  const HICON = {
+    kontor:'<path d="M3 10l9-6 9 6v10H3z"/><path d="M8 20v-6h8v6M8 17h8"/>',
+    works:'<path d="M3 20V11l5 3v-3l5 3V6h4v14z"/><path d="M15 6V3h2v3M7 17h2M12 17h2"/>',
+    council:'<path d="M4 20h16M5 20V10M19 20V10M9.5 20V10M14.5 20V10M3 10l9-6 9 6z"/>',
+    hansetag:'<circle cx="12" cy="12" r="8"/><path d="M12 6.5l1.6 3.4 3.7.4-2.8 2.5.8 3.6L12 14.6l-3.3 1.8.8-3.6-2.8-2.5 3.7-.4z"/>',
+    race:'<path d="M6 20c0-6 2-11 6-15M18 20c0-6-2-11-6-15"/><path d="M7.5 15c-2 0-3-1-3.5-2.5 1.8-.2 3 .4 3.5 2.5zM8.6 10.6C6.8 10.2 6 9 6 7.4c1.6.4 2.6 1.5 2.6 3.2zM16.5 15c2 0 3-1 3.5-2.5-1.8-.2-3 .4-3.5 2.5zM15.4 10.6c1.8-.4 2.6-1.6 2.6-3.2-1.6.4-2.6 1.5-2.6 3.2z"/>',
+    gv:'<path d="M4 20h16M6 20V9h5v11M13 20V5h5v15M6 9l2.5-3L11 9M13 5l2.5-2L18 5"/>',
+    biz:'<ellipse cx="9" cy="7" rx="5" ry="2.2"/><path d="M4 7v4c0 1.2 2.2 2.2 5 2.2s5-1 5-2.2V7"/><ellipse cx="15.5" cy="14" rx="5" ry="2.2"/><path d="M10.5 14v3.5c0 1.2 2.2 2.2 5 2.2s5-1 5-2.2V14"/>',
+    dock:'<circle cx="12" cy="5" r="2"/><path d="M12 7v13M7 11h10M5 15c1 3 3.5 5 7 5s6-2 7-5"/>',
+    caps:'<path d="M5 11c0-3.5 3-6 7-6s7 2.5 7 6"/><path d="M3 11h18l-2 3H5z"/><circle cx="12" cy="17" r="3"/>',
+    tavern:'<path d="M6 7h10v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M16 9h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2M6 7c0-2 2-3 5-3s5 1 5 3"/>',
+  };
+  const hic = k => `<svg class="hic" viewBox="0 0 24 24" aria-hidden="true">${HICON[k] || HICON.kontor}</svg>`;
+
+  // Schiffe als Holzschnitt, klein für Einträge und Listen. Segel in der Hausfarbe gestreift.
+  let inkId = 0;
+  function shipInk(type, stripe, o = {}) {
+    const id = 'si' + (++inkId), T = SHIPS[type] ? type : 'kogge', ink = '#3a2a1c', wood = '#efe1c0', flag = o.flag || stripe;
+    const S = {
+      schnigge:{hull:'M26 66 Q30 64 38 64 L128 64 Q137 63 143 58 L138 77 Q116 86 84 86 Q52 86 34 80 Z', sail:'M64 26 Q86 23 108 26 L110 59 Q86 63 62 59 Z', mx:86, top:14, castles:false},
+      kogge:{hull:'M17 61 Q22 60 30 60 L132 60 Q141 59 149 53 L143 77 Q118 88 82 88 Q46 88 27 80 Z', sail:'M57 17 Q84 13.5 111 17 L113.5 55 Q84 61 54.5 55 Z', mx:84, top:4, castles:true},
+      holk:{hull:'M10 50 Q24 64 44 62 L120 62 Q140 62 152 46 Q152 70 134 82 Q104 91 76 90 Q40 89 22 76 Q10 64 10 50 Z', sail:'M54 15 Q82 11 110 15 L113 57 Q82 63 51 57 Z', mx:82, top:2, castles:true, round:true},
+      kraweel:{hull:'M14 58 Q22 60 32 60 L134 60 Q144 58 152 50 L146 74 Q120 86 84 86 Q48 86 28 78 Z', sail:'M64 19 Q88 15.5 112 19 L114 55 Q88 60 61.5 55 Z', mx:88, top:6, castles:true, carvel:true},
+    }[T];
+    const st0 = (x, y, w2, h) => `<rect x="${x}" y="${y}" width="${w2}" height="${h}"/>` + Array.from({length:Math.floor(w2 / 5)}, (_, i) => `<rect x="${x + 1 + i * 5}" y="${y - 3}" width="3" height="3"/>`).join('');
+    const mx = S.mx, top = S.top;
+    let s = `<svg class="ship-ink ${o.cls || ''}" viewBox="0 0 160 104" aria-hidden="true"><defs><clipPath id="${id}"><path d="${S.sail}"/></clipPath><clipPath id="${id}h"><path d="${S.hull}"/></clipPath></defs>
+      <g fill="none" stroke="${ink}" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M${mx} ${top + 2} L${mx - 32} 61 M${mx} ${top + 2} L${mx + 34} 61 M${mx} ${top + 4} L22 58 M${mx} ${top + 4} L148 51" stroke-width=".7" opacity=".8"/>
+      <path d="M${mx} ${top} V61" stroke-width="2.2"/>${S.castles ? `<path d="M${mx - 5} ${top + 5} h10 l-1.5 5 h-7 z" fill="${wood}" stroke-width="1.1"/>` : ''}
+      <path d="M${mx} ${top} l13 2.5 -13 3" fill="${flag}" stroke-width=".9"/>`;
+    if (S.carvel) s += `<path d="M126 22 V60" stroke-width="1.6"/><path d="M118 26 Q126 24.5 134 26 L135 46 Q126 48 117 46 Z" fill="#f1e4c4" stroke-width="1.1"/><path d="M40 20 V60" stroke-width="1.5"/><path d="M40 21 L52 48 L32 48 Z" fill="#f1e4c4" stroke-width="1"/>`;
+    const sx0 = +S.sail.match(/^M([\d.]+)/)[1];
+    s += `<path d="${S.sail.replace(/^M([\d.]+) ([\d.]+) Q([\d.]+) ([\d.]+) ([\d.]+) ([\d.]+).*$/, 'M$1 $2 Q$3 $4 $5 $6')}" stroke-width="2" transform="translate(0 -1)"/>
+      <path d="${S.sail}" fill="#f1e4c4" stroke-width="1.3"/>
+      <g clip-path="url(#${id})" stroke="none" fill="${stripe}" opacity=".88">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${sx0 + 3 + i * 9.6}" y="${top}" width="4.6" height="60"/>`).join('')}</g>
+      <path d="${S.sail}" stroke-width="1.3"/>`;
+    if (S.castles) s += S.round
+      ? `<path d="M12 50 Q14 34 18 34 H46 V61 Q26 62 12 50 Z M118 61 V30 H148 Q152 38 151 47 Q140 60 118 61 Z" fill="${wood}" stroke-width="1.1"/><path d="M18 34 v-3 h4 v3 M26 34 v-3 h4 v3 M34 34 v-3 h4 v3 M122 30 v-3 h4 v3 M130 30 v-3 h4 v3 M138 30 v-3 h4 v3" stroke-width="1"/><path d="M14 42 H46 M14 50 H46 M118 38 H149 M118 46 H150 M118 54 H146" stroke-width=".6"/>`
+      : `<g fill="${wood}" stroke-width="1.1">${st0(120, 44, 26, 16)}${st0(22, 51, 17, 10)}</g><path d="M124 48 v8 M130 48 v8 M136 48 v8 M142 48 v8 M27 54 v5 M33 54 v5" stroke-width=".6"/>`;
+    s += `<path d="${S.hull}" fill="${wood}" stroke-width="1.5"/>
+      <g clip-path="url(#${id}h)" stroke-width=".7">${S.carvel ? '<path d="M20 70 Q80 74 146 66" opacity=".7"/>' : '<path d="M20 66 Q80 70 146 62 M22 72 Q80 77 144 68 M26 78 Q80 84 142 74"/>'}
+        ${Array.from({length:26}, (_, i) => `<path d="M${30 + i * 4.6} 90 l5 -8" stroke-width=".55" opacity=".75"/>`).join('')}</g>
+      <path d="M4 92 q7 -4 14 0 t14 0 t14 0 t14 0 t14 0 t14 0 t14 0 t14 0 t14 0 t14 0 t14 0" stroke-width="1.1"/>
+      <path d="M14 99 q6 -3 12 0 t12 0 t12 0 M70 99 q6 -3 12 0 t12 0 t12 0 t12 0 t12 0" stroke-width=".7" opacity=".7"/></g></svg>`;
+    return s;
+  }
+  const houseCol = () => HM_CITY[((st.player && st.player.avatar) || {}).col || 0] || HM_CITY[0];
+
+  // Weg der Ämter: Stationen ab Bürger, dazwischen der Weg; der rote Punkt zeigt, wie weit du bis zum nächsten Amt bist
+  function roadHTML(r, i) {
+    // Bis Bürgermeister vier Stationen; erst wer Bürgermeister ist, sieht das Amt darüber
+    const S = CIVIC.slice(1, i >= 4 ? CIVIC.length : 5), n = S.length, X = S.map((_, k) => (k + .5) / n * 100);
+    const at = k => k < 0 ? 0 : X[k];
+    const next = CIVIC[i + 1], f = next ? Math.max(0, Math.min(1, (r - CIVIC[i][0]) / (next[0] - CIVIC[i][0]))) : 1;
+    const px = next ? at(i - 1) + (at(i) - at(i - 1)) * f : X[n - 1];
+    let h = `<div class="road" aria-hidden="true"><svg class="rd" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M${X[0]} 10 H${X[n - 1]}" stroke="#9d8059" stroke-width="1.6" stroke-dasharray="1 4" stroke-linecap="round" vector-effect="non-scaling-stroke" fill="none"/>` +
+      (i >= 1 ? `<path d="M${X[0]} 10 H${at(i - 1)}" stroke="#3a2a1c" stroke-width="2.4" vector-effect="non-scaling-stroke" fill="none"/>` : '') +
+      (next ? `<path d="M${at(i - 1)} 10 H${px.toFixed(1)}" stroke="#3a2a1c" stroke-width="2.4" vector-effect="non-scaling-stroke" fill="none"/>` : '') + `</svg>`;
+    S.forEach((c, k) => { const cls = k + 1 <= i ? 'done' : k + 1 === 4 ? 'goal' : ''; h += `<i class="${cls}" style="left:${X[k]}%"></i>`; });
+    if (next) h += `<b class="now" style="left:${px.toFixed(1)}%"></b>`;
+    h += `</div><div class="stations" style="--n:${n}">${S.map((c, k) => `<span class="${k + 1 === i ? 'cur' : k + 1 === 4 ? 'g' : ''}" style="left:${X[k]}%">${c[1].replace(' of the Hansa', '')}</span>`).join('')}</div>`;
+    return h;
+  }
+  const HTITLE = {kontor:'Kontor', works:'workshops', council:'Town hall', hansetag:'Hanseatic Diet', race:'Race', gv:'Great projects', biz:'Contracts and money'};
+  function homeTiles(i) {
+    const n = openItems().length, ord = st.orders.active;
+    return [
+      {k:'kontor', html:kontorHTML(i), meta:st.kontor ? `${kontorUsed()} of ${st.kontor.cap} lasts${hasSteward() ? ' · steward' : ''}` : i >= 1 ? 'can be built' : 'from Burgher', lock:!st.kontor && i < 1},
+      {k:'works', html:worksHTML(i), meta:i < 2 ? 'from Guild brother' : `${(st.works || []).length} of ${maxWorks()}`, lock:i < 2},
+      {k:'council', html:councilHTML(i), meta:`${ord.length ? `${ord.length} ${ord.length === 1 ? 'commission' : 'commissions'} · ` : ''}election on ${fdate(nextElection())}`, hot:st.loc === st.home && ord.some(o => haveFor(o.g) >= o.q)},
+      {k:'hansetag', html:hanseHTML(i), meta:n ? `${n} ${n === 1 ? 'question' : 'questions'} open` : st.hanse && st.hanse.escort ? 'escort under way' : 'next on 24 June', hot:openItems().some(x => x.kind === 'gift' || !x.v.my) && (canVote() || openItems().some(x => x.kind === 'gift'))},
+      {k:'race', html:raceHTML(), meta:raceMeta()},
+      {k:'gv', html:gvHTML(), meta:gvMeta(), hot:!!(st.gv && st.gv.job)},
+      {k:'biz', html:bizHTML(), meta:bizMeta()},
+    ].map(t => { const m = t.html.match(/^<div class="kontor"><h3>([\s\S]*?)<\/h3>([\s\S]*)<\/div>$/); return Object.assign(t, {title:HTITLE[t.k], head:m ? m[1] : HTITLE[t.k], body:m ? m[2] : (t.html || `<p class="small">For this you first need a Kontor in your home seat.</p>`)}); });
+  }
+  const tileHTML = t => `<button class="htile${t.lock ? ' lock' : ''}${t.hot ? ' hot' : ''}" type="button" data-hs-open="${t.k}"${t.id != null ? ` data-id="${t.id}"` : ''}>${hic(t.ic || t.k)}<span><b>${t.title}</b><span>${t.meta || ''}</span></span>${t.hot ? '<i class="hdot" aria-label="due"></i>' : ''}</button>`;
   function renderHome() {
     const box = $('#homecard');
     if (!st.home) { box.hidden = true; return; }
     box.hidden = false;
     const r = st.repute || 0, i = civicIdx(r), next = CIVIC[i + 1];
-    const prog = next ? Math.min(100, (r - CIVIC[i][0]) / (next[0] - CIVIC[i][0]) * 100) : 100;
-    const pa = (st.player && st.player.avatar) || {};
-    box.innerHTML = `<div class="hmhead">${hausmarke(pa.mark || 0, pa.col || 0, 'inl')}<div><h2>Home seat ${C[st.home].n}</h2><span class="sub2">Trading house ${st.player ? st.player.name : ''} · ${CIVIC[i][1]}${st.player && st.player.origin && ORIGINS[st.player.origin] ? ` · ${ORIGINS[st.player.origin].n}` : ''}</span></div></div>` +
-      (st.loc !== st.home ? `<p class="small awayline">${st.loc ? `You are in ${C[st.loc].n}.` : 'You are at sea.'} What you can only do here in person, such as storing goods or taking commissions, is possible in ${C[st.home].n}.${hasSteward() ? ' Your steward trades for you from afar.' : ''}</p>` : '') +
-      `<div class="perks"><div><b>Citizenship:</b> buy 5 % cheaper and sell 5 % dearer here.</div><div><b>${PERKS[st.home].t}:</b> ${PERKS[st.home].d}</div></div>` +
-      `<div class="wealth"><div class="holdrow"><span>Reputation ${fmt(r)}</span><span class="small">${next ? `${next[1]} from ${fmt(next[0])}` : 'Highest standing reached'}</span></div><div class="bar"><i style="width:${prog}%"></i></div>` +
-      `<span class="small">Reputation comes from sales here, especially of goods the town needs, plus council commissions, workshops, buildings and victories over pirates.</span></div>` +
-      det('ladder', 'Offices and unlocks', `<ol class="ladder">` + CIVIC.map(([min, name], k) => `<li class="${k <= i ? 'done' : k === i + 1 ? 'next' : ''}"><i class="mk"></i><span>${name}${UNLOCK[k] ? `<span class="soon">${UNLOCK[k]}</span>` : ''}</span><small>${fmt(min)}</small></li>`).join('') + `</ol>`, CIVIC[i][1], false) +
-      sec('kontor', kontorHTML(i), st.kontor ? `${kontorUsed()} / ${st.kontor.cap} lasts${hasSteward() ? ' · steward' : ''}` : i >= 1 ? 'can be built' : 'from Burgher', (st.loc === st.home || hasSteward()) && !!st.kontor) +
-      sec('works', worksHTML(i), i < 2 ? 'from Guild brother' : `${(st.works || []).length} of ${maxWorks()}`, false) +
-      sec('hansetag', hanseHTML(i), (() => { const n = openItems().length; return n ? `${n} ${n === 1 ? 'question' : 'questions'} open` : st.hanse && st.hanse.escort ? 'escort under way' : 'next Diet 24 June'; })(), openItems().some(x => x.kind === 'gift' || !x.v.my) && (canVote() || openItems().some(x => x.kind === 'gift'))) +
-      sec('race', raceHTML(), raceMeta(), false) +
-      sec('gv', gvHTML(), gvMeta(), !!(st.gv && st.gv.job)) +
-      sec('biz', bizHTML(), bizMeta(), false) +
-      sec('council', councilHTML(i), `${st.orders.active.length ? `${st.orders.active.length} ${st.orders.active.length === 1 ? 'commission' : 'commissions'} · ` : ''}election on ${fdate(nextElection())}`, st.loc === st.home && st.orders.active.some(o => haveFor(o.g) >= o.q));
+    const pa = (st.player && st.player.avatar) || {}, name = st.player ? st.player.name : '';
+    box.innerHTML = `<div class="hhead"><div class="port">${avatarSVG(pa, 'big')}</div><div><h2>Trading house ${esc(name)}</h2><span class="sub2">Home seat ${C[st.home].n} · ${CIVIC[i][1]}${st.player && st.player.origin && ORIGINS[st.player.origin] ? ` · ${ORIGINS[st.player.origin].n}` : ''}</span></div></div>` +
+      roadHTML(r, i) +
+      `<p class="note">${next ? `Next office: <b>${next[1]}</b> from <b>${fmt(next[0])}</b> reputation, you have <b>${fmt(r)}</b>.` : `You have reached the highest office, with <b>${fmt(r)}</b> reputation.`} <span>Reputation comes from sales here, especially of goods the town needs, and from council commissions, workshops, buildings and victories over pirates.</span></p>` +
+      `<div class="priv"><div><i></i><b>Citizenship</b>in ${C[st.home].n} buy 5 % cheaper, sell 5 % dearer</div><div><i></i><b>${PERKS[st.home].t}</b>${PERKS[st.home].d}</div></div>` +
+      (st.loc !== st.home ? `<p class="small awayline">${st.loc ? `You are in ${C[st.loc].n}.` : 'You are at sea.'} What you can only do on the spot, such as storing goods or taking commissions, is done in ${C[st.home].n}.${hasSteward() ? ' Your steward trades for you from afar.' : ''}</p>` : '') +
+      `<h2 class="fh">Your home seat</h2><div class="hindex">${homeTiles(i).map(tileHTML).join('')}</div>`;
+    renderHSheet();
   }
+
+  // Ein Eintrag der Flotte: Schiff als Holzschnitt, Name, Kapitän mit Strichliste, Route mit dem aktuellen Hafen unterstrichen
+  function routeLineHTML(cv) {
+    const at = cv.sail ? cv.sail.to : cv.loc;
+    return cv.route.map(c => c === at ? `<u>${C[c].n}</u>` : C[c].n).join(' – ');
+  }
+  function fleetEntry(cv) {
+    const k = capOf(cv), sh = cv.fleet[0] || {type:'kogge', name:'–'}, kinds = {};
+    cv.fleet.forEach(x => { kinds[x.type] = (kinds[x.type] || 0) + 1; });
+    const what = Object.entries(kinds).map(([t, n]) => `${n} ${SHIPS[t].n}${n > 1 ? (SHIPS[t].n.endsWith('e') ? 'n' : 'e') : ''}`).join(', ');
+    return `<button class="fentry" type="button" data-hs-open="cv" data-id="${cv.id}">${shipInk(sh.type, houseCol())}<span class="fe"><b>“${esc(sh.name)}” <small>${what}</small></b>` +
+      (k ? `<span class="fcap">${avatarSVG(capAv(k), 't')}<span>Captain ${esc(k.name)}</span></span><span class="tally">Trade ${tally(k.trade)} · Combat ${tally(k.fight)}</span>` : '') +
+      `<span class="rt">${routeLineHTML(cv)}<i class="${st.pendingFight === cv.id ? 'alarm' : ''}">${cvStatus(cv)}</i></span>` +
+      (cv.report && !cv.report.seen ? `<em class="rep${cv.report.warn ? ' warn' : ''}">Report</em>` : '') + `</span></button>`;
+  }
+  function ownEntry() {
+    if (!st.fleet.length) return '';
+    const sh = st.fleet[0], kinds = {}, k = (st.captains || []).find(x => x.id === st.capOwn);
+    st.fleet.forEach(x => { kinds[x.type] = (kinds[x.type] || 0) + 1; });
+    const what = Object.entries(kinds).map(([t, n]) => `${n} ${SHIPS[t].n}${n > 1 ? (SHIPS[t].n.endsWith('e') ? 'n' : 'e') : ''}`).join(', ');
+    return `<button class="fentry own" type="button" data-hs-open="own">${shipInk(sh.type, houseCol())}<span class="fe"><b>“${esc(sh.name)}” <small>${what}</small></b>` +
+      `<span class="fcap">${k ? `${avatarSVG(capAv(k), 't')}<span>Captain ${esc(k.name)}</span>` : `${avatarSVG(st.player && st.player.avatar, 't')}<span>Your own convoy</span>`}</span>` +
+      `<span class="rt">${st.loc ? `lies in ${C[st.loc].n}` : st.sail ? `at sea bound for ${C[st.sail.to].n}` : ''}<i>${used()} of ${CAP} lasts loaded</i></span></span></button>`;
+  }
+  function renderHouse() {
+    const box = $('#housecard'), cvs = st.convoys || [], caps = st.captains || [], home = st.loc === st.home && !st.focus;
+    const show = st.home;
+    box.hidden = !show;
+    if (!show) { renderHSheet(); return; }
+    const idle = caps.filter(k => !k.cv && k.id !== st.capOwn);
+    let h = `<h2 class="fh">Your fleet <small>${cvs.length ? `${cvs.length} ${cvs.length === 1 ? 'convoy' : 'convoys'} under captains · ` : ''}${fmt(capWages() + cvs.reduce((x, c) => x + cvCost(c), 0))} G a day</small></h2>`;
+    h += ownEntry() + cvs.map(fleetEntry).join('');
+    if (!routesOpen()) h += `<p class="small fnote">Convoys of your own on trade routes open up with your first branch (from ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} guilders, in the Town tab of another port). Captains lead them and trade there themselves.</p>`;
+    else if (st.loc && !st.focus && (st.fleet.length || (st.loc === st.home && dockOf().length)) && cvs.length < MAX_CONVOYS)
+      h += `<button class="stamp" type="button" data-h="rnew"${idle.length ? '' : ' disabled'}>Form a new convoy</button>${idle.length ? '' : `<span class="small fnote">For that you need a free captain from the skippers’ house${home ? '' : ` in ${C[st.home].n}`}.</span>`}`;
+    const tiles = [];
+    if (dockOf().length || buildsOf().length) tiles.push({k:'dock', title:`Moorings`, meta:`${dockOf().length} ${dockOf().length === 1 ? 'ship' : 'ships'}${buildsOf().length ? ` · ${buildsOf().length} being built` : ''}`});
+    tiles.push({k:'caps', title:'Captains', meta:caps.length ? `${caps.length} of ${MAX_CAPTAINS}${idle.length ? ` · ${idle.length} free` : ''}` : 'none yet'});
+    tiles.push({k:'tavern', title:'Skippers’ house', meta:home ? '3 applicants' : `in ${C[st.home].n}`, lock:!home});
+    h += `<div class="hindex">${tiles.map(tileHTML).join('')}</div>`;
+    box.innerHTML = h;
+    renderHSheet();
+  }
+  function capsHTML() {
+    const caps = st.captains || [];
+    if (!caps.length) return `<p class="small">No captains yet. You hire them at the skippers’ house in ${C[st.home].n}.</p>`;
+    return caps.map(k => `<div class="yrow kap">${avatarSVG(capAv(k), 'rvf')}<span class="yl"><b>${esc(k.name)}</b>` +
+      `<span class="tally">${SKILL_N.nav} ${tally(k.nav)} · ${SKILL_N.trade} ${tally(k.trade)} · ${SKILL_N.fight} ${tally(k.fight)}</span>` +
+      `<span class="small">${k.cv ? `leads the ${esc(cvLabel(cvById(k.cv) || {fleet:[]}))}` : st.capOwn === k.id ? 'leads your convoy' : 'unassigned'} · ${k.wage} G a day · ${k.xp} voyages</span></span>` +
+      (k.cv ? '' : `<span class="ybtns"><button class="ybtn${st.capOwn === k.id ? ' on' : ''}" type="button" data-h="aboard" data-id="${k.id}"${st.focus || st.sail ? ' disabled' : ''}>${st.capOwn === k.id ? 'Relieve captain' : 'Lead your convoy'}</button><button class="ybtn" type="button" data-h="fire" data-id="${k.id}"${st.capOwn === k.id && st.sail ? ' disabled' : ''}>Dismiss</button></span>`) + `</div>`).join('');
+  }
+  function tavernHTML() {
+    const caps = st.captains || [];
+    if (st.loc !== st.home || st.focus) return `<p class="small">The skippers’ house is in ${C[st.home].n}. Sail there to hire captains.</p>`;
+    return `<p class="small">New captains every month. Seamanship makes you faster, trade makes buying and selling smarter, combat enlarges your target zone and strengthens boarding when you take over their fight or they lead your own convoy. Every convoy needs a captain, yours too.</p>` +
+      tavern().map(k => `<div class="yrow kap">${avatarSVG(capAv(k), 'rvf')}<span class="yl"><b>${esc(k.name)}</b><span class="tally">${SKILL_N.nav} ${tally(k.nav)} · ${SKILL_N.trade} ${tally(k.trade)} · ${SKILL_N.fight} ${tally(k.fight)}</span><span class="small">Wages ${k.wage} G a day</span></span>` +
+        `<span class="ybtns"><button class="ybtn" type="button" data-h="hire" data-id="${k.id}"${st.money >= k.fee && caps.length < MAX_CAPTAINS ? '' : ' disabled'}>${caps.length >= MAX_CAPTAINS ? 'Enough captains' : `Hire · ${fmt(k.fee)} G`}</button></span></div>`).join('');
+  }
+
+  // Seekarte mit der Route eines Verbands: Häfen nummeriert, der Verband als kleines Schiff
+  function routeChart(cv) {
+    const ports = cv.route, pts = [];
+    for (let k = 0; k < ports.length; k++) { const a = ports[k], b = ports[(k + 1) % ports.length]; if (cv.tpl === 'pendel' && k === ports.length - 1) break; const r = route(a, b, st.day); pts.push([NODES[r.segs[0].a]].concat(r.segs.map(sg => NODES[sg.b]))); }
+    const all = pts.flat().concat(ports.map(c => NODES[c]));
+    let x0 = Math.min(...all.map(p => p[0])) - 34, x1 = Math.max(...all.map(p => p[0])) + 34, y0 = Math.min(...all.map(p => p[1])) - 26, y1 = Math.max(...all.map(p => p[1])) + 26;
+    if (x1 - x0 < 230) { const c = (x0 + x1) / 2; x0 = c - 115; x1 = c + 115; }
+    const ar = 1.7; if ((x1 - x0) / (y1 - y0) < ar) { const w = (y1 - y0) * ar, c = (x0 + x1) / 2; x0 = c - w / 2; x1 = c + w / 2; } else { const hh = (x1 - x0) / ar, c = (y0 + y1) / 2; y0 = c - hh / 2; y1 = c + hh / 2; }
+    let h = `<svg class="rchart" viewBox="${x0.toFixed(1)} ${y0.toFixed(1)} ${(x1 - x0).toFixed(1)} ${(y1 - y0).toFixed(1)}" role="img" aria-label="Route: ${ports.map(c => C[c].n).join(', ')}"><rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" fill="var(--sea)"/>` +
+      LAND.map(poly => `<polygon class="land" points="${pts2(poly)}"/>`).join('') +
+      pts.map(p => `<polyline class="rroute" points="${p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ')}"/>`).join('');
+    CITIES.forEach(c => { if (ports.includes(c.id)) return; const [x, y] = NODES[c.id]; if (x < x0 || x > x1 || y < y0 || y > y1) return; h += `<circle class="rdot" cx="${x}" cy="${y}" r="2.6"/><text class="rlab" x="${x + c.lx * .8}" y="${y + c.ly * .8}" text-anchor="${c.la}">${c.n}</text>`; });
+    ports.forEach((c, k) => { const [x, y] = NODES[c], cc = C[c], CC = CITIES.find(q => q.id === c); h += `<circle class="rport" cx="${x}" cy="${y}" r="6.5"/><text class="rnum" x="${x}" y="${y + 3.2}">${k + 1}</text><text class="rlab b" x="${x + CC.lx}" y="${y + CC.ly}" text-anchor="${CC.la}">${cc.n}</text>`; });
+    const [sx, sy] = posOf(cv.loc, cv.sail);
+    h += `<g transform="translate(${(sx + 7).toFixed(1)},${(sy - 6).toFixed(1)}) scale(.8)"><path d="M-7,2 H7 L5,6 H-5 Z" fill="#efe1c0" stroke="#3a2a1c" stroke-width="1"/><path d="M0,2 V-12" stroke="#3a2a1c" stroke-width="1.2"/><path d="M-5,-10 Q0,-11 5,-10 L5.5,-1 Q0,0 -5.5,-1 Z" fill="${houseCol()}" stroke="#3a2a1c" stroke-width=".9"/></g></svg>`;
+    return h;
+  }
+  const pts2 = arr => arr.map(([lo, la]) => P(lo, la).map(v => v.toFixed(1)).join(',')).join(' ');
+
+  // Regeln je Hafen: Aktion, Menge und Preisgrenze. Alte Regeln sind nur ein Wort ('buy'), neue ein Objekt {a, q, p}.
+  const rl = v => v == null ? null : typeof v === 'string' ? {a:v} : v;
+  const QTY = [0, 5, 10, 20, 30, 50];
+  const ruleLimits = (a, gid) => { const b = G[gid].b; return a === 'buy' ? [0.8, 0.9, 1, 1.1, 1.25].map(f => Math.round(b * f)) : a === 'sell' ? [0.9, 1.1, 1.25, 1.4, 1.6].map(f => Math.round(b * f)) : []; };
+  function rulesHTML(cv) {
+    const at = cv.sail ? null : cv.loc, ed = ui.rl && ui.rl.id === cv.id ? ui.rl : null;
+    return cv.route.map((c, k) => {
+      const R0 = (cv.rules || {})[c] || {}, hasK = !!storeAt(c), ids = GOODS.map(g => g.id).filter(g => R0[g]);
+      let h = `<h3 class="rph">${k + 1}. ${C[c].n}${hasK ? ' ⌂' : ''}${c === at ? ' <small>the convoy lies here</small>' : ''}</h3>`;
+      ids.forEach(gid => {
+        const r = rl(R0[gid]), on = ed && ed.c === c && ed.g === gid;
+        h += `<button class="rrow${on ? ' on' : ''}" type="button" data-h="rl" data-id="${cv.id}" data-c="${c}" data-g="${gid}">${icon(gid)}<span><em class="ra ra-${r.a}">${RULE_N[r.a]}</em> ${G[gid].n}${r.q ? ` · up to ${r.q} lasts` : r.a === 'sell' || r.a === 'put' ? ' · everything' : ''}</span>` +
+          `<span class="rp">${r.p ? (r.a === 'buy' ? `at most ${fmt(r.p)} G` : `at least ${fmt(r.p)} G`) : r.a === 'buy' ? 'when it pays' : r.a === 'sell' ? 'not below 80 %' : ''}</span></button>`;
+        if (on) {
+          const acts = hasK ? ['buy', 'sell', 'put', 'take'] : ['buy', 'sell'], lims = ruleLimits(r.a, gid);
+          h += `<div class="redit">` +
+            `<div class="chipset">${acts.map(a => `<button type="button" data-h="rla" data-id="${cv.id}" data-c="${c}" data-g="${gid}" data-v="${a}" aria-pressed="${r.a === a}">${RULE_N[a]}</button>`).join('')}<button type="button" data-h="rla" data-id="${cv.id}" data-c="${c}" data-g="${gid}" data-v="">Remove</button></div>` +
+            `<span class="flabel">Quantity per call</span><div class="chipset">${QTY.map(q => `<button type="button" data-h="rlq" data-id="${cv.id}" data-c="${c}" data-g="${gid}" data-v="${q}" aria-pressed="${(r.q || 0) === q}">${q ? `${q} lasts` : r.a === 'buy' ? 'as much as pays' : 'alles'}</button>`).join('')}</div>` +
+            (lims.length ? `<span class="flabel">${r.a === 'buy' ? 'Buy up to at most' : 'Sell only from'} <small>(base price ${G[gid].b} G)</small></span><div class="chipset">` +
+              `<button type="button" data-h="rlp" data-id="${cv.id}" data-c="${c}" data-g="${gid}" data-v="0" aria-pressed="${!r.p}">${r.a === 'buy' ? 'Captain decides' : 'not below 80 % of purchase'}</button>` +
+              lims.map(p => `<button type="button" data-h="rlp" data-id="${cv.id}" data-c="${c}" data-g="${gid}" data-v="${p}" aria-pressed="${r.p === p}">${fmt(p)} G</button>`).join('') + `</div>` : '') +
+            `<span class="small">${r.a === 'buy' ? (r.p ? `He buys as long as a last costs at most ${fmt(r.p)} guilders, even without prospect of profit.` : 'Without a price limit he only buys as long as it pays against the next selling port.') : r.a === 'sell' ? (r.p ? `He sells as long as a last brings at least ${fmt(r.p)} guilders.` : 'Without a price limit he does not sell below 80 % of the purchase price, after three ports below that too.') : 'Without a quantity he moves everything that fits.'}</span></div>`;
+        }
+      });
+      const adding = ui.rla && ui.rla.id === cv.id && ui.rla.c === c;
+      h += adding ? `<div class="chipset radd">${GOODS.filter(g => !R0[g.id]).map(g => `<button type="button" data-h="rlnew" data-id="${cv.id}" data-c="${c}" data-g="${g.id}">${icon(g.id)}${g.n}</button>`).join('')}</div>`
+        : `<button class="ybtn radd" type="button" data-h="rladd" data-id="${cv.id}" data-c="${c}">+ Goods</button>`;
+      return h;
+    }).join('');
+  }
+  function ruleSet(cv, c, gid, f) {
+    cv.rules = cv.rules || {}; const R0 = cv.rules[c] || (cv.rules[c] = {});
+    const r = f(Object.assign({}, rl(R0[gid]) || {a:'buy'}));
+    if (!r || !r.a) delete R0[gid];
+    else R0[gid] = !r.q && !r.p ? r.a : {a:r.a, q:r.q || 0, p:r.p || 0};
+    if (cv.mode !== 'regeln') cv.mode = 'regeln';
+  }
+  function cvSheetHTML(cv) {
+    const k = capOf(cv), here = canMerge(cv), sh = cv.fleet[0] || {name:'–'};
+    const goods = GOODS.filter(g => cv.cargo[g.id]).map(g => `<span class="chip">${icon(g.id)}${cv.cargo[g.id].q}</span>`).join('');
+    let h = (k ? `<div class="fcap big">${avatarSVG(capAv(k), 'rvf')}<span>Captain ${esc(k.name)}</span><span class="tally">Trade ${tally(k.trade)} · Combat ${tally(k.fight)}</span></div>` : '') +
+      `<div class="rframe">${routeChart(cv)}</div>`;
+    if (cv.report && !cv.report.seen) h += reportHTML(cv);
+    h += `<p class="small">${cvUsed(cv)} of ${cvCap(cv)} lasts · ${cv.crew} sailors · ${armsLine(cv)} · ${cvCost(cv)} G a day · ${cv.trips} voyages · Profit <span class="${cv.prof >= 0 ? 'pos' : 'neg'}">${cv.prof >= 0 ? '+' : '−'}${fmt(Math.abs(cv.prof))} G</span></p>` +
+      (goods ? `<div class="chips">${goods}</div>` : '') +
+      `<div class="fleetline">${cv.fleet.map(x => `<span class="shipchip${x.hull < 40 ? ' low' : ''}">${esc(x.name)} <small>${SHIPS[x.type].n} · ${x.hull} %</small></span>`).join('')}</div>` +
+      (cv.loc === st.home && !cv.sail && st.focus !== cv.id && (cv.fleet.length > 1 || (dockOf().length && cv.fleet.length < MAX_FLEET)) ? `<div class="ybtns wrapb">` +
+        (cv.fleet.length > 1 ? cv.fleet.map(x => `<button class="ybtn" type="button" data-h="cvdock" data-id="${cv.id}" data-sh="${x.id}"${shipsHome() < MAX_DOCK && cvUsed(cv) <= cvCap(cv) - shipCap(x) ? '' : ' disabled'}>“${esc(x.name)}” to the moorings</button>`).join('') : '') +
+        (cv.fleet.length < MAX_FLEET ? dockOf().map(x => `<button class="ybtn" type="button" data-h="dockcv" data-id="${cv.id}" data-sh="${x.id}">+ “${esc(x.name)}”</button>`).join('') : '') + `</div>` : '');
+    if (ui.rw && ui.rw.id === cv.id) h += rwHTML();
+    else {
+      h += `<h3 class="bh">${cv.tpl === 'pendel' ? 'Shuttle' : 'Circuit'}${cv.mode === 'regeln' ? ' by your rules' : ', the captain trades freely'}</h3>`;
+      if (cv.mode === 'regeln') h += rulesHTML(cv);
+      else h += `<p class="small">The captain buys and sells by himself, the better his trade, the smarter. With your own rules you decide for each port what he buys and sells, how much and at what price.</p>` +
+        `<button class="ybtn" type="button" data-h="tomode" data-id="${cv.id}">Set your own rules</button>`;
+    }
+    if (st.focus !== cv.id && !(ui.rw && ui.rw.id === cv.id)) h += `<div class="ybtns wrapb cvacts"><button class="ybtn" type="button" data-h="redit" data-id="${cv.id}">Change route</button>` +
+      `<button class="ybtn${ui.oEdit === cv.id ? ' on' : ''}" type="button" data-h="orders" data-id="${cv.id}">Orders</button>` +
+      `<button class="ybtn" type="button" data-h="hold" data-id="${cv.id}">${cv.hold ? 'Sail on' : 'Halt'}</button>` +
+      (here ? `<button class="ybtn" type="button" data-h="merge" data-id="${cv.id}">Into your convoy</button>` : '') + `</div>`;
+    if (ui.oEdit === cv.id) h += ordersHTML(cv);
+    return {title:`“${esc(sh.name)}”`, sub:`${cv.fleet.length} ${cv.fleet.length === 1 ? 'ship' : 'ships'} · ${cv.tpl === 'pendel' ? 'Shuttle' : 'Circuit'} · ${cvStatus(cv)}`, body:h};
+  }
+
+  // Das Blatt: eingelegt über dem Haus, mit Lesebändchen; Zurück führt ins Haus
+  const HS_HOME = ['kontor', 'works', 'council', 'hansetag', 'race', 'gv', 'biz'];
+  function hsContent() {
+    const s = ui.hs; if (!s) return null;
+    if (HS_HOME.includes(s.k)) { const t = homeTiles(civicIdx(st.repute || 0)).find(x => x.k === s.k); return t && {title:t.head, sub:t.meta, body:t.body}; }
+    if (s.k === 'cv') { const cv = cvById(s.id); return cv && cvSheetHTML(cv); }
+    if (s.k === 'rw') return ui.rw && !ui.rw.id ? {title:'New convoy', sub:`from ${C[st.loc].n}`, body:rwHTML()} : null;
+    if (s.k === 'dock') return {title:`Moorings in ${C[st.home].n}`, sub:`${dockOf().length} ${dockOf().length === 1 ? 'ship' : 'ships'}${buildsOf().length ? ` · ${buildsOf().length} being built` : ''}`, body:dockHTML()};
+    if (s.k === 'caps') return {title:'Your captains', sub:`${(st.captains || []).length} of ${MAX_CAPTAINS}`, body:capsHTML()};
+    if (s.k === 'tavern') return {title:'Skippers’ house', sub:C[st.home].n, body:tavernHTML()};
+    return null;
+  }
+  function renderHSheet() {
+    const box = $('#hsheet'), scrim = $('#hscrim');
+    if (!box) return;
+    const c = st.home ? hsContent() : null;
+    if (!c) { if (ui.hs && !(ui.hs.k === 'rw' && ui.rw)) ui.hs = null; box.hidden = true; scrim.hidden = true; box.innerHTML = ''; return; }
+    const keep = box.hidden ? 0 : box.scrollTop;
+    box.hidden = false; scrim.hidden = false;
+    box.innerHTML = `<div class="in"><button class="hsback" type="button" data-hs="close">‹ House</button><h2 id="hs-title">${c.title}</h2>${c.sub ? `<div class="hsub">${c.sub}</div>` : ''}<div class="hsbody">${c.body}</div></div>`;
+    box.scrollTop = keep;
+  }
+  function hsOpen(k, id) {
+    if (k === 'own') { ui.hs = null; renderHSheet(); return setTab('werft'); }
+    ui.hs = {k, id}; ui.rl = null; ui.rla = null;
+    if (k === 'cv') { const cv = cvById(id); if (cv && cv.report && !cv.report.seen) {} }
+    renderHSheet(); $('#hsheet').scrollTop = 0;
+  }
+  function hsClose() { ui.hs = null; ui.rl = null; ui.rla = null; if (ui.rw) ui.rw = null; renderHouse(); renderHome(); }
   function kontorHTML(ci) {
     const home = st.loc === st.home, K = st.kontor, nk = KONTOR[K ? K.lvl + 1 : 1];
     let h = `<div class="kontor"><h3>Kontor in ${C[st.home].n}</h3>` + (Object.keys(st.branches || {}).length ? '' : `<p class="small kexp">The Kontor is your store in your home seat. A branch is a store in another town (from ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} guilders); only a branch opens up trade routes and building.</p>`);
@@ -10946,7 +12119,7 @@ em.rep.warn{background:#b5523a}
     st.fleet.forEach((sh, i) => {
       const T = SHIPS[sh.type], per = repairPrice() * T.hullK, miss = 100 - sh.hull, pct = Math.min(miss, Math.floor(Math.max(0, st.money) / per));
       if (miss) { damaged++; allCost += Math.round(miss * per); }
-      h += `<div class="yrow"><span class="yl"><b>${i === 0 ? '⚑ ' : ''}${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} lasts · hull ${sh.hull} %</span>` +
+      h += `<div class="yrow yship">${shipInk(sh.type, houseCol())}<span class="yl"><b>${i === 0 ? '⚑ ' : ''}${esc(sh.name)}</b><span class="small">${T.n} · ${shipCap(sh)} lasts · hull ${sh.hull} %</span>` +
         `<span class="hbar${sh.hull < 40 ? ' low' : ''}"><i style="width:${sh.hull}%"></i></span></span><span class="ybtns">` +
         (miss ? `<button class="ybtn" type="button" data-yard="repair" data-n="${i}"${pct ? '' : ' disabled'}>${pct >= miss ? 'Repair' : `+${pct} %`} · ${fmt(Math.round(pct * per))} G</button>` : '') +
         (st.fleet.length > 1 && st.loc === st.home ? `<button class="ybtn" type="button" data-yard="todock" data-n="${i}"${canSellShip(i) && shipsHome() < MAX_DOCK ? '' : ' disabled'}>Moorings</button>` : '') +
@@ -10967,7 +12140,7 @@ em.rep.warn{background:#b5523a}
       types.forEach(tp => {
         const T = SHIPS[tp];
         const why = buildWhy(tp);
-        ns += `<div class="yrow"><span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} days to build</b><span class="small">${T.cap} lasts · speed ${Math.round(T.spd * 100)} % · ${T.crewMin} to ${T.crewMax} sailors · ${T.arm} weapon places · ${T.upkeep} G a day</span><span class="small">${T.d}</span></span>` +
+        ns += `<div class="yrow yship">${shipInk(tp, houseCol())}<span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} days to build</b><span class="small">${T.cap} lasts · speed ${Math.round(T.spd * 100)} % · ${T.crewMin} to ${T.crewMax} sailors · ${T.arm} weapon slots · ${T.upkeep} G a day</span><span class="small">${T.d}</span></span>` +
           `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `Order · ${fmt(T.price)} G`}</button>${loanBuildBtn(tp, why)}</span></div>`;
       });
       h += det('newships', `Build orders`, ns, types.map(tp => SHIPS[tp].n).join(', '), false);
@@ -10996,53 +12169,6 @@ em.rep.warn{background:#b5523a}
     if (cv.hold) return `Halted in ${C[cv.loc].n}`;
     if (cv.stuck) return `Stuck in ${C[cv.loc].n}`;
     return `In ${C[cv.loc].n}, ${cvLeaveText(cv)}${nx ? ` for ${C[nx].n}` : ''}`;
-  }
-  function renderHouse() {
-    const box = $('#housecard'), cvs = st.convoys || [], caps = st.captains || [], home = st.loc === st.home && !st.focus;
-    const show = cvs.length || caps.length || home || dockOf().length || buildsOf().length;
-    box.hidden = !show;
-    if (!show) return;
-    const idle = caps.filter(k => !k.cv && k.id !== st.capOwn);
-    let h = `<h2>Trading house</h2><span class="sub2">${cvs.length ? `${cvs.length} ${cvs.length === 1 ? 'convoy' : 'convoys'} under captains · ` : ''}Costs ${fmt(capWages() + cvs.reduce((x, c) => x + cvCost(c), 0))} guilders a day</span>`;
-    if (dockOf().length || buildsOf().length) h += det('dock', `Moorings in ${C[st.home].n}`, dockHTML(), `${dockOf().length} ${dockOf().length === 1 ? 'ship' : 'ships'}${buildsOf().length ? ` · ${buildsOf().length} being built` : ''}`, true);
-    if (!cvs.length) h += `<p class="small">Captains lead further convoys on fixed routes and trade there on their own. Their price reports add to your knowledge of the markets.${caps.length ? '' : ` You hire captains at the skippers' house of ${C[st.home].n}.`}</p>`;
-    cvs.forEach(cv => {
-      const k = capOf(cv), here = canMerge(cv);
-      const goods = GOODS.filter(g => cv.cargo[g.id]).map(g => `<span class="chip">${icon(g.id)}${cv.cargo[g.id].q}</span>`).join('');
-      const cvOpen = ui.det['cv' + cv.id] == null ? false : ui.det['cv' + cv.id];
-      h += `<details class="cv" data-det="cv${cv.id}"${cvOpen || (ui.rw && ui.rw.id === cv.id) || ui.oEdit === cv.id ? ' open' : ''}><summary><span class="cvh"><b>${esc(cvLabel(cv))}</b><span class="small">Captain ${k ? esc(k.name) : '–'}</span></span>` +
-        `<span class="cvs${st.pendingFight === cv.id ? ' alarm' : ''}">${cvStatus(cv)}${cv.report && !cv.report.seen ? ` <em class="rep${cv.report.warn ? ' warn' : ''}">Report</em>` : ''}</span><i class="chev" aria-hidden="true"></i></summary>` +
-        `<div class="fleetline">${cv.fleet.map(sh => `<span class="shipchip${sh.hull < 40 ? ' low' : ''}">${esc(sh.name)} <small>${SHIPS[sh.type].n} · ${sh.hull} %</small></span>`).join('')}</div>` +
-        (cv.loc === st.home && !cv.sail && st.focus !== cv.id && (cv.fleet.length > 1 || (dockOf().length && cv.fleet.length < MAX_FLEET)) ? `<div class="ybtns wrapb">` +
-          (cv.fleet.length > 1 ? cv.fleet.map(sh => `<button class="ybtn" type="button" data-h="cvdock" data-id="${cv.id}" data-sh="${sh.id}"${shipsHome() < MAX_DOCK && cvUsed(cv) <= cvCap(cv) - shipCap(sh) ? '' : ' disabled'}>“${esc(sh.name)}” to the moorings</button>`).join('') : '') +
-          (cv.fleet.length < MAX_FLEET ? dockOf().map(sh => `<button class="ybtn" type="button" data-h="dockcv" data-id="${cv.id}" data-sh="${sh.id}">+ “${esc(sh.name)}”</button>`).join('') : '') + `</div>` : '') +
-        `<span class="small">${cvUsed(cv)} / ${cvCap(cv)} lasts · ${cv.crew} sailors · ${armsLine(cv)} · ${cvCost(cv)} G a day</span>` +
-        (goods ? `<div class="chips">${goods}</div>` : '') +
-        `<span class="small">Route ${cv.route.map(c => C[c].n).join(' → ')} · ${cv.trips} voyages · profit <span class="${cv.prof >= 0 ? 'pos' : 'neg'}">${cv.prof >= 0 ? '+' : '−'}${fmt(Math.abs(cv.prof))} G</span></span>`;
-      if (cv.report && !cv.report.seen) h += reportHTML(cv);
-      h += `<span class="small">${cv.tpl === 'pendel' ? 'Shuttle' : 'Circuit'}${cv.mode === 'regeln' ? ' · by your rules' : ' · captain trades freely'}</span>`;
-      if (st.focus !== cv.id) h += `<div class="ybtns wrapb"><button class="ybtn${ui.rw && ui.rw.id === cv.id ? ' on' : ''}" type="button" data-h="redit" data-id="${cv.id}">Route and goods</button>` +
-        `<button class="ybtn${ui.oEdit === cv.id ? ' on' : ''}" type="button" data-h="orders" data-id="${cv.id}">Orders</button>` +
-        `<button class="ybtn" type="button" data-h="hold" data-id="${cv.id}">${cv.hold ? 'Sail on' : 'Halt'}</button>` +
-        (here ? `<button class="ybtn" type="button" data-h="merge" data-id="${cv.id}">Into your convoy</button>` : '') + `</div>`;
-      if (ui.rw && ui.rw.id === cv.id) h += rwHTML();
-      if (ui.oEdit === cv.id) h += ordersHTML(cv);
-      h += `</details>`;
-    });
-    if (!routesOpen()) h += `<p class="small">Trade routes with convoys of your own open up with your first branch (from ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} guilders, in the Town tab of another port).</p>`;
-    else if (st.loc && !st.focus && (st.fleet.length || (st.loc === st.home && dockOf().length)) && cvs.length < MAX_CONVOYS) {
-      if (ui.rw && !ui.rw.id) h += rwHTML();
-      else h += `<button class="ybtn" type="button" data-h="rnew" style="margin-top:10px"${idle.length ? '' : ' disabled'}>New trade route</button>${idle.length ? '' : '<span class="small"> For that you need a free captain from the skippers\' house.</span>'}`;
-    }
-    if (caps.length) h += det('caps', 'Your captains', caps.map(k => `<div class="yrow"><span class="yl"><b>${esc(k.name)}</b>` +
-      `<span class="small">${SKILL_N.nav} ${stars(k.nav)} · ${SKILL_N.trade} ${stars(k.trade)} · ${SKILL_N.fight} ${stars(k.fight)}</span>` +
-      `<span class="small">${k.cv ? `leads the ${esc(cvLabel(cvById(k.cv) || {fleet:[]}))}` : st.capOwn === k.id ? 'leads your convoy' : 'unassigned'} · ${k.wage} G a day · ${k.xp} voyages</span></span>` +
-      (k.cv ? '' : `<span class="ybtns"><button class="ybtn${st.capOwn === k.id ? ' on' : ''}" type="button" data-h="aboard" data-id="${k.id}"${st.focus || st.sail ? ' disabled' : ''}>${st.capOwn === k.id ? 'Relieve captain' : 'Lead your convoy'}</button><button class="ybtn" type="button" data-h="fire" data-id="${k.id}"${st.capOwn === k.id && st.sail ? ' disabled' : ''}>Dismiss</button></span>`) + `</div>`).join(''), `${caps.length} of ${MAX_CAPTAINS}`, false);
-    if (home) {
-      h += det('tavern', `Skippers’ house`, `<span class="small">New captains every month. Seamanship makes the convoy faster, Trade makes you shrewder at buying and selling, Combat enlarges your target zone and strengthens boarding when you take over their fight or they lead your own convoy. Every convoy needs a captain, yours too.</span>` + tavern().map(k => `<div class="yrow"><span class="yl"><b>${esc(k.name)}</b><span class="small">${SKILL_N.nav} ${stars(k.nav)} · ${SKILL_N.trade} ${stars(k.trade)} · ${SKILL_N.fight} ${stars(k.fight)}</span><span class="small">Wages ${k.wage} G a day</span></span>` +
-        `<span class="ybtns"><button class="ybtn" type="button" data-h="hire" data-id="${k.id}"${st.money >= k.fee && caps.length < MAX_CAPTAINS ? '' : ' disabled'}>${caps.length >= MAX_CAPTAINS ? 'Enough captains' : `Hire · ${fmt(k.fee)} G`}</button></span></div>`).join(''), '3 applicants', !caps.length);
-    }
-    box.innerHTML = h;
   }
   function renderAlarm() {
     const box = $('#alarm'), cv = st.pendingFight && !st.focus ? cvById(st.pendingFight) : null;
@@ -11309,7 +12435,7 @@ em.rep.warn{background:#b5523a}
     const W = Math.round(r.width), H = Math.round(r.height), dm = Math.min(2, window.devicePixelRatio || 1), dpr = W * dm > 3200 ? Math.max(1, 3200 / W) : dm;
     const plots = home ? cityPlots() : null, season = seasonOf(st.day), winter = season === 'winter', branch = !home && !!(st.branches || {})[cid];
     const ships = (st.loc === cid ? st.fleet.map(sh => ({type:sh.type})) : []).concat((st.convoys || []).filter(c => c.loc === cid).map(c => ({type:((c.fleet || [])[0] || {}).type || 'kogge'})));
-    const pa = (st.player && st.player.avatar) || {}, house = {hc:HM_CITY[pa.col || 0] || HM_CITY[0], mark:AV.marks[pa.mark || 0] || AV.marks[0]};
+    const pa = (st.player && st.player.avatar) || {}, house = {hc:HM_CITY[pa.col || 0] || HM_CITY[0], mark:null};
     const sig = [cid, W, H, dpr, season, JSON.stringify(plots), branch, house.hc, pa.mark || 0].join('|'), full = sig + '|' + ships.map(q => q.type).join(',');
     if (!tgt && full === citySig && force !== true) return;
     const arrive = !tgt && st.loc === cid && cityLocSeen != null && cityLocSeen !== cid && ships.length > 0;
@@ -11393,9 +12519,10 @@ em.rep.warn{background:#b5523a}
     // Später
     const later = [];
     L.forEach(e => { if (!e) return;
-      if (e.k === 'haus' && e.up && e.up.lock && e.state !== 'job') later.push([e.up.name, e.up.lock]);
-      else if (e.k !== 'haus' && e.state === 'later' && !(e.k[0] === 'w' && later.some(x => x[2]))) later.push([e.name, e.why.replace(/^Möglich /, ''), e.k[0] === 'w']); });
-    if (later.length) h += `<h3 class="bh">Later</h3><ul class="blater">` + later.map(([n, w]) => `<li><span>${n}</span><span class="small">${w}</span></li>`).join('') + `</ul>`;
+      if (e.k === 'haus' && e.up && e.up.lock && e.state !== 'job') later.push([e.up.name, e.up.lock, false, Object.assign({}, e, {kind:'haus', icon:null, o:{lvl:(st.city.house || 1) + 1}})]);
+      else if (e.k !== 'haus' && e.state === 'later' && !(e.k[0] === 'w' && later.some(x => x[2]))) later.push([e.name, e.why.replace(/^Möglich /, ''), e.k[0] === 'w', e]); });
+    // ab Version 53 als Seite im Baubuch: kleine Zeichnung, Name, wann es möglich wird
+    if (later.length) h += `<h3 class="bh">Later</h3><ul class="blater">` + later.map(([n, w, , e]) => `<li>${e ? `<span class="lart">${isoArt(e.kind, Object.assign({w:64, g:e.icon, cid:st.home}, e.o || {}))}</span>` : '<span></span>'}<b>${n}</b><span class="small">${w}</span></li>`).join('') + `</ul>`;
     return h;
   }
   function pubTiles(home) {
@@ -11657,8 +12784,9 @@ em.rep.warn{background:#b5523a}
     const t = e.target.closest('[data-ammo]'); if (!t || !st.enc || st.enc.phase !== 'volley' || busy || aim.run || aim.done) return;
     st.enc.ammo = t.dataset.ammo; sizeAim(false); renderEnc(); renderActions(); renderScene();
   });
-  $('#homecard').addEventListener('click', e => {
+  function homeClick(e) {
     const t = e.target.closest('button'); if (!t) return;
+    if (t.dataset.hsOpen) return hsOpen(t.dataset.hsOpen, +t.dataset.id);
     if (t.dataset.k === 'build') return kontorBuild();
     if (t.dataset.work) return buildWork(t.dataset.work);
     if (t.dataset.vote) return castVote(t.dataset.vote, t.dataset.v);
@@ -11681,17 +12809,30 @@ em.rep.warn{background:#b5523a}
     if (t.dataset.vwx) return stewardCancel(+t.dataset.vwx);
     if (t.dataset.ksell) return doSellStore(t.dataset.ksell, +t.dataset.n, true);
     if (t.dataset.kmove) kontorMove(t.dataset.good, t.dataset.kmove, ui.kq === 'max' ? Infinity : (ui.kq || 10));
-  });
-  $('#housecard').addEventListener('click', e => {
+  }
+  $('#homecard').addEventListener('click', homeClick);
+  function houseClick(e) {
     const t = e.target.closest('button'); if (!t) return;
     const id = +t.dataset.id, h = t.dataset.h;
+    if (t.dataset.hsOpen) return hsOpen(t.dataset.hsOpen, id);
+    // Regeln je Hafen im Blatt des Verbands
+    if (h && h.startsWith('rl') || h === 'tomode') {
+      const cv = cvById(id); if (!cv) return; const c = t.dataset.c, g = t.dataset.g, v = t.dataset.v;
+      if (h === 'tomode') { cv.mode = 'regeln'; cv.rules = cv.rules || {}; ui.rla = {id, c:cv.route[0]}; return commit(); }
+      if (h === 'rl') { ui.rl = ui.rl && ui.rl.id === id && ui.rl.c === c && ui.rl.g === g ? null : {id, c, g}; ui.rla = null; return renderHouse(); }
+      if (h === 'rladd') { ui.rla = {id, c}; ui.rl = null; return renderHouse(); }
+      if (h === 'rlnew') { ruleSet(cv, c, g, r => ({a:'buy'})); ui.rla = null; ui.rl = {id, c, g}; return commit(); }
+      if (h === 'rla') { ruleSet(cv, c, g, r => v ? Object.assign(r, {a:v, p:v === r.a ? r.p : 0}) : null); if (!v) ui.rl = null; return commit(); }
+      if (h === 'rlq') { ruleSet(cv, c, g, r => Object.assign(r, {q:+v})); return commit(); }
+      if (h === 'rlp') { ruleSet(cv, c, g, r => Object.assign(r, {p:+v})); return commit(); }
+    }
     if (t.dataset.rsel) { const a = ui.rSel || (ui.rSel = []), i = a.indexOf(t.dataset.rsel); if (i >= 0) a.splice(i, 1); else if (a.length < 4) a.push(t.dataset.rsel); return renderHouse(); }
     if (t.dataset.gskip) { const cv = cvById(id); if (cv) { const i = cv.skip.indexOf(t.dataset.gskip); if (i >= 0) cv.skip.splice(i, 1); else cv.skip.push(t.dataset.gskip); commit(); } return; }
     if (t.dataset.fship) { const f = ui.form, v = +t.dataset.fship, i = f.ships.indexOf(v); if (i >= 0) f.ships.splice(i, 1); else f.ships.push(v); return renderHouse(); }
     if (t.dataset.fcap) { ui.form.cap = +t.dataset.fcap; return renderHouse(); }
     if (t.dataset.froute) { const f = ui.form, v = t.dataset.froute, i = f.route.indexOf(v); if (i >= 0) f.route.splice(i, 1); else if (f.route.length < 3) f.route.push(v); return renderHouse(); }
-    if (t.dataset.rw) return rwClick(t);
-    if (h === 'rnew') return rwStart(null);
+    if (t.dataset.rw) { const isNew = ui.hs && ui.hs.k === 'rw', n0 = (st.convoys || []).length; rwClick(t); if (isNew && !ui.rw && (st.convoys || []).length > n0) hsOpen('cv', st.convoys[st.convoys.length - 1].id); return; }
+    if (h === 'rnew') { rwStart(null); ui.hs = {k:'rw'}; return renderHSheet(); }
     if (h === 'redit') { if (ui.rw && ui.rw.id === id) { ui.rw = null; return renderHouse(); } return rwStart(id); }
     if (t.dataset.ord) return setOrder(id, t.dataset.ord);
     if (h === 'dockown') return dockToFleet(+t.dataset.sh);
@@ -11714,7 +12855,14 @@ em.rep.warn{background:#b5523a}
     if (h === 'hire') return hireCaptain(id);
     if (h === 'aboard') return toggleAboard(id);
     if (h === 'fire') return fireCaptain(id);
+  }
+  $('#housecard').addEventListener('click', houseClick);
+  $('#hsheet').addEventListener('click', e => {
+    const t = e.target.closest('button'); if (!t) return;
+    if (t.dataset.hs === 'close') return hsClose();
+    if (ui.hs && HS_HOME.includes(ui.hs.k)) homeClick(e); else houseClick(e);
   });
+  $('#hscrim').addEventListener('click', hsClose);
   $('#goals').addEventListener('click', questClick);
   $('#qsheet').addEventListener('click', questClick);
   $('#alarm').addEventListener('click', e => { if (e.target.closest('[data-act="takeover"]')) takeOver(); else if (e.target.closest('[data-act="capfight"]')) capFight(); });
@@ -11968,7 +13116,7 @@ em.rep.warn{background:#b5523a}
 
 
 <script>
-window.KK_BUILD = '7ce04f281f';
+window.KK_BUILD = '5c178ba305';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }

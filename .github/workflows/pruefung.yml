@@ -2,7 +2,8 @@
 # 1. Die gebauten Dateien (Englisch, Spanisch, Beta) passen zur deutschen Quelle, keine Übersetzung fehlt.
 # 2. Prüfmodus der Stadtbilder: nichts über Wasser, Mauern an Türmen, alles auf dem Boden, Viertel, Antippen.
 # 3. Seegefecht auf dem kleinsten iPhone (375 × 667): Spannen und Feuer, Enterkampf, Kapitän entscheiden, je Sprache.
-# 4. Rauchtest im iPhone-Format: Beta, Hauptseite, Probe-Fassung und App, je Deutsch, Englisch, Spanisch.
+# 4. Haus im Stil Kontorbuch (375 × 667): Kacheln, Blätter, Verband mit Regeln, Menge und Preisgrenze, je Sprache.
+# 5. Rauchtest im iPhone-Format: Beta, Hauptseite, Probe-Fassung und App, je Deutsch, Englisch, Spanisch.
 # Bildschirmfotos und Berichte liegen danach unter „Artifacts“ des Laufs (rauchtest).
 name: Prüfung
 
@@ -51,6 +52,9 @@ jobs:
       - name: Seegefecht (375 × 667)
         run: node tools/test/gefecht.js --bilder
 
+      - name: Haus und Verbände (375 × 667)
+        run: node tools/test/haus.js --bilder
+
       - name: Rauchtest
         run: node tools/test/smoke.js
 
@@ -62,4 +66,5 @@ jobs:
           path: |
             tools/out/smoke
             tools/out/gefecht
+            tools/out/haus
           retention-days: 14
