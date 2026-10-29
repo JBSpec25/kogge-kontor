@@ -3257,7 +3257,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       announce(t);
       if (extra) announce(extra);
       chronicle(ch);
+      if (STORY_HIST[h.id]) storyPush('hist', {h:h.id});
     });
+    // Ab Version 54: Erzählbild zum ersten Winter, wenn Eis die Häfen im Osten schließt
+    { const d0 = dateOf(st.day), q = qS(); if (d0.getMonth() === 11 && d0.getDate() === 1 && !q.ev.eis) { q.ev.eis = 1; storyPush('hist', {h:'eis'}); } }
     // jährlicher Hansetag um Johannis: Wahl des Ältermann
     const d = dateOf(st.day);
     if (d.getMonth() === 5 && d.getDate() === 24 && d.getFullYear() > 1356) hansetag();
@@ -12305,6 +12308,15 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!st || !st.player || st._temp || window.__fast) return;
     popPush(Object.assign({k:'story', kind, d:st.day, r:st.rank}, x || {}));
   }
+  // Erzählbilder zu Ereignissen der Zeit: Hansetag in Lübeck, Pest, Krieg, Frieden, der erste Eiswinter
+  const STORY_HIST = {
+    ht1356:{band:'Der erste Hansetag', t:'In Lübeck kommen die Ratsherren der Hansestädte zusammen. Von jetzt an beschließen sie gemeinsam, wie sie ihre Kaufleute schützen.', city:'luebeck'},
+    pest1:{band:'Die Pest kehrt zurück', t:'In den Gassen läuten die Totenglocken. Wo die Pest umgeht, sind Matrosen kaum zu finden und die Märkte leer.', pose:'ruhig'},
+    pest2:{band:'Eine neue Pestwelle', t:'Wieder geht die Pest um. Halte dich von den betroffenen Häfen fern oder handle dort mit dem, was fehlt.', pose:'ruhig'},
+    visby:{band:'Krieg mit Dänemark', t:'König Waldemar hat Visby gebrandschatzt. Die Hanse rüstet, dänische Auslieger machen den Sund unsicher. Rüste deine Schiffe.'},
+    stral:{band:'Frieden von Stralsund', t:'Dänemark gibt nach. Die Hanse erhält die Burgen in Schonen und freie Fahrt durch den Sund. In allen Häfen wird gefeiert.', pose:'zeigen'},
+    eis:{band:'Der erste Winter', t:'Eis legt sich in die Häfen im Osten, die Fahrten dauern länger. Manche Kaufleute warten bis zum Frühjahr; wer Lager hat, verkauft jetzt teuer.', season:'winter', pose:'ruhig'}
+  };
   function storyText(p) {
     const nm = st.player.name, home = C[st.home].n, f = (st.player.avatar || {}).g === 'f';
     const RT = {1:'Die Leute am Kai kennen deinen Namen. Dein Verband darf jetzt zwei Schiffe führen, und die Werft baut dir eine Kogge. Im Schifferhaus warten Kapitäne.',
@@ -12324,19 +12336,20 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       case 'work': return {band:'Der erste Betrieb arbeitet', t:`Er liefert jeden Tag ein wenig Ware in dein Kontor in ${home}.`};
       case 'mayor': return {band:`${nm} wird Bürgermeister`, t:`Du hast es geschafft: Der Rat von ${home} wählt dich zum Bürgermeister. In ${FEST_DAYS} Tagen lädst du die ganze Stadt zum großen Fest.`, pose:'brief'};
       case 'fest': { const F0 = (st.ende || {}).fest || {n:0}; return {band:`Das große Fest in ${home}`, t:F0.ok ? `${home} feiert dich, ${festWord(F0.n)}.` : 'Das Fest fällt mager aus, doch du bleibst Bürgermeister.'}; }
+      case 'hist': { const H = STORY_HIST[p.h] || {}; return {band:H.band || '', t:H.t || '', pose:H.pose, city:H.city, season:H.season}; }
       case 'sieg': { const E0 = st.ende || {}; return {band:E0.mon ? monName(E0.mon.k) : 'Ein Denkmal', t:`Das Monument steht. Das Buch der Hanse schließt mit dem Namen ${nm}.`}; }
     }
     return {band:nm, t:''};
   }
   const storyCache = {};
   function storyHTML(p) {
-    const T = storyText(p), key = [p.kind, p.d, p.r, p.i, p.c].join('|');
+    const T = storyText(p), key = [p.kind, p.d, p.r, p.i, p.c, p.h].join('|');
     if (!storyCache[key]) {
       const cap = (st.captains || [])[0], mate = p.kind === 'win' && fightCap() ? capAv(fightCap()) : cap ? capAv(cap) : seedAv('begleit' + (st.gid || ''), 'm');
-      storyCache[key] = STORY.scene({city:st.home, season:SEASON_OF(dateOf(p.d).getMonth()), rank:Math.min(6, p.r || 0), player:{a:st.player.avatar || defAv()}, mate:{a:mate}, band:esc(T.band), seed:(p.d % 97) + 3, pose:T.pose, mon:p.kind === 'sieg' && st.ende && st.ende.mon ? st.ende.mon.k : null});
+      storyCache[key] = STORY.scene({city:T.city || st.home, season:T.season || SEASON_OF(dateOf(p.d).getMonth()), rank:Math.min(6, p.r || 0), player:{a:st.player.avatar || defAv()}, mate:{a:mate}, band:esc(T.band), seed:(p.d % 97) + 3, pose:T.pose, mon:p.kind === 'sieg' && st.ende && st.ende.mon ? st.ende.mon.k : null});
     }
     const sieg = p.kind === 'sieg';
-    return `<div class="in story${sieg ? ' sieg' : ''}"><span class="k">${sieg ? 'Buch der Hanse' : C[st.home].n}, ${fdate(p.d, true)}</span><h2 id="q-title">${esc(T.band)}</h2>` +
+    return `<div class="in story${sieg ? ' sieg' : ''}"><span class="k">${sieg ? 'Buch der Hanse' : C[T.city || st.home].n}, ${fdate(p.d, true)}</span><h2 id="q-title">${esc(T.band)}</h2>` +
       `<div class="sbild">${storyCache[key]}</div>` + (sieg ? `<div class="siegtxt"><span class="init">${esc(st.player.name[0])}</span><p>${esc(st.player.name.slice(1))}, Bürger und Bürgermeister von ${C[st.home].n}, Handelshaus mit ${fmt(Math.round(wealth()))} Gulden Vermögen und ${fmt(ehre())} Ehre. ${T.t}</p>${sealImg(st.player.avatar, {name:st.player.name, place:C[st.home].n})}</div>` : `<p>${T.t}</p>`) + (p.neu && p.neu.length ? `<div class="sneu"><span class="k">Neu im Reiter Haus</span>${p.neu.map(k => `<em>${(UNLOCKS.find(u => u.k === k) || {n:k}).n}</em>`).join('')}</div>` : '') +
       `<button class="btn primary wide" type="button" data-qclose="1">Weiter</button></div>`;
   }
