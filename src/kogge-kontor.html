@@ -98,7 +98,7 @@ button{font:inherit;color:inherit}
 .aimbar .mc.none{border-style:dashed;border-color:#b89b70;color:#6b5440;background:transparent;font:italic .78rem var(--f-body)}
 .aimbar .vs{font:italic .7rem var(--f-body);color:#6b5440;line-height:1}
 .aimbar .slot{border:1.6px dashed #b89b70;border-radius:4px;min-height:54px;display:grid;align-content:center;gap:4px;padding:3px;font:italic .74rem var(--f-body);color:#6b5440}
-.aimbar .slot .mc{min-height:46px;cursor:pointer}.aimbar .slot .mc .bon{position:absolute;top:-8px;right:-6px;font:800 .62rem var(--f-sc);background:#c9962e;color:#33241a;border:1px solid #33241a;border-radius:999px;padding:0 4px}
+.aimbar .slot .mc{min-height:46px;cursor:pointer}.aimbar .slot .mc span{font-size:.58rem;letter-spacing:0}.aimbar .slot .mc .bon{position:absolute;top:-8px;right:-6px;font:800 .62rem var(--f-sc);background:#c9962e;color:#33241a;border:1px solid #33241a;border-radius:999px;padding:0 4px}
 .aimbar .lane .res{font:800 1rem var(--f-body);transition:transform .3s}.aimbar .lane .res.plus{color:#8a5a12}.aimbar .lane .res.minus{color:#b5503c}
 .aimbar .lane .res.bump{animation:rbump .5s ease-out}@keyframes rbump{40%{transform:scale(1.7)}}
 .aimbar .lane .prev{font:700 .72rem var(--f-sc);color:var(--seal)}
@@ -197,7 +197,7 @@ button{font:inherit;color:inherit}
 .qgoals li.ok b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule)}
 .qgoals li.cur b{font-weight:700}
 .qmk{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--rule);display:grid;place-items:center;font:700 .78rem var(--f-body);font-style:normal;color:#fff;margin-top:-1px}
-.qgoals li.ok .qmk{background:var(--good);border-color:var(--good)}
+.qgoals li.ok .qmk{background:none;border-color:#6b4d33;color:var(--seal);font:700 .95rem var(--f-sc)}
 .qgoals li.cur .qmk{border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
 .qgoals small{font-size:.8rem;color:var(--muted)}
 .qgoals .qhint{font-size:.88rem;line-height:1.4;color:var(--ink);background:var(--paper);border-radius:8px;padding:8px 10px;margin-top:2px}
@@ -492,7 +492,7 @@ a.btn,a.ybtn{display:inline-flex;flex-direction:column;align-items:center;justif
 .ctable .deal{color:var(--good);font-weight:500}
 
 /* Seeräuber */
-.enc{border-color:var(--bad)}
+.enc{border-color:var(--bad);margin-top:12px}
 .cvy{border-top:1px dashed var(--rule);margin-top:8px;padding-top:6px}
 .cvy .yrow.sub{padding-left:10px}
 /* Ab Version 37: Ereignisse auf Fahrt */
@@ -611,7 +611,7 @@ details.cv[open] > summary{padding-bottom:4px}
   .tab[aria-selected="true"]{color:var(--brass)}
   .tab[aria-selected="true"]::before{content:"";position:absolute;top:-5px;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--brass)}
   .tab .dot{position:absolute;top:4px;left:calc(50% + 9px);width:8px;height:8px;border-radius:50%;background:var(--bad);border:1.5px solid var(--card)}
-  .tab .dot.b{background:var(--brass)}
+  .tab .dot.b{background:#c9962e}
   .actions{padding-top:8px;padding-bottom:calc(2px + env(safe-area-inset-bottom,0px))}
   .actions .btn{min-height:56px;padding:6px 8px;font-size:1.08rem}
   .actions .btn small{font-size:.82rem}
@@ -876,14 +876,19 @@ em.rep.warn{background:#b5523a}
 
 /* Logbuch aufklappbar */
 .log{background:var(--card);border:1px solid var(--rule);border-radius:10px}
-.log summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px;min-height:50px}
+.log summary,.log .lsum{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px;min-height:50px;width:100%;border:0;background:none;text-align:left;font:inherit;color:inherit}
+.log .lbody{display:none}
+.ltile{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin-top:10px;padding:8px 10px;border:1.5px solid #6b4d33;border-radius:4px;background:rgba(255,248,230,.5);text-align:left;font:inherit;color:inherit;cursor:pointer}
+.ltile b{font:700 .95rem var(--f-sc);letter-spacing:.03em;flex:none}.ltile span{flex:1;min-width:0;font-size:.86rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.ltile .chev{flex:none;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg)}
+.ltile.hot,.log.hot{border-color:var(--seal);box-shadow:inset 3px 0 0 var(--seal)}.ltile .lbody{display:none}
 .log summary::-webkit-details-marker{display:none}
 #chronbody{padding:0 14px 14px}
 #chron{margin-bottom:12px}
-.log summary h2{margin:0;flex:none}
+.log summary h2,.log .lsum h2{margin:0;flex:none}
 .log .last{font-size:.88rem;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .log .chev{flex:none;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
-.log[open] .chev{transform:translateY(2px) rotate(-135deg)}
+.log .lsum .chev{transform:rotate(-45deg)}
 .log ol{padding:0 14px 14px}
 .log[open] .last{visibility:hidden}
 
@@ -1003,7 +1008,7 @@ details.sec{border-top:1px solid #a88a5e}
 .priv div{position:relative;padding:8px 10px 9px 36px;border:1px solid #9d8059;background:rgba(255,248,230,.45);font-size:.84rem;line-height:1.25}
 .priv div b{display:block;font:700 .88rem var(--f-sc);letter-spacing:.02em}
 .priv i{position:absolute;left:8px;top:9px;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#c9473a,#8e2219);box-shadow:0 1px 0 #5c130d}
-h2.fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:20px 0 6px;font:400 1.4rem/1.05 var(--f-title)}
+h2.fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:20px 0 6px;font:700 1.05rem/1.1 var(--f-sc);letter-spacing:.04em;color:var(--ink)}
 h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right}
 #housecard h2.fh{margin-top:0}
 .hindex{display:grid;grid-template-columns:1fr 1fr;margin-top:10px;border-top:1px solid #8a6a48}
@@ -1061,9 +1066,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
 /* Stadt: Baubuch */
 .blater{border:0;border-top:1px solid #8a6a48;border-radius:0;background:none}
-.blater li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:10px;padding:6px 0;border-top:0;border-bottom:1px solid #b89b70}
+.blater li{display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:10px;row-gap:1px;padding:6px 0;border-top:0;border-bottom:1px solid #b89b70}
+.blater .lart{grid-row:1/3}.blater b{grid-column:2}.blater .small{grid-column:2}
 .blater .lart{line-height:0;filter:sepia(.55) saturate(.7) opacity(.7)}.blater .lart svg,.blater .lart img{width:64px;height:auto}
-.blater b{font:700 .92rem var(--f-sc);letter-spacing:.02em;color:#5d4632}.blater .small{font-style:italic;text-align:right}
+.blater b{font:700 .92rem var(--f-sc);letter-spacing:.02em;color:#5d4632}.blater .small{font-style:italic;text-align:left;color:#6b5440}
 .bslot{border:1px solid #9d8059;border-radius:3px;background:rgba(255,248,230,.45)}.bslot.free{border-style:dashed}
 .bc,.ptile,.bc.bco{border:1px solid #9d8059;border-radius:3px;background:rgba(255,248,230,.5)}
 .bart,.ptile .pfac{background:linear-gradient(#ead9b4,#f1e4c4)}
@@ -1085,6 +1091,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 .cap .ttl{font-family:var(--f-title)}
 
 .yrow.yship{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:start;column-gap:10px}
+.yrow.yship .ybtns{grid-column:2;flex-wrap:wrap;gap:6px}.yrow.yship .ybtns .ybtn{flex:1 1 auto;white-space:nowrap}
 .yrow.yship>.ship-ink{width:96px;height:auto;margin-top:2px}.yrow.yship .ybtns{grid-column:2;flex-wrap:wrap}
 .scene:not(.ink) canvas{filter:sepia(.18) saturate(.9)}
 .yard h2{font:400 1.45rem/1.05 var(--f-title)}
@@ -1162,7 +1169,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       <div class="card evc" id="evc" data-tab="lage" aria-live="polite" hidden></div>
       <div class="card" id="status" data-tab="lage"></div>
       <section class="card goals" id="goals" data-tab="lage" aria-label="Dein Weg in der Hanse" hidden><div id="goalsbody"></div>
-        <details class="log chron" id="chron" data-det="chron"><summary><h2>Lauf der Zeit</h2><span class="last" id="chronlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="chronbody"></div></details>
+        <div class="log chron" id="chron"><button class="lsum" type="button" data-hs-open="chron"><h2>Lauf der Zeit</h2><span class="last" id="chronlast"></span><i class="chev" aria-hidden="true"></i></button><div id="chronbody" class="lbody"></div></div>
       </section>
       <div class="card citycard" id="citycard" data-tab="stadt" hidden></div>
       <figure class="chart" data-tab="karte">
@@ -1173,14 +1180,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     </section>
     <section class="col">
       <div class="card" id="market" data-tab="markt"></div>
-      <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Aufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
+      <div class="log frbox" id="frbox" data-tab="markt" hidden><button class="lsum" type="button" data-hs-open="frbox"><h2>Aufträge</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></button><div id="frbody" class="lbody"></div></div>
       <div class="card home" id="dealcard" data-tab="markt" hidden></div>
       <div class="card yard" id="yard" data-tab="werft" hidden></div>
       <div class="card home" id="homecard" data-tab="haus"></div>
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
       <div class="card home" id="housecard" data-tab="haus" hidden></div>
       <div class="card emptytab" id="emptytab" hidden></div>
-      <details class="log" id="log" data-tab="lage"><summary><h2>Logbuch</h2><span class="last" id="loglast"></span><i class="chev" aria-hidden="true"></i></summary><ol id="loglist"></ol></details>
+      <div class="log" id="log" data-tab="lage"><button class="lsum" type="button" data-hs-open="log"><h2>Logbuch</h2><span class="last" id="loglast"></span><i class="chev" aria-hidden="true"></i></button><ol id="loglist" class="lbody"></ol></div>
     </section>
   </main>
 
@@ -1986,7 +1993,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (box.hidden) return;
     const nHere = act.filter(f => st.loc && ordDue(f) === st.loc).length, slots = act.filter(f => f.k !== 'brief').length;
     $('#frlast').textContent = nHere ? `${nHere} hier zu erledigen` : [act.length ? `${act.length} angenommen` : '', offers.length ? `${offers.length} ${offers.length === 1 ? 'Angebot' : 'Angebote'}` : ''].filter(Boolean).join(' · ');
-    if (ui.det.frbox == null) box.open = true;
+    box.classList.toggle('hot', nHere > 0);
     let h = '';
     if (act.length) h += `<h3 class="frh">Angenommen <small>${slots} von ${ORD_MAX()}</small></h3><ul class="frl">${act.slice().sort((x, y) => (ordDue(y) === st.loc) - (ordDue(x) === st.loc) || x.due - y.due).map(f => freightRow(f, true)).join('')}</ul>`;
     if (offers.length) h += `<h3 class="frh">Angebote in ${C[st.loc].n}</h3><p class="small frhint">Fracht und Abholen brauchen nur Laderaum, den Lohn gibt es beim Abliefern. Beim Besorgen kaufst du die Ware selbst, wo sie günstig ist${ratOrder(st.loc) ? '; der Rat zahlt dazu Ansehen' : ''}. Neue Angebote etwa jede Woche.</p><ul class="frl">${offers.map(o => freightRow(o, false)).join('')}</ul>`;
@@ -11432,10 +11439,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       `<div class="bar"><i style="width:${CAP ? u / CAP * 100 : 0}%"></i></div>${chips ? `<div class="chips">${chips}</div>` : ''}` +
       `</div>` + (() => {
         const open = ui.det.status == null ? false : ui.det.status;
-        return `<details class="more" data-det="status"${open ? ' open' : ''}><summary><span>Vermögen ${fmt(w)} Gulden · ${st.fleet.length} ${st.fleet.length === 1 ? 'Schiff' : 'Schiffe'}</span><i class="chev" aria-hidden="true"></i></summary>` +
+        return `<div class="ltile" role="button" tabindex="0" data-hs-open="status"><b>Vermögen und Flotte</b><span>${fmt(w)} Gulden · ${st.fleet.length} ${st.fleet.length === 1 ? 'Schiff' : 'Schiffe'}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="statusbody">` +
           (st.fleet.length ? `<div class="fleetline">${st.fleet.map((sh, i) => `<span class="shipchip${sh.hull < 40 ? ' low' : ''}">${i === 0 ? '⚑ ' : ''}${esc(sh.name)} <small>${SHIPS[sh.type].n} · ${sh.hull} %</small></span>`).join('')}</div>` : '') +
           `<div class="wealth"><div class="holdrow"><span>Vermögen mit Ladung und Schiffen</span><span class="small">${next ? `${next[1]} ab ${fmt(next[0])}` : 'Höchster Rang erreicht'}</span></div>` +
-          `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} Matrosen · ${armsLine()} · Tempo ${Math.round(fleetSpeed() * 100)} % · Heuer und Unterhalt ${wage()} Gulden am Tag</span></div></details>`;
+          `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} Matrosen · ${armsLine()} · Tempo ${Math.round(fleetSpeed() * 100)} % · Heuer und Unterhalt ${wage()} Gulden am Tag</span></div></div></div>`;
       })();
     if (halted()) h = endHTML() + h;
     else if (locked()) h = trialHTML() + h;
@@ -11509,8 +11516,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       `<button class="tbtn" type="button" data-trade="sell" data-good="${g.id}" data-n="${ns}"${ns ? '' : ' disabled'}>Verkaufen<span>${ns} Last · ${fmt(gs)} G</span></button>` +
       (ks ? `<button class="tbtn store" type="button" data-trade="store" data-good="${g.id}" data-n="${nk}">Aus dem ${st.loc === st.home ? 'Kontor' : 'Lager'} verkaufen<span>${nk} Last · ${fmt(gk)} G</span></button>` : '') + `</div>` +
       (hint ? `<p class="hint">${hint}</p>` : '') +
-      `<details class="more minfo" data-det="minfo"${mi ? ' open' : ''}><summary><span>Mehr zur Ware</span><i class="chev" aria-hidden="true"></i></summary>` +
-      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</details></div>`;
+      `<div class="ltile" role="button" tabindex="0" data-hs-open="minfo" data-id="${g.id}"><b>Mehr zur Ware</b><span>Herkunft und Preisverlauf</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="minfobody">` +
+      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</div></button></div>`;
   }
   // Ab Version 34: Marktinfos aufklappbar, auf Wunsch immer offen (Einstellung unter Spielstände)
   const MINFO_KEY = 'kogge-kontor-marktinfo';
@@ -11655,6 +11662,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       if (el.tagName === 'DETAILS') { el.open = true; if (el.dataset.det) ui.det[el.dataset.det] = true; }
       const tgt = el.closest('details') && !el.closest('details').open ? el.closest('details') : el;
       if (tgt.tagName === 'DETAILS') tgt.open = true;
+      // Blätter (ab Version 55): die Kachel wird geöffnet statt nur gezeigt
+      const tile = el.closest('.ltile, .lsum, .htile'); if (tile && tile.dataset.hsOpen && !HS_HOME.includes(tile.dataset.hsOpen)) { hsOpen(tile.dataset.hsOpen, tile.dataset.id); return; }
       tgt.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'center'});
       tgt.classList.remove('qflash'); void tgt.offsetWidth; tgt.classList.add('qflash');
       setTimeout(() => tgt.classList.remove('qflash'), 2600);
@@ -11721,9 +11730,9 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!rivShown()) return '';
     const l = ((st.rivAt || {})[cid] || []).filter(x => st.day - x.d <= 14 && Math.abs(x.p) >= 2).slice(0, 3);
     if (!l.length) return '';
-    return `<details class="more rivhere" data-det="rivm"${minfoPref() || ui.det.rivm ? ' open' : ''}><summary><span>Konkurrenten in ${C[cid].n} <small>· ${l.length} ${l.length === 1 ? 'Geschäft' : 'Geschäfte'}</small></span><i class="chev" aria-hidden="true"></i></summary><ul>` + l.map(x => { const r = rivById(x.r);
+    return `<div class="ltile" role="button" tabindex="0" data-hs-open="rivm"><b>Konkurrenten</b><span>in ${C[cid].n} · ${l.length} ${l.length === 1 ? 'Geschäft' : 'Geschäfte'}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="rivmbody"><ul class="rivlist">` + l.map(x => { const r = rivById(x.r);
       return `<li>${r.av ? avatarSVG(r.av, 'rvf') : ''}<span><b>${esc(r.name)}</b> ${x.k === 'buy' ? `kaufte ${agoD(x.d)} ${x.q} Last ${G[x.g].n}${x.o ? ` für ${C[x.o].n}` : ''}` : `verkaufte ${agoD(x.d)} ${x.q} Last ${G[x.g].n}${x.o ? ` aus ${C[x.o].n}` : ''}`}. ` +
-        `${x.k === 'buy' ? 'Der Kaufpreis stieg dadurch um' : 'Der Verkaufspreis sank dadurch um'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></details>`;
+        `${x.k === 'buy' ? 'Der Kaufpreis stieg dadurch um' : 'Der Verkaufspreis sank dadurch um'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></div></div>`;
   }
   function rpHTML() {
     const R = st.rpt; if (!R) return '';
@@ -12500,8 +12509,25 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (s.k === 'dock') return {title:`Liegeplatz in ${C[st.home].n}`, sub:`${dockOf().length} ${dockOf().length === 1 ? 'Schiff' : 'Schiffe'}${buildsOf().length ? ` · ${buildsOf().length} im Bau` : ''}`, body:dockHTML()};
     if (s.k === 'caps') return {title:'Deine Kapitäne', sub:`${(st.captains || []).length} von ${MAX_CAPTAINS}`, body:capsHTML()};
     if (s.k === 'tavern') return {title:'Schifferhaus', sub:C[st.home].n, body:tavernHTML()};
-    return null;
+    // Ab Version 55: Blätter aus allen Reitern; der Inhalt liegt versteckt in der Kachel (.lbody) und wird hier gezeigt
+    const L = LSHEET[s.k]; if (!L) return null;
+    const src = document.getElementById(L.body); if (!src) return null;
+    const sub = typeof L.sub === 'function' ? L.sub(s) : L.sub;
+    return {title:typeof L.title === 'function' ? L.title(s) : L.title, sub, body:src.innerHTML, tab:L.tab, src:L.body};
   }
+  const LSHEET = {
+    log:{title:'Logbuch', body:'loglist', tab:'lage', sub:() => st.log.length ? `${Math.min(40, st.log.length)} Einträge` : ''},
+    chron:{title:'Lauf der Zeit', body:'chronbody', tab:'lage', sub:() => 'Was in der Hanse geschieht'},
+    status:{title:'Vermögen und Flotte', body:'statusbody', tab:'lage', sub:() => `${fmt(Math.round(wealth()))} Gulden · ${RANKS[st.rank][1]}`},
+    frbox:{title:'Aufträge', body:'frbody', tab:'markt', sub:() => st.loc ? `in ${C[st.loc].n}` : ''},
+    minfo:{title:s => G[s.id] ? G[s.id].n : 'Ware', body:'minfobody', tab:'markt', sub:'Herkunft und Preisverlauf'},
+    rivm:{title:'Konkurrenten', body:'rivmbody', tab:'markt', sub:() => st.loc ? `zuletzt in ${C[st.loc].n}` : ''},
+    arms:{title:'Waffenkammer', body:'armsbody', tab:'werft', sub:() => `${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} von ${armSlots()} Plätzen frei`},
+    newships:{title:'Bauaufträge', body:'newshipsbody', tab:'werft', sub:() => st.loc ? `Werft von ${C[st.loc].n}` : ''},
+    enchelp:{title:'So geht das Gefecht', body:'enchelpbody', tab:'lage', sub:''},
+    bdhelp:{title:'So geht das Entern', body:'bdhelpbody', tab:'lage', sub:''}
+  };
+  const TAB_N = {lage:'Lage', markt:'Markt', karte:'Karte', werft:'Werft', stadt:'Stadt', haus:'Haus'};
   function renderHSheet() {
     const box = $('#hsheet'), scrim = $('#hscrim');
     if (!box) return;
@@ -12509,7 +12535,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!c) { if (ui.hs && !(ui.hs.k === 'rw' && ui.rw)) ui.hs = null; box.hidden = true; scrim.hidden = true; box.innerHTML = ''; return; }
     const keep = box.hidden ? 0 : box.scrollTop;
     box.hidden = false; scrim.hidden = false;
-    box.innerHTML = `<div class="in"><button class="hsback" type="button" data-hs="close">‹ Haus</button><h2 id="hs-title">${c.title}</h2>${c.sub ? `<div class="hsub">${c.sub}</div>` : ''}<div class="hsbody">${c.body}</div></div>`;
+    box.innerHTML = `<div class="in"><button class="hsback" type="button" data-hs="close">‹ ${TAB_N[c.tab || 'haus']}</button><h2 id="hs-title">${c.title}</h2>${c.sub ? `<div class="hsub">${c.sub}</div>` : ''}<div class="hsbody">${c.body}</div></div>`;
     box.scrollTop = keep;
   }
   function hsOpen(k, id) {
@@ -12518,7 +12544,17 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     unlSeen(k);
     renderHSheet(); $('#hsheet').scrollTop = 0;
   }
-  function hsClose() { ui.hs = null; ui.rl = null; ui.rla = null; if (ui.rw) ui.rw = null; renderHouse(); renderHome(); }
+  function hsClose() { ui.hs = null; ui.rl = null; ui.rla = null; if (ui.rw) ui.rw = null; renderHouse(); renderHome(); renderHSheet(); }
+  // Klick in einem Blatt aus einem anderen Reiter: den gleichen Knopf in der versteckten Quelle drücken
+  function hsProxy(e) {
+    const s = ui.hs, L = s && LSHEET[s.k]; if (!L) return false;
+    const t = e.target.closest('button, input'); if (!t || t.dataset.hs) return false;
+    const src = document.getElementById(L.body); if (!src) return true;
+    const sel = t.tagName.toLowerCase() + Object.entries(t.dataset).map(([k, v]) => `[data-${k.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}="${CSS.escape(v)}"]`).join('') + (t.id ? `#${t.id}` : '');
+    const o = src.querySelector(sel) || (t.id && document.getElementById(t.id));
+    if (o && o !== t && o.tagName === 'BUTTON') o.click();
+    return true;
+  }
   function kontorHTML(ci) {
     const home = st.loc === st.home, K = st.kontor, nk = KONTOR[K ? K.lvl + 1 : 1];
     let h = `<div class="kontor"><h3>Kontor in ${C[st.home].n}</h3>` + (Object.keys(st.branches || {}).length ? '' : `<p class="small kexp">Das Kontor ist dein Lager im Stammsitz. Eine Niederlassung ist ein Lager in einer anderen Stadt (ab ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} Gulden); erst sie öffnet Handelsrouten und das Bauen.</p>`);
@@ -12732,16 +12768,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     let bdHelp = '';
     if (handgemenge) {
       const own = e.bd.att === 'own';
-      bdHelp = `<details class="more bdhelp" data-det="bdhelp"${ui.det.bdhelp ? ' open' : ''}><summary><span>${own ? 'Enterkampf auf ihrem Deck' : 'Enterkampf auf deinem Deck'} · so geht es</span><i class="chev" aria-hidden="true"></i></summary>` +
+      bdHelp = `<div class="ltile" role="button" tabindex="0" data-hs-open="bdhelp"><b>So geht das Entern</b><span>${own ? 'auf ihrem Deck' : 'auf deinem Deck'}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="bdhelpbody">` +
         `<p class="small" style="margin:0 0 6px">Jede Runde ziehst du vier Karten aus Mannschaft und Ausrüstung und legst Karten für bis zu zwei Kraft in die Abschnitte Bug, Mitte und Kastell. Dort liegen offen ihre Züge. Angriffskarten wirken in ihrem Heimatabschnitt (gold umrandet) anderthalbfach; Schildwall und Pavesen wirken nur gegen den Zug im eigenen Abschnitt. Ein Zug ohne Antwort im selben Abschnitt trifft anderthalbfach. Wer einen umkämpften Abschnitt gewinnt, nimmt dem Gegner dort einen Punkt (Bug: Entern, Mitte: Segel, Kastell: Schützen); wer ihn verliert, verliert selbst einen. Ihr Enterhaken in der Mitte hält die Schiffe zusammen, solange du dort nichts legst: dann kein Tauekappen und bis zu zwei Runden mehr. ` +
-        `Was ein Abschnitt ergibt, schiebt die Deckleiste. ${own ? 'Sie verteidigen ihr eigenes Deck und haben Vorteil.' : 'Du verteidigst dein eigenes Deck und hast Vorteil.'} Nach drei Runden zählt die Deckleiste: ab dem rechten Strich streichen sie die Flagge, unter dem linken ${own ? 'müsst ihr zurück' : 'nehmen sie dein Schiff'}, dazwischen lösen sich die Schiffe. Enterhaken und Brandtöpfe werden verbraucht, Harnische und Pavesen können kaputtgehen.</p></details>`;
+        `Was ein Abschnitt ergibt, schiebt die Deckleiste. ${own ? 'Sie verteidigen ihr eigenes Deck und haben Vorteil.' : 'Du verteidigst dein eigenes Deck und hast Vorteil.'} Nach drei Runden zählt die Deckleiste: ab dem rechten Strich streichen sie die Flagge, unter dem linken ${own ? 'müsst ihr zurück' : 'nehmen sie dein Schiff'}, dazwischen lösen sich die Schiffe. Enterhaken und Brandtöpfe werden verbraucht, Harnische und Pavesen können kaputtgehen.</p></div></div>`;
     }
     if (open && e.phase !== 'meet') h += `<div class="mor"><div class="ml"><span>Kampfgeist des Gegners</span><em>${Math.round(e.mor)}</em></div><div class="mb"><i style="width:${clamp(e.mor, 0, 100)}%"></i><b style="left:${T.flee}%"></b></div>` +
       `<small>${e.mor <= T.flee ? 'Unter der Fluchtschwelle: Sie wollen fliehen.' : `Unter ${T.flee} (Strich) wollen sie fliehen. Er sinkt durch Verluste, Volltreffer und Feuer.`}</small></div>`;
     const rows = [['Manöver', e.logMan, 'm'], ['Deine Salve', e.logOwn, 'o'], ['Gegenfeuer', e.logPir, 'p']].filter(r => r[1]);
     h += open && rows.length && !['meet', 'boarding', 'flee', 'hook', 'melee'].includes(e.phase) ? `<div class="log">${rows.map(r => `<p class="${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></p>`).join('')}</div>` : `<p class="emsg">${e.msg}</p>`;
     h += bdHelp;
-    if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `Sie zielen auf die „${esc(tgt.name)}“. ` : ''}So funktioniert das Gefecht</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">Jede Runde: Manöver wählen, dann schießen deine Leute. Ihr Schiff hat drei Drittel: Bug mit den Enterern, Mitte mit dem Segel, Kastell mit den Schützen. Unter dem Bild läuft ein Zeiger über die Trefferleiste; tippe für jede Rotte einmal, wenn er im Feld steht. Das Rote ist eine verwundbare Stelle (Volltreffer). Jede Waffe hat ihr Feld und Tempo: die Armbrust trifft Bug und Kastell, Steine alles, aber nur nah, Brandpfeile die Mitte, die Blide wirft einmal und schwer. Je schwerer der Gegner, je weiter weg und wer die Luvseite hat, desto schneller läuft der Zeiger; Kurs halten und ein erfahrener Kapitän bremsen ihn. Ist ihr Kastell zerschossen, wird ihr Gegenfeuer schwach; ohne Enterer können sie nicht entern; mit zerfetztem Segel kaum fliehen. Fällt ihr Kampfgeist unter den Strich, wollen sie fliehen oder ergeben sich. Entern geht nur nah, mit Karten in drei Abschnitten.</p></details>`;
+    if (e.phase === 'tactic') h += `<div class="ltile" role="button" tabindex="0" data-hs-open="enchelp"><b>So geht das Gefecht</b><span>${tgt ? `Sie zielen auf die „${esc(tgt.name)}“` : ''}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="enchelpbody"><p class="small" style="margin:0 0 6px">Jede Runde: Manöver wählen, dann schießen deine Leute. Ihr Schiff hat drei Drittel: Bug mit den Enterern, Mitte mit dem Segel, Kastell mit den Schützen. Unter dem Bild läuft ein Zeiger über die Trefferleiste; tippe für jede Rotte einmal, wenn er im Feld steht. Das Rote ist eine verwundbare Stelle (Volltreffer). Jede Waffe hat ihr Feld und Tempo: die Armbrust trifft Bug und Kastell, Steine alles, aber nur nah, Brandpfeile die Mitte, die Blide wirft einmal und schwer. Je schwerer der Gegner, je weiter weg und wer die Luvseite hat, desto schneller läuft der Zeiger; Kurs halten und ein erfahrener Kapitän bremsen ihn. Ist ihr Kastell zerschossen, wird ihr Gegenfeuer schwach; ohne Enterer können sie nicht entern; mit zerfetztem Segel kaum fliehen. Fällt ihr Kampfgeist unter den Strich, wollen sie fliehen oder ergeben sich. Entern geht nur nah, mit Karten in drei Abschnitten.</p></div></div>`;
     if (e.phase === 'meet') h += `<p class="small">${st.crew} Matrosen, ${armsLine()}, ${st.brand || 0} Bündel Brandpfeile${armsOf(st).buechse ? `, ${st.pulver || 0} Ladungen Pulver` : ''} an Bord. Die Matrosen bemannen die Waffen${fk && !st.focus ? `, Kapitän ${esc(fk.name)} führt das Gefecht` : ''}; beim Entern kämpfen alle. ` +
       `Entern sie dich und verlierst du den Kampf an Deck, ${st.fleet.length === 1 ? 'ist dein einziges Schiff samt Ladung verloren, und du kommst nur gegen Lösegeld frei' : 'nehmen sie das Schiff, auf das sie zielen'}. Misslingt dein eigener Enterangriff, ziehst du dich zurück.</p>`;
     h += `</div>`;
@@ -12816,7 +12852,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
       `<div class="yrow"><span class="yl"><b>${st.brand || 0} von ${MAX_BRAND} Bündeln Brandpfeile</b><span class="small">für Salven auf mittlere und weite Entfernung</span></span><span class="ybtns">${hire('brand', 5, BRAND_PRICE, MAX_BRAND - (st.brand || 0))}</span></div>` +
       `<p class="small" style="margin:8px 0 0">Heuer ${Math.round(st.crew * 0.3)}, Waffen ${Math.round(armsUp(st.arms))} und Unterhalt ${upkeep()} Gulden am Tag.</p>` +
-      det('arms', 'Waffenkammer', armsHTML(hire), `${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} von ${armSlots()} Plätzen frei`, false);
+      `<div class="ltile" role="button" tabindex="0" data-hs-open="arms"><b>Waffenkammer</b><span>${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} von ${armSlots()} Plätzen frei</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="armsbody">${armsHTML(hire)}</div></div>`;
     h += cvYardHTML();
     const types = YARDS[st.loc] || [];
     if (buildsOf().length || dockOf().length) h += `<p class="small" style="margin-top:10px">${buildsOf().length ? `${buildsOf().length} ${buildsOf().length === 1 ? 'Schiff' : 'Schiffe'} im Bau oder unterwegs` : ''}${buildsOf().length && dockOf().length ? ', ' : ''}${dockOf().length ? `${dockOf().length} am Liegeplatz in ${C[st.home].n}` : ''}; zuteilen im Reiter Haus.</p>`;
@@ -12828,15 +12864,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         ns += `<div class="yrow yship">${shipInk(tp, houseCol())}<span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} Tage Bauzeit</b><span class="small">${T.cap} Last · Tempo ${Math.round(T.spd * 100)} % · ${T.crewMin} bis ${T.crewMax} Matrosen · ${T.arm} Waffenplätze · ${T.upkeep} G am Tag</span><span class="small">${T.d}</span></span>` +
           `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `In Auftrag · ${fmt(T.price)} G`}</button>${loanBuildBtn(tp, why)}</span></div>`;
       });
-      h += det('newships', `Bauaufträge`, ns, types.map(tp => SHIPS[tp].n).join(', '), false);
+      h += `<div class="ltile" role="button" tabindex="0" data-hs-open="newships"><b>Bauaufträge</b><span>${types.map(tp => SHIPS[tp].n).join(', ')}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="newshipsbody">${ns}</div></div>`;
     } else h += `<p class="small" style="margin-top:10px">In ${C[st.loc].n} baut keine Werft neue Schiffe.</p>`;
     if (!canSail() && st.fleet.length) h += `<p class="warnline">${unready()}</p>`;
     const ts = ytStep();
-    if (ts >= 0) { if (YTOUR[ts].k === 'arms') ui.det.arms = true; if (YTOUR[ts].k === 'build') ui.det.newships = true; }
     y.innerHTML = h;
     if (ts >= 0) { // die Karte der Führung steht direkt über der besprochenen Stelle
-      const k = YTOUR[ts].k, el = k === 'arms' ? y.querySelector('[data-det="arms"]') : k === 'build' ? y.querySelector('[data-det="newships"]') : y.querySelector(`[data-tour="${k}"]`);
-      if (el) { el.classList.add('tourhl'); if (el.tagName === 'DETAILS') el.open = true; el.insertAdjacentHTML('beforebegin', ytourHTML(ts)); }
+      const k = YTOUR[ts].k, el = k === 'arms' ? y.querySelector('[data-hs-open="arms"]') : k === 'build' ? y.querySelector('[data-hs-open="newships"]') : y.querySelector(`[data-tour="${k}"]`);
+      if (el) { el.classList.add('tourhl'); el.insertAdjacentHTML('beforebegin', ytourHTML(ts)); }
       else y.querySelector('h2').insertAdjacentHTML('afterend', ytourHTML(ts));
     }
   }
@@ -13383,7 +13418,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
-  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderEv(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderDeals(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
+  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderEv(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderDeals(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); if (ui.hs && LSHEET[ui.hs.k]) renderHSheet(); }
 
   function openSheet(focus) {
     if (!st.loc || bankrupt()) return;
@@ -13449,7 +13484,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   $('#tempo').addEventListener('click', () => setTempo(TEMPI[(TEMPI.indexOf(tempo) + 1) % TEMPI.length]));
   $('#stats').addEventListener('click', e => { if (e.target.closest('[data-act="music"]')) { music.toggle(); renderStats(); } else if (e.target.closest('[data-act="rank"]')) questShow('#goals', 'lage'); });
   $('#news').addEventListener('click', e => { if (e.target.closest('[data-act="news-ok"]')) { st.inbox = []; commit(); } });
-  $('#log').addEventListener('toggle', () => { try { localStorage.setItem('kogge-kontor-log', $('#log').open ? '1' : '0'); } catch (e) {} });
   $('#yard').addEventListener('click', e => {
     if (e.target.closest('[data-act="ship-dice"]')) { ui.shipName = newShipName(); renderYard(); return; }
     { const cy = e.target.closest('[data-cvy]'); if (cy) return cvYardClick(cy); }
@@ -13549,9 +13583,13 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   $('#hsheet').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
     if (t.dataset.hs === 'close') return hsClose();
+    if (hsProxy(e)) return;
     if (ui.hs && HS_HOME.includes(ui.hs.k)) homeClick(e); else houseClick(e);
   });
+  $('#hsheet').addEventListener('input', e => { if (e.target.id === 'ship-name') { ui.shipName = e.target.value; const o = document.querySelector('#yard #ship-name'); if (o) o.value = e.target.value; } });
   $('#hscrim').addEventListener('click', hsClose);
+  document.addEventListener('click', e => { const t = e.target.closest('.ltile, .lsum'); if (!t || t.closest('#hsheet') || !t.dataset.hsOpen) return; hsOpen(t.dataset.hsOpen, t.dataset.id); });
+  document.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const t = e.target.closest('.ltile'); if (!t || !t.dataset.hsOpen) return; e.preventDefault(); hsOpen(t.dataset.hsOpen, t.dataset.id); });
   $('#goals').addEventListener('click', questClick);
   $('#qsheet').addEventListener('click', questClick);
   $('#alarm').addEventListener('click', e => { if (e.target.closest('[data-act="takeover"]')) takeOver(); else if (e.target.closest('[data-act="capfight"]')) capFight(); });
@@ -13652,7 +13690,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     let fresh = false;
     if (!st) { newGame({name:'', avatar:defAv()}, 'luebeck'); st._temp = true; fresh = true; }
     normalize(st); applyHome();
-    try { $('#log').open = localStorage.getItem('kogge-kontor-log') === '1'; } catch (e) {}
     music.arm(renderStats);
     if (data && data.ui) Object.assign(ui, data.ui, {confirmNew:false});
     if (fresh) openWizard(active, false);
