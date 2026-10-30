@@ -204,7 +204,7 @@ button{font:inherit;color:inherit}
 .qgoals li:first-child{border-top:0}
 .qgoals li>span{display:flex;flex-direction:column;gap:4px;min-width:0}
 .qgoals b{font-weight:500;font-size:.96rem;line-height:1.3}
-.qgoals li.ok b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule)}
+.qgoals li.ok b{color:var(--muted);text-decoration:line-through;text-decoration-color:#a88a62}
 .qgoals li.cur b{font-weight:700}
 .qmk{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--rule);display:grid;place-items:center;font:700 .78rem var(--f-body);font-style:normal;color:#fff;margin-top:-1px}
 .qgoals li.ok .qmk{background:none;border-color:#6b4d33;color:var(--seal);font:700 .95rem var(--f-sc)}
@@ -465,8 +465,9 @@ a.btn,a.ybtn{display:inline-flex;flex-direction:column;align-items:center;justif
 /* Logbuch */
 .log h2{margin:0 0 8px;font:700 1.05rem var(--f-sc);letter-spacing:.04em}
 .log ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
-.log li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:10px;font-size:.93rem}
-.log time{font:400 .78rem var(--f-mono);color:var(--muted);padding-top:2px}
+.log li,.loglist li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:10px;font-size:.93rem}
+.loglist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.log time,.loglist time{font:400 .78rem var(--f-mono);color:var(--muted);padding-top:2px}
 .tag{font:700 .72rem var(--f-sc);letter-spacing:.08em;color:var(--brass);margin-right:6px}
 .foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid var(--rule)}
 .linkbtn{background:none;border:1px solid var(--rule);border-radius:7px;padding:8px 12px;cursor:pointer;font-size:.9rem}
@@ -516,7 +517,7 @@ ol.privs{margin:4px 0 8px;padding-left:1.3em;font-size:.92rem}ol.privs li{margin
 .race .rv{grid-area:v}.race i.rr,.sw.rr{background:var(--accent,#8a5a14)}.race i.re,.sw.re{background:var(--brass,#b8902e);opacity:.75}.race .rb i{display:block;height:100%}.race .rb i:first-child{border-radius:5px 0 0 5px}
 .race .rb em{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink,#222)}.race .rrow.me .rn b{color:var(--accent,#8a5a14)}
 .sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin:0 3px 0 6px}
-.blist{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.blist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:4px 0;border-top:1px solid var(--rule)}
+.blist{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.blist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:4px 6px;margin:0 -6px;border-top:1px solid var(--rule)}
 .blist li.cur{background:color-mix(in srgb,var(--brass) 10%,transparent);border-radius:6px}.blist .bn{display:grid}.blist .num{font-variant-numeric:tabular-nums}
 .rvcmp{display:grid;gap:4px;margin:4px 0 6px}.rvcmp .rvh,.rvcmp .rvr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;align-items:center;font-size:.86rem}
 .rvcmp .rvh{color:var(--muted);font-size:.74rem}.rvcmp .rvr span{position:relative}.rvcmp .rvr i{display:block;height:4px;border-radius:2px;background:var(--muted);margin-bottom:2px}.rvcmp .rvr.me i{background:var(--accent,#8a5a14)}
@@ -11527,7 +11528,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       (ks ? `<button class="tbtn store" type="button" data-trade="store" data-good="${g.id}" data-n="${nk}">Sell from the ${st.loc === st.home ? 'Kontor' : 'store'}<span>${nk} lasts · ${fmt(gk)} G</span></button>` : '') + `</div>` +
       (hint ? `<p class="hint">${hint}</p>` : '') +
       `<div class="ltile" role="button" tabindex="0" data-hs-open="minfo" data-id="${g.id}"><b>More about the ware</b><span>Origin and price history</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="minfobody">` +
-      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</div></button></div>`;
+      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</div></div>`;
   }
   // Ab Version 34: Marktinfos aufklappbar, auf Wunsch immer offen (Einstellung unter Spielstände)
   const MINFO_KEY = 'kogge-kontor-marktinfo';
@@ -11545,7 +11546,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         `<line class="base" x1="0" x2="${W}" y1="${Y(G[gid].b).toFixed(1)}" y2="${Y(G[gid].b).toFixed(1)}"/><polyline points="${hh.map(x => `${X(x[0]).toFixed(1)},${Y(x[1]).toFixed(1)}`).join(' ')}"/>` +
         `<circle cx="${X(last[0]).toFixed(1)}" cy="${Y(last[1]).toFixed(1)}" r="3"/></svg>`;
     }
-    return `<div class="pchart"><div class="holdrow"><span class="small">Buying price here${hh.length >= 2 ? ` since ${fdate(hh[0][0])}` : ''}</span><span class="small">dashed: base price ${G[gid].b}</span></div>` +
+    return `<div class="pchart"><div class="holdrow"><span class="small">Buying price here ${fmt(buyPrice(st.loc, gid))}${hh.length >= 2 ? ` · since ${fdate(hh[0][0])}` : ''}</span><span class="small">${hh.length >= 2 ? `dashed: base price ${G[gid].b}` : `Base price ${G[gid].b}`}</span></div>` +
       (svg || `<span class="small">You will see the history once you have been here more often.</span>`) +
       (best ? `<span class="small">Best known selling price: ${best.c.n} ${best.p} guilders, as of ${fdate(best.d)}</span>` : '') + `</div>`;
   }
@@ -11826,7 +11827,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (pest.length) flags.push(`Plague in ${pest.map(c => C[c].n).join(', ')}`);
     if (e.warToll) flags.push('Poundage for the war');
     if (flags.length) h += `<div class="chips" style="margin:6px 0">${flags.map(x => `<span class="chip">${x}</span>`).join('')}</div>`;
-    h += `<ol class="chronlist">${e.chron.slice(0, 30).map(x => `<li><time>${fdate(x.d, true)}</time><span>${x.t}</span></li>`).join('') || '<li><span>Nothing has happened yet.</span></li>'}</ol>`;
+    h += `<ol class="chronlist">${e.chron.slice(0, 30).map(x => `<li><time>${fdate(x.d, true)}</time><span>${x.t}</span></li>`).join('') || '<li><span style="grid-column:1/-1">Nothing has happened yet.</span></li>'}</ol>`;
     h += `<h3 class="ehead">Leaderboard</h3>${blHTML(false)}<p class="small">Whoever becomes Mayor earliest is at the top; then the feast and wealth count. Full list under Saved games.</p>`;
     const hb = honorBook();
     if (hb.length) h += `<h3 class="ehead">Book of Honour</h3><ol class="honor">${hb.slice(0, 5).map(x => `<li><b>${esc(x.n)}</b> <span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.t}</span><span class="num">${fmt(x.s)}</span></li>`).join('')}</ol>`;
@@ -12523,7 +12524,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const L = LSHEET[s.k]; if (!L) return null;
     const src = document.getElementById(L.body); if (!src) return null;
     const sub = typeof L.sub === 'function' ? L.sub(s) : L.sub;
-    return {title:typeof L.title === 'function' ? L.title(s) : L.title, sub, body:src.innerHTML, tab:L.tab, src:L.body};
+    return {title:typeof L.title === 'function' ? L.title(s) : L.title, sub, body:src.tagName === 'OL' ? `<ol class="loglist">${src.innerHTML}</ol>` : src.innerHTML, tab:L.tab, src:L.body};
   }
   const LSHEET = {
     log:{title:'Logbook', body:'loglist', tab:'lage', sub:() => st.log.length ? `${Math.min(40, st.log.length)} entries` : ''},
@@ -13852,7 +13853,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
 
 <script>
-window.KK_BUILD = '36e4b4c4cc';
+window.KK_BUILD = '2d4c1ac05a';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
