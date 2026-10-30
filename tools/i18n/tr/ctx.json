@@ -30,5 +30,37 @@
 "black",
 "negro"
 ]
+},
+{
+"key": "8aa84cf8",
+"re": "sturm:\\{n:'Sturm'",
+"t": [
+"Assault",
+"Asalto"
+]
+},
+{
+"key": "8aa84cf8",
+"re": "const FOE_MOVE = \\{sturm:'Sturm'",
+"t": [
+"Assault",
+"Asalto"
+]
+},
+{
+"key": "8aa84cf8",
+"re": "cc.block === 'sturm' \\? 'Sturm'",
+"t": [
+"Assault",
+"Asalto"
+]
+},
+{
+"key": "98d340af",
+"re": "T3R = \\{bug:'Enterer', mitte:'Segel'",
+"t": [
+"sails",
+"velas"
+]
 }
 ]

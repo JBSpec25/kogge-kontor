@@ -2,7 +2,7 @@
 //
 //   node tools/test/haus.js [--bilder]
 //
-// Je Sprache: neues Spiel ohne Hausmarke, dann Kaufmann mit Kontor, Niederlassung, drei Kapitänen und zwei Verbänden
+// Je Sprache: neues Spiel ohne Hausmarke, dann Großkaufmann und Ratsherr (ab Version 54 erscheinen Kacheln erst mit Rang und Amt) mit Kontor, Niederlassung, drei Kapitänen und zwei Verbänden
 // (einer nach Regeln mit Menge und Preisgrenze). Geöffnet werden das Haus, jedes Blatt hinter den Kacheln und das Blatt
 // eines Verbands; dort wird eine Regel bearbeitet (Aktion, Menge, Preisgrenze) und wieder geschlossen.
 // Geprüft wird: keine Fehler in der Konsole, nichts ragt seitlich über den Bildschirm, jedes Blatt hat einen Titel und
@@ -63,7 +63,7 @@ async function lauf(browser, lang) {
     if (!(await p.$('#stats .hpurse')) || !(await p.$('#stats .wline .hseal'))) fehler.push('Kopf: Truhe oder Haussiegel fehlt');
     await p.evaluate(() => {
       const K = window.__kk, st = K.st, ui = K.ui;
-      st.rank = 2; st.money = 90000; st.repute = 2095; st.crew = 40;
+      st.rank = 4; st.money = 90000; st.repute = 3400; st.crew = 40;
       K.kontorBuild();
       const other = st.home === 'visby' ? 'riga' : 'visby';
       st.branches = st.branches || {}; st.branches[other] = {lvl:1, cap:60, goods:{}};
@@ -76,8 +76,11 @@ async function lauf(browser, lang) {
       K.setTab('haus'); K.commit();
     });
     await p.waitForTimeout(300);
+    // Erzählbilder zum Aufstieg schließen
+    for (let i = 0; i < 6 && (await p.$('#qsheet:not([hidden]) [data-qclose]')); i++) { await p.click('#qsheet [data-qclose]'); await p.waitForTimeout(150); }
     if ((await p.evaluate(() => window.__kk.st.convoys.length)) !== 2) fehler.push('Aufbau: zwei Verbände erwartet');
     if ((await p.$$('#homecard .htile')).length < 7) fehler.push('Haus: weniger als sieben Kacheln im Stammsitz');
+    if (!(await p.$('#homecard .htile .hneu'))) fehler.push('Haus: kein Stempel „Neu“ an frisch freigeschalteten Kacheln');
     if ((await p.$$('#housecard .fentry')).length !== 3) fehler.push('Haus: Flotte sollte drei Einträge haben (dein Verband und zwei Kapitänsverbände)');
     await sieh('1-haus');
     // Jede Kachel öffnet ein Blatt mit Titel, Zurück schließt es
@@ -114,7 +117,7 @@ async function lauf(browser, lang) {
     if (tr.salz !== 7) fehler.push(`Handel: Menge nicht eingehalten, Salz ${tr.salz} statt 7`);
     if (tr.eisen !== 0) fehler.push(`Handel: Preisgrenze nicht eingehalten, Eisen ${tr.eisen} statt 0`);
     if (lang !== 'de') { const rest = deutscheReste(texte.join('\n')); if (rest.length) fehler.push('Deutsche Reste: ' + rest.slice(0, 12).join(', ')); }
-  } catch (e) { fehler.push('Abbruch: ' + e.message.split('\n')[0]); }
+  } catch (e) { fehler.push('Abbruch: ' + e.message.split('\n').slice(0, 12).join(' | ')); }
   await ctx.close();
   return fehler;
 }

@@ -1,0 +1,1102 @@
+{
+"16378fb2": [
+"Elections on 1 January and 1 July, the most reputation wins; then the great feast",
+"Elecciones el 1 de enero y el 1 de julio, gana la mayor reputación; después, el gran banquete"
+],
+"85e3e745": [
+"As a Great merchant you can build great projects in {0}: hospital, harbour, peace fleet, Artus Court, church tower, and endowments. They bring honour and reputation and are recorded in the Book of the Town. Under House: Great projects.",
+"Como gran mercader puedes construir grandes obras en {0}: hospital, puerto, flota de paz, Corte de Arturo, campanario y además donaciones. Dan honor y reputación y quedan en el Libro de la Ciudad. En Casa: Grandes obras."
+],
+"52f97942": [
+"<div class=\"kontor\"><h3>Great projects</h3><p class=\"small\">Projects tie up a lot of money and bring honour; buildings count towards your wealth at half their cost. Honour so far: {0}; it counts in the Book of the Town.{1}</p>",
+"<div class=\"kontor\"><h3>Grandes obras</h3><p class=\"small\">Las obras inmovilizan mucho dinero y dan honor; los edificios cuentan en tu patrimonio por la mitad de su coste. Honor hasta ahora: {0}; cuenta en el Libro de la Ciudad.{1}</p>"
+],
+"90f0a387": [
+"Hanseatic Diet {0} in Lübeck. The town envoys debate tolls, privileges and peace at sea.",
+"Dieta Hanseática {0} en Lübeck. Los enviados de las ciudades debaten aranceles, privilegios y la paz en el mar."
+],
+"0f4172b2": [
+"<div class=\"kontor\"><h3>Race for the mayoralty</h3>",
+"<div class=\"kontor\"><h3>Carrera por el cargo de burgomaestre</h3>"
+],
+"dd5fd4e7": [
+"<p class=\"small\">On 1 January and 1 July the council of {0} elects the Mayor. Anyone with {1} reputation may stand; whoever has the most wins. Who is contesting the office with you becomes clear once you sit on the council.</p></div>",
+"<p class=\"small\">El 1 de enero y el 1 de julio el concejo de {0} elige al burgomaestre. Puede presentarse quien tenga {1} de reputación; gana quien tenga más. Quién te disputa el cargo lo sabrás cuando tengas asiento en el concejo.</p></div>"
+],
+"c59fc6e2": [
+"You have been Mayor since {0}. The families are shown here for information only.",
+"Eres burgomaestre desde el {0}. Las familias figuran aquí solo a título informativo."
+],
+"d3c6995c": [
+"Next election on {0}. Whoever has the most reputation wins, at least {1}.",
+"Próxima elección el {0}. Gana quien tenga más reputación, al menos {1}."
+],
+"9bd89ae4": [
+" <span class=\"pill\">Mayor</span>",
+" <span class=\"pill\">Burgomaestre</span>"
+],
+"f73de950": [
+" · eligible",
+" · elegible"
+],
+"03b809e4": [
+"<p class=\"small\"><i class=\"sw rr\"></i> Reputation at the election · line: {0}</p>",
+"<p class=\"small\"><i class=\"sw rr\"></i> Reputación en la elección · raya: {0}</p>"
+],
+"b287dad2": [
+"You are Mayor",
+"Eres burgomaestre"
+],
+"812e577d": [
+"Election on {0}",
+"Elección el {0}"
+],
+"6c1a5433": [
+"Mayor {0}{1}{2}",
+"Burgomaestre {0}{1}{2}"
+],
+"1147526f": [
+", feast with {0} lasts",
+", banquete con {0} lasts"
+],
+"1fa8bb21": [
+"Monument",
+"Monumento"
+],
+"938fd78a": [
+"{0} spreads rumours about your dealings in the council of {1}: {2} reputation lost. Under House, Race, you can answer them within 20 days.",
+"{0} difunde en el concejo de {1} rumores sobre tus negocios: pierdes {2} de reputación. En Casa, Carrera, puedes desmentirlos en un plazo de 20 días."
+],
+"03b6203d": [
+"wants to be Mayor himself",
+"quiere ser burgomaestre"
+],
+"11ef9e18": [
+"Town gate",
+"Puerta de la ciudad"
+],
+"7a1436c2": [
+"A brick gate with two towers, your house seal above the archway.",
+"Una puerta de ladrillo con dos torres y tu sello sobre el arco."
+],
+"ec6c49da": [
+"Guildhall",
+"Casa gremial"
+],
+"9fd03f2a": [
+"A house for the merchants' guild, with a hall, arms and your name above the door.",
+"Una casa para el gremio de mercaderes, con salón, escudo y tu nombre sobre la puerta."
+],
+"a6dddc8e": [
+"Church tower",
+"Campanario"
+],
+"6049a5d9": [
+"A tower the skippers can see from far out at sea. The bell bears your name.",
+"Una torre que los patrones ven ya desde el mar. La campana lleva tu nombre."
+],
+"babe9850": [
+"Holsten Gate",
+"Puerta de Holsten"
+],
+"bcd86545": [
+"House of the Shipmasters' Guild",
+"Casa de la Cofradía de Navegantes"
+],
+"6a8a0d35": [
+"Towers of St Mary's",
+"Torres de Santa María"
+],
+"20137e7e": [
+"Millern Gate",
+"Puerta de Millern"
+],
+"7aaf7f31": [
+"House of the England Traders",
+"Casa de los mercaderes de Inglaterra"
+],
+"28c68002": [
+"Tower of St Peter's",
+"Torre de San Pedro"
+],
+"5eaa8616": [
+"Oster Gate",
+"Puerta de Oster"
+],
+"85078f16": [
+"Schütting",
+"Schütting"
+],
+"02c9f24c": [
+"Towers of the cathedral",
+"Torres de la catedral"
+],
+"abaad9db": [
+"Crane Gate",
+"Puerta de la Grúa"
+],
+"64fa0d1e": [
+"Artus Court",
+"Corte de Arturo"
+],
+"405ff0d8": [
+"Sand Gate",
+"Puerta de la Arena"
+],
+"1f86d5d4": [
+"House of the Blackheads",
+"Casa de los Cabezas Negras"
+],
+"2d271d27": [
+"Great Coast Gate",
+"Gran Puerta de la Costa"
+],
+"0c822c29": [
+"Great Guild Hall",
+"Casa del Gran Gremio"
+],
+"cb393f93": [
+"Tower of St Olaf's",
+"Torre de San Olaf"
+],
+"cd1702ce": [
+"Österport",
+"Österport"
+],
+"501013d9": [
+"Merchants' Guildhall",
+"Casa gremial de los mercaderes"
+],
+"2f7c9577": [
+"Norrport",
+"Norrport"
+],
+"ecb91ca6": [
+"German Guildhall",
+"Casa gremial de los alemanes"
+],
+"be477cc2": [
+"Tower of St Nicholas's",
+"Torre de San Nicolás"
+],
+"20e94068": [
+"a feast people will talk about for years",
+"un banquete del que se hablará mucho tiempo"
+],
+"26d10d8f": [
+"a splendid feast",
+"un banquete espléndido"
+],
+"7fdf1122": [
+"a fine feast",
+"un buen banquete"
+],
+"86afc957": [
+"a modest feast",
+"un banquete modesto"
+],
+"b855b9c2": [
+"{0} becomes Mayor of {1}",
+"{0} es elegido burgomaestre de {1}"
+],
+"c5058d0c": [
+"The council of {0} elects you Mayor. To celebrate, you hold the great feast on {1}: put at least {2} into the Kontor for it. Whatever more lies there is served too and earns you a better place in the Book of the Town.",
+"El concejo de {0} te elige burgomaestre. Para celebrarlo darás el gran banquete el {1}: guarda para ello al menos {2} en el almacén. Lo que haya de más también se servirá y te dará un mejor puesto en el Libro de la Ciudad."
+],
+"98911353": [
+"The great feast of Mayor {0}",
+"El gran banquete del burgomaestre {0}"
+],
+"78798d37": [
+"The great feast in {0}: {1}. The town celebrates you, {2}.",
+"El gran banquete en {0}: {1}. La ciudad te aclama, {2}."
+],
+"57f62e26": [
+"The great feast in {0} is meagre: {1}. People grumble, and you lose reputation.",
+"El gran banquete en {0} resulta pobre: {1}. La gente murmura y pierdes reputación."
+],
+"c55e10ae": [
+"Mayor of {0}",
+"Burgomaestre de {0}"
+],
+"85720d9a": [
+"You carry on running your trading house freely, without a monument and without an end.",
+"Sigues dirigiendo tu casa comercial libremente, sin monumento y sin final."
+],
+"acbf5c39": [
+"You want to endow {0} with a monument: {1}. Commission the building in the House tab.",
+"Quieres donar a {0} un monumento: {1}. Encarga la obra en la pestaña Casa."
+],
+"0a2dd4ab": [
+"{0} in {1} is complete. {2} honour for the trading house {3}; your name stands forever in the Book of the Town.",
+"{0} en {1} está terminado. {2} de honor para la casa comercial {3}; tu nombre queda para siempre en el Libro de la Ciudad."
+],
+"2141910d": [
+"{0} completed",
+"{0} terminado"
+],
+"d962f12e": [
+"<div class=\"kontor\"><h3>Monument</h3>",
+"<div class=\"kontor\"><h3>Monumento</h3>"
+],
+"7d64aaac": [
+"<p class=\"small\">After the great feast you can endow {0} with a monument.</p></div>",
+"<p class=\"small\">Después del gran banquete puedes donar a {0} un monumento.</p></div>"
+],
+"0d0a0903": [
+"<div class=\"gvrow{0}\"><span class=\"gvart\">{1}</span><span class=\"gvtxt\"><b>{2}</b><span class=\"small\">{3}. {4} {5} honour, {6} days to build.</span></span>",
+"<div class=\"gvrow{0}\"><span class=\"gvart\">{1}</span><span class=\"gvtxt\"><b>{2}</b><span class=\"small\">{3}. {4} {5} de honor, {6} días de obra.</span></span>"
+],
+"bdc0e65a": [
+"<span class=\"ybtns\"><button class=\"ybtn on\" type=\"button\" data-ende=\"monbau\"{0}>{1}</button><button class=\"ybtn\" type=\"button\" data-ende=\"wahl\">Choose another</button></span>",
+"<span class=\"ybtns\"><button class=\"ybtn on\" type=\"button\" data-ende=\"monbau\"{0}>{1}</button><button class=\"ybtn\" type=\"button\" data-ende=\"wahl\">Elegir otro</button></span>"
+],
+"5699599f": [
+"Start building · {0} G",
+"Empezar la obra · {0} G"
+],
+"f5f1a07c": [
+"<span class=\"bar\"><i style=\"width:{0}%\"></i></span><span class=\"small\">{1} days left</span>",
+"<span class=\"bar\"><i style=\"width:{0}%\"></i></span><span class=\"small\">faltan {1} días</span>"
+],
+"73123966": [
+"<span class=\"small\">completed on {0}</span>",
+"<span class=\"small\">terminado el {0}</span>"
+],
+"3c19b1aa": [
+"{0} days left",
+"faltan {0} días"
+],
+"d6871877": [
+"ready to build",
+"listo para construir"
+],
+"fcc9676b": [
+"Mayor since {0}{1}",
+"Burgomaestre desde el {0}{1}"
+],
+"a883bfb8": [
+" · feast with {0} lasts",
+" · banquete con {0} lasts"
+],
+"e5b166a8": [
+"from {0} · reputation {1}",
+"de {0} · reputación {1}"
+],
+"6a832d32": [
+"<div class=\"in buchst\"><span class=\"k\">{0}, {1}</span><h2 id=\"q-title\">Book of the Town</h2>",
+"<div class=\"in buchst\"><span class=\"k\">{0}, {1}</span><h2 id=\"q-title\">Libro de la Ciudad</h2>"
+],
+"810c9268": [
+"The great feast was {0}.",
+"El gran banquete fue {0}."
+],
+"dc624d51": [
+"The great feast was meagre.",
+"El gran banquete resultó pobre."
+],
+"51a86d3a": [
+"<h3 class=\"rph\">Leaderboard</h3>{0}",
+"<h3 class=\"rph\">Clasificación</h3>{0}"
+],
+"7b06afed": [
+"<p>Would you like to play on? If you do, you can endow the town with a monument and enter the Book of the Town forever.</p>",
+"<p>¿Quieres seguir jugando? Quien sigue puede donar a la ciudad un monumento y entrar para siempre en el Libro de la Ciudad.</p>"
+],
+"749c3e37": [
+"<div class=\"ybtns qbtns\"><button class=\"btn\" type=\"button\" data-ende=\"end\"><b>End here</b><small>can be resumed later</small></button><button class=\"btn primary\" type=\"button\" data-ende=\"weiter\"><b>Play on</b><small>choose a monument</small></button></div></div>",
+"<div class=\"ybtns qbtns\"><button class=\"btn\" type=\"button\" data-ende=\"end\"><b>Terminar aquí</b><small>se puede continuar luego</small></button><button class=\"btn primary\" type=\"button\" data-ende=\"weiter\"><b>Seguir jugando</b><small>elegir monumento</small></button></div></div>"
+],
+"3bce3180": [
+"<div class=\"in qwel\"><span class=\"k\">A monument for {0}</span><h2 id=\"q-title\">What shall remain of you?</h2>",
+"<div class=\"in qwel\"><span class=\"k\">Un monumento para {0}</span><h2 id=\"q-title\">¿Qué quedará de ti?</h2>"
+],
+"192db5e0": [
+"<p>A monument costs a lot of money and time. Once it stands, your name is immortal, and the Book of the Hansa closes with your picture.</p>",
+"<p>Un monumento cuesta mucho dinero y tiempo. Cuando esté en pie, tu nombre será inmortal y el Libro de la Hansa se cerrará con tu imagen.</p>"
+],
+"2de223df": [
+"<button class=\"moncard\" type=\"button\" data-ende=\"mon\" data-k=\"{0}\"><span class=\"gvart\">{1}</span><b>{2}</b><span class=\"small\">{3} · {4} G · {5} days · {6} honour</span><span class=\"small\">{7}</span></button>",
+"<button class=\"moncard\" type=\"button\" data-ende=\"mon\" data-k=\"{0}\"><span class=\"gvart\">{1}</span><b>{2}</b><span class=\"small\">{3} · {4} G · {5} días · {6} de honor</span><span class=\"small\">{7}</span></button>"
+],
+"681f1386": [
+"<button class=\"btn wide\" type=\"button\" data-ende=\"frei\"><b>Play on freely without a monument</b><small>the game continues without an end</small></button></div>",
+"<button class=\"btn wide\" type=\"button\" data-ende=\"frei\"><b>Seguir libremente sin monumento</b><small>la partida sigue sin final</small></button></div>"
+],
+"6de36a2a": [
+"<p class=\"small\">{0}You find offers in the ports, in the Market tab under Orders and Business.</p>",
+"<p class=\"small\">{0}Encontrarás ofertas en los puertos, en la pestaña Mercado, en Encargos y Negocios.</p>"
+],
+"14c30279": [
+"From the rank of {0}, towns and merchants offer you supply contracts and the Hanseatic Kontors admit you. ",
+"A partir del rango de {0}, ciudades y mercaderes te ofrecen contratos de suministro y las factorías hanseáticas te admiten. "
+],
+"271befc0": [
+"Bow",
+"Proa"
+],
+"649ad246": [
+"Middle",
+"Centro"
+],
+"8cfd4d9d": [
+"boarders",
+"abordadores"
+],
+"ded421f0": [
+"shooters",
+"tiradores"
+],
+"6a5890ef": [
+"crew at bow and castle",
+"gente en proa y castillo"
+],
+"2514d402": [
+"everything, close only",
+"todo, solo de cerca"
+],
+"d2f56419": [
+"sails, sets fire",
+"velas, incendia"
+],
+"25ebabd1": [
+"one heavy throw",
+"un tiro pesado"
+],
+"b22109ff": [
+"crossbow bolts at bow and castle, at any range",
+"virotes de ballesta contra proa y castillo, a cualquier distancia"
+],
+"1230a466": [
+"thrown from the top and castle at the whole ship, at short range only",
+"arrojadas desde la cofa y el castillo contra todo el barco, solo a corta distancia"
+],
+"1b0901ea": [
+"one heavy throw at medium and long range",
+"un tiro pesado a media y larga distancia"
+],
+"c5f7650a": [
+"light enemy",
+"enemigo ligero"
+],
+"e4423a1b": [
+"enemy",
+"enemigo"
+],
+"394d71a3": [
+"heavy enemy",
+"enemigo fuerte"
+],
+"36e58ca7": [
+"windward is yours",
+"barlovento tuyo"
+],
+"7f154a40": [
+"enemy has windward",
+"barlovento del enemigo"
+],
+"dd40d45b": [
+"practice",
+"práctica"
+],
+"d40bfcd9": [
+"Their ship is a wreck, and their fighting spirit collapses.",
+"Su barco es un despojo y su moral se derrumba."
+],
+"3d494bdc": [
+"Return fire: {0}{1}{2}{3}.",
+"Fuego enemigo: {0}{1}{2}{3}."
+],
+"78449aa2": [
+", hits on {0}",
+", impactos en {0}"
+],
+"358ecb83": [
+"a pavise holds",
+"un pavés aguanta"
+],
+"cc8ed94e": [
+"the pavises hold {0} times",
+"los paveses aguantan {0} veces"
+],
+"26963681": [
+" Their castle falls silent: their return fire grows weak.",
+" Su castillo calla: su fuego se debilita."
+],
+"99df8c8c": [
+" Their boarders are down: they can no longer board.",
+" Sus abordadores han caído: ya no pueden abordar."
+],
+"cd480109": [
+" Their sail hangs in rags: they can hardly flee, and when boarded they strike their flag sooner.",
+" Su vela cuelga en jirones: apenas pueden huir y, en el abordaje, arrían antes la bandera."
+],
+"23f9de3d": [
+"The {0} throw",
+"El tiro ({0})"
+],
+"f554c03c": [
+"One direct hit",
+"Un impacto de lleno"
+],
+"6d19a03d": [
+"{0} direct hits",
+"{0} impactos de lleno"
+],
+"3d495cdd": [
+" and {0} hits",
+" y {0} impactos"
+],
+"9bcfdb2a": [
+"{0} hits",
+"{0} impactos"
+],
+"cd5b39b7": [
+" from {0} {1}",
+" de {0} {1}"
+],
+"b73f47d5": [
+"throws",
+"tiros"
+],
+"1144d9be": [
+"squads",
+"escuadras"
+],
+"7ef2f40b": [
+" Their ship: {0}.",
+" Su barco: {0}."
+],
+"affdeac1": [
+"{0} {1} into the water.{2}",
+"{0} {1} al agua.{2}"
+],
+"4c57418d": [
+"of their crossbowmen falls",
+"de sus ballesteros cae"
+],
+"715a8958": [
+"of their crossbowmen fall",
+"de sus ballesteros caen"
+],
+"7b47ce2a": [
+"{0}{1} strikes the flag and surrenders! Booty: {2} guilders.",
+"¡{0}{1} arría la bandera y se rinde! Botín: {2} florines."
+],
+"2490227d": [
+"Your crew surges over the rail.",
+"Tu gente se lanza por la borda."
+],
+"20a42356": [
+"Hooks fly, the plank is down: across!",
+"Vuelan los garfios, la plancha está echada: ¡al otro lado!"
+],
+"4ffebd21": [
+"Shield wall",
+"Muro de escudos"
+],
+"2d0fdc09": [
+"Stops their assault in the same section.",
+"Detiene su asalto en la misma sección."
+],
+"6b3b8f4e": [
+"Crossbows from the castle; their assault −4 in the same section.",
+"Ballestas desde el castillo; en la misma sección, su asalto −4."
+],
+"063a7d26": [
+"Halves their volley in the same section.",
+"Reduce a la mitad su andanada en la misma sección."
+],
+"79069849": [
+"Fire pot",
+"Olla incendiaria"
+],
+"ffdab1e8": [
+"Fire on their deck; their next move is only half as strong.",
+"Fuego en su cubierta; su próxima jugada tiene la mitad de fuerza."
+],
+"0c996d91": [
+"Captain's call",
+"Grito del capitán"
+],
+"374f19e2": [
+"Your captain leaps ahead. Once per fight.",
+"Tu capitán salta al frente. Una vez por combate."
+],
+"87898bed": [
+"Hooks fly, the planks are down: your crew leaps across!",
+"Vuelan los garfios, las planchas están echadas: ¡tu gente salta al otro lado!"
+],
+"c6007ea9": [
+"{0} Play your cards against their moves. Three rounds, then the deck bar decides.",
+"{0} Juega tus cartas contra sus jugadas. Tres rondas; después cuenta la barra de cubierta."
+],
+"e8d41d57": [
+"They are on deck.",
+"Están en cubierta."
+],
+"68c3b753": [
+"You are across.",
+"Estáis al otro lado."
+],
+"5c0291bc": [
+"fire pots",
+"ollas incendiarias"
+],
+"a3b90ca2": [
+"armour dented",
+"armadura abollada"
+],
+"351ad2c1": [
+"armours dented",
+"armaduras abolladas"
+],
+"62d48f90": [
+"pavise splintered",
+"pavés astillado"
+],
+"fe8fc4f1": [
+"pavises splintered",
+"paveses astillados"
+],
+"4a7af6d7": [
+"You gain ground, +{0} on deck.",
+"Ganáis terreno, +{0} en cubierta."
+],
+"dbae3c54": [
+"They push you back, −{0} on deck.",
+"Os hacen retroceder, −{0} en cubierta."
+],
+"c51a55bb": [
+"Nobody gives way.",
+"Nadie cede."
+],
+"9650a25b": [
+" Used up or damaged: {0}.",
+" Gastado o dañado: {0}."
+],
+"9d6acdec": [
+"The lines hold, and while you hack at them, they attack. ",
+"Los cabos aguantan y, mientras cortáis, atacan. "
+],
+"c1d16045": [
+"inkscene fightink",
+"inkscene fightink"
+],
+"f037a002": [
+"<svg width=\"400\" height=\"262\" ",
+"<svg width=\"400\" height=\"262\" "
+],
+"d4a03dd1": [
+"transform {0}ms ease-in-out, opacity {1}ms",
+"transform {0}ms ease-in-out, opacity {1}ms"
+],
+"6d3a3fdd": [
+"Direct hit {0}!",
+"¡Impacto de lleno: {0}!"
+],
+"cdbd72fe": [
+"Hit {0}",
+"Impacto: {0}"
+],
+"6d4f5364": [
+"They strike their flag!",
+"¡Arrían la bandera!"
+],
+"de0c7e65": [
+"transform 2.6s ease-in, opacity 2.6s ease-in",
+"transform 2.6s ease-in, opacity 2.6s ease-in"
+],
+"574528bb": [
+"<span class=\"pips{0}\" aria-label=\"{1} of {2}\">{3}</span>",
+"<span class=\"pips{0}\" aria-label=\"{1} de {2}\">{3}</span>"
+],
+"38e799e5": [
+" · {0} {1} of {2}",
+" · {0} {1} de {2}"
+],
+"06816368": [
+"Throw",
+"Tiro"
+],
+"5a90fd84": [
+"Squad",
+"Escuadra"
+],
+"e0bb2448": [
+"tap when the pointer is in the field",
+"toca cuando la aguja esté en el campo"
+],
+"9a3f03bf": [
+"<div class=\"weapons\" role=\"group\" aria-label=\"Weapon\">{0}</div>",
+"<div class=\"weapons\" role=\"group\" aria-label=\"Arma\">{0}</div>"
+],
+"8c8b4705": [
+"{0} bundles",
+"{0} haces"
+],
+"bb91e868": [
+"{0} heavy",
+"{0} pesadas"
+],
+"ae17ab83": [
+"close only",
+"solo de cerca"
+],
+"2bebb33a": [
+"<button type=\"button\" data-weap=\"{0}\" aria-pressed=\"{1}\"{2}><b>{3}</b><span class=\"wstat\"><span>Field</span><span class=\"fw\" style=\"width:{4}px\"></span><span>Speed</span><span class=\"sp\">{5}</span></span><small>{6}</small><small>{7}</small></button>",
+"<button type=\"button\" data-weap=\"{0}\" aria-pressed=\"{1}\"{2}><b>{3}</b><span class=\"wstat\"><span>Campo</span><span class=\"fw\" style=\"width:{4}px\"></span><span>Ritmo</span><span class=\"sp\">{5}</span></span><small>{6}</small><small>{7}</small></button>"
+],
+"f08c6e25": [
+"<div class=\"chips\"><span class=\"tk\">Pointer ×{0}</span>{1}</div>",
+"<div class=\"chips\"><span class=\"tk\">Aguja ×{0}</span>{1}</div>"
+],
+"f75aa1dc": [
+"<div class=\"mh\"><b>Round {0} of {1}</b><span class=\"kr\">Strength {2}</span><button class=\"cut\" type=\"button\" data-act=\"bd-back\"{3}>{4}</button></div>",
+"<div class=\"mh\"><b>Ronda {0} de {1}</b><span class=\"kr\">Fuerza {2}</span><button class=\"cut\" type=\"button\" data-act=\"bd-back\"{3}>{4}</button></div>"
+],
+"3ab6710b": [
+"<div class=\"deck\"><div class=\"dl\"><span class=\"me\">You {0} %</span><span>Deck</span><span class=\"foe\">Enemy {1} %</span></div>",
+"<div class=\"deck\"><div class=\"dl\"><span class=\"me\">Tú {0} %</span><span>Cubierta</span><span class=\"foe\">Enemigo {1} %</span></div>"
+],
+"72787619": [
+"<div class=\"planks\" role=\"img\" aria-label=\"You hold {0} of 100 of the deck\"><i style=\"width:{1}%\"></i><u style=\"left:{2}%\"></u><u style=\"left:{3}%\"></u><b style=\"left:{4}%\"></b>{5}</div>",
+"<div class=\"planks\" role=\"img\" aria-label=\"Dominas {0} de 100 de la cubierta\"><i style=\"width:{1}%\"></i><u style=\"left:{2}%\"></u><u style=\"left:{3}%\"></u><b style=\"left:{4}%\"></b>{5}</div>"
+],
+"2f108a6d": [
+"<div class=\"why\"><span>below {0} %: {1}</span><span>from {2} %: flag{3}</span></div></div>",
+"<div class=\"why\"><span>por debajo de {0} %: {1}</span><span>desde {2} %: bandera{3}</span></div></div>"
+],
+"d46975e9": [
+"retreat",
+"retirada"
+],
+"229715fa": [
+"ship lost",
+"barco perdido"
+],
+"abe3d64a": [
+" (sails shot to pieces)",
+" (velas destrozadas)"
+],
+"20507851": [
+"<div class=\"lane{0}{1}\" data-l=\"{2}\" role=\"button\" tabindex=\"0\" aria-label=\"{3}\"><h4>{4}</h4><div class=\"st\">their {5} {6}</div>",
+"<div class=\"lane{0}{1}\" data-l=\"{2}\" role=\"button\" tabindex=\"0\" aria-label=\"{3}\"><h4>{4}</h4><div class=\"st\">sus {5} {6}</div>"
+],
+"1d1e260a": [
+"<div class=\"mc none\">quiet</div>",
+"<div class=\"mc none\">tranquilo</div>"
+],
+"28f58765": [
+"<div class=\"vs\">against</div><div class=\"slot\" data-slot=\"{0}\">{1}{2}</div>",
+"<div class=\"vs\">contra</div><div class=\"slot\" data-slot=\"{0}\">{1}{2}</div>"
+],
+"02190b22": [
+"<div class=\"mc\" data-back=\"{0}\" role=\"button\" tabindex=\"0\" aria-label=\"Take back {1}\">{2}{3}<b>{4}</b><span>{5}</span></div>",
+"<div class=\"mc\" data-back=\"{0}\" role=\"button\" tabindex=\"0\" aria-label=\"Retirar {1}\">{2}{3}<b>{4}</b><span>{5}</span></div>"
+],
+"ff208e6f": [
+"<div class=\"prev\">{0} here</div>",
+"<div class=\"prev\">{0} aquí</div>"
+],
+"5ed8277b": [
+"<span class=\"v\">{0}</span><span class=\"cost\" aria-label=\"Strength {1}\">{2}</span>{3}<b>{4}</b>",
+"<span class=\"v\">{0}</span><span class=\"cost\" aria-label=\"Fuerza {1}\">{2}</span>{3}<b>{4}</b>"
+],
+"6fce8944": [
+"<span class=\"use\">used up</span>",
+"<span class=\"use\">se gasta</span>"
+],
+"fa98b8c2": [
+"anywhere",
+"en todas partes"
+],
+"e87f9bf1": [
+"<b>{0}</b> · strength {1}. {2} <span>From {3}{4}{5}. Tap a section.</span>",
+"<b>{0}</b> · fuerza {1}. {2} <span>De {3}{4}{5}. Toca una sección.</span>"
+],
+"15761805": [
+", used up",
+", se gasta"
+],
+"4e20b81c": [
+", may break",
+", puede romperse"
+],
+"d9b1235a": [
+"Their plan: {0}. Tap a card, then a section, or drag it in.",
+"Su plan: {0}. Toca una carta y luego una sección, o arrástrala."
+],
+"52afcbe9": [
+"Hit bar: tap to fire",
+"Barra de tiro: toca para disparar"
+],
+"38e8464c": [
+"<p class=\"small\">Your goal: rise from Pedlar to Mayor of {0} and hold the great feast. The card “Your path in the Hansa” guides you there chapter by chapter. There is no fixed end.</p>",
+"<p class=\"small\">Tu objetivo: pasar de buhonero a burgomaestre de {0} y dar el gran banquete. La tarjeta «Tu camino en la Hansa» te guía hasta allí capítulo a capítulo. No hay un final fijo.</p>"
+],
+"449c3305": [
+"Who became Mayor first",
+"Quién fue burgomaestre antes"
+],
+"0d87afc7": [
+"</div>{0}<span class=\"small\">Each game appears once in the list: when you became Mayor, how big your feast was and your highest wealth.{1}</span>",
+"</div>{0}<span class=\"small\">Cada partida aparece una vez en la lista: cuándo fuiste burgomaestre, lo grande que fue tu banquete y tu mayor patrimonio.{1}</span>"
+],
+"8cf2569d": [
+"On 1 January and 1 July {0} elects its Mayor. Whoever has the most reputation wins. {1} want the office too.",
+"El 1 de enero y el 1 de julio {0} elige a su burgomaestre. Gana quien tenga más reputación. {1} también quieren el cargo."
+],
+"0e7cfa9c": [
+"You are Mayor. Now you hold the great feast.",
+"Eres burgomaestre. Ahora darás el gran banquete."
+],
+"507a56c4": [
+"Under House, Race, you see how your reputation compares with the families and when the election is held.",
+"En Casa, Carrera, ves cómo está tu reputación frente a las familias y cuándo se vota."
+],
+"3a6f20ae": [
+"The great feast",
+"El gran banquete"
+],
+"3e1b2095": [
+"As Mayor you invite {0} to the great feast{1}. Whatever lies in the Kontor is served: at least {2}. More earns a better place on the leaderboard.",
+"Como burgomaestre invitas a {0} al gran banquete{1}. Se sirve lo que haya en el almacén: al menos {2}. Más te da un mejor puesto en la clasificación."
+],
+"b48b16bb": [
+"The town has celebrated; your name stands in the Book of the Town. If you play on, you can endow a monument.",
+"La ciudad lo ha celebrado y tu nombre está en el Libro de la Ciudad. Si sigues jugando, puedes donar un monumento."
+],
+"5221c079": [
+"Put {0} lasts of {1} in the Kontor",
+"Guarda {0} lasts de {1} en el almacén"
+],
+"ad445531": [
+"Buy {0} where it is cheap and store it in {1} (House tab, Kontor). On the feast day everything is served.",
+"Compra {0} donde esté barato y guárdalo en {1} (pestaña Casa, almacén). El día del banquete se sirve todo."
+],
+"de1880fb": [
+"Hold the great feast",
+"Da el gran banquete"
+],
+"00b6b4e2": [
+"The feast takes place on {0}, even if you are not in {1}.",
+"El banquete se celebra el {0}, aunque no estés en {1}."
+],
+"4e07d182": [
+"First the election, then the feast.",
+"Primero se vota, luego se celebra."
+],
+"28deeea7": [
+"<p>You start as a small pedlar with an old snekke. <b>Your goal:</b> rise from Pedlar to Mayor of {0} and hold the great feast. Trade brings you wealth and rank; sales in {1} bring reputation and offices.</p>",
+"<p>Empiezas como pequeño buhonero con una vieja esneca. <b>Tu objetivo:</b> pasar de buhonero a burgomaestre de {0} y dar el gran banquete. El comercio te da patrimonio y rango; las ventas en {1}, reputación y cargos.</p>"
+],
+"1fe9609a": [
+"<h3 class=\"ehead\">Leaderboard</h3>{0}<p class=\"small\">Whoever becomes Mayor earliest is at the top; then the feast and wealth count. Full list under Saved games.</p>",
+"<h3 class=\"ehead\">Clasificación</h3>{0}<p class=\"small\">Arriba está quien antes llega a burgomaestre; después cuentan el banquete y el patrimonio. Completa en Partidas.</p>"
+],
+"45069a88": [
+"The first Hanseatic Diet",
+"La primera Dieta Hanseática"
+],
+"d6e5d4b4": [
+"The councillors of the Hanseatic towns gather in Lübeck. From now on they decide together how to protect their merchants.",
+"Los regidores de las ciudades hanseáticas se reúnen en Lübeck. A partir de ahora deciden juntos cómo proteger a sus mercaderes."
+],
+"232152a5": [
+"Death knells ring in the lanes. Where the plague goes about, sailors are hard to find and the markets are empty.",
+"En las callejas doblan las campanas. Donde ronda la peste apenas hay marineros y los mercados están vacíos."
+],
+"3bcac408": [
+"A new wave of plague",
+"Una nueva ola de peste"
+],
+"30a95b6e": [
+"The plague is abroad again. Keep away from the stricken ports, or trade there in what they lack.",
+"La peste vuelve a rondar. Mantente lejos de los puertos afectados o comercia allí con lo que falta."
+],
+"55ad59b9": [
+"War with Denmark",
+"Guerra con Dinamarca"
+],
+"74ec023a": [
+"King Valdemar has sacked Visby. The Hansa is arming, Danish privateers make the Sound unsafe. Arm your ships.",
+"El rey Valdemar ha saqueado Visby. La Hansa se arma y los corsarios daneses hacen inseguro el Sund. Arma tus barcos."
+],
+"9fa2d46d": [
+"Denmark gives way. The Hansa receives the castles in Scania and free passage through the Sound. Every port celebrates.",
+"Dinamarca cede. La Hansa recibe los castillos de Escania y paso libre por el Sund. Todos los puertos lo celebran."
+],
+"682b10b2": [
+"The first winter",
+"El primer invierno"
+],
+"1979400f": [
+"Ice settles in the eastern ports, and voyages take longer. Some merchants wait for spring; whoever has stores sells dear now.",
+"El hielo cubre los puertos del este y los viajes se alargan. Algunos mercaderes esperan a la primavera; quien tiene almacén vende ahora caro."
+],
+"eace7155": [
+"The people on the quay know your name. Your convoy may now lead two ships, and the shipyard builds you a cog. Captains are waiting in the skippers' house.",
+"La gente del muelle conoce tu nombre. Tu convoy puede llevar ahora dos barcos y el astillero te construye una coca. En la casa de patrones esperan capitanes."
+],
+"ef135ac8": [
+"As a Merchant you lead three ships; the large shipyards build you a hulk, and towns offer you supply contracts.",
+"Como mercader llevas tres barcos; los grandes astilleros te construyen una urca y las ciudades te ofrecen contratos de suministro."
+],
+"7a0ccef4": [
+"Your ships are seen on every sea between Bruges and Novgorod. The Hanseatic Kontors open their doors to you.",
+"Tus barcos se ven en todos los mares entre Brujas y Nóvgorod. Las factorías hanseáticas te abren sus puertas."
+],
+"d3f43313": [
+"A Great merchant is one of the rich of the town. Great projects and endowments bring you honour.",
+"Un gran mercader es uno de los ricos de la ciudad. Las grandes obras y donaciones te dan honor."
+],
+"d226bfa2": [
+"Your trading house is among the first of the Hansa.",
+"Tu casa comercial está entre las primeras de la Hansa."
+],
+"7f9a7d9c": [
+"Your house is counted among the patricians of the Hansa.",
+"Tu casa se cuenta entre los patricios de la Hansa."
+],
+"6c62dae4": [
+"The council admits you as a Burgher. You may build a Kontor in {0} and take on the council's commissions.",
+"El concejo te admite como vecino. Puedes construir un almacén en {0} y aceptar encargos del concejo."
+],
+"448f054e": [
+"The guild admits you. With a branch in another town, your own convoys on trade routes open up, and you may build.",
+"El gremio te admite. Con una sucursal en otra ciudad se abren tus propios convoyes en rutas comerciales y puedes construir."
+],
+"e03f45b3": [
+"You sit on the council of {0}. You help set the tolls, and the families contesting the mayoralty with you show themselves.",
+"Tienes asiento en el concejo de {0}. Decides los aranceles con los demás y se dan a conocer las familias que te disputan el cargo de burgomaestre."
+],
+"570c8fc4": [
+"{0} becomes {1}{2}",
+"{0} llega a {1}{2}"
+],
+"08770f1e": [
+"{0} becomes {1}",
+"{0} llega a {1}"
+],
+"805e90a6": [
+"First victory at sea",
+"Primera victoria en el mar"
+],
+"e43bbdad": [
+"{0} strike their sails. The ports are talking about it.",
+"{0} arrían las velas. En los puertos se habla de ello."
+],
+"e11fc93a": [
+"The pirates",
+"Los piratas"
+],
+"82e6ea85": [
+"Your first store in a foreign town. Now you can send your own convoys on trade routes.",
+"Tu primer almacén en una ciudad ajena. Ahora puedes enviar tus propios convoyes por rutas comerciales."
+],
+"6a158c4c": [
+"Your first convoy",
+"Tu primer convoy"
+],
+"92b0b10d": [
+"A captain leads your ships on a fixed route and trades there himself. In the House tab you see where he is.",
+"Un capitán lleva tus barcos por una ruta fija y comercia allí por su cuenta. En Casa ves dónde está."
+],
+"2ba2e9c4": [
+"Your first workshop is working",
+"Tu primer taller funciona"
+],
+"fbf4b9bc": [
+"Every day it delivers a few goods to your Kontor in {0}.",
+"Cada día entrega un poco de mercancía a tu almacén en {0}."
+],
+"c4dbc706": [
+"{0} becomes Mayor",
+"{0} es burgomaestre"
+],
+"d864492b": [
+"You have done it: the council of {0} elects you Mayor. In {1} days you invite the whole town to the great feast.",
+"Lo has logrado: el concejo de {0} te elige burgomaestre. Dentro de {1} días invitarás a toda la ciudad al gran banquete."
+],
+"ffbb0201": [
+"The great feast in {0}",
+"El gran banquete en {0}"
+],
+"4d2b495b": [
+"{0} celebrates you, {1}.",
+"{0} te aclama, {1}."
+],
+"dd7374bc": [
+"The feast is meagre, but you remain Mayor.",
+"El banquete resulta pobre, pero sigues siendo burgomaestre."
+],
+"55543615": [
+"A memorial",
+"Un memorial"
+],
+"e24f9ea5": [
+"The monument stands. The Book of the Hansa closes with the name {0}.",
+"El monumento está en pie. El Libro de la Hansa se cierra con el nombre {0}."
+],
+"3dcdd6ac": [
+"Book of the Hansa",
+"Libro de la Hansa"
+],
+"935b5ff0": [
+"<div class=\"siegtxt\"><span class=\"init\">{0}</span><p>{1}, burgher and Mayor of {2}, trading house with {3} guilders of wealth and {4} honour. {5}</p>{6}</div>",
+"<div class=\"siegtxt\"><span class=\"init\">{0}</span><p>{1}, vecino y burgomaestre de {2}, casa comercial con {3} florines de patrimonio y {4} de honor. {5}</p>{6}</div>"
+],
+"3d64cdff": [
+"<div class=\"sneu\"><span class=\"k\">New in the House tab</span>{0}</div>",
+"<div class=\"sneu\"><span class=\"k\">Nuevo en la pestaña Casa</span>{0}</div>"
+],
+"72c87c42": [
+"Skippers' house and captains",
+"Casa de patrones y capitanes"
+],
+"f9f67339": [
+"Council commissions",
+"Encargos del concejo"
+],
+"839a727b": [
+"Workshops and building",
+"Talleres y obras"
+],
+"c39e5e0e": [
+"Branches and trade routes",
+"Sucursales y rutas comerciales"
+],
+"2643b8d5": [
+"Supply contracts and Hanseatic Kontors",
+"Contratos de suministro y factorías hanseáticas"
+],
+"4edb0ba4": [
+"Hanseatic Diet and tolls",
+"Dieta Hanseática y aranceles"
+],
+"d39f1487": [
+"Race for the mayoralty",
+"Carrera por el cargo de burgomaestre"
+],
+"e85b521d": [
+"New for your trading house: {0}. Find it in the House tab.",
+"Novedad para tu casa comercial: {0}. Está en la pestaña Casa."
+],
+"8a9e8256": [
+"<em class=\"hneu\">New</em>",
+"<em class=\"hneu\">Nuevo</em>"
+],
+"3783b0b6": [
+"<span><b>As {0}</b> you unlock: {1}.</span>",
+"<span><b>Como {0}</b> se abre: {1}.</span>"
+],
+"a750eb1e": [
+"<button class=\"btn primary\" type=\"button\" data-act=\"bd-go\"{0}><b>Fight the round</b><small>{1}</small></button>",
+"<button class=\"btn primary\" type=\"button\" data-act=\"bd-go\"{0}><b>Luchar la ronda</b><small>{1}</small></button>"
+],
+"7d304a99": [
+"{0} of {1} strength played",
+"{0} de {1} de fuerza jugada"
+],
+"61915df5": [
+"no card played yet",
+"aún no hay carta jugada"
+],
+"8dab7089": [
+"<button class=\"btn\" type=\"button\" data-act=\"flee\"><b>Flee</b><small>{0}</small></button><button class=\"btn primary\" type=\"button\" data-act=\"fight\"><b>Fight</b><small>practice fight</small></button>",
+"<button class=\"btn\" type=\"button\" data-act=\"flee\"><b>Huir</b><small>{0}</small></button><button class=\"btn primary\" type=\"button\" data-act=\"fight\"><b>Luchar</b><small>combate de práctica</small></button>"
+],
+"f17c6d1f": [
+"steadier pointer",
+"aguja más lenta"
+],
+"85b14cd7": [
+"Your first pirate, a light enemy. Tap “Fight”, and your captain will guide you through the battle.",
+"Tu primer pirata, un enemigo ligero. Toca «Luchar» y tu capitán te guiará en el combate."
+],
+"5cf31ba0": [
+"Choose a manoeuvre. At long and medium range your crossbows shoot; close in, stones fly and you can board. To start: Close in.",
+"Elige una maniobra. A larga y media distancia disparan tus ballestas; de cerca vuelan piedras y puedes abordar. Para empezar: Acercarse."
+],
+"d7faf404": [
+"Below the picture the pointer runs across their ship. Tap the bar or “Fire!” when it is in the light field; the red spot is a direct hit. One tap per squad.",
+"Bajo la imagen la aguja recorre su barco. Toca la barra o «¡Fuego!» cuando esté en el campo claro; lo rojo es un impacto de lleno. Un toque por escuadra."
+],
+"3b1f753a": [
+"Well done. Every hit costs one third of their ship a point: the castle carries their return fire, the bow their boarders, the middle their sail.",
+"Bien hecho. Cada impacto cuesta un punto a un tercio de su barco: el castillo sostiene su fuego, la proa sus abordadores, el centro su vela."
+],
+"4fb7563b": [
+"Tap a card, then a section; the gold outline marks its home section. Play cards worth two strength, then tap “Fight the round”.",
+"Toca una carta y luego una sección; el borde dorado marca su sección propia. Juega cartas por dos de fuerza y toca «Luchar la ronda»."
+],
+"47f37fa5": [
+"They are fleeing. Pursuit brings more booty; letting them go is safe.",
+"Huyen. Perseguirlos da más botín; dejarlos ir es seguro."
+],
+"1d512d15": [
+"Done! From now on pirates come at random, light and heavy alike. Arm yourself at the shipyard with crossbows, armour and grappling hooks.",
+"¡Hecho! A partir de ahora los piratas llegan al azar, ligeros y fuertes. Ármate en el astillero con ballestas, armaduras y garfios."
+],
+"31bd5e9f": [
+"<p class=\"coach\"><b>Practice:</b> {0}</p>",
+"<p class=\"coach\"><b>Práctica:</b> {0}</p>"
+],
+"2c3d4b97": [
+"<p class=\"small\" style=\"margin:0 0 6px\">Each round you draw four cards from crew and equipment and play cards worth up to two strength into the sections bow, middle and castle. Their moves lie open there. Attack cards count one and a half times in their home section (gold outline); shield wall and pavises only work against the move in their own section. ",
+"<p class=\"small\" style=\"margin:0 0 6px\">Cada ronda robas cuatro cartas de tripulación y equipo y juegas cartas por hasta dos de fuerza en las secciones proa, centro y castillo. Allí están a la vista sus jugadas. Las cartas de ataque valen una vez y media en su sección propia (borde dorado); el muro de escudos y los paveses solo actúan contra la jugada de su propia sección. "
+],
+"283c84d1": [
+"What a section yields moves the deck bar. {0} After three rounds the deck bar decides: from the right line they strike their flag, below the left one {1}, in between the ships separate. Grappling hooks and fire pots are used up; armour and pavises can break.</p></details>",
+"Lo que da cada sección mueve la barra de cubierta. {0} Tras tres rondas decide la barra: desde la raya derecha arrían la bandera, por debajo de la izquierda {1}, entre ambas los barcos se separan. Los garfios y las ollas incendiarias se gastan; armaduras y paveses pueden romperse.</p></details>"
+],
+"93bb571f": [
+"<details class=\"more\" data-det=\"enchelp\"{0}><summary><span>{1}How the battle works</span><i class=\"chev\" aria-hidden=\"true\"></i></summary><p class=\"small\" style=\"margin:0 0 6px\">Each round: choose a manoeuvre, then your crew shoots. Their ship has three thirds: the bow with the boarders, the middle with the sail, the castle with the shooters. Below the picture a pointer runs across the hit bar; tap once for each squad when it is in the field. The red spot is a weak point (direct hit). Every weapon has its own field and speed: the crossbow hits bow and castle, stones everything but only close, fire arrows the middle, the trebuchet throws once and heavily. The heavier the enemy, the farther away and whoever has the windward side, the faster the pointer runs; holding course and an experienced captain slow it. With their castle shot up, their return fire is weak; without boarders they cannot board; with a torn sail they can hardly flee. If their fighting spirit falls below the line, they want to flee or surrender. Boarding is only possible close in, with cards in three sections.</p></details>",
+"<details class=\"more\" data-det=\"enchelp\"{0}><summary><span>{1}Cómo funciona el combate</span><i class=\"chev\" aria-hidden=\"true\"></i></summary><p class=\"small\" style=\"margin:0 0 6px\">Cada ronda: elige una maniobra y luego dispara tu gente. Su barco tiene tres tercios: la proa con los abordadores, el centro con la vela y el castillo con los tiradores. Bajo la imagen una aguja recorre la barra de tiro; toca una vez por escuadra cuando esté en el campo. Lo rojo es un punto débil (impacto de lleno). Cada arma tiene su campo y su ritmo: la ballesta alcanza proa y castillo, las piedras todo pero solo de cerca, las flechas incendiarias el centro y el trabuquete tira una vez y fuerte. Cuanto más fuerte el enemigo, más lejos y quien tenga el barlovento, más rápido corre la aguja; mantener el rumbo y un capitán experto la frenan. Con su castillo destrozado su fuego es débil; sin abordadores no pueden abordar; con la vela rota apenas pueden huir. Si su moral cae por debajo de la raya, quieren huir o se rinden. Abordar solo es posible de cerca, con cartas en tres secciones.</p></details>"
+],
+"512d2535": [
+"Your ships",
+"Tus barcos"
+],
+"8b910b00": [
+"Here are the ships of your convoy with their hull. After a storm or a fight the shipyard repairs it; below 40 % every voyage becomes dangerous.",
+"Aquí están los barcos de tu convoy con su casco. Tras una tormenta o un combate el astillero lo repara; por debajo del 40 % todo viaje es peligroso."
+],
+"60cc4c88": [
+"Without enough sailors you cannot cast off. Every sailor costs wages but fights along when it comes to boarding.",
+"Sin suficientes marineros no zarpas. Cada marinero cuesta soldada, pero lucha cuando llega el abordaje."
+],
+"4afdd2d5": [
+"Around day 30 the first pirate lies in wait for you. The first fight is practice; after that it gets serious: crossbows shoot, armour and pavises protect when boarding, hooks hold the enemy fast. Every weapon needs a slot.",
+"Hacia el día 30 te acecha el primer pirata. El primer combate es de práctica; después va en serio: las ballestas disparan, armaduras y paveses protegen en el abordaje y los garfios sujetan al enemigo. Cada arma necesita un hueco."
+],
+"85bc29af": [
+"The shipyard takes orders for new ships; when finished they sail to the moorings at your home seat. From Trader it builds you a cog, from Merchant a hulk.",
+"El astillero acepta encargos de barcos nuevos; una vez terminados navegan al amarradero de tu sede. Desde tratante te construye una coca; desde mercader, una urca."
+],
+"c6d77207": [
+"<div class=\"ytour\" role=\"note\"><span class=\"k\">The shipyard · {0} of {1}</span><b>{2}</b><p>{3}</p>",
+"<div class=\"ytour\" role=\"note\"><span class=\"k\">El astillero · {0} de {1}</span><b>{2}</b><p>{3}</p>"
+],
+"e5902b16": [
+"<div class=\"ybtns\"><button class=\"linkbtn\" type=\"button\" data-ytour=\"skip\">End the tour</button><button class=\"ybtn on\" type=\"button\" data-ytour=\"next\">{0}</button></div></div>",
+"<div class=\"ybtns\"><button class=\"linkbtn\" type=\"button\" data-ytour=\"skip\">Terminar la visita</button><button class=\"ybtn on\" type=\"button\" data-ytour=\"next\">{0}</button></div></div>"
+],
+"aeff967b": [
+"Next",
+"Siguiente"
+],
+"5e8d360b": [
+"Got it",
+"Entendido"
+],
+"cd270e42": [
+"<div class=\"yrow yship\"{0}>{1}<span class=\"yl\"><b>{2}{3}</b><span class=\"small\">{4} · {5} lasts · hull {6} %</span>",
+"<div class=\"yrow yship\"{0}>{1}<span class=\"yl\"><b>{2}{3}</b><span class=\"small\">{4} · {5} lasts · casco {6} %</span>"
+],
+"12894fa1": [
+"<div class=\"yrow\" data-tour=\"crew\"><span class=\"yl\"><b>{0} of {1} sailors</b><span class=\"small\">at least {2} to cast off; they sail and fight when boarding</span></span><span class=\"ybtns\">{3}{4}</span></div>",
+"<div class=\"yrow\" data-tour=\"crew\"><span class=\"yl\"><b>{0} de {1} marineros</b><span class=\"small\">al menos {2} para zarpar; navegan y luchan en el abordaje</span></span><span class=\"ybtns\">{3}{4}</span></div>"
+]
+}
