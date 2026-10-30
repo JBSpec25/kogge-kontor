@@ -9698,7 +9698,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       dane:{stripe:'#b5262c', flag:'#b5262c', flag2:'#f2e6c8', sail:SAILC, wood:WOOD, wood2:WOOD2, cross:true},
       prey:{stripe:null, flag:'#b5262c', flag2:'#f2e6c8', sail:'#e8dcc0', wood:WOOD, wood2:WOOD2, cross:true}
     };
-    const variant = v => v === true ? VAR.pir : v === 'd' ? VAR.dane : v === 'm' ? VAR.prey : VAR.own;
+    const variant = v => v && typeof v === 'object' ? v : v === true ? VAR.pir : v === 'd' ? VAR.dane : v === 'm' ? VAR.prey : VAR.own;
     const stroke = (d, col, w, op) => `<path d="${d}" fill="none" stroke="${col || INK}" stroke-width="${w || 1}"${op != null ? ` opacity="${op}"` : ''} stroke-linecap="round" stroke-linejoin="round"/>`;
     const fill = (d, col, sw, op) => `<path d="${d}" fill="${col}"${sw ? ` stroke="${INK}" stroke-width="${sw}" stroke-linejoin="round"` : ''}${op != null ? ` opacity="${op}"` : ''}/>`;
     // Zinnenkranz
@@ -9890,7 +9890,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     };
     const KINDS = ['matrose', 'steuermann', 'ausguck', 'schuetze', 'spiess', 'kapitaen'];
     const specs = new Map();
-    function spec(type, v) { const key = `${type}|${v}`; let s = specs.get(key); if (!s) { const V = variant(v); s = (DEF[type] || DEF.kogge)(V); s.V = V; s.f = s.L * U / (s.hull[1] - s.hull[0]); s.cx = (s.hull[0] + s.hull[1]) / 2; specs.set(key, s); } return s; }
+    function spec(type, v) { const key = `${type}|${v && typeof v === 'object' ? v.key : v}`; let s = specs.get(key); if (!s) { const V = variant(v); s = (DEF[type] || DEF.kogge)(V); s.V = V; s.f = s.L * U / (s.hull[1] - s.hull[0]); s.cx = (s.hull[0] + s.hull[1]) / 2; specs.set(key, s); } return s; }
 
     // ───── Bilder: Schiff (ohne bewegte Teile) und Figuren ─────
     // Rückgabe wie artSprite: Ausschnitt (box) in Bildeinheiten der Szene, Wasserlinie bei 0, Mitte des Rumpfs bei 0
@@ -9973,7 +9973,22 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       // Flagge sinkt am Mast: Ergeben
       if (o.lost) { const [mx, my] = S.mastTop, fy = my + o.lost * 90; ctx.fillStyle = '#1c1714'; ctx.beginPath(); ctx.moveTo(mx, fy); ctx.lineTo(mx - 26, fy + 8); ctx.lineTo(mx, fy + 16); ctx.closePath(); ctx.fill(); ctx.strokeStyle = '#d8c7a0'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, fy + 16); ctx.stroke(); }
     }
-    return {DEF, spec, shipMake, figMake, people, drawLive, KINDS, U, INK};
+    // Dieselben Pfade als SVG (für ruhende Bilder außerhalb der Leinwand)
+    function primsSvg(prims, cid) {
+      return prims.map((p, i) => {
+        if (p.clip) { const id = `${cid}c${i}`; return `<defs><clipPath id="${id}"><path d="${p.clip}"/></clipPath></defs><g clip-path="url(#${id})">${primsSvg(p.items, id)}</g>`; }
+        return `<path d="${p.d}" fill="${p.f || 'none'}"${p.s ? ` stroke="${p.s}" stroke-width="${p.w || 1}" stroke-linecap="round" stroke-linejoin="round"` : ''}${p.o != null ? ` opacity="${p.o}"` : ''}/>`;
+      }).join('');
+    }
+    // Ruhendes Schiff mit gesetzten Segeln und Wimpel im Zeichenraum 400 × 262 (Bug rechts); v: Fassung oder eigene Farben
+    function shipSvg(type, v, cid) {
+      const S = spec(type, v), V = S.V;
+      let sails = '';
+      S.sails.forEach((sd, i) => { const sail = sd.sq ? squareSail(sd.sq[0], sd.sq[1], sd.sq[2], sd.sq[3], sd.sq[4], sd.sq[5] ? Object.assign({}, V, {stripe:null}) : V, false) : lateenSail(sd.lat[0], sd.lat[1], sd.lat[2], 7, V, true); sails += primsSvg(sail.prims, `${cid}s${i}`); });
+      const [px, py, len] = S.pennant;
+      return S.back + sails + `<path d="${pennantPath(px, py, len, 0.6)}" fill="${V.flag}" stroke="${INK}" stroke-width=".9" stroke-linejoin="round"/>` + S.front;
+    }
+    return {DEF, spec, shipMake, shipSvg, figMake, people, drawLive, KINDS, U, INK};
   })();
   // ───────── Ab Version 55: Wirkungen des Gefechts auf der gemalten Szene ─────────
   // Die gemalte Szene (Version 51) zeichnet Fahrt und Gefecht; Schäden an den Dritteln, Leute an Bord und die sinkende Flagge
@@ -12136,30 +12151,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       if (sn) s += [[186, 196, 30], [262, 210, 24], [312, 190, 22]].map(([x, y, w]) => F(`M${x} ${y} l${w * .18} -4 l${w * .5} -1 l${w * .32} 4 v2.4 l-${w * .3} 2.6 l-${w * .52} .4 l-${w * .18} -3 z`, '#b8cde0', .7) + F(`M${x} ${y} l${w * .18} -4 l${w * .5} -1 l${w * .32} 4 l-${w * .3} 2.4 l-${w * .52} .3 z`, '#f4f8fc', .6) + Ln(`M${x - 4} ${y + 6} q4 -2 8 0 M${x + w - 2} ${y + 7} q4 -2 8 0`, .6, '#c9dcf4')).join('');
       return s;
     }
-    // Kogge in Buchmalerei, Bug rechts, am Kai festgemacht
+    // Kogge in Buchmalerei: die Holzschnitt-Kogge der Seeszene (InkShips) in den Farben der Malerei, Streifen und Wimpel in der Hausfarbe, am Poller festgemacht
+    const ILLUM_SHIP = {key:'illum', stripe:'#HAUS#', flag:'#HAUS#', flag2:WHITE, sail:WHITE, wood:'#b08350', wood2:'#8a5a36'};
     function cog(x, house, ID) {
-      const id = 'k' + ID, by = 204, hullTop = 186;
-      // Rumpf mit schräg gestelltem Achtersteven (von x+3 oben nach x+16 unten), daran hängt das Ruder
-      const hull = `M${x + 3} ${hullTop} H${x + 118} L${x + 132} ${hullTop - 10} L${x + 124} ${by - 2} Q${x + 70} ${by + 8} ${x + 16} ${by - 2} Z`;
-      const sail = `M${x + 40} 108 Q${x + 66} 104 ${x + 92} 108 L${x + 95} 162 Q${x + 66} 167 ${x + 37} 162 Z`;
-      let s = `<defs><clipPath id="${id}s"><path d="${sail}"/></clipPath><clipPath id="${id}h"><path d="${hull}"/></clipPath></defs>`;
-      // Takelage
-      s += Ln(`M${x + 66} 96 L${x + 20} ${hullTop - 18} M${x + 66} 96 L${x + 30} ${hullTop - 2} M${x + 66} 96 L${x + 104} ${hullTop - 2} M${x + 66} 96 L${x + 120} ${hullTop - 18} M${x + 66} 86 L${x + 131} ${hullTop - 12}`, .55, INK, ' opacity=".9"');
-      s += F(`M${x + 64.8} ${hullTop} V76 H${x + 67.2} V${hullTop} Z`, '#7a5032', .7) + `<circle cx="${x + 66}" cy="75.4" r="1.6" fill="#8a5a36" stroke="${INK}" stroke-width=".6"/>` + F(`M${x + 59} 86 H${x + 73} L${x + 71} 94 H${x + 61} Z`, '#8a5a36', .7) + Ln(`M${x + 62} 87 V93 M${x + 66} 87 V93 M${x + 70} 87 V93`, .5, '#5a3a22');
-      s += F(`M${x + 66} 79 c6 -2 12 2 20 0 c-3 2 -3 4 0 6 c-8 2 -14 -2 -20 0 z`, house, .6);
-      s += Ln(`M${x + 38} 107 Q${x + 66} 102 ${x + 94} 107`, 2.4, '#5a3a22');
-      s += F(sail, WHITE, .9) + `<g clip-path="url(#${id}s)">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${x + 41 + i * 9.6}" y="100" width="4.8" height="70" fill="${house}"/>`).join('')}<path d="M${x + 37} 155 H${x + 96}" stroke="${INK}" stroke-width=".6"/><rect x="${x + 37}" y="100" width="12" height="70" fill="${INK}" opacity=".1"/></g>` + F(sail, 'none', .9);
-      // Kastelle
-      s += F(`M${x + 2} ${hullTop - 18} H${x + 30} V${hullTop} H${x + 4} Z`, '#8a5a36', .9) + Array.from({length:5}, (_, k) => F(`M${x + 3 + k * 5.6} ${hullTop - 18} v-4 h3.4 v4`, '#8a5a36', .6)).join('');
-      s += F(`M${x + 104} ${hullTop - 16} H${x + 128} L${x + 124} ${hullTop - 2} H${x + 104} Z`, '#8a5a36', .9) + Array.from({length:4}, (_, k) => F(`M${x + 105 + k * 5.8} ${hullTop - 16} v-4 h3.4 v4`, '#8a5a36', .6)).join('');
-      // Rumpf mit Klinkerplanken
-      s += F(hull, '#7a4a28', 1.1) + `<g clip-path="url(#${id}h)">${[0, 1, 2, 3].map(k => Ln(`M${x} ${hullTop + 3 + k * 4.4} Q${x + 70} ${hullTop + 8 + k * 4.4} ${x + 132} ${hullTop - 4 + k * 4.4}`, .7, '#c99a5e')).join('')}<rect x="${x}" y="${hullTop}" width="22" height="30" fill="${INK}" opacity=".15"/></g>`;
-      // Heckruder hinter dem Achtersteven: Schaft bis über den Rumpf, Pinne ins Achterkastell, Blatt nach unten breiter, zwei Beschläge
-      const st = t => [n1(x - 2 + 15 * t), n1(hullTop - 10 + 32 * t)], [a1, a2] = st(.42), [b1, b2] = st(1);
-      s += F(`M${a1} ${a2} L${b1} ${b2} L${x + 1} ${by + 5} L${x - 6} ${hullTop + 12} Z`, '#6b4226', .9) + Ln(`M${x - 3.6} ${hullTop + 14} L${x + 7} ${hullTop + 13.4}`, .6, '#9a6a40');
-      s += Ln(`M${x - 2} ${hullTop - 10} L${b1} ${b2}`, 2.2, '#4a2c18') + F(`M${x + 4.6} ${hullTop - 11.4} h3.6 v4 h-3.6 z`, '#2a2230', .5) + Ln(`M${x - 3.4} ${hullTop - 9.4} L${x + 6.4} ${hullTop - 9.4}`, 1.6, '#4a2c18');
-      // Tau zum Poller
-      s += Ln(`M${x + 124} ${hullTop - 13} Q${x + 130} ${QFRONT - 1} 153.6 ${QFRONT - 7.4}`, .9, '#7a5a36') + Ln(`M153.4 ${QFRONT - 8.6} q2.6 1.6 5.2 0 M153.4 ${QFRONT - 6.6} q2.6 1.6 5.2 0`, .8, '#7a5a36');
+      const f = 0.4, y = WATER + 12 - 230 * f;
+      // unter der Wasserlinie abgeschnitten, das Wasser liegt dahinter
+      let s = `<defs><clipPath id="wl${ID}"><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${n1(WATER + 12 - Y0)}"/></clipPath></defs><g clip-path="url(#wl${ID})"><g transform="translate(${x} ${n1(y)}) scale(${f})">${InkShips.shipSvg('kogge', ILLUM_SHIP, 'il' + ID).split('#HAUS#').join(house)}</g></g>`;
+      // Tau vom Bug zum Poller
+      s += Ln(`M${n1(x + 372 * f)} ${n1(y + 150 * f)} Q${n1(x + 390 * f)} ${QFRONT - 1} 153.6 ${QFRONT - 7.4}`, .9, '#7a5a36') + Ln(`M153.4 ${QFRONT - 8.6} q2.6 1.6 5.2 0 M153.4 ${QFRONT - 6.6} q2.6 1.6 5.2 0`, .8, '#7a5a36');
       return s;
     }
     // Fracht auf dem Kai, je Stadt
@@ -12194,7 +12193,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     function scene(o) {
       const ID = 'z' + (++uid), W = 360, H = 262, r = rnd(o.seed || 7), sn = o.season === 'winter';
       const hcol = P.AV.colStrong[o.player.a.col] || RED;
-      let s = `<svg viewBox="0 0 ${W} ${H}" class="scene" aria-hidden="true"><defs>
+      let s = `<svg viewBox="0 0 ${W} ${H}" class="illum" aria-hidden="true"><defs>
         <linearGradient id="g${ID}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d27a"/><stop offset=".5" stop-color="#d9ac45"/><stop offset="1" stop-color="#b8862c"/></linearGradient>
         <pattern id="d${ID}" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0H14V14" fill="none" stroke="#9a6c1e" stroke-width=".7"/><circle cx="7" cy="7" r="1.3" fill="#9a6c1e"/></pattern>
         <pattern id="br${ID}" width="8" height="5" patternUnits="userSpaceOnUse"><path d="M0 0.25H8M0 2.75H8M2 0V2.5M6 2.5V5" stroke="#6b2a1c" stroke-width=".35"/></pattern>
@@ -12230,7 +12229,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       if (o.mate) s += person(o.mate.a, {x:171, y:QUAY + 16 - 301 * .3, s:.3, rank:0, pose:'ruhig'});
       s += person(o.player.a, {x:201, y:QUAY + 17 - 301 * .43, s:.43, rank:o.rank, pose:o.pose || 'zeigen'});
       // Wasser und Kogge
-      s += water(sn, r) + cog(22, hcol, ID);
+      s += water(sn, r) + cog(2, hcol, ID);
       s += `</g><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="none" stroke="${INK}" stroke-width="1.4"/><rect x="${X0 + 2.4}" y="${Y0 + 2.4}" width="${X1 - X0 - 4.8}" height="${Y1 - Y0 - 4.8}" fill="none" stroke="#f3dc8e" stroke-width=".9"/>`;
       // Perlen im Rahmen
       for (let x = 8; x <= W - 8; x += 9) s += `<circle cx="${x}" cy="6.5" r="1.1" fill="${WHITE}"/>`;
@@ -13926,7 +13925,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
 
 <script>
-window.KK_BUILD = '527e8dff9a';
+window.KK_BUILD = '2af90eda52';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
