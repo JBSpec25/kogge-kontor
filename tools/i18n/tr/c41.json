@@ -1,0 +1,358 @@
+{
+"2cab2881": [
+"{0} held back, below {1} G",
+"{0} retenido, por debajo de {1} G"
+],
+"2a12d280": [
+"{0} above {1} G",
+"{0} por encima de {1} G"
+],
+"082471dc": [
+"<svg ",
+"<svg "
+],
+"2641a11c": [
+"<svg x=\"270\" y=\"118\" width=\"370\" height=\"242\" ",
+"<svg x=\"270\" y=\"118\" width=\"370\" height=\"242\" "
+],
+"0e3a2030": [
+"<h1 id=\"wiz-title\">Origin and house colour</h1><p>Where do you come from, and in which colour do you bear your seal, sails and flags?</p>",
+"<h1 id=\"wiz-title\">Origen y color de la casa</h1><p>¿De dónde vienes y en qué color llevas tu sello, tus velas y tus banderas?</p>"
+],
+"2168f625": [
+"<div class=\"wseal\">{0}<span class=\"small\">Your house seal: your portrait in wax of your house colour. It stands on your charters and in the Book of the Town.</span></div>",
+"<div class=\"wseal\">{0}<span class=\"small\">Tu sello de la casa: tu retrato en cera del color de tu casa. Figura en tus cartas y en el Libro de la Ciudad.</span></div>"
+],
+"f44019e3": [
+"Trading house",
+"Casa comercial"
+],
+"cb055234": [
+"Your house seal",
+"Tu sello de la casa"
+],
+"2bbc4c6f": [
+"<dt>House seal</dt><dd>{0}</dd><dt>Origin</dt><dd>{1}: {2}</dd>",
+"<dt>Sello de la casa</dt><dd>{0}</dd><dt>Origen</dt><dd>{1}: {2}</dd>"
+],
+"8a0a8f6c": [
+"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"140\" height=\"140\" ",
+"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"140\" height=\"140\" "
+],
+"f88c6939": [
+"at sea",
+"en el mar"
+],
+"20ca38cb": [
+"<div class=\"hd\"><div class=\"hdate\" aria-label=\"Date {0}\"><b>{1}</b><small>Anno {2}{3}</small></div>",
+"<div class=\"hd\"><div class=\"hdate\" aria-label=\"Fecha {0}\"><b>{1}</b><small>Año {2}{3}</small></div>"
+],
+"77399a87": [
+"<div class=\"hpurse\" aria-label=\"Chest {0} guilders\">{1}<div><b class=\"{2}\">{3}</b><small>guilders in the chest</small></div></div>",
+"<div class=\"hpurse\" aria-label=\"Arcón {0} florines\">{1}<div><b class=\"{2}\">{3}</b><small>florines en el arcón</small></div></div>"
+],
+"5e4abb52": [
+"<button class=\"wline\" type=\"button\" data-act=\"rank\" aria-label=\"{0}, wealth {1} guilders{2}: show your next goal\">",
+"<button class=\"wline\" type=\"button\" data-act=\"rank\" aria-label=\"{0}, patrimonio {1} florines{2}: ver tu próxima meta\">"
+],
+"ef59f66f": [
+", {0} from {1}",
+", {0} desde {1}"
+],
+"9adae711": [
+"<span class=\"wl\"><span><em>{0}</em><i> · Wealth</i> <b>{1}</b></span><span>{2}</span></span>",
+"<span class=\"wl\"><span><em>{0}</em><i> · Patrimonio</i> <b>{1}</b></span><span>{2}</span></span>"
+],
+"db22562f": [
+"{0} from <b>{1}</b>",
+"{0} desde <b>{1}</b>"
+],
+"f4e62f17": [
+"highest rank",
+"rango más alto"
+],
+"13dd6d7f": [
+"<div class=\"mslots\" role=\"img\" aria-label=\"Hold {0} of {1} lasts\"><span class=\"ml\">Hold <b>{2}</b> of <b>{3}</b> lasts{4}</span><span class=\"sl\" style=\"--n:{5}\">{6}</span></div>",
+"<div class=\"mslots\" role=\"img\" aria-label=\"Bodega {0} de {1} lasts\"><span class=\"ml\">Bodega <b>{2}</b> de <b>{3}</b> lasts{4}</span><span class=\"sl\" style=\"--n:{5}\">{6}</span></div>"
+],
+"ef4b7d10": [
+"<div class=\"mhead\"><h2>Market of {0}</h2>",
+"<div class=\"mhead\"><h2>Mercado de {0}</h2>"
+],
+"477f6bd3": [
+" of the Hansa",
+" de la Hansa"
+],
+"891a4828": [
+"Hanseatic Diet",
+"Dieta Hanseática"
+],
+"920c16c3": [
+"Race",
+"Carrera"
+],
+"dda79baa": [
+"Great projects",
+"Grandes obras"
+],
+"af473d75": [
+"Contracts and money",
+"Contratos y dinero"
+],
+"8c105d00": [
+"{0} of {1} lasts{2}",
+"{0} de {1} lasts{2}"
+],
+"6e58e5f8": [
+"next on 24 June",
+"próxima el 24 de junio"
+],
+"0261925d": [
+"<p class=\"small\">For this you first need a Kontor in your home seat.</p>",
+"<p class=\"small\">Para esto necesitas primero un almacén en tu sede.</p>"
+],
+"94276d9c": [
+"<i class=\"hdot\" aria-label=\"due\"></i>",
+"<i class=\"hdot\" aria-label=\"pendiente\"></i>"
+],
+"2f3493cf": [
+"<div class=\"hhead\"><div class=\"port\">{0}</div><div><h2>Trading house {1}</h2><span class=\"sub2\">Home seat {2} · {3}{4}</span></div></div>",
+"<div class=\"hhead\"><div class=\"port\">{0}</div><div><h2>Casa comercial {1}</h2><span class=\"sub2\">Sede {2} · {3}{4}</span></div></div>"
+],
+"b9f63592": [
+"<p class=\"note\">{0} <span>Reputation comes from sales here, especially of goods the town needs, and from council commissions, workshops, buildings and victories over pirates.</span></p>",
+"<p class=\"note\">{0} <span>La reputación llega con las ventas aquí, sobre todo de mercancías que la ciudad necesita, y con los encargos del concejo, los talleres, las obras y las victorias sobre piratas.</span></p>"
+],
+"9fade387": [
+"Next office: <b>{0}</b> from <b>{1}</b> reputation, you have <b>{2}</b>.",
+"Próximo cargo: <b>{0}</b> desde <b>{1}</b> de reputación; tienes <b>{2}</b>."
+],
+"1609363f": [
+"You have reached the highest office, with <b>{0}</b> reputation.",
+"Has alcanzado el cargo más alto, con <b>{0}</b> de reputación."
+],
+"8f93a867": [
+"<div class=\"priv\"><div><i></i><b>Citizenship</b>in {0} buy 5 % cheaper, sell 5 % dearer</div><div><i></i><b>{1}</b>{2}</div></div>",
+"<div class=\"priv\"><div><i></i><b>Ciudadanía</b>en {0} compras un 5 % más barato y vendes un 5 % más caro</div><div><i></i><b>{1}</b>{2}</div></div>"
+],
+"923cc19a": [
+"<p class=\"small awayline\">{0} What you can only do on the spot, such as storing goods or taking commissions, is done in {1}.{2}</p>",
+"<p class=\"small awayline\">{0} Lo que solo puedes hacer en persona, como almacenar o aceptar encargos, se hace en {1}.{2}</p>"
+],
+"609527a2": [
+"<h2 class=\"fh\">Your home seat</h2><div class=\"hindex\">{0}</div>",
+"<h2 class=\"fh\">Tu sede</h2><div class=\"hindex\">{0}</div>"
+],
+"af3f5f9c": [
+"<span class=\"fcap\">{0}<span>Captain {1}</span></span><span class=\"tally\">Trade {2} · Combat {3}</span>",
+"<span class=\"fcap\">{0}<span>Capitán {1}</span></span><span class=\"tally\">Comercio {2} · Combate {3}</span>"
+],
+"df677694": [
+"<em class=\"rep{0}\">Report</em>",
+"<em class=\"rep{0}\">Informe</em>"
+],
+"a6127960": [
+"{0}<span>Captain {1}</span>",
+"{0}<span>Capitán {1}</span>"
+],
+"a95d8216": [
+"{0}<span>Your own convoy</span>",
+"{0}<span>Tu propio convoy</span>"
+],
+"20c5d9af": [
+"<span class=\"rt\">{0}<i>{1} of {2} lasts loaded</i></span></span></button>",
+"<span class=\"rt\">{0}<i>{1} de {2} lasts cargados</i></span></span></button>"
+],
+"79310285": [
+"lies in {0}",
+"está en {0}"
+],
+"eb289c35": [
+"at sea bound for {0}",
+"en el mar rumbo a {0}"
+],
+"6e660287": [
+"<h2 class=\"fh\">Your fleet <small>{0}{1} G a day</small></h2>",
+"<h2 class=\"fh\">Tu flota <small>{0}{1} G al día</small></h2>"
+],
+"eb253a2d": [
+"<p class=\"small fnote\">Convoys of your own on trade routes open up with your first branch (from {0}, {1} guilders, in the Town tab of another port). Captains lead them and trade there themselves.</p>",
+"<p class=\"small fnote\">Los convoyes propios en rutas comerciales se abren con tu primera sucursal (desde {0}, {1} florines, en la pestaña Ciudad de otro puerto). Los capitanes los dirigen y comercian allí por su cuenta.</p>"
+],
+"b1e11798": [
+"<button class=\"stamp\" type=\"button\" data-h=\"rnew\"{0}>Form a new convoy</button>{1}",
+"<button class=\"stamp\" type=\"button\" data-h=\"rnew\"{0}>Formar un convoy nuevo</button>{1}"
+],
+"9931fe70": [
+"<span class=\"small fnote\">For that you need a free captain from the skippers’ house{0}.</span>",
+"<span class=\"small fnote\">Para ello necesitas un capitán libre de la casa de patrones{0}.</span>"
+],
+"42c136c7": [
+" in {0}",
+" de {0}"
+],
+"67830a26": [
+"Moorings",
+"Amarradero"
+],
+"3c63b38f": [
+"{0} of {1}{2}",
+"{0} de {1}{2}"
+],
+"f3b221eb": [
+" · {0} free",
+" · {0} libres"
+],
+"e55406cd": [
+"none yet",
+"todavía ninguno"
+],
+"3e3abaad": [
+"in {0}",
+"en {0}"
+],
+"83a7748c": [
+"<p class=\"small\">No captains yet. You hire them at the skippers’ house in {0}.</p>",
+"<p class=\"small\">Todavía no hay capitanes. Los contratas en la casa de patrones de {0}.</p>"
+],
+"632cb7be": [
+"<p class=\"small\">The skippers’ house is in {0}. Sail there to hire captains.</p>",
+"<p class=\"small\">La casa de patrones está en {0}. Navega hasta allí para contratar capitanes.</p>"
+],
+"b50f9840": [
+"<p class=\"small\">New captains every month. Seamanship makes you faster, trade makes buying and selling smarter, combat enlarges your target zone and strengthens boarding when you take over their fight or they lead your own convoy. Every convoy needs a captain, yours too.</p>",
+"<p class=\"small\">Capitanes nuevos cada mes. La náutica da velocidad, el comercio hace más astutas las compras y las ventas, y el combate amplía tu zona de tiro y refuerza el abordaje cuando te haces cargo de su combate o dirigen tu propio convoy. Cada convoy necesita un capitán, también el tuyo.</p>"
+],
+"b623875b": [
+"<div class=\"yrow kap\">{0}<span class=\"yl\"><b>{1}</b><span class=\"tally\">{2} {3} · {4} {5} · {6} {7}</span><span class=\"small\">Wages {8} G a day</span></span>",
+"<div class=\"yrow kap\">{0}<span class=\"yl\"><b>{1}</b><span class=\"tally\">{2} {3} · {4} {5} · {6} {7}</span><span class=\"small\">Soldada {8} G al día</span></span>"
+],
+"ed0dc0c3": [
+"<svg class=\"rchart\" viewBox=\"{0} {1} {2} {3}\" role=\"img\" aria-label=\"Route: {4}\"><rect x=\"{5}\" y=\"{6}\" width=\"{7}\" height=\"{8}\" fill=\"var(--sea)\"/>",
+"<svg class=\"rchart\" viewBox=\"{0} {1} {2} {3}\" role=\"img\" aria-label=\"Ruta: {4}\"><rect x=\"{5}\" y=\"{6}\" width=\"{7}\" height=\"{8}\" fill=\"var(--sea)\"/>"
+],
+"98dc1ed9": [
+" <small>the convoy lies here</small>",
+" <small>aquí está el convoy</small>"
+],
+"8b11e63f": [
+" · up to {0} lasts",
+" · hasta {0} lasts"
+],
+"5c16bb49": [
+" · everything",
+" · todo"
+],
+"ed44a88a": [
+"at most {0} G",
+"como máximo {0} G"
+],
+"1966d510": [
+"at least {0} G",
+"como mínimo {0} G"
+],
+"1df52cc9": [
+"when it pays",
+"cuando compense"
+],
+"be2bd6d5": [
+"not below 80 %",
+"no por debajo del 80 %"
+],
+"ee92f21a": [
+"<div class=\"chipset\">{0}<button type=\"button\" data-h=\"rla\" data-id=\"{1}\" data-c=\"{2}\" data-g=\"{3}\" data-v=\"\">Remove</button></div>",
+"<div class=\"chipset\">{0}<button type=\"button\" data-h=\"rla\" data-id=\"{1}\" data-c=\"{2}\" data-g=\"{3}\" data-v=\"\">Quitar</button></div>"
+],
+"73888597": [
+"<span class=\"flabel\">Quantity per call</span><div class=\"chipset\">{0}</div>",
+"<span class=\"flabel\">Cantidad por escala</span><div class=\"chipset\">{0}</div>"
+],
+"c7954307": [
+"as much as pays",
+"lo que compense"
+],
+"7548fd20": [
+"<span class=\"flabel\">{0} <small>(base price {1} G)</small></span><div class=\"chipset\">",
+"<span class=\"flabel\">{0} <small>(precio base {1} G)</small></span><div class=\"chipset\">"
+],
+"2027116c": [
+"Buy up to at most",
+"Comprar como máximo a"
+],
+"406debb0": [
+"Sell only from",
+"Vender solo desde"
+],
+"e29b36fe": [
+"Captain decides",
+"Decide el capitán"
+],
+"5891ebcd": [
+"not below 80 % of purchase",
+"no por debajo del 80 % de la compra"
+],
+"3be48749": [
+"He buys as long as a last costs at most {0} guilders, even without prospect of profit.",
+"Compra mientras el last cueste como máximo {0} florines, aunque no haya ganancia a la vista."
+],
+"2cc6afb7": [
+"Without a price limit he only buys as long as it pays against the next selling port.",
+"Sin límite de precio solo compra mientras compense frente al siguiente puerto de venta."
+],
+"eb71a143": [
+"He sells as long as a last brings at least {0} guilders.",
+"Vende mientras el last le reporte como mínimo {0} florines."
+],
+"0973822f": [
+"Without a price limit he does not sell below 80 % of the purchase price, after three ports below that too.",
+"Sin límite de precio no vende por debajo del 80 % de la compra; tras tres puertos, también por debajo."
+],
+"1593a1fe": [
+"Without a quantity he moves everything that fits.",
+"Sin cantidad mueve todo lo que quepa."
+],
+"fd7d4a43": [
+"<button class=\"ybtn radd\" type=\"button\" data-h=\"rladd\" data-id=\"{0}\" data-c=\"{1}\">+ Goods</button>",
+"<button class=\"ybtn radd\" type=\"button\" data-h=\"rladd\" data-id=\"{0}\" data-c=\"{1}\">+ Mercancía</button>"
+],
+"e9fd23ee": [
+"<div class=\"fcap big\">{0}<span>Captain {1}</span><span class=\"tally\">Trade {2} · Combat {3}</span></div>",
+"<div class=\"fcap big\">{0}<span>Capitán {1}</span><span class=\"tally\">Comercio {2} · Combate {3}</span></div>"
+],
+"5e784af5": [
+"<p class=\"small\">{0} of {1} lasts · {2} sailors · {3} · {4} G a day · {5} voyages · Profit <span class=\"{6}\">{7}{8} G</span></p>",
+"<p class=\"small\">{0} de {1} lasts · {2} marineros · {3} · {4} G al día · {5} viajes · Ganancia <span class=\"{6}\">{7}{8} G</span></p>"
+],
+"340a8da9": [
+", the captain trades freely",
+", el capitán comercia libremente"
+],
+"ca93f93f": [
+"<p class=\"small\">The captain buys and sells by himself, the better his trade, the smarter. With your own rules you decide for each port what he buys and sells, how much and at what price.</p>",
+"<p class=\"small\">El capitán compra y vende por su cuenta: cuanto mejor su comercio, más astuto. Con tus propias reglas decides en cada puerto qué compra y vende, cuánto y a qué precio.</p>"
+],
+"0db43c22": [
+"<button class=\"ybtn\" type=\"button\" data-h=\"tomode\" data-id=\"{0}\">Set your own rules</button>",
+"<button class=\"ybtn\" type=\"button\" data-h=\"tomode\" data-id=\"{0}\">Fijar tus propias reglas</button>"
+],
+"f452b368": [
+"<div class=\"ybtns wrapb cvacts\"><button class=\"ybtn\" type=\"button\" data-h=\"redit\" data-id=\"{0}\">Change route</button>",
+"<div class=\"ybtns wrapb cvacts\"><button class=\"ybtn\" type=\"button\" data-h=\"redit\" data-id=\"{0}\">Cambiar ruta</button>"
+],
+"ca55d9e1": [
+"New convoy",
+"Convoy nuevo"
+],
+"52501d6e": [
+"<div class=\"in\"><button class=\"hsback\" type=\"button\" data-hs=\"close\">‹ House</button><h2 id=\"hs-title\">{0}</h2>{1}<div class=\"hsbody\">{2}</div></div>",
+"<div class=\"in\"><button class=\"hsback\" type=\"button\" data-hs=\"close\">‹ Casa</button><h2 id=\"hs-title\">{0}</h2>{1}<div class=\"hsbody\">{2}</div></div>"
+],
+"83a55e65": [
+"<div class=\"yrow yship\">{0}<span class=\"yl\"><b>{1}{2}</b><span class=\"small\">{3} · {4} lasts · hull {5} %</span>",
+"<div class=\"yrow yship\">{0}<span class=\"yl\"><b>{1}{2}</b><span class=\"small\">{3} · {4} lasts · casco {5} %</span>"
+],
+"f2ef6a57": [
+"<div class=\"yrow yship\">{0}<span class=\"yl\"><b>{1} · {2} days to build</b><span class=\"small\">{3} lasts · speed {4} % · {5} to {6} sailors · {7} weapon slots · {8} G a day</span><span class=\"small\">{9}</span></span>",
+"<div class=\"yrow yship\">{0}<span class=\"yl\"><b>{1} · {2} días de construcción</b><span class=\"small\">{3} lasts · velocidad {4} % · de {5} a {6} marineros · {7} huecos de armas · {8} G al día</span><span class=\"small\">{9}</span></span>"
+]
+}
