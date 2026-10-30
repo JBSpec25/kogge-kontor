@@ -7488,12 +7488,11 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       dane:{hull:'#5e432c', hullD:'#40301f', wale:'#2c2016', band:'#7a5a3c', deck:'#a07a50', inner:'#86623f', castle:'#86603e', castleD:'#664a30', sail:'#efe4cb', stripe:'#c8102e', mast:'#5a3e28', rope:'rgba(40,28,18,.6)', flagA:'#c8102e', flagB:'#c8102e', pav:['#c8102e', '#f2ece0'], cross:true}
     };
 
-    // Sichten: Stadt (Isometrie wie Variante A) und Segelansicht (Seite, leicht von oben)
+    // Sicht: Stadt (Isometrie wie Variante A); die Seitenansicht der Seeszene zeichnet seit Version 56 InkShips
     function viewFrom(a, b, k, ox, oy) {
       let V = cross(a, b); if (V[2] < 0) V = V.map(x => -x); V = norm(V);
       return {a, b, V, k, P:(x, y, z) => [ox + k * (a[0] * x + a[1] * y + a[2] * z), oy + k * (b[0] * x + b[1] * y + b[2] * z)]};
     }
-    const sideView = (k, ox, oy) => viewFrom([1, 0, 0], [0, -0.2, -1], k, ox, oy);
     const isoView = (k, ox, oy) => viewFrom([1, 1, 0], [0.5, -0.5, -1.05], k, ox, oy);
 
     // ───── Rumpf aus Spanten ─────
@@ -7715,7 +7714,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         for (const s of [-1, 1]) { ctx.beginPath(); for (let q = 0; q <= 10; q++) { const f = q / 10, p = at(L * 0.5 - f * L * 1.6, s * (T.B * 0.5 + f * T.B * 0.9)); q ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); } ctx.stroke(); }
       }
     }
-    return {draw, water, DEF, isoView, sideView, viewFrom};
+    return {draw, water, DEF, isoView, viewFrom};
   })();
   // ───────── Ab Version 36: Stadtansicht und Baubilder als 2,5D-Körper (eine Lichtrichtung, ein Maßstab in Metern) ─────────
   const K36 = (function () {
@@ -9003,27 +9002,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       return html;
     }
 
-    // ── Segelansicht: Seitenbild aus demselben Modell ──
-    // Rückgabe wie bisher: Leinwand und Ausschnitt in Bildeinheiten (11,25 Einheiten je Meter, Wasserlinie bei 0)
-    const U = 11.25, SPR = new Map();
-    function sideSprite(type, v, furled, kArt) {
-      const key = [type, v, furled ? 1 : 0, kArt.toFixed(2)].join('|');
-      if (SPR.has(key)) return SPR.get(key);
-      const T = Ships36.DEF[type] || Ships36.DEF.kogge, L = T.L, mh = 44;
-      const bx = -(L / 2 + 9) * U, by = -mh * U, bw = (L + 18) * U, bh = (mh + 3.2) * U;
-      const cw = Math.ceil(bw * kArt), ch = Math.ceil(bh * kArt), cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
-      const ctx = cv.getContext('2d'), kpx = U * kArt, ox = -bx * kArt, oy = -by * kArt;
-      const view = Ships36.sideView(kpx, ox, oy);
-      view.W = cw; view.H = ch;
-      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, cw, oy + 0.35 * kpx); ctx.clip();
-      Ships36.draw(ctx, view, {type:Ships36.DEF[type] ? type : 'kogge', X:0, Y:0, heading:0, furled, pirate:v === true, dane:v === 'd' || v === 'm', plain:v === 'm', cross:v === 'd', brace:furled ? 0 : 1.12, belly:furled ? 0 : 0.8, t:1, light:K36.S.L});
-      ctx.restore();
-      const sp = {ready:true, cv, bx, by, bw, bh, k:kArt};
-      if (SPR.size > 40) SPR.delete(SPR.keys().next().value);
-      SPR.set(key, sp);
-      return sp;
-    }
-    return {cityBase, show, stop, pick, vignette, sideSprite, VIEW};
+    return {cityBase, show, stop, pick, vignette, VIEW};
   })();
 
   const ARTS = new Map();
@@ -9056,15 +9035,20 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
   // Auflösung der Bilder nach Bildschirm: Telefon etwa 1, großer Bildschirm bis 1,3
   const artK = () => Math.min(1.3, Math.max(0.8, Math.min(window.innerWidth || 390, 620) / 880 * Math.min(2, window.devicePixelRatio || 1) * 1.1));
-  const shipSprite = (type, v, furled) => { try { return G36.sideSprite(SHIPS[type] ? type : 'kogge', v === true ? true : v || 0, !!furled, artK()); } catch (e) { return null; } };
+  // Schiffe der Seeszene (ab Version 56 Holzschnitt): Bild der festen Teile, Figuren der Leute an Bord
+  // zwei Bilder je Schiff: hinten Takelage, Masten und Rahen (im Hafen mit den gerefften Segeln), vorn Rumpf und Kastelle; dazwischen liegen Segel und Leute an Deck
+  const shipKey = (type, v, furled, layer) => `ink:${SHIPS[type] ? type : 'kogge'}:${v === true ? true : v || 0}:${layer === 'back' && furled ? 1 : 0}:${layer}`;
+  const shipSprite = (type, v, furled, layer) => { const T = SHIPS[type] ? type : 'kogge', vv = v === true ? true : v || 0; return artSprite(shipKey(T, vv, furled, layer), () => InkShips.shipMake(T, vv, !!furled, layer), artK() * 1.5); };
+  const figSprite = (kind, i) => artSprite(`fig:${kind}:${i % 5}`, () => InkShips.figMake(kind, i), 3);
   function preloadArt() {
     if (!st) return;
     const w = isWinter(st.day), need = [];
     if (st.loc) need.push(() => citySprite(st.loc, w));
     const sl = st.sail;
     if (sl) need.push(() => citySprite(sl.to, w), () => citySprite(sl.from, w));
-    (st.fleet || []).forEach(sh => need.push(() => shipSprite(sh.type, false, !st.sail), () => shipSprite(sh.type, false, !!st.sail)));
-    if (st.sail) need.push(() => shipSprite('kogge', true, false), () => shipSprite('holk', true, false));
+    (st.fleet || []).forEach(sh => need.push(() => shipSprite(sh.type, false, !st.sail, 'back'), () => shipSprite(sh.type, false, false, 'front')));
+    if (st.sail) need.push(() => shipSprite('kogge', true, false, 'back'), () => shipSprite('kogge', true, false, 'front'), () => shipSprite('holk', true, false, 'back'), () => shipSprite('holk', true, false, 'front'));
+    InkShips.KINDS.forEach(k => need.push(() => figSprite(k, 0), () => figSprite(k, 1)));
     let i = 0;
     const step = () => { if (i < need.length) { need[i++](); (window.requestIdleCallback || (f => setTimeout(f, 40)))(step); } };
     step();
@@ -9282,14 +9266,40 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       const pa = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), pb = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16));
       return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * k)).join(',')})`;
     }
-    function shipArt(type, pirate, furled, x, y, s, a, flip) {
-      const sp = shipSprite(type, pirate, furled);
-      if (!sp) return false;
-      const k = s * 0.4;
+    const INK_K = 0.48;   // Bildeinheiten (11,25 je Meter) in Bildpunkte je Maßstab s
+    // Schiff zeichnen: festes Bild, darüber Segel, Wimpel, Leute und Schäden je Bild.
+    // live: t, wind (1 ruhig, 2 Sturm), crew/crewMax/arm/cap (Leute), th/max (Drittelpunkte im Gefecht), lost (Flagge sinkt), harbor
+    function shipArt(type, v, furled, x, y, s, a, flip, live) {
+      const T = SHIPS[type] ? type : 'kogge', back = shipSprite(T, v, furled, 'back'), front = shipSprite(T, v, furled, 'front');
+      if (!back || !front) { const e = ARTS.get(shipKey(T, v, furled, back ? 'front' : 'back')); return !!(e && !e.failed); }   // Bild noch im Werden: nichts zeichnen; misslungen: alte Silhouette
+      const k = s * INK_K, S = InkShips.spec(T, v === true ? true : v || 0);
+      const o = Object.assign({fig:figSprite, furled}, live || {});
+      if (o.th) { const mx = o.max || 3, lost = q => Math.round((mx - q) / mx * 4); o.holes = Math.round((mx - o.th.mitte) / mx * 3); o.bolts = {kastell:lost(o.th.kastell), bug:lost(o.th.bug)}; }
+      o.figures = live ? InkShips.people(S, o) : [];
       ctx.save(); ctx.translate(x, y); ctx.rotate(a); ctx.scale(flip ? -k : k, k);
-      ctx.drawImage(sp.cv, sp.bx, sp.by, sp.bw, sp.bh);
+      ctx.drawImage(back.cv, back.bx, back.by, back.bw, back.bh);
+      ctx.save(); ctx.scale(S.f, S.f); ctx.translate(-S.cx, -S.WL); InkShips.drawLive(ctx, S, o, 'behind'); ctx.restore();
+      ctx.drawImage(front.cv, front.bx, front.by, front.bw, front.bh);
+      ctx.scale(S.f, S.f); ctx.translate(-S.cx, -S.WL); InkShips.drawLive(ctx, S, o, 'front');
       ctx.restore();
       return true;
+    }
+    // Bugwelle als eingerollte Gischt und Kielwasser als auslaufende Striche; dir: Fahrtrichtung (1 nach rechts)
+    function inkWake(type, x, y, s, dir, t, amp, trail) {
+      const T = SHIPS[type] ? type : 'kogge', S = InkShips.spec(T, 0), k = s * INK_K * S.f, bowX = x + dir * (S.stem - S.cx) * k, sternX = x + dir * (S.stern - S.cx) * k, wy = y + 1.5 * s;
+      ctx.save(); ctx.lineCap = 'round';
+      if (trail) for (let q = 0; q < 3; q++) {
+        const ph = (t * 0.7 + q / 3) % 1, xx = sternX - dir * (4 + ph * 120) * s, al = (1 - ph) * 0.9, yy = wy + (q * 1.8 + ph * 5) * s;
+        ctx.globalAlpha = al; ctx.strokeStyle = '#f3ead6'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(xx, yy); ctx.lineTo(xx - dir * (18 + ph * 30) * s, yy); ctx.stroke();
+        ctx.globalAlpha = al * 0.4; ctx.strokeStyle = InkShips.INK; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(xx - dir * 5 * s, yy + 3 * s); ctx.lineTo(xx - dir * (14 + ph * 16) * s, yy + 3 * s); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      const pulse = (0.75 + 0.25 * Math.sin(t * 3 + x)) * (0.55 + 0.14 * amp) * s;
+      ctx.translate(bowX + dir * 1.5 * s, wy - 0.5 * s); ctx.scale(dir * pulse, pulse);
+      ctx.fillStyle = '#f3ead6'; ctx.strokeStyle = InkShips.INK; ctx.lineWidth = 0.9;
+      const curl = new Path2D('M0 0 q6 -9 14 -3 q-3 5 -8 3 q4 -5 0 -6'); ctx.fill(curl); ctx.stroke(curl);
+      ctx.lineWidth = 1.4; ctx.strokeStyle = '#f3ead6'; ctx.stroke(new Path2D('M-4 3 q8 -2 16 0'));
+      ctx.restore();
     }
     // Zwischengespeicherte Ebenen (Himmel, Meer, Nebel); werden bei Größenänderung verworfen
     const LAYERS = new Map();
@@ -9403,37 +9413,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       ctx.strokeStyle = '#21160f'; ctx.lineWidth = 1; ctx.strokeRect(-52, -31, 24, 15); ctx.strokeRect(34, -32, 19, 14);
       // Ruder
       ctx.fillStyle = '#3a291d'; ctx.fillRect(-55, -15, 4, 20);
-      ctx.restore();
-    }
-    // Ab Version 55: Schäden an den Dritteln und Leute an Bord, auf das gezeichnete Schiff gelegt.
-    // Koordinaten wie das Schiffsmodell (Ships36): Mitte bei 0, Wasserlinie bei 0, eine Einheit je Meter; bow: Richtung zum Gegner.
-    const SU = 11.25;
-    function shipMarks(type, th, max, x, y, s, bow, crewCol, lost) {
-      const D = Ships36 && Ships36.DEF[type] || Ships36.DEF.kogge, m = D.masts[0], k = s * 0.4, u = SU;
-      const mx = (m.u - 0.5) * D.L * u, sailY = -(D.D + m.h * 0.56) * u, sw = m.sw * 0.5 * u, sh = m.sh * 0.5 * u, deck = -(D.D + 0.6) * u;
-      const cx = (D.L * 0.36) * u;
-      ctx.save(); ctx.translate(x, y); ctx.scale(k, k); ctx.lineJoin = 'round';
-      const r = rng(7);
-      // Löcher im Segel (Mitte)
-      const nl = Math.round((max - th.mitte) / max * 3);
-      for (let i = 0; i < nl; i++) { const hx = mx + (r() - 0.5) * sw * 1.3, hy = sailY + (r() - 0.5) * sh * 1.2, hr = 0.5 * u + r() * 0.45 * u;
-        ctx.fillStyle = 'rgba(30,22,16,.85)'; ctx.beginPath(); for (let q = 0; q < 7; q++) { const a = q / 7 * Math.PI * 2, rr = hr * (0.7 + r() * 0.5); q ? ctx.lineTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr) : ctx.moveTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr); } ctx.closePath(); ctx.fill(); }
-      // Leute auf den Kastellen: Bug (Richtung Gegner) und Kastell (abgewandt), je ein Mann je Punkt, höchstens vier
-      const men = (n, px, py, col) => { for (let i = 0; i < Math.min(4, n); i++) { const fxp = px + (i - 1.5) * 1.3 * u * -bow, fy = py;
-        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(fxp, fy - 1.9 * u, 0.5 * u, 0, Math.PI * 2); ctx.fill();
-        ctx.fillRect(fxp - 0.45 * u, fy - 1.35 * u, 0.9 * u, 1.35 * u); } };
-      men(Math.round(th.bug / max * 4), cx * bow, deck, crewCol);
-      men(Math.round(th.kastell / max * 4), -cx * bow, deck - 0.8 * u, crewCol);
-      // steckende Bolzen an den Kastellen je verlorenem Punkt
-      ctx.strokeStyle = '#2a2019'; ctx.lineWidth = 0.35 * u; ctx.lineCap = 'round';
-      const bolts = (n, px, py) => { for (let i = 0; i < Math.min(5, n); i++) { const bx = px + (i - 2) * 1.1 * u, by = py + 0.8 * u + (i % 2) * 0.8 * u; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + 1.6 * u * bow, by - 1.1 * u); ctx.stroke(); } };
-      bolts(Math.round((max - th.bug) / max * 4), cx * bow, deck + 0.4 * u);
-      bolts(Math.round((max - th.kastell) / max * 4), -cx * bow, deck - 0.2 * u);
-      if (lost) { // Flagge sinkt am Mast: Ergeben
-        const top = -(D.D + m.h) * u, fy = top + lost * (m.h * 0.7) * u;
-        ctx.fillStyle = '#1c1714'; ctx.beginPath(); ctx.moveTo(mx, fy); ctx.lineTo(mx - 4 * u * bow, fy + 1.2 * u); ctx.lineTo(mx, fy + 2.4 * u); ctx.closePath(); ctx.fill();
-        ctx.strokeStyle = '#d8c7a0'; ctx.lineWidth = 0.25 * u; ctx.beginPath(); ctx.moveTo(mx, top); ctx.lineTo(mx, fy + 2.4 * u); ctx.stroke();
-      }
       ctx.restore();
     }
     function quay(y) {
@@ -9621,32 +9600,30 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       fx.pirX += (fx.pirT - fx.pirX) * Math.min(1, dt * 1.1);
       const shipX = fx.ownX * W, baseY = hz + L * 0.62;
       const shipY = baseY + Math.sin(t * (sea ? 1.6 : 0.9)) * amp * 0.9;
+      const wind = wx === 'storm' ? 2 : wx === 'cloudy' || wx === 'rain' ? 1.3 : 1;
+      const cap0 = capOwnK(), armbrust = armsOf(st).armbrust || 0, fleetMax = Math.max(1, crewMax());
+      // Leute je Schiff: Anteil an der Mannschaft nach Höchstbesatzung; Armbrüste machen Matrosen zu Schützen
+      const ownLive = (sh, first) => ({t, wind, harbor:!sea, crew:Math.round(st.crew * SHIPS[sh.type].crewMax / fleetMax), crewMax:SHIPS[sh.type].crewMax, arm:Math.round(armbrust * SHIPS[sh.type].crewMax / fleetMax), cap:first && !!cap0, th:first && sea && enc && enc.me ? enc.me : null, max:3});
       let pirY = baseY;
       if (sea && fx.pirX < 1.38) {
         if (enc && (enc.fleet || enc.pair)) for (let q = encShips(enc) - 1; q >= 1; q--) { const cx = fx.pirX * W + (q === 1 ? 0.15 : 0.27) * W, cy = hz + L * (0.5 - q * 0.035) + Math.sin(t * 1.4 + q) * amp * 0.6;
-          shipArt(enc.ptype === 'holk' ? 'kogge' : q === 2 ? 'kogge' : 'holk', true, false, cx, cy, s * (0.72 - q * 0.07), Math.sin(t * 1.3 + q) * 0.03, true); }
+          const et = enc.ptype === 'holk' ? 'kogge' : q === 2 ? 'kogge' : 'holk';
+          shipArt(et, true, false, cx, cy, s * (0.72 - q * 0.07), Math.sin(t * 1.3 + q) * 0.03, true, {t:t + q, wind, crew:Math.round(PTYPE_MAX[et] * 0.5), crewMax:PTYPE_MAX[et], arm:Math.round(PTYPE_MAX[et] * 0.2), cap:true}); }
         const pk = fx.sink ? Math.min(1, (now - fx.sink) / 3400) : 0;
         if (pk < 1) {
           pirY = baseY + Math.sin(t * 1.5 + 1.3) * amp * 0.9 + pk * pk * 80 * s;
           ctx.globalAlpha = 1 - pk * 0.5;
           const px = fx.pirX * W + (now < fx.pshake ? (Math.random() - 0.5) * 6 : 0), pt = enc && SHIPS[enc.ptype] ? enc.ptype : 'kogge';
           if (pk < 0.3) shade(px, pirY, s * 0.95, t + 1);
-          const drawn = shipArt(pt, enc && enc.prey ? 'm' : enc && enc.dane ? 'd' : true, false, px, pirY, s * 0.95, Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true);
+          const pirLive = enc ? {t:t + 1.7, wind, crew:enc.n, crewMax:PTYPE_MAX[pt] || 48, arm:enc.arm ? enc.arm.armbrust : 0, cap:true, th:enc.th || null, max:enc.thm || 3, lost:fx.strike ? Math.min(1, (now - fx.strike) / 1600) : 0} : null;
+          if (pk < 0.3) inkWake(pt, px, pirY, s * 0.95, -1, t + 1, pal.amp, false);
+          const drawn = shipArt(pt, enc && enc.prey ? 'm' : enc && enc.dane ? 'd' : true, false, px, pirY, s * 0.95, Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true, pirLive);
           if (!drawn) cog(px, pirY, s * 0.95 * (enc && SHIPS[enc.ptype] ? SHIPS[enc.ptype].sc : 1), Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true, t + 1.7, wx === 'storm', PIR_STY);
-          if (enc && drawn && enc.th) shipMarks(pt, enc.th, enc.thm || 3, px, pirY, s * 0.95, -1, '#1c1714', fx.strike ? Math.min(1, (now - fx.strike) / 1600) : 0);
           if (fx.fire && pk < 0.85) flames(px, pirY, s, t);
           ctx.globalAlpha = 1;
         }
       }
       const ang = Math.sin(t * (sea ? 1.6 : 0.9) + 0.7) * (sea ? 0.035 : 0.015) * (wx === 'storm' ? 2.2 : 1);
-      if (sea) {
-        ctx.strokeStyle = 'rgba(255,255,255,.45)'; ctx.lineWidth = 1.4;
-        for (let i = 0; i < 5; i++) {
-          const ph = (t * 0.9 + i / 5) % 1, wx0 = shipX - 50 * s - ph * W * 0.35, wy = shipY + 6 * s + Math.sin(i * 2 + t) * 2;
-          ctx.globalAlpha = 1 - ph; ctx.beginPath(); ctx.moveTo(wx0, wy); ctx.lineTo(wx0 - 14 - ph * 20, wy + ph * 6); ctx.stroke();
-        }
-        ctx.globalAlpha = 1;
-      }
       // Begleitschiffe des Verbands: kleiner und weiter hinten
       const fl0 = st.fleet && st.fleet[0], escorts = st.fleet ? st.fleet.slice(1, 4) : [];
       escorts.forEach((sh, i) => {
@@ -9654,18 +9631,15 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         const ex = enc ? shipX - W * 0.17 * k : !sea ? [W * 0.13, W * 0.53, W * 0.02][i] : shipX + (k % 2 ? -1 : 1) * W * (0.2 + 0.08 * Math.floor(i / 2));
         const ey = baseY - (10 + 5 * i) * s + Math.sin(t * (sea ? 1.5 : 0.8) + k * 1.9) * amp * 0.7;
         shade(ex, ey, s * T.sc * 0.66, t + k);
-        if (!shipArt(sh.type, false, !sea, ex, ey, s * 0.66, Math.sin(t * 1.4 + k) * 0.03, false))
+        if (sea) inkWake(sh.type, ex, ey, s * 0.66, 1, t + k, pal.amp, true);
+        if (!shipArt(sh.type, false, !sea, ex, ey, s * 0.66, Math.sin(t * 1.4 + k) * 0.03, false, Object.assign(ownLive(sh, false), {t:t + k * 0.9})))
           cog(ex, ey, s * T.sc * 0.66, Math.sin(t * 1.4 + k) * 0.03, sea, t + k * 0.9, wx === 'storm', sh.type === 'kraweel' ? OWN_MZ : OWN_STY);
       });
       shade(shipX, shipY, s * (fl0 ? SHIPS[fl0.type].sc : 1), t);
-      const ownDrawn = (fl0 || st.focus) && shipArt(fl0 ? fl0.type : 'kogge', false, !sea, shipX, shipY, s, ang, false);
+      const ownType = fl0 ? fl0.type : 'kogge';
+      if (sea) inkWake(ownType, shipX, shipY, s, 1, t, pal.amp, true);
+      const ownDrawn = (fl0 || st.focus) && shipArt(ownType, false, !sea, shipX, shipY, s, ang, false, ownLive(fl0 || {type:'kogge'}, true));
       if (!ownDrawn) cog(shipX, shipY, s * (fl0 ? SHIPS[fl0.type].sc : 1), ang, sea, t, wx === 'storm', fl0 && fl0.type === 'kraweel' ? OWN_MZ : OWN_STY);
-      if (ownDrawn && sea) shipMarks(fl0 ? fl0.type : 'kogge', enc && enc.me ? enc.me : {bug:3, mitte:3, kastell:3}, 3, shipX, shipY, s, 1, '#3a2a1e', 0);
-      if (sea) {
-        ctx.fillStyle = 'rgba(255,255,255,.55)';
-        for (let i = 0; i < 4; i++) { const ph = (t * 1.4 + i / 4) % 1; ctx.globalAlpha = 1 - ph; ctx.beginPath(); ctx.arc(shipX + 50 * s + ph * 10, shipY - 4 * s - ph * 8, 1.5 + ph * 2, 0, Math.PI * 2); ctx.fill(); }
-        ctx.globalAlpha = 1;
-      }
       wave(hz + L * 0.68, amp, 36, t, sp, 2.8, mix(pal.sea0, pal.sea1, 0.6), 'rgba(255,255,255,.22)');
       if (!sea && !pierArt(hz + L * 0.56)) quay(hz + L * 0.56);
       wave(hz + L * 0.87, amp * 1.25, 44, t, sp * 1.1, 4.1, mix(pal.sea0, pal.sea1, 0.85), 'rgba(255,255,255,.18)');
@@ -9705,206 +9679,305 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     scene.start = () => { scene.fx.init(st); resize(); running = false; wake(); };
   })();
 
-  // ───── Ab Version 53: Schiffe als Holzschnitt (Kogge nach der Bremer Kogge, Holk) für die Segelansicht, später auch das Seegefecht ─────
-  const SHIP_INK = (() => {
-  const INK = '#33241a', WOOD = '#e2c99a', WOOD2 = '#d6b780', SAILC = '#f2e6c8';
-  const P = (x, y) => `${x.toFixed(1)} ${y.toFixed(1)}`;
-  const lerp = (a, b, t) => a + (b - a) * t;
-  const qpt = (p0, p1, p2, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * p1[0] + t * t * p2[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * p1[1] + t * t * p2[1]];
-  let uid = 0;
-
-  // Holzschnitt-Wellen: Reihen kleiner Kämme mit eingerollter Gischt, darunter waagrechte Schraffur
-  function waves(y, w, opt = {}) {
-    let sd = opt.seed || 3; const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
-    const rows = opt.rows || 3, out = [], sea = opt.sea || '#f2e5c7';
-    for (let r = 0; r < rows; r++) {
-      const yy = y + r * 12; let x = -14 + rnd() * 10, d = `M${x.toFixed(1)} ${yy}`, top = d;
-      const curls = [];
-      while (x < w + 20) { const st = 20 + rnd() * 14 - r * 2, a = 4 + rnd() * 3 - r; d += ` q${(st * 0.28).toFixed(1)} ${(-a).toFixed(1)} ${(st * 0.55).toFixed(1)} 0 q${(st * 0.2).toFixed(1)} ${(a * 0.45).toFixed(1)} ${(st * 0.45).toFixed(1)} 0`;
-        if (r === 0 && rnd() < 0.35) curls.push(`<path d="M${(x + st * 0.3).toFixed(1)} ${(yy - a + 1.2).toFixed(1)} q3 -3.2 5.6 -.4 q-1.6 2 -3.6 .8" fill="none" stroke="#33241a" stroke-width=".85" stroke-linecap="round"/>`);
-        x += st; }
-      if (r === 0) out.push(`<path d="${d} V${y + 80} H-14 Z" fill="${sea}"/>`);
-      out.push(`<path d="${d}" fill="none" stroke="#33241a" stroke-width="${(1.4 - r * 0.3).toFixed(2)}" stroke-linecap="round"/>`, curls.join(''));
-      for (let k = 1; k <= 2; k++) { let xx = -10 + rnd() * 20; const segs = []; while (xx < w) { const L = 8 + rnd() * 18; segs.push(`M${xx.toFixed(1)} ${(yy + 3.5 + k * 2.4).toFixed(1)} h${L.toFixed(1)}`); xx += L + 5 + rnd() * 10 + k * 3; }
-        out.push(`<path d="${segs.join(' ')}" stroke="#33241a" stroke-width=".5" opacity=".6"/>`); }
+  // ───────── Ab Version 56: Schiffe der Seeszene als kolorierter Holzschnitt ─────────
+  // Zeichenraum je Schiff 400 × 262 (Bug rechts, Wasserlinie WL); Umrechnung in Bildeinheiten der Szene (11,25 je Meter) über f = L · 11,25 / Rumpflänge.
+  // Rumpf, Kastelle, Mast und Takelage werden einmal als Bild berechnet (artSprite); Segel, Wimpel, Leute, Löcher, Bolzen und Flagge
+  // entstehen jedes Bild neu aus wenigen Pfaden (Path2D). Kogge nach der Bremer Kogge, Holk bauchig, Schnigge offen mit eingerollten Steven,
+  // Kraweel kraweelbeplankt mit drei Masten und Lateinersegel.
+  const InkShips = (function () {
+    const INK = '#33241a', WOOD = '#d8bc8a', WOOD2 = '#c6a470', SAILC = '#f2e6c8', U = 11.25;
+    const P = (x, y) => `${x.toFixed(1)} ${y.toFixed(1)}`;
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const rng = seed => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+    const qpt = (p0, p1, p2, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * p1[0] + t * t * p2[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * p1[1] + t * t * p2[1]];
+    const mixc = (a, b, t) => { const A = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), B = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16)); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+    // Farben je Fassung: eigen, Seeräuber (true), dänisches Kriegsschiff ('d'), dänischer Kauffahrer ('m')
+    const VAR = {
+      own:{stripe:'#9c3326', flag:'#9c3326', flag2:'#f2e6c8', sail:SAILC, wood:WOOD, wood2:WOOD2, cross:false},
+      pir:{stripe:'#3a302a', flag:'#2b2522', flag2:'#e9d6aa', sail:'#c9bea4', wood:'#c7ab7c', wood2:'#b29366', skull:true},
+      dane:{stripe:'#b5262c', flag:'#b5262c', flag2:'#f2e6c8', sail:SAILC, wood:WOOD, wood2:WOOD2, cross:true},
+      prey:{stripe:null, flag:'#b5262c', flag2:'#f2e6c8', sail:'#e8dcc0', wood:WOOD, wood2:WOOD2, cross:true}
+    };
+    const variant = v => v === true ? VAR.pir : v === 'd' ? VAR.dane : v === 'm' ? VAR.prey : VAR.own;
+    const stroke = (d, col, w, op) => `<path d="${d}" fill="none" stroke="${col || INK}" stroke-width="${w || 1}"${op != null ? ` opacity="${op}"` : ''} stroke-linecap="round" stroke-linejoin="round"/>`;
+    const fill = (d, col, sw, op) => `<path d="${d}" fill="${col}"${sw ? ` stroke="${INK}" stroke-width="${sw}" stroke-linejoin="round"` : ''}${op != null ? ` opacity="${op}"` : ''}/>`;
+    // Zinnenkranz
+    function crenel(x0, x1, y, h, n, col) {
+      const w = (x1 - x0) / (n * 2 - 1); let d = `M${P(x0, y + h)} V${y}`;
+      for (let i = 0; i < n; i++) { d += ` h${w.toFixed(1)}`; if (i < n - 1) d += ` v${(h * 0.45).toFixed(1)} h${w.toFixed(1)} v${(-h * 0.45).toFixed(1)}`; }
+      return fill(d + ` V${y + h} Z`, col, 1.2);
     }
-    return out.join('');
-  }
-
-  // Rahsegel: Bahnen (senkrechte Nähte), jede zweite in Farbe, Bauch durch gekrümmte Kanten, Bonnet unten angeschnürt
-  function sail(x0, x1, yTop, yBot, belly, stripe, id, flip) {
-    const mid = (x0 + x1) / 2, bl = belly;
-    const edge = `M${P(x0, yTop)} Q${P(mid, yTop - 3)} ${P(x1, yTop)} Q${P(x1 + bl * (flip ? -0.6 : 1), (yTop + yBot) / 2)} ${P(x1 + 2 * (flip ? -1 : 1), yBot)} Q${P(mid, yBot + 6)} ${P(x0 - 2 * (flip ? -1 : 1), yBot)} Q${P(x0 - bl * (flip ? -1 : 0.6), (yTop + yBot) / 2)} ${P(x0, yTop)}Z`;
-    const n = 9, cloths = [], seams = [];
-    for (let i = 0; i < n; i++) {
-      const a = lerp(x0, x1, i / n), b = lerp(x0, x1, (i + 1) / n), bulge = Math.sin((i + 0.5) / n * Math.PI) * bl * 0.35 * (flip ? -1 : 1);
-      if (i % 2 === 1) cloths.push(`<path d="M${P(a, yTop - 2)} L${P(b, yTop - 2)} Q${P(b + bulge, (yTop + yBot) / 2)} ${P(b + (b - mid) * 0.05, yBot + 8)} L${P(a + (a - mid) * 0.05, yBot + 8)} Q${P(a + bulge, (yTop + yBot) / 2)} ${P(a, yTop - 2)}Z" fill="${stripe}"/>`);
-      if (i) seams.push(`<path d="M${P(a, yTop)} Q${P(a + bulge, (yTop + yBot) / 2)} ${P(a + (a - mid) * 0.05, yBot + 4)}" fill="none" stroke="${INK}" stroke-width=".55" opacity=".7"/>`);
+    // Schraffur, auf den Rumpf (clip) beschränkt
+    const hatch = (clip, x0, x1, y, n, len) => `<g clip-path="url(#${clip})">${Array.from({length:n}, (_, k) => `<path d="M${(x0 + k * (x1 - x0) / n).toFixed(1)} ${y} l${(len * 0.4).toFixed(1)} ${(-len).toFixed(1)}" stroke="${INK}" stroke-width=".6" opacity=".45"/>`).join('')}</g>`;
+    // Wanten mit Jungfern zu beiden Seiten des Masts
+    function shrouds(mx, ytop, xs, yfn, wood2) {
+      return stroke(xs.map(x => `M${P(mx, ytop)} L${P(x, yfn(x))}`).join(' '), INK, 0.7, 0.85) +
+        xs.map(x => `<ellipse cx="${x}" cy="${yfn(x).toFixed(1)}" rx="2.6" ry="2" fill="${wood2}" stroke="${INK}" stroke-width=".7"/>`).join('') +
+        stroke([0.25, 0.4, 0.55, 0.7].map(t => { const a = [lerp(mx, xs[0], t), lerp(ytop, yfn(xs[0]), t)], b = [lerp(mx, xs[2], t), lerp(ytop, yfn(xs[2]), t)]; return `M${P(...a)} L${P(...b)}`; }).join(' '), INK, 0.45, 0.7);
     }
-    // Schatten auf der vom Licht abgewandten Seite: gebogene Schraffur
-    const sh = []; for (let k = 0; k < 7; k++) { const xx = flip ? lerp(x0, mid, k / 14) : lerp(x1, mid, k / 14); sh.push(`<path d="M${P(xx, yTop + 6)} Q${P(xx + (flip ? -1 : 1) * bl * 0.3, (yTop + yBot) / 2)} ${P(xx, yBot - 4)}" fill="none" stroke="${INK}" stroke-width=".45" opacity=".55"/>`); }
-    const bonnet = yBot - (yBot - yTop) * 0.18;
-    const lace = []; for (let i = 0; i <= 16; i++) { const x = lerp(x0 + 3, x1 - 3, i / 16); lace.push(`<path d="M${P(x, bonnet - 2)} l1.5 4" stroke="${INK}" stroke-width=".6"/>`); }
-    return `<defs><clipPath id="sc${id}"><path d="${edge}"/></clipPath></defs>
-      <path d="${edge}" fill="${SAILC}"/><g clip-path="url(#sc${id})">${cloths.join('')}${seams.join('')}${sh.join('')}<path d="M${x0 - 10} ${bonnet} Q${mid} ${bonnet + 5} ${x1 + 10} ${bonnet}" fill="none" stroke="${INK}" stroke-width=".9"/>${lace.join('')}</g>
-      <path d="${edge}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
-  }
+    function mastPole(mx, ybot, ytop, w, wood2) { return fill(`M${P(mx - w, ybot)} L${P(mx - w * 0.55, ytop)} L${P(mx + w * 0.55, ytop)} L${P(mx + w, ybot)}Z`, wood2, 1.1) + stroke(`M${P(mx + 1, ytop + 12)} V${(ybot - 8).toFixed(1)}`, INK, 0.5, 0.6); }
+    function top(mx, y, w, wood) { return fill(`M${P(mx - w, y)} L${P(mx + w, y)} L${P(mx + w * 0.7, y + 16)} L${P(mx - w * 0.7, y + 16)}Z`, wood, 1.1) + stroke([-0.7, -0.35, 0, 0.35, 0.7].map(d => `M${P(mx + d * w, y + 1)} l${(d * w * -0.25).toFixed(1)} 14`).join(' '), INK, 0.6) + stroke(`M${P(mx - w, y)} h${(2 * w).toFixed(1)}`, INK, 1.6); }
+    const yardArc = (x0, x1, y, mx) => `M${x0} ${y} Q${mx} ${y - 6} ${x1} ${y}`;
+    function yard(x0, x1, y, mx, wood2) { return stroke(yardArc(x0, x1, y, mx), INK, 3.2) + stroke(yardArc(x0, x1, y, mx), wood2, 1.4); }
+    // Gerefftes Segel: Bündel an der Rah mit Zeisingen
+    function furledSail(x0, x1, y, mx, sail) { return fill(`M${P(x0 + 4, y + 2)} Q${P(mx, y - 3)} ${P(x1 - 4, y + 2)} Q${P(mx, y + 22)} ${P(x0 + 4, y + 2)}Z`, sail, 1.1) + stroke(Array.from({length:7}, (_, i) => `M${P(lerp(x0 + 16, x1 - 16, i / 6), y + 1)} l1.5 ${(9 - Math.abs(i - 3) * 1.6).toFixed(1)}`).join(' '), INK, 0.6, 0.7) + stroke(`M${P(x0 + 12, y + 8)} Q${P(mx, y + 15)} ${P(x1 - 12, y + 8)}`, INK, 0.5, 0.5); }
 
-  // Zinnenkranz: Brüstung mit Zinnen und Schießscharten
-  function crenel(x0, x1, y, h, n, fill) {
-    const w = (x1 - x0) / (n * 2 - 1); let d = `M${P(x0, y + h)} V${y}`;
-    for (let i = 0; i < n; i++) { d += ` h${w}`; if (i < n - 1) d += ` v${h * 0.45} h${w} v${-h * 0.45}`; }
-    d += ` V${y + h} Z`;
-    return `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/>`;
-  }
-  // kleine Gestalten: Kopf mit Kappe, Schultern, wahlweise Spieß
-  function men(xs, y, opt = {}) {
-    return xs.map((x, i) => `<path d="M${x - 4.5} ${y + 9} q4.5 -6 9 0" fill="${i % 3 === 0 ? '#7a3b2c' : i % 3 === 1 ? '#40566a' : '#6b5a3a'}" stroke="${INK}" stroke-width=".8"/>` +
-      `<circle cx="${x}" cy="${y}" r="3.1" fill="#ecd6bb" stroke="${INK}" stroke-width=".8"/><path d="M${x - 3.4} ${y - 1} q3.4 -4.4 6.8 0z" fill="${INK}"/>` +
-      (opt.pike ? `<path d="M${x + 3} ${y + 8} L${x + 6 + (i % 2)} ${y - 16}" stroke="${INK}" stroke-width=".9"/><path d="M${x + 6 + (i % 2)} ${y - 16} l-1.6 3.4 h3.2z" fill="${INK}"/>` : '')).join('');
-  }
+    // ───── Segel je Bild: Pfade (d, Füllung, Strich, Breite, Deckkraft) ─────
+    // Rahsegel: Bahnen, jede zweite farbig, Nähte, Schatten als gebogene Schraffur, Bonnet mit Schnürung. flip: Bauch nach links.
+    function squareSail(x0, x1, yTop, yBot, bl, V, flip) {
+      const mid = (x0 + x1) / 2, s = flip ? -1 : 1, out = [];
+      const edge = `M${P(x0, yTop)} Q${P(mid, yTop - 3)} ${P(x1, yTop)} Q${P(x1 + bl * (flip ? 0.6 : 1), (yTop + yBot) / 2)} ${P(x1 + 2 * s, yBot)} Q${P(mid, yBot + 6)} ${P(x0 - 2 * s, yBot)} Q${P(x0 - bl * (flip ? 1 : 0.6), (yTop + yBot) / 2)} ${P(x0, yTop)}Z`;
+      out.push({d:edge, f:V.sail});
+      const n = 9; let cloths = '', seams = '';
+      for (let i = 0; i < n; i++) {
+        const a = lerp(x0, x1, i / n), b = lerp(x0, x1, (i + 1) / n), bulge = Math.sin((i + 0.5) / n * Math.PI) * bl * 0.35 * s;
+        if (i % 2 === 1 && V.stripe) cloths += `M${P(a, yTop - 2)} L${P(b, yTop - 2)} Q${P(b + bulge, (yTop + yBot) / 2)} ${P(b + (b - mid) * 0.05, yBot + 8)} L${P(a + (a - mid) * 0.05, yBot + 8)} Q${P(a + bulge, (yTop + yBot) / 2)} ${P(a, yTop - 2)}Z`;
+        if (i) seams += `M${P(a, yTop)} Q${P(a + bulge, (yTop + yBot) / 2)} ${P(a + (a - mid) * 0.05, yBot + 4)}`;
+      }
+      let sh = ''; for (let k = 0; k < 7; k++) { const xx = flip ? lerp(x0, mid, k / 14) : lerp(x1, mid, k / 14); sh += `M${P(xx, yTop + 6)} Q${P(xx + s * bl * 0.3, (yTop + yBot) / 2)} ${P(xx, yBot - 4)}`; }
+      const bonnet = yBot - (yBot - yTop) * 0.18; let lace = '';
+      for (let i = 0; i <= 16; i++) lace += `M${P(lerp(x0 + 3, x1 - 3, i / 16), bonnet - 2)} l1.5 4`;
+      out.push({clip:edge, items:[cloths && {d:cloths, f:V.stripe}, {d:seams, s:INK, w:0.55, o:0.7}, {d:sh, s:INK, w:0.45, o:0.5}, {d:`M${x0 - 10} ${bonnet} Q${mid} ${bonnet + 5} ${x1 + 10} ${bonnet}`, s:INK, w:0.9}, {d:lace, s:INK, w:0.6}].filter(Boolean)});
+      out.push({d:edge, s:INK, w:1.5});
+      return {prims:out, edge, box:[Math.min(x0, x1) - bl, yTop - 3, Math.abs(x1 - x0) + 2 * bl, yBot - yTop + 10]};
+    }
+    // Lateinersegel am schrägen Baum: Dreieck mit Bauch, Schraffur im Schatten
+    function lateenSail(A, B, Cl, bl, V, flip) {
+      const s = flip ? -1 : 1, mid = [(A[0] + B[0] + Cl[0]) / 3, (A[1] + B[1] + Cl[1]) / 3];
+      const edge = `M${P(...A)} L${P(...B)} Q${P(lerp(B[0], Cl[0], 0.5) + s * bl, lerp(B[1], Cl[1], 0.5))} ${P(...Cl)} Q${P(lerp(Cl[0], A[0], 0.5) - s * bl * 0.3, lerp(Cl[1], A[1], 0.5) + 4)} ${P(...A)}Z`;
+      let sh = ''; for (let k = 1; k < 6; k++) { const t = k / 6, p = [lerp(A[0], B[0], t), lerp(A[1], B[1], t)]; sh += `M${P(...p)} Q${P(lerp(p[0], Cl[0], 0.5) + s * bl * 0.4, lerp(p[1], Cl[1], 0.5))} ${P(lerp(p[0], Cl[0], 0.92), lerp(p[1], Cl[1], 0.92))}`; }
+      return {prims:[{d:edge, f:V.sail}, {clip:edge, items:[{d:sh, s:INK, w:0.5, o:0.6}]}, {d:edge, s:INK, w:1.4}], edge, box:[Math.min(A[0], B[0], Cl[0]) - bl, Math.min(A[1], B[1], Cl[1]), Math.abs(Math.max(A[0], B[0], Cl[0]) - Math.min(A[0], B[0], Cl[0])) + 2 * bl, Math.max(A[1], B[1], Cl[1]) - Math.min(A[1], B[1], Cl[1])]};
+    }
+    // Wimpel am Topp; t: Zeit; len: Länge; nach links (Fahrtrichtung rechts)
+    function pennantPath(x, y, len, t) {
+      const w = Math.sin(t * 5) * 3, w2 = Math.sin(t * 5 + 1.6) * 4;
+      return `M${x} ${y} C${x - len * 0.35} ${y - 4 + w}, ${x - len * 0.7} ${y + 6 + w2}, ${x - len} ${y + 2 + w2 * 1.2} L${x - len * 0.82} ${y + 6 + w2} L${x - len} ${y + 9 + w2 * 1.2} C${x - len * 0.7} ${y + 13 + w2}, ${x - len * 0.35} ${y + 5 + w}, ${x} ${y + 8}Z`;
+    }
+    // Flagge am Heckstock: Hausfarbe mit hellem Streifen, Seeräuber Totenkopf, Dänen Kreuz
+    function flagAt(x, y, V, wood2) {
+      let s = stroke(`M${x} ${y + 32} V${y - 2}`, INK, 2.2) + fill(`M${x} ${y + 1} h-24 v14 h24z`, V.flag, 0.9);
+      if (V.skull) s += `<circle cx="${x - 12}" cy="${y + 7}" r="3.2" fill="#e9d6aa"/><path d="M${x - 14} ${y + 6} h1.4 M${x - 11.4} ${y + 6} h1.4" stroke="${INK}" stroke-width="1.2"/><path d="M${x - 18} ${y + 11.6} l12 -1.2 M${x - 18} ${y + 10.4} l12 1.2" stroke="#e9d6aa" stroke-width="1.3" stroke-linecap="round"/>`;
+      else if (V.cross) s += `<path d="M${x - 16} ${y + 1} v14 M${x - 24} ${y + 8} h24" stroke="${V.flag2}" stroke-width="2.6"/>`;
+      else s += `<path d="M${x - 24} ${y + 8} h24" stroke="${V.flag2}" stroke-width="2.4"/>`;
+      return s;
+    }
+    // Anker am Bug
+    const anchor = (x, y) => `<g transform="translate(${x} ${y}) rotate(-14)"><path d="M0 0 v22 M-6 4 h12 M-9 16 q9 12 18 0" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round"/><circle cx="0" cy="-2" r="2.2" fill="none" stroke="${INK}" stroke-width="1.1"/></g>`;
 
-  // Leute an Bord als kleine Holzschnittfiguren. Kopf bei (x, y), Blick nach rechts (dir 1) oder links (dir -1).
-  // kind: matrose (Gugel), schuetze (Eisenhut und Armbrust), spiess (Eisenhut und Spieß), kapitaen (Kappe, zeigt voraus)
-  const CLOTH = ['#8a4a36', '#4a6378', '#77663f', '#5e7050', '#6a4a5e'];
-  function crew(list, o = {}) {
-    const dir = o.dir || 1, sc = o.s || 1;
-    return list.map((p, i) => {
-      const [x, y, kind] = p, k = kind || o.kind || 'matrose', cl = mixc(CLOTH[(i + (o.seed || 0)) % CLOTH.length], '#efe1c0', .2), sk = '#efd2b4';
-      const g = [];
-      // Rumpf und Schultern
+    // ───── Leute: eine Figur je Art als kleines Bild (Kopf bei 0/0, Blick nach rechts) ─────
+    // matrose (Gugel), steuermann (Arm an der Pinne), ausguck (hebt die Hand), schuetze (Eisenhut, Armbrust), spiess (Eisenhut, Spieß), kapitaen (Kappe, zeigt voraus)
+    const CLOTH = ['#8a4a36', '#4a6378', '#77663f', '#5e7050', '#6a4a5e'];
+    function figureSvg(kind, i) {
+      const cl = mixc(CLOTH[i % 5], '#efe1c0', .2), sk = '#efd2b4', g = [];
       g.push(`<path d="M-4.6 14 C-4.8 7 -4.2 3.6 -2.4 2.6 L2.6 2.6 C4.4 3.6 5 7 4.8 14 Z" fill="${cl}" stroke="${INK}" stroke-width=".85"/>`, `<path d="M-.2 3 V14" stroke="${INK}" stroke-width=".4" opacity=".6"/>`);
-      if (k === 'matrose') {
+      if (kind === 'matrose' || kind === 'steuermann' || kind === 'ausguck') {
         g.push(`<path d="M-4.4 5.6 C-5.6 0 -4.4 -6.2 .2 -6.6 C3.8 -6.8 5.2 -4 4.6 -1 C4.2 1.2 3.6 2.6 2.6 4 C1 5.4 -2.6 6.4 -4.4 5.6 Z" fill="${mixc(CLOTH[(i + 2) % 5], '#efe1c0', .15)}" stroke="${INK}" stroke-width=".85"/>`,
           `<path d="M-3.8 -3.6 C-6.4 -2.6 -7.6 0 -8 3.4" fill="none" stroke="${INK}" stroke-width="1.3" stroke-linecap="round"/>`,
           `<path d="M.8 -3.6 C2.4 -4.4 3.8 -3.8 4.2 -2.2 L5.2 -.8 L4.2 -.4 C4 1 3 2 1.6 1.8 C.4 1.6 -.2 .2 0 -1.4 Z" fill="${sk}" stroke="${INK}" stroke-width=".7"/>`);
-        g.push(`<path d="M2.6 4.4 L6.4 8.4" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>`);
+        g.push(kind === 'steuermann' ? `<path d="M2.6 4.4 L9 9" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>` : kind === 'ausguck' ? `<path d="M2.6 4.4 L7 -2 M-3.6 4.4 L-7 -1" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>` : `<path d="M2.6 4.4 L6.4 8.4" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>`);
       } else {
         g.push(`<path d="M-2.4 -2 C-2.6 -4.8 -.6 -6.2 1.4 -6 C3.4 -5.8 4.4 -4.2 4.2 -2.4 L5.2 -.8 L4.2 -.4 C4.2 1.2 3 2.4 1.4 2.2 C-.6 2 -2.4 .6 -2.4 -2 Z" fill="${sk}" stroke="${INK}" stroke-width=".8"/>`);
-        if (k === 'kapitaen') g.push(`<path d="M-3 -3.6 C-3.4 -6.8 4.8 -7.6 5.6 -4.6 C3.6 -3.6 -1 -3.2 -3 -3.6 Z" fill="${mixc('#2a2a2e', '#efe1c0', .2)}" stroke="${INK}" stroke-width=".8"/>`, `<path d="M2.6 4.2 L9.6 1.6" stroke="${INK}" stroke-width="1.2" stroke-linecap="round"/>`, `<path d="M-1.6 3 C-2 6 -2 9 -1.4 12" stroke="${INK}" stroke-width=".5" opacity=".6"/>`);
+        if (kind === 'kapitaen') g.push(`<path d="M-3 -3.6 C-3.4 -6.8 4.8 -7.6 5.6 -4.6 C3.6 -3.6 -1 -3.2 -3 -3.6 Z" fill="${mixc('#2a2a2e', '#efe1c0', .2)}" stroke="${INK}" stroke-width=".8"/>`, `<path d="M2.6 4.2 L9.6 1.6" stroke="${INK}" stroke-width="1.2" stroke-linecap="round"/>`, `<path d="M-1.6 3 C-2 6 -2 9 -1.4 12" stroke="${INK}" stroke-width=".5" opacity=".6"/>`);
         else {
-          // Eisenhut mit Krempe
           g.push(`<path d="M-2.6 -3.6 C-2.8 -7.8 4.6 -8.4 4.8 -3.8 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".8"/><path d="M-4.8 -3.4 Q1 -5.6 7 -3.4 Q1 -2.2 -4.8 -3.4 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".8"/><path d="M1 -7.6 V-4" stroke="${INK}" stroke-width=".4"/>`);
-          if (k === 'schuetze') g.push(`<path d="M1 3.6 L12.6 1" stroke="#6b4a2a" stroke-width="1.5" stroke-linecap="round"/><path d="M11.4 -4.6 Q14.2 1.4 11.6 7.4" fill="none" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/><path d="M11.4 -4.4 L4.4 2.4 L11.6 7.2" fill="none" stroke="${INK}" stroke-width=".4"/><path d="M2.4 4.6 L5.4 2.6" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>`);
-          if (k === 'spiess') g.push(`<path d="M4.6 16 L7.6 -15" stroke="#6b4a2a" stroke-width="1.2" stroke-linecap="round"/><path d="M7.6 -15 L6.6 -20.6 L9.4 -15.6 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".7"/><path d="M2.6 4.6 L5.4 5.6" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.6" cy="5.4" r="1.1" fill="${sk}" stroke="${INK}" stroke-width=".5"/>`);
+          if (kind === 'schuetze') g.push(`<path d="M1 3.6 L12.6 1" stroke="#6b4a2a" stroke-width="1.5" stroke-linecap="round"/><path d="M11.4 -4.6 Q14.2 1.4 11.6 7.4" fill="none" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/><path d="M11.4 -4.4 L4.4 2.4 L11.6 7.2" fill="none" stroke="${INK}" stroke-width=".4"/><path d="M2.4 4.6 L5.4 2.6" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/>`);
+          if (kind === 'spiess') g.push(`<path d="M4.6 16 L7.6 -15" stroke="#6b4a2a" stroke-width="1.2" stroke-linecap="round"/><path d="M7.6 -15 L6.6 -20.6 L9.4 -15.6 Z" fill="#c4bdac" stroke="${INK}" stroke-width=".7"/><path d="M2.6 4.6 L5.4 5.6" stroke="${INK}" stroke-width="1.1" stroke-linecap="round"/><circle cx="5.6" cy="5.4" r="1.1" fill="${sk}" stroke="${INK}" stroke-width=".5"/>`);
         }
       }
-      return `<g transform="translate(${x} ${y}) scale(${dir * sc} ${sc})">${g.join('')}</g>`;
-    }).join('');
-  }
-  const mixc = (a, b, t) => { const A = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), B = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16)); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
-
-  function pennant(x, y, len, col, flip) {
-    const s = flip ? -1 : 1;
-    return `<path d="M${x} ${y} C${x - s * len * 0.35} ${y - 4}, ${x - s * len * 0.7} ${y + 6}, ${x - s * len} ${y + 2} L${x - s * len * 0.82} ${y + 6} L${x - s * len} ${y + 9} C${x - s * len * 0.7} ${y + 13}, ${x - s * len * 0.35} ${y + 5}, ${x} ${y + 8}Z" fill="${col}" stroke="${INK}" stroke-width=".9" stroke-linejoin="round"/>`;
-  }
-
-  // ───────── Kogge, Bug rechts ─────────
-  function kogge(o = {}) {
-    const id = 'k' + (++uid), stripe = o.stripe || '#9c3326', flag = o.flag || stripe, W = 400, H = 300, WL = 228;
-    // Rumpfkanten
-    const stemTop = [374, 150], stemFoot = [324, 246], sternTop = [52, 140], sternFoot = [86, 248];
-    const sheerC = [212, 172], keelC = [205, 262];
-    const hull = `M${P(...sternTop)} Q${P(...sheerC)} ${P(...stemTop)} L${P(...stemFoot)} Q${P(...keelC)} ${P(...sternFoot)} Z`;
-    // Klinkerplanken: Kurven zwischen Schergang und Kiel, laufen an den Steven aus
-    const strakes = [];
-    for (let i = 1; i <= 7; i++) {
-      const t = i / 8, a = [lerp(sternTop[0], sternFoot[0], t), lerp(sternTop[1], sternFoot[1], t)], b = [lerp(stemTop[0], stemFoot[0], t), lerp(stemTop[1], stemFoot[1], t)], c = [lerp(sheerC[0], keelC[0], t), lerp(sheerC[1], keelC[1], t)];
-      strakes.push(`<path d="M${P(...a)} Q${P(...c)} ${P(...b)}" fill="none" stroke="${INK}" stroke-width="${i === 1 ? 2.4 : 1}"/>`);
-      strakes.push(`<path d="M${P(a[0] + 1, a[1] + 2.2)} Q${P(c[0], c[1] + 2.2)} ${P(b[0] - 1, b[1] + 2.2)}" fill="none" stroke="${INK}" stroke-width=".5" opacity=".55"/>`);
-      if (i >= 4) for (let k = 0; k < (i - 3) * 2; k++) { const tt = (k + 0.5) / ((i - 3) * 2); const p = qpt(a, c, b, tt); strakes.push(`<path d="M${P(p[0] - 9, p[1] + 4)} h18" stroke="${INK}" stroke-width=".45" opacity=".5"/>`); }
+      return g.join('');
     }
-    // durchgesteckte Querbalken unter dem Schergang
-    const beams = [0.25, 0.38, 0.51, 0.64, 0.77].map(t => { const p = qpt([sternTop[0], sternTop[1] + 9], [sheerC[0], sheerC[1] + 9], [stemTop[0] - 6, stemTop[1] + 12], t); return `<rect x="${(p[0] - 2.6).toFixed(1)}" y="${(p[1] - 2.6).toFixed(1)}" width="5.2" height="5.2" fill="${WOOD2}" stroke="${INK}" stroke-width=".9"/>`; }).join('');
-    // Achterkastell (burgartig) mit Stützen, Schatten unter dem Überhang
-    const ak = `<path d="M44 96 H136 V146 Q100 150 52 148 Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/>
-      ${[56, 68, 80, 92, 104, 116, 128].map(x => `<path d="M${x} 104 V146" stroke="${INK}" stroke-width=".55" opacity=".7"/>`).join('')}
-      <path d="M44 104 H136" stroke="${INK}" stroke-width="1"/><path d="M84 146 v-18 a8 8 0 0 1 16 0 v18" fill="#3b2a1d" stroke="${INK}" stroke-width="1"/>
-      ${crenel(42, 138, 84, 13, 6, WOOD)}
-      ${[0, 1, 2, 3, 4, 5].map(k => `<path d="M${118 + k * 3} 106 l-3 38" stroke="${INK}" stroke-width=".45" opacity=".6"/>`).join('')}
-      <path d="M136 146 L140 152 M120 148 l3 6" stroke="${INK}" stroke-width=".8"/>`;
-    // Vorderkastell klein auf dem Vorsteven
-    const vk = `<path d="M320 132 H372 L366 152 Q340 160 322 160 Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>${crenel(318, 374, 122, 11, 4, WOOD)}
-      ${[330, 342, 354].map(x => `<path d="M${x} 136 v18" stroke="${INK}" stroke-width=".5" opacity=".7"/>`).join('')}`;
-    // Heckruder am Achtersteven mit Fingerlingen, Pinne ins Kastell
-    const rud = `<path d="M54 146 L48 150 L60 246 Q70 252 82 246 L84 238 Z" fill="${WOOD2}" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>
-      ${[176, 198, 220].map(y => `<path d="M${52 + (y - 150) * 0.12} ${y} h${12}" stroke="${INK}" stroke-width="1.6"/>`).join('')}
-      ${[0, 1, 2, 3, 4].map(k => `<path d="M${62 + k * 4} 205 l2 36" stroke="${INK}" stroke-width=".45" opacity=".6"/>`).join('')}`;
-    // Mast, Mastkorb, Rah, Segel, Takelage
-    const mx = 214;
-    const rig = `<path d="M${P(mx, 40)} L176 160 M${P(mx, 40)} L188 162 M${P(mx, 40)} L200 164 M${P(mx, 40)} L236 166 M${P(mx, 40)} L250 165 M${P(mx, 40)} L264 164" stroke="${INK}" stroke-width=".7" opacity=".85"/>
-      ${[176, 188, 200, 236, 250, 264].map(x => `<ellipse cx="${x}" cy="${x < mx ? 164 - (x - 176) * 0.15 : 166 - (x - 236) * 0.1}" rx="2.6" ry="2" fill="${WOOD2}" stroke="${INK}" stroke-width=".7"/>`).join('')}
-      <path d="M${mx} 34 L392 128" stroke="${INK}" stroke-width=".8"/><path d="M128 64 Q100 70 92 92 M300 64 Q330 90 362 124" stroke="${INK}" stroke-width=".6" opacity=".8"/>
-      ${[0.25, 0.4, 0.55, 0.7].map(t => { const a = [lerp(mx, 176, t), lerp(40, 160, t)], b = [lerp(mx, 200, t), lerp(40, 164, t)]; return `<path d="M${P(...a)} L${P(...b)}" stroke="${INK}" stroke-width=".45" opacity=".7"/>`; }).join('')}`;
-    const mast = `<path d="M${mx - 3.5} 168 L${mx - 2} 18 L${mx + 2} 18 L${mx + 3.5} 168Z" fill="${WOOD2}" stroke="${INK}" stroke-width="1.1"/>
-      <path d="M${mx + 1} 30 v130" stroke="${INK}" stroke-width=".5" opacity=".6"/>
-      <path d="M${mx - 13} 30 L${mx + 13} 30 L${mx + 9} 46 L${mx - 9} 46Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.1"/>${[-9, -4.5, 0, 4.5, 9].map(d => `<path d="M${mx + d} 31 l${d * -0.25} 14" stroke="${INK}" stroke-width=".6"/>`).join('')}
-      <path d="M${mx - 13} 30 h26" stroke="${INK}" stroke-width="1.6"/>`;
-    const yard = `<path d="M126 60 Q${mx} 54 302 60" fill="none" stroke="${INK}" stroke-width="3.2" stroke-linecap="round"/><path d="M126 60 Q${mx} 54 302 60" fill="none" stroke="${WOOD2}" stroke-width="1.4" stroke-linecap="round"/>`;
-    const sl = sail(130, 298, 62, 150, 16, stripe, id, false);
-    const sheets = `<path d="M128 150 Q110 152 96 146 M300 150 Q330 150 344 134" stroke="${INK}" stroke-width=".7" fill="none"/>`;
-    const bowsprit = `<path d="M352 140 L398 120" stroke="${INK}" stroke-width="3.6" stroke-linecap="round"/><path d="M352 140 L398 120" stroke="${WOOD2}" stroke-width="1.6" stroke-linecap="round"/>`;
-    const anchor = `<g transform="translate(338 172) rotate(-14)"><path d="M0 0 v22 M-6 4 h12 M-9 16 q9 12 18 0" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round"/><circle cx="0" cy="-2" r="2.2" fill="none" stroke="${INK}" stroke-width="1.1"/></g><path d="M346 158 q-6 6 -8 12" stroke="${INK}" stroke-width=".9" fill="none"/>`;
-    const crewSet = crew([[60, 76, 'kapitaen'], [82, 76, 'schuetze'], [104, 76, 'matrose'], [124, 76, 'schuetze']], {dir:1, s:1.7}) + crew([[336, 114, 'matrose'], [356, 114, 'schuetze']], {dir:1, s:1.6, seed:2});
-    const stern = `<path d="M50 84 V54" stroke="${INK}" stroke-width="1.4"/><path d="M50 55 h20 v12 h-20z" fill="${flag}" stroke="${INK}" stroke-width=".9"/><path d="M50 61 h20" stroke="#f2e6c8" stroke-width="2.4"/>`;
-    // Schatten unter dem Schergang und am Wasser
-    const shade = `<g clip-path="url(#hc${id})">${Array.from({length:44}, (_, k) => `<path d="M${40 + k * 8} 258 l10 -22" stroke="${INK}" stroke-width=".6" opacity=".55"/>`).join('')}
-      ${Array.from({length:30}, (_, k) => `<path d="M${120 + k * 7} 160 l6 10" stroke="${INK}" stroke-width=".4" opacity=".35"/>`).join('')}</g>`;
-    return `<svg class="${o.cls || 'ship'}" viewBox="0 0 ${W} 262" aria-hidden="true"><defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>
-      <g class="rig" fill="none">${rig}</g>${mast}${yard}<g class="sail">${sl}</g>${sheets}${bowsprit}
-      ${pennant(mx, 18, 64, flag, true)}
-      <g class="hull"><path d="${hull}" fill="${WOOD}" stroke="${INK}" stroke-width="1.7" stroke-linejoin="round"/>${shade}${strakes.join('')}${beams}${anchor}</g>
-      <g class="crew">${crewSet}</g><g class="ak">${ak}${stern}</g><g class="vk">${vk}</g>${rud}
-      <g class="sea">${waves(WL + 2, W, {seed:o.seed || 5, sea:o.sea})}</g></svg>`;
-  }
+    const FIG_BOX = [-10, -22, 26, 38];
 
-  // ───────── Holk, Bug links, bauchig, Kastelle aus der Beplankung ─────────
-  function holk(o = {}) {
-    const id = 'h' + (++uid), stripe = o.stripe || '#3a302a', flag = o.flag || '#2b2522', W = 400, H = 300, WL = 228, f = o.dmg || {bug:3, mitte:3, kastell:3};
-    // Rumpf: Banane, die Enden gerundet und hochgezogen; Planken laufen an Bug und Heck nach oben aus
-    const SH = [[16, 84], [200, 190], [384, 74]], KE = [[74, 220], [200, 242], [332, 220]], BOW = [[16, 84], [2, 168], [74, 220]], STN = [[384, 74], [400, 164], [332, 220]];
-    const hull = `M16 84 Q200 190 384 74 Q400 164 332 220 Q200 242 74 220 Q2 168 16 84Z`;
-    const strakes = [];
-    for (let i = 1; i <= 8; i++) {
-      const t = i / 9, L = qpt(...BOW, t), R = qpt(...STN, t), C = [200, lerp(190, 242, t)];
-      strakes.push(`<path d="M${P(...L)} Q${P(...C)} ${P(...R)}" fill="none" stroke="${INK}" stroke-width="${i === 1 ? 2.2 : .95}"/>`);
-      strakes.push(`<path d="M${P(L[0] + 1, L[1] + 2.3)} Q${P(C[0], C[1] + 2.3)} ${P(R[0] - 1, R[1] + 2.3)}" fill="none" stroke="${INK}" stroke-width=".5" opacity=".55"/>`);
-      if (i >= 5) for (let k = 0; k < (i - 4) * 3; k++) { const pp = qpt(L, C, R, (k + 0.5) / ((i - 4) * 3)); strakes.push(`<path d="M${P(pp[0] - 8, pp[1] + 4)} h16" stroke="${INK}" stroke-width=".45" opacity=".45"/>`); }
+    // ───── Die vier Schiffe ─────
+    // Jede Beschreibung: L (Meter), hull [xHeck, xBug] (Rumpflänge im Zeichenraum), WL, statische Teile (back: Takelage und Mast hinter dem Segel,
+    // front: Rumpf, Kastelle, Ruder, Flagge), sails (Rahsegel: x0 x1 yTop yBot Bauch; Lateiner: Punkte), pennant (x y Länge), slots (Leute),
+    // marks (Bolzen-Anker je Drittel), stem/stern (Gischt, Kielwasser), mastTop (Flagge sinkt).
+    const DEF = {};
+    DEF.kogge = V => {
+      const id = 'kg', mx = 214, stemTop = [374, 150], stemFoot = [324, 246], sternTop = [52, 140], sternFoot = [86, 248], sheerC = [212, 172], keelC = [205, 262];
+      const hull = `M${P(...sternTop)} Q${P(...sheerC)} ${P(...stemTop)} L${P(...stemFoot)} Q${P(...keelC)} ${P(...sternFoot)} Z`;
+      let strakes = '';
+      for (let i = 1; i <= 7; i++) {
+        const t = i / 8, a = [lerp(sternTop[0], sternFoot[0], t), lerp(sternTop[1], sternFoot[1], t)], b = [lerp(stemTop[0], stemFoot[0], t), lerp(stemTop[1], stemFoot[1], t)], c = [lerp(sheerC[0], keelC[0], t), lerp(sheerC[1], keelC[1], t)];
+        strakes += stroke(`M${P(...a)} Q${P(...c)} ${P(...b)}`, INK, i === 1 ? 2.4 : 1) + stroke(`M${P(a[0] + 1, a[1] + 2.2)} Q${P(c[0], c[1] + 2.2)} ${P(b[0] - 1, b[1] + 2.2)}`, INK, 0.5, 0.55);
+        if (i >= 4) { let d = ''; for (let k = 0; k < (i - 3) * 2; k++) { const p = qpt(a, c, b, (k + 0.5) / ((i - 3) * 2)); d += `M${P(p[0] - 9, p[1] + 4)} h18`; } strakes += stroke(d, INK, 0.45, 0.5); }
+      }
+      const beams = [0.25, 0.38, 0.51, 0.64, 0.77].map(t => { const p = qpt([sternTop[0], sternTop[1] + 9], [sheerC[0], sheerC[1] + 9], [stemTop[0] - 6, stemTop[1] + 12], t); return `<rect x="${(p[0] - 2.6).toFixed(1)}" y="${(p[1] - 2.6).toFixed(1)}" width="5.2" height="5.2" fill="${V.wood2}" stroke="${INK}" stroke-width=".9"/>`; }).join('');
+      const ak = fill('M44 96 H136 V146 Q100 150 52 148 Z', V.wood, 1.4) + stroke([56, 68, 80, 92, 104, 116, 128].map(x => `M${x} 104 V146`).join(' '), INK, 0.55, 0.7) + stroke('M44 104 H136', INK, 1) +
+        fill('M84 146 v-18 a8 8 0 0 1 16 0 v18', '#3b2a1d', 1) + crenel(42, 138, 84, 13, 6, V.wood) + stroke([0, 1, 2, 3, 4, 5].map(k => `M${118 + k * 3} 106 l-3 38`).join(' '), INK, 0.45, 0.6);
+      const vk = fill('M320 132 H372 L366 152 Q340 160 322 160 Z', V.wood, 1.3) + crenel(318, 374, 122, 11, 4, V.wood) + stroke('M330 136 v18 M342 136 v18 M354 136 v18', INK, 0.5, 0.7);
+      const rud = fill('M54 146 L48 150 L60 246 Q70 252 82 246 L84 238 Z', V.wood2, 1.3) + stroke([176, 198, 220].map(y => `M${(52 + (y - 150) * 0.12).toFixed(1)} ${y} h12`).join(' '), INK, 1.6);
+      const rig = shrouds(mx, 40, [176, 188, 200], x => 164 - (x - 176) * 0.15, V.wood2) + shrouds(mx, 40, [236, 250, 264], x => 166 - (x - 236) * 0.1, V.wood2) + stroke(`M${mx} 34 L392 128`, INK, 0.8) + stroke('M128 64 Q100 70 92 92 M300 64 Q330 90 362 124', INK, 0.6, 0.8);
+      const bowsprit = stroke('M352 140 L398 120', INK, 3.6) + stroke('M352 140 L398 120', V.wood2, 1.6);
+      return {L:24, hull:[52, 374], WL:230, stem:334, stern:82, mastTop:[mx, 18], id,
+        back:rig + mastPole(mx, 168, 18, 3.5, V.wood2) + top(mx, 30, 13, V.wood) + yard(126, 302, 60, mx, V.wood2),
+        furled:furledSail(126, 302, 60, mx, V.sail),
+        front:`<defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>${bowsprit}${fill(hull, V.wood, 1.7)}${hatch('hc' + id, 40, 392, 258, 44, 22)}${hatch('hc' + id, 120, 330, 170, 30, -10)}${strakes}${beams}${anchor(338, 172)}${ak}${flagAt(50, 54, V, V.wood2)}${vk}${rud}`,
+        sails:[{sq:[130, 298, 62, 150, 16]}], pennant:[mx, 18, 64],
+        slots:{kastell:[[66, 76, 'kapitaen'], [92, 76, 'steuermann'], [118, 76, 'matrose']], bug:[[334, 114, 'matrose'], [356, 114, 'matrose']], deck:[[150, 150, 'matrose'], [288, 152, 'matrose']], mast:[mx + 1, 24], s:1.7, sm:1.3},
+        marks:{kastell:[90, 125], bug:[346, 146]}};
+    };
+    DEF.holk = V => {
+      const id = 'hk', mx = 200;
+      // gespiegelt zum Entwurf (Bug rechts): Spiegelung x → 400 − x
+      const M = x => 400 - x, SH = [[M(16), 84], [M(200), 190], [M(384), 74]], BOW = [[M(16), 84], [M(2), 168], [M(74), 220]], STN = [[M(384), 74], [M(400), 164], [M(332), 220]];
+      const hull = `M${P(...SH[0])} Q${P(...SH[1])} ${P(...SH[2])} Q${P(...STN[1])} ${P(...STN[2])} Q200 242 ${P(...BOW[2])} Q${P(...BOW[1])} ${P(...BOW[0])}Z`;
+      let strakes = '';
+      for (let i = 1; i <= 8; i++) {
+        const t = i / 9, L = qpt(...BOW, t), R = qpt(...STN, t), C = [200, lerp(190, 242, t)];
+        strakes += stroke(`M${P(...L)} Q${P(...C)} ${P(...R)}`, INK, i === 1 ? 2.2 : 0.95) + stroke(`M${P(L[0] - 1, L[1] + 2.3)} Q${P(C[0], C[1] + 2.3)} ${P(R[0] + 1, R[1] + 2.3)}`, INK, 0.5, 0.55);
+        if (i >= 5) { let d = ''; for (let k = 0; k < (i - 4) * 3; k++) { const pp = qpt(L, C, R, (k + 0.5) / ((i - 4) * 3)); d += `M${P(pp[0] - 8, pp[1] + 4)} h16`; } strakes += stroke(d, INK, 0.45, 0.45); }
+      }
+      const sy = x => { let lo = 0, hi = 1; for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; if (qpt(...SH, m)[0] < x) lo = m; else hi = m; } return qpt(...SH, lo)[1]; };
+      const castle = (x0, x1, yTop, cid) => { let d = `M${x0} ${yTop} H${x1}`; for (let x = x1; x >= x0; x -= 4) d += ` L${x} ${sy(x).toFixed(1)}`; d += ' Z';
+        return `<defs><clipPath id="${cid}"><path d="${d}"/></clipPath></defs>${fill(d, V.wood, 1.4)}<g clip-path="url(#${cid})">${stroke(Array.from({length:7}, (_, k) => `M${x0 - 2} ${yTop + 8 + k * 7} H${x1 + 2}`).join(' '), INK, 0.8, 0.8)}</g>` + crenel(x0 - 2, x1 + 2, yTop - 12, 12, 6, V.wood); };
+      const ak = castle(18, 104, 52, 'ha' + id) + fill([0, 1, 2].map(k => `M${94 - k * 22} ${96 - k * 3} v-11 a5 5 0 0 0 -10 0 v11z`).join(' '), '#2b2118', 0.8) + stroke([0, 1, 2, 3, 4, 5].map(k => `M${48 - k * 4} 64 l4 ${34 - k * 3}`).join(' '), INK, 0.45, 0.55);
+      const vk = castle(296, 382, 64, 'hv' + id);
+      const rig = shrouds(mx, 30, [142, 156, 170], x => 136 + (x - 142) * 0.15, V.wood2) + shrouds(mx, 30, [230, 244, 258], x => 140 - (x - 230) * 0.15, V.wood2) + stroke(`M${mx} 26 L360 62`, INK, 0.8) + stroke(`M${mx} 26 L70 46`, INK, 0.7);
+      return {L:28, hull:[16, 384], WL:224, stem:334, stern:66, mastTop:[mx, 10], id,
+        back:rig + mastPole(mx, 152, 10, 4, V.wood2) + top(mx, 18, 16, V.wood) + yard(112, 288, 52, mx, V.wood2),
+        furled:furledSail(112, 288, 52, mx, V.sail),
+        front:`<defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>${fill(hull, V.wood, 1.7)}${hatch('hc' + id, 10, 390, 240, 46, 22)}${strakes}${ak}${flagAt(42, 10, V, V.wood2)}${vk}`,
+        sails:[{sq:[116, 284, 54, 138, 15]}], pennant:[mx, 10, 70],
+        slots:{kastell:[[40, 30, 'kapitaen'], [62, 30, 'steuermann'], [86, 30, 'matrose']], bug:[[312, 42, 'matrose'], [336, 42, 'matrose'], [360, 42, 'matrose']], deck:[[150, 180, 'matrose'], [250, 182, 'matrose']], mast:[mx - 1, 13], s:1.7, sm:1.3},
+        marks:{kastell:[60, 80], bug:[336, 92]}};
+    };
+    DEF.schnigge = V => {
+      const id = 'sn', mx = 206;
+      const hull = 'M62 136 Q206 196 348 134 Q358 190 322 236 Q206 252 90 236 Q54 190 62 136Z';
+      const sheerY = x => { const t = (x - 62) / 286; return (1 - t) * (1 - t) * 136 + 2 * (1 - t) * t * 196 + t * t * 134; };
+      let strakes = '';
+      for (let i = 1; i <= 5; i++) { const t = i / 6, L = [lerp(62, 90, t), lerp(136, 236, t)], R = [lerp(348, 322, t), lerp(134, 236, t)], C = [206, lerp(196, 252, t)];
+        strakes += stroke(`M${P(...L)} Q${P(...C)} ${P(...R)}`, INK, i === 1 ? 2.2 : 1) + stroke(`M${P(L[0] + 1, L[1] + 2.4)} Q${P(C[0], C[1] + 2.4)} ${P(R[0] - 1, R[1] + 2.4)}`, INK, 0.5, 0.55);
+        if (i >= 3) { let d = ''; for (let k = 0; k < (i - 2) * 3; k++) { const pp = qpt(L, C, R, (k + 0.5) / ((i - 2) * 3)); d += `M${P(pp[0] - 8, pp[1] + 4)} h16`; } strakes += stroke(d, INK, 0.45, 0.45); } }
+      const oars = [120, 150, 262, 292].map(x => stroke(`M${x} ${(sheerY(x) - 2).toFixed(1)} l-30 -34`, INK, 2.2) + stroke(`M${x} ${(sheerY(x) - 2).toFixed(1)} l-30 -34`, V.wood2, 0.9) + stroke(`M${x - 2} ${(sheerY(x) - 6).toFixed(1)} v8`, INK, 1.6)).join('');
+      const curls = stroke('M348 134 C360 110 376 112 374 126 C372 136 358 132 354 126', INK, 2.4) + stroke('M62 136 C48 112 32 116 36 130 C40 140 54 134 58 128', INK, 2.4);
+      const rud = fill('M70 150 L62 156 L72 232 Q80 238 88 230 L86 162 Z', V.wood2, 1.3) + stroke('M74 150 L104 142', INK, 2.2);
+      const rig = stroke(`M${mx} 64 L150 176 M${mx} 64 L164 180 M${mx} 64 L248 180 M${mx} 64 L262 176`, INK, 0.7, 0.85) + stroke(`M${mx} 60 L340 130`, INK, 0.8) + stroke(`M${mx} 60 L72 134`, INK, 0.7);
+      return {L:16, hull:[62, 348], WL:228, stem:330, stern:80, mastTop:[mx, 50], id,
+        back:rig + mastPole(mx, 196, 48, 3, V.wood2) + `<circle cx="${mx}" cy="50" r="3.2" fill="${V.wood}" stroke="${INK}" stroke-width="1"/>` + yard(136, 276, 86, mx, V.wood2),
+        furled:furledSail(136, 276, 86, mx, V.sail),
+        front:`<defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>${fill(hull, V.wood, 1.7)}${hatch('hc' + id, 70, 340, 248, 34, 22)}${strakes}${curls}${oars}${rud}`,
+        sails:[{sq:[140, 272, 88, 168, 14]}], pennant:[mx, 50, 48],
+        slots:{kastell:[[96, 118, 'steuermann'], [126, 134, 'matrose']], bug:[[318, 112, 'matrose'], [288, 128, 'matrose']], deck:[[240, 150, 'matrose'], [176, 150, 'matrose']], mast:null, s:1.6, sm:1.2},
+        marks:{kastell:[92, 150], bug:[320, 150]}};
+    };
+    DEF.kraweel = V => {
+      const id = 'kw', mF = 322, mM = 196, mZ = 90;
+      // Rumpf: Spiegelheck links, runder Vorsteven rechts, kraweel (glatt) mit Barghölzern und Stückpforten
+      const sheer = [[44, 118], [200, 152], [362, 124]];
+      const hull = `M${P(...sheer[0])} Q${P(...sheer[1])} ${P(...sheer[2])} Q376 118 380 112 Q386 150 368 186 Q340 230 300 240 Q200 256 92 238 Q58 226 50 180 Z`;
+      const W1 = [[46, 134], [200, 168], [366, 138]], W2 = [[48, 152], [200, 186], [364, 154]];
+      const wales = stroke(`M${P(...W1[0])} Q${P(...W1[1])} ${P(...W1[2])} M${P(...W2[0])} Q${P(...W2[1])} ${P(...W2[2])}`, INK, 2.2) + stroke('M52 172 Q200 204 356 172 M60 192 Q200 222 342 192 M74 212 Q200 240 318 214', INK, 0.8, 0.7);
+      let ports = ''; for (let k = 0; k < 6; k++) { const p = qpt(...W1, 0.22 + k * 0.105); ports += `<rect x="${(p[0] - 4.5).toFixed(1)}" y="${(p[1] + 4).toFixed(1)}" width="9" height="7" fill="#1e1712" stroke="${INK}" stroke-width=".8"/>`; }
+      let hatchD = ''; for (let k = 0; k < 40; k++) { const p = qpt(...W2, (k + 0.5) / 40); hatchD += `M${P(p[0] - 4, p[1] + 10)} h8`; }
+      // Achterkastell mit zwei Decks und Heckgalerie, Vorderkastell
+      const ak = fill('M40 76 H140 V134 Q90 128 44 120 Z', V.wood, 1.4) + stroke('M40 104 H140', INK, 1) + stroke([54, 70, 86, 102, 118, 134].map(x => `M${x} 82 V${x > 100 ? 130 : 122}`).join(' '), INK, 0.55, 0.65) +
+        fill('M64 122 v-12 a6 6 0 0 1 12 0 v12z M104 126 v-12 a6 6 0 0 1 12 0 v12z', '#3b2a1d', 1) + crenel(38, 142, 64, 12, 7, V.wood) +
+        fill('M38 106 h-10 v12 h10z', V.wood2, 1) + stroke('M28 110 h10 M28 114 h10', INK, 0.6) + stroke([0, 1, 2, 3, 4].map(k => `M${126 + k * 3} 106 l-3 22`).join(' '), INK, 0.45, 0.55);
+      const vk = fill('M310 110 H362 L360 126 Q334 136 312 134 Z', V.wood, 1.3) + crenel(308, 364, 100, 11, 4, V.wood) + stroke('M322 114 v22 M338 114 v22 M352 114 v16', INK, 0.5, 0.7);
+      const rig = shrouds(mM, 40, [160, 172, 184], x => 144 - (x - 160) * 0.1, V.wood2) + shrouds(mM, 40, [210, 222, 234], x => 148 - (x - 210) * 0.12, V.wood2) +
+        stroke(`M${mF} 62 L290 136 M${mF} 62 L350 132 M${mZ} 14 L56 72 M${mZ} 14 L124 72`, INK, 0.6, 0.8) + stroke(`M${mM} 30 L${mF} 60 L396 104 M${mM} 30 L${mZ} 12`, INK, 0.75);
+      const bowsprit = stroke('M346 118 L398 100', INK, 3.6) + stroke('M346 118 L398 100', V.wood2, 1.6);
+      const lateenYard = stroke('M152 98 L34 12', INK, 2.6) + stroke('M152 98 L34 12', V.wood2, 1.1);
+      return {L:27, hull:[44, 380], WL:226, stem:342, stern:56, mastTop:[mM, 22], id,
+        back:rig + mastPole(mM, 160, 22, 3.6, V.wood2) + top(mM, 34, 13, V.wood) + mastPole(mF, 140, 56, 2.6, V.wood2) + mastPole(mZ, 76, 8, 2.6, V.wood2) + yard(128, 266, 62, mM, V.wood2) + yard(282, 362, 70, mF, V.wood2) + lateenYard,
+        furled:furledSail(128, 266, 62, mM, V.sail) + furledSail(282, 362, 70, mF, V.sail) + fill('M148 100 L36 16 Q88 60 144 104Z', V.sail, 1),
+        front:`<defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>${bowsprit}${fill(hull, V.wood, 1.7)}${hatch('hc' + id, 50, 380, 252, 44, 22)}${wales}${stroke(hatchD, INK, 0.45, 0.4)}${ports}${anchor(332, 160)}${ak}${flagAt(42, 34, V, V.wood2)}${vk}`,
+        sails:[{sq:[132, 262, 64, 150, 13]}, {sq:[286, 358, 72, 98, 6, true]}, {lat:[[152, 98], [34, 12], [52, 70]]}], pennant:[mM, 22, 60],
+        slots:{kastell:[[60, 56, 'kapitaen'], [84, 56, 'steuermann'], [110, 56, 'matrose'], [130, 56, 'matrose']], bug:[[324, 92, 'matrose'], [348, 92, 'matrose']], deck:[[172, 140, 'matrose'], [250, 140, 'matrose']], mast:[mM + 1, 28], s:1.7, sm:1.3},
+        marks:{kastell:[90, 112], bug:[336, 122]}};
+    };
+    const KINDS = ['matrose', 'steuermann', 'ausguck', 'schuetze', 'spiess', 'kapitaen'];
+    const specs = new Map();
+    function spec(type, v) { const key = `${type}|${v}`; let s = specs.get(key); if (!s) { const V = variant(v); s = (DEF[type] || DEF.kogge)(V); s.V = V; s.f = s.L * U / (s.hull[1] - s.hull[0]); s.cx = (s.hull[0] + s.hull[1]) / 2; specs.set(key, s); } return s; }
+
+    // ───── Bilder: Schiff (ohne bewegte Teile) und Figuren ─────
+    // Rückgabe wie artSprite: Ausschnitt (box) in Bildeinheiten der Szene, Wasserlinie bei 0, Mitte des Rumpfs bei 0
+    function shipMake(type, v, furled, layer) {
+      const S = spec(type, v), f = S.f, part = layer === 'back' ? S.back + (furled ? S.furled : '') : S.front;
+      return {box:[-S.cx * f, -S.WL * f, 400 * f, 262 * f], defs:'', svg:`<g transform="translate(${(-S.cx * f).toFixed(2)} ${(-S.WL * f).toFixed(2)}) scale(${f.toFixed(4)})">${part}</g>`};
     }
-    const sy = x => { let lo = 0, hi = 1; for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; if (qpt(...SH, m)[0] < x) lo = m; else hi = m; } return qpt(...SH, lo)[1]; };
-    // Kastelle als fortgeführte Beplankung: waagrechte Planken, unten dem Schergang folgend, oben Zinnen
-    const castle = (x0, x1, yTop, cid) => { let d = `M${x0} ${yTop} H${x1}`; for (let x = x1; x >= x0; x -= 4) d += ` L${x} ${sy(x).toFixed(1)}`; d += ' Z';
-      const planks = Array.from({length:7}, (_, k) => `<path d="M${x0 - 2} ${yTop + 8 + k * 7} H${x1 + 2}" stroke="${INK}" stroke-width="${k ? .7 : 1}" opacity="${k ? .75 : 1}"/>`).join('');
-      return `<defs><clipPath id="${cid}"><path d="${d}"/></clipPath></defs><path d="${d}" fill="${WOOD}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><g clip-path="url(#${cid})">${planks}</g>` + crenel(x0 - 2, x1 + 2, yTop - 12, 12, 6, WOOD); };
-    const vk = castle(18, 104, 64, 'v' + id);
-    const ak = castle(296, 382, 52, 'a' + id) + [0, 1, 2].map(k => `<path d="M${306 + k * 22} ${96 - k * 3} v-11 a5 5 0 0 1 10 0 v11z" fill="#2b2118" stroke="${INK}" stroke-width=".8"/>`).join('') +
-      [0, 1, 2, 3, 4, 5].map(k => `<path d="M${352 + k * 4} 64 l-4 ${34 - k * 3}" stroke="${INK}" stroke-width=".45" opacity=".55"/>`).join('');
-    const mx = 200;
-    const rig = `<path d="M${mx} 30 L142 136 M${mx} 30 L156 138 M${mx} 30 L170 140 M${mx} 30 L230 140 M${mx} 30 L244 138 M${mx} 30 L258 136" stroke="${INK}" stroke-width=".7" opacity=".85"/>
-      ${[142, 156, 170, 230, 244, 258].map(x => `<ellipse cx="${x}" cy="${x < mx ? 136 + (x - 142) * 0.15 : 140 - (x - 230) * 0.15}" rx="2.6" ry="2" fill="${WOOD2}" stroke="${INK}" stroke-width=".7"/>`).join('')}
-      <path d="M${mx} 26 L40 62" stroke="${INK}" stroke-width=".8"/><path d="M${mx} 26 L330 46" stroke="${INK}" stroke-width=".7"/>`;
-    const mast = `<path d="M${mx - 4} 150 L${mx - 2.4} 10 L${mx + 2.4} 10 L${mx + 4} 156Z" fill="${WOOD2}" stroke="${INK}" stroke-width="1.1"/>
-      <path d="M${mx - 16} 18 L${mx + 16} 18 L${mx + 11} 38 L${mx - 11} 38Z" fill="${WOOD}" stroke="${INK}" stroke-width="1.2"/>${[-11, -5.5, 0, 5.5, 11].map(d => `<path d="M${mx + d} 19 l${d * -0.3} 18" stroke="${INK}" stroke-width=".6"/>`).join('')}
-      <path d="M${mx - 16} 18 h32" stroke="${INK}" stroke-width="1.8"/>${f.mitte > 0 ? crew([[mx - 1, 13, 'matrose']], {dir:-1, s:1.3, seed:3}) : ''}`;
-    const yard = `<path d="M112 52 Q${mx} 46 288 52" fill="none" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/><path d="M112 52 Q${mx} 46 288 52" fill="none" stroke="${WOOD2}" stroke-width="1.5" stroke-linecap="round"/>`;
-    const sl = sail(116, 284, 54, 138, 15, stripe, id, true);
-    const shade = `<g clip-path="url(#hc${id})">${Array.from({length:46}, (_, k) => `<path d="M${10 + k * 8} 240 l9 -22" stroke="${INK}" stroke-width=".55" opacity=".5"/>`).join('')}
-      </g>`;
-    const crewB = f.bug > 0 ? crew([[34, 42, 'spiess'], [56, 42, 'spiess'], [78, 42, 'matrose'], [98, 42, 'spiess']].slice(0, Math.min(4, f.bug + 1 + (f.bug > 1 ? 1 : 0))), {dir:-1, s:1.7, seed:1}) : '';
-    const crewK = f.kastell > 0 ? crew([[306, 30, 'schuetze'], [326, 30, 'schuetze'], [346, 30, 'schuetze'], [366, 30, 'kapitaen']].slice(0, Math.min(4, f.kastell + 1 + (f.kastell > 1 ? 1 : 0))), {dir:-1, s:1.7, seed:4}) : '';
-    const flagK = `<path d="M382 44 V10" stroke="${INK}" stroke-width="1.4"/><path d="M382 11 h-24 v14 h24z" fill="${flag}" stroke="${INK}" stroke-width=".9"/><path d="M364 15 l6 6 M370 15 l-6 6" stroke="#e9d6aa" stroke-width="1.4"/>`;
-    return `<svg class="${o.cls || 'ship'}" viewBox="0 0 ${W} 262" aria-hidden="true"><defs><clipPath id="hc${id}"><path d="${hull}"/></clipPath></defs>
-      <g class="rig" fill="none">${rig}</g>${mast}${yard}<g class="sail">${sl}</g>
-      ${pennant(mx, 10, 70, flag, false)}
-      <g class="hull"><path d="${hull}" fill="${WOOD}" stroke="${INK}" stroke-width="1.7" stroke-linejoin="round"/>${shade}${strakes.join('')}</g>
-      ${crewB}<g class="vk">${vk}</g>${crewK}<g class="ak">${ak}<g class="flag">${flagK}</g></g>
-      <g class="sea">${waves(WL + 2, W, {seed:o.seed || 9, sea:o.sea})}</g></svg>`;
-  }
-    return {kogge, holk, waves, crew};
+    const figMake = (kind, i) => ({box:FIG_BOX, defs:'', svg:figureSvg(kind, i)});
+
+    // ───── Leute: welche Plätze besetzt sind ─────
+    // o.crew / o.crewMax: Mannschaft, o.arm: Armbrüste, o.cap: Kapitän an Bord, o.th / o.max: Drittelpunkte im Gefecht (null auf Fahrt), o.harbor
+    function people(S, o) {
+      const sl = S.slots, order = [].concat(sl.kastell.map(p => ['kastell', p]), sl.bug.map(p => ['bug', p]), sl.deck.map(p => ['deck', p]));
+      const slotsN = order.length + (sl.mast ? 1 : 0);
+      const wanted = o.crewMax > 0 ? Math.max(1, Math.round(slotsN * Math.min(1, (o.crew || 0) / o.crewMax))) : 2;
+      let picks = [];
+      if (o.th) {
+        // Gefecht: Schützen im Kastell und Spieße am Bug nach den Drittelpunkten, höchstens so viele, wie die Mannschaft hergibt
+        const share = (pts, list) => list.slice(0, Math.round(Math.min(1, pts / o.max) * list.length));
+        picks = share(o.th.kastell, sl.kastell).map((p, i) => ['kastell', p, i === 0 && o.cap ? 'kapitaen' : 'schuetze']).concat(share(o.th.bug, sl.bug).map(p => ['bug', p, 'spiess']), (o.th.mitte > 0 && sl.mast ? [['mast', sl.mast, 'schuetze']] : []));
+        picks = picks.slice(0, Math.max(1, wanted + 1));
+      } else {
+        // Fahrt: Steuermann, Kapitän, Matrosen an festen Plätzen, Ausguck ab drei Leuten; im Hafen höchstens zwei
+        const n = o.harbor ? Math.min(2, wanted) : wanted;
+        picks = order.slice(0, n).map(([g, p]) => [g, p, p[2] === 'kapitaen' && !o.cap ? 'matrose' : p[2]]);
+        if (!o.harbor && sl.mast && n >= 3) picks.push(['mast', sl.mast, 'ausguck']);
+        // Armbrüste an Bord: so viele Matrosen tragen die Armbrust
+        let arch = Math.round(Math.min(1, (o.arm || 0) / Math.max(1, o.crew || 1)) * n);
+        picks = picks.map(pk => { if (arch > 0 && pk[2] === 'matrose') { arch--; return [pk[0], pk[1], 'schuetze']; } return pk; });
+      }
+      return picks;
+    }
+
+    // ───── Zeichnen je Bild: Segel, Wimpel, Leute, Schäden. ctx steht im Zeichenraum des Schiffs (400 × 262) ─────
+    function paint(ctx, prims) {
+      for (const p of prims) {
+        if (p.clip) { ctx.save(); ctx.clip(new Path2D(p.clip)); paint(ctx, p.items); ctx.restore(); continue; }
+        const path = new Path2D(p.d);
+        if (p.o != null) ctx.globalAlpha = p.o;
+        if (p.f) { ctx.fillStyle = p.f; ctx.fill(path); }
+        if (p.s) { ctx.strokeStyle = p.s; ctx.lineWidth = p.w || 1; ctx.stroke(path); }
+        if (p.o != null) ctx.globalAlpha = 1;
+      }
+    }
+    // o: t (Zeit), wind (1 ruhig, 2 Sturm), furled, holes (0..3), bolts {kastell, bug}, lost (0..1 Flagge sinkt), figures [[gruppe, [x,y], art]], fig(kind, i) → Bild
+    // pass 'behind': Segel, Wimpel und Leute an Deck (hinter der Bordwand); 'front': Leute auf Kastellen und im Mars, Bolzen, sinkende Flagge
+    function drawLive(ctx, S, o, pass) {
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      const V = S.V, t = o.t || 0;
+      if (pass === 'behind' && !o.furled) {
+        S.sails.forEach((sd, i) => {
+          let sail;
+          if (sd.sq) { const [x0, x1, yT, yB, bl, plain] = sd.sq, belly = bl * (0.7 + 0.3 * (o.wind == null ? 1 : o.wind)) + Math.sin(t * 1.9 + i) * (0.8 + (o.wind || 1)); sail = squareSail(x0, x1, yT, yB, belly, plain ? Object.assign({}, V, {stripe:null}) : V, false); }
+          else { const [A, B, C] = sd.lat; sail = lateenSail(A, B, [C[0] + Math.sin(t * 1.7) * 2, C[1]], 6 + (o.wind || 1) * 2, V, true); }
+          paint(ctx, sail.prims);
+          if (i === 0 && o.holes) { // Löcher im Großsegel
+            ctx.save(); ctx.clip(new Path2D(sail.edge)); ctx.fillStyle = 'rgba(30,22,16,.85)';
+            const r = rng(7 + o.holes), [bx, by, bw, bh] = sail.box;
+            for (let h = 0; h < o.holes; h++) { const hx = bx + bw * (0.2 + r() * 0.6), hy = by + bh * (0.2 + r() * 0.55), hr = 4 + r() * 4; ctx.beginPath(); for (let q = 0; q < 7; q++) { const a = q / 7 * Math.PI * 2, rr = hr * (0.7 + r() * 0.5); q ? ctx.lineTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr) : ctx.moveTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr); } ctx.closePath(); ctx.fill(); }
+            ctx.restore();
+          }
+        });
+      }
+      // Wimpel am Großtopp
+      if (pass === 'behind') { const [px, py, len] = S.pennant; paint(ctx, [{d:pennantPath(px, py, len * (0.85 + 0.15 * (o.wind == null ? 1 : o.wind)), t), f:V.flag, s:INK, w:0.9}]); }
+      // Leute: an Deck hinter der Bordwand, auf den Kastellen und im Mars davor
+      if (o.figures) {
+        const sc = S.slots.s;
+        o.figures.forEach((pk, i) => {
+          const [g, p, kind] = pk; if ((g === 'deck') !== (pass === 'behind')) return;
+          const sp = o.fig(kind, i); if (!sp) return;
+          const s = g === 'mast' ? S.slots.sm : sc, sway = Math.sin(t * 2.2 + i * 1.3) * 0.9;
+          ctx.save(); ctx.translate(p[0], p[1] + sway); ctx.scale(s, s); ctx.drawImage(sp.cv, sp.bx, sp.by, sp.bw, sp.bh); ctx.restore();
+        });
+      }
+      if (pass === 'behind') return;
+      // steckende Bolzen an den Kastellen
+      if (o.bolts) { ctx.strokeStyle = '#2a2019'; ctx.lineWidth = 1.4;
+        for (const g of ['kastell', 'bug']) { const n = Math.min(5, o.bolts[g] || 0), [ax, ay] = S.marks[g]; for (let i = 0; i < n; i++) { const bx = ax + (i - 2) * 7, by = ay + (i % 2) * 6; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + 11, by - 7); ctx.stroke(); } } }
+      // Flagge sinkt am Mast: Ergeben
+      if (o.lost) { const [mx, my] = S.mastTop, fy = my + o.lost * 90; ctx.fillStyle = '#1c1714'; ctx.beginPath(); ctx.moveTo(mx, fy); ctx.lineTo(mx - 26, fy + 8); ctx.lineTo(mx, fy + 16); ctx.closePath(); ctx.fill(); ctx.strokeStyle = '#d8c7a0'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, fy + 16); ctx.stroke(); }
+    }
+    return {DEF, spec, shipMake, figMake, people, drawLive, KINDS, U, INK};
   })();
   // ───────── Ab Version 55: Wirkungen des Gefechts auf der gemalten Szene ─────────
-  // Die gemalte Szene (Version 51) zeichnet Fahrt und Gefecht; aus dem Holzschnitt-Gefecht bleiben Schäden an den Dritteln,
-  // Leute an Bord, Sprechblase, aufsteigende Schrift, Bolzen in der Bahn und die sinkende Flagge, nun auf der Leinwand.
+  // Die gemalte Szene (Version 51) zeichnet Fahrt und Gefecht; Schäden an den Dritteln, Leute an Bord und die sinkende Flagge
+  // zeichnet InkShips (Version 56) auf die Schiffe, Sprechblase, aufsteigende Schrift und Bolzen in der Bahn die Leinwand.
   const inkFx = {
     shot(x, r, ammo) {
       const e = st.enc; if (!e) return;
@@ -13853,7 +13926,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
 
 <script>
-window.KK_BUILD = '2d4c1ac05a';
+window.KK_BUILD = '527e8dff9a';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
