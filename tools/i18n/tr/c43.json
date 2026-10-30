@@ -1,0 +1,170 @@
+{
+ "9145cc9c": [
+  " Their {0} loses a point.",
+  " Su {0} pierde un punto."
+ ],
+ "ea74b9ac": [
+  " Your {0} loses a point.",
+  " Tu {0} pierde un punto."
+ ],
+ "d6e7fba3": [
+  " Their grappling hook holds the ships together; it goes on.",
+  " Su garfio mantiene los barcos unidos; la lucha sigue."
+ ],
+ "d077134f": [
+  "Their grappling hook holds the ships together. Play a card to the midships, then the lines can be cut.",
+  "Su garfio mantiene los barcos unidos. Juega una carta al centro, luego podrás cortar los cabos."
+ ],
+ "b20e5d5d": [
+  "Pavise holds",
+  "Pavés resiste"
+ ],
+ "7617771e": [
+  "{0} pavises hold",
+  "{0} paveses resisten"
+ ],
+ "2821e3be": [
+  "<div class=\"mh\"><b>{0}</b><span class=\"kr\">Strength {1}</span><button class=\"cut\" type=\"button\" data-act=\"bd-back\"{2}>{3}</button></div>",
+  "<div class=\"mh\"><b>{0}</b><span class=\"kr\">Fuerza {1}</span><button class=\"cut\" type=\"button\" data-act=\"bd-back\"{2}>{3}</button></div>"
+ ],
+ "7bdafbd6": [
+  "Round {0} · hook holds",
+  "Asalto {0} · el garfio aguanta"
+ ],
+ "7eda1155": [
+  "Round {0} of {1}",
+  "Asalto {0} de {1}"
+ ],
+ "4bc615cc": [
+  "holds",
+  "aguanta"
+ ],
+ "6d2dc050": [
+  "<span class=\"warn\">unanswered ×1.5</span>",
+  "<span class=\"warn\">sin respuesta ×1,5</span>"
+ ],
+ "905bd30a": [
+  "<span class=\"warn\">lines held fast</span>",
+  "<span class=\"warn\">cabos sujetos</span>"
+ ],
+ "b7f09153": [
+  "Their plan: {0}. An unanswered move hits ×1.5; a section won costs them a point there. Tap a card, then a section.",
+  "Su plan: {0}. Un movimiento sin respuesta golpea ×1,5; una sección ganada les cuesta un punto allí. Toca una carta y luego una sección."
+ ],
+ "512a59f3": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"status\"><b>Wealth and fleet</b><span>{0} guilders · {1} {2}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"statusbody\">",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"status\"><b>Fortuna y flota</b><span>{0} florines · {1} {2}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"statusbody\">"
+ ],
+ "f5ff9d3c": [
+  "<div class=\"bar\"><i style=\"width:{0}%\"></i></div><span class=\"small\">{1} sailors · {2} · speed {3} % · wages and upkeep {4} guilders a day</span></div></div></div>",
+  "<div class=\"bar\"><i style=\"width:{0}%\"></i></div><span class=\"small\">{1} marineros · {2} · velocidad {3} % · soldadas y mantenimiento {4} florines al día</span></div></div></div>"
+ ],
+ "700d53f1": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"minfo\" data-id=\"{0}\"><b>More about the ware</b><span>Origin and price history</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"minfobody\">",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"minfo\" data-id=\"{0}\"><b>Más sobre la mercancía</b><span>Origen e historial de precios</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"minfobody\">"
+ ],
+ "f25532f5": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"rivm\"><b>Rivals</b><span>in {0} · {1} {2}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"rivmbody\"><ul class=\"rivlist\">",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"rivm\"><b>Rivales</b><span>en {0} · {1} {2}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"rivmbody\"><ul class=\"rivlist\">"
+ ],
+ "f95da57a": [
+  "Logbook",
+  "Diario de a bordo"
+ ],
+ "98554779": [
+  "{0} entries",
+  "{0} entradas"
+ ],
+ "df5afe3f": [
+  "Passage of time",
+  "El paso del tiempo"
+ ],
+ "43af0fd5": [
+  "What happens in the Hanse",
+  "Qué ocurre en la Hansa"
+ ],
+ "c6e4f2cd": [
+  "Wealth and fleet",
+  "Fortuna y flota"
+ ],
+ "3da3c702": [
+  "{0} guilders · {1}",
+  "{0} florines · {1}"
+ ],
+ "5b6926db": [
+  "Ware",
+  "Mercancía"
+ ],
+ "bedb6e1e": [
+  "Origin and price history",
+  "Origen e historial de precios"
+ ],
+ "91c94fe9": [
+  "Rivals",
+  "Rivales"
+ ],
+ "040f1955": [
+  "last in {0}",
+  "última vez en {0}"
+ ],
+ "869878f0": [
+  "Shipyard of {0}",
+  "Astillero de {0}"
+ ],
+ "1bd045f3": [
+  "How the battle works",
+  "Cómo funciona el combate"
+ ],
+ "5af127cf": [
+  "How boarding works",
+  "Cómo funciona el abordaje"
+ ],
+ "8e6a8158": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"bdhelp\"><b>How boarding works</b><span>{0}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"bdhelpbody\">",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"bdhelp\"><b>Cómo funciona el abordaje</b><span>{0}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"bdhelpbody\">"
+ ],
+ "d8f0afe3": [
+  "<p class=\"small\" style=\"margin:0 0 6px\">Each round you draw four cards from crew and equipment and play cards worth up to two strength into the sections bow, middle and castle. Their moves lie open there. Attack cards count one and a half times in their home section (gold outline); shield wall and pavises only work against the move in their own section. An unanswered move in the same section hits one and a half times. Whoever wins a contested section takes a point from the enemy there (bow: boarders, middle: sail, castle: shooters); whoever loses it loses one himself. Their grappling hook in the middle holds the ships together as long as you play nothing there: then no cutting the lines and up to two more rounds. ",
+  "<p class=\"small\" style=\"margin:0 0 6px\">Cada ronda robas cuatro cartas de tripulación y equipo y juegas cartas por hasta dos de fuerza en las secciones proa, centro y castillo. Allí están a la vista sus jugadas. Las cartas de ataque valen una vez y media en su sección propia (borde dorado); el muro de escudos y los paveses solo actúan contra la jugada de su propia sección. Una jugada sin respuesta en la misma sección golpea una vez y media. Quien gana una sección disputada quita allí un punto al enemigo (proa: abordadores, centro: vela, castillo: tiradores); quien la pierde pierde uno. Su garfio en el centro mantiene los barcos unidos mientras no juegues nada allí: entonces no se cortan los cabos y hay hasta dos rondas más. "
+ ],
+ "7f1ea8ad": [
+  "What a section yields moves the deck bar. {0} After three rounds the deck bar decides: from the right line they strike their flag, below the left one {1}, in between the ships separate. Grappling hooks and fire pots are used up; armour and pavises can break.</p></div></div>",
+  "Lo que da cada sección mueve la barra de cubierta. {0} Tras tres rondas decide la barra: desde la raya derecha arrían la bandera, por debajo de la izquierda {1}, entre ambas los barcos se separan. Los garfios y las ollas incendiarias se gastan; armaduras y paveses pueden romperse.</p></div></div>"
+ ],
+ "d4a1b4cf": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"enchelp\"><b>How the battle works</b><span>{0}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"enchelpbody\"><p class=\"small\" style=\"margin:0 0 6px\">Each round: choose a manoeuvre, then your crew shoots. Their ship has three thirds: the bow with the boarders, the middle with the sail, the castle with the shooters. Below the picture a pointer runs across the hit bar; tap once for each squad when it is in the field. The red spot is a weak point (direct hit). Every weapon has its own field and speed: the crossbow hits bow and castle, stones everything but only close, fire arrows the middle, the trebuchet throws once and heavily. The heavier the enemy, the farther away and whoever has the windward side, the faster the pointer runs; holding course and an experienced captain slow it. With their castle shot up, their return fire is weak; without boarders they cannot board; with a torn sail they can hardly flee. If their fighting spirit falls below the line, they want to flee or surrender. Boarding is only possible close in, with cards in three sections.</p></div></div>",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"enchelp\"><b>Cómo funciona el combate</b><span>{0}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"enchelpbody\"><p class=\"small\" style=\"margin:0 0 6px\">Cada ronda: elige una maniobra y luego dispara tu gente. Su barco tiene tres tercios: la proa con los abordadores, el centro con la vela y el castillo con los tiradores. Bajo la imagen una aguja recorre la barra de tiro; toca una vez por escuadra cuando esté en el campo. Lo rojo es un punto débil (impacto de lleno). Cada arma tiene su campo y su ritmo: la ballesta alcanza proa y castillo, las piedras todo pero solo de cerca, las flechas incendiarias el centro y el trabuquete tira una vez y fuerte. Cuanto más fuerte el enemigo, más lejos y quien tenga el barlovento, más rápido corre la aguja; mantener el rumbo y un capitán experto la frenan. Con su castillo destrozado su fuego es débil; sin abordadores no pueden abordar; con la vela rota apenas pueden huir. Si su moral cae por debajo de la raya, quieren huir o se rinden. Abordar solo es posible de cerca, con cartas en tres secciones.</p></div></div>"
+ ],
+ "8ae65f39": [
+  "They aim at the “{0}”",
+  "Apuntan a la «{0}»"
+ ],
+ "87e7022b": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"arms\"><b>Armoury</b><span>{0} of {1} places free</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"armsbody\">{2}</div></div>",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"arms\"><b>Armería</b><span>{0} de {1} plazas libres</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"armsbody\">{2}</div></div>"
+ ],
+ "dadf213c": [
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"newships\"><b>Build orders</b><span>{0}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"newshipsbody\">{1}</div></div>",
+  "<div class=\"ltile\" role=\"button\" tabindex=\"0\" data-hs-open=\"newships\"><b>Encargos de construcción</b><span>{0}</span><i class=\"chev\" aria-hidden=\"true\"></i><div class=\"lbody\" id=\"newshipsbody\">{1}</div></div>"
+ ],
+ "df1c4abe": [
+  " · since {0}",
+  " · desde el {0}"
+ ],
+ "b27858a1": [
+  "<li><span style=\"grid-column:1/-1\">Nothing has happened yet.</span></li>",
+  "<li><span style=\"grid-column:1/-1\">Todavía no ha pasado nada.</span></li>"
+ ],
+ "63faa295": [
+  "<div class=\"pchart\"><div class=\"holdrow\"><span class=\"small\">Buying price here {0}{1}</span><span class=\"small\">{2}</span></div>",
+  "<div class=\"pchart\"><div class=\"holdrow\"><span class=\"small\">Precio de compra aquí {0}{1}</span><span class=\"small\">{2}</span></div>"
+ ],
+ "f878fd17": [
+  "dashed: base price {0}",
+  "discontinua: precio base {0}"
+ ],
+ "4c7ac51d": [
+  "Base price {0}",
+  "Precio base {0}"
+ ]
+}

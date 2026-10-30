@@ -108,10 +108,11 @@ button{font:inherit;color:inherit}
 .aimbar .mc.none{border-style:dashed;border-color:#b89b70;color:#6b5440;background:transparent;font:italic .78rem var(--f-body)}
 .aimbar .vs{font:italic .7rem var(--f-body);color:#6b5440;line-height:1}
 .aimbar .slot{border:1.6px dashed #b89b70;border-radius:4px;min-height:54px;display:grid;align-content:center;gap:4px;padding:3px;font:italic .74rem var(--f-body);color:#6b5440}
-.aimbar .slot .mc{min-height:46px;cursor:pointer}.aimbar .slot .mc .bon{position:absolute;top:-8px;right:-6px;font:800 .62rem var(--f-sc);background:#c9962e;color:#33241a;border:1px solid #33241a;border-radius:999px;padding:0 4px}
+.aimbar .slot .mc{min-height:46px;cursor:pointer}.aimbar .slot .mc span{font-size:.58rem;letter-spacing:0}.aimbar .slot .mc .bon{position:absolute;top:-8px;right:-6px;font:800 .62rem var(--f-sc);background:#c9962e;color:#33241a;border:1px solid #33241a;border-radius:999px;padding:0 4px}
 .aimbar .lane .res{font:800 1rem var(--f-body);transition:transform .3s}.aimbar .lane .res.plus{color:#8a5a12}.aimbar .lane .res.minus{color:#b5503c}
 .aimbar .lane .res.bump{animation:rbump .5s ease-out}@keyframes rbump{40%{transform:scale(1.7)}}
 .aimbar .lane .prev{font:700 .72rem var(--f-sc);color:var(--seal)}
+.aimbar .slot .warn{font:700 .62rem/1.2 var(--f-sc);color:#8e2219;padding:2px 4px;border:1px solid #b5503c;border-radius:3px;background:#f6e2d6}
 .aimbar .flipin{animation:flipin .45s ease-out both}@keyframes flipin{0%{transform:perspective(400px) rotateY(90deg);opacity:0}100%{transform:none;opacity:1}}
 .aimbar .clashU{animation:clashU .5s ease-in-out}@keyframes clashU{50%{transform:translateY(-10px) scale(1.06)}}
 .aimbar .clashD{animation:clashD .5s ease-in-out}@keyframes clashD{50%{transform:translateY(10px) scale(1.06)}}
@@ -129,23 +130,15 @@ button{font:inherit;color:inherit}
 .bfly{position:fixed;z-index:50;pointer-events:none;transition:transform .33s cubic-bezier(.3,.9,.4,1),opacity .33s}
 .aimbar .detail{min-height:2.6em;margin-top:8px;padding:5px 9px;border-left:3px solid #c9962e;background:rgba(255,248,230,.5);font-size:.86rem;line-height:1.35}
 .aimbar .detail b{font:700 .88rem var(--f-sc)}.aimbar .detail span{color:#6b5440}
-/* Seegefecht als Holzschnitt */
-.scene.fight canvas{visibility:hidden}
 .duel .th3{display:flex;justify-content:space-between;gap:4px;margin:4px 0 2px;font:600 .7rem var(--f-sc);color:#6b5440}
 .duel .th3 .pips{margin-left:2px}.duel .th3 .pips i{width:7px;height:7px}
 .duel .coach{margin:8px 0;padding:6px 10px;border-left:3px solid var(--seal);background:rgba(142,34,25,.06);font-size:.9rem;line-height:1.35}
-.fightink .foe .fmove{transition:transform .9s ease-in-out,opacity .9s}
-.fightink .fbob{animation:ibob 4.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 80%}
-.fightink .obob{animation:ibob 4s ease-in-out infinite reverse;transform-box:fill-box;transform-origin:50% 80%}
-.fightink .hitshake{animation:fhit .38s ease-out}
-@keyframes fhit{0%{transform:translateX(0)}25%{transform:translateX(-6px)}55%{transform:translateX(5px)}100%{transform:translateX(0)}}
-.fightink .foe.strike .flag{transition:transform 1.6s ease-in;transform:translateY(30px)}
 .pop-txt{position:absolute;z-index:3;font:800 1.02rem var(--f-sc);color:var(--ink);text-shadow:0 1px 0 #f4e8cb,0 -1px 0 #f4e8cb,1px 0 0 #f4e8cb,-1px 0 0 #f4e8cb;pointer-events:none;white-space:nowrap;transform:translate(-50%,-50%);animation:poprise 1.1s ease-out forwards}
 .pop-txt.red{color:var(--seal)}.pop-txt.own{color:#8e2219}
 @keyframes poprise{0%{opacity:0;transform:translate(-50%,-30%) scale(.7)}20%{opacity:1;transform:translate(-50%,-60%) scale(1.12)}100%{opacity:0;transform:translate(-50%,-160%) scale(1)}}
 .shout{position:absolute;z-index:3;right:5%;top:12%;max-width:52%;background:#fbf3de;color:#33241a;font:700 .88rem var(--f-sc);padding:6px 10px;border-radius:10px;border:1.5px solid #33241a;box-shadow:0 2px 0 rgba(58,35,22,.25)}
 .shout:after{content:"";position:absolute;bottom:-9px;right:24%;border:8px solid transparent;border-top-color:#33241a;border-bottom:0}
-@media (prefers-reduced-motion: reduce){.aimbar *,.fightink *,.pop-txt,.bcard{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion: reduce){.aimbar *,.pop-txt,.bcard{animation:none!important;transition:none!important}}
 .alarmflash{position:absolute;inset:0;box-shadow:inset 0 0 0 4px #e0503f,inset 0 0 40px rgba(224,80,63,.55);border-radius:12px;pointer-events:none}
 /* Gefechtskarte im Duell-Aufbau */
 .duel .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
@@ -211,10 +204,10 @@ button{font:inherit;color:inherit}
 .qgoals li:first-child{border-top:0}
 .qgoals li>span{display:flex;flex-direction:column;gap:4px;min-width:0}
 .qgoals b{font-weight:500;font-size:.96rem;line-height:1.3}
-.qgoals li.ok b{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule)}
+.qgoals li.ok b{color:var(--muted);text-decoration:line-through;text-decoration-color:#a88a62}
 .qgoals li.cur b{font-weight:700}
 .qmk{width:22px;height:22px;border-radius:50%;border:1.6px solid var(--rule);display:grid;place-items:center;font:700 .78rem var(--f-body);font-style:normal;color:#fff;margin-top:-1px}
-.qgoals li.ok .qmk{background:var(--good);border-color:var(--good)}
+.qgoals li.ok .qmk{background:none;border-color:#6b4d33;color:var(--seal);font:700 .95rem var(--f-sc)}
 .qgoals li.cur .qmk{border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
 .qgoals small{font-size:.8rem;color:var(--muted)}
 .qgoals .qhint{font-size:.88rem;line-height:1.4;color:var(--ink);background:var(--paper);border-radius:8px;padding:8px 10px;margin-top:2px}
@@ -472,8 +465,9 @@ a.btn,a.ybtn{display:inline-flex;flex-direction:column;align-items:center;justif
 /* Logbuch */
 .log h2{margin:0 0 8px;font:700 1.05rem var(--f-sc);letter-spacing:.04em}
 .log ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
-.log li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:10px;font-size:.93rem}
-.log time{font:400 .78rem var(--f-mono);color:var(--muted);padding-top:2px}
+.log li,.loglist li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:10px;font-size:.93rem}
+.loglist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.log time,.loglist time{font:400 .78rem var(--f-mono);color:var(--muted);padding-top:2px}
 .tag{font:700 .72rem var(--f-sc);letter-spacing:.08em;color:var(--brass);margin-right:6px}
 .foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid var(--rule)}
 .linkbtn{background:none;border:1px solid var(--rule);border-radius:7px;padding:8px 12px;cursor:pointer;font-size:.9rem}
@@ -509,7 +503,7 @@ a.btn,a.ybtn{display:inline-flex;flex-direction:column;align-items:center;justif
 .ctable .deal{color:var(--good);font-weight:500}
 
 /* Seeräuber */
-.enc{border-color:var(--bad)}
+.enc{border-color:var(--bad);margin-top:12px}
 .cvy{border-top:1px dashed var(--rule);margin-top:8px;padding-top:6px}
 .cvy .yrow.sub{padding-left:10px}
 /* Ab Version 37: Ereignisse auf Fahrt */
@@ -523,7 +517,7 @@ ol.privs{margin:4px 0 8px;padding-left:1.3em;font-size:.92rem}ol.privs li{margin
 .race .rv{grid-area:v}.race i.rr,.sw.rr{background:var(--accent,#8a5a14)}.race i.re,.sw.re{background:var(--brass,#b8902e);opacity:.75}.race .rb i{display:block;height:100%}.race .rb i:first-child{border-radius:5px 0 0 5px}
 .race .rb em{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink,#222)}.race .rrow.me .rn b{color:var(--accent,#8a5a14)}
 .sw{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin:0 3px 0 6px}
-.blist{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.blist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:4px 0;border-top:1px solid var(--rule)}
+.blist{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}.blist li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:4px 6px;margin:0 -6px;border-top:1px solid var(--rule)}
 .blist li.cur{background:color-mix(in srgb,var(--brass) 10%,transparent);border-radius:6px}.blist .bn{display:grid}.blist .num{font-variant-numeric:tabular-nums}
 .rvcmp{display:grid;gap:4px;margin:4px 0 6px}.rvcmp .rvh,.rvcmp .rvr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;align-items:center;font-size:.86rem}
 .rvcmp .rvh{color:var(--muted);font-size:.74rem}.rvcmp .rvr span{position:relative}.rvcmp .rvr i{display:block;height:4px;border-radius:2px;background:var(--muted);margin-bottom:2px}.rvcmp .rvr.me i{background:var(--accent,#8a5a14)}
@@ -628,7 +622,7 @@ details.cv[open] > summary{padding-bottom:4px}
   .tab[aria-selected="true"]{color:var(--brass)}
   .tab[aria-selected="true"]::before{content:"";position:absolute;top:-5px;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--brass)}
   .tab .dot{position:absolute;top:4px;left:calc(50% + 9px);width:8px;height:8px;border-radius:50%;background:var(--bad);border:1.5px solid var(--card)}
-  .tab .dot.b{background:var(--brass)}
+  .tab .dot.b{background:#c9962e}
   .actions{padding-top:8px;padding-bottom:calc(2px + env(safe-area-inset-bottom,0px))}
   .actions .btn{min-height:56px;padding:6px 8px;font-size:1.08rem}
   .actions .btn small{font-size:.82rem}
@@ -893,14 +887,19 @@ em.rep.warn{background:#b5523a}
 
 /* Logbuch aufklappbar */
 .log{background:var(--card);border:1px solid var(--rule);border-radius:10px}
-.log summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px;min-height:50px}
+.log summary,.log .lsum{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px;min-height:50px;width:100%;border:0;background:none;text-align:left;font:inherit;color:inherit}
+.log .lbody{display:none}
+.ltile{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin-top:10px;padding:8px 10px;border:1.5px solid #6b4d33;border-radius:4px;background:rgba(255,248,230,.5);text-align:left;font:inherit;color:inherit;cursor:pointer}
+.ltile b{font:700 .95rem var(--f-sc);letter-spacing:.03em;flex:none}.ltile span{flex:1;min-width:0;font-size:.86rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.ltile .chev{flex:none;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg)}
+.ltile.hot,.log.hot{border-color:var(--seal);box-shadow:inset 3px 0 0 var(--seal)}.ltile .lbody{display:none}
 .log summary::-webkit-details-marker{display:none}
 #chronbody{padding:0 14px 14px}
 #chron{margin-bottom:12px}
-.log summary h2{margin:0;flex:none}
+.log summary h2,.log .lsum h2{margin:0;flex:none}
 .log .last{font-size:.88rem;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .log .chev{flex:none;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
-.log[open] .chev{transform:translateY(2px) rotate(-135deg)}
+.log .lsum .chev{transform:rotate(-45deg)}
 .log ol{padding:0 14px 14px}
 .log[open] .last{visibility:hidden}
 
@@ -1020,7 +1019,7 @@ details.sec{border-top:1px solid #a88a5e}
 .priv div{position:relative;padding:8px 10px 9px 36px;border:1px solid #9d8059;background:rgba(255,248,230,.45);font-size:.84rem;line-height:1.25}
 .priv div b{display:block;font:700 .88rem var(--f-sc);letter-spacing:.02em}
 .priv i{position:absolute;left:8px;top:9px;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#c9473a,#8e2219);box-shadow:0 1px 0 #5c130d}
-h2.fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:20px 0 6px;font:400 1.4rem/1.05 var(--f-title)}
+h2.fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:20px 0 6px;font:700 1.05rem/1.1 var(--f-sc);letter-spacing:.04em;color:var(--ink)}
 h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right}
 #housecard h2.fh{margin-top:0}
 .hindex{display:grid;grid-template-columns:1fr 1fr;margin-top:10px;border-top:1px solid #8a6a48}
@@ -1078,9 +1077,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
 /* Stadt: Baubuch */
 .blater{border:0;border-top:1px solid #8a6a48;border-radius:0;background:none}
-.blater li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:10px;padding:6px 0;border-top:0;border-bottom:1px solid #b89b70}
+.blater li{display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:10px;row-gap:1px;padding:6px 0;border-top:0;border-bottom:1px solid #b89b70}
+.blater .lart{grid-row:1/3}.blater b{grid-column:2}.blater .small{grid-column:2}
 .blater .lart{line-height:0;filter:sepia(.55) saturate(.7) opacity(.7)}.blater .lart svg,.blater .lart img{width:64px;height:auto}
-.blater b{font:700 .92rem var(--f-sc);letter-spacing:.02em;color:#5d4632}.blater .small{font-style:italic;text-align:right}
+.blater b{font:700 .92rem var(--f-sc);letter-spacing:.02em;color:#5d4632}.blater .small{font-style:italic;text-align:left;color:#6b5440}
 .bslot{border:1px solid #9d8059;border-radius:3px;background:rgba(255,248,230,.45)}.bslot.free{border-style:dashed}
 .bc,.ptile,.bc.bco{border:1px solid #9d8059;border-radius:3px;background:rgba(255,248,230,.5)}
 .bart,.ptile .pfac{background:linear-gradient(#ead9b4,#f1e4c4)}
@@ -1099,23 +1099,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 .cols{font:600 .72rem var(--f-sc);color:#6b5440;border-bottom:1px solid #6b4d33}
 .good{border-bottom:1px solid #c8ad80}
 
-/* Segelansicht als Holzschnitt, passend zur Seekarte */
-.inkscene{position:absolute;inset:0;background:#f1e4c2;overflow:hidden}
-.inkscene>svg{display:block;width:100%;height:100%}
-.inkscene .ibob{transform-box:fill-box;transform-origin:50% 80%;animation:ibob 4.2s ease-in-out infinite}
-.inkscene .wrow{animation:idrift 7s ease-in-out infinite alternate}.inkscene .w1{animation-duration:5.5s}.inkscene .w3{animation-duration:3.8s}.inkscene .w2{animation-duration:4.4s;animation-direction:alternate-reverse}
-.inkscene .clouds{animation:idrift 26s linear infinite alternate}
-.inkscene .rain{animation:irain .5s linear infinite}
-@keyframes ibob{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(5px) rotate(1.4deg)}}
-@keyframes idrift{from{transform:translateX(0)}to{transform:translateX(-36px)}}
-@keyframes irain{from{transform:translate(0,0)}to{transform:translate(-7px,16px)}}
-@media (prefers-reduced-motion: reduce){.inkscene *{animation:none!important}}
-.scene.ink .cap{background:linear-gradient(rgba(244,232,203,.7),rgba(244,232,203,0) 75%);color:var(--ink);text-shadow:0 0 6px #f4e8cb,0 0 2px #f4e8cb}
-.scene.ink .tempo{background:rgba(58,36,22,.75)}
-.scene.ink .prog{background:rgba(58,36,22,.2)}.scene.ink .prog i{background:var(--seal)}
 .cap .ttl{font-family:var(--f-title)}
 
 .yrow.yship{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:start;column-gap:10px}
+.yrow.yship .ybtns{grid-column:2;flex-wrap:wrap;gap:6px}.yrow.yship .ybtns .ybtn{flex:1 1 auto;white-space:nowrap}
 .yrow.yship>.ship-ink{width:96px;height:auto;margin-top:2px}.yrow.yship .ybtns{grid-column:2;flex-wrap:wrap}
 .scene:not(.ink) canvas{filter:sepia(.18) saturate(.9)}
 .yard h2{font:400 1.45rem/1.05 var(--f-title)}
@@ -1184,7 +1171,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     <section class="col">
       <div class="scene" id="scene" data-tab="lage" role="img" aria-label="Painted scene: harbour or cog at sea">
         <canvas></canvas>
-        <div class="inkscene" id="inkscene" hidden></div>
         <div class="cap" id="cap"></div>
         <div class="prog" id="prog" hidden><i></i></div>
         <button class="tempo" id="tempo" type="button"></button>
@@ -1194,7 +1180,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       <div class="card evc" id="evc" data-tab="lage" aria-live="polite" hidden></div>
       <div class="card" id="status" data-tab="lage"></div>
       <section class="card goals" id="goals" data-tab="lage" aria-label="Your path in the Hansa" hidden><div id="goalsbody"></div>
-        <details class="log chron" id="chron" data-det="chron"><summary><h2>Course of time</h2><span class="last" id="chronlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="chronbody"></div></details>
+        <div class="log chron" id="chron"><button class="lsum" type="button" data-hs-open="chron"><h2>Course of time</h2><span class="last" id="chronlast"></span><i class="chev" aria-hidden="true"></i></button><div id="chronbody" class="lbody"></div></div>
       </section>
       <div class="card citycard" id="citycard" data-tab="stadt" hidden></div>
       <figure class="chart" data-tab="karte">
@@ -1205,14 +1191,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     </section>
     <section class="col">
       <div class="card" id="market" data-tab="markt"></div>
-      <details class="log frbox" id="frbox" data-tab="markt" data-det="frbox" hidden><summary><h2>Orders</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></summary><div id="frbody"></div></details>
+      <div class="log frbox" id="frbox" data-tab="markt" hidden><button class="lsum" type="button" data-hs-open="frbox"><h2>Orders</h2><span class="last" id="frlast"></span><i class="chev" aria-hidden="true"></i></button><div id="frbody" class="lbody"></div></div>
       <div class="card home" id="dealcard" data-tab="markt" hidden></div>
       <div class="card yard" id="yard" data-tab="werft" hidden></div>
       <div class="card home" id="homecard" data-tab="haus"></div>
       <div class="card home" id="branchcard" data-tab="markt" hidden></div>
       <div class="card home" id="housecard" data-tab="haus" hidden></div>
       <div class="card emptytab" id="emptytab" hidden></div>
-      <details class="log" id="log" data-tab="lage"><summary><h2>Logbook</h2><span class="last" id="loglast"></span><i class="chev" aria-hidden="true"></i></summary><ol id="loglist"></ol></details>
+      <div class="log" id="log" data-tab="lage"><button class="lsum" type="button" data-hs-open="log"><h2>Logbook</h2><span class="last" id="loglast"></span><i class="chev" aria-hidden="true"></i></button><ol id="loglist" class="lbody"></ol></div>
     </section>
   </main>
 
@@ -2018,7 +2004,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (box.hidden) return;
     const nHere = act.filter(f => st.loc && ordDue(f) === st.loc).length, slots = act.filter(f => f.k !== 'brief').length;
     $('#frlast').textContent = nHere ? `${nHere} to do here` : [act.length ? `${act.length} accepted` : '', offers.length ? `${offers.length} ${offers.length === 1 ? 'offer' : 'offers'}` : ''].filter(Boolean).join(' · ');
-    if (ui.det.frbox == null) box.open = true;
+    box.classList.toggle('hot', nHere > 0);
     let h = '';
     if (act.length) h += `<h3 class="frh">Accepted <small>${slots} of ${ORD_MAX()}</small></h3><ul class="frl">${act.slice().sort((x, y) => (ordDue(y) === st.loc) - (ordDue(x) === st.loc) || x.due - y.due).map(f => freightRow(f, true)).join('')}</ul>`;
     if (offers.length) h += `<h3 class="frh">Offers in ${C[st.loc].n}</h3><p class="small frhint">Freight and collection only need hold space; you are paid on delivery. For procurement you buy the goods yourself wherever they are cheap${ratOrder(st.loc) ? '; the council adds reputation' : ''}. New offers roughly every week.</p><ul class="frl">${offers.map(o => freightRow(o, false)).join('')}</ul>`;
@@ -5195,10 +5181,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // Ab Kaufmann kreuzen Verbände aus zwei oder drei Schiffen in bekannten Gebieten. Wer dort fährt, trifft oft auf sie;
   // gegen sie siegt man auch bei gutem Spiel nur etwa jedes zweite Mal, darum lohnen Umweg, Flucht, Tribut oder Geleitbrief.
   const PF = {
-    stoertebeker:{n:'Klaus Störtebeker', ships:3, k:2.5, kf:0.985, kr:0.335, trait:'zaeh', ptype:'holk', blide:1, flee:-0.1, toll:1.25, bounty:5000, rep:90,
+    stoertebeker:{n:'Klaus Störtebeker', ships:3, k:2.7, kf:0.985, kr:0.335, trait:'zaeh', ptype:'holk', blide:1, flee:-0.1, toll:1.25, bounty:5000, rep:90,
       reg:['nnord', 'skagen', 'kattegat', 'helsingoer', 'bornholm', 'gotsued'], where:'between Skagen, the Sound and Gotland',
       d:'The legend. His men fight to the last; whoever surrenders to him keeps his life.'},
-    michels:{n:'Gödeke Michels', ships:3, k:2.3, kf:0.97, kr:0.32, trait:'drauf', ptype:'holk', flee:-0.08, toll:1.1, bounty:3500, rep:70,
+    michels:{n:'Gödeke Michels', ships:3, k:1.6, kf:0.97, kr:0.32, trait:'drauf', ptype:'holk', flee:-0.08, toll:1.1, bounty:3500, rep:70,
       reg:['nsued', 'elbe', 'nnord'], where:'off Heligoland and the mouth of the Elbe', d:'Störtebeker’s companion. He boards early and hard.'},
     wigbold:{n:'Magister Wigbold', ships:2, k:1.15, kf:1.075, kr:0.48, trait:'vorsicht', ptype:'holk', luv:true, blide:1, flee:-0.05, toll:1, bounty:3000, rep:60,
       reg:['visby', 'gotsued', 'oeland'], where:'around Gotland', d:'A learned man. He comes from windward and prefers to shoot from a distance.'},
@@ -5734,9 +5720,9 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   // weil deine Salven mehr ausrichten als ihr Gegenfeuer und wer sein Deck verteidigt, mit Vorteil kämpft.
   // Schwere Gegner haben zähe oder draufgängerische Anführer und bessere Waffen; ab Kaufmann kommt jeder zweite mit zwei Schiffen.
   // Schwere Siege bringen mehr Beute und Ansehen (TIER_LOOT, TIER_REP), damit die Zielzeiten trotz echter Verluste halten.
-  // Ab Version 54 mit Dritteln und Karten neu abgestimmt (tools/sim/kampf.js, 6 Spielstände je Tag 400, 1100, 1800, je 25 Gefechte):
-  // gut leicht 100 %, mittel 85 bis 88 %, schwer 51 bis 66 %; ordentlich (Kapitän) mittel 74 bis 75 %, schwer 32 bis 43 %.
-  let TIER_K = [[0.6, 0.85], [1.65, 2], [2, 2.5]];
+  // Ab Version 55 mit dem Entern in Abschnitten neu abgestimmt (tools/sim/kampf.js, 6 Spielstände je Tag 400, 1100, 1800, je 25 Gefechte):
+  // gut leicht 100 %, mittel 88 bis 95 %, schwer 56 bis 59 %; ordentlich (Kapitän) mittel 69 bis 81 %, schwer 45 bis 56 %.
+  let TIER_K = [[0.6, 0.85], [1.5, 1.85], [1.7, 2.1]];
   let TIER_LOOT = [1, 1.4, 2.2], TIER_REP = [2, 8, 20];
   const TIER_P = [[0.6, 0.25, 0.15], [0.4, 0.3, 0.3]], TIER_TRAITS = [['vorsicht', 'gierig'], ['vorsicht', 'gierig', 'drauf', 'zaeh'], ['zaeh', 'drauf']];
   const PTYPE_MAX = {schnigge:22, kogge:48, holk:90, kraweel:130};   // so viele Bewaffnete drängen sich höchstens auf ein Seeräuberschiff
@@ -6122,9 +6108,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     salve:{n:'volley', k:1, home:'kastell', cut:4, val:e => 3 + meOf(e).kastell, say:'Crossbows from the castle; their assault −4 in the same section.', from:'den Armbrüsten'},
     pavese:{n:'Pavises', k:1, block:'salve', val:() => 0, say:'Halves their volley in the same section.', from:'den Pavesen', wear:'pavese'},
     brand:{n:'Fire pot', k:2, home:'mitte', val:() => 6, say:'Fire on their deck; their next move is only half as strong.', from:'den Brandpfeilen', use:'brand'},
-    ruf:{n:'Captain\'s call', k:2, val:() => 4 + 2 * (fightCap() ? fightCap().fight : 0), say:'Your captain leaps ahead. Once per fight.', from:'deinem Kapitän'}
+    ruf:{n:'Captain\'s call', k:1, val:() => 4 + 2 * (fightCap() ? fightCap().fight : 0), say:'Your captain leaps ahead. Once per fight.', from:'deinem Kapitän'}
   };
-  const FOE_MOVE = {sturm:'Assault', salve:'volley', wall:'Shield wall'};
+  const FOE_MOVE = {sturm:'Assault', salve:'volley', wall:'Shield wall', haken:'Grappling hooks'};
+  const BD_OPEN = 1.5, BD_MAXR = 5;   // ab Version 55: ein Zug ohne Antwort trifft ×1,5; mit ihrem Haken in der Mitte bis zu fünf Runden
   const cardHave = k => k === 'haken' ? (armsOf(st).haken || 0) > 0 : k === 'brand' ? (st.brand || 0) > 0 : k === 'schild' ? (armsOf(st).harnisch || 0) > 0 : k === 'pavese' ? (armsOf(st).pavese || 0) > 0 : k === 'ruf' ? !!fightCap() : true;
   function bdDeck(e) {
     const a = armsOf(st), M = manned(), d = ['sturm', 'sturm', 'sturm', 'sturm'];
@@ -6143,7 +6130,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const p = pirEff(att === 'own' ? Object.assign({}, e, {mor:Math.max(e.mor, BD.mfloor)}) : e) * (att === 'own' ? BD.def : 1);
     return clamp(Math.pow(p / Math.max(1, o), BD.kexp), 0.3, 3);
   }
-  const foeVal = (e, k) => { const v = k === 'sturm' ? (BD.fs + 3 * thF(e, 'bug')) * e.bd.M : k === 'salve' ? (BD.fv + 3 * thF(e, 'kastell')) * e.bd.M : 0; return Math.round(e.bd.weak ? v / 2 : v); };
+  // Ihr Sturm über die Mitte (zweiter Sturm der Draufgänger) ist schwächer als der über den Bug
+  const foeVal = (e, k, l) => { const v = k === 'sturm' ? (BD.fs + 3 * thF(e, 'bug')) * e.bd.M * (l === 'mitte' ? 0.7 : 1) : k === 'salve' ? (BD.fv + 3 * thF(e, 'kastell')) * e.bd.M : 0; return Math.round(e.bd.weak ? v / 2 : v); };
   function bdDraw(e) {
     const bd = e.bd, th = thOf(e), T = e.trait;
     bd.hand = [];
@@ -6155,19 +6143,21 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     }
     bd.put = {bug:[], mitte:[], kastell:[]};
     bd.M = bdM(e);
-    // Zwei offene Züge: Sturm kommt über den Bug (ohne Enterer über die Mitte), die Salve aus dem Kastell, der Schildwall dort, wo Platz ist
-    const W = {sturm:(th.bug > 0 ? 3 : 1) + (T === 'drauf' ? 1 : 0) + (bd.ctl >= 65 ? 1.5 : 0), salve:th.kastell > 0 ? 1 + thF(e, 'kastell') * 0.7 + (T === 'vorsicht' ? 0.5 : 0) : 0, wall:1 + (T === 'zaeh' || T === 'vorsicht' ? 0.5 : 0) + (bd.ctl <= 35 ? 1 : 0)};
-    const wp = () => { const tot = W.sturm + W.salve + W.wall; let r = Math.random() * tot; for (const k of ['sturm', 'salve', 'wall']) { if ((r -= W[k]) < 0) return k; } return 'sturm'; };
-    let a1 = wp(), a2 = wp();
-    if (a2 === a1 && a1 !== 'wall') a2 = a1 === 'salve' ? (th.bug > 0 ? 'sturm' : 'wall') : (th.kastell > 0 ? 'salve' : 'wall');
-    if (a1 === 'wall') [a1, a2] = [a2, a1];   // erst Sturm und Salve an ihren Platz, der Schildwall dorthin, wo noch frei ist
-    const plan = {bug:null, mitte:null, kastell:null};
-    [a1, a2].forEach(k => {
-      const free = T3.filter(t => !plan[t]);
-      let l = k === 'sturm' ? (th.bug > 0 ? 'bug' : 'mitte') : k === 'salve' ? 'kastell' : free[Math.floor(Math.random() * free.length)];
-      if (plan[l]) l = T3.find(t => !plan[t]);
-      plan[l] = k;
-    });
+    // Zwei offene Züge nach dem Ruf des Anführers: Draufgänger stürmen gern zweimal (Bug und Mitte), Vorsichtige stellen Salve und Schildwall,
+    // Zähe Sturm und Schildwall, Gierige werfen den Haken (Mitte) und stürmen oder schießen. Sturm braucht Enterer, Salve Schützen.
+    const plan = {bug:null, mitte:null, kastell:null}, can = {sturm:th.bug > 0, salve:th.kastell > 0, wall:true, haken:th.mitte > 0};
+    const P = {drauf:[['sturm', 'bug'], ['salve', 'kastell'], ['sturm', 'mitte'], ['wall', 'kastell']], vorsicht:[['salve', 'kastell'], ['wall', 'bug'], ['sturm', 'bug'], ['wall', 'mitte']],
+      zaeh:[['sturm', 'bug'], ['wall', 'kastell'], ['salve', 'kastell'], ['wall', 'mitte']], gierig:[['haken', 'mitte'], ['sturm', 'bug'], ['salve', 'kastell'], ['wall', 'bug']]}[T] || [['sturm', 'bug'], ['salve', 'kastell'], ['wall', 'bug'], ['wall', 'mitte']];
+    // der Lage angepasst: wer das Deck verliert, hält lieber; wer es hat, drängt
+    const W = P.map(([k, l], i) => [k, l, (4 - i) + (k === 'wall' && bd.ctl >= 65 ? 2 : 0) + (k === 'sturm' && bd.ctl <= 35 && th.bug > 0 ? 2 : 0) + (k === 'haken' && bd.r === 0 ? 1 : 0)]);
+    let placed = 0;
+    while (placed < 2) {
+      const open = W.filter(([k, l]) => can[k] && !plan[l] && !(k === 'haken' && T3.some(x => plan[x] === 'haken')));
+      if (!open.length) break;
+      const tot = open.reduce((a, x) => a + x[2], 0); let r = Math.random() * tot, pick = open[0];
+      for (const x of open) { if ((r -= x[2]) < 0) { pick = x; break; } }
+      plan[pick[1]] = pick[0]; placed++;
+    }
     bd.plan = plan;
   }
   function bdStart(e, att) {
@@ -6178,7 +6168,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   const bdUsedK = bd => bdPlaced(bd).reduce((a, i) => a + CARD[bd.hand[i]].k, 0);
   function laneRes(e, l, extra) {
     const bd = e.bd, plan = bd.plan[l], idx = bd.put[l].concat(extra != null ? [extra] : []);
-    let mine = 0, theirs = plan ? foeVal(e, plan) : 0, cut = 0;
+    let mine = 0, theirs = plan ? foeVal(e, plan, l) : 0, cut = 0;
     idx.forEach(i => {
       const k = bd.hand[i], c = CARD[k], v = c.val(e);
       if (c.block) { if (c.block === plan) theirs = c.block === 'sturm' ? Math.max(0, theirs - v) : Math.round(theirs / 2); }
@@ -6187,7 +6177,9 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     });
     if (plan === 'sturm') theirs = Math.max(0, theirs - cut);
     if (plan === 'wall') mine = Math.round(mine / 2);
-    return {mine, theirs, d:mine - theirs};
+    const open = !!plan && plan !== 'wall' && plan !== 'haken' && !idx.length;
+    if (open) theirs = Math.round(theirs * BD_OPEN);
+    return {mine, theirs, d:mine - theirs, open, held:plan === 'haken' && !idx.length};
   }
   const bdTotal = e => T3.reduce((a, l) => a + laneRes(e, l).d, 0);
   // Verbrauch und Verschleiß der gespielten Karten
@@ -6208,7 +6200,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if ((e.fleet || e.pair) && e.reserve > 0) { rein = Math.min(e.reserve, Math.round((PF_REIN + e.reserve * 0.18) * BD.rein)); e.reserve -= rein; e.n += rein; }
     const played = bdPlaced(bd).map(i => bd.hand[i]), lanes = {}, plan = Object.assign({}, bd.plan);
     let tot = 0, dO = 0, dP = 0;
-    T3.forEach(l => { const r = laneRes(e, l); lanes[l] = r; tot += r.d; dO += r.mine; dP += r.theirs; });
+    const th = thOf(e), me = meOf(e), hitF = [], hitO = [];
+    bd.held = false;
+    T3.forEach(l => { const r = laneRes(e, l); lanes[l] = r; tot += r.d; dO += r.mine; dP += r.theirs;
+      // Wer einen umkämpften Abschnitt gewinnt, nimmt dem Gegner dort einen Punkt; wer ihn verliert, verliert selbst einen
+      const fought = !!plan[l] || bd.put[l].length > 0;
+      if (fought && r.d > 0 && th[l] > 0) { th[l]--; hitF.push(l); }
+      else if (fought && r.d < 0 && me[l] > 0) { me[l]--; hitO.push(l); }
+      if (r.held) bd.held = true; });
     bd.ctl = clamp(bd.ctl + tot, 0, 100);
     const kP = Math.min(e.n, Math.round(dO / BD.ref * BD.kill * ownEff() * rnd(0.8, 1.2)));
     const c0 = st.crew; loseCrew(Math.round(dP / BD.ref * BD.kill * pirEff(e) * rnd(0.8, 1.2) * (1 - 0.3 * armorFrac()))); const kO = c0 - st.crew;
@@ -6219,18 +6218,21 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const used = bdWear(played);
     bd.used = bd.used.concat(used); bd.log = bd.log.concat(played);
     bd.r++;
-    const res = e.n <= 0 || bd.ctl >= 100 ? 'win' : bd.ctl <= 0 ? 'broken' : e.mor <= 10 && bd.ctl > 50 ? 'strike'
+    let res = e.n <= 0 || bd.ctl >= 100 ? 'win' : bd.ctl <= 0 ? 'broken' : e.mor <= 10 && bd.ctl > 50 ? 'strike'
       : bd.r >= BD.rounds ? (bd.ctl >= strikeAt(e) ? 'strike' : bd.ctl < BD.retreat ? 'broken' : 'part') : 'go';
-    if (meleeHook) meleeHook({r:bd.r, att:bd.att, ctl:Math.round(bd.ctl), tot, M:+bd.M.toFixed(2), mor:Math.round(e.mor), n:e.n, crew:st.crew, played:played.join(','), res});
+    if (res === 'part' && bd.held && bd.r < BD_MAXR) res = 'go';   // ihr Haken hält die Schiffe zusammen
+    if (meleeHook) meleeHook({r:bd.r, att:bd.att, ctl:Math.round(bd.ctl), tot, M:+bd.M.toFixed(2), mor:Math.round(e.mor), n:e.n, crew:st.crew, played:played.join(','), put:T3.map(l => bd.put[l].length).join('/'), res});
     if (res === 'go') bdDraw(e);
-    return {lanes, plan, tot, kP, kO, res, rein, used, played};
+    return {lanes, plan, tot, kP, kO, res, rein, used, played, hitF, hitO, held:bd.held};
   }
   // Karten legen für Kapitän und Bot: mit Wahrscheinlichkeit klug die beste Verteilung, sonst irgendeine gültige
   function bdAuto(e, klug) {
     const bd = e.bd, H = bd.hand, opts = [[]];
     H.forEach((k, i) => T3.forEach(l => { if (CARD[k].k <= BD.kraft) opts.push([[i, l]]); }));
     for (let i = 0; i < H.length; i++) for (let j = i + 1; j < H.length; j++) if (CARD[H[i]].k + CARD[H[j]].k <= BD.kraft) T3.forEach(a => T3.forEach(b => opts.push([[i, a], [j, b]])));
-    const score = o => { bd.put = {bug:[], mitte:[], kastell:[]}; o.forEach(([i, l]) => bd.put[l].push(i)); return bdTotal(e) - o.reduce((x, [i]) => x + (CARD[H[i]].use ? 1.5 : 0) + (CARD[H[i]].k === 2 && bd.r < BD.rounds - 1 && H[i] === 'ruf' ? 2 : 0), 0); };
+    const score = o => { bd.put = {bug:[], mitte:[], kastell:[]}; o.forEach(([i, l]) => bd.put[l].push(i));
+      let v = bdTotal(e); T3.forEach(l => { const r = laneRes(e, l); if ((bd.plan[l] || bd.put[l].length) && r.d > 0 && thOf(e)[l] > 0) v += l === 'mitte' ? 2.5 : 2; if (r.held) v -= 3; });
+      return v - o.reduce((x, [i]) => x + (CARD[H[i]].use ? 1.5 : 0) + (H[i] === 'ruf' && bd.r < BD.rounds - 1 ? 1 : 0), 0); };
     let best = opts[opts.length - 1];
     if (Math.random() < (klug === true ? 1 : +klug || 0)) { let bv = -1e9; opts.forEach(o => { const v = score(o); if (v > bv) { bv = v; best = o; } }); }
     else best = opts[1 + Math.floor(Math.random() * (opts.length - 1))] || [];
@@ -6300,7 +6302,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const e = st.enc, bd = e.bd;
     const line = `${pre || ''}${o.tot > 0 ? `You gain ground, +${o.tot} on deck.` : o.tot < 0 ? `They push you back, −${-o.tot} on deck.` : 'Nobody gives way.'} ` +
       `${o.kP ? `${o.kP} of them ${o.kP === 1 ? 'falls' : 'fall'}` : 'none of them falls'}, ${o.kO ? `${o.kO} ${o.kO === 1 ? 'man' : 'men'} of yours` : 'none of yours'}.` +
-      (o.used.length ? ` Used up or damaged: ${usedLine(o.used)}.` : '') + (o.rein >= 3 ? ` ${o.rein} men jump across from the escort ship.` : '');
+      (o.hitF.length ? ` Their ${o.hitF.map(l => T3N[l]).join(' and ')} loses a point.` : '') + (o.hitO.length ? ` Your ${o.hitO.map(l => T3N[l]).join(' and ')} loses a point.` : '') +
+      (o.used.length ? ` Used up or damaged: ${usedLine(o.used)}.` : '') + (o.rein >= 3 ? ` ${o.rein} men jump across from the escort ship.` : '') + (o.res === 'go' && o.held && bd.r >= BD.rounds ? ' Their grappling hook holds the ships together; it goes on.' : '');
     if (o.kO) inkFx.pop(`Men −${o.kO}`, 'own');
     if (o.kP) setTimeout(() => { if (st.enc) inkFx.pop(`−${o.kP}`, 'pir'); }, 250);
     if (o.res === 'win' || o.res === 'strike') return boardWin(o.res, line);
@@ -6331,6 +6334,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
   async function cutLoose() {
     const e = st.enc, k = fightCap();
+    if (e.bd && T3.some(l => laneRes(e, l).held)) { e.msg = 'Their grappling hook holds the ships together. Play a card to the midships, then the lines can be cut.'; renderEnc(); return; }
     const p = clamp(0.3 + 0.1 * (ownWend() - SHIPS[e.ptype].wend) + (k ? k.nav * 0.03 : 0), 0.15, 0.6);
     busy = true; e.phase = 'boarding'; e.msg = 'Axes to the lines!'; render(); await sleep(900); busy = false;
     if (!st.enc) return;
@@ -9074,7 +9078,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     const OWN_STY = {hull:'#4a3324', castle:'#5b4130', sail:'#efe5cf', stripe:'#a2392d', pen1:'#b13a2c', pen2:'#f2ece0', flip:false};
     const OWN_MZ = {...OWN_STY, mizzen:true};
     const PIR_STY = {hull:'#261c17', castle:'#382a22', sail:'#3a3634', stripe:'#5c1c17', pen1:'#111', pen2:'#111', flip:true};
-    const fx = {ownX:0.55, pirX:1.45, pirT:1.45, sink:0, fire:false, shake:0, bolts:[], sparks:[], texts:[], board:0, last:performance.now()};
+    const fx = {ownX:0.55, pirX:1.45, pirT:1.45, sink:0, fire:false, shake:0, pshake:0, strike:0, bolts:[], sparks:[], texts:[], board:0, last:performance.now()};
     scene.fx = {
       arrive() { fx.pirX = 1.35; fx.pirT = DIST_X[2]; fx.sink = 0; fx.fire = false; },
       place(d) { fx.pirX = fx.pirT = DIST_X[d == null ? 1 : d]; fx.sink = 0; },
@@ -9085,17 +9089,19 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       flee(ok) { fx.pirT = ok ? 1.5 : DIST_X[1]; },
       fire(on) { fx.fire = on; },
       shake() { fx.shake = performance.now() + 380; },
+      pshake() { fx.pshake = performance.now() + 380; },
+      strike() { fx.strike = performance.now(); },
       sink() { fx.sink = performance.now(); },
       clash() { fx.pirT = 0.58; fx.board = performance.now(); },
       board() { fx.pirT = 0.58; fx.board = performance.now() + 700; fx.texts.push({s:'Board!', side:'mid', color:'#ffd27a', t0:performance.now() + 700}); },
-      volley(from, n, zone, burn) {
+      volley(from, n, zone, burn, heavy) {
         const now = performance.now();
-        for (let i = 0; i < n; i++) fx.bolts.push({from, t0:now + i * 70 + Math.random() * 60, dur:650 + Math.random() * 220,
+        for (let i = 0; i < n; i++) fx.bolts.push({from, t0:now + i * 70 + Math.random() * 60, dur:(heavy ? 900 : 650) + Math.random() * 220,
           hit:zone !== 'miss' && Math.random() < (zone === 'crit' ? 0.95 : 0.75), jx:Math.random() - 0.5, jy:Math.random() - 0.5,
-          burn:!!burn && zone !== 'miss' && from === 'own'});
+          burn:!!burn && zone !== 'miss' && from === 'own', heavy:!!heavy, crit:zone === 'crit'});
       },
       text(s, side, color) { fx.texts.push({s, side, color, t0:performance.now()}); },
-      reset() { fx.fire = false; fx.bolts = []; fx.board = 0; if (!fx.sink) fx.pirT = 1.5; },
+      reset() { fx.fire = false; fx.bolts = []; fx.board = 0; fx.strike = 0; if (!fx.sink) fx.pirT = 1.5; },
       init(state) {
         fx.ownX = state.sail ? (state.enc ? 0.3 : 0.55) : 0.34;
         const e = state.enc;
@@ -9126,13 +9132,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         const A = b.from === 'own' ? ownDeck : pirDeck, T = b.from === 'own' ? pirDeck : ownDeck, dir = b.from === 'own' ? 1 : -1;
         const B = b.hit ? [T[0] + b.jx * 34 * s, T[1] + b.jy * 26 * s] : [T[0] - dir * (28 + Math.abs(b.jx) * 50) * s, hz + L * 0.72 + b.jy * 10];
         if (k >= 1) {
-          if (b.hit) spark(B[0], B[1], 6, b.burn ? ['#ffb347', '#ff6a2b', '#ffd27a'] : ['#7a5236', '#c9a27a', '#3a2a1e']);
+          if (b.hit) { spark(B[0], B[1], b.crit ? 12 : 6, b.burn ? ['#ffb347', '#ff6a2b', '#ffd27a'] : b.crit ? ['#8e2219', '#3a2a1e', '#c9a27a'] : ['#7a5236', '#c9a27a', '#3a2a1e'], b.crit ? 90 : 60); if (b.crit || b.heavy) { if (b.from === 'own') fx.pshake = now + 300; else fx.shake = now + 300; } }
           else spark(B[0], B[1], 7, ['rgba(255,255,255,.9)', 'rgba(210,230,235,.85)'], 110);
           return false;
         }
-        const arc = Math.abs(B[0] - A[0]) * 0.3;
+        const arc = Math.abs(B[0] - A[0]) * (b.heavy ? 0.5 : 0.3);
         const at = q => [A[0] + (B[0] - A[0]) * q, A[1] + (B[1] - A[1]) * q - Math.sin(q * Math.PI) * arc];
         const [x, y] = at(k), [x2, y2] = at(Math.max(0, k - 0.07));
+        if (b.heavy) { ctx.fillStyle = '#4a3a2c'; ctx.beginPath(); ctx.arc(x, y, 2.6 * s, 0, Math.PI * 2); ctx.fill(); return true; }
         ctx.strokeStyle = b.burn ? '#ffb347' : b.from === 'own' ? '#2a2019' : '#3b1712';
         ctx.lineWidth = 1.7; ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x, y); ctx.stroke();
         if (b.burn) { ctx.fillStyle = 'rgba(255,170,60,.85)'; ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2); ctx.fill(); }
@@ -9398,6 +9405,37 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       ctx.fillStyle = '#3a291d'; ctx.fillRect(-55, -15, 4, 20);
       ctx.restore();
     }
+    // Ab Version 55: Schäden an den Dritteln und Leute an Bord, auf das gezeichnete Schiff gelegt.
+    // Koordinaten wie das Schiffsmodell (Ships36): Mitte bei 0, Wasserlinie bei 0, eine Einheit je Meter; bow: Richtung zum Gegner.
+    const SU = 11.25;
+    function shipMarks(type, th, max, x, y, s, bow, crewCol, lost) {
+      const D = Ships36 && Ships36.DEF[type] || Ships36.DEF.kogge, m = D.masts[0], k = s * 0.4, u = SU;
+      const mx = (m.u - 0.5) * D.L * u, sailY = -(D.D + m.h * 0.56) * u, sw = m.sw * 0.5 * u, sh = m.sh * 0.5 * u, deck = -(D.D + 0.6) * u;
+      const cx = (D.L * 0.36) * u;
+      ctx.save(); ctx.translate(x, y); ctx.scale(k, k); ctx.lineJoin = 'round';
+      const r = rng(7);
+      // Löcher im Segel (Mitte)
+      const nl = Math.round((max - th.mitte) / max * 3);
+      for (let i = 0; i < nl; i++) { const hx = mx + (r() - 0.5) * sw * 1.3, hy = sailY + (r() - 0.5) * sh * 1.2, hr = 0.5 * u + r() * 0.45 * u;
+        ctx.fillStyle = 'rgba(30,22,16,.85)'; ctx.beginPath(); for (let q = 0; q < 7; q++) { const a = q / 7 * Math.PI * 2, rr = hr * (0.7 + r() * 0.5); q ? ctx.lineTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr) : ctx.moveTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr); } ctx.closePath(); ctx.fill(); }
+      // Leute auf den Kastellen: Bug (Richtung Gegner) und Kastell (abgewandt), je ein Mann je Punkt, höchstens vier
+      const men = (n, px, py, col) => { for (let i = 0; i < Math.min(4, n); i++) { const fxp = px + (i - 1.5) * 1.3 * u * -bow, fy = py;
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(fxp, fy - 1.9 * u, 0.5 * u, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(fxp - 0.45 * u, fy - 1.35 * u, 0.9 * u, 1.35 * u); } };
+      men(Math.round(th.bug / max * 4), cx * bow, deck, crewCol);
+      men(Math.round(th.kastell / max * 4), -cx * bow, deck - 0.8 * u, crewCol);
+      // steckende Bolzen an den Kastellen je verlorenem Punkt
+      ctx.strokeStyle = '#2a2019'; ctx.lineWidth = 0.35 * u; ctx.lineCap = 'round';
+      const bolts = (n, px, py) => { for (let i = 0; i < Math.min(5, n); i++) { const bx = px + (i - 2) * 1.1 * u, by = py + 0.8 * u + (i % 2) * 0.8 * u; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + 1.6 * u * bow, by - 1.1 * u); ctx.stroke(); } };
+      bolts(Math.round((max - th.bug) / max * 4), cx * bow, deck + 0.4 * u);
+      bolts(Math.round((max - th.kastell) / max * 4), -cx * bow, deck - 0.2 * u);
+      if (lost) { // Flagge sinkt am Mast: Ergeben
+        const top = -(D.D + m.h) * u, fy = top + lost * (m.h * 0.7) * u;
+        ctx.fillStyle = '#1c1714'; ctx.beginPath(); ctx.moveTo(mx, fy); ctx.lineTo(mx - 4 * u * bow, fy + 1.2 * u); ctx.lineTo(mx, fy + 2.4 * u); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = '#d8c7a0'; ctx.lineWidth = 0.25 * u; ctx.beginPath(); ctx.moveTo(mx, top); ctx.lineTo(mx, fy + 2.4 * u); ctx.stroke();
+      }
+      ctx.restore();
+    }
     function quay(y) {
       const x0 = W * 0.68;
       ctx.fillStyle = '#2f241b';
@@ -9591,10 +9629,12 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         if (pk < 1) {
           pirY = baseY + Math.sin(t * 1.5 + 1.3) * amp * 0.9 + pk * pk * 80 * s;
           ctx.globalAlpha = 1 - pk * 0.5;
-          if (pk < 0.3) shade(fx.pirX * W, pirY, s * 0.95, t + 1);
-          if (!shipArt(enc && SHIPS[enc.ptype] ? enc.ptype : 'kogge', enc && enc.prey ? 'm' : enc && enc.dane ? 'd' : true, false, fx.pirX * W, pirY, s * 0.95, Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true))
-            cog(fx.pirX * W, pirY, s * 0.95 * (enc && SHIPS[enc.ptype] ? SHIPS[enc.ptype].sc : 1), Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true, t + 1.7, wx === 'storm', PIR_STY);
-          if (fx.fire && pk < 0.85) flames(fx.pirX * W, pirY, s, t);
+          const px = fx.pirX * W + (now < fx.pshake ? (Math.random() - 0.5) * 6 : 0), pt = enc && SHIPS[enc.ptype] ? enc.ptype : 'kogge';
+          if (pk < 0.3) shade(px, pirY, s * 0.95, t + 1);
+          const drawn = shipArt(pt, enc && enc.prey ? 'm' : enc && enc.dane ? 'd' : true, false, px, pirY, s * 0.95, Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true);
+          if (!drawn) cog(px, pirY, s * 0.95 * (enc && SHIPS[enc.ptype] ? SHIPS[enc.ptype].sc : 1), Math.sin(t * 1.5 + 2) * 0.035 + pk * 0.45, true, t + 1.7, wx === 'storm', PIR_STY);
+          if (enc && drawn && enc.th) shipMarks(pt, enc.th, enc.thm || 3, px, pirY, s * 0.95, -1, '#1c1714', fx.strike ? Math.min(1, (now - fx.strike) / 1600) : 0);
+          if (fx.fire && pk < 0.85) flames(px, pirY, s, t);
           ctx.globalAlpha = 1;
         }
       }
@@ -9618,8 +9658,9 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
           cog(ex, ey, s * T.sc * 0.66, Math.sin(t * 1.4 + k) * 0.03, sea, t + k * 0.9, wx === 'storm', sh.type === 'kraweel' ? OWN_MZ : OWN_STY);
       });
       shade(shipX, shipY, s * (fl0 ? SHIPS[fl0.type].sc : 1), t);
-      if (!(fl0 || st.focus) || !shipArt(fl0 ? fl0.type : 'kogge', false, !sea, shipX, shipY, s, ang, false))
-        cog(shipX, shipY, s * (fl0 ? SHIPS[fl0.type].sc : 1), ang, sea, t, wx === 'storm', fl0 && fl0.type === 'kraweel' ? OWN_MZ : OWN_STY);
+      const ownDrawn = (fl0 || st.focus) && shipArt(fl0 ? fl0.type : 'kogge', false, !sea, shipX, shipY, s, ang, false);
+      if (!ownDrawn) cog(shipX, shipY, s * (fl0 ? SHIPS[fl0.type].sc : 1), ang, sea, t, wx === 'storm', fl0 && fl0.type === 'kraweel' ? OWN_MZ : OWN_STY);
+      if (ownDrawn && sea) shipMarks(fl0 ? fl0.type : 'kogge', enc && enc.me ? enc.me : {bug:3, mitte:3, kastell:3}, 3, shipX, shipY, s, 1, '#3a2a1e', 0);
       if (sea) {
         ctx.fillStyle = 'rgba(255,255,255,.55)';
         for (let i = 0; i < 4; i++) { const ph = (t * 1.4 + i / 4) % 1; ctx.globalAlpha = 1 - ph; ctx.beginPath(); ctx.arc(shipX + 50 * s + ph * 10, shipY - 4 * s - ph * 8, 1.5 + ph * 2, 0, Math.PI * 2); ctx.fill(); }
@@ -9861,157 +9902,30 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   }
     return {kogge, holk, waves, crew};
   })();
-  // ───────── Ab Version 54: Seegefecht als Holzschnitt ─────────
-  // Ihr Holk rechts (je näher, desto größer), deine Kogge links unten in der Hausfarbe. Schäden bleiben im Bild: Löcher im Segel,
-  // abgeschlagene Zinnen, steckende Bolzen, Flammen. Bolzen fliegen in einer Bahn, Treffer als Tintenspritzer mit Ruck,
-  // Fehlschüsse als Ringe im Wasser; Schrift steigt auf. Beim Entern fliegen Karten in die Abschnitte und prallen aufeinander.
-  // Alles ohne Bewegung bei „Bewegung reduzieren“.
-  const SVGNS = 'http://www.w3.org/2000/svg';
-  const IHOLK = {AIMY:{bug:[60, 92], mitte:[200, 98], kastell:[338, 80]}, flagX:370, flagY:20};
-  const IKOG = {pts:{kastell:[90, 100], mitte:[214, 110], bug:[344, 136]}, launch:[300, 96]};
-  const inkFight = {key:'', box:null};
-  const foeGeo = d => { const s = [1, 0.8, 0.64][d == null ? 2 : d], w = 380 * s, h = w * 262 / 400, wl = [304, 280, 262][d == null ? 2 : d]; return {s:w / 400, x:664 - w, y:wl - h * 228 / 262, w, h}; };
-  const OWN_G = {s:250 / 400, x:8, y:322 - 164 * 228 / 262};
-  const foePt = (e, hx, hy, d) => { const g = foeGeo(d != null ? d : e.dist); return [g.x + hx * g.s, g.y + hy * g.s]; };
-  const ownPt = (hx, hy) => [OWN_G.x + hx * OWN_G.s, OWN_G.y + hy * OWN_G.s];
-  // Schäden ins Bild des Holks (Koordinaten des Holks, 400 × 262)
-  function foeDamage(e) {
-    const f = {bug:Math.round(thF(e, 'bug')), mitte:Math.round(thF(e, 'mitte')), kastell:Math.round(thF(e, 'kastell'))}, out = [];
-    const holes = [[150, 86], [232, 70], [176, 114], [214, 100], [252, 110], [136, 66]], lostM = TH_MAX - f.mitte;
-    for (let i = 0; i < Math.min(holes.length, lostM * 2); i++) { const [x, y] = holes[i]; out.push(`<path d="M${x} ${y} l5 -4 l3 6 l6 1 l-4 5 l2 6 l-7 -2 l-5 3 l0 -6 l-5 -3z" fill="#2b2118" opacity=".9"/><path d="M${x + 2} ${y - 6} l-3 -6 M${x + 12} ${y + 10} l5 5" stroke="#33241a" stroke-width=".8"/>`); }
-    const bolts = (x0, y0, n) => Array.from({length:n}, (_, i) => `<path d="M${x0 + i * 13} ${y0 + (i % 2) * 6} l-9 -7" stroke="#33241a" stroke-width="1.6" stroke-linecap="round"/><path d="M${x0 - 9 + i * 13} ${y0 - 7 + (i % 2) * 6} l-2 2 m2 -2 l2 -1" stroke="#33241a" stroke-width="1"/>`).join('');
-    const gap = (x, y) => `<rect x="${x}" y="${y}" width="12" height="13" fill="#efe1c0"/><path d="M${x} ${y + 13} l4 -5 l3 3 l5 -6" stroke="#33241a" stroke-width="1" fill="none"/>`;
-    for (let i = 0; i < TH_MAX - f.bug; i++) out.push(gap(28 + i * 26, 52), bolts(34 + i * 22, 84, 2));
-    for (let i = 0; i < TH_MAX - f.kastell; i++) out.push(gap(306 + i * 26, 40), bolts(312 + i * 20, 74, 2));
-    if (e.fire) out.push(`<g class="flames">${[[160, 126], [204, 120], [236, 128], [182, 132]].slice(0, Math.max(2, 4 - f.mitte)).map(([x, y], i) => `<path d="M${x} ${y} q-8 -12 0 -26 q2 10 8 12 q3 -8 1 -14 q12 12 2 28z" fill="#e0902a" stroke="#33241a" stroke-width=".9"><animateTransform attributeName="transform" type="scale" values="1 1;1 1.12;1 .94;1 1" dur="${0.7 + i * 0.15}s" repeatCount="indefinite" additive="sum"/></path>`).join('')}` +
-      `<g class="smoke">${[0, 1, 2].map(i => `<circle cx="${190 + i * 18}" cy="${70 - i * 14}" r="${10 + i * 4}" fill="#6b5a4a" opacity=".25"/>`).join('')}</g></g>`);
-    return out.join('');
-  }
-  // Schäden an deiner Kogge (Koordinaten der Kogge): Bolzen im Kastell und am Bug, Löcher im Segel
-  function ownDamage(e) {
-    const m = meOf(e), out = [];
-    const bolts = (x0, y0, n) => Array.from({length:n}, (_, i) => `<path d="M${x0 + i * 12} ${y0 + (i % 2) * 5} l9 -7" stroke="#33241a" stroke-width="1.6" stroke-linecap="round"/>`).join('');
-    for (let i = 0; i < TH_MAX - m.kastell; i++) out.push(bolts(52 + i * 24, 118, 2));
-    for (let i = 0; i < TH_MAX - m.bug; i++) out.push(bolts(326 + i * 14, 146, 1));
-    [[170, 90], [250, 104], [206, 126]].slice(0, TH_MAX - m.mitte).forEach(([x, y]) => out.push(`<path d="M${x} ${y} l5 -4 l3 6 l6 1 l-4 5 l2 6 l-7 -2 l-5 3 l0 -6 l-5 -3z" fill="#2b2118" opacity=".85"/>`));
-    return out.join('');
-  }
-  function inkFightRender() {
-    const sc = $('#scene'), e = st.enc;
-    let box = $('#fightink');
-    sc.classList.toggle('fight', !!e);
-    if (!e) { if (box) { box.remove(); inkFight.key = ''; } return; }
-    if (!box) { box = document.createElement('div'); box.className = 'inkscene fightink'; box.id = 'fightink'; sc.insertBefore(box, sc.querySelector('.cap')); }
-    sc.classList.add('ink');
-    const wx = (st.sail && st.sail.weather) || 'clear', dark = wx === 'storm', col = houseCol(), type = (st.fleet[0] || {type:'kogge'}).type;
-    const k0 = [e.name, e.ptype, wx, col, type].join('|');
-    if (inkFight.key !== k0) {
-      inkFight.key = k0;
-      const W = 680, H = 400, ink = '#33241a', sea = dark ? '#dccaa0' : '#ecdcb6', seed = hashStr(e.name) % 97 + 3;
-      const strip = s => s.replace(/<g class="sea">[\s\S]*<\/g><\/svg>\s*$/, '</svg>');
-      const own = strip((type === 'holk' ? SHIP_INK.holk : SHIP_INK.kogge)({stripe:col, flag:col, sea, seed:seed + 7, cls:'oship'}));
-      const ownSvg = type === 'holk' ? own.replace('<svg ', '<svg width="400" height="262" ').replace(/^<svg([^>]*)>/, '<svg$1><g transform="translate(400 0) scale(-1 1)">').replace(/<\/svg>\s*$/, '</g></svg>') : own.replace('<svg ', '<svg width="400" height="262" ');
-      box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? '#d6c294' : '#f4e8cb'}"/><stop offset="1" stop-color="${dark ? '#e2d0a6' : '#efe0bb'}"/></linearGradient></defs>` +
-        `<rect width="${W}" height="${H}" fill="url(#fsky)"/>` +
-        `<g class="wrow w0" opacity=".6">${SHIP_INK.waves(232, W + 60, {seed:seed + 1, rows:1, sea})}</g>` +
-        `<g class="foe"><g class="fmove"><g class="fbob"><g class="fshake"></g></g></g></g>` +
-        `<g class="wrow w1" opacity=".85">${SHIP_INK.waves(300, W + 60, {seed:seed + 2, rows:2, sea})}</g>` +
-        `<g class="own" transform="translate(${OWN_G.x} ${OWN_G.y}) scale(${OWN_G.s})"><g class="obob"><g class="oshake">${ownSvg}<g class="odmg"></g></g></g></g>` +
-        `<g class="wrow w3">${SHIP_INK.waves(352, W + 60, {seed:seed + 5, rows:2, sea})}</g>` +
-        (wx === 'rain' || wx === 'storm' ? `<g class="rain">${Array.from({length:dark ? 60 : 34}, (_, i) => { const x = (i * 97 + seed * 13) % W, y = (i * 53) % 300; return `<path d="M${x} ${y} l-7 16" stroke="${ink}" stroke-width=".9" opacity=".45"/>`; }).join('')}</g>` : '') +
-        (wx === 'fog' ? `<rect width="${W}" height="${H}" fill="#f4ead6" opacity=".45"/>` : '') +
-        `<g class="fxl"></g></svg>`;
-      inkFight.fx = box.querySelector('.fxl'); inkFight.dk = ''; inkFight.gone = false;
-      // Ankunft: von rechts herein
-      const g = foeGeo(e.phase === 'meet' ? 2 : e.dist), mv = box.querySelector('.fmove');
-      mv.style.transform = `translate(${g.x + (e.phase === 'meet' && !reduce ? 240 : 0)}px, ${g.y}px) scale(${g.s})`;
-      if (e.phase === 'meet' && !reduce) requestAnimationFrame(() => requestAnimationFrame(() => { mv.style.transform = `translate(${g.x}px, ${g.y}px) scale(${g.s})`; }));
-    }
-    // Lage, Schäden und Ausgang bei jedem Zeichnen
-    const mv = box.querySelector('.fmove'), out = ['won', 'escaped', 'paid', 'captured', 'lost'].includes(e.phase), g = foeGeo(e.phase === 'melee' || e.phase === 'boarding' ? 0 : e.dist);
-    if (!out && !inkFight.gone) mv.style.transform = `translate(${g.x}px, ${g.y}px) scale(${g.s})`;
-    const dk = JSON.stringify([thOf(e), e.fire]);
-    if (inkFight.dk !== dk) {   // Leute an Bord und Schäden nach den Dritteln
-      inkFight.dk = dk;
-      const sea = wx === 'storm' ? '#dccaa0' : '#ecdcb6';
-      box.querySelector('.fshake').innerHTML = SHIP_INK.holk({stripe:'#3a302a', flag:'#2b2522', sea, seed:hashStr(e.name) % 97 + 6, cls:'fship', dmg:{bug:Math.ceil(thF(e, 'bug')), mitte:Math.ceil(thF(e, 'mitte')), kastell:Math.ceil(thF(e, 'kastell'))}})
-        .replace(/<g class="sea">[\s\S]*<\/g><\/svg>\s*$/, `<g class="fdmg">${foeDamage(e)}</g></svg>`).replace('<svg ', '<svg width="400" height="262" ');
-    }
-    box.querySelector('.odmg').innerHTML = ownDamage(e);
-    box.querySelector('.foe').classList.toggle('strike', e.phase === 'won' && ['surrender', 'board', 'empty'].includes(e.kind));
-  }
+  // ───────── Ab Version 55: Wirkungen des Gefechts auf der gemalten Szene ─────────
+  // Die gemalte Szene (Version 51) zeichnet Fahrt und Gefecht; aus dem Holzschnitt-Gefecht bleiben Schäden an den Dritteln,
+  // Leute an Bord, Sprechblase, aufsteigende Schrift, Bolzen in der Bahn und die sinkende Flagge, nun auf der Leinwand.
   const inkFx = {
-    gone() { inkFight.gone = true; },
-    move(tf, ms) { const mv = $('#fightink .fmove'); if (!mv) return; mv.style.transition = reduce ? 'none' : `transform ${ms || 900}ms ease-in-out, opacity ${ms || 900}ms`; mv.style.transform = tf; },
-    // Schuss mit Flugbahn von deiner Kogge zum Ziel auf ihrem Schiff; Treffer: Tintenspritzer und Ruck, daneben: Ringe im Wasser
     shot(x, r, ammo) {
-      const e = st.enc, fx = inkFight.fx; if (!e || !fx) return;
-      const [hx0, hy0] = IHOLK.AIMY[r.k], hx = 14 + x * 372, hy = hy0 + (Math.random() - 0.5) * 20;
-      const [tx, ty0] = foePt(e, hx, hy), g = foeGeo(e.dist), ty = r.z === 'miss' ? g.y + g.h * 0.95 + Math.random() * 12 : ty0;
-      const [x0, y0] = ownPt(...IKOG.launch);
-      const big = ammo === 'blide' || ammo === 'steine';
-      const proj = document.createElementNS(SVGNS, 'g');
-      proj.innerHTML = big ? `<circle r="${ammo === 'blide' ? 6 : 3.6}" fill="#6b5a48" stroke="#33241a" stroke-width="1.2"/>` : `<path d="M-10 0 h18" stroke="${ammo === 'brand' ? '#c2541f' : '#33241a'}" stroke-width="2.2" stroke-linecap="round"/><path d="M8 0 l-5 -3 v6z" fill="${ammo === 'brand' ? '#e0902a' : '#33241a'}"/><path d="M-10 0 l-4 -3 M-10 0 l-4 3" stroke="#33241a" stroke-width="1.2"/>`;
-      fx.appendChild(proj);
-      const cx = (x0 + tx) / 2, cy = Math.min(y0, ty) - (ammo === 'blide' ? 150 : 90), T = reduce ? 1 : ammo === 'blide' ? 700 : 420, t0 = performance.now();
-      const step = () => {
-        const u = Math.min(1, (performance.now() - t0) / T), a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u;
-        const px = a * x0 + b * cx + c * tx, py = a * y0 + b * cy + c * ty, dx = 2 * (1 - u) * (cx - x0) + 2 * u * (tx - cx), dy = 2 * (1 - u) * (cy - y0) + 2 * u * (ty - cy);
-        proj.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)}) rotate(${(Math.atan2(dy, dx) * 180 / Math.PI).toFixed(1)})`);
-        if (u < 1) requestAnimationFrame(step); else { proj.remove(); inkFx.impact(tx, ty, r.z, 'foe'); }
-      };
-      requestAnimationFrame(step);
-      setTimeout(() => inkFx.pop(r.z === 'miss' ? 'Miss' : r.z === 'crit' ? `Direct hit ${T3N[r.k]}!` : `Hit ${T3N[r.k]}`, 'pir', r.z === 'crit'), reduce ? 0 : T);
+      const e = st.enc; if (!e) return;
+      const n = ammo === 'blide' ? 1 : ammo === 'steine' ? 5 : Math.round(clamp((2 + manned().armbrust * 0.6) / Math.max(1, aim.R), 2, 8));
+      scene.fx.volley('own', n, r.z, ammo === 'brand', ammo === 'blide' || ammo === 'steine');
+      setTimeout(() => { if (st.enc) scene.fx.text(r.z === 'miss' ? 'Miss' : r.z === 'crit' ? `Direct hit ${T3N[r.k]}!` : `Hit ${T3N[r.k]}`, 'pir', r.z === 'crit' ? '#ffb347' : r.z === 'hit' ? '#f6e7b8' : '#dfe7ea'); }, reduce ? 0 : 500);
     },
-    impact(tx, ty, z, side) {
-      const fx = inkFight.fx; if (!fx) return;
-      const g = document.createElementNS(SVGNS, 'g');
-      if (z === 'miss') g.innerHTML = [0, 1, 2].map(i => `<ellipse cx="${tx}" cy="${ty}" rx="4" ry="1.6" fill="none" stroke="#33241a" stroke-width="1"><animate attributeName="rx" from="3" to="${22 + i * 8}" dur=".8s" begin="${i * 0.12}s" fill="freeze"/><animate attributeName="ry" from="1.2" to="${5 + i * 2}" dur=".8s" begin="${i * 0.12}s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" dur=".8s" begin="${i * 0.12}s" fill="freeze"/></ellipse>`).join('') +
-        `<path d="M${tx - 6} ${ty} q3 -16 6 -22 q3 6 6 22" fill="#efe1c0" stroke="#33241a" stroke-width=".9"><animate attributeName="opacity" from="1" to="0" dur=".7s" fill="freeze"/></path>`;
-      else if (z === 'held') g.innerHTML = `<path d="M${tx - 7} ${ty - 9} h14 v10 q-7 8 -14 0z" fill="#e2c99a" stroke="#33241a" stroke-width="1.2"><animate attributeName="opacity" from="1" to="0" dur=".9s" begin=".2s" fill="freeze"/></path>`;
-      else {
-        const big = z === 'crit';
-        g.innerHTML = Array.from({length:big ? 12 : 8}, (_, i) => { const a = i / (big ? 12 : 8) * Math.PI * 2, L = big ? 26 : 16; return `<path d="M${(tx + Math.cos(a) * 4).toFixed(1)} ${(ty + Math.sin(a) * 4).toFixed(1)} L${(tx + Math.cos(a) * L).toFixed(1)} ${(ty + Math.sin(a) * L).toFixed(1)}" stroke="${big ? '#8e2219' : '#33241a'}" stroke-width="${big ? 2.2 : 1.6}" stroke-linecap="round"><animate attributeName="opacity" from="1" to="0" dur=".6s" begin=".15s" fill="freeze"/></path>`; }).join('') +
-          `<circle cx="${tx}" cy="${ty}" r="${big ? 9 : 5}" fill="${big ? '#8e2219' : '#33241a'}"><animate attributeName="r" from="2" to="${big ? 14 : 8}" dur=".25s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" dur=".5s" begin=".1s" fill="freeze"/></circle>`;
-        inkFx.jolt(side);
-      }
-      fx.appendChild(g); setTimeout(() => g.remove(), 1100);
-    },
-    jolt(side) { const el = $(side === 'own' ? '#fightink .oshake' : '#fightink .fshake'); if (!el || reduce) return; el.classList.remove('hitshake'); void el.getBoundingClientRect(); el.classList.add('hitshake'); },
-    // Gegenfeuer: Bolzen aus ihrem Kastell auf deine Drittel; Pavesen halten manchen ab
     counter(out) {
-      const e = st.enc, fx = inkFight.fx; if (!e || !fx) return;
-      const n = Math.max(2, Math.min(9, (out.ns || 2) + 2)), hits = (out.hitK || []).slice(), [x0, y0] = foePt(e, 336, 40);
-      for (let i = 0; i < n; i++) setTimeout(() => {
-        if (!inkFight.fx) return;
-        const k = hits.length ? hits.shift() : null, held = !k && i < (out.held || 0), [hx, hy] = IKOG.pts[k || T3[i % 3]];
-        const [tx, ty0] = ownPt(hx + (Math.random() - 0.5) * 30, hy + (Math.random() - 0.5) * 14), ty = k || held ? ty0 : OWN_G.y + 164 * 0.92 + Math.random() * 10;
-        const proj = document.createElementNS(SVGNS, 'g');
-        proj.innerHTML = `<path d="M-9 0 h16" stroke="#33241a" stroke-width="2" stroke-linecap="round"/><path d="M7 0 l-4 -2.6 v5.2z" fill="#33241a"/>`;
-        fx.appendChild(proj);
-        const cx = (x0 + tx) / 2, cy = Math.min(y0, ty) - 70, T = reduce ? 1 : 460, t0 = performance.now();
-        const step = () => { const u = Math.min(1, (performance.now() - t0) / T), a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u;
-          const px = a * x0 + b * cx + c * tx, py = a * y0 + b * cy + c * ty, dx = 2 * (1 - u) * (cx - x0) + 2 * u * (tx - cx), dy = 2 * (1 - u) * (cy - y0) + 2 * u * (ty - cy);
-          proj.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)}) rotate(${(Math.atan2(dy, dx) * 180 / Math.PI).toFixed(1)})`);
-          if (u < 1) requestAnimationFrame(step); else { proj.remove(); inkFx.impact(tx, ty, k ? 'hit' : held ? 'held' : 'miss', 'own'); } };
-        requestAnimationFrame(step);
-      }, reduce ? 0 : i * 90);
+      const e = st.enc; if (!e) return;
+      const n = Math.max(2, Math.min(9, (out.ns || 2) + 2));
+      scene.fx.volley('pir', n, (out.hitK && out.hitK.length) || out.loss ? 'hit' : 'miss');
+      if (out.held) setTimeout(() => { if (st.enc) scene.fx.text(out.held === 1 ? 'Pavise holds' : `${out.held} pavises hold`, 'own', '#bff0c8'); }, reduce ? 0 : 900);
     },
     shout(t) {
       const sc = $('#scene'); sc.querySelectorAll('.shout').forEach(x => x.remove());
       sc.insertAdjacentHTML('beforeend', `<div class="shout">${esc(t)}</div>`);
       setTimeout(() => sc.querySelectorAll('.shout').forEach(x => x.remove()), reduce ? 900 : 1500);
     },
-    // Schrift steigt auf: über ihrem Schiff (pir) oder über deinem (own)
-    pop(t, side, red) {
-      const sc = $('#scene'), e = st.enc; if (!sc || !e) return;
-      const el = document.createElement('div'); el.className = 'pop-txt' + (red ? ' red' : side === 'own' ? ' own' : '');
-      el.textContent = t;
-      const [px, py] = side === 'own' ? ownPt(200, 40) : foePt(e, 200, 30);
-      el.style.left = `${Math.min(86, Math.max(14, px / 680 * 100))}%`; el.style.top = `${Math.min(70, Math.max(18, py / 400 * 100))}%`;
-      sc.appendChild(el); setTimeout(() => el.remove(), 1100);
-    },
-    strike() { const f = $('#fightink .foe'); if (f) f.classList.add('strike'); inkFx.pop('They strike their flag!', 'pir', true); },
+    pop(t, side, red) { scene.fx.text(t, side === 'own' ? 'own' : 'pir', red ? '#ffb347' : side === 'own' ? '#ffb3a3' : '#f6e7b8'); },
+    strike() { scene.fx.strike(); scene.fx.text('They strike their flag!', 'pir', '#ffb347'); },
+    jolt(side) { if (side === 'own') scene.fx.shake(); else scene.fx.pshake(); },
     // Im Enterkampf: Karte fliegt aus der Hand in den Abschnitt
     async cardFly(i, l) {
       const from = document.querySelector(`#aimbar .bcard[data-i="${i}"]`), to = document.querySelector(`#aimbar [data-slot="${l}"]`);
@@ -10042,24 +9956,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       }
     }
   };
-  // Die alten Wirkungen der Szene laufen auch im Holzschnitt: Ankunft, Abstand, Flucht, Untergang, Entern
-  ['dist', 'leaving', 'leave', 'vanish', 'flee', 'fire', 'sink', 'board', 'clash', 'shake', 'arrive', 'reset'].forEach(k => {
-    const f = scene.fx[k];
-    scene.fx[k] = function (...a) {
-      const r = f.apply(this, a), e = st && st.enc;
-      if (!e || !$('#fightink')) return r;
-      const g = d => foeGeo(d), tf = d => `translate(${g(d).x}px, ${g(d).y}px) scale(${g(d).s})`;
-      if (k === 'dist') { inkFight.gone = false; inkFx.move(tf(a[0]), 800); }
-      else if (k === 'leaving') inkFx.move(`translate(${g(e.dist).x + 90}px, ${g(e.dist).y - 6}px) scale(${g(e.dist).s * 0.94})`, 1400);
-      else if (k === 'leave' || k === 'vanish') { inkFight.gone = true; inkFx.move(`translate(${g(e.dist).x + 320}px, ${g(e.dist).y - 20}px) scale(${g(e.dist).s * 0.8})`, 2200); }
-      else if (k === 'flee') { if (!a[0]) inkFx.move(tf(Math.max(0, e.dist)), 900); }
-      else if (k === 'sink') { inkFight.gone = true; const mv = $('#fightink .fmove'); if (mv) { mv.style.transition = reduce ? 'none' : 'transform 2.6s ease-in, opacity 2.6s ease-in'; mv.style.transform = `translate(${g(e.dist).x + 20}px, ${g(e.dist).y + 90}px) scale(${g(e.dist).s}) rotate(9deg)`; mv.style.opacity = '.15'; } }
-      else if (k === 'board' || k === 'clash') { inkFx.move(tf(0), 700); if (k === 'board') inkFx.pop('Board!', 'pir', true); }
-      else if (k === 'shake') inkFx.jolt('own');
-      else if (k === 'fire') { inkFight.dk = ''; }
-      return r;
-    };
-  });
   // ───────── Ab Version 54: Leiste unter dem Bild ─────────
   // Fernkampf: je Drittel Name, Punkte und Aufgabe, darunter die Trefferleiste mit Feld und roter Stelle; die Waffen darunter.
   // Entern: Deckleiste, drei Abschnitte mit ihrem Zug gegen deine Karten, darunter deine Hand.
@@ -10092,15 +9988,15 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   function meleeHTML(e) {
     const bd = e.bd, left = BD.kraft - bdUsedK(bd), sel = ui.bdSel != null && !bdPlaced(bd).includes(ui.bdSel) ? CARD[bd.hand[ui.bdSel]] : null, th = thOf(e);
     const c = Math.round(bd.ctl), after = clamp(c + bdTotal(e), 0, 100), wa = strikeAt(e);
-    let h = `<div class="mh"><b>Round ${Math.min(bd.r + 1, BD.rounds)} of ${BD.rounds}</b><span class="kr">Strength ${Array.from({length:BD.kraft}, (_, i) => `<i class="${i < left ? 'on' : ''}"></i>`).join('')}</span><button class="cut" type="button" data-act="bd-back"${busy ? ' disabled' : ''}>${bd.att === 'own' ? 'Withdraw' : 'Cut the lines'}</button></div>`;
+    let h = `<div class="mh"><b>${bd.r >= BD.rounds ? `Round ${bd.r + 1} · hook holds` : `Round ${bd.r + 1} of ${BD.rounds}`}</b><span class="kr">Strength ${Array.from({length:BD.kraft}, (_, i) => `<i class="${i < left ? 'on' : ''}"></i>`).join('')}</span><button class="cut" type="button" data-act="bd-back"${busy ? ' disabled' : ''}>${bd.att === 'own' ? 'Withdraw' : 'Cut the lines'}</button></div>`;
     h += `<div class="deck"><div class="dl"><span class="me">You ${c} %</span><span>Deck</span><span class="foe">Enemy ${100 - c} %</span></div>` +
       `<div class="planks" role="img" aria-label="You hold ${c} of 100 of the deck"><i style="width:${c}%"></i><u style="left:${BD.retreat}%"></u><u style="left:${wa}%"></u><b style="left:${c}%"></b>${bdPlaced(bd).length ? `<s style="left:${after}%" data-d="${signed(after - c)}"></s>` : ''}</div>` +
       `<div class="why"><span>below ${BD.retreat} %: ${bd.att === 'own' ? 'retreat' : 'ship lost'}</span><span>from ${wa} %: flag${th.mitte <= 0 ? ' (sails shot to pieces)' : ''}</span></div></div>`;
-    h += `<div class="lanes">${T3.map(l => { const p = bd.plan[l], r = laneRes(e, l), can = sel && left >= sel.k, pv = can ? laneRes(e, l, ui.bdSel).d - r.d : null, fv = p ? foeVal(e, p) : 0;
+    h += `<div class="lanes">${T3.map(l => { const p = bd.plan[l], r = laneRes(e, l), can = sel && left >= sel.k, pv = can ? laneRes(e, l, ui.bdSel).d - r.d : null, fv = p ? foeVal(e, p, l) : 0;
       return `<div class="lane${can ? ' can' : ''}${can && sel.home === l ? ' home' : ''}" data-l="${l}" role="button" tabindex="0" aria-label="${T3N[l]}"><h4>${T3N[l]}</h4><div class="st">their ${T3R[l]} ${pipsHTML(th[l], true, thMax(e))}</div>` +
-        (p ? `<div class="mc foe flipin">${bicon(p === 'wall' ? 'wall' : p)}<b>${fv ? '−' + fv : '½'}</b><span>${FOE_MOVE[p]}</span></div>` : '<div class="mc none">quiet</div>') +
+        (p ? `<div class="mc foe flipin">${bicon(p === 'wall' ? 'wall' : p)}<b>${p === 'haken' ? 'holds' : fv ? '−' + fv : '½'}</b><span>${FOE_MOVE[p]}</span></div>` : '<div class="mc none">quiet</div>') +
         `<div class="vs">against</div><div class="slot" data-slot="${l}">${bd.put[l].map(i => { const k = bd.hand[i], cc = CARD[k], home = cc.home === l, v = cc.block ? (cc.block !== p ? '0' : cc.block === 'sturm' ? `−${cc.val(e)}` : '½') : `+${Math.round(cc.val(e) * (home ? BD.home : 1) * (p === 'wall' ? 0.5 : 1))}`;
-          return `<div class="mc" data-back="${i}" role="button" tabindex="0" aria-label="Take back ${cc.n}">${home ? '<span class="bon">×1,5</span>' : ''}${bicon(k)}<b>${v}</b><span>${cc.n}</span></div>`; }).join('') || (can ? '' : '–')}${can ? `<div class="prev">${signed(pv)} here</div>` : ''}</div>` +
+          return `<div class="mc" data-back="${i}" role="button" tabindex="0" aria-label="Take back ${cc.n}">${home ? '<span class="bon">×1,5</span>' : ''}${bicon(k)}<b>${v}</b><span>${cc.n}</span></div>`; }).join('') || (can ? '' : (r.open ? '<span class="warn">unanswered ×1.5</span>' : r.held ? '<span class="warn">lines held fast</span>' : '–'))}${can ? `<div class="prev">${signed(pv)} here</div>` : ''}</div>` +
         `<div class="res ${r.d > 0 ? 'plus' : r.d < 0 ? 'minus' : ''}">${signed(r.d)}</div></div>`; }).join('')}</div>`;
     const inL = new Set(bdPlaced(bd));
     h += `<div class="hand">${bd.hand.map((k, i) => { const cc = CARD[k], v = cc.val(e);
@@ -10108,7 +10004,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         `<span class="v">${cc.block ? (cc.block === 'sturm' ? '−' + v : '½') : '+' + v}</span><span class="cost" aria-label="Strength ${cc.k}">${cc.k}</span>${bicon(k)}<b>${cc.n}</b>` +
         `${cc.use ? '<span class="use">used up</span>' : ''}<span class="home">${cc.home ? `${T3N[cc.home]} ×1,5` : cc.block ? `gegen ${cc.block === 'sturm' ? 'Assault' : 'volley'}` : 'anywhere'}</span></button>`; }).join('')}</div>`;
     h += `<div class="detail">${sel ? `<b>${sel.n}</b> · strength ${sel.k}. ${sel.say} <span>From ${sel.from}${sel.use ? ', used up' : ''}${sel.wear ? ', may break' : ''}. Tap a section.</span>`
-      : `Their plan: ${T3.filter(l => bd.plan[l]).map(l => `${FOE_MOVE[bd.plan[l]]} (${T3N[l]})`).join(', ')}. Tap a card, then a section, or drag it in.`}</div>`;
+      : `Their plan: ${T3.filter(l => bd.plan[l]).map(l => `${FOE_MOVE[bd.plan[l]]} (${T3N[l]})`).join(', ')}. An unanswered move hits ×1.5; a section won costs them a point there. Tap a card, then a section.`}</div>`;
     return h;
   }
   function renderAim(e) {
@@ -10173,40 +10069,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     }
     if (e.phase === 'volley') { const w = t.closest('[data-weap]'); if (w) { if (!w.disabled) setWeap(w.dataset.weap); return; } }
   }
-  // Segelansicht im Stil der Seekarte: Pergament, Holzschnitt-Wellen, dein Schiff mit Segel in der Hausfarbe
-  let inkKey = '';
-  function inkSail() {
-    const box = $('#inkscene'), s = st.sail, show = !!s && !st.enc;
-    $('#scene').classList.toggle('ink', show);
-    box.hidden = !show;
-    if (!show) { inkKey = ''; return; }
-    const wx = s.weather || 'clear', type = (st.fleet[0] || {type:'kogge'}).type, col = houseCol();
-    const key = [wx, type, col, s.from, s.to].join('|');
-    if (key === inkKey) return;
-    inkKey = key;
-    const W = 680, H = 400, ink = '#33241a', dark = wx === 'storm', sea = dark ? '#dccaa0' : '#ecdcb6';
-    const seed = hashStr(s.from + s.to) % 97 + 3;
-    const cloud = (x, y, w, k) => `<g transform="translate(${x} ${y}) scale(${w / 100})"><path d="M0 30 C2 14 22 10 30 18 C34 4 60 2 66 16 C76 8 96 12 96 26 C104 28 104 38 96 40 H6 C-4 40 -6 32 0 30 Z" fill="${dark ? '#cdb98d' : '#f6ecd4'}" stroke="${ink}" stroke-width="${1.4 * 100 / w}"/>` +
-      (k ? Array.from({length:9}, (_, i) => `<path d="M${14 + i * 9} 39 l6 -9" stroke="${ink}" stroke-width="${.7 * 100 / w}" opacity=".55"/>`).join('') : '') + `</g>`;
-    let sky = '';
-    if (wx === 'clear' || wx === 'cloudy') sky += `<g class="sun"><circle cx="604" cy="146" r="30" fill="#f3d27a" stroke="${ink}" stroke-width="1.4"/>${Array.from({length:16}, (_, i) => { const t = i / 16 * Math.PI * 2, r1 = 38, r2 = i % 2 ? 50 : 58; return `<path d="M${(604 + Math.cos(t) * r1).toFixed(1)} ${(146 + Math.sin(t) * r1).toFixed(1)} L${(604 + Math.cos(t) * r2).toFixed(1)} ${(146 + Math.sin(t) * r2).toFixed(1)}" stroke="${ink}" stroke-width="1.2" stroke-linecap="round"/>`; }).join('')}</g>`;
-    sky += `<g class="clouds">${cloud(428, 22, 104, dark)}${wx !== 'clear' ? cloud(16, 166, 124, dark) : ''}</g>`;
-    if (dark) sky += `<rect width="${W}" height="${H}" fill="url(#ihat)" opacity=".35"/>`;
-    // ferne Küste mit Türmen am Horizont
-    const coast = `<path d="M0 214 C60 206 120 210 160 204 C200 198 230 206 270 205 L270 214 Z" fill="#e4d2a8" stroke="${ink}" stroke-width="1.1"/>` +
-      `<path d="M190 203 v-14 h6 v14 M193 189 l3 -8 l3 8 M214 205 v-9 h10 v9 M219 196 l0 -6" fill="#e4d2a8" stroke="${ink}" stroke-width="1"/>`;
-    const rows = [[222, 1, .6], [262, 2, .8], [310, 3, 1]].map(([y, sd, op], i) => `<g class="wrow w${i}" opacity="${op}">${SHIP_INK.waves(y, W + 60, {seed:seed + sd, rows:i ? 2 : 1, sea})}</g>`).join('');
-    const ship = (type === 'holk' ? SHIP_INK.holk : SHIP_INK.kogge)({stripe:col, flag:col, sea, seed:seed + 7, cls:'iship', dmg:{bug:2, mitte:2, kastell:2}});
-    let fx = '';
-    if (wx === 'rain' || wx === 'storm') fx += `<g class="rain">${Array.from({length:dark ? 60 : 34}, (_, i) => { const x = (i * 97 + seed * 13) % W, y = (i * 53) % 300; return `<path d="M${x} ${y} l-7 16" stroke="${ink}" stroke-width=".9" opacity=".45"/>`; }).join('')}</g>`;
-    if (wx === 'snow') fx += `<g class="snowf">${Array.from({length:50}, (_, i) => `<circle cx="${(i * 89 + seed * 7) % W}" cy="${(i * 47) % 300}" r="2" fill="#fffaf0" stroke="${ink}" stroke-width=".5"/>`).join('')}</g>`;
-    if (wx === 'fog') fx += `<rect width="${W}" height="${H}" fill="#f4ead6" opacity=".55"/>` + [120, 200, 280].map(y => `<path d="M0 ${y} H${W}" stroke="#fff8ea" stroke-width="18" opacity=".6"/>`).join('');
-    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><pattern id="ihat" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)"><path d="M0 0 V5" stroke="${ink}" stroke-width=".7"/></pattern>
-      <linearGradient id="isky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark ? '#d6c294' : '#f4e8cb'}"/><stop offset="1" stop-color="${dark ? '#e2d0a6' : '#efe0bb'}"/></linearGradient></defs>
-      <rect width="${W}" height="${H}" fill="url(#isky)"/>${sky}${coast}${rows}
-      <g class="ishipw"><g class="ibob">${ship.replace(/<g class="sea">[\s\S]*<\/g><\/svg>\s*$/, '</svg>').replace('<svg ', '<svg x="270" y="118" width="370" height="242" ')}</g></g>` +
-      `<g class="wrow w3">${SHIP_INK.waves(330, W + 60, {seed:seed + 5, rows:2, sea})}</g>${fx}</svg>`;
-  }
   function renderScene() {
     const cap = $('#cap'), prog = $('#prog');
     const e = st.enc;
@@ -10233,8 +10095,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       cap.innerHTML = `<span class="eb">In port · ${fdate(st.day)}</span><span class="ttl">${c.n}</span><span class="ln">${c.d}</span>`;
       prog.hidden = true;
     }
-    inkSail();
-    inkFightRender();
     if (reduce) scene.draw(0);
   }
 
@@ -11590,10 +11450,10 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       `<div class="bar"><i style="width:${CAP ? u / CAP * 100 : 0}%"></i></div>${chips ? `<div class="chips">${chips}</div>` : ''}` +
       `</div>` + (() => {
         const open = ui.det.status == null ? false : ui.det.status;
-        return `<details class="more" data-det="status"${open ? ' open' : ''}><summary><span>Wealth ${fmt(w)} guilders · ${st.fleet.length} ${st.fleet.length === 1 ? 'ship' : 'ships'}</span><i class="chev" aria-hidden="true"></i></summary>` +
+        return `<div class="ltile" role="button" tabindex="0" data-hs-open="status"><b>Wealth and fleet</b><span>${fmt(w)} guilders · ${st.fleet.length} ${st.fleet.length === 1 ? 'ship' : 'ships'}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="statusbody">` +
           (st.fleet.length ? `<div class="fleetline">${st.fleet.map((sh, i) => `<span class="shipchip${sh.hull < 40 ? ' low' : ''}">${i === 0 ? '⚑ ' : ''}${esc(sh.name)} <small>${SHIPS[sh.type].n} · ${sh.hull} %</small></span>`).join('')}</div>` : '') +
           `<div class="wealth"><div class="holdrow"><span>Wealth incl. cargo and ships</span><span class="small">${next ? `${next[1]} from ${fmt(next[0])}` : 'Highest rank reached'}</span></div>` +
-          `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} sailors · ${armsLine()} · speed ${Math.round(fleetSpeed() * 100)} % · wages and upkeep ${wage()} guilders a day</span></div></details>`;
+          `<div class="bar"><i style="width:${prog}%"></i></div><span class="small">${st.crew} sailors · ${armsLine()} · speed ${Math.round(fleetSpeed() * 100)} % · wages and upkeep ${wage()} guilders a day</span></div></div></div>`;
       })();
     if (halted()) h = endHTML() + h;
     else if (locked()) h = trialHTML() + h;
@@ -11667,8 +11527,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       `<button class="tbtn" type="button" data-trade="sell" data-good="${g.id}" data-n="${ns}"${ns ? '' : ' disabled'}>Sell<span>${ns} lasts · ${fmt(gs)} G</span></button>` +
       (ks ? `<button class="tbtn store" type="button" data-trade="store" data-good="${g.id}" data-n="${nk}">Sell from the ${st.loc === st.home ? 'Kontor' : 'store'}<span>${nk} lasts · ${fmt(gk)} G</span></button>` : '') + `</div>` +
       (hint ? `<p class="hint">${hint}</p>` : '') +
-      `<details class="more minfo" data-det="minfo"${mi ? ' open' : ''}><summary><span>More about this good</span><i class="chev" aria-hidden="true"></i></summary>` +
-      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</details></div>`;
+      `<div class="ltile" role="button" tabindex="0" data-hs-open="minfo" data-id="${g.id}"><b>More about the ware</b><span>Origin and price history</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="minfobody">` +
+      `<div class="ginfo">${art(g.id)}<div><b>${g.n}</b><span class="small">${GOOD_INFO[g.id]}</span></div></div>` + priceChart(g.id) + `</div></div>`;
   }
   // Ab Version 34: Marktinfos aufklappbar, auf Wunsch immer offen (Einstellung unter Spielstände)
   const MINFO_KEY = 'kogge-kontor-marktinfo';
@@ -11686,7 +11546,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         `<line class="base" x1="0" x2="${W}" y1="${Y(G[gid].b).toFixed(1)}" y2="${Y(G[gid].b).toFixed(1)}"/><polyline points="${hh.map(x => `${X(x[0]).toFixed(1)},${Y(x[1]).toFixed(1)}`).join(' ')}"/>` +
         `<circle cx="${X(last[0]).toFixed(1)}" cy="${Y(last[1]).toFixed(1)}" r="3"/></svg>`;
     }
-    return `<div class="pchart"><div class="holdrow"><span class="small">Buying price here${hh.length >= 2 ? ` since ${fdate(hh[0][0])}` : ''}</span><span class="small">dashed: base price ${G[gid].b}</span></div>` +
+    return `<div class="pchart"><div class="holdrow"><span class="small">Buying price here ${fmt(buyPrice(st.loc, gid))}${hh.length >= 2 ? ` · since ${fdate(hh[0][0])}` : ''}</span><span class="small">${hh.length >= 2 ? `dashed: base price ${G[gid].b}` : `Base price ${G[gid].b}`}</span></div>` +
       (svg || `<span class="small">You will see the history once you have been here more often.</span>`) +
       (best ? `<span class="small">Best known selling price: ${best.c.n} ${best.p} guilders, as of ${fdate(best.d)}</span>` : '') + `</div>`;
   }
@@ -11813,6 +11673,8 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
       if (el.tagName === 'DETAILS') { el.open = true; if (el.dataset.det) ui.det[el.dataset.det] = true; }
       const tgt = el.closest('details') && !el.closest('details').open ? el.closest('details') : el;
       if (tgt.tagName === 'DETAILS') tgt.open = true;
+      // Blätter (ab Version 55): die Kachel wird geöffnet statt nur gezeigt
+      const tile = el.closest('.ltile, .lsum, .htile'); if (tile && tile.dataset.hsOpen && !HS_HOME.includes(tile.dataset.hsOpen)) { hsOpen(tile.dataset.hsOpen, tile.dataset.id); return; }
       tgt.scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'center'});
       tgt.classList.remove('qflash'); void tgt.offsetWidth; tgt.classList.add('qflash');
       setTimeout(() => tgt.classList.remove('qflash'), 2600);
@@ -11879,9 +11741,9 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!rivShown()) return '';
     const l = ((st.rivAt || {})[cid] || []).filter(x => st.day - x.d <= 14 && Math.abs(x.p) >= 2).slice(0, 3);
     if (!l.length) return '';
-    return `<details class="more rivhere" data-det="rivm"${minfoPref() || ui.det.rivm ? ' open' : ''}><summary><span>Competitors in ${C[cid].n} <small>· ${l.length} ${l.length === 1 ? 'deal' : 'deals'}</small></span><i class="chev" aria-hidden="true"></i></summary><ul>` + l.map(x => { const r = rivById(x.r);
+    return `<div class="ltile" role="button" tabindex="0" data-hs-open="rivm"><b>Rivals</b><span>in ${C[cid].n} · ${l.length} ${l.length === 1 ? 'deal' : 'deals'}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="rivmbody"><ul class="rivlist">` + l.map(x => { const r = rivById(x.r);
       return `<li>${r.av ? avatarSVG(r.av, 'rvf') : ''}<span><b>${esc(r.name)}</b> ${x.k === 'buy' ? `bought ${x.q} lasts of ${G[x.g].n}${x.o ? ` for ${C[x.o].n}` : ''} ${agoD(x.d)}` : `sold ${x.q} lasts of ${G[x.g].n}${x.o ? ` from ${C[x.o].n}` : ''} ${agoD(x.d)}`}. ` +
-        `${x.k === 'buy' ? 'This raised the buying price by' : 'This lowered the selling price by'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></details>`;
+        `${x.k === 'buy' ? 'This raised the buying price by' : 'This lowered the selling price by'} ${pctS(x.p).slice(1)}.</span></li>`; }).join('') + `</ul></div></div>`;
   }
   function rpHTML() {
     const R = st.rpt; if (!R) return '';
@@ -11965,7 +11827,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (pest.length) flags.push(`Plague in ${pest.map(c => C[c].n).join(', ')}`);
     if (e.warToll) flags.push('Poundage for the war');
     if (flags.length) h += `<div class="chips" style="margin:6px 0">${flags.map(x => `<span class="chip">${x}</span>`).join('')}</div>`;
-    h += `<ol class="chronlist">${e.chron.slice(0, 30).map(x => `<li><time>${fdate(x.d, true)}</time><span>${x.t}</span></li>`).join('') || '<li><span>Nothing has happened yet.</span></li>'}</ol>`;
+    h += `<ol class="chronlist">${e.chron.slice(0, 30).map(x => `<li><time>${fdate(x.d, true)}</time><span>${x.t}</span></li>`).join('') || '<li><span style="grid-column:1/-1">Nothing has happened yet.</span></li>'}</ol>`;
     h += `<h3 class="ehead">Leaderboard</h3>${blHTML(false)}<p class="small">Whoever becomes Mayor earliest is at the top; then the feast and wealth count. Full list under Saved games.</p>`;
     const hb = honorBook();
     if (hb.length) h += `<h3 class="ehead">Book of Honour</h3><ol class="honor">${hb.slice(0, 5).map(x => `<li><b>${esc(x.n)}</b> <span class="small">${C[x.h] ? C[x.h].n : ''} · ${x.t}</span><span class="num">${fmt(x.s)}</span></li>`).join('')}</ol>`;
@@ -12658,8 +12520,25 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (s.k === 'dock') return {title:`Moorings in ${C[st.home].n}`, sub:`${dockOf().length} ${dockOf().length === 1 ? 'ship' : 'ships'}${buildsOf().length ? ` · ${buildsOf().length} being built` : ''}`, body:dockHTML()};
     if (s.k === 'caps') return {title:'Your captains', sub:`${(st.captains || []).length} of ${MAX_CAPTAINS}`, body:capsHTML()};
     if (s.k === 'tavern') return {title:'Skippers’ house', sub:C[st.home].n, body:tavernHTML()};
-    return null;
+    // Ab Version 55: Blätter aus allen Reitern; der Inhalt liegt versteckt in der Kachel (.lbody) und wird hier gezeigt
+    const L = LSHEET[s.k]; if (!L) return null;
+    const src = document.getElementById(L.body); if (!src) return null;
+    const sub = typeof L.sub === 'function' ? L.sub(s) : L.sub;
+    return {title:typeof L.title === 'function' ? L.title(s) : L.title, sub, body:src.tagName === 'OL' ? `<ol class="loglist">${src.innerHTML}</ol>` : src.innerHTML, tab:L.tab, src:L.body};
   }
+  const LSHEET = {
+    log:{title:'Logbook', body:'loglist', tab:'lage', sub:() => st.log.length ? `${Math.min(40, st.log.length)} entries` : ''},
+    chron:{title:'Passage of time', body:'chronbody', tab:'lage', sub:() => 'What happens in the Hanse'},
+    status:{title:'Wealth and fleet', body:'statusbody', tab:'lage', sub:() => `${fmt(Math.round(wealth()))} guilders · ${RANKS[st.rank][1]}`},
+    frbox:{title:'commissions', body:'frbody', tab:'markt', sub:() => st.loc ? `in ${C[st.loc].n}` : ''},
+    minfo:{title:s => G[s.id] ? G[s.id].n : 'Ware', body:'minfobody', tab:'markt', sub:'Origin and price history'},
+    rivm:{title:'Rivals', body:'rivmbody', tab:'markt', sub:() => st.loc ? `last in ${C[st.loc].n}` : ''},
+    arms:{title:'Armoury', body:'armsbody', tab:'werft', sub:() => `${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} of ${armSlots()} places free`},
+    newships:{title:'Build orders', body:'newshipsbody', tab:'werft', sub:() => st.loc ? `Shipyard of ${C[st.loc].n}` : ''},
+    enchelp:{title:'How the battle works', body:'enchelpbody', tab:'lage', sub:''},
+    bdhelp:{title:'How boarding works', body:'bdhelpbody', tab:'lage', sub:''}
+  };
+  const TAB_N = {lage:'Status', markt:'Market', karte:'Map', werft:'Shipyard', stadt:'Town', haus:'House'};
   function renderHSheet() {
     const box = $('#hsheet'), scrim = $('#hscrim');
     if (!box) return;
@@ -12667,7 +12546,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!c) { if (ui.hs && !(ui.hs.k === 'rw' && ui.rw)) ui.hs = null; box.hidden = true; scrim.hidden = true; box.innerHTML = ''; return; }
     const keep = box.hidden ? 0 : box.scrollTop;
     box.hidden = false; scrim.hidden = false;
-    box.innerHTML = `<div class="in"><button class="hsback" type="button" data-hs="close">‹ House</button><h2 id="hs-title">${c.title}</h2>${c.sub ? `<div class="hsub">${c.sub}</div>` : ''}<div class="hsbody">${c.body}</div></div>`;
+    box.innerHTML = `<div class="in"><button class="hsback" type="button" data-hs="close">‹ ${TAB_N[c.tab || 'haus']}</button><h2 id="hs-title">${c.title}</h2>${c.sub ? `<div class="hsub">${c.sub}</div>` : ''}<div class="hsbody">${c.body}</div></div>`;
     box.scrollTop = keep;
   }
   function hsOpen(k, id) {
@@ -12676,7 +12555,17 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     unlSeen(k);
     renderHSheet(); $('#hsheet').scrollTop = 0;
   }
-  function hsClose() { ui.hs = null; ui.rl = null; ui.rla = null; if (ui.rw) ui.rw = null; renderHouse(); renderHome(); }
+  function hsClose() { ui.hs = null; ui.rl = null; ui.rla = null; if (ui.rw) ui.rw = null; renderHouse(); renderHome(); renderHSheet(); }
+  // Klick in einem Blatt aus einem anderen Reiter: den gleichen Knopf in der versteckten Quelle drücken
+  function hsProxy(e) {
+    const s = ui.hs, L = s && LSHEET[s.k]; if (!L) return false;
+    const t = e.target.closest('button, input'); if (!t || t.dataset.hs) return false;
+    const src = document.getElementById(L.body); if (!src) return true;
+    const sel = t.tagName.toLowerCase() + Object.entries(t.dataset).map(([k, v]) => `[data-${k.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}="${CSS.escape(v)}"]`).join('') + (t.id ? `#${t.id}` : '');
+    const o = src.querySelector(sel) || (t.id && document.getElementById(t.id));
+    if (o && o !== t && o.tagName === 'BUTTON') o.click();
+    return true;
+  }
   function kontorHTML(ci) {
     const home = st.loc === st.home, K = st.kontor, nk = KONTOR[K ? K.lvl + 1 : 1];
     let h = `<div class="kontor"><h3>Kontor in ${C[st.home].n}</h3>` + (Object.keys(st.branches || {}).length ? '' : `<p class="small kexp">The Kontor is your store in your home seat. A branch is a store in another town (from ${CIVIC[BRANCH.civic][1]}, ${fmt(BRANCH.cost)} guilders); only a branch opens up trade routes and building.</p>`);
@@ -12890,16 +12779,16 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     let bdHelp = '';
     if (handgemenge) {
       const own = e.bd.att === 'own';
-      bdHelp = `<details class="more bdhelp" data-det="bdhelp"${ui.det.bdhelp ? ' open' : ''}><summary><span>${own ? 'Boarding fight on their deck' : 'Boarding fight on your deck'} · how it works</span><i class="chev" aria-hidden="true"></i></summary>` +
-        `<p class="small" style="margin:0 0 6px">Each round you draw four cards from crew and equipment and play cards worth up to two strength into the sections bow, middle and castle. Their moves lie open there. Attack cards count one and a half times in their home section (gold outline); shield wall and pavises only work against the move in their own section. ` +
-        `What a section yields moves the deck bar. ${own ? 'They are defending their own deck and have the advantage.' : 'You are defending your own deck and have the advantage.'} After three rounds the deck bar decides: from the right line they strike their flag, below the left one ${own ? 'you have to fall back' : 'they take your ship'}, in between the ships separate. Grappling hooks and fire pots are used up; armour and pavises can break.</p></details>`;
+      bdHelp = `<div class="ltile" role="button" tabindex="0" data-hs-open="bdhelp"><b>How boarding works</b><span>${own ? 'on their deck' : 'on your deck'}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="bdhelpbody">` +
+        `<p class="small" style="margin:0 0 6px">Each round you draw four cards from crew and equipment and play cards worth up to two strength into the sections bow, middle and castle. Their moves lie open there. Attack cards count one and a half times in their home section (gold outline); shield wall and pavises only work against the move in their own section. An unanswered move in the same section hits one and a half times. Whoever wins a contested section takes a point from the enemy there (bow: boarders, middle: sail, castle: shooters); whoever loses it loses one himself. Their grappling hook in the middle holds the ships together as long as you play nothing there: then no cutting the lines and up to two more rounds. ` +
+        `What a section yields moves the deck bar. ${own ? 'They are defending their own deck and have the advantage.' : 'You are defending your own deck and have the advantage.'} After three rounds the deck bar decides: from the right line they strike their flag, below the left one ${own ? 'you have to fall back' : 'they take your ship'}, in between the ships separate. Grappling hooks and fire pots are used up; armour and pavises can break.</p></div></div>`;
     }
     if (open && e.phase !== 'meet') h += `<div class="mor"><div class="ml"><span>Enemy's fighting spirit</span><em>${Math.round(e.mor)}</em></div><div class="mb"><i style="width:${clamp(e.mor, 0, 100)}%"></i><b style="left:${T.flee}%"></b></div>` +
       `<small>${e.mor <= T.flee ? 'Below the flight threshold: they want to flee.' : `Below ${T.flee} (the line) they want to flee. It sinks with losses, direct hits and fire.`}</small></div>`;
     const rows = [['Manoeuvre', e.logMan, 'm'], ['Your volley', e.logOwn, 'o'], ['Return fire', e.logPir, 'p']].filter(r => r[1]);
     h += open && rows.length && !['meet', 'boarding', 'flee', 'hook', 'melee'].includes(e.phase) ? `<div class="log">${rows.map(r => `<p class="${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></p>`).join('')}</div>` : `<p class="emsg">${e.msg}</p>`;
     h += bdHelp;
-    if (e.phase === 'tactic') h += `<details class="more" data-det="enchelp"${ui.det.enchelp ? ' open' : ''}><summary><span>${tgt ? `They are aiming at the “${esc(tgt.name)}”. ` : ''}How the battle works</span><i class="chev" aria-hidden="true"></i></summary><p class="small" style="margin:0 0 6px">Each round: choose a manoeuvre, then your crew shoots. Their ship has three thirds: the bow with the boarders, the middle with the sail, the castle with the shooters. Below the picture a pointer runs across the hit bar; tap once for each squad when it is in the field. The red spot is a weak point (direct hit). Every weapon has its own field and speed: the crossbow hits bow and castle, stones everything but only close, fire arrows the middle, the trebuchet throws once and heavily. The heavier the enemy, the farther away and whoever has the windward side, the faster the pointer runs; holding course and an experienced captain slow it. With their castle shot up, their return fire is weak; without boarders they cannot board; with a torn sail they can hardly flee. If their fighting spirit falls below the line, they want to flee or surrender. Boarding is only possible close in, with cards in three sections.</p></details>`;
+    if (e.phase === 'tactic') h += `<div class="ltile" role="button" tabindex="0" data-hs-open="enchelp"><b>How the battle works</b><span>${tgt ? `They aim at the “${esc(tgt.name)}”` : ''}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="enchelpbody"><p class="small" style="margin:0 0 6px">Each round: choose a manoeuvre, then your crew shoots. Their ship has three thirds: the bow with the boarders, the middle with the sail, the castle with the shooters. Below the picture a pointer runs across the hit bar; tap once for each squad when it is in the field. The red spot is a weak point (direct hit). Every weapon has its own field and speed: the crossbow hits bow and castle, stones everything but only close, fire arrows the middle, the trebuchet throws once and heavily. The heavier the enemy, the farther away and whoever has the windward side, the faster the pointer runs; holding course and an experienced captain slow it. With their castle shot up, their return fire is weak; without boarders they cannot board; with a torn sail they can hardly flee. If their fighting spirit falls below the line, they want to flee or surrender. Boarding is only possible close in, with cards in three sections.</p></div></div>`;
     if (e.phase === 'meet') h += `<p class="small">${st.crew} sailors, ${armsLine()}, ${st.brand || 0} bundles of fire arrows${armsOf(st).buechse ? `, ${st.pulver || 0} charges of powder` : ''} aboard. The sailors man the weapons${fk && !st.focus ? `, Captain ${esc(fk.name)} leads the fight` : ''}; when boarding, everyone fights. ` +
       `If they board you and you lose the fight on deck, ${st.fleet.length === 1 ? 'your only ship is lost with its cargo, and you only go free against a ransom' : 'they take the ship they are aiming at'}. If your own boarding attack fails, you withdraw.</p>`;
     h += `</div>`;
@@ -12974,7 +12863,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
       `<div class="yrow"><span class="yl"><b>${st.brand || 0} of ${MAX_BRAND} bundles of fire arrows</b><span class="small">for volleys at medium and long range</span></span><span class="ybtns">${hire('brand', 5, BRAND_PRICE, MAX_BRAND - (st.brand || 0))}</span></div>` +
       `<p class="small" style="margin:8px 0 0">Wages ${Math.round(st.crew * 0.3)}, weapons ${Math.round(armsUp(st.arms))} and upkeep ${upkeep()} guilders a day.</p>` +
-      det('arms', 'Armoury', armsHTML(hire), `${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} of ${armSlots()} places free`, false);
+      `<div class="ltile" role="button" tabindex="0" data-hs-open="arms"><b>Armoury</b><span>${Math.max(0, armSlots() - slotsUsed(armsOf(st)))} of ${armSlots()} places free</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="armsbody">${armsHTML(hire)}</div></div>`;
     h += cvYardHTML();
     const types = YARDS[st.loc] || [];
     if (buildsOf().length || dockOf().length) h += `<p class="small" style="margin-top:10px">${buildsOf().length ? `${buildsOf().length} ${buildsOf().length === 1 ? 'ship' : 'ships'} being built or under way` : ''}${buildsOf().length && dockOf().length ? ', ' : ''}${dockOf().length ? `${dockOf().length} at the moorings in ${C[st.home].n}` : ''}; assign them in the House tab.</p>`;
@@ -12986,15 +12875,14 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
         ns += `<div class="yrow yship">${shipInk(tp, houseCol())}<span class="yl"><b>${T.n} · ${BUILD_DAYS[tp]} days to build</b><span class="small">${T.cap} lasts · speed ${Math.round(T.spd * 100)} % · ${T.crewMin} to ${T.crewMax} sailors · ${T.arm} weapon slots · ${T.upkeep} G a day</span><span class="small">${T.d}</span></span>` +
           `<span class="ybtns"><button class="ybtn" type="button" data-yard="build" data-n="${tp}"${why ? ' disabled' : ''}>${why || `Order · ${fmt(T.price)} G`}</button>${loanBuildBtn(tp, why)}</span></div>`;
       });
-      h += det('newships', `Build orders`, ns, types.map(tp => SHIPS[tp].n).join(', '), false);
+      h += `<div class="ltile" role="button" tabindex="0" data-hs-open="newships"><b>Build orders</b><span>${types.map(tp => SHIPS[tp].n).join(', ')}</span><i class="chev" aria-hidden="true"></i><div class="lbody" id="newshipsbody">${ns}</div></div>`;
     } else h += `<p class="small" style="margin-top:10px">No shipyard in ${C[st.loc].n} builds new ships.</p>`;
     if (!canSail() && st.fleet.length) h += `<p class="warnline">${unready()}</p>`;
     const ts = ytStep();
-    if (ts >= 0) { if (YTOUR[ts].k === 'arms') ui.det.arms = true; if (YTOUR[ts].k === 'build') ui.det.newships = true; }
     y.innerHTML = h;
     if (ts >= 0) { // die Karte der Führung steht direkt über der besprochenen Stelle
-      const k = YTOUR[ts].k, el = k === 'arms' ? y.querySelector('[data-det="arms"]') : k === 'build' ? y.querySelector('[data-det="newships"]') : y.querySelector(`[data-tour="${k}"]`);
-      if (el) { el.classList.add('tourhl'); if (el.tagName === 'DETAILS') el.open = true; el.insertAdjacentHTML('beforebegin', ytourHTML(ts)); }
+      const k = YTOUR[ts].k, el = k === 'arms' ? y.querySelector('[data-hs-open="arms"]') : k === 'build' ? y.querySelector('[data-hs-open="newships"]') : y.querySelector(`[data-tour="${k}"]`);
+      if (el) { el.classList.add('tourhl'); el.insertAdjacentHTML('beforebegin', ytourHTML(ts)); }
       else y.querySelector('h2').insertAdjacentHTML('afterend', ytourHTML(ts));
     }
   }
@@ -13541,7 +13429,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     if (!msg) return;
     box.hidden = false; box.innerHTML = `<p class="small" style="margin:0">${msg}</p>`;
   }
-  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderEv(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderDeals(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); }
+  function render() { preloadArt(); if (scene.wake) scene.wake(); music.set(trackFor()); music.amb(ambFor(), st.wx ? st.wx.w : (st.sail ? st.sail.weather : 'clear')); renderTabs(); renderNews(); renderStats(); renderScene(); renderTempo(); renderEnc(); renderEv(); renderStatus(); renderMap(); renderMarket(); renderFreight(); renderDeals(); renderYard(); renderHome(); renderBranch(); renderHouse(); renderCity(); renderLog(); renderChron(); renderGoals(); renderQPop(); renderActions(); renderSheet(); renderSaves(); renderBook(); renderAlarm(); renderSaveState(); renderMapInfo(); renderEmpty(); if (ui.hs && LSHEET[ui.hs.k]) renderHSheet(); }
 
   function openSheet(focus) {
     if (!st.loc || bankrupt()) return;
@@ -13607,7 +13495,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   $('#tempo').addEventListener('click', () => setTempo(TEMPI[(TEMPI.indexOf(tempo) + 1) % TEMPI.length]));
   $('#stats').addEventListener('click', e => { if (e.target.closest('[data-act="music"]')) { music.toggle(); renderStats(); } else if (e.target.closest('[data-act="rank"]')) questShow('#goals', 'lage'); });
   $('#news').addEventListener('click', e => { if (e.target.closest('[data-act="news-ok"]')) { st.inbox = []; commit(); } });
-  $('#log').addEventListener('toggle', () => { try { localStorage.setItem('kogge-kontor-log', $('#log').open ? '1' : '0'); } catch (e) {} });
   $('#yard').addEventListener('click', e => {
     if (e.target.closest('[data-act="ship-dice"]')) { ui.shipName = newShipName(); renderYard(); return; }
     { const cy = e.target.closest('[data-cvy]'); if (cy) return cvYardClick(cy); }
@@ -13707,9 +13594,13 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
   $('#hsheet').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return;
     if (t.dataset.hs === 'close') return hsClose();
+    if (hsProxy(e)) return;
     if (ui.hs && HS_HOME.includes(ui.hs.k)) homeClick(e); else houseClick(e);
   });
+  $('#hsheet').addEventListener('input', e => { if (e.target.id === 'ship-name') { ui.shipName = e.target.value; const o = document.querySelector('#yard #ship-name'); if (o) o.value = e.target.value; } });
   $('#hscrim').addEventListener('click', hsClose);
+  document.addEventListener('click', e => { const t = e.target.closest('.ltile, .lsum'); if (!t || t.closest('#hsheet') || !t.dataset.hsOpen) return; hsOpen(t.dataset.hsOpen, t.dataset.id); });
+  document.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const t = e.target.closest('.ltile'); if (!t || !t.dataset.hsOpen) return; e.preventDefault(); hsOpen(t.dataset.hsOpen, t.dataset.id); });
   $('#goals').addEventListener('click', questClick);
   $('#qsheet').addEventListener('click', questClick);
   $('#alarm').addEventListener('click', e => { if (e.target.closest('[data-act="takeover"]')) takeOver(); else if (e.target.closest('[data-act="capfight"]')) capFight(); });
@@ -13810,7 +13701,6 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
     let fresh = false;
     if (!st) { newGame({name:'', avatar:defAv()}, 'luebeck'); st._temp = true; fresh = true; }
     normalize(st); applyHome();
-    try { $('#log').open = localStorage.getItem('kogge-kontor-log') === '1'; } catch (e) {}
     music.arm(renderStats);
     if (data && data.ui) Object.assign(ui, data.ui, {confirmNew:false});
     if (fresh) openWizard(active, false);
@@ -13963,7 +13853,7 @@ h2.fh small{font:italic .84rem var(--f-body);color:var(--muted);text-align:right
 
 
 <script>
-window.KK_BUILD = '161a4dadd4';
+window.KK_BUILD = '2d4c1ac05a';
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
